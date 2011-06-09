@@ -1,17 +1,15 @@
 #labels Featured,Phase-Implementation,Phase-Requirements
 == Page de travail pour la préparation de la V3.3 de la rentrée 2011 ==
-<div align="right">[http://javascool.gforge.inria.fr web] [http://wiki.inria.fr/sciencinfolycee/Catégorie:JavaScool wiki]</div>
-
-A partir de la [[JavaScool:ToDoList]] et de son usage 2010-2011 se dégage trois objectifs:
-# Modulariser les grains qui constituent JavaScool pour un usage plus souple, des usages au "cas à cas", le développement d'activités par des profs etc.. et rendre plus lisible ce que la plateforme offre.
-# Améliorer (ou changer) l'éditeur actuel qui laisse à désirer
+A partir de la ToDoList et de son usage 2010-2011 se dégage trois objectifs:
+  # Modulariser les grains qui constituent JavaScool pour un usage plus souple, des usages au "cas à cas", le développement d'activités par des profs etc.. et rendre plus lisible ce que la plateforme offre.
+  # Améliorer (ou changer) l'éditeur actuel qui laisse à désirer
 en continuant d'assurer un "support temps réel" aux utilisateurs qui se multiplient.
-# Travailler sur une amélioration du prélangage Jvs et son extension [http://javascool.gforge.inria.fr/v3/?page=api:/org/javascool/Pml.html Pml]
+  # Travailler sur une amélioration du prélangage Jvs et son extension [http://javascool.gforge.inria.fr/v3/?page=api:/org/javascool/Pml.html Pml]
 
 En revanche, 
-* nous considérons comme stable la méthode générale de proposer une plateforme intégrée minimale de type click-and-run 
-** pour initier à la programmation 
-** et permettre d'y manipuler les objets numériques sous forme de «proglets»
-* avec ce niveau de simplicité/sophistication au niveau de l'interface qui permet une prise en main immédiate et dont l'ergonomie a été bien lissée avec le temps.
+  * nous considérons comme stable la méthode générale de proposer une plateforme intégrée minimale de type click-and-run 
+    * pour initier à la programmation 
+    * et permettre d'y manipuler les objets numériques sous forme de «proglets»
+  * avec ce niveau de simplicité/sophistication au niveau de l'interface qui permet une prise en main immédiate et dont l'ergonomie a été bien lissée avec le temps.
 
 Nous avons étudié et rejeté des solutions alternatives (intégration finale sous éclipse, netbean ou processing, les trois plateformes restant ''interopérables'' avec JavaScool; déploiement sous forme de Jnls ou Applet qui pose des problèmes de barrières de sécurité et conduit à des solutions instables, passage à d'autres solutions complètement différentes comme celles basées sur des technos au dessus de JavaScript hors de portée de nos forces de développement).
