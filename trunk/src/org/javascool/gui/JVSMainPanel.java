@@ -29,14 +29,7 @@ public class JVSMainPanel extends JPanel{
     
     /** Setup the ToolBar */
     private void setupToolBar(){
-        toolbar.addTool("Test", "", new Runnable(){
-
-            @Override
-            public void run() {
-                throw new UnsupportedOperationException("Building ...");
-            }
-        
-        });
+        // Add Buttons here
         this.add(toolbar, BorderLayout.NORTH);
     }
     

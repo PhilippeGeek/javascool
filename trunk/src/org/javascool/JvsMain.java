@@ -14,7 +14,7 @@ import org.javascool.gui.JVSMainPanel;
  */
 public class JvsMain {
 
-    public static final String title = "Java's Cool 3.3 Dev";
+    public static final String title = "Java's Cool 3.3 Developper's version";
     public static final String logo = "org/javascool/doc-files/logo.png";
     public static final String logo32 = "org/javascool/doc-files/icon32/logo.png";
     public static final String logo16 = "org/javascool/doc-files/icon16/logo.png";
@@ -52,7 +52,6 @@ public class JvsMain {
     static JFrame getJVSMainJFrame(){
         JFrame main=new JFrame();
         main.add(new JVSMainPanel());
-        main.setAlwaysOnTop(true);
         main.setTitle(title);
         main.setIconImage(Utils.getIcon(JvsMain.logo).getImage());
         main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
