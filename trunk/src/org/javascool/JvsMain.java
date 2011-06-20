@@ -15,9 +15,9 @@ import org.javascool.gui.JVSMainPanel;
 public class JvsMain {
 
     public static final String title = "Java's Cool 3.3 Dev";
-    public static final String logo = "org/javascool/logo.png";
-    public static final String logo32 = "org/javascool/logo.png";
-    public static final String logo16 = "org/javascool/logo.png";
+    public static final String logo = "org/javascool/doc-files/logo.png";
+    public static final String logo32 = "org/javascool/doc-files/icon32/logo.png";
+    public static final String logo16 = "org/javascool/doc-files/icon16/logo.png";
 
     
     /** Setup the system to run Java's cool
@@ -63,7 +63,7 @@ public class JvsMain {
 
     /** Used to run a JavaScool 3.3 as a standalone program.
      * <p>- Starts a JavaScool "activity" which result is to be stored in a "file-name".</p>
-     * @param usage <tt>java org.javascool.Main [activity [file-name]]</tt><ul>
+     * @param usage <tt>java org.javascool.JvsMain [activity [file-name]]</tt><ul>
      * <li><tt>activity</tt> specifies the activity to be done (its index or name).</li>
      * <li><tt>file-name</tt> specifies the file used for the activity.</li>
      * </ul>
