@@ -51,6 +51,9 @@ public class JvsMain {
         main.add(new JVSMainPanel());
         main.setAlwaysOnTop(true);
         main.setTitle(title);
+        main.setIconImage(Utils.getIcon("org/javascool/logo.png").getImage());
+        main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        main.pack();
         main.setExtendedState(JFrame.MAXIMIZED_BOTH);
         return main;
     }
