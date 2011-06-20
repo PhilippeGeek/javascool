@@ -38,7 +38,8 @@ public class JVSMainPanel extends JPanel{
     
     /** Setup Main Panel */
     private void setupMainPanel(){
-        tabs.add("Test", JvsMain.logo16, new JPanel());
+        //tabs.add("Test", JvsMain.logo16, new JPanel());
+        tabs.add("Editeur", "", new org.javascool.editor.JVSEditor());
         this.add(tabs,BorderLayout.CENTER);
     }
     
