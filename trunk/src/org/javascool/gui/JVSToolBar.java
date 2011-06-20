@@ -6,12 +6,15 @@ package org.javascool.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.HashMap;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JToolBar;
+import org.javascool.JvsMain;
 import org.javascool.Utils;
 
 /**
@@ -34,7 +37,43 @@ public class JVSToolBar extends JToolBar {
      */
     public JVSToolBar() {
         super("Java's cool ToolBar");
+        JLabel soft = new JLabel(Utils.getIcon(org.javascool.JvsMain.logo32));
+        soft.addMouseListener(new MouseListener() {
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                new JVSAboutFrame();
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        });
+        this.add(soft);
+    }
+
+    /** Reset all the toolbar */
+    public void reset() {
+        setVisible(false);
+        revalidate();
+        this.removeAll();
         this.add(new JLabel(Utils.getIcon(org.javascool.JvsMain.logo32)));
+        buttons.clear();
+        actions.clear();
+        setVisible(true);
+        revalidate();
     }
 
     /** Adds a button to the toolbar.
@@ -43,10 +82,11 @@ public class JVSToolBar extends JToolBar {
      * @param action Button action.
      * @return The added button.
      */
-    public JButton addTool(String label, String icon, Runnable action) {
+    public final JButton addTool(String label, String icon, Runnable action) {
         delTool(label);
         JButton button = icon == null ? new JButton(label) : new JButton(label, Utils.getIcon(icon));
         button.addActionListener(new ActionListener() {
+
             @Override
             public void actionPerformed(ActionEvent e) {
                 actions.get((JButton) e.getSource()).run();
