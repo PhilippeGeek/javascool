@@ -15,7 +15,7 @@ import org.fife.ui.rtextarea.RTextScrollPane;
  *
  * @author philien
  */
-public class JVSEditor extends JPanel {
+public class JVSEditor extends JPanel implements Editor{
 
     private RSyntaxTextArea TextPane;
     private RTextScrollPane scrollPane;
@@ -43,10 +43,30 @@ public class JVSEditor extends JPanel {
         textArea.requestFocusInWindow();
         textArea.setMarkOccurrences(true);
         textArea.setTextAntiAliasHint("VALUE_TEXT_ANTIALIAS_ON");
-//try {
-//SyntaxScheme scheme = SyntaxScheme.load(textArea.getFont(), new java.io.FileInputStream("C:/temp/eclipse.xml"));
-//textArea.setSyntaxScheme(scheme);
-//} catch (Exception e) { e.printStackTrace(); }
+        textArea.setText("void main(){\n"
+                + "\n"
+                + "}");
         return textArea;
+    }
+
+    /** Get text into the TextArea
+     * @return The code
+     */
+    @Override
+    public String getText() {
+        return TextPane.getText();
+    }
+
+    /** Set the text
+     * @param text The text to write on screen
+     */
+    @Override
+    public void setText(String text) {
+        TextPane.setText(text);
+    }
+    
+    /** Get the RSyntaxTextArea */
+    public RSyntaxTextArea getRTextArea(){
+        return TextPane;
     }
 }
