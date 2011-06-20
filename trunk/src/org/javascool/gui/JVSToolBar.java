@@ -34,7 +34,7 @@ public class JVSToolBar extends JToolBar {
      */
     public JVSToolBar() {
         super("Java's cool ToolBar");
-        this.add(new JLabel(Utils.getIcon(org.javascool.JvsMain.logo)));
+        this.add(new JLabel(Utils.getIcon(org.javascool.JvsMain.logo32)));
     }
 
     /** Adds a button to the toolbar.
