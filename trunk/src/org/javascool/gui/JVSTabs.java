@@ -23,15 +23,19 @@ public class JVSTabs extends JTabbedPane {
     }
 
     public void add(String name, String icon, JPanel panel) {
+        this.add(name,icon,panel,null);
+    }
+    
+    public void add(String name, String icon, JPanel panel, String tooltip) {
         if (tabs.containsKey(name)) {
             this.del(name);
         }
         tabs.put(name, panel);
         if (!icon.equalsIgnoreCase("")) {
             ImageIcon logo = Utils.getIcon(icon);
-            this.addTab(name, logo, panel);
+            this.addTab(name, logo, panel,tooltip);
         }else{
-            this.addTab(name, panel);
+            this.addTab(name, null, panel,tooltip);
         }
         this.revalidate();
     }

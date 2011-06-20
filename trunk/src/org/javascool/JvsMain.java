@@ -4,8 +4,13 @@
  */
 package org.javascool;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 import org.javascool.gui.JVSMainPanel;
 
 /** The Start Class for Java's cool
@@ -14,47 +19,69 @@ import org.javascool.gui.JVSMainPanel;
  */
 public class JvsMain {
 
-    public static final String title = "Java's Cool 3.3 Developper's version";
+    public static final String title = "Java's Cool 3.3 Dev";
     public static final String logo = "org/javascool/doc-files/logo.png";
     public static final String logo32 = "org/javascool/doc-files/icon32/logo.png";
     public static final String logo16 = "org/javascool/doc-files/icon16/logo.png";
 
-    
     /** Setup the system to run Java's cool
      * Set look and feel
      * @todo Setup here the execution path or just check it
      */
-    static void setUpSystem(){
-        String os = System.getProperty("os.name");
-        if (os.startsWith("Windows")) {
-            try {
-                // We are on windows
-                UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-            } catch (Exception e) {
+    static void setUpSystem() {
+        try {
+            for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
             }
-        } else {
-            try {
-                // We set menu for Mac
-                System.setProperty("com.apple.mrj.application.apple.menu.about.name", title);
-            } catch (Exception e) {
-            }
-            try {
-                // We are on an *nix's system or a mac
-                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            } catch (Exception e) {
-                // Error
-                System.err.println(e.getMessage());
-                System.err.println("Note: Utilisaton du thème Java (et non du système)");
+        } catch (Exception e) {
+            String os = System.getProperty("os.name");
+            if (os.startsWith("Windows")) {
+                try {
+                    // We are on windows
+                    UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+                } catch (Exception ex) {
+                }
+            } else {
+                try {
+                    // We set menu for Mac
+                    System.setProperty("com.apple.mrj.application.apple.menu.about.name", title);
+                } catch (Exception ex) {
+                }
+                try {
+                    // We are on an *nix's system or a mac
+                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                } catch (Exception ex) {
+                    // Error
+                    System.err.println(e.getMessage());
+                    System.err.println("Note: Utilisaton du thème Java (et non du système)");
+                }
             }
         }
     }
-    
-    static JFrame getJVSMainJFrame(){
-        JFrame main=new JFrame();
+
+    static JFrame getJVSMainJFrame() {
+        final JFrame main = new JFrame();
         main.add(new JVSMainPanel());
         main.setTitle(title);
         main.setIconImage(Utils.getIcon(JvsMain.logo).getImage());
-        main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        main.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        main.addWindowListener(new WindowAdapter() {
+
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                int result = JOptionPane.showConfirmDialog(main,
+                        "Êtes-vous sûr de vouloir quitter ?");
+
+                if (result == JOptionPane.YES_OPTION) {
+                    main.setVisible(false);
+                    main.dispose();
+                    System.exit(0);
+                }
+            }
+        });
         main.pack();
         main.setExtendedState(JFrame.MAXIMIZED_BOTH);
         return main;
@@ -70,7 +97,7 @@ public class JvsMain {
     public static void main(String[] usage) {
         System.out.println("---------------------\n" + title + "\n---------------------\nstarting..");
         org.javascool.JvsMain.setUpSystem();
-        JFrame main=getJVSMainJFrame();
+        JFrame main = getJVSMainJFrame();
         main.setVisible(true);
     }
 }
