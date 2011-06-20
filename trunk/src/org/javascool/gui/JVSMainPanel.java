@@ -6,7 +6,6 @@ package org.javascool.gui;
 
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
-import org.javascool.JvsMain;
 
 /**
  *
@@ -15,7 +14,7 @@ import org.javascool.JvsMain;
 public class JVSMainPanel extends JPanel{
     
     private JVSToolBar toolbar=new JVSToolBar();
-    private JVSTabs tabs=new JVSTabs();
+    private JVSFileEditorTabs tabs=new JVSFileEditorTabs();
     
     public JVSMainPanel(){
         this.setVisible(true);
@@ -39,7 +38,7 @@ public class JVSMainPanel extends JPanel{
     /** Setup Main Panel */
     private void setupMainPanel(){
         //tabs.add("Test", JvsMain.logo16, new JPanel());
-        tabs.add("Editeur", "", new org.javascool.editor.JVSEditor());
+        tabs.openNewFile();
         this.add(tabs,BorderLayout.CENTER);
     }
     
