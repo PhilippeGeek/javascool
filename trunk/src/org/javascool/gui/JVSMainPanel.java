@@ -6,6 +6,7 @@ package org.javascool.gui;
 
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
+import org.javascool.JvsMain;
 
 /**
  *
@@ -14,11 +15,13 @@ import javax.swing.JPanel;
 public class JVSMainPanel extends JPanel{
     
     private JVSToolBar toolbar=new JVSToolBar();
+    private JVSTabs tabs=new JVSTabs();
     
     public JVSMainPanel(){
         this.setVisible(true);
         this.setupViewLayout();
         this.setupToolBar();
+        this.setupMainPanel();
     }
     
     /** Setup the Border Layout for the JPanel */
@@ -31,6 +34,12 @@ public class JVSMainPanel extends JPanel{
     private void setupToolBar(){
         // Add Buttons here
         this.add(toolbar, BorderLayout.NORTH);
+    }
+    
+    /** Setup Main Panel */
+    private void setupMainPanel(){
+        tabs.add("Test", JvsMain.logo16, new JPanel());
+        this.add(tabs,BorderLayout.CENTER);
     }
     
     /** Get the toolbar
