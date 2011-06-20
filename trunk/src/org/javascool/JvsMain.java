@@ -14,7 +14,10 @@ import org.javascool.gui.JVSMainPanel;
  */
 public class JvsMain {
 
-    public static String title = "Java's Cool 3.3 Dev";
+    public static final String title = "Java's Cool 3.3 Dev";
+    public static final String logo = "org/javascool/logo.png";
+    public static final String logo32 = "org/javascool/logo.png";
+    public static final String logo16 = "org/javascool/logo.png";
 
     
     /** Setup the system to run Java's cool
@@ -51,7 +54,7 @@ public class JvsMain {
         main.add(new JVSMainPanel());
         main.setAlwaysOnTop(true);
         main.setTitle(title);
-        main.setIconImage(Utils.getIcon("org/javascool/logo.png").getImage());
+        main.setIconImage(Utils.getIcon(JvsMain.logo).getImage());
         main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         main.pack();
         main.setExtendedState(JFrame.MAXIMIZED_BOTH);

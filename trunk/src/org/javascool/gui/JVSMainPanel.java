@@ -13,14 +13,38 @@ import javax.swing.JPanel;
  */
 public class JVSMainPanel extends JPanel{
     
+    private JVSToolBar toolbar=new JVSToolBar();
+    
     public JVSMainPanel(){
         this.setVisible(true);
-        this.setViewLayout();
+        this.setupViewLayout();
+        this.setupToolBar();
     }
     
-    private void setViewLayout(){
+    /** Setup the Border Layout for the JPanel */
+    private void setupViewLayout(){
         BorderLayout layout=new BorderLayout();
         this.setLayout(layout);
+    }
+    
+    /** Setup the ToolBar */
+    private void setupToolBar(){
+        toolbar.addTool("Test", "", new Runnable(){
+
+            @Override
+            public void run() {
+                throw new UnsupportedOperationException("Building ...");
+            }
+        
+        });
+        this.add(toolbar, BorderLayout.NORTH);
+    }
+    
+    /** Get the toolbar
+     * @return The toolbar
+     */
+    public JVSToolBar getToolBar(){
+        return toolbar;
     }
     
 }
