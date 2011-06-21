@@ -59,6 +59,17 @@ public class JVSMainPanel extends JPanel {
         this.haveToSave.put(fileId, true);
     }
 
+    public void openFile() {
+        final JFileChooser fc = new JFileChooser();
+        int returnVal = fc.showOpenDialog(this.getParent());
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            String path = fc.getSelectedFile().getAbsolutePath();
+            String fileId = this.editorTabs.open(path);
+            this.haveToSave.put(fileId, true);
+        } else {
+        }
+    }
+
     public Boolean close() {
         String id = "";
         Boolean[] can_close = new Boolean[this.haveToSave.keySet().toArray().length];
@@ -66,7 +77,7 @@ public class JVSMainPanel extends JPanel {
         for (Object fileId : this.haveToSave.keySet().toArray()) {
             id = (String) fileId;
             if (this.haveToSave.get(id)) {
-                switch(this.saveFileId(id)){
+                switch (this.saveFileId(id)) {
                     case 1:
                         can_close[i] = true;
                         break;
@@ -78,6 +89,9 @@ public class JVSMainPanel extends JPanel {
                 }
             } else {
                 can_close[i] = true;
+            }
+            if (can_close[i]) {
+                this.editorTabs.closeFile(id);
             }
             i++;
         }
@@ -98,13 +112,13 @@ public class JVSMainPanel extends JPanel {
             if (file.isTmp()) {
                 int returnVal = fc.showOpenDialog(this.getParent());
                 if (returnVal == JFileChooser.APPROVE_OPTION) {
-                    String path=fc.getSelectedFile().getAbsolutePath();
-                    if(!path.endsWith(".jvs")){
-                        path=path+".jvs";
+                    String path = fc.getSelectedFile().getAbsolutePath();
+                    if (!path.endsWith(".jvs")) {
+                        path = path + ".jvs";
                     }
                     file.setPath(path);
                     file.setName(fc.getSelectedFile().getName());
-                    if(file.save()){
+                    if (file.save()) {
                         return 1;
                     } else {
                         return 0;
@@ -112,14 +126,15 @@ public class JVSMainPanel extends JPanel {
                 } else {
                     return 0;
                 }
+            } else if (file.save()) {
+                    return 1;
             } else {
-                file.save();
+                return 0;
             }
         } else if (result == JOptionPane.NO_OPTION) {
             return 1;
         } else {
             return -1;
         }
-        return 0;
     }
 }

@@ -54,10 +54,16 @@ public class JVSToolBar extends JToolBar {
     
     private void init(){
         final JVSMainPanel main_panel=((JVSMainPanel)this.getParent());
-        this.addTool("", "org/javascool/doc-files/icon16/new.png", new Runnable(){
+        this.addTool("Nouveau", "org/javascool/doc-files/icon16/new.png", new Runnable(){
             @Override
             public void run() {
                 ((JVSMainPanel)getParent()).newFile();
+            }
+        });
+        this.addTool("Ouvrir", "org/javascool/doc-files/icon16/open.png", new Runnable(){
+            @Override
+            public void run() {
+                ((JVSMainPanel)getParent()).openFile();
             }
         });
     }
