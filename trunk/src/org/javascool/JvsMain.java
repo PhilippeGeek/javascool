@@ -5,13 +5,7 @@
 package org.javascool;
 
 import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import org.javascool.gui.JVSMainPanel;
@@ -22,7 +16,7 @@ import org.javascool.gui.JVSMainPanel;
  */
 public class JvsMain {
 
-    public static final String title = "Java's Cool 3.3 Dev";
+    public static final String title = "Java's Cool 3.3";
     public static final String logo = "org/javascool/doc-files/logo.png";
     public static final String logo32 = "org/javascool/doc-files/icon32/logo.png";
     public static final String logo16 = "org/javascool/doc-files/icon16/logo.png";
@@ -32,6 +26,8 @@ public class JvsMain {
      * @todo Setup here the execution path or just check it
      */
     static void setUpSystem() {
+        
+        //<editor-fold defaultstate="collapsed" desc="Style Conf">
         try {
             for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -49,11 +45,6 @@ public class JvsMain {
                 }
             } else {
                 try {
-                    // We set menu for Mac
-                    System.setProperty("com.apple.mrj.application.apple.menu.about.name", title);
-                } catch (Exception ex) {
-                }
-                try {
                     // We are on an *nix's system or a mac
                     UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
                 } catch (Exception ex) {
@@ -63,6 +54,15 @@ public class JvsMain {
                 }
             }
         }
+        //</editor-fold>
+        //<editor-fold defaultstate="collapsed" desc="Mac setup">
+        try {
+            // We set menu for Mac
+            System.setProperty("com.apple.mrj.application.apple.menu.about.name", title);
+        } catch (Exception ex) {
+        }
+        //</editor-fold>
+    
     }
 
     static JFrame getJVSMainJFrame() {

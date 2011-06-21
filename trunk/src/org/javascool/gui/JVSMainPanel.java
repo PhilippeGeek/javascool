@@ -55,7 +55,7 @@ public class JVSMainPanel extends JPanel {
     }
 
     public void newFile() {
-        String fileId = this.editorTabs.openNewFile();
+        String fileId = this.getEditorTabs().openNewFile();
         this.haveToSave.put(fileId, true);
     }
 
@@ -64,10 +64,18 @@ public class JVSMainPanel extends JPanel {
         int returnVal = fc.showOpenDialog(this.getParent());
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             String path = fc.getSelectedFile().getAbsolutePath();
-            String fileId = this.editorTabs.open(path);
-            this.haveToSave.put(fileId, true);
+            String fileId = this.getEditorTabs().open(path);
+            this.haveToSave.put(fileId, false);
         } else {
         }
+    }
+
+    public void saveFile() {
+        this.getEditorTabs().saveCurrentFile();
+    }
+    
+    public void mustSave(String fileId){
+        this.haveToSave.put(fileId, true);
     }
 
     public Boolean close() {
@@ -77,7 +85,7 @@ public class JVSMainPanel extends JPanel {
         for (Object fileId : this.haveToSave.keySet().toArray()) {
             id = (String) fileId;
             if (this.haveToSave.get(id)) {
-                switch (this.saveFileId(id)) {
+                switch (this.saveFileIdBeforeClose(id)) {
                     case 1:
                         can_close[i] = true;
                         break;
@@ -91,7 +99,7 @@ public class JVSMainPanel extends JPanel {
                 can_close[i] = true;
             }
             if (can_close[i]) {
-                this.editorTabs.closeFile(id);
+                this.getEditorTabs().closeFile(id);
             }
             i++;
         }
@@ -103,38 +111,27 @@ public class JVSMainPanel extends JPanel {
         return true;
     }
 
-    private int saveFileId(String fileId) {
+    private int saveFileIdBeforeClose(String fileId) {
         final JFileChooser fc = new JFileChooser();
-        JVSFile file = this.editorTabs.getFile(fileId);
+        JVSFile file = this.getEditorTabs().getFile(fileId);
         int result = JOptionPane.showConfirmDialog(this.getParent(),
                 "Voulez vous enregistrer " + file.getName() + " avant de quitter ?");
         if (result == JOptionPane.YES_OPTION) {
-            if (file.isTmp()) {
-                int returnVal = fc.showOpenDialog(this.getParent());
-                if (returnVal == JFileChooser.APPROVE_OPTION) {
-                    String path = fc.getSelectedFile().getAbsolutePath();
-                    if (!path.endsWith(".jvs")) {
-                        path = path + ".jvs";
-                    }
-                    file.setPath(path);
-                    file.setName(fc.getSelectedFile().getName());
-                    if (file.save()) {
-                        return 1;
-                    } else {
-                        return 0;
-                    }
-                } else {
-                    return 0;
-                }
-            } else if (file.save()) {
-                    return 1;
+            if (this.getEditorTabs().saveFile(fileId)) {
+                this.haveToSave.put(fileId, false);
+                return 1;
             } else {
                 return 0;
             }
         } else if (result == JOptionPane.NO_OPTION) {
             return 1;
         } else {
+            this.haveToSave.put(fileId, true);
             return -1;
         }
+    }
+
+    private JVSFileEditorTabs getEditorTabs() {
+        return this.editorTabs;
     }
 }
