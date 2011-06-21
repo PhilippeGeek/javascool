@@ -51,22 +51,23 @@ public class JVSFile {
         }
     }
 
+    public Boolean isTmp() {
+        return (this.name.startsWith("New") && this.file.getName().startsWith("JVS_TMPFILE_"));
+    }
+
     public Boolean save() {
-        if (this.name.startsWith("New") && this.file.getName().startsWith("JVS_TMPFILE_")) {
-            // File has never been saved
-        } else {
-            try {
-                FileWriter fstream = new FileWriter(this.getPath());
-                BufferedWriter out = new BufferedWriter(fstream);
-                out.write(this.getText());
-                out.close();
-            } catch (Exception e) {
-                System.err.println("Error: " + e.getMessage());
-            }
+        try {
+            FileWriter fstream = new FileWriter(this.getPath());
+            BufferedWriter out = new BufferedWriter(fstream);
+            out.write(this.getText());
+            out.close();
+            return true;
+        } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
         }
         return false;
     }
-    
+
     /**
      * @return the text
      */

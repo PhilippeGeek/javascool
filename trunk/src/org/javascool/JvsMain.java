@@ -64,7 +64,8 @@ public class JvsMain {
 
     static JFrame getJVSMainJFrame() {
         final JFrame main = new JFrame();
-        main.add(new JVSMainPanel());
+        final JVSMainPanel main_panel = new JVSMainPanel();
+        main.add(main_panel);
         main.setTitle(title);
         main.setIconImage(Utils.getIcon(JvsMain.logo).getImage());
         main.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -72,10 +73,7 @@ public class JvsMain {
 
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
-                int result = JOptionPane.showConfirmDialog(main,
-                        "Êtes-vous sûr de vouloir quitter ?");
-
-                if (result == JOptionPane.YES_OPTION) {
+                if (main_panel.close()) {
                     main.setVisible(false);
                     main.dispose();
                     System.exit(0);
