@@ -66,6 +66,12 @@ public class JVSToolBar extends JToolBar {
                 ((JVSMainPanel)getParent()).openFile();
             }
         });
+        this.addTool("Enregistrer", "org/javascool/doc-files/icon16/save.png", new Runnable(){
+            @Override
+            public void run() {
+                ((JVSMainPanel)getParent()).saveFile();
+            }
+        });
     }
 
     /** Adds a button to the toolbar.

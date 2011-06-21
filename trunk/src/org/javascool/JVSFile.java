@@ -65,7 +65,7 @@ public class JVSFile {
 
     public Boolean save() {
         try {
-            FileWriter fstream = new FileWriter(this.getPath());
+            FileWriter fstream = new FileWriter(this.file.getAbsolutePath());
             BufferedWriter out = new BufferedWriter(fstream);
             out.write(this.getText());
             out.close();
