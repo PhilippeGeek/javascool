@@ -37,31 +37,7 @@ public class JVSToolBar extends JToolBar {
      */
     public JVSToolBar() {
         super("Java's cool ToolBar");
-        JLabel soft = new JLabel(Utils.getIcon(org.javascool.JvsMain.logo32));
-        soft.addMouseListener(new MouseListener() {
-
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                new JVSAboutFrame();
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-            }
-        });
-        this.add(soft);
+        this.init();
     }
 
     /** Reset all the toolbar */
@@ -69,11 +45,21 @@ public class JVSToolBar extends JToolBar {
         setVisible(false);
         revalidate();
         this.removeAll();
-        this.add(new JLabel(Utils.getIcon(org.javascool.JvsMain.logo32)));
         buttons.clear();
         actions.clear();
+        this.init();
         setVisible(true);
         revalidate();
+    }
+    
+    private void init(){
+        final JVSMainPanel main_panel=((JVSMainPanel)this.getParent());
+        this.addTool("", "org/javascool/doc-files/icon16/new.png", new Runnable(){
+            @Override
+            public void run() {
+                ((JVSMainPanel)getParent()).newFile();
+            }
+        });
     }
 
     /** Adds a button to the toolbar.
