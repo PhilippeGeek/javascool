@@ -5,8 +5,11 @@
 package org.javascool;
 
 import com.icl.saxon.exslt.Date;
+import java.io.BufferedInputStream;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -34,11 +37,12 @@ public class JVSFile {
     public JVSFile(String url, Boolean fromurl) {
         if (!fromurl) {
             this.text = url;
-            this.name = "New " + Date.time();
+            this.name = "Nouveau fichier";
             this.path = "";
             try {
                 this.file = File.createTempFile("JVS_TMPFILE_", ".jvs");
                 this.file.deleteOnExit();
+                this.path=this.file.getAbsolutePath();
             } catch (IOException ex) {
                 Logger.getLogger(JVSFile.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -46,13 +50,17 @@ public class JVSFile {
             File file_to_open = new File(url);
             this.name = file_to_open.getName();
             this.path = file_to_open.getAbsolutePath();
-            this.text = file_to_open.toString();
+            try {
+                this.text = JVSFile.readFileAsString(this.path);
+            } catch (IOException ex) {
+                this.text="";
+            }
             this.file = file_to_open;
         }
     }
 
     public Boolean isTmp() {
-        return (this.name.startsWith("New") && this.file.getName().startsWith("JVS_TMPFILE_"));
+        return (this.file.getName().startsWith("JVS_TMPFILE_"));
     }
 
     public Boolean save() {
@@ -115,5 +123,13 @@ public class JVSFile {
      */
     public File getFile() {
         return file;
+    }
+    
+    
+    public static String readFileAsString(String filePath) throws java.io.IOException {
+        byte[] buffer = new byte[(int) new File(filePath).length()];
+        BufferedInputStream f = new BufferedInputStream(new FileInputStream(filePath));
+        f.read(buffer);
+        return new String(buffer);
     }
 }
