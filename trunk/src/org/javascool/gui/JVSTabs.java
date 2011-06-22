@@ -27,9 +27,6 @@ public class JVSTabs extends JTabbedPane {
     }
     
     public void add(String name, String icon, JPanel panel, String tooltip) {
-        if (tabs.containsKey(name)) {
-            this.del(name);
-        }
         tabs.put(name, panel);
         if (!icon.equalsIgnoreCase("")) {
             ImageIcon logo = Utils.getIcon(icon);
