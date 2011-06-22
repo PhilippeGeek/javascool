@@ -6,10 +6,16 @@ package org.javascool.editor;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Event;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import javax.swing.AbstractAction;
 import javax.swing.JPanel;
+import javax.swing.KeyStroke;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rtextarea.Gutter;
 import org.fife.ui.rtextarea.RTextScrollPane;
+import org.javascool.gui.JVSFileEditorTabs;
 
 /**
  *
@@ -43,9 +49,20 @@ public class JVSEditor extends JPanel implements Editor{
         textArea.requestFocusInWindow();
         textArea.setMarkOccurrences(true);
         textArea.setTextAntiAliasHint("VALUE_TEXT_ANTIALIAS_ON");
-        textArea.setText("void main(){\n"
-                + "\n"
-                + "}");
+        textArea.setText("");
+        //Ctrl-b to go backward one character
+        KeyStroke key = KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.CTRL_MASK);
+
+        textArea.getInputMap().put(key,
+                "save");
+        textArea.getActionMap().put("save",
+                new AbstractAction() {
+
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        getEditorTabs().getMainPanel().saveFile();
+                    }
+                });
         return textArea;
     }
 
@@ -68,5 +85,13 @@ public class JVSEditor extends JPanel implements Editor{
     /** Get the RSyntaxTextArea */
     public RSyntaxTextArea getRTextArea(){
         return TextPane;
+    }
+    
+    public JVSFileEditorTabs getEditorTabs(){
+        try{
+            return (JVSFileEditorTabs)getParent();
+        } catch (Exception e){
+            return new JVSFileEditorTabs();
+        }
     }
 }

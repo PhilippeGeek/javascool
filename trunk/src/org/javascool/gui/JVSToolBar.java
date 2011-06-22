@@ -6,22 +6,16 @@ package org.javascool.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.HashMap;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JToolBar;
-import org.javascool.JvsMain;
 import org.javascool.Utils;
 
 /**
  *
  * @author philien
  */
-public class JVSToolBar extends JToolBar {
+public class JVSToolBar extends JToolBar implements JVSGuiObject{
 
     /** HashMap for button list.
      * The map associate a String to a JButton
@@ -108,5 +102,10 @@ public class JVSToolBar extends JToolBar {
             setVisible(true);
             revalidate();
         }
+    }
+
+    @Override
+    public JVSMainPanel getMainPanel() {
+        return ((JVSMainPanel)this.getParent());
     }
 }

@@ -5,20 +5,25 @@
 package org.javascool.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Event;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.util.HashMap;
+import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.KeyStroke;
 import org.javascool.JVSFile;
 
 /**
  *
  * @author philien
  */
-public class JVSMainPanel extends JPanel {
+public final class JVSMainPanel extends JPanel {
 
     private JVSToolBar toolbar = new JVSToolBar();
-    private JVSFileEditorTabs editorTabs = new JVSFileEditorTabs();
+    private JVSSplitPane mainPane = new JVSSplitPane(new JVSFileEditorTabs(), new JVSFileEditorTabs());
     private HashMap<String, Boolean> haveToSave = new HashMap<String, Boolean>();
 
     public JVSMainPanel() {
@@ -26,6 +31,7 @@ public class JVSMainPanel extends JPanel {
         this.setupViewLayout();
         this.setupToolBar();
         this.setupMainPanel();
+        this.addBindings();
     }
 
     /** Setup the Border Layout for the JPanel */
@@ -44,7 +50,41 @@ public class JVSMainPanel extends JPanel {
     private void setupMainPanel() {
         //tabs.add("Test", JvsMain.logo16, new JPanel());
         this.newFile();
-        this.add(editorTabs, BorderLayout.CENTER);
+        this.add(mainPane, BorderLayout.CENTER);
+    }
+
+    //Add a couple of emacs key bindings for navigation.
+    protected void addBindings() {
+
+        KeyStroke ctrlS = KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.CTRL_MASK);
+        KeyStroke ctrlO = KeyStroke.getKeyStroke(KeyEvent.VK_O, Event.CTRL_MASK);
+        KeyStroke ctrlQ = KeyStroke.getKeyStroke(KeyEvent.VK_Q, Event.CTRL_MASK);
+        KeyStroke ctrlI = KeyStroke.getKeyStroke(KeyEvent.VK_I, Event.CTRL_MASK);
+        KeyStroke ctrlR = KeyStroke.getKeyStroke(KeyEvent.VK_R, Event.CTRL_MASK);
+
+        // Set save handler for ctrl+S
+        this.getInputMap().put(ctrlS,
+                "save");
+        this.getActionMap().put("save",
+                new AbstractAction() {
+
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        saveFile();
+                    }
+                });
+        
+        // Set openFile handler for ctrl+O
+        this.getInputMap().put(ctrlO,
+                "open");
+        this.getActionMap().put("open",
+                new AbstractAction() {
+
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        openFile();
+                    }
+                });
     }
 
     /** Get the toolbar
@@ -71,10 +111,12 @@ public class JVSMainPanel extends JPanel {
     }
 
     public void saveFile() {
-        this.getEditorTabs().saveCurrentFile();
+        if(this.getEditorTabs().saveCurrentFile()){
+            this.haveToSave.put(this.getEditorTabs().getCurrentFileId(), false);
+        }
     }
-    
-    public void mustSave(String fileId){
+
+    public void mustSave(String fileId) {
         this.haveToSave.put(fileId, true);
     }
 
@@ -132,6 +174,6 @@ public class JVSMainPanel extends JPanel {
     }
 
     private JVSFileEditorTabs getEditorTabs() {
-        return this.editorTabs;
+        return ((JVSFileEditorTabs) this.mainPane.getLeftComponent());
     }
 }
