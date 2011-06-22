@@ -26,12 +26,12 @@ public class JVSAboutFrame extends JDialog {
         this.setIconImage(Utils.getIcon(JvsMain.logo).getImage());
         this.setLayout(new BorderLayout());
         getContentPane().add(new JLabel("<html>"+
-                JvsMain.title+" est un logiciel conçut en colaboration avec : <br/><center>"+
-                "L'INRIA<br/>"
-                + "Thierry Viéville<br/>"
+                JvsMain.title+" est un logiciel conçut en colaboration avec : <br/><center>"
                 + "Philippe Vienne<br/>"
-                + "Cécille Picard<br/>"
                 + "Guillaume Matheron<br/>"
+                + "Thierry Viéville<br/>"
+                + "L'INRIA<br/>"
+                + "Cécille Picard<br/>"
                 + "</center><br/>"
                 + "Il est distribué sous les conditions de la licence CeCILL<br/>"
                 + "(ou selon votre choix GNU GPL V3)"

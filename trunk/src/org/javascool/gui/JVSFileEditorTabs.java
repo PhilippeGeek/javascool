@@ -16,7 +16,7 @@ import org.javascool.editor.JVSEditor;
  *
  * @author philien
  */
-public class JVSFileEditorTabs extends JVSTabs {
+public class JVSFileEditorTabs extends JVSTabs implements JVSGuiObject {
 
     /** Store all JVSEditor in an HashMap by the fileId */
     private HashMap<String, JVSEditor> editors = new HashMap<String, JVSEditor>();
@@ -69,7 +69,7 @@ public class JVSFileEditorTabs extends JVSTabs {
         // Set text in the editor
         editor.setText(file.getText());
         // Add listener for edit
-        editor.getRTextArea().getDocument().addDocumentListener(new DocumentListener(){
+        editor.getRTextArea().getDocument().addDocumentListener(new DocumentListener() {
 
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -138,12 +138,8 @@ public class JVSFileEditorTabs extends JVSTabs {
     }
 
     /** Save the current file */
-    public void saveCurrentFile() {
-        if (this.currentFileIsTmp()) { // Check if current file isin tempory memory
-            this.saveFilePromptWhere(this.getCurrentFileId()); // If yes prompt were we can save
-        } else { // Else
-            this.saveFile(this.getCurrentFileId()); // We just save the file
-        }
+    public Boolean saveCurrentFile() {
+        return this.saveFile(this.getCurrentFileId()); // We just save the file
     }
 
     /** Check if the current file is in tempory memory
@@ -250,8 +246,13 @@ public class JVSFileEditorTabs extends JVSTabs {
             return new JVSEditor(); // Return new empty JVSEditor if fileId not exists
         }
     }
-    
-    protected void fileUpdateNotification(){
-        ((JVSMainPanel)this.getParent()).mustSave(this.getCurrentFileId());
+
+    protected void fileUpdateNotification() {
+        ((JVSMainPanel) this.getParent().getParent()).mustSave(this.getCurrentFileId());
+    }
+
+    @Override
+    public JVSMainPanel getMainPanel() {
+        return ((JVSMainPanel) this.getParent().getParent());
     }
 }

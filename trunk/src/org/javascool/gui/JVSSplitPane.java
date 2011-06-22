@@ -12,7 +12,7 @@ import javax.swing.JSplitPane;
  *
  * @author philien
  */
-public class JVSSplitPane extends JSplitPane{
+public class JVSSplitPane extends JSplitPane implements JVSGuiObject{
     
     private Component left_pane;
     private Component right_pane;
@@ -30,8 +30,11 @@ public class JVSSplitPane extends JSplitPane{
      */
     public JVSSplitPane(Component left,Component right){
         super(JSplitPane.HORIZONTAL_SPLIT);
-        this.setLeftComponent(left_pane);
-        this.setRightComponent(right_pane);
+        JVSFileEditorTabs editor=new JVSFileEditorTabs();
+        left_pane=editor;
+        this.setLeftComponent(editor);
+        this.setRightComponent(right);
+        this.setVisible(true);
     }
     
     /** Get the left component */
@@ -44,5 +47,10 @@ public class JVSSplitPane extends JSplitPane{
     @Override
     public Component getRightComponent(){
         return right_pane;
+    }
+
+    @Override
+    public JVSMainPanel getMainPanel() {
+        return ((JVSMainPanel)this.getParent());
     }
 }
