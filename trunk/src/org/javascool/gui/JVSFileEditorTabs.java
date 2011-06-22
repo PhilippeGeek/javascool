@@ -185,11 +185,8 @@ public class JVSFileEditorTabs extends JVSTabs {
             this.files.get(fileId).setPath(path); // We set the new path
             this.files.get(fileId).setName(fc.getSelectedFile().getName()); // We set the new Name
             this.editTabName(fileId, fc.getSelectedFile().getName()); // Update the TabTitle to the new name
-            if (this.saveFile(fileId)) { // We save it
-                return true; // Success
-            } else {
-                return false; // Fail
-            }
+            this.files.get(fileId).setText(this.editors.get(fileId).getText()); // Set the editor's text into the object
+            return this.files.get(fileId).save(); // Write data in the file
         } else {
             return false; // If the user is not ok
         }
