@@ -7,6 +7,7 @@ package org.javascool.gui;
 import java.awt.Component;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
+import org.javascool.tools.Console;
 
 /**
  *
@@ -14,8 +15,8 @@ import javax.swing.JSplitPane;
  */
 public class JVSSplitPane extends JSplitPane implements JVSGuiObject{
     
-    private Component left_pane;
-    private Component right_pane;
+    private static JVSFileEditorTabs editor;
+    private static JVSTabs tabs;
     private int split;
     
     /** Construct a new JVSSplitPane */
@@ -30,23 +31,25 @@ public class JVSSplitPane extends JSplitPane implements JVSGuiObject{
      */
     public JVSSplitPane(Component left,Component right){
         super(JSplitPane.HORIZONTAL_SPLIT);
-        JVSFileEditorTabs editor=new JVSFileEditorTabs();
-        left_pane=editor;
-        this.setLeftComponent(editor);
-        this.setRightComponent(right);
+        JVSFileEditorTabs editorToSet=new JVSFileEditorTabs();
+        JVSSplitPane.editor=editorToSet;
+        JVSSplitPane.tabs=new JVSTabs();
+        JVSSplitPane.tabs.add("Console", "", new Console());
+        this.setLeftComponent(JVSSplitPane.editor);
+        this.setRightComponent(JVSSplitPane.tabs);
         this.setVisible(true);
     }
     
     /** Get the left component */
     @Override
     public Component getLeftComponent(){
-        return left_pane;
+        return JVSSplitPane.editor;
     }
     
     /** Get the right component */
     @Override
     public Component getRightComponent(){
-        return right_pane;
+        return JVSSplitPane.tabs;
     }
 
     @Override

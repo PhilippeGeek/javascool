@@ -7,10 +7,12 @@ package org.javascool.gui;
 import java.util.HashMap;
 import java.util.UUID;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import org.javascool.JVSFile;
 import org.javascool.editor.JVSEditor;
+import org.javascool.jvs.Jvs2Java;
 
 /**
  *
@@ -19,11 +21,11 @@ import org.javascool.editor.JVSEditor;
 public class JVSFileEditorTabs extends JVSTabs implements JVSGuiObject {
 
     /** Store all JVSEditor in an HashMap by the fileId */
-    private HashMap<String, JVSEditor> editors = new HashMap<String, JVSEditor>();
+    private static HashMap<String, JVSEditor> editors = new HashMap<String, JVSEditor>();
     /** Store all JVSFile in an HashMap by the fileId */
-    private HashMap<String, JVSFile> files = new HashMap<String, JVSFile>();
+    private static HashMap<String, JVSFile> files = new HashMap<String, JVSFile>();
     /** Store all fileIds in an HashMap by the tab name */
-    private HashMap<String, String> fileIds = new HashMap<String, String>();
+    private static HashMap<String, String> fileIds = new HashMap<String, String>();
 
     /** Create a new JVSFileEditorTabs */
     public JVSFileEditorTabs() {
@@ -34,10 +36,8 @@ public class JVSFileEditorTabs extends JVSTabs implements JVSGuiObject {
      * @return The file's tempory id in editor tabs
      */
     public String openNewFile() {
-        return this.openFile(new JVSFile("class Toto{\n"
-                + "\tvoid main(){\n"
+        return this.openFile(new JVSFile("void main(){\n"
                 + "\n"
-                + "\t}\n"
                 + "}"));
     }
 
@@ -57,7 +57,7 @@ public class JVSFileEditorTabs extends JVSTabs implements JVSGuiObject {
     private String openFile(JVSFile file) {
         // Check if file is not already opened
         if (!this.getFileId(file.getName()).equals("")) {
-            if (this.files.get(this.getFileId(file.getName())).getPath().equals(file.getPath())) {
+            if (JVSFileEditorTabs.files.get(this.getFileId(file.getName())).getFile().equals(file.getFile())) {
                 this.setSelectedIndex(this.getTabId(this.getFileId(file.getName())));
                 return this.getFileId(file.getName());
             }
@@ -88,9 +88,9 @@ public class JVSFileEditorTabs extends JVSTabs implements JVSGuiObject {
             }
         });
         // Store the new editor
-        this.editors.put(fileId, editor);
+        JVSFileEditorTabs.editors.put(fileId, editor);
         // Store the JVSFile
-        this.files.put(fileId, file);
+        JVSFileEditorTabs.files.put(fileId, file);
         // Create the tab name
         String tabTitle = file.getName();
         if (this.indexOfTab(file.getName()) != -1) {
@@ -104,7 +104,7 @@ public class JVSFileEditorTabs extends JVSTabs implements JVSGuiObject {
         // We add the tab
         this.add(tabTitle, "", editors.get(fileId));
         // Store the new fileId by the tab name
-        this.fileIds.put(tabTitle, fileId);
+        JVSFileEditorTabs.fileIds.put(tabTitle, fileId);
         // Select the new tab
         this.setSelectedIndex(this.getTabId(fileId));
         // Return the new file id
@@ -119,9 +119,10 @@ public class JVSFileEditorTabs extends JVSTabs implements JVSGuiObject {
             String tab_title = this.getTitleAt(this.getTabId(fileId)); // Save the tap title (Useful)
             try {
                 this.removeTabAt(this.getTabId(fileId)); // First remove the tab
-                this.fileIds.remove(tab_title); // Remove id in the index
-                this.files.remove(fileId); // Remove the file class
-                this.editors.remove(fileId); // Remove the editor
+                JVSFileEditorTabs.fileIds.remove(tab_title); // Remove id in the index
+                JVSFileEditorTabs.files.remove(fileId); // Remove the file class
+                JVSFileEditorTabs.editors.remove(fileId); // Remove the editor
+                JVSMainPanel.haveNotToSave(fileId);
             } catch (Exception e) {
                 System.err.println(e.getLocalizedMessage()); // Use to debug
             }
@@ -133,7 +134,7 @@ public class JVSFileEditorTabs extends JVSTabs implements JVSGuiObject {
      */
     public String getCurrentFileId() {
         String tab_name = this.getTitleAt(this.getSelectedIndex()); // Get the tab name opened to find the id
-        String fileId = this.fileIds.get(tab_name); // We get the id
+        String fileId = JVSFileEditorTabs.fileIds.get(tab_name); // We get the id
         return fileId;
     }
 
@@ -146,7 +147,19 @@ public class JVSFileEditorTabs extends JVSTabs implements JVSGuiObject {
      * @return True if is tempory
      */
     public Boolean currentFileIsTmp() {
-        return this.files.get(this.getCurrentFileId()).isTmp(); // Check in the JVS File object if is tempory
+        return JVSFileEditorTabs.files.get(this.getCurrentFileId()).isTmp(); // Check in the JVS File object if is tempory
+    }
+
+    /** Compile a file
+     * @param fileId The id of the file to compile
+     * @return True on success, false in case of error. Can return true if file is not openned
+     */
+    public static Boolean compileFile(String fileId) {
+        if (!JVSFileEditorTabs.fileIds.containsValue(fileId)) { // Check if id is opened
+            return true; // Return true because file is not opened
+        }
+        Jvs2Java.compileAndRun(JVSFileEditorTabs.editors.get(fileId).getText());
+        return true;
     }
 
     /** Save a file
@@ -154,14 +167,15 @@ public class JVSFileEditorTabs extends JVSTabs implements JVSGuiObject {
      * @return True on success, false in case of error. Can return true if file is not openned
      */
     public Boolean saveFile(String fileId) {
-        if (!this.fileIds.containsValue(fileId)) { // Check if id is opened
+        if (!JVSFileEditorTabs.fileIds.containsValue(fileId)) { // Check if id is opened
             return true; // Return true because file is not opened
         }
-        if (this.files.get(fileId).isTmp()) {
+        if (JVSFileEditorTabs.files.get(fileId).isTmp()) {
             return this.saveFilePromptWhere(fileId);
         } else {
-            this.files.get(fileId).setText(this.editors.get(fileId).getText()); // Set the editor's text into the object
-            return this.files.get(fileId).save(); // Write data in the file
+            JVSFileEditorTabs.files.get(fileId).setText(JVSFileEditorTabs.editors.get(fileId).getText()); // Set the editor's text into the object
+            JVSFileEditorTabs.files.get(fileId).save(); // Write data in the file
+            return true;
         }
     }
 
@@ -172,17 +186,44 @@ public class JVSFileEditorTabs extends JVSTabs implements JVSGuiObject {
      */
     public Boolean saveFilePromptWhere(String fileId) {
         JFileChooser fc = new JFileChooser(); // We create a file chooser
+        fc.setApproveButtonText("Enregistrer");
+        fc.setDialogTitle("Enregistrer");
         int returnVal = fc.showOpenDialog(this.getParent()); // Get the return value of user choice
         if (returnVal == JFileChooser.APPROVE_OPTION) { // Check if user is ok to save the file
             String path = fc.getSelectedFile().getAbsolutePath(); // Get the path which has been choosed by the user
+            String name = fc.getSelectedFile().getName();
             if (!path.endsWith(".jvs")) { // Test if user writed the extension
                 path = path + ".jvs"; // If not we just add it
             }
-            this.files.get(fileId).setPath(path); // We set the new path
-            this.files.get(fileId).setName(fc.getSelectedFile().getName()); // We set the new Name
-            this.editTabName(fileId, fc.getSelectedFile().getName()); // Update the TabTitle to the new name
-            this.files.get(fileId).setText(this.editors.get(fileId).getText()); // Set the editor's text into the object
-            return this.files.get(fileId).save(); // Write data in the file
+            if (!name.endsWith(".jvs")) { // Test if user writed the extension
+                name = name + ".jvs"; // If not we just add it
+            }
+            JVSFile file = new JVSFile(path, true);
+            if (!this.getFileId(file.getName()).equals("")) {
+                System.out.println("Le fichier n'est pas nouveau ; Test : ");
+                System.out.println(JVSFileEditorTabs.files.get(this.getFileId(file.getName())).getFile().equals(file.getFile()));
+                if (JVSFileEditorTabs.files.get(this.getFileId(file.getName())).getFile().equals(file.getFile())) {
+                    JOptionPane.showMessageDialog(this.getMainPanel(),
+                            "Ce fichier est déjà ouvert dans Java's cool, choisisez un nouvelle endroit.",
+                            "Erreur d'écriture",
+                            JOptionPane.ERROR_MESSAGE);
+                    return this.saveFilePromptWhere(fileId);
+                }
+            }
+            JVSFileEditorTabs.files.get(fileId).setPath(path); // We set the new path
+            JVSFileEditorTabs.files.get(fileId).setName(fc.getSelectedFile().getName()); // We set the new Name
+            this.editTabName(fileId, name); // Update the TabTitle to the new name
+            JVSFileEditorTabs.files.get(fileId).setText(JVSFileEditorTabs.editors.get(fileId).getText()); // Set the editor's text into the object
+
+            if (JVSFileEditorTabs.files.get(fileId).save()) {
+                return true;
+            } else {
+                JOptionPane.showMessageDialog(this.getMainPanel(),
+                        "Le fichier ne peut pas être écrit ici, choisisez un nouvelle endroit.",
+                        "Erreur d'écriture",
+                        JOptionPane.ERROR_MESSAGE);
+                return this.saveFilePromptWhere(fileId);
+            }// Write data in the file
         } else {
             return false; // If the user is not ok
         }
@@ -190,8 +231,8 @@ public class JVSFileEditorTabs extends JVSTabs implements JVSGuiObject {
 
     /** Get the tabId for an fileId */
     public int getTabId(String fileId) {
-        if (this.fileIds.containsValue(fileId)) { // We check if fileId exist
-            return this.indexOfComponent(this.editors.get(fileId)); // Get index from the editor
+        if (JVSFileEditorTabs.fileIds.containsValue(fileId)) { // We check if fileId exist
+            return this.indexOfComponent(JVSFileEditorTabs.editors.get(fileId)); // Get index from the editor
         }
         return -1; // If file not exist, return -1. 
     }
@@ -212,8 +253,8 @@ public class JVSFileEditorTabs extends JVSTabs implements JVSGuiObject {
         }
         String oldTabTitle = this.getTitleAt(this.getTabId(fileId)); // Get the old tab title
         this.setTitleAt(this.getTabId(fileId), tabTitle); // Update the title
-        this.fileIds.remove(oldTabTitle); // remove old index
-        this.fileIds.put(tabTitle, fileId); // set the new fil
+        JVSFileEditorTabs.fileIds.remove(oldTabTitle); // remove old index
+        JVSFileEditorTabs.fileIds.put(tabTitle, fileId); // set the new fil
         return true; // return true all time
     }
 
@@ -222,8 +263,8 @@ public class JVSFileEditorTabs extends JVSTabs implements JVSGuiObject {
      * @return The file Id
      */
     public String getFileId(String tabName) {
-        if (this.fileIds.containsKey(tabName)) { // Check if tabName exist
-            return this.fileIds.get(tabName); // Return the id
+        if (JVSFileEditorTabs.fileIds.containsKey(tabName)) { // Check if tabName exist
+            return JVSFileEditorTabs.fileIds.get(tabName); // Return the id
         } else {
             return ""; // Return empty string if tabName not exist
         }
@@ -231,8 +272,8 @@ public class JVSFileEditorTabs extends JVSTabs implements JVSGuiObject {
 
     /** Get a file from its ID */
     public JVSFile getFile(String id) {
-        if (this.files.containsKey(id)) { // Check if id exist
-            return this.files.get(id); // Return the JVSFile
+        if (JVSFileEditorTabs.files.containsKey(id)) { // Check if id exist
+            return JVSFileEditorTabs.files.get(id); // Return the JVSFile
         } else {
             return new JVSFile(); // Return new empty JVSFile if id not exists
         }
@@ -240,8 +281,8 @@ public class JVSFileEditorTabs extends JVSTabs implements JVSGuiObject {
 
     /** Get the editor for an ID */
     public JVSEditor getEditor(String fileId) {
-        if (this.editors.containsKey(fileId)) { // Check if fileId exist
-            return this.editors.get(fileId); // Return the editor
+        if (JVSFileEditorTabs.editors.containsKey(fileId)) { // Check if fileId exist
+            return JVSFileEditorTabs.editors.get(fileId); // Return the editor
         } else {
             return new JVSEditor(); // Return new empty JVSEditor if fileId not exists
         }

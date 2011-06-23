@@ -7,6 +7,7 @@ package org.javascool.gui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
+import java.util.UUID;
 import javax.swing.JButton;
 import javax.swing.JToolBar;
 import org.javascool.Utils;
@@ -48,22 +49,34 @@ public class JVSToolBar extends JToolBar implements JVSGuiObject{
     
     private void init(){
         final JVSMainPanel main_panel=((JVSMainPanel)this.getParent());
-        this.addTool("Nouveau", "org/javascool/doc-files/icon16/new.png", new Runnable(){
+        this.addTool("", "org/javascool/doc-files/icon16/new.png", new Runnable(){
             @Override
             public void run() {
-                ((JVSMainPanel)getParent()).newFile();
+                JVSMainPanel.newFile();
             }
         });
-        this.addTool("Ouvrir", "org/javascool/doc-files/icon16/open.png", new Runnable(){
+        this.addTool("", "org/javascool/doc-files/icon16/open.png", new Runnable(){
             @Override
             public void run() {
-                ((JVSMainPanel)getParent()).openFile();
+                JVSMainPanel.openFile();
             }
         });
-        this.addTool("Enregistrer", "org/javascool/doc-files/icon16/save.png", new Runnable(){
+        this.addTool("", "org/javascool/doc-files/icon16/save.png", new Runnable(){
             @Override
             public void run() {
-                ((JVSMainPanel)getParent()).saveFile();
+                JVSMainPanel.saveFile();
+            }
+        });
+        this.addTool("", "org/javascool/doc-files/icon16/remove.png", new Runnable(){
+            @Override
+            public void run() {
+                JVSMainPanel.closeFile();
+            }
+        });
+        this.addTool("", "org/javascool/doc-files/icon16/compile.png", new Runnable(){
+            @Override
+            public void run() {
+                JVSFileEditorTabs.compileFile(JVSMainPanel.getEditorTabs().getCurrentFileId());
             }
         });
     }
@@ -75,7 +88,7 @@ public class JVSToolBar extends JToolBar implements JVSGuiObject{
      * @return The added button.
      */
     public final JButton addTool(String label, String icon, Runnable action) {
-        delTool(label);
+        String buttonId="MenuButton"+UUID.randomUUID().toString();
         JButton button = icon == null ? new JButton(label) : new JButton(label, Utils.getIcon(icon));
         button.addActionListener(new ActionListener() {
 
@@ -85,9 +98,10 @@ public class JVSToolBar extends JToolBar implements JVSGuiObject{
             }
         });
         add(button);
-        buttons.put(label, button);
+        buttons.put(buttonId, button);
         actions.put(button, action);
         revalidate();
+        button.setName(buttonId);
         return button;
     }
 

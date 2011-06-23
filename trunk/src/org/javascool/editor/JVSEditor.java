@@ -16,6 +16,7 @@ import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rtextarea.Gutter;
 import org.fife.ui.rtextarea.RTextScrollPane;
 import org.javascool.gui.JVSFileEditorTabs;
+import org.javascool.gui.JVSMainPanel;
 
 /**
  *
@@ -60,7 +61,7 @@ public class JVSEditor extends JPanel implements Editor{
 
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        getEditorTabs().getMainPanel().saveFile();
+                        JVSMainPanel.saveFile();
                     }
                 });
         return textArea;

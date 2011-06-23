@@ -76,7 +76,7 @@ public class JvsMain {
 
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
-                if (main_panel.close()) {
+                if (JVSMainPanel.close()) {
                     main.setVisible(false);
                     main.dispose();
                     System.exit(0);
