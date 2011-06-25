@@ -18,6 +18,7 @@ import javax.swing.SwingUtilities;
  */
 public class Console extends JPanel {
     
+    public static Runnable program;
     public static JTextArea outputPane=Console.getConsoleTextPane();
 
     public Console() {
@@ -71,6 +72,6 @@ public class Console extends JPanel {
         };
 
         System.setOut(new PrintStream(out, true));
-        System.setErr(new PrintStream(out, true));
+        //System.setErr(new PrintStream(out, true));
     }
 }

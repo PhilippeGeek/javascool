@@ -15,18 +15,23 @@ import javax.swing.KeyStroke;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rtextarea.Gutter;
 import org.fife.ui.rtextarea.RTextScrollPane;
-import org.javascool.gui.JVSFileEditorTabs;
+import org.javascool.JvsMain;
 import org.javascool.gui.JVSMainPanel;
 
-/**
- *
- * @author philien
+/** Define a JVSEditor
+ * Use JVSEditor to edit jvs files, it can be used as a panel
+ * @author Philippe VIENNE
  */
 public class JVSEditor extends JPanel implements Editor{
 
+    /** The editor */
     private RSyntaxTextArea TextPane;
+    /** The scroll pane */
     private RTextScrollPane scrollPane;
 
+    /** Create a new JVSEditor
+     * Common setup
+     */
     public JVSEditor() {
         this.setLayout(new BorderLayout());
         TextPane = this.createTextArea();
@@ -38,9 +43,8 @@ public class JVSEditor extends JPanel implements Editor{
         this.setVisible(true);
     }
 
-    /**
+    /** TextArea initialization
      * Creates the text area for this application.
-     *
      * @return The text area.
      */
     private RSyntaxTextArea createTextArea() {
@@ -51,8 +55,11 @@ public class JVSEditor extends JPanel implements Editor{
         textArea.setMarkOccurrences(true);
         textArea.setTextAntiAliasHint("VALUE_TEXT_ANTIALIAS_ON");
         textArea.setText("");
-        //Ctrl-b to go backward one character
+        
         KeyStroke key = KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.CTRL_MASK);
+        if(JvsMain.isMac()){
+            key=KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.META_MASK);
+        }
 
         textArea.getInputMap().put(key,
                 "save");
@@ -86,13 +93,5 @@ public class JVSEditor extends JPanel implements Editor{
     /** Get the RSyntaxTextArea */
     public RSyntaxTextArea getRTextArea(){
         return TextPane;
-    }
-    
-    public JVSFileEditorTabs getEditorTabs(){
-        try{
-            return (JVSFileEditorTabs)getParent();
-        } catch (Exception e){
-            return new JVSFileEditorTabs();
-        }
     }
 }

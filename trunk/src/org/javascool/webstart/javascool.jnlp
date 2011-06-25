@@ -1,15 +1,27 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<jnlp spec="1.0+" codebase="" href="">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<jnlp codebase="file:/home/philien/JVS/trunk/dist/" href="launch.jnlp" spec="1.0+">
     <information>
-        <title><!-- Application Title -->
-        </title>
-        <vendor><!-- Application Vendor -->
-        </vendor>
+        <title>Java's Cool Core</title>
+        <vendor>philien</vendor>
+        <homepage href=""/>
+        <description>Java's Cool Core</description>
+        <description kind="short">Java's Cool Core</description>
+        <icon href="logo.png" kind="default"/>
+        <offline-allowed/>
     </information>
+    <update check="background"/>
+    <security>
+        <all-permissions/>
+    </security>
     <resources>
-        <!-- Application Resources -->
+        <j2se version="1.6+"/>
+        <jar href="Java's Cool.jar" main="true"/> 
+        <jar href="lib/saxon.jar"/>
+        <jar href="lib/javac.jar"/>
+        <jar href="lib/processing.zip"/>
+        <jar href="lib/RSyntaxTextArea.jar"/>
     </resources>
-    <application-desc main-class="">
-        <!-- Application Arguments -->
+    <application-desc main-class="org.javascool.JvsMain">
+        
     </application-desc>
 </jnlp>

@@ -6,8 +6,10 @@ package org.javascool;
 
 import java.awt.event.WindowAdapter;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
+import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.javascool.gui.JVSMainPanel;
 
 /** The Start Class for Java's cool
@@ -20,14 +22,15 @@ public class JvsMain {
     public static final String logo = "org/javascool/doc-files/logo.png";
     public static final String logo32 = "org/javascool/doc-files/icon32/logo.png";
     public static final String logo16 = "org/javascool/doc-files/icon16/logo.png";
+    
+    private static JFrame jvsMainFrame;
+    private static JVSMainPanel jvsMainPanel;
 
     /** Setup the system to run Java's cool
      * Set look and feel
-     * @todo Setup here the execution path or just check it
      */
     static void setUpSystem() {
-        
-        //<editor-fold defaultstate="collapsed" desc="Style Conf">
+        //<editor-fold defaultstate="collapsed" desc="Style setup">
         try {
             for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -56,36 +59,76 @@ public class JvsMain {
         }
         //</editor-fold>
         //<editor-fold defaultstate="collapsed" desc="Mac setup">
-        try {
-            // We set menu for Mac
-            System.setProperty("com.apple.mrj.application.apple.menu.about.name", title);
-        } catch (Exception ex) {
+        if (JvsMain.isMac()) {
+            try {
+                System.setProperty("apple.laf.useScreenMenuBar", "true");
+                System.setProperty("com.apple.mrj.application.apple.menu.about.name", JvsMain.title);
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            } catch (Exception ex) {
+                JvsMain.reportBug(ex);
+            }
         }
         //</editor-fold>
-    
+        //<editor-fold defaultstate="collapsed" desc="Check Java Version">
+        if((System.getProperty("java.version").charAt(2))<'5'){
+            final int n = JOptionPane.showConfirmDialog(
+                    new JFrame(),
+                    "<html>Vous n'avez pas une version suffisante de Java<br>"
+                    + JvsMain.title +" requière Java 1.5 ou plus.<br>"
+                    + "Voulez vous être redirigé vers le site de téléchargements ?",
+                    "Confirmation",
+                    JOptionPane.YES_NO_OPTION,JOptionPane.ERROR_MESSAGE);
+            if (n == JOptionPane.YES_OPTION) {
+                Utils.openURL("http://www.java.com/getjava");
+            }
+            System.exit(-1);
+        }
+        //</editor-fold>
     }
 
-    static JFrame getJVSMainJFrame() {
-        final JFrame main = new JFrame();
-        final JVSMainPanel main_panel = new JVSMainPanel();
-        main.add(main_panel);
-        main.setTitle(title);
-        main.setIconImage(Utils.getIcon(JvsMain.logo).getImage());
-        main.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        main.addWindowListener(new WindowAdapter() {
+    /**
+     * Create the Main Frame for this app
+     */
+    private static void setUpJVSMainFrame() {
+        jvsMainFrame = new JFrame();
+        jvsMainPanel = new JVSMainPanel();
+        jvsMainFrame.add(jvsMainPanel);
+        jvsMainFrame.setTitle(title);
+        jvsMainFrame.setIconImage(Utils.getIcon(JvsMain.logo).getImage());
+        jvsMainFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        jvsMainFrame.addWindowListener(new WindowAdapter() {
 
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 if (JVSMainPanel.close()) {
-                    main.setVisible(false);
-                    main.dispose();
+                    jvsMainFrame.setVisible(false);
+                    jvsMainFrame.dispose();
                     System.exit(0);
                 }
             }
         });
-        main.pack();
-        main.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        return main;
+        jvsMainFrame.pack();
+        jvsMainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+    }
+
+    /** Get the jvsMainFrame */
+    public static JFrame getJvsMainFrame() {
+        return JvsMain.jvsMainFrame;
+    }
+
+    /** Get the jvsMainPanel instance */
+    public static JVSMainPanel getJvsMainPanel() {
+        return JvsMain.jvsMainPanel;
+    }
+
+    /** Test if we are on Mac */
+    public static Boolean isMac() {
+        return RSyntaxTextArea.isOSX();
+    }
+    
+    /** Function used to report a bug */
+    public static void reportBug(Exception e){
+        System.err.println("Bug : "+e.getMessage()+" Source : "+e.getCause().toString());
     }
 
     /** Used to run a JavaScool 3.3 as a standalone program.
@@ -98,7 +141,7 @@ public class JvsMain {
     public static void main(String[] usage) {
         System.out.println("---------------------\n" + title + "\n---------------------\nstarting..");
         org.javascool.JvsMain.setUpSystem();
-        JFrame main = getJVSMainJFrame();
-        main.setVisible(true);
+        JvsMain.setUpJVSMainFrame();
+        JvsMain.getJvsMainFrame().setVisible(true);
     }
 }

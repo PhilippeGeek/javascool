@@ -25,6 +25,7 @@ import javax.tools.JavaCompiler;
 import javax.tools.JavaFileObject;
 import javax.tools.StandardJavaFileManager;
 import javax.tools.ToolProvider;
+import org.javascool.gui.JVSMainPanel;
 import org.javascool.tools.Console;
 
 /** This factory defines how a Jvs code is translated into a Java code and compiled.
@@ -35,19 +36,18 @@ import org.javascool.tools.Console;
  */
 public class Jvs2Java {
 
+    /**
+     * This class can not be invoked
+     * @deprecated
+     */
     private Jvs2Java() {
     }
 
     /** Translates a Jvs code source.
-     * @param path The file path to translate: A <tt>.jvs</tt> file is read and the corresponding <tt>.java</tt> file is written.
-     * @param proglet The proglet to use. Default is to make all proglets usable.
-     *
-     * @throws RuntimeException if an I/O exception occurs during file translation.
-     * @throws IllegalArgumentException If the Java class name is not valid.
+     * @param The jvs source code
      */
     public static String translate(String jvsCode) {
         String text = jvsCode;
-        String javaCode = "";
         // Here we check and correct a missing "void main()"
         if (!text.replaceAll("[ \n\r\t]+", " ").matches(".*void[ ]+main[ ]*\\([ ]*\\).*")) {
             if (text.replaceAll("[ \n\r\t]+", " ").matches(".*main[ ]*\\([ ]*\\).*")) {
@@ -63,6 +63,7 @@ public class Jvs2Java {
         StringBuilder body = new StringBuilder();
         // Here is the translation loop
         {
+            int i=1;
             // Copies the user's code
             for (String line : lines) {
                 if (line.matches("^\\s*(import|package)[^;]*;\\s*$")) {
@@ -74,6 +75,7 @@ public class Jvs2Java {
                 } else {
                     body.append(translateOnce(line)).append("\n");
                 }
+                i++;
             }
             // Imports proglet's static methods
             head.append("import static java.lang.Math.*;");
@@ -85,7 +87,7 @@ public class Jvs2Java {
             //head.append("import static org.javascool.Macros.*;");
             //head.append("import proglet.paintbrush.*;");
             // Declares the proglet's core as a Runnable in the Applet
-            head.append("public class JvsToJavaTranslated").append(Jvs2Java.uid).append(" implements Runnable {");
+            head.append("public class JvsToJavaTranslated").append(Jvs2Java.uid).append(" extends Thread {");
             head.append("  private static final long serialVersionUID = ").append(uid).append("L;");
             head.append("  public void run() { main(); new File(System.getProperty(\"java.io.tmpdir\")+\"").append(File.separator).append("JvsToJavaTranslated").append(Jvs2Java.uid).append(".class\").delete(); }");
             body.append("}\n");
@@ -95,7 +97,7 @@ public class Jvs2Java {
 
     private static String translateOnce(String line) {
         // Translates the while statement with sleep
-        line = line.replaceAll("(while.*\\{)", "$1 sleep(0);");
+        line = line.replaceAll("(while.*\\{)", "$1 try{this.sleep((long)1000);}catch(Exception ex9982HDGXBSJXW){this.interrupt();}");
         // Translates the Synthe proglet @tone macro
         line = line.replaceFirst("@tone:(.*)\\s*;",
                 "proglet.synthesons.SoundDisplay.tone = new org.javascool.SoundBit() { public double get(char c, double t) { return $1; } }; proglet.synthesons.SoundDisplay.syntheSet(\"16 a\");");
@@ -105,7 +107,7 @@ public class Jvs2Java {
     // Counter used to increment the serialVersionUID in order to reload the different versions of the class
     private static int uid = 1;
     
-    public static DiagnosticCollector<JavaFileObject> compile(String pathToJavaFile){
+    public static DiagnosticCollector<JavaFileObject> javaCompile(String pathToJavaFile){
         
         // We init tools
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler(); // The compiler tool
@@ -121,7 +123,7 @@ public class Jvs2Java {
         JavaCompiler.CompilationTask task = compiler.getTask(null, fileManager, diagnostics, null,
                 null, compilationUnits);
         
-        // Now we compile
+        // Now we javaCompile
         task.call();
         
         // Close file manager
@@ -136,12 +138,10 @@ public class Jvs2Java {
 
     /** Compiles a Jvs code source.
      * <div>The jdk <tt>tool.jar</tt> must be in the path.</div>
-     * @param path The file path to compile.
-     * @return An empty string if the compilation succeeds, else the error message's text.
-     *
-     * @throws RuntimeException if an I/O exception occurs during command execution.
+     * @param path The file path to javaCompile.
+     * @return The compilation success
      */
-    public static String compileAndRun(String jvsCode) {
+    public static Boolean jvsCompile(String jvsCode) {
         
         // Create an temp file
         File tmpJavaFile = new File(System.getProperty("java.io.tmpdir") + File.separator + "JvsToJavaTranslated" + Jvs2Java.uid + ".java");
@@ -159,38 +159,39 @@ public class Jvs2Java {
         // Compile tmpJavaFile //
         /////////////////////////
         
-        DiagnosticCollector<JavaFileObject> diagnostics = Jvs2Java.compile(tmpJFilePath);
+        DiagnosticCollector<JavaFileObject> diagnostics = Jvs2Java.javaCompile(tmpJFilePath);
         
         // Delete the tmp Java source file
         tmpJavaFile.delete();
         
         // Show errors
         for (Diagnostic diagnostic : diagnostics.getDiagnostics()) {
+            JVSMainPanel.reportCompileError((int)diagnostic.getLineNumber(), diagnostic.getMessage(Locale.FRENCH));
             System.out.println("Erreur à la ligne "+diagnostic.getLineNumber()+". Message de java : "+diagnostic.getMessage(Locale.FRENCH)+". Type : "+diagnostic.getKind());
             if(diagnostic.getKind().equals(Diagnostic.Kind.ERROR)){
                 System.err.println("Erreur fatal lors de la compilation, arrêt de la compilation.");
                 uid++;
-                return "";
+                return false;
             }
 
         }
         
         ///////////////
-        //    Run    //
+        // SetUp Run //
         ///////////////
         
         try {
             Runnable program = Jvs2Java.load(tmpJavaFile.getAbsolutePath());
             Console.clear();
-            program.run();
+            Console.program=program;
         } catch (Throwable e) {
             // If any error during the execution time
             System.err.println("Erreur fatal lors de l'éxecution, arrêt du programme."+e);
             uid++;
-            return "";
+            return false;
         }
         uid++;
-        return "";
+        return true;
     }
 
     /** Dynamically loads a Java runnable class to be used during this session.
@@ -203,7 +204,7 @@ public class Jvs2Java {
     public static Runnable load(String path) throws Throwable {
         try {
             File javaClass=new File(path);
-            URL[] urls = new URL[]{ /* new URL(getJavaScoolJar()), */new URL("file:" + javaClass.getParent() + File.separator)};
+            URL[] urls = new URL[]{new URL("file:" + javaClass.getParent() + File.separator)};
             Class< ?> j_class = new URLClassLoader(urls).loadClass(javaClass.getName().replaceAll("\\.java",""));
             Object o = j_class.newInstance();
             if (!(o instanceof Runnable)) {
@@ -215,18 +216,13 @@ public class Jvs2Java {
         }
     }
     
+    /** The java runnable wich has been compiled */
     public static Runnable runnable = null;
 
-    /** Translates Jvs files to Java files.
-     * @param usage <tt>java org.javascool.Jvs2Java [-reformat] [-compile] input-file</tt>
-     * <p><tt>-reformat</tt> : Reformat the Jvs code</p>
-     * <p><tt>-compile</tt> : Compile the java classes</p>
+    /**
+     * @deprecated Jvs2Java will now not be a stand alone program
      */
     public static void main(String[] usage) {
-        try {
-            Jvs2Java.compile("/home/philien/test/Hello.java");
-        } catch (Throwable ex) {
-            Logger.getLogger(Jvs2Java.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        System.err.println("Jvs2Java is not a stand alone program");
     }
 }
