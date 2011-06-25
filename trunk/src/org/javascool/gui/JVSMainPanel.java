@@ -1,37 +1,46 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.javascool.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Event;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
+import java.awt.Color;
 import java.util.HashMap;
-import javax.swing.AbstractAction;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.KeyStroke;
+import javax.swing.text.BadLocationException;
 import org.javascool.JVSFile;
+import org.javascool.JvsMain;
+import org.javascool.jvs.Jvs2Java;
+import org.javascool.tools.Console;
 
-/**
- *
- * @author philien
+/** The main panel for Java's cool
+ * This class wich is very static contain all that we need to run Java's cool like save and open file command.
+ * This class can only be called by JvsMain on instance otherwise it can throw very big errors
+ * @author Philippe Vienne
  */
 public final class JVSMainPanel extends JPanel {
 
+    /** The java's cool top tool bar
+     * @see JVSToolBar
+     */
     private static JVSToolBar toolbar = new JVSToolBar();
+    /** The java's cool split pane
+     * @see JVSSplitPane
+     */
     private static JVSSplitPane mainPane = new JVSSplitPane(new JVSFileEditorTabs(), new JVSFileEditorTabs());
+    /** This HashMap say if a file has to be saved */
     private static HashMap<String, Boolean> haveToSave = new HashMap<String, Boolean>();
 
+    /** This is the initializer command for the main panel
+     * !! WARNING !! Call it only in JvsMain
+     * @see JvsMain
+     */
     public JVSMainPanel() {
         this.setVisible(true);
         this.setupViewLayout();
         this.setupToolBar();
         this.setupMainPanel();
-        this.addBindings();
     }
 
     /** Setup the Border Layout for the JPanel */
@@ -53,40 +62,6 @@ public final class JVSMainPanel extends JPanel {
         this.add(mainPane, BorderLayout.CENTER);
     }
 
-    //Add a couple of emacs key bindings for navigation.
-    protected void addBindings() {
-
-        KeyStroke ctrlS = KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.CTRL_MASK);
-        KeyStroke ctrlO = KeyStroke.getKeyStroke(KeyEvent.VK_O, Event.CTRL_MASK);
-        KeyStroke ctrlQ = KeyStroke.getKeyStroke(KeyEvent.VK_Q, Event.CTRL_MASK);
-        KeyStroke ctrlI = KeyStroke.getKeyStroke(KeyEvent.VK_I, Event.CTRL_MASK);
-        KeyStroke ctrlR = KeyStroke.getKeyStroke(KeyEvent.VK_R, Event.CTRL_MASK);
-
-        // Set save handler for ctrl+S
-        this.getInputMap().put(ctrlS,
-                "save");
-        this.getActionMap().put("save",
-                new AbstractAction() {
-
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        saveFile();
-                    }
-                });
-
-        // Set openFile handler for ctrl+O
-        this.getInputMap().put(ctrlO,
-                "open");
-        this.getActionMap().put("open",
-                new AbstractAction() {
-
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        openFile();
-                    }
-                });
-    }
-
     /** Get the toolbar
      * @return The toolbar
      */
@@ -94,14 +69,22 @@ public final class JVSMainPanel extends JPanel {
         return toolbar;
     }
 
+    /** Open a new file in the editor
+     * @see JVSFileEditorTabs
+     */
     public static void newFile() {
         String fileId = JVSMainPanel.getEditorTabs().openNewFile();
         JVSMainPanel.haveToSave.put(fileId, false);
     }
 
+    /** Open a file
+     * Start a file chooser and open selected file
+     * @see JFileChooser
+     * @see JVSFileEditorTabs
+     */
     public static void openFile() {
         final JFileChooser fc = new JFileChooser();
-        int returnVal = fc.showOpenDialog(JVSMainPanel.getEditorTabs().getMainPanel().getParent());
+        int returnVal = fc.showOpenDialog(JvsMain.getJvsMainFrame());
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             String path = fc.getSelectedFile().getAbsolutePath();
             String fileId = JVSMainPanel.getEditorTabs().open(path);
@@ -110,12 +93,19 @@ public final class JVSMainPanel extends JPanel {
         }
     }
 
+    /** Save the current file
+     * @see JVSFileEditorTabs
+     * @see JVSFile
+     */
     public static void saveFile() {
         if (JVSMainPanel.getEditorTabs().saveCurrentFile()) {
             JVSMainPanel.haveToSave.put(JVSMainPanel.getEditorTabs().getCurrentFileId(), false);
         }
     }
 
+    /** Close the current file
+     * @see JVSFileEditorTabs
+     */
     public static void closeFile() {
         if (JVSMainPanel.haveToSave.get(getEditorTabs().getCurrentFileId())) {
             if (saveFileIdBeforeClose(getEditorTabs().getCurrentFileId()) == 1) {
@@ -124,27 +114,62 @@ public final class JVSMainPanel extends JPanel {
         } else {
             getEditorTabs().closeFile(getEditorTabs().getCurrentFileId());
         }
-        if (JVSMainPanel.getEditorTabs().tabs.entrySet().toArray().length==0) {
+        if (JVSMainPanel.getEditorTabs().tabs.entrySet().toArray().length == 0) {
             JVSMainPanel.newFile();
         }
     }
 
+    /** Update haveToSave for a file
+     * Set it to true
+     * @param fileId The file id
+     */
     public static void mustSave(String fileId) {
         JVSMainPanel.haveToSave.put(fileId, true);
     }
 
+    /** Update haveToSave for a file
+     * Set it to true
+     * @param fileId The file id
+     */
     public static void haveNotToSave(String fileId) {
         JVSMainPanel.haveToSave.put(fileId, false);
     }
 
+    /** Show a compile error for an human
+     * Open a dialog with compile error explains and hightlight the error line
+     * @param line The line error
+     * @param explication Human explain for that error
+     * @see Jvs2Java
+     * @see Console
+     * @see DiagnosticCollector
+     */
+    public static void reportCompileError(int line, String explication) {
+        JOptionPane.showMessageDialog(JVSMainPanel.getThisInStatic(),
+                "Erreur lors de la compilation à la ligne " + line + ". Voici l'explication du compilateur : " + explication,
+                "Erreur de compilation",
+                JOptionPane.ERROR_MESSAGE);
+        try {
+            JVSMainPanel.getEditorTabs().getEditor(JVSMainPanel.getEditorTabs().getCurrentFileId()).getRTextArea().addLineHighlight(line - 1, Color.red);
+        } catch (BadLocationException ex) {
+            Logger.getLogger(JVSMainPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /** Handle the close application task
+     * Check if all files are saved and if the user want to close the application
+     * @return True meen that app can be close and false that app can NOT be closed
+     */
     public static Boolean close() {
         String id = "";
         Boolean[] can_close = new Boolean[JVSMainPanel.haveToSave.keySet().toArray().length];
         int i = 0;
         int j = 0;
+        // Check save for each file
         for (Object fileId : JVSMainPanel.haveToSave.keySet().toArray()) {
             id = (String) fileId;
             if (JVSMainPanel.haveToSave.get(id)) {
+                // File has to be saved
+                // For number see JVSMainPanel.saveFileIdBeforeClose() documentation about return
                 switch (JVSMainPanel.saveFileIdBeforeClose(id)) {
                     case 1:
                         can_close[i] = true;
@@ -157,38 +182,49 @@ public final class JVSMainPanel extends JPanel {
                 }
                 j++;
             } else {
+                // If file has not to be saved it's good
                 can_close[i] = true;
             }
             if (can_close[i]) {
+                // If we can close this file, we close the tab
                 JVSMainPanel.getEditorTabs().closeFile(id);
             }
             i++;
         }
+        // Check if a file is not save, if yes we can not close the application
         for (Boolean can_close_r : can_close) {
             if (can_close_r == false) {
 
                 return false;
             }
         }
+        // If user no have dialog to stop close, we create one
         if (j == 0) {
             final int n = JOptionPane.showConfirmDialog(
-                    getEditorTabs().getMainPanel().getParent(),
+                    JvsMain.getJvsMainFrame(),
                     "Voulez vous vraiment quitter Java's cool ?",
                     "Confirmation",
                     JOptionPane.YES_NO_OPTION);
             if (n == JOptionPane.YES_OPTION) {
                 return true;
             } else {
+                // He can refuse to close
                 JVSMainPanel.newFile();
                 return false;
             }
         }
+        // We return true if all is good
         return true;
     }
 
+    /** Ask to user to save a file before it close
+     * @param fileId The file id
+     * @return 1 meen that file is saved or that user not want to save the file. 0 meen that there was an error during the save of file. -1 meen that user want to stop all that happend (Cancel option).
+     */
     private static int saveFileIdBeforeClose(String fileId) {
         JVSFile file = JVSMainPanel.getEditorTabs().getFile(fileId);
-        int result = JOptionPane.showConfirmDialog(JVSMainPanel.getEditorTabs().getMainPanel(),
+        int result = JOptionPane.showConfirmDialog(
+                JvsMain.getJvsMainFrame(),
                 "Voulez vous enregistrer " + file.getName() + " avant de quitter ?");
         if (result == JOptionPane.YES_OPTION) {
             if (JVSMainPanel.getEditorTabs().saveFile(fileId)) {
@@ -205,7 +241,19 @@ public final class JVSMainPanel extends JPanel {
         }
     }
 
+    /** Get the current istance of Editor Tabs
+     * @see JVSFileEditorTabs
+     * @return The JVSFileEditorTabs instance
+     */
     public static JVSFileEditorTabs getEditorTabs() {
         return ((JVSFileEditorTabs) JVSMainPanel.mainPane.getLeftComponent());
+    }
+
+    /** Get the JVSMainPanel
+     * Used to access to non-static methods in static methods (Strange ? Yes)
+     * @return The current instance of JvsMainPanel
+     */
+    public static JVSMainPanel getThisInStatic() {
+        return JvsMain.getJvsMainPanel();
     }
 }

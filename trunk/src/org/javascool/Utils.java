@@ -62,7 +62,9 @@ import javax.swing.Action;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 // Used to show a text in a frame
+import java.util.Arrays;
 import javax.swing.JEditorPane;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 
 /** This factory contains useful methods to interface javascool with the environment.
@@ -73,6 +75,45 @@ public class Utils {
   private Utils() {}
   private static final long serialVersionUID = 1L;
 
+  static final String[] browsers = { "google-chrome", "firefox", "opera",
+      "epiphany", "konqueror", "conkeror", "midori", "kazehakase", "mozilla" };
+   static final String errMsg = "Error attempting to launch web browser";
+
+   public static void openURL(String url) {
+      try {  //attempt to use Desktop library from JDK 1.6+
+         Class<?> d = Class.forName("java.awt.Desktop");
+         d.getDeclaredMethod("browse", new Class[] {java.net.URI.class}).invoke(
+            d.getDeclaredMethod("getDesktop").invoke(null),
+            new Object[] {java.net.URI.create(url)});
+         //above code mimicks:  java.awt.Desktop.getDesktop().browse()
+         }
+      catch (Exception ignore) {  //library not available or failed
+         String osName = System.getProperty("os.name");
+         try {
+            if (osName.startsWith("Mac OS")) {
+               Class.forName("com.apple.eio.FileManager").getDeclaredMethod(
+                  "openURL", new Class[] {String.class}).invoke(null,
+                  new Object[] {url});
+               }
+            else if (osName.startsWith("Windows"))
+               Runtime.getRuntime().exec(
+                  "rundll32 url.dll,FileProtocolHandler " + url);
+            else { //assume Unix or Linux
+               String browser = null;
+               for (String b : browsers)
+                  if (browser == null && Runtime.getRuntime().exec(new String[]
+                        {"which", b}).getInputStream().read() != -1)
+                     Runtime.getRuntime().exec(new String[] {browser = b, url});
+               if (browser == null)
+                  throw new Exception(Arrays.toString(browsers));
+               }
+            }
+         catch (Exception e) {
+            JOptionPane.showMessageDialog(null, errMsg + "\n" + e.toString());
+            }
+         }
+      }
+  
   /** Runs an operating-system command, waits until completion and returns the output.
    * @param command The operating systems command with its arguments separated by either tabulation ("\t" char) if any else space (" " char).
    * @param timeout Timeout in second or 0 if no timeout. Default is 10.
@@ -416,198 +457,4 @@ public class Utils {
       System.err.println(error.getStackTrace()[i]);
     return error instanceof RuntimeException ? (RuntimeException) error : new RuntimeException(error);
   }
-  /** Alerts on uncaught exception.
-   * - Installs a default uncaught exception handler that collects JavaScool, Java and operating system versions, thread name and stack trace and
-   * displays it in a separate window in order to be collected and reported by the user.
-   * @param title The alert window title.
-   * @param header The alert window text header explaining to the user what to do with the exception output.
-   */
-  public static void setUncaughtExceptionAlert(String title, String header) {
-    uncaughtExceptionAlertTitle = title;
-    uncaughtExceptionAlertHeader = header;
-    Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
-                                                public void uncaughtException(Thread t, Throwable e) {
-                                                  String s = "";
-                                                  if(uncaughtExceptionAlertOnce <= 1) {
-                                                    s += uncaughtExceptionAlertHeader + "\n";
-                                                    for(String p : new String[] { "javascool.version", "java.version", "os.name", "os.arch", "os.version" }
-                                                        )
-                                                      s += "> " + p + " = " + System.getProperty(p) + "\n";
-                                                  }
-                                                  s += "> thread.name = " + t.getName() + "\n";
-                                                  s += "> throwable = " + e + "\n";
-                                                  if(0 < uncaughtExceptionAlertOnce)
-                                                    s += "> count = " + uncaughtExceptionAlertOnce + "\n";
-                                                  s += "> stack-trace = «\n";
-                                                  for(int i = 0; i < t.getStackTrace().length; i++)
-                                                    s += e.getStackTrace()[i] + "\n";
-                                                  s += "»\n";
-                                                  if(uncaughtExceptionAlertOnce == 0)
-                                                    Utils.show(s, uncaughtExceptionAlertTitle);
-                                                  else
-                                                    System.err.println(s);
-                                                  uncaughtExceptionAlertOnce++;
-                                                }
-                                              }
-                                              );
-  }
-  private static String uncaughtExceptionAlertTitle, uncaughtExceptionAlertHeader;
-  private static int uncaughtExceptionAlertOnce = 0;
-
-  /** Opens an applet or panel in a standalone frame.
-   * @param applet The applet, panel or text to display.
-   * @param title  Frame title. If null, no title.
-   * @param icon   Frame icon.  If null, no icon.
-   * @param width  Applet width. Default is 80% of the screen size. If 0 set to 800.
-   * @param height Applet height. Default is 80% of the screen size. If 0 set to 600.
-   * @param quit   If true activate the <tt>Control+Q</tt> keystroke. If false fires the "quit" action of the applet or panel root panel. Default is true.
-   * <p>Use <tt>unshow(pane);</tt> to properly close the window.</p>
-   * @return The opened frame.
-   * @deprecated
-   */
-  public static JFrame show(Component applet, String title, ImageIcon icon, int width, int height, boolean quit) {
-    Frame f = new Frame();
-    f.open(applet, title, icon, width, height, quit);
-    return f;
-  }
-  /**/public static JFrame show(Component applet, String title, ImageIcon icon, boolean quit) {
-    Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-    int width = (int) (1 * dim.getWidth()), height = (int) (1 * dim.getHeight());
-    if(width > 1600)
-      width = 1600;
-    if(height > 1000)
-      height = 1000;
-    return show(applet, title, icon, width, height, quit);
-  }
-  /**/public static JFrame show(Component applet, String title, int width, int height) {
-    return show(applet, title, null, width, height, true);
-  }
-  /**/public static JFrame show(Component applet, String title) {
-    return show(applet, title, (ImageIcon) null, true);
-  }
-  /**/public static JFrame show(Component applet, int width, int height) {
-    return show(applet, (String) null, (ImageIcon) null, width, height, true);
-  }
-  /**/public static JFrame show(Component applet) {
-    return show(applet, (String) null, (ImageIcon) null, true);
-  }
-  /**/public static JFrame show(String applet, String title, ImageIcon icon, int width, int height, boolean quit) {
-    JEditorPane p = new JEditorPane();
-    p.setEditable(false);
-    p.setText(applet);
-    return show(new JScrollPane(p, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER), title, icon, width, height, quit);
-  }
-  /**/public static JFrame show(String applet, String title, ImageIcon icon, boolean quit) {
-    return show(applet, title, icon, 800, 600, true);
-  }
-  /**/public static JFrame show(String applet, String title, int width, int height) {
-    return show(applet, title, (ImageIcon) null, width, height, true);
-  }
-  /**/public static JFrame show(String applet, String title) {
-    return show(applet, title, (ImageIcon) null, true);
-  }
-  /**/public static JFrame show(String applet, int width, int height) {
-    return show(applet, (String) null, (ImageIcon) null, width, height, true);
-  }
-  /**/public static JFrame show(String applet) {
-    return show(applet, (String) null, (ImageIcon) null, true);
-  }
-  // Encapsulates an applet in a frame
-  /**
-   * @deprecated
-   */
-  private static class Frame extends JFrame {
-    private static final long serialVersionUID = 1L;
-    private Applet applet = null;
-    // Opens an applet in a standalone frame.
-    public void open(Component pane, String title, ImageIcon icon, int width, int height, boolean quit) {
-      if(width == 0)
-        width = 800;
-      if(height == 0)
-        height = 600;
-      if(pane instanceof Applet)
-        this.applet = (Applet) pane;
-      getContentPane().add(pane, BorderLayout.CENTER);
-      if(applet != null)
-        applet.init();
-      pack();
-      frames.put(pane, this);
-      if(title != null)
-        setTitle(title);
-      if(icon != null)
-        setIconImage(icon.getImage());
-      // Defines an quit on CTRL+Q input code.
-      if(quit) {
-        getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_Q, KeyEvent.CTRL_MASK), "quit");
-        getRootPane().getActionMap().put("quit", new AbstractAction("quit") {
-                                           private static final long serialVersionUID = 1L;
-                                           public void actionPerformed(ActionEvent e) {
-                                             dispose();
-                                           }
-                                         }
-                                         );
-      } else {
-        if(pane instanceof JComponent)
-          close = ((JComponent) pane).getActionMap().get("quit");
-        if(pane instanceof JApplet)
-          close = ((JApplet) pane).getRootPane().getActionMap().get("quit");
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-      }
-      setSize(width, height);
-      setVisible(true);
-      if(applet != null)
-        applet.start();
-    }
-    // Closes the frame and dispose, force quit if all frames are closed.
-    public void dispose() {
-      if(applet != null) {
-        applet.stop();
-        applet.destroy();
-      }
-      super.dispose();
-      System.gc();
-      frames.remove(applet);
-      if(frames.size() == 0)
-        System.exit(0);
-    }
-    private void quit() {
-      if(close == null)
-        dispose();
-      else
-        close.actionPerformed(new ActionEvent(this, 0, "quit"));
-    }
-    private Action close = null;
-    // Defines a listener for focus, iconification and dispose.
-    {
-      addWindowListener(new WindowListener() {
-                          public void windowOpened(WindowEvent e) {
-                            e.getWindow().requestFocus();
-                          }
-                          public void windowClosing(WindowEvent e) {}
-                          public void windowClosed(WindowEvent e) {}
-                          public void windowIconified(WindowEvent e) {
-                            if(applet != null)
-                              applet.stop();
-                          }
-                          public void windowDeiconified(WindowEvent e) {
-                            if(applet != null)
-                              applet.start();
-                          }
-                          public void windowActivated(WindowEvent e) {
-                            e.getWindow().requestFocus();
-                          }
-                          public void windowDeactivated(WindowEvent e) {}
-                        }
-                        );
-    }
-  }
-
-  /** Opens an applet or panel in a standalone frame.
-   *  applet The applet or panel to close.
-   */
-  public static void unshow(Component applet) {
-    if(frames.containsKey(applet))
-      frames.get(applet).dispose();
-  }
-  private static HashMap<Component, JFrame> frames = new HashMap<Component, JFrame>();
 }

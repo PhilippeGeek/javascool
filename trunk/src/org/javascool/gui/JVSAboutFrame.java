@@ -20,6 +20,7 @@ import org.javascool.Utils;
  */
 public class JVSAboutFrame extends JDialog {
 
+    /** Open a new aboutFrame */
     public JVSAboutFrame() {
         super(new JFrame(), "About "+JvsMain.title, true);
         

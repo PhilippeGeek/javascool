@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.javascool.gui;
 
 import java.util.HashMap;
@@ -11,14 +7,16 @@ import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import org.javascool.JVSFile;
+import org.javascool.JvsMain;
 import org.javascool.editor.JVSEditor;
 import org.javascool.jvs.Jvs2Java;
+import org.javascool.tools.Console;
 
-/**
- *
- * @author philien
+/** The JVSFileEditorTabs
+ * A powerful JVSTabs to manage a multi-file editing. It only support JVSFile.
+ * @author Philippe Vienne
  */
-public class JVSFileEditorTabs extends JVSTabs implements JVSGuiObject {
+public class JVSFileEditorTabs extends JVSTabs{
 
     /** Store all JVSEditor in an HashMap by the fileId */
     private static HashMap<String, JVSEditor> editors = new HashMap<String, JVSEditor>();
@@ -151,14 +149,34 @@ public class JVSFileEditorTabs extends JVSTabs implements JVSGuiObject {
     }
 
     /** Compile a file
-     * @param fileId The id of the file to compile
+     * @param fileId The id of the file to javaCompile
      * @return True on success, false in case of error. Can return true if file is not openned
      */
     public static Boolean compileFile(String fileId) {
+        /*final int n = JOptionPane.showConfirmDialog(
+                JVSMainPanel.getEditorTabs().getMainPanel().getParent(),
+                "Voulez vous enregistrer avant de compiler ?",
+                "Confirmation",
+                JOptionPane.YES_NO_OPTION);
+        if (n == JOptionPane.YES_OPTION) {
+            JVSMainPanel.saveFile();
+        } else {
+        }*/
         if (!JVSFileEditorTabs.fileIds.containsValue(fileId)) { // Check if id is opened
             return true; // Return true because file is not opened
         }
-        Jvs2Java.compileAndRun(JVSFileEditorTabs.editors.get(fileId).getText());
+        if(Jvs2Java.jvsCompile(JVSFileEditorTabs.editors.get(fileId).getText())){
+            JVSMainPanel.getToolBar().addTool("Lancer", "", new Runnable(){
+
+                @Override
+                public void run() {
+                    Console.program.run();
+                    JVSMainPanel.getToolBar().delTool(JVSMainPanel.getToolBar().getButtonId("Lancer"));
+                }
+            
+                
+            });
+        }
         return true;
     }
 
@@ -203,7 +221,7 @@ public class JVSFileEditorTabs extends JVSTabs implements JVSGuiObject {
                 System.out.println("Le fichier n'est pas nouveau ; Test : ");
                 System.out.println(JVSFileEditorTabs.files.get(this.getFileId(file.getName())).getFile().equals(file.getFile()));
                 if (JVSFileEditorTabs.files.get(this.getFileId(file.getName())).getFile().equals(file.getFile())) {
-                    JOptionPane.showMessageDialog(this.getMainPanel(),
+                    JOptionPane.showMessageDialog(JVSFileEditorTabs.getJvsMainPanel(),
                             "Ce fichier est déjà ouvert dans Java's cool, choisisez un nouvelle endroit.",
                             "Erreur d'écriture",
                             JOptionPane.ERROR_MESSAGE);
@@ -218,7 +236,7 @@ public class JVSFileEditorTabs extends JVSTabs implements JVSGuiObject {
             if (JVSFileEditorTabs.files.get(fileId).save()) {
                 return true;
             } else {
-                JOptionPane.showMessageDialog(this.getMainPanel(),
+                JOptionPane.showMessageDialog(JVSFileEditorTabs.getJvsMainPanel(),
                         "Le fichier ne peut pas être écrit ici, choisisez un nouvelle endroit.",
                         "Erreur d'écriture",
                         JOptionPane.ERROR_MESSAGE);
@@ -288,12 +306,15 @@ public class JVSFileEditorTabs extends JVSTabs implements JVSGuiObject {
         }
     }
 
-    protected void fileUpdateNotification() {
-        ((JVSMainPanel) this.getParent().getParent()).mustSave(this.getCurrentFileId());
+    /** File update is call when a file is edited
+     * Call JVSMainPanel.mustSave(this.getCurrentFileId()) to check if file has to be save
+     */
+    protected static void fileUpdateNotification() {
+        JVSMainPanel.mustSave(JVSMainPanel.getEditorTabs().getCurrentFileId());
     }
 
-    @Override
-    public JVSMainPanel getMainPanel() {
-        return ((JVSMainPanel) this.getParent().getParent());
+    /** Get the Main Panel to have main functions */
+    private static JVSMainPanel getJvsMainPanel() {
+        return JvsMain.getJvsMainPanel();
     }
 }

@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.javascool.gui;
 
 import java.util.HashMap;
@@ -10,9 +6,9 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import org.javascool.Utils;
 
-/**
- *
- * @author philien
+/** Create a tab structure
+ * Java's cool Tab Structure is used to make easy JTabbedPane
+ * @author Philippe VIENNE
  */
 public class JVSTabs extends JTabbedPane {
 

@@ -5,31 +5,23 @@
 package org.javascool.gui;
 
 import java.awt.Component;
-import javax.swing.JPanel;
 import javax.swing.JSplitPane;
+import org.javascool.JvsMain;
 import org.javascool.tools.Console;
 
-/**
- *
- * @author philien
+/** The main Split Pane
+ * This JSplitPane is used to place the FileEditor and the rights tabs
+ * @author Philippe VIENNE
  */
-public class JVSSplitPane extends JSplitPane implements JVSGuiObject{
+public class JVSSplitPane extends JSplitPane{
     
+    /** File editor tabs */
     private static JVSFileEditorTabs editor;
+    /** The right tabs */
     private static JVSTabs tabs;
-    private int split;
     
     /** Construct a new JVSSplitPane */
     public JVSSplitPane(){
-        this(new JPanel(),new JPanel());
-    }
-    
-    /** Construct a new JVSSplitPane
-     * Construct and set left and right component
-     * @param left The left component
-     * @param right The right component
-     */
-    public JVSSplitPane(Component left,Component right){
         super(JSplitPane.HORIZONTAL_SPLIT);
         JVSFileEditorTabs editorToSet=new JVSFileEditorTabs();
         JVSSplitPane.editor=editorToSet;
@@ -38,6 +30,14 @@ public class JVSSplitPane extends JSplitPane implements JVSGuiObject{
         this.setLeftComponent(JVSSplitPane.editor);
         this.setRightComponent(JVSSplitPane.tabs);
         this.setVisible(true);
+    }
+    
+    /** Construct a new JVSSplitPane
+     * Construct and set left and right component
+     * @deprecated You can't set left and right components
+     */
+    public JVSSplitPane(Component left,Component right){
+        this();
     }
     
     /** Get the left component */
@@ -52,8 +52,8 @@ public class JVSSplitPane extends JSplitPane implements JVSGuiObject{
         return JVSSplitPane.tabs;
     }
 
-    @Override
-    public JVSMainPanel getMainPanel() {
-        return ((JVSMainPanel)this.getParent());
+    /** Get the Main Panel to have main functions */
+    private static JVSMainPanel getJvsMainPanel() {
+        return JvsMain.getJvsMainPanel();
     }
 }
