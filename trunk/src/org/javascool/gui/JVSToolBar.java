@@ -34,7 +34,11 @@ public class JVSToolBar extends JToolBar{
      */
     public JVSToolBar() {
         super("Java's cool ToolBar");
-        this.init();
+        init();
+    }
+    
+    protected JVSToolBar(Boolean escapeInit){
+        super("Java's cool ToolBar");
     }
 
     /** Reset all the toolbar */
@@ -139,6 +143,11 @@ public class JVSToolBar extends JToolBar{
             i++;
         }
         return findId;
+    }
+    
+    protected void resetButtonsMaps(){
+        buttons.clear();
+        actions.clear();
     }
 
     /** Get the Main Panel to have main functions */

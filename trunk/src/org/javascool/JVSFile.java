@@ -19,14 +19,22 @@ import java.util.logging.Logger;
  */
 public class JVSFile {
 
+    public static String defaultCode = "void main(){\n"
+            + "\t\n"
+            + "}";
+    /** The JSon Data of file 
+    private JSONObject json; */
+    private String fileContent;
     /** The text content of file */
-    private String text;
+    private String code;
     /** The name of the file */
     private String name;
     /** The path to the file */
     private String path;
     /** The file instance */
     private File file;
+    /** Proglet liked to this document */
+    private String proglet;
 
     /** Open a new empty file */
     public JVSFile() {
@@ -47,13 +55,14 @@ public class JVSFile {
      */
     public JVSFile(String url, Boolean fromurl) {
         if (!fromurl) {
-            this.text = url;
+            this.code = url;
             this.name = "Nouveau fichier";
             this.path = "";
+            this.proglet = "default";
             try {
                 this.file = File.createTempFile("JVS_TMPFILE_", ".jvs");
                 this.file.deleteOnExit();
-                this.path=this.file.getAbsolutePath();
+                this.path = this.file.getAbsolutePath();
             } catch (IOException ex) {
                 Logger.getLogger(JVSFile.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -62,12 +71,40 @@ public class JVSFile {
             this.name = file_to_open.getName();
             this.path = file_to_open.getAbsolutePath();
             try {
-                this.text = JVSFile.readFileAsString(this.path);
+                this.fileContent = JVSFile.readFileAsString(this.path);
             } catch (IOException ex) {
-                this.text="";
+                this.fileContent = "";
             }
+            if (this.fileContent.split("\\/\\/\\#ENDJVSDATA\\#\\/\\/", 2).length>1) {
+                String dataTxt = this.fileContent.split("\\/\\/\\#ENDJVSDATA\\#\\/\\/", 2)[0];
+                String[] data = dataTxt.split("\n");
+                String balise;
+                for (String dat : data) {
+                    balise=dat.split(":")[0];
+                    if (balise.equals("proglet")) {
+                        this.proglet = dat.split(":")[1];
+                        System.err.println("Proglet setted");
+                    }
+                }
+                this.code=this.fileContent.split("\\/\\/\\#ENDJVSDATA\\#\\/\\/\n", 2)[1];
+            } else {
+                this.proglet="default";
+                this.code=this.fileContent;
+            }
+            /* JSon Code Propostion
+            try {
+            this.json=new JSONObject(fileContent);
+            this.proglet=this.json.getString("proglet");
+            this.code=this.json.getString("code");
+            } catch (JSONException ex) {
+            // Handler for old Java's cool files
+            this.code=fileContent;
+            this.proglet="";
+            this.json=new JSONObject(this);
+            } */
             this.file = file_to_open;
         }
+        this.refreshData();
     }
 
     /** Check if file is in tempory memory */
@@ -78,30 +115,16 @@ public class JVSFile {
     /** Save file */
     public Boolean save() {
         try {
+            this.refreshData();
             FileWriter fstream = new FileWriter(this.getPath());
             BufferedWriter out = new BufferedWriter(fstream);
-            out.write(this.getText());
+            out.write(this.fileContent);
             out.close();
             return true;
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
         }
         return false;
-    }
-
-    /** Get the content of file
-     * @return the text
-     */
-    public String getText() {
-        return text;
-    }
-
-    /** Set the text
-     * !! WARNING !! It no write the text to the file, it just save it into the object use save() insted.
-     * @param text the text to set
-     */
-    public void setText(String text) {
-        this.text = text;
     }
 
     /** Get the file name
@@ -131,6 +154,7 @@ public class JVSFile {
      */
     public void setPath(String path) {
         this.path = path;
+        this.file = new File(path);
     }
 
     /** Get the file Instance in memory
@@ -139,7 +163,52 @@ public class JVSFile {
     public File getFile() {
         return file;
     }
-    
+
+    /**
+     * @return the proglet
+     */
+    public String getProglet() {
+        if(this.proglet.equals("default")){
+            return "";
+        }
+        return proglet;
+    }
+
+    /**
+     * @param proglet the proglet to set
+     */
+    public void setProglet(String proglet) {
+        this.proglet = proglet;
+        this.refreshData();
+    }
+
+    /** Get the code in the file
+     * @return the code
+     */
+    public String getCode() {
+        return code;
+    }
+
+    /** Set the code
+     * !! WARNING !! It no write the text to the file, it just save it into the object use save() insted.
+     * @param code the text to set
+     */
+    public void setCode(String code) {
+        this.code = code;
+        this.refreshData();
+    }
+
+    /** Refresh the data to save file */
+    private void refreshData() {
+        String fileToSave="/*****************************************************************\n"
+                        + "  DO NOT EDIT THIS HEADER go to the ENDJVSDATA to find your code";
+        fileToSave+="\nproglet:"+this.proglet;
+        fileToSave+="\n*****************************************************************/"
+                + "\n//#ENDJVSDATA#//\n";
+        fileToSave+=this.getCode();
+        this.fileContent=fileToSave;
+    }
+
     /** Read a file */
     public static String readFileAsString(String filePath) throws java.io.IOException {
         byte[] buffer = new byte[(int) new File(filePath).length()];
