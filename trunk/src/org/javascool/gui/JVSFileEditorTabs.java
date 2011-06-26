@@ -65,7 +65,7 @@ public class JVSFileEditorTabs extends JVSTabs{
         // Create the JVSEditor for the file
         JVSEditor editor = new JVSEditor();
         // Set text in the editor
-        editor.setText(file.getText());
+        editor.setText(file.getCode());
         // Add listener for edit
         editor.getRTextArea().getDocument().addDocumentListener(new DocumentListener() {
 
@@ -153,15 +153,6 @@ public class JVSFileEditorTabs extends JVSTabs{
      * @return True on success, false in case of error. Can return true if file is not openned
      */
     public static Boolean compileFile(String fileId) {
-        /*final int n = JOptionPane.showConfirmDialog(
-                JVSMainPanel.getEditorTabs().getMainPanel().getParent(),
-                "Voulez vous enregistrer avant de compiler ?",
-                "Confirmation",
-                JOptionPane.YES_NO_OPTION);
-        if (n == JOptionPane.YES_OPTION) {
-            JVSMainPanel.saveFile();
-        } else {
-        }*/
         if (!JVSFileEditorTabs.fileIds.containsValue(fileId)) { // Check if id is opened
             return true; // Return true because file is not opened
         }
@@ -170,7 +161,7 @@ public class JVSFileEditorTabs extends JVSTabs{
 
                 @Override
                 public void run() {
-                    Console.program.run();
+                    Console.startProgram();
                     JVSMainPanel.getToolBar().delTool(JVSMainPanel.getToolBar().getButtonId("Lancer"));
                 }
             
@@ -191,7 +182,7 @@ public class JVSFileEditorTabs extends JVSTabs{
         if (JVSFileEditorTabs.files.get(fileId).isTmp()) {
             return this.saveFilePromptWhere(fileId);
         } else {
-            JVSFileEditorTabs.files.get(fileId).setText(JVSFileEditorTabs.editors.get(fileId).getText()); // Set the editor's text into the object
+            JVSFileEditorTabs.files.get(fileId).setCode(JVSFileEditorTabs.editors.get(fileId).getText()); // Set the editor's text into the object
             JVSFileEditorTabs.files.get(fileId).save(); // Write data in the file
             return true;
         }
@@ -231,7 +222,7 @@ public class JVSFileEditorTabs extends JVSTabs{
             JVSFileEditorTabs.files.get(fileId).setPath(path); // We set the new path
             JVSFileEditorTabs.files.get(fileId).setName(fc.getSelectedFile().getName()); // We set the new Name
             this.editTabName(fileId, name); // Update the TabTitle to the new name
-            JVSFileEditorTabs.files.get(fileId).setText(JVSFileEditorTabs.editors.get(fileId).getText()); // Set the editor's text into the object
+            JVSFileEditorTabs.files.get(fileId).setCode(JVSFileEditorTabs.editors.get(fileId).getText()); // Set the editor's text into the object
 
             if (JVSFileEditorTabs.files.get(fileId).save()) {
                 return true;

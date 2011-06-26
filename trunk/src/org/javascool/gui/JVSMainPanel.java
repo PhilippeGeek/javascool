@@ -11,8 +11,6 @@ import javax.swing.JPanel;
 import javax.swing.text.BadLocationException;
 import org.javascool.JVSFile;
 import org.javascool.JvsMain;
-import org.javascool.jvs.Jvs2Java;
-import org.javascool.tools.Console;
 
 /** The main panel for Java's cool
  * This class wich is very static contain all that we need to run Java's cool like save and open file command.
@@ -28,9 +26,10 @@ public final class JVSMainPanel extends JPanel {
     /** The java's cool split pane
      * @see JVSSplitPane
      */
-    private static JVSSplitPane mainPane = new JVSSplitPane(new JVSFileEditorTabs(), new JVSFileEditorTabs());
+    private static JVSSplitPane mainPane = new JVSSplitPane();
     /** This HashMap say if a file has to be saved */
     private static HashMap<String, Boolean> haveToSave = new HashMap<String, Boolean>();
+    private static Boolean noFileEdited = true;
 
     /** This is the initializer command for the main panel
      * !! WARNING !! Call it only in JvsMain
@@ -41,6 +40,7 @@ public final class JVSMainPanel extends JPanel {
         this.setupViewLayout();
         this.setupToolBar();
         this.setupMainPanel();
+        new org.javascool.tools.ProgletManager();
     }
 
     /** Setup the Border Layout for the JPanel */
@@ -87,6 +87,10 @@ public final class JVSMainPanel extends JPanel {
         int returnVal = fc.showOpenDialog(JvsMain.getJvsMainFrame());
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             String path = fc.getSelectedFile().getAbsolutePath();
+            if (noFileEdited) {
+                JVSMainPanel.closeFile();
+                noFileEdited = false;
+            }
             String fileId = JVSMainPanel.getEditorTabs().open(path);
             JVSMainPanel.haveToSave.put(fileId, false);
         } else {
@@ -124,6 +128,7 @@ public final class JVSMainPanel extends JPanel {
      * @param fileId The file id
      */
     public static void mustSave(String fileId) {
+        noFileEdited = false;
         JVSMainPanel.haveToSave.put(fileId, true);
     }
 
@@ -145,7 +150,7 @@ public final class JVSMainPanel extends JPanel {
      */
     public static void reportCompileError(int line, String explication) {
         JOptionPane.showMessageDialog(JVSMainPanel.getThisInStatic(),
-                "Erreur lors de la compilation à la ligne " + line + ". Voici l'explication du compilateur : " + explication,
+                "<html>Erreur lors de la compilation à la ligne " + line + ".<br/>Voici l'explication du compilateur : " + explication + "</html>",
                 "Erreur de compilation",
                 JOptionPane.ERROR_MESSAGE);
         try {

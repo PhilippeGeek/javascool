@@ -84,20 +84,26 @@ public class Jvs2Java {
             head.append("import java.util.Map;");
             head.append("import java.io.*;");
             head.append("import java.util.HashMap;");
-            //head.append("import static org.javascool.Macros.*;");
+            head.append("import static org.javascool.tools.Macros.*;");
             //head.append("import proglet.paintbrush.*;");
             // Declares the proglet's core as a Runnable in the Applet
-            head.append("public class JvsToJavaTranslated").append(Jvs2Java.uid).append(" extends Thread {");
+            head.append("public class JvsToJavaTranslated").append(Jvs2Java.uid).append(" implements Runnable{");
             head.append("  private static final long serialVersionUID = ").append(uid).append("L;");
             head.append("  public void run() { main(); new File(System.getProperty(\"java.io.tmpdir\")+\"").append(File.separator).append("JvsToJavaTranslated").append(Jvs2Java.uid).append(".class\").delete(); }");
             body.append("}\n");
         }
         return (head.toString() + body.toString());
     }
-
+    
+    /** Translate a jvs line to a java line 
+     * Translate with replace
+     * @param line
+     * @return 
+     */
     private static String translateOnce(String line) {
         // Translates the while statement with sleep
-        line = line.replaceAll("(while.*\\{)", "$1 try{this.sleep((long)1000);}catch(Exception ex9982HDGXBSJXW){this.interrupt();}");
+        line = line.replaceAll("(while.*\\{)", "$1 sleep(0);");
+        //line = line.replaceAll("(while\\(true\\)\\{)", "$1 sleep(50);");
         // Translates the Synthe proglet @tone macro
         line = line.replaceFirst("@tone:(.*)\\s*;",
                 "proglet.synthesons.SoundDisplay.tone = new org.javascool.SoundBit() { public double get(char c, double t) { return $1; } }; proglet.synthesons.SoundDisplay.syntheSet(\"16 a\");");
@@ -166,8 +172,11 @@ public class Jvs2Java {
         
         // Show errors
         for (Diagnostic diagnostic : diagnostics.getDiagnostics()) {
-            JVSMainPanel.reportCompileError((int)diagnostic.getLineNumber(), diagnostic.getMessage(Locale.FRENCH));
-            System.out.println("Erreur à la ligne "+diagnostic.getLineNumber()+". Message de java : "+diagnostic.getMessage(Locale.FRENCH)+". Type : "+diagnostic.getKind());
+            String javaDiagnostic=diagnostic.getMessage(Locale.FRENCH);
+            String jvsDiagnostic=javaDiagnostic.split(":", 3)[javaDiagnostic.split(":", 3).length-1];
+                        
+            JVSMainPanel.reportCompileError((int)diagnostic.getLineNumber(), jvsDiagnostic);
+            
             if(diagnostic.getKind().equals(Diagnostic.Kind.ERROR)){
                 System.err.println("Erreur fatal lors de la compilation, arrêt de la compilation.");
                 uid++;
@@ -183,7 +192,7 @@ public class Jvs2Java {
         try {
             Runnable program = Jvs2Java.load(tmpJavaFile.getAbsolutePath());
             Console.clear();
-            Console.program=program;
+            Console.setProgram(program);
         } catch (Throwable e) {
             // If any error during the execution time
             System.err.println("Erreur fatal lors de l'éxecution, arrêt du programme."+e);
@@ -218,11 +227,4 @@ public class Jvs2Java {
     
     /** The java runnable wich has been compiled */
     public static Runnable runnable = null;
-
-    /**
-     * @deprecated Jvs2Java will now not be a stand alone program
-     */
-    public static void main(String[] usage) {
-        System.err.println("Jvs2Java is not a stand alone program");
-    }
 }
