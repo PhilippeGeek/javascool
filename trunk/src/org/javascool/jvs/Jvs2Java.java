@@ -89,7 +89,7 @@ public class Jvs2Java {
             // Declares the proglet's core as a Runnable in the Applet
             head.append("public class JvsToJavaTranslated").append(Jvs2Java.uid).append(" implements Runnable{");
             head.append("  private static final long serialVersionUID = ").append(uid).append("L;");
-            head.append("  public void run() { main(); new File(System.getProperty(\"java.io.tmpdir\")+\"").append(File.separator).append("JvsToJavaTranslated").append(Jvs2Java.uid).append(".class\").delete(); }");
+            head.append("  public void run() { main(); new File(System.getProperty(\"java.io.tmpdir\")+\"").append(File.separator.equals("\\")?"\\\\":"/").append("JvsToJavaTranslated").append(Jvs2Java.uid).append(".class\").delete(); }");
             body.append("}\n");
         }
         return (head.toString() + body.toString());
