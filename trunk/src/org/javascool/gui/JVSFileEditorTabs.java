@@ -34,9 +34,7 @@ public class JVSFileEditorTabs extends JVSTabs{
      * @return The file's tempory id in editor tabs
      */
     public String openNewFile() {
-        return this.openFile(new JVSFile("void main(){\n"
-                + "\n"
-                + "}"));
+        return this.openFile(new JVSFile(JVSFile.defaultCode));
     }
 
     /** Open a new empty Java's cool file in tmp
@@ -156,19 +154,7 @@ public class JVSFileEditorTabs extends JVSTabs{
         if (!JVSFileEditorTabs.fileIds.containsValue(fileId)) { // Check if id is opened
             return true; // Return true because file is not opened
         }
-        if(Jvs2Java.jvsCompile(JVSFileEditorTabs.editors.get(fileId).getText())){
-            JVSMainPanel.getToolBar().addTool("Lancer", "", new Runnable(){
-
-                @Override
-                public void run() {
-                    Console.startProgram();
-                    JVSMainPanel.getToolBar().delTool(JVSMainPanel.getToolBar().getButtonId("Lancer"));
-                }
-            
-                
-            });
-        }
-        return true;
+        return Jvs2Java.jvsCompile(JVSFileEditorTabs.editors.get(fileId).getText());
     }
 
     /** Save a file

@@ -40,7 +40,6 @@ public final class JVSMainPanel extends JPanel {
         this.setupViewLayout();
         this.setupToolBar();
         this.setupMainPanel();
-        new org.javascool.tools.ProgletManager();
     }
 
     /** Setup the Border Layout for the JPanel */
@@ -60,6 +59,7 @@ public final class JVSMainPanel extends JPanel {
         //tabs.add("Test", JvsMain.logo16, new JPanel());
         JVSMainPanel.newFile();
         this.add(mainPane, BorderLayout.CENTER);
+        ((JVSTabs)JVSMainPanel.getMainPane().getRightComponent()).add("Web", "",new JVSWebPanel());
     }
 
     /** Get the toolbar
@@ -75,6 +75,13 @@ public final class JVSMainPanel extends JPanel {
     public static void newFile() {
         String fileId = JVSMainPanel.getEditorTabs().openNewFile();
         JVSMainPanel.haveToSave.put(fileId, false);
+    }
+    
+    /** Compile file in the editor
+     * @see JVSFileEditorTabs
+     */
+    public static void compileFile() {
+        JVSFileEditorTabs.compileFile(JVSMainPanel.getEditorTabs().getCurrentFileId());
     }
 
     /** Open a file
@@ -169,6 +176,25 @@ public final class JVSMainPanel extends JPanel {
         Boolean[] can_close = new Boolean[JVSMainPanel.haveToSave.keySet().toArray().length];
         int i = 0;
         int j = 0;
+        for (Object fileId : JVSMainPanel.haveToSave.keySet().toArray()) {
+            if (JVSMainPanel.haveToSave.get((String) fileId)) {
+                j++;
+            }
+        }
+        // If user no have dialog to stop close, we create one
+        if (j == 0) {
+            final int n = JOptionPane.showConfirmDialog(
+                    JvsMain.getJvsMainFrame(),
+                    "Voulez vous vraiment quitter Java's cool ?",
+                    "Confirmation",
+                    JOptionPane.YES_NO_OPTION);
+            if (n == JOptionPane.YES_OPTION) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        j=0;
         // Check save for each file
         for (Object fileId : JVSMainPanel.haveToSave.keySet().toArray()) {
             id = (String) fileId;
@@ -203,21 +229,7 @@ public final class JVSMainPanel extends JPanel {
                 return false;
             }
         }
-        // If user no have dialog to stop close, we create one
-        if (j == 0) {
-            final int n = JOptionPane.showConfirmDialog(
-                    JvsMain.getJvsMainFrame(),
-                    "Voulez vous vraiment quitter Java's cool ?",
-                    "Confirmation",
-                    JOptionPane.YES_NO_OPTION);
-            if (n == JOptionPane.YES_OPTION) {
-                return true;
-            } else {
-                // He can refuse to close
-                JVSMainPanel.newFile();
-                return false;
-            }
-        }
+        
         // We return true if all is good
         return true;
     }
@@ -253,6 +265,10 @@ public final class JVSMainPanel extends JPanel {
     public static JVSFileEditorTabs getEditorTabs() {
         return ((JVSFileEditorTabs) JVSMainPanel.mainPane.getLeftComponent());
     }
+    
+    public static JVSSplitPane getMainPane(){
+        return JVSMainPanel.mainPane;
+    }
 
     /** Get the JVSMainPanel
      * Used to access to non-static methods in static methods (Strange ? Yes)
@@ -260,5 +276,19 @@ public final class JVSMainPanel extends JPanel {
      */
     public static JVSMainPanel getThisInStatic() {
         return JvsMain.getJvsMainPanel();
+    }
+    
+    public static class Dialog{
+        
+        /** Show a success dialog */
+        public static void success(String title, String message){
+            JOptionPane.showMessageDialog(JvsMain.getJvsMainFrame(), message, title, JOptionPane.INFORMATION_MESSAGE);
+        }
+        
+        /** Show an error dialog */
+        public static void error(String title, String message){
+            JOptionPane.showMessageDialog(JvsMain.getJvsMainFrame(), message, title, JOptionPane.ERROR_MESSAGE);
+        }
+        
     }
 }

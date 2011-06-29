@@ -60,6 +60,10 @@ public class JVSEditor extends JPanel implements Editor{
         if(JvsMain.isMac()){
             key=KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.META_MASK);
         }
+        KeyStroke copy_key = KeyStroke.getKeyStroke(KeyEvent.VK_C, Event.CTRL_MASK);
+        if(JvsMain.isMac()){
+            copy_key=KeyStroke.getKeyStroke(KeyEvent.VK_C, Event.META_MASK);
+        }
 
         textArea.getInputMap().put(key,
                 "save");
@@ -71,6 +75,18 @@ public class JVSEditor extends JPanel implements Editor{
                         JVSMainPanel.saveFile();
                     }
                 });
+        
+        textArea.getInputMap().put(copy_key,
+                "copy");
+        textArea.getActionMap().put("copy",
+                new AbstractAction() {
+
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        getRTextArea().copyAsRtf();
+                    }
+                });
+        
         return textArea;
     }
 
