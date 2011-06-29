@@ -154,13 +154,14 @@ public class Console extends JPanel {
 
     /** Start the current program */
     public static void startProgram() {
+        Console.toolbar.updateTimeRunning("0 min 0 sec");
         Console.toolbar.programRunning();
         Console.clear();
-        Console.run(true);
         new Thread(new Runnable() {
 
             @Override
             public void run() {
+                Console.run(true);
                 for (int t = 0; Console.isRunning(); t++) {
                     Console.toolbar.updateTimeRunning("" + (t / 60) + " min " + (t % 60) + " sec");
                     Macros.sleep(1000);

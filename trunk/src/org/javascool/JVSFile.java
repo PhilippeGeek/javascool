@@ -75,7 +75,8 @@ public class JVSFile {
             } catch (IOException ex) {
                 this.fileContent = "";
             }
-            if (this.fileContent.split("\\/\\/\\#ENDJVSDATA\\#\\/\\/", 2).length>1) {
+            if (this.fileContent.split("\\/\\/\\$jvs\\#", 2).length>1) {
+                System.out.println("OK");/*
                 String dataTxt = this.fileContent.split("\\/\\/\\#ENDJVSDATA\\#\\/\\/", 2)[0];
                 String[] data = dataTxt.split("\n");
                 String balise;
@@ -87,21 +88,10 @@ public class JVSFile {
                     }
                 }
                 this.code=this.fileContent.split("\\/\\/\\#ENDJVSDATA\\#\\/\\/\n", 2)[1];
-            } else {
+            } else {*/
                 this.proglet="default";
                 this.code=this.fileContent;
             }
-            /* JSon Code Propostion
-            try {
-            this.json=new JSONObject(fileContent);
-            this.proglet=this.json.getString("proglet");
-            this.code=this.json.getString("code");
-            } catch (JSONException ex) {
-            // Handler for old Java's cool files
-            this.code=fileContent;
-            this.proglet="";
-            this.json=new JSONObject(this);
-            } */
             this.file = file_to_open;
         }
         this.refreshData();
