@@ -13,4 +13,6 @@ package org.javascool.proglets;
  */
 public class MyClass {
     
+    private String data;
+    
 }

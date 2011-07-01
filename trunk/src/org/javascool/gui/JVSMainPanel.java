@@ -11,6 +11,8 @@ import javax.swing.JPanel;
 import javax.swing.text.BadLocationException;
 import org.javascool.JVSFile;
 import org.javascool.JvsMain;
+import org.javascool.tools.Proglet;
+import org.javascool.tools.ProgletManager;
 
 /** The main panel for Java's cool
  * This class wich is very static contain all that we need to run Java's cool like save and open file command.
@@ -19,6 +21,9 @@ import org.javascool.JvsMain;
  */
 public final class JVSMainPanel extends JPanel {
 
+    
+    private static ProgletManager pgman=new ProgletManager();
+    private static Proglet currentProglet;
     /** The java's cool top tool bar
      * @see JVSToolBar
      */
@@ -59,7 +64,9 @@ public final class JVSMainPanel extends JPanel {
         //tabs.add("Test", JvsMain.logo16, new JPanel());
         JVSMainPanel.newFile();
         this.add(mainPane, BorderLayout.CENTER);
-        ((JVSTabs)JVSMainPanel.getMainPane().getRightComponent()).add("Web", "",new JVSWebPanel());
+        //((JVSTabs)JVSMainPanel.getMainPane().getRightComponent()).add("Web", "",new JVSWebPanel());
+        JVSMainPanel.currentProglet=JVSMainPanel.pgman.getProglet("test");
+        ((JVSTabs)JVSMainPanel.getMainPane().getRightComponent()).add("Web", "",JVSMainPanel.currentProglet.getPanel());
     }
 
     /** Get the toolbar
@@ -233,6 +240,73 @@ public final class JVSMainPanel extends JPanel {
         // We return true if all is good
         return true;
     }
+    
+    /** Handle the close file task
+     * Check if all files are saved and if the user want to continue
+     * @return True meen that app can be close and false that app can NOT be closed
+     */
+    public static Boolean closeAllFiles() {
+        String id = "";
+        Boolean[] can_close = new Boolean[JVSMainPanel.haveToSave.keySet().toArray().length];
+        int i = 0;
+        int j = 0;
+        for (Object fileId : JVSMainPanel.haveToSave.keySet().toArray()) {
+            if (JVSMainPanel.haveToSave.get((String) fileId)) {
+                j++;
+            }
+        }
+        // If user no have dialog to stop close, we create one
+        if (j == 0) {
+            final int n = JOptionPane.showConfirmDialog(
+                    JvsMain.getJvsMainFrame(),
+                    "Voulez vous vraiment continuer ?",
+                    "Confirmation",
+                    JOptionPane.YES_NO_OPTION);
+            if (n == JOptionPane.YES_OPTION) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        j=0;
+        // Check save for each file
+        for (Object fileId : JVSMainPanel.haveToSave.keySet().toArray()) {
+            id = (String) fileId;
+            if (JVSMainPanel.haveToSave.get(id)) {
+                // File has to be saved
+                // For number see JVSMainPanel.saveFileIdBeforeClose() documentation about return
+                switch (JVSMainPanel.saveFileIdBeforeClose(id)) {
+                    case 1:
+                        can_close[i] = true;
+                        break;
+                    case 0:
+                        can_close[i] = false;
+                        break;
+                    case -1:
+                        return false;
+                }
+                j++;
+            } else {
+                // If file has not to be saved it's good
+                can_close[i] = true;
+            }
+            if (can_close[i]) {
+                // If we can close this file, we close the tab
+                JVSMainPanel.getEditorTabs().closeFile(id);
+            }
+            i++;
+        }
+        // Check if a file is not save, if yes we can not close the application
+        for (Boolean can_close_r : can_close) {
+            if (can_close_r == false) {
+
+                return false;
+            }
+        }
+        
+        // We return true if all is good
+        return true;
+    }
 
     /** Ask to user to save a file before it close
      * @param fileId The file id
@@ -242,7 +316,7 @@ public final class JVSMainPanel extends JPanel {
         JVSFile file = JVSMainPanel.getEditorTabs().getFile(fileId);
         int result = JOptionPane.showConfirmDialog(
                 JvsMain.getJvsMainFrame(),
-                "Voulez vous enregistrer " + file.getName() + " avant de quitter ?");
+                "Voulez vous enregistrer " + file.getName() + " avant de continuer ?");
         if (result == JOptionPane.YES_OPTION) {
             if (JVSMainPanel.getEditorTabs().saveFile(fileId)) {
                 JVSMainPanel.haveToSave.put(fileId, false);
@@ -256,6 +330,14 @@ public final class JVSMainPanel extends JPanel {
             JVSMainPanel.haveToSave.put(fileId, true);
             return -1;
         }
+    }
+    
+    public static Proglet getCurrentProglet(){
+        return JVSMainPanel.currentProglet;
+    }
+    
+    public static ProgletManager getProgletManager(){
+        return JVSMainPanel.pgman;
     }
 
     /** Get the current istance of Editor Tabs

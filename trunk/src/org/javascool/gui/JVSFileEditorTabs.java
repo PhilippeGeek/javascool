@@ -16,7 +16,7 @@ import org.javascool.tools.Console;
  * A powerful JVSTabs to manage a multi-file editing. It only support JVSFile.
  * @author Philippe Vienne
  */
-public class JVSFileEditorTabs extends JVSTabs{
+public class JVSFileEditorTabs extends JVSTabs {
 
     /** Store all JVSEditor in an HashMap by the fileId */
     private static HashMap<String, JVSEditor> editors = new HashMap<String, JVSEditor>();
@@ -154,7 +154,13 @@ public class JVSFileEditorTabs extends JVSTabs{
         if (!JVSFileEditorTabs.fileIds.containsValue(fileId)) { // Check if id is opened
             return true; // Return true because file is not opened
         }
-        return Jvs2Java.jvsCompile(JVSFileEditorTabs.editors.get(fileId).getText());
+        if (Jvs2Java.jvsCompile(JVSFileEditorTabs.editors.get(fileId).getText())) {
+            Console.clear();
+            Console.setProgram(Jvs2Java.runnable);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /** Save a file

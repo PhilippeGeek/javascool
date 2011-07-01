@@ -4,10 +4,11 @@
 package org.javascool.gui;
 
 import java.awt.BorderLayout;
-import java.net.MalformedURLException;
+import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JPanel;
+import org.javascool.JvsMain;
 import org.lobobrowser.html.gui.HtmlPanel;
 import org.lobobrowser.html.test.SimpleHtmlRendererContext;
 import org.lobobrowser.html.test.SimpleUserAgentContext;
@@ -18,7 +19,9 @@ import org.lobobrowser.html.test.SimpleUserAgentContext;
  */
 public class JVSWebPanel extends JPanel{
     
-    private HtmlPanel webPanel;
+    private org.lobobrowser.html.gui.HtmlPanel webPanel;
+    private JVSToolBar toolbar;
+    private SimpleHtmlRendererContext render;
     
     public JVSWebPanel(){
         this.setupPanel();
@@ -32,13 +35,34 @@ public class JVSWebPanel extends JPanel{
     
     private void setupWebPanel(){
         webPanel=new HtmlPanel();
+        render=new SimpleHtmlRendererContext(webPanel,new SimpleUserAgentContext());
+        System.err.println("file:"+JvsMain.class.getResource("package.html").getPath());
         try {
-            new SimpleHtmlRendererContext(webPanel, new SimpleUserAgentContext())
-            .prompt("hello", "");
+            webPanel.setHtml(org.javascool.Utils.loadString(JvsMain.class.getResource("packag.html").getPath()), "file:"+JvsMain.class.getResource("packag.html").getPath(), render );
+            //render.navigate("http://www.google.fr");
+            
         } catch (Exception ex) {
             Logger.getLogger(JVSWebPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.add(webPanel,BorderLayout.CENTER);
+        this.setupToolbar();
+    }
+    
+    private void setupToolbar(){
+        toolbar=new JVSToolBar(true);
+        toolbar.addTool("Précédent", "", new Runnable(){
+
+            @Override
+            public void run() {
+            }
+        });
+        toolbar.addTool("Suivant", "", new Runnable(){
+
+            @Override
+            public void run() {
+            }
+        });
+        this.add(toolbar,BorderLayout.NORTH);
     }
     
 }

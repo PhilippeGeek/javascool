@@ -36,6 +36,8 @@ import org.javascool.tools.Console;
  */
 public class Jvs2Java {
 
+    public static boolean reportError = true;
+
     /**
      * This class can not be invoked
      * @deprecated
@@ -49,13 +51,15 @@ public class Jvs2Java {
     public static String translate(String jvsCode) {
         String text = jvsCode;
         // Here we check and correct a missing "void main()"
-        if (!text.replaceAll("[ \n\r\t]+", " ").matches(".*void[ ]+main[ ]*\\([ ]*\\).*")) {
+        if (!text.replaceAll("[ \n\r\t]+", " ").matches(".*void[ ]+main[ ]*\\([ ]*\\).*")&&Jvs2Java.reportError) {
             if (text.replaceAll("[ \n\r\t]+", " ").matches(".*main[ ]*\\([ ]*\\).*")) {
                 System.out.println("Attention: il faut mettre \"void\" devant \"main()\" pour que le programme puisque se compiler");
                 text = text.replaceFirst("main[ ]*\\([ ]*\\)", "void main()");
             } else {
                 System.out.println("Attention: il faut un block \"void main()\" pour que le programme puisque se compiler");
-                text = "\nvoid main() {\n" + text + "\n}\n";
+                if (Jvs2Java.reportError) {
+                    text = "\nvoid main() {\n" + text + "\n}\n";
+                }
             }
         }
         String[] lines = text.split("\n");
@@ -63,7 +67,7 @@ public class Jvs2Java {
         StringBuilder body = new StringBuilder();
         // Here is the translation loop
         {
-            int i=1;
+            int i = 1;
             // Copies the user's code
             for (String line : lines) {
                 if (line.matches("^\\s*(import|package)[^;]*;\\s*$")) {
@@ -89,12 +93,18 @@ public class Jvs2Java {
             // Declares the proglet's core as a Runnable in the Applet
             head.append("public class JvsToJavaTranslated").append(Jvs2Java.uid).append(" implements Runnable{");
             head.append("  private static final long serialVersionUID = ").append(uid).append("L;");
-            head.append("  public void run() { main(); new File(System.getProperty(\"java.io.tmpdir\")+\"").append(File.separator.equals("\\")?"\\\\":"/").append("JvsToJavaTranslated").append(Jvs2Java.uid).append(".class\").delete(); }");
+            if (JVSMainPanel.getCurrentProglet() != null) {
+                try {
+                    head.append(JVSMainPanel.getCurrentProglet().getJvsFunctionsToInclude());
+                } catch (Exception e) {
+                }
+            }
+            head.append("  public void run() { main(); new File(System.getProperty(\"java.io.tmpdir\")+\"").append(File.separator.equals("\\") ? "\\\\" : "/").append("JvsToJavaTranslated").append(Jvs2Java.uid).append(".class\").delete(); }");
             body.append("}\n");
         }
         return (head.toString() + body.toString());
     }
-    
+
     /** Translate a jvs line to a java line 
      * Translate with replace
      * @param line
@@ -109,36 +119,35 @@ public class Jvs2Java {
                 "proglet.synthesons.SoundDisplay.tone = new org.javascool.SoundBit() { public double get(char c, double t) { return $1; } }; proglet.synthesons.SoundDisplay.syntheSet(\"16 a\");");
         return "    " + line;
     }
-    
     // Counter used to increment the serialVersionUID in order to reload the different versions of the class
     private static int uid = 1;
-    
-    public static DiagnosticCollector<JavaFileObject> javaCompile(String pathToJavaFile){
-        
+
+    public static DiagnosticCollector<JavaFileObject> javaCompile(String pathToJavaFile) {
+
         // We init tools
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler(); // The compiler tool
         DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<JavaFileObject>(); // The diagnostic colector
         StandardJavaFileManager fileManager = compiler.getStandardFileManager(null, Locale.FRENCH, null); // The file manager
-        
+
         // Setup the file
         List<File> sourceFileList = new ArrayList<File>();
         sourceFileList.add(new File(pathToJavaFile));
         Iterable<? extends JavaFileObject> compilationUnits = fileManager.getJavaFileObjectsFromFiles(sourceFileList);
-        
+
         // Create the task
         JavaCompiler.CompilationTask task = compiler.getTask(null, fileManager, diagnostics, null,
                 null, compilationUnits);
-        
+
         // Now we javaCompile
         task.call();
-        
+
         // Close file manager
         try {
             fileManager.close();
         } catch (IOException ex) {
             Logger.getLogger(Jvs2Java.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return diagnostics;
     }
 
@@ -148,54 +157,53 @@ public class Jvs2Java {
      * @return The compilation success
      */
     public static Boolean jvsCompile(String jvsCode) {
-        
+
         // Create an temp file
         File tmpJavaFile = new File(System.getProperty("java.io.tmpdir") + File.separator + "JvsToJavaTranslated" + Jvs2Java.uid + ".java");
         String tmpPath = new File(tmpJavaFile.getParent()).getAbsolutePath();
         String tmpJFilePath = tmpJavaFile.getAbsolutePath();
-        
+
         // We convert the JVS file and write the Java code ito the temp file
         try {
             Utils.saveString(Jvs2Java.translate(jvsCode), tmpJFilePath);
         } catch (IOException ex) {
             Logger.getLogger(Jvs2Java.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         /////////////////////////
         // Compile tmpJavaFile //
         /////////////////////////
-        
+
         DiagnosticCollector<JavaFileObject> diagnostics = Jvs2Java.javaCompile(tmpJFilePath);
-        
+
         // Delete the tmp Java source file
         tmpJavaFile.delete();
-        
+
         // Show errors
         for (Diagnostic diagnostic : diagnostics.getDiagnostics()) {
-            String javaDiagnostic=diagnostic.getMessage(Locale.FRENCH);
-            String jvsDiagnostic=javaDiagnostic.split(":", 3)[javaDiagnostic.split(":", 3).length-1];
-                        
-            JVSMainPanel.reportCompileError((int)diagnostic.getLineNumber(), jvsDiagnostic);
-            
-            if(diagnostic.getKind().equals(Diagnostic.Kind.ERROR)){
+            String javaDiagnostic = diagnostic.getMessage(Locale.FRENCH);
+            String jvsDiagnostic = javaDiagnostic.split(":", 3)[javaDiagnostic.split(":", 3).length - 1];
+            if (Jvs2Java.reportError) {
+                JVSMainPanel.reportCompileError((int) diagnostic.getLineNumber(), jvsDiagnostic);
+            }
+            if (diagnostic.getKind().equals(Diagnostic.Kind.ERROR)) {
                 System.err.println("Erreur fatal lors de la compilation, arrêt de la compilation.");
                 uid++;
                 return false;
             }
 
         }
-        
+
         ///////////////
         // SetUp Run //
         ///////////////
-        
+
         try {
             Runnable program = Jvs2Java.load(tmpJavaFile.getAbsolutePath());
-            Console.clear();
-            Console.setProgram(program);
+            Jvs2Java.runnable = program;
         } catch (Throwable e) {
             // If any error during the execution time
-            System.err.println("Erreur fatal lors de l'éxecution, arrêt du programme."+e);
+            System.err.println("Erreur fatal lors de l'éxecution, arrêt du programme.");
             uid++;
             return false;
         }
@@ -212,9 +220,9 @@ public class Jvs2Java {
      */
     public static Runnable load(String path) throws Throwable {
         try {
-            File javaClass=new File(path);
+            File javaClass = new File(path);
             URL[] urls = new URL[]{new URL("file:" + javaClass.getParent() + File.separator)};
-            Class< ?> j_class = new URLClassLoader(urls).loadClass(javaClass.getName().replaceAll("\\.java",""));
+            Class< ?> j_class = new URLClassLoader(urls).loadClass(javaClass.getName().replaceAll("\\.java", ""));
             Object o = j_class.newInstance();
             if (!(o instanceof Runnable)) {
                 throw new Exception("La class à charger n'est pas un runnable");
@@ -224,7 +232,6 @@ public class Jvs2Java {
             throw new RuntimeException("Erreur: impossible de charger la class");
         }
     }
-    
     /** The java runnable wich has been compiled */
     public static Runnable runnable = null;
 }
