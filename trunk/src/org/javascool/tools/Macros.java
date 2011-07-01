@@ -5,6 +5,7 @@
 package org.javascool.tools;
 
 import java.util.Calendar;
+import org.javascool.gui.JVSMainPanel;
 
 /** Contain useful function for help student to program
  * @serial exclude
@@ -12,6 +13,14 @@ import java.util.Calendar;
 public class Macros {
   private Macros() {}
 
+  /** Set accesible in JVS the JVSMainPanel
+   * @see JVSMainPanel
+   * @return 
+   */
+  public static JVSMainPanel getJVS(){
+      return org.javascool.gui.JVSMainPanel.getThisInStatic();
+  }
+  
   /** Show a String on the console
    * @param string The string to show
    */
@@ -85,7 +94,7 @@ public class Macros {
     System.err.println("#" + condition + " : " + message);
     if(!condition) {
       System.out.println(message);
-      //Console.run(false);
+      Console.stopProgram();
       sleep(500);
     }
   }

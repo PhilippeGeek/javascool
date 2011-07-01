@@ -6,19 +6,25 @@ package org.javascool.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Set;
 import java.util.UUID;
+import javax.swing.Box;
 import javax.swing.JButton;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 import javax.swing.JToolBar;
+import javax.swing.KeyStroke;
 import org.javascool.JvsMain;
 import org.javascool.Utils;
 
 /** The JVS top tool bar
  * @author Philippe VIENNE
  */
-public class JVSToolBar extends JToolBar{
+public class JVSToolBar extends JToolBar {
 
     /** HashMap for button list.
      * The map associate a String to a JButton
@@ -36,8 +42,8 @@ public class JVSToolBar extends JToolBar{
         super("Java's cool ToolBar");
         init();
     }
-    
-    protected JVSToolBar(Boolean escapeInit){
+
+    protected JVSToolBar(Boolean escapeInit) {
         super("Java's cool ToolBar");
     }
 
@@ -52,39 +58,47 @@ public class JVSToolBar extends JToolBar{
         setVisible(true);
         revalidate();
     }
-    
+
     /** Initialize the toolBar with default button and setUps */
-    private void init(){
-        this.addTool("Nouveau fichier", "org/javascool/doc-files/icon16/new.png", new Runnable(){
+    private void init() {
+        this.addTool("Nouveau fichier", "org/javascool/doc-files/icon16/new.png", new Runnable() {
+
             @Override
             public void run() {
                 JVSMainPanel.newFile();
             }
         });
-        this.addTool("Ouvrir un fichier", "org/javascool/doc-files/icon16/open.png", new Runnable(){
+        this.addTool("Ouvrir un fichier", "org/javascool/doc-files/icon16/open.png", new Runnable() {
+
             @Override
             public void run() {
                 JVSMainPanel.openFile();
             }
         });
-        this.addTool("Sauver", "org/javascool/doc-files/icon16/save.png", new Runnable(){
+        this.addTool("Sauver", "org/javascool/doc-files/icon16/save.png", new Runnable() {
+
             @Override
             public void run() {
                 JVSMainPanel.saveFile();
             }
         });
-        this.addTool("Fermer le fichier", "org/javascool/doc-files/icon16/remove.png", new Runnable(){
+        this.addTool("Fermer le fichier", "org/javascool/doc-files/icon16/remove.png", new Runnable() {
+
             @Override
             public void run() {
                 JVSMainPanel.closeFile();
             }
         });
-        this.addTool("Compiler", "org/javascool/doc-files/icon16/compile.png", new Runnable(){
+
+        this.addTool("Compiler", "org/javascool/doc-files/icon16/compile.png", new Runnable() {
+
             @Override
             public void run() {
                 JVSFileEditorTabs.compileFile(JVSMainPanel.getEditorTabs().getCurrentFileId());
             }
         });
+        this.add(Box.createHorizontalGlue());
+        this.generateProgletMenu();
     }
 
     /** Adds a button to the toolbar.
@@ -94,7 +108,7 @@ public class JVSToolBar extends JToolBar{
      * @return The added button.
      */
     public final JButton addTool(String label, String icon, Runnable action) {
-        String buttonId="MenuButton-"+UUID.randomUUID().toString();
+        String buttonId = "MenuButton-" + UUID.randomUUID().toString();
         JButton button = icon == null ? new JButton(label) : new JButton(label, Utils.getIcon(icon));
         button.addActionListener(new ActionListener() {
 
@@ -123,31 +137,63 @@ public class JVSToolBar extends JToolBar{
             revalidate();
         }
     }
-    
+
     /** Get a button id
      * Search the buttonId by the text label
      * @param label The text label on the button
      * @return The button ID
      */
     public String getButtonId(String label) {
-        Set<String> id=this.buttons.keySet();
-        Collection<JButton> butToCheck=this.buttons.values();
-        int i=0;
-        String findId="";
-        while(i<(id.size()-1)){
-            JButton test=(JButton) butToCheck.toArray()[i];
-            if(test.getText().equals(label)){
-                findId=test.getName();
+        Set<String> id = this.buttons.keySet();
+        Collection<JButton> butToCheck = this.buttons.values();
+        int i = 0;
+        String findId = "";
+        while (i < (id.size() - 1)) {
+            JButton test = (JButton) butToCheck.toArray()[i];
+            if (test.getText().equals(label)) {
+                findId = test.getName();
                 return findId;
             }
             i++;
         }
         return findId;
     }
-    
-    protected void resetButtonsMaps(){
+
+    protected void resetButtonsMaps() {
         buttons.clear();
         actions.clear();
+    }
+
+    private void generateProgletMenu() {
+        
+        final JPopupMenu jPopupMenu = new JPopupMenu();
+        JMenuItem menuitem=new JMenuItem("Installer une proglet");
+        menuitem.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JVSMainPanel.getProgletManager().installNewProglet();
+            }
+            
+        });
+        jPopupMenu.add(menuitem);
+        menuitem=new JMenuItem("Changer de proglet");
+        menuitem.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JVSMainPanel.getProgletManager().changeProglet();
+            }
+            
+        });
+        jPopupMenu.add(menuitem);
+        this.addTool("Proglets", "", new Runnable(){
+            @Override
+            public void run() {
+                jPopupMenu.show(JvsMain.getJvsMainPanel(), JvsMain.getJvsMainPanel().getWidth(), JVSMainPanel.getToolBar().getHeight());
+            }
+        });
+        return;
     }
 
     /** Get the Main Panel to have main functions */

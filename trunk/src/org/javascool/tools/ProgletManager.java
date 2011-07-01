@@ -3,12 +3,23 @@
  **************************************************************/
 package org.javascool.tools;
 
+import java.awt.BorderLayout;
 import java.io.File;
-import java.net.URL;
-import java.util.ArrayList;
+import java.io.FilenameFilter;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JList;
+import javax.swing.JScrollPane;
+import javax.swing.filechooser.FileFilter;
+import org.javascool.JvsMain;
+import org.javascool.Utils;
+import org.javascool.gui.JVSMainPanel;
+import org.javascool.pml.Pml;
 
 /** The proglets manager class
  * This class list and store all opened proglets
@@ -19,48 +30,82 @@ public class ProgletManager {
     private HashMap<String, Proglet> proglets = new HashMap<String, Proglet>();
 
     public ProgletManager() {
-        try {
-            for(Class proglet:ProgletManager.getClasses("org.javascool.proglets")){
-                System.err.println(proglet.getName());
+        this.proglets.put("test", new Proglet("test"));
+    }
+
+    public Proglet getProglet(String name) {
+        return this.proglets.get(name);
+    }
+
+    public void installNewProglet() {
+        JFileChooser fc = new JFileChooser();
+        fc.setFileFilter(new FileFilter() {
+
+            @Override
+            public boolean accept(File f) {
+                if (f.isDirectory()) {
+                    return true;
+                } else {
+                    return false;
+                }
             }
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ProgletManager.class.getName()).log(Level.SEVERE, null, ex);
+
+            @Override
+            public String getDescription() {
+                return "Dossiers";
+            }
+        });
+        fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        switch (fc.showDialog(JvsMain.getJvsMainFrame(), "Installer le scketchbook")) {
+            case JFileChooser.APPROVE_OPTION:
+                try {
+                    this.installProgletDir(fc.getSelectedFile());
+                } catch (Exception ex) {
+                    Logger.getLogger(ProgletManager.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                break;
+            default:
+                System.err.println("Help");
         }
     }
 
-    public static Class[] getClasses(String pckgname) throws ClassNotFoundException {
-        ArrayList<Class> classes = new ArrayList<Class>();
-        // Get a File object for the package
-        File directory = null;
-        try {
-            ClassLoader cld = Thread.currentThread().getContextClassLoader();
-            if (cld == null) {
-                throw new ClassNotFoundException("Can't get class loader.");
-            }
-            String path = pckgname.replace('.', '/');
-            URL resource = cld.getResource(path);
-            if (resource == null) {
-                throw new ClassNotFoundException("No resource for " + path);
-            }
-            directory = new File(resource.getFile());
-        } catch (NullPointerException x) {
-            throw new ClassNotFoundException(pckgname + " (" + directory + ") does not appear to be a valid package");
+    private void installProgletDir(File directory) throws Exception {
+        if (!directory.exists() || !directory.isDirectory()) {
+            throw new Exception(directory + " is not a proglet folder");
         }
-        if (directory.exists()) {
-            // Get the list of the files contained in the package
-            String[] files = directory.list();
-            for (int i = 0; i < files.length; i++) {
-                // we are only interested in .class files
-                if (files[i].endsWith(".class")) {
-                    // removes the .class extension
-                    classes.add(Class.forName(pckgname + '.' + files[i].substring(0, files[i].length() - 6)));
+        for (String dir : directory.list(new FilenameFilter() {
+
+            @Override
+            public boolean accept(File dir, String name) {
+                if (dir.isDirectory()) {
+                    return true;
+                } else {
+                    return false;
                 }
             }
-        } else {
-            throw new ClassNotFoundException(pckgname + " does not appear to be a valid package");
+        })) {
+            try {
+                this.proglets.put(dir, new Proglet(new File(directory.getPath() + File.separator + dir)));
+            } catch (Exception e) {
+            }
         }
-        Class[] classesA = new Class[classes.size()];
-        classes.toArray(classesA);
-        return classesA;
+    }
+
+    public void changeProglet() {
+        // Create the frame
+        String title = "Changer de proglet";
+        JFrame frame = new JFrame(title);
+        frame.setIconImage(Utils.getIcon("org/javascool/logo.png").getImage());
+        JButton valid=new JButton("Changer");
+        JList list = new JList(new DefaultListModel());
+        JScrollPane scrollingList = new JScrollPane(list);
+        frame.getContentPane().add(scrollingList, BorderLayout.CENTER);
+        frame.getContentPane().add(valid,BorderLayout.SOUTH);
+        int width = 300;
+        int height = 300;
+        int x=(JvsMain.getJvsMainFrame().getX())+(JvsMain.getJvsMainFrame().getWidth()-width)/2;
+        int y=(JvsMain.getJvsMainFrame().getY())+(JvsMain.getJvsMainFrame().getHeight()-height)/2;
+        frame.setBounds(x, y, width, height);
+        frame.setVisible(true);
     }
 }
