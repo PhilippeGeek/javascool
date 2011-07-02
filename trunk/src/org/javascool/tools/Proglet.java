@@ -13,6 +13,7 @@ import java.net.URISyntaxException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JPanel;
+import org.javascool.JVSFile;
 import org.javascool.Utils;
 import org.javascool.gui.JVSMainPanel;
 import org.javascool.jvs.Jvs2Java;
@@ -25,14 +26,15 @@ import org.javascool.pml.Pml;
 public class Proglet {
 
     private Pml conf;
-    private JPanel panel;
+    private JPanel panel=new JPanel();
     private String jvsFunctions = "";
-    private String name;
+    private String name="";
 
     public Proglet(File directory) throws Exception {
         if (!directory.exists() || !directory.isDirectory()) {
             throw new Exception(directory + " is not a proglet folder");
         }
+        this.name=directory.getName();
         if (new File(directory.getPath() + File.separator + "Panel.class").exists()) {
             // @todo Load the JPanel
         } else if (new File(directory.getPath() + File.separator + "Panel.jvs").exists()) {
@@ -85,8 +87,9 @@ public class Proglet {
     }
 
     private void setupJvsFunctions(File functionFile) {
+        JVSFile file=new JVSFile(functionFile.getAbsolutePath(),true);
         String jvsFile;
-        jvsFile = Utils.loadString(functionFile.getPath());
+        jvsFile = file.getCode();
         jvsFile = jvsFile.replaceAll("\n", "").replaceAll("\t", "");
         // Before include check if JVS functions form the proglet are compilable
         Jvs2Java.reportError = false;
@@ -100,6 +103,10 @@ public class Proglet {
 
     public JPanel getPanel() {
         return this.panel;
+    }
+    
+    public String getName(){
+        return "Proglet "+name;
     }
 
     public String getJvsFunctionsToInclude() {

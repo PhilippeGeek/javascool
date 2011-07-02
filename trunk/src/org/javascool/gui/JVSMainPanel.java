@@ -21,8 +21,7 @@ import org.javascool.tools.ProgletManager;
  */
 public final class JVSMainPanel extends JPanel {
 
-    
-    private static ProgletManager pgman=new ProgletManager();
+    private static ProgletManager pgman = new ProgletManager();
     private static Proglet currentProglet;
     /** The java's cool top tool bar
      * @see JVSToolBar
@@ -65,8 +64,7 @@ public final class JVSMainPanel extends JPanel {
         JVSMainPanel.newFile();
         this.add(mainPane, BorderLayout.CENTER);
         //((JVSTabs)JVSMainPanel.getMainPane().getRightComponent()).add("Web", "",new JVSWebPanel());
-        JVSMainPanel.currentProglet=JVSMainPanel.pgman.getProglet("test");
-        ((JVSTabs)JVSMainPanel.getMainPane().getRightComponent()).add("Web", "",JVSMainPanel.currentProglet.getPanel());
+        JVSMainPanel.loadProglet("test");
     }
 
     /** Get the toolbar
@@ -83,7 +81,7 @@ public final class JVSMainPanel extends JPanel {
         String fileId = JVSMainPanel.getEditorTabs().openNewFile();
         JVSMainPanel.haveToSave.put(fileId, false);
     }
-    
+
     /** Compile file in the editor
      * @see JVSFileEditorTabs
      */
@@ -201,7 +199,7 @@ public final class JVSMainPanel extends JPanel {
                 return false;
             }
         }
-        j=0;
+        j = 0;
         // Check save for each file
         for (Object fileId : JVSMainPanel.haveToSave.keySet().toArray()) {
             id = (String) fileId;
@@ -236,11 +234,11 @@ public final class JVSMainPanel extends JPanel {
                 return false;
             }
         }
-        
+
         // We return true if all is good
         return true;
     }
-    
+
     /** Handle the close file task
      * Check if all files are saved and if the user want to continue
      * @return True meen that app can be close and false that app can NOT be closed
@@ -268,7 +266,7 @@ public final class JVSMainPanel extends JPanel {
                 return false;
             }
         }
-        j=0;
+        j = 0;
         // Check save for each file
         for (Object fileId : JVSMainPanel.haveToSave.keySet().toArray()) {
             id = (String) fileId;
@@ -303,7 +301,7 @@ public final class JVSMainPanel extends JPanel {
                 return false;
             }
         }
-        
+
         // We return true if all is good
         return true;
     }
@@ -331,12 +329,26 @@ public final class JVSMainPanel extends JPanel {
             return -1;
         }
     }
-    
-    public static Proglet getCurrentProglet(){
+
+    public static Proglet getCurrentProglet() {
         return JVSMainPanel.currentProglet;
     }
-    
-    public static ProgletManager getProgletManager(){
+
+    public static void loadProglet(String name) {
+        if (JVSMainPanel.pgman.getProglet(name) != null) {
+            if (currentProglet != null) {
+                ((JVSTabs) JVSMainPanel.getMainPane().getRightComponent()).remove(currentProglet.getPanel());
+            }
+            JVSMainPanel.currentProglet = JVSMainPanel.pgman.getProglet(name);
+            if (JVSMainPanel.currentProglet.getPanel() != null) {
+                ((JVSTabs) JVSMainPanel.getMainPane().getRightComponent()).add(currentProglet.getName(), "", JVSMainPanel.currentProglet.getPanel());
+            }
+        } else {
+            Dialog.error("Impossible de continuer", "La proglet " + name + " ne peut pas être chargé car elle n'existe pas.");
+        }
+    }
+
+    public static ProgletManager getProgletManager() {
         return JVSMainPanel.pgman;
     }
 
@@ -347,8 +359,8 @@ public final class JVSMainPanel extends JPanel {
     public static JVSFileEditorTabs getEditorTabs() {
         return ((JVSFileEditorTabs) JVSMainPanel.mainPane.getLeftComponent());
     }
-    
-    public static JVSSplitPane getMainPane(){
+
+    public static JVSSplitPane getMainPane() {
         return JVSMainPanel.mainPane;
     }
 
@@ -359,18 +371,17 @@ public final class JVSMainPanel extends JPanel {
     public static JVSMainPanel getThisInStatic() {
         return JvsMain.getJvsMainPanel();
     }
-    
-    public static class Dialog{
-        
+
+    public static class Dialog {
+
         /** Show a success dialog */
-        public static void success(String title, String message){
+        public static void success(String title, String message) {
             JOptionPane.showMessageDialog(JvsMain.getJvsMainFrame(), message, title, JOptionPane.INFORMATION_MESSAGE);
         }
-        
+
         /** Show an error dialog */
-        public static void error(String title, String message){
+        public static void error(String title, String message) {
             JOptionPane.showMessageDialog(JvsMain.getJvsMainFrame(), message, title, JOptionPane.ERROR_MESSAGE);
         }
-        
     }
 }

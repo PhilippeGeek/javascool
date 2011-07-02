@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  *
  * @author philien
  */
-public class JVSFile {
+public final class JVSFile {
 
     public static String defaultCode = "void main(){\n"
             + "\t\n"
@@ -75,23 +75,21 @@ public class JVSFile {
             } catch (IOException ex) {
                 this.fileContent = "";
             }
-            if (this.fileContent.split("\\/\\/\\$jvs\\#", 2).length>1) {
-                System.out.println("OK");/*
-                String dataTxt = this.fileContent.split("\\/\\/\\#ENDJVSDATA\\#\\/\\/", 2)[0];
-                String[] data = dataTxt.split("\n");
-                String balise;
-                for (String dat : data) {
-                    balise=dat.split(":")[0];
-                    if (balise.equals("proglet")) {
-                        this.proglet = dat.split(":")[1];
-                        System.err.println("Proglet setted");
+            // Read file line by line
+            String proprity, value, realCode = "";
+            for (String line : fileContent.split("\n")) {
+                if (line.startsWith("//$jvs#")) {
+                    line = line.replaceFirst("\\/\\/\\$jvs\\#", "");
+                    proprity = line.split(":")[0];
+                    value = line.split(":", 2)[1];
+                    if (proprity.equalsIgnoreCase("proglet")) {
+                        this.setProglet(value);
                     }
+                } else {
+                    realCode += line + "\n";
                 }
-                this.code=this.fileContent.split("\\/\\/\\#ENDJVSDATA\\#\\/\\/\n", 2)[1];
-            } else {*/
-                this.proglet="default";
-                this.code=this.fileContent;
             }
+            this.code = realCode;
             this.file = file_to_open;
         }
         this.refreshData();
@@ -158,7 +156,7 @@ public class JVSFile {
      * @return the proglet
      */
     public String getProglet() {
-        if(this.proglet.equals("default")){
+        if (this.proglet.equals("default")) {
             return "";
         }
         return proglet;
@@ -190,13 +188,10 @@ public class JVSFile {
 
     /** Refresh the data to save file */
     private void refreshData() {
-        String fileToSave="/*****************************************************************\n"
-                        + "  DO NOT EDIT THIS HEADER go to the ENDJVSDATA to find your code";
-        fileToSave+="\nproglet:"+this.proglet;
-        fileToSave+="\n*****************************************************************/"
-                + "\n//#ENDJVSDATA#//\n";
-        fileToSave+=this.getCode();
-        this.fileContent=fileToSave;
+        String fileToSave = "";
+        fileToSave += "//$jvs#proglet:" + this.proglet+"\n";
+        fileToSave += this.getCode();
+        this.fileContent = fileToSave;
     }
 
     /** Read a file */
