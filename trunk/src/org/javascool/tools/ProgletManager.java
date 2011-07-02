@@ -4,6 +4,8 @@
 package org.javascool.tools;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.HashMap;
@@ -19,6 +21,7 @@ import javax.swing.filechooser.FileFilter;
 import org.javascool.JvsMain;
 import org.javascool.Utils;
 import org.javascool.gui.JVSMainPanel;
+import org.javascool.gui.JVSMainPanel.Dialog;
 import org.javascool.pml.Pml;
 
 /** The proglets manager class
@@ -27,14 +30,14 @@ import org.javascool.pml.Pml;
  */
 public class ProgletManager {
 
-    private HashMap<String, Proglet> proglets = new HashMap<String, Proglet>();
+    private static HashMap<String, Proglet> proglets = new HashMap<String, Proglet>();
 
     public ProgletManager() {
-        this.proglets.put("test", new Proglet("test"));
+        ProgletManager.proglets.put("test", new Proglet("test"));
     }
 
     public Proglet getProglet(String name) {
-        return this.proglets.get(name);
+        return ProgletManager.proglets.get(name);
     }
 
     public void installNewProglet() {
@@ -84,9 +87,13 @@ public class ProgletManager {
                 }
             }
         })) {
-            try {
-                this.proglets.put(dir, new Proglet(new File(directory.getPath() + File.separator + dir)));
-            } catch (Exception e) {
+            if (ProgletManager.proglets.containsKey(dir)) {
+                Dialog.error("Erreur lors du chargement", "Le proglet " + dir + " est déjà chargé");
+            } else {
+                try {
+                    ProgletManager.proglets.put(dir, new Proglet(new File(directory.getPath() + File.separator + dir)));
+                } catch (Exception e) {
+                }
             }
         }
     }
@@ -94,17 +101,34 @@ public class ProgletManager {
     public void changeProglet() {
         // Create the frame
         String title = "Changer de proglet";
-        JFrame frame = new JFrame(title);
+        final JFrame frame = new JFrame(title);
         frame.setIconImage(Utils.getIcon("org/javascool/logo.png").getImage());
-        JButton valid=new JButton("Changer");
-        JList list = new JList(new DefaultListModel());
+        JButton valid = new JButton("Changer");
+        final HashMap<String, String> progletsForHumans = new HashMap<String, String>();
+        for (String key : ProgletManager.proglets.keySet()) {
+            progletsForHumans.put(key, ProgletManager.proglets.get(key).getName());
+        }
+        final JList list = new JList(progletsForHumans.values().toArray());
         JScrollPane scrollingList = new JScrollPane(list);
         frame.getContentPane().add(scrollingList, BorderLayout.CENTER);
-        frame.getContentPane().add(valid,BorderLayout.SOUTH);
+        frame.getContentPane().add(valid, BorderLayout.SOUTH);
+        valid.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Object selectedValue = list.getSelectedValue();
+                for (String key : progletsForHumans.keySet()) {
+                    if(progletsForHumans.get(key).equals(selectedValue)){
+                        JVSMainPanel.loadProglet(key);
+                    }
+                }
+                frame.dispose();
+            }
+        });
         int width = 300;
         int height = 300;
-        int x=(JvsMain.getJvsMainFrame().getX())+(JvsMain.getJvsMainFrame().getWidth()-width)/2;
-        int y=(JvsMain.getJvsMainFrame().getY())+(JvsMain.getJvsMainFrame().getHeight()-height)/2;
+        int x = (JvsMain.getJvsMainFrame().getX()) + (JvsMain.getJvsMainFrame().getWidth() - width) / 2;
+        int y = (JvsMain.getJvsMainFrame().getY()) + (JvsMain.getJvsMainFrame().getHeight() - height) / 2;
         frame.setBounds(x, y, width, height);
         frame.setVisible(true);
     }
