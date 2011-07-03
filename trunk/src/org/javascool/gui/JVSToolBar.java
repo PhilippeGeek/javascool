@@ -124,6 +124,23 @@ public class JVSToolBar extends JToolBar {
         button.setName(buttonId);
         return button;
     }
+    
+    /** Adds a button to the toolbar.
+     * @param label Button label.
+     * @param icon Button icon. If null do not show icon.
+     * @param action Button action.
+     * @return The added button.
+     */
+    private final JButton addTool(String label, String icon, ActionListener action) {
+        String buttonId = "MenuButton-" + UUID.randomUUID().toString();
+        JButton button = icon == null ? new JButton(label) : new JButton(label, Utils.getIcon(icon));
+        button.addActionListener(action);
+        add(button);
+        buttons.put(buttonId, button);
+        revalidate();
+        button.setName(buttonId);
+        return button;
+    }
 
     /** Removes a button from the tool bar. */
     public void delTool(String buttonId) {
@@ -167,7 +184,7 @@ public class JVSToolBar extends JToolBar {
     private void generateProgletMenu() {
         
         final JPopupMenu jPopupMenu = new JPopupMenu();
-        JMenuItem menuitem=new JMenuItem("Installer une proglet");
+        JMenuItem menuitem=new JMenuItem("Installer un scketchbook");
         menuitem.addActionListener(new ActionListener(){
 
             @Override
@@ -187,10 +204,12 @@ public class JVSToolBar extends JToolBar {
             
         });
         jPopupMenu.add(menuitem);
-        this.addTool("Proglets", "", new Runnable(){
+        this.addTool("Proglets", "", new ActionListener(){
+
             @Override
-            public void run() {
-                jPopupMenu.show(JvsMain.getJvsMainPanel(), JvsMain.getJvsMainPanel().getWidth(), JVSMainPanel.getToolBar().getHeight());
+            public void actionPerformed(ActionEvent e) {
+                jPopupMenu.show(((JButton)e.getSource()),
+                       0, ((JButton)e.getSource()).getHeight());
             }
         });
         return;

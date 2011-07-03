@@ -10,6 +10,8 @@ package org.javascool.tools;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JPanel;
@@ -36,7 +38,11 @@ public class Proglet {
         }
         this.name=directory.getName();
         if (new File(directory.getPath() + File.separator + "Panel.class").exists()) {
-            // @todo Load the JPanel
+            try {
+                this.panel=Proglet.loadPanelFromClass(directory.getPath() + File.separator + "Panel.class");
+            } catch (Throwable ex) {
+                Logger.getLogger(Proglet.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } else if (new File(directory.getPath() + File.separator + "Panel.jvs").exists()) {
             // @todo Compile a jvs File to a JPanel
         }
@@ -119,6 +125,28 @@ public class Proglet {
             return true;
         } catch (ClassNotFoundException exception) {
             return false;
+        }
+    }
+    
+    /** Dynamically loads a Java runnable class to be used during this session.
+     * @param path The path to the java class to load. The java class is supposed to belong to the "default" package, i.e. not to belong to a package.
+     * @return An instantiation of this Java class. If the object is a runnable, the current runnable is set.
+     *
+     * @throws RuntimeException if an I/O exception occurs during command execution.
+     * @throws IllegalArgumentException If the Java class name is not valid.
+     */
+    private static JPanel loadPanelFromClass(String path) throws Throwable {
+        try {
+            File javaClass = new File(path);
+            URL[] urls = new URL[]{new URL("file:" + javaClass.getParent() + File.separator)};
+            Class< ?> j_class = new URLClassLoader(urls).loadClass(javaClass.getName().replaceAll("\\.class", ""));
+            Object o = j_class.newInstance();
+            if (!(o instanceof JPanel)) {
+                throw new Exception("La class à charger n'est pas un JPanel");
+            }
+            return (JPanel) o;
+        } catch (Throwable e) {
+            throw new RuntimeException("Erreur: impossible de charger la class, erreur : "+e.getMessage());
         }
     }
 }
