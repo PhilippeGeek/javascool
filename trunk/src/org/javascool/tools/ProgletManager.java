@@ -34,6 +34,13 @@ public class ProgletManager {
 
     public ProgletManager() {
         ProgletManager.proglets.put("test", new Proglet("test"));
+        if(!JvsMain.getJvsConf().get("sketchbook").equals("")){
+            try {
+                this.installProgletDir(new File(JvsMain.getJvsConf().get("sketchbook")));
+            } catch (Exception ex) {
+                Logger.getLogger(ProgletManager.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     public Proglet getProglet(String name) {
@@ -76,6 +83,7 @@ public class ProgletManager {
         if (!directory.exists() || !directory.isDirectory()) {
             throw new Exception(directory + " is not a proglet folder");
         }
+        JvsMain.getJvsConf().set("sketchbook", directory.getPath());
         for (String dir : directory.list(new FilenameFilter() {
 
             @Override

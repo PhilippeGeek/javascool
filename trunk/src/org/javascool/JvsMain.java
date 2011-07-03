@@ -24,6 +24,7 @@ public class JvsMain {
     public static final String logo16 = "org/javascool/doc-files/icon16/logo.png";
     
     private static JFrame jvsMainFrame;
+    private static JVSConf jvsConf=new JVSConf();
     private static JVSMainPanel jvsMainPanel;
 
     /** Setup the system to run Java's cool
@@ -119,6 +120,11 @@ public class JvsMain {
     /** Get the jvsMainPanel instance */
     public static JVSMainPanel getJvsMainPanel() {
         return JvsMain.jvsMainPanel;
+    }
+    
+    /** Get the JVSConf instance */
+    public static JVSConf getJvsConf() {
+        return JvsMain.jvsConf;
     }
 
     /** Test if we are on Mac */
