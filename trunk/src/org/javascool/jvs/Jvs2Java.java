@@ -89,16 +89,14 @@ public class Jvs2Java {
             head.append("import java.io.*;");
             head.append("import java.util.HashMap;");
             head.append("import static org.javascool.tools.Macros.*;");
+            if (JVSMainPanel.getCurrentProglet().getJvsFunctionsToInclude()) {
+                head.append("import static ").append(JVSMainPanel.getCurrentProglet().getPackage()).append(".Functions.*;");
+            }
             //head.append("import proglet.paintbrush.*;");
             // Declares the proglet's core as a Runnable in the Applet
             head.append("public class JvsToJavaTranslated").append(Jvs2Java.uid).append(" implements Runnable{");
             head.append("  private static final long serialVersionUID = ").append(uid).append("L;");
-            if (JVSMainPanel.getCurrentProglet() != null) {
-                try {
-                    head.append(JVSMainPanel.getCurrentProglet().getJvsFunctionsToInclude());
-                } catch (Exception e) {
-                }
-            }
+            
             head.append("  public void run() { main(); new File(System.getProperty(\"java.io.tmpdir\")+\"").append(File.separator.equals("\\") ? "\\\\" : "/").append("JvsToJavaTranslated").append(Jvs2Java.uid).append(".class\").delete(); }");
             body.append("}\n");
         }

@@ -33,7 +33,6 @@ public class ProgletManager {
     private static HashMap<String, Proglet> proglets = new HashMap<String, Proglet>();
 
     public ProgletManager() {
-        ProgletManager.proglets.put("test", new Proglet("test"));
         ProgletManager.proglets.put("game", new Proglet("game"));
         if(!JvsMain.getJvsConf().get("sketchbook").equals("")){
             try {

@@ -70,7 +70,7 @@ public final class JVSMainPanel extends JPanel {
             Logger.getLogger(JVSMainPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
         ((JVSTabs)JVSMainPanel.getMainPane().getRightComponent()).add("Web", "",jvsHtmlDisplay);
-        JVSMainPanel.loadProglet("test");
+        JVSMainPanel.loadProglet("game");
     }
 
     /** Get the toolbar
