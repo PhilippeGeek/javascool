@@ -21,6 +21,8 @@ public class Macros {
       return org.javascool.gui.JVSMainPanel.getThisInStatic();
   }
   
+  
+  
   /** Show a String on the console
    * @param string The string to show
    */
@@ -81,7 +83,7 @@ public class Macros {
       if(delay > 0) {
         Thread.sleep(delay);
       } else {
-        Thread.sleep(0, 10000);
+        Thread.sleep(0,10000);
       }
     } catch(Exception e) { throw new RuntimeException("Programme arrêté !");
     }
