@@ -3,6 +3,7 @@ package org.javascool.proglets.game;
 import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.javascool.tools.Console;
 
 public class Functions {
 
@@ -13,6 +14,13 @@ public class Functions {
         private java.util.ArrayList<CallbackFunction> m_onClick;
 
         public void onClick(String s) {
+            try {
+                m_onClick.add(new CallbackFunction(Console.getProgram().getClass().getMethod(s,MouseState.class)));
+            } catch (NoSuchMethodException ex) {
+                Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SecurityException ex) {
+                Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
         public void start() {
@@ -54,15 +62,15 @@ public class Functions {
 
         public void call(State s) {
             try {
-                try {
-                    m_method.invoke(s);
-                } catch (InvocationTargetException ex) {
-                    Logger.getLogger(CallbackFunction.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                m_method.invoke(Console.getProgram(),s);
             } catch (IllegalAccessException ex) {
-                Logger.getLogger(CallbackFunction.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IllegalArgumentException ex) {
-                Logger.getLogger(CallbackFunction.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InvocationTargetException ex) {
+                Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SecurityException ex) {
+                Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
