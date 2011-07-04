@@ -30,7 +30,8 @@ public class Proglet {
     private Pml conf;
     private JPanel panel = new JPanel();
     private File help;
-    private String jvsFunctions = "";
+    private Boolean jvsFunctions = false;
+    private String packageName="org.javascool.proglets.tools";
     private String name = "";
 
     public Proglet(File directory) throws Exception {
@@ -75,6 +76,7 @@ public class Proglet {
 
     public Proglet(String progletName) {
         this.name = progletName;
+        this.packageName = "org.javascool.proglets."+progletName;
         this.setupPanel();
         this.setupJvsFunctions();
         try {
@@ -106,50 +108,28 @@ public class Proglet {
     }
 
     private void setupJvsFunctions() {
-
-        try {
-            String jvsFile;
-            jvsFile = Utils.loadString(Class.forName("org.javascool.JvsMain").getResource("proglets/" + name + "/functions.jvs").toURI().toString());
-            jvsFile = jvsFile.replaceAll("\n", "").replaceAll("\t", "");
-            // Before include check if JVS functions form the proglet are compilable
-            Jvs2Java.reportError = false;
-            if (!Jvs2Java.jvsCompile(jvsFile + "\nvoid main(){echo(\"This is a jvs lib\");}")) {
-                JVSMainPanel.Dialog.error("Erreur", "Le fichier de fonctions JVS de la proglet \"" + name + "\" n'est pas bon");
-            } else {
-                this.jvsFunctions = jvsFile;
-            }
-            Jvs2Java.reportError = true;
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Proglet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (URISyntaxException ex) {
-            Logger.getLogger(Proglet.class.getName()).log(Level.SEVERE, null, ex);
+        if (Proglet.classExists("org.javascool.proglets." + this.name + ".Functions")) {
+            this.jvsFunctions=true;
         }
     }
 
     private void setupJvsFunctions(File functionFile) {
-        JVSFile file = new JVSFile(functionFile.getAbsolutePath(), true);
-        String jvsFile;
-        jvsFile = file.getCode();
-        jvsFile = jvsFile.replaceAll("\n", "").replaceAll("\t", "");
-        // Before include check if JVS functions form the proglet are compilable
-        Jvs2Java.reportError = false;
-        if (!Jvs2Java.jvsCompile(jvsFile + "\nvoid main(){echo(\"This is a jvs lib\");}")) {
-            JVSMainPanel.Dialog.error("Erreur", "Le fichier de fonctions JVS de la proglet \"" + name + "\" n'est pas bon");
-        } else {
-            this.jvsFunctions = jvsFile;
-        }
-        Jvs2Java.reportError = true;
+        this.jvsFunctions=false;
     }
 
     public JPanel getPanel() {
         return this.panel;
+    }
+    
+    public String getPackage(){
+        return this.packageName;
     }
 
     public String getName() {
         return "Proglet " + name;
     }
 
-    public String getJvsFunctionsToInclude() {
+    public Boolean getJvsFunctionsToInclude() {
         return this.jvsFunctions;
     }
 
