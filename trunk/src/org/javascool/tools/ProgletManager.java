@@ -36,6 +36,7 @@ public class ProgletManager {
         ProgletManager.proglets.put("test", new Proglet("test"));
         if(!JvsMain.getJvsConf().get("sketchbook").equals("")){
             try {
+                Logger.getLogger(ProgletManager.class.getName()).log(Level.INFO, "Load sketchbook ...");
                 this.installProgletDir(new File(JvsMain.getJvsConf().get("sketchbook")));
             } catch (Exception ex) {
                 Logger.getLogger(ProgletManager.class.getName()).log(Level.SEVERE, null, ex);

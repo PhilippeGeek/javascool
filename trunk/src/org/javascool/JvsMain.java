@@ -11,6 +11,8 @@ import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.javascool.gui.JVSMainPanel;
+import org.javascool.pml.Pml;
+import org.javascool.tools.Macros;
 
 /** The Start Class for Java's cool
  * It will contain all engines to start and setup Java's cool as a stand alone program, an applet or an sub-panel in an app.
@@ -126,6 +128,10 @@ public class JvsMain {
     public static JVSConf getJvsConf() {
         return JvsMain.jvsConf;
     }
+    
+    public static JVSMainPanel getJvs(){
+        return JvsMain.jvsMainPanel;
+    }
 
     /** Test if we are on Mac */
     public static Boolean isMac() {
@@ -145,7 +151,7 @@ public class JvsMain {
      * </ul>
      */
     public static void main(String[] usage) {
-        System.out.println("---------------------\n" + title + "\n---------------------\nstarting..");
+        System.out.println("" + title + " is starting ...");
         org.javascool.JvsMain.setUpSystem();
         JvsMain.setUpJVSMainFrame();
         JvsMain.getJvsMainFrame().setVisible(true);

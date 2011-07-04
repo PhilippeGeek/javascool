@@ -63,7 +63,13 @@ public final class JVSMainPanel extends JPanel {
         //tabs.add("Test", JvsMain.logo16, new JPanel());
         JVSMainPanel.newFile();
         this.add(mainPane, BorderLayout.CENTER);
-        //((JVSTabs)JVSMainPanel.getMainPane().getRightComponent()).add("Web", "",new JVSWebPanel());
+        JVSHtmlDisplay jvsHtmlDisplay = new JVSHtmlDisplay();
+        try {
+            jvsHtmlDisplay.load(Class.forName("org.javascool.JvsMain").getResource("doc-files/about-main.htm").toString());
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(JVSMainPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        ((JVSTabs)JVSMainPanel.getMainPane().getRightComponent()).add("Web", "",jvsHtmlDisplay);
         JVSMainPanel.loadProglet("test");
     }
 
