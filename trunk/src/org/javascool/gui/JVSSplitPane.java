@@ -30,14 +30,8 @@ public class JVSSplitPane extends JSplitPane{
         this.setLeftComponent(JVSSplitPane.editor);
         this.setRightComponent(JVSSplitPane.tabs);
         this.setVisible(true);
-    }
-    
-    /** Construct a new JVSSplitPane
-     * Construct and set left and right component
-     * @deprecated You can't set left and right components
-     */
-    public JVSSplitPane(Component left,Component right){
-        this();
+        this.validate();
+        this.setDividerLocation(500);
     }
     
     /** Get the left component */
