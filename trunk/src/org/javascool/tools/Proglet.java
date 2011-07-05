@@ -159,7 +159,7 @@ public class Proglet {
         return this.jvsFunctions;
     }
 
-    private static boolean classExists(String className) {
+    public static boolean classExists(String className) {
         try {
             Class.forName(className);
             return true;

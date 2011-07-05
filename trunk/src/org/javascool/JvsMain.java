@@ -151,9 +151,16 @@ public class JvsMain {
      * </ul>
      */
     public static void main(String[] usage) {
-        System.out.println("" + title + " is starting ...");
-        org.javascool.JvsMain.setUpSystem();
-        JvsMain.setUpJVSMainFrame();
-        JvsMain.getJvsMainFrame().setVisible(true);
+        try {
+            System.out.println("" + title + " is starting ...");
+            org.javascool.JvsMain.setUpSystem();
+            JvsMain.setUpJVSMainFrame();
+            JvsMain.getJvsMainFrame().setVisible(true);
+            JvsMain.getJvsMainPanel().revalidate();
+            JvsMain.getJvsMainFrame().pack();
+        } catch (Exception e) {
+            System.err.println("Erreur Java : \n"+e.getMessage()+"\nCall stack: \n");
+            e.printStackTrace(System.err);
+        }
     }
 }

@@ -52,21 +52,6 @@ public class Functions {
     private java.util.ArrayList<String> m_onMouseWheelUp;
     private java.util.ArrayList<String> m_onMouseWheelDown;
     private java.util.ArrayList<String> m_onMouseWheelMoved;
-
-    public static void test(){
-        try {
-            for(Method m:Macros.getProgram().getClass().getDeclaredMethods()){
-                System.err.println("Method : "+m.getName()+" ");
-                Class[] c=m.getParameterTypes();
-                for (int i=0; i<c.length; i++) {
-                    System.err.println(c[i].getName()+" ");
-                }
-                if (m.getName().equals("toto")) m.invoke(Macros.getProgram());
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
     
     /**
      * Used to create a listener that will callback the specified function
@@ -178,14 +163,14 @@ public class Functions {
             Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NoSuchMethodException ex) {
             try {
-                System.out.println(Macros.getProgram().getClass().getMethod(method).toString());
-            } /*catch (IllegalAccessException ex2) {
+                Macros.getProgram().getClass().getMethod(method).invoke(Macros.getProgram());
+            } catch (IllegalAccessException ex2) {
                 Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex2);
-            } */catch (IllegalArgumentException ex2) {
+            } catch (IllegalArgumentException ex2) {
                 Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex2);
-            } /*catch (InvocationTargetException ex2) {
+            } catch (InvocationTargetException ex2) {
                 Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex2);
-            } */catch (NoSuchMethodException ex2) {
+            } catch (NoSuchMethodException ex2) {
                 Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex2);
             } catch (SecurityException ex2) {
                 Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex2);
@@ -215,7 +200,6 @@ public class Functions {
         m_singleton.m_onMouseEntered=new java.util.ArrayList<String>();
         m_singleton.m_onMouseExited=new java.util.ArrayList<String>();
         m_singleton.m_onMouseMoved=new java.util.ArrayList<String>();
-        m_singleton.m_onMousePressed=new java.util.ArrayList<String>();
         m_singleton.m_onMousePressed=new java.util.ArrayList<String>();
         m_singleton.m_onMouseReleased=new java.util.ArrayList<String>();
         m_singleton.m_onMouseUp=new java.util.ArrayList<String>();
