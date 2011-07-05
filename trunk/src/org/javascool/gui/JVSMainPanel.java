@@ -346,9 +346,7 @@ public final class JVSMainPanel extends JPanel {
             ((JVSTabs) JVSMainPanel.getMainPane().getRightComponent()).removeAll();
             ((JVSTabs) JVSMainPanel.getMainPane().getRightComponent()).add("Console","",new org.javascool.tools.Console());
             JVSMainPanel.currentProglet = JVSMainPanel.pgman.getProglet(name);
-            if (JVSMainPanel.currentProglet.getPanel() != null) {
-                ((JVSTabs) JVSMainPanel.getMainPane().getRightComponent()).add(currentProglet.getName(), "", JVSMainPanel.currentProglet.getPanel());
-            }
+            JVSMainPanel.getWidgetTabs().setProglet(currentProglet);
         } else {
             Dialog.error("Impossible de continuer", "La proglet " + name + " ne peut pas être chargé car elle n'existe pas.");
         }
@@ -364,6 +362,10 @@ public final class JVSMainPanel extends JPanel {
      */
     public static JVSFileEditorTabs getEditorTabs() {
         return ((JVSFileEditorTabs) JVSMainPanel.mainPane.getLeftComponent());
+    }
+    
+    public static JVSWidgetPanel getWidgetTabs(){
+        return (JVSWidgetPanel) JVSMainPanel.mainPane.getRightComponent();
     }
 
     public static JVSSplitPane getMainPane() {

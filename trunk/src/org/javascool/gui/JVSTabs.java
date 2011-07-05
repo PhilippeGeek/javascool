@@ -18,11 +18,11 @@ public class JVSTabs extends JTabbedPane {
         super();
     }
 
-    public void add(String name, String icon, JPanel panel) {
-        this.add(name,icon,panel,null);
+    public String add(String name, String icon, JPanel panel) {
+        return this.add(name,icon,panel,null);
     }
     
-    public void add(String name, String icon, JPanel panel, String tooltip) {
+    public String add(String name, String icon, JPanel panel, String tooltip) {
         tabs.put(name, panel);
         if (!icon.equalsIgnoreCase("")) {
             ImageIcon logo = Utils.getIcon(icon);
@@ -31,8 +31,13 @@ public class JVSTabs extends JTabbedPane {
             this.addTab(name, null, panel,tooltip);
         }
         this.revalidate();
+        return name;
     }
 
+    public JPanel getPanel(String name){
+        return this.tabs.get(name);
+    }
+    
     public void del(String name) {
         this.removeTabAt(this.indexOfTab(name));
         tabs.remove(name);

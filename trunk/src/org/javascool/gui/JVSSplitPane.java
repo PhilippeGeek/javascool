@@ -25,7 +25,7 @@ public class JVSSplitPane extends JSplitPane{
         super(JSplitPane.HORIZONTAL_SPLIT);
         JVSFileEditorTabs editorToSet=new JVSFileEditorTabs();
         JVSSplitPane.editor=editorToSet;
-        JVSSplitPane.tabs=new JVSTabs();
+        JVSSplitPane.tabs=new JVSWidgetPanel();
         JVSSplitPane.tabs.add("Console", "", new Console());
         this.setLeftComponent(JVSSplitPane.editor);
         this.setRightComponent(JVSSplitPane.tabs);

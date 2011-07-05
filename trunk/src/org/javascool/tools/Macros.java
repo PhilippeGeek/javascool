@@ -5,6 +5,7 @@
 package org.javascool.tools;
 
 import java.util.Calendar;
+import javax.swing.JPanel;
 import org.javascool.gui.JVSMainPanel;
 
 /** Contain useful function for help student to program
@@ -99,5 +100,9 @@ public class Macros {
       Console.stopProgram();
       sleep(500);
     }
+  }
+  
+  public static JPanel getProgletPanel(){
+      return JVSMainPanel.getWidgetTabs().getProgletPanel();
   }
 }
