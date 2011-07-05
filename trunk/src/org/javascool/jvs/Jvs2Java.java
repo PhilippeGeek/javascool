@@ -104,7 +104,7 @@ public class Jvs2Java {
 
             head.append("  public void run() { main(); new File(System.getProperty(\"java.io.tmpdir\")+\"").append(File.separator.equals("\\") ? "\\\\" : "/").append("JvsToJavaTranslated").append(Jvs2Java.uid).append(".class\").delete(); }");
         }
-        String finalBody = body.toString();
+        String finalBody = body.toString().replaceAll("([ \t]*)(?!(public|private|protected))([A-Za-z0-1_ \t]*)\\(([^)]*)\\)([ \t\n]*)\\{", "public $3($4){")/*.replaceAll("^(( |\t)*((?!(public|private|protected))( |\n)+)?[a-zA-Z0-9_]+( |\n)+[a-zA-Z0-9_]+ *\\(.*\\)( |\n)*\\{( |\n)*)$", "public $1")*/;
         System.err.println(finalBody);
         return (head.toString() + finalBody + "}");
     }
@@ -116,7 +116,6 @@ public class Jvs2Java {
      */
     private static String translateOnce(String line) {
         // Translates the while statement with sleep
-        line.replaceAll("^(( |\t)*((?!(public|private|protected))( |\n)+)?[a-zA-Z0-9_]+( |\n)+[a-zA-Z0-9_]+ *\\(.*\\)( |\n)*\\{( |\n)*)$", "public $1");
         line = line.replaceAll("(while.*\\{)", "$1 sleep(20);");
         line = line.replaceAll("([A-Za-z0-9_\\-]+)::([A-Za-z0-9_\\-]+)\\(\\)", "org.javascool.proglets.$1.Functions.$2()");
         //line = line.replaceAll("(while\\(true\\)\\{)", "$1 sleep(50);");
