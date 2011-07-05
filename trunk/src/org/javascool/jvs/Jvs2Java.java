@@ -104,8 +104,10 @@ public class Jvs2Java {
 
             head.append("  public void run() { main(); new File(System.getProperty(\"java.io.tmpdir\")+\"").append(File.separator.equals("\\") ? "\\\\" : "/").append("JvsToJavaTranslated").append(Jvs2Java.uid).append(".class\").delete(); }");
         }
-        String finalBody = body.toString().replaceAll("([ \t]*)(?!(public|private|protected))([A-Za-z0-1_ \t]*)\\(([^)]*)\\)([ \t\n]*)\\{", "public $3($4){")/*.replaceAll("^(( |\t)*((?!(public|private|protected))( |\n)+)?[a-zA-Z0-9_]+( |\n)+[a-zA-Z0-9_]+ *\\(.*\\)( |\n)*\\{( |\n)*)$", "public $1")*/;
+        String finalBody = body.toString().replaceAll("((^|\n)([ \t]*)(?!((public|private|protected)([ \t]+)))([A-Za-z0-1_]*)([ ]+)([A-Za-z0-1_]*)\\(([^()]*)\\)([ ]*)\\{([ \t]*)(\n|$))", "public $1")/*.replaceAll("^(( |\t)*((?!(public|private|protected))( |\n)+)?[a-zA-Z0-9_]+( |\n)+[a-zA-Z0-9_]+ *\\(.*\\)( |\n)*\\{( |\n)*)$", "public $1")*/;
+        System.err.println("****");
         System.err.println(finalBody);
+        System.err.println("****");
         return (head.toString() + finalBody + "}");
     }
 
