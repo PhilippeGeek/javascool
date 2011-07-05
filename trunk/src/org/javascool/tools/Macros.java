@@ -105,4 +105,8 @@ public class Macros {
   public static JPanel getProgletPanel(){
       return JVSMainPanel.getWidgetTabs().getProgletPanel();
   }
+  
+  public static Object getProgram(){
+      return org.javascool.tools.Console.getProgram().getClass().cast(org.javascool.tools.Console.getProgram());
+  }
 }

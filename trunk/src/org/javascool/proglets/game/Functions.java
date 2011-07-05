@@ -51,7 +51,7 @@ public class Functions {
 
     public static void test(){
         try {
-            for(Method m:org.javascool.tools.Console.getProgram().getClass().cast(org.javascool.tools.Console.getProgram()).getClass().getDeclaredMethods()){
+            for(Method m:Macros.getProgram().getClass().getDeclaredMethods()){
                 System.err.println("Method : "+m.getName());
             }
         } catch (Exception ex) {
