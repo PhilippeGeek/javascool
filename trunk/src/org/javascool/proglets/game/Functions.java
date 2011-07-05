@@ -56,7 +56,12 @@ public class Functions {
     public static void test(){
         try {
             for(Method m:Macros.getProgram().getClass().getDeclaredMethods()){
-                System.err.println("Method : "+m.getName());
+                System.err.println("Method : "+m.getName()+" ");
+                Class[] c=m.getParameterTypes();
+                for (int i=0; i<c.length; i++) {
+                    System.err.println(c[i].getName()+" ");
+                }
+                if (m.getName().equals("toto")) m.invoke(Macros.getProgram());
             }
         } catch (Exception ex) {
             Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
@@ -164,7 +169,7 @@ public class Functions {
      */
     private static void call(String method, State s) {
         try {
-            Console.getProgram().getClass().getMethod(method, State.class).invoke(Console.getProgram(), s);
+            Macros.getProgram().getClass().getMethod(method, State.class).invoke(Macros.getProgram(), s);
         } catch (IllegalAccessException ex) {
             Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalArgumentException ex) {
@@ -173,14 +178,14 @@ public class Functions {
             Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NoSuchMethodException ex) {
             try {
-                Console.getProgram().getClass().getMethod(method).invoke(Console.getProgram());
-            } catch (IllegalAccessException ex2) {
+                System.out.println(Macros.getProgram().getClass().getMethod(method).toString());
+            } /*catch (IllegalAccessException ex2) {
                 Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex2);
-            } catch (IllegalArgumentException ex2) {
+            } */catch (IllegalArgumentException ex2) {
                 Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex2);
-            } catch (InvocationTargetException ex2) {
+            } /*catch (InvocationTargetException ex2) {
                 Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex2);
-            } catch (NoSuchMethodException ex2) {
+            } */catch (NoSuchMethodException ex2) {
                 Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex2);
             } catch (SecurityException ex2) {
                 Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex2);
