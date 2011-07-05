@@ -609,7 +609,12 @@ public class Pml {
             return "";
         }
         String v = data.get(name).toString();
-        return v != null ? v.substring(1,v.length()-1) : value != null ? value : "";
+        if(v.startsWith("{\"")){
+            v=v.substring(2,v.length()-2);
+        } else {
+            v=v.substring(1,v.length()-1);
+        }
+        return v != null ? v : value != null ? value : "";
     }
     /**/
 

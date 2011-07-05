@@ -92,6 +92,10 @@ public class Jvs2Java {
             if (JVSMainPanel.getCurrentProglet().getJvsFunctionsToInclude()) {
                 head.append("import static ").append(JVSMainPanel.getCurrentProglet().getPackage()).append(".Functions.*;");
             }
+            if (!JVSMainPanel.getCurrentProglet().getJavaDependance().equals(new ArrayList<String>())) {
+                for(String dep:JVSMainPanel.getCurrentProglet().getJavaDependance())
+                    head.append("import ").append(dep).append(";");
+            }
             //head.append("import proglet.paintbrush.*;");
             // Declares the proglet's core as a Runnable in the Applet
             head.append("public class JvsToJavaTranslated").append(Jvs2Java.uid).append(" implements Runnable{");
@@ -110,7 +114,7 @@ public class Jvs2Java {
      */
     private static String translateOnce(String line) {
         // Translates the while statement with sleep
-        line = line.replaceAll("(while.*\\{)", "$1 sleep(0);");
+        line = line.replaceAll("(while.*\\{)", "$1 sleep(20);");
         //line = line.replaceAll("(while\\(true\\)\\{)", "$1 sleep(50);");
         // Translates the Synthe proglet @tone macro
         line = line.replaceFirst("@tone:(.*)\\s*;",
