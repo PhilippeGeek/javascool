@@ -180,9 +180,14 @@ public class Functions {
         }
     }
 
-    //TODO
+    public static void stop() {
+        m_clock.stop();
+    }
+    
+    private static Thread m_clock;
+    
     /**
-     * This method should be called during init (see bug report #005)
+     * This method is called during init
      * It creates the listeners, the clock and the singleton
      */
     public static void start() {
@@ -209,7 +214,8 @@ public class Functions {
          */
         Clock c = new Clock();
         c.setFps(30);
-        new Thread(c).start();
+        m_clock=new Thread(c);
+        m_clock.start();
 
         /* Define a few anonymous classes that will define the proglet's behavior
          * when an event is performed. Uually the proglet will call all the callback
@@ -311,7 +317,6 @@ public class Functions {
                 try {
                     Thread.sleep(1000 / m_fps);
                 } catch (InterruptedException ex) {
-                    Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 tick();
             }
