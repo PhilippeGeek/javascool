@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.javascool.tools.Console;
 import org.javascool.tools.Macros;
+import org.javascool.proglets.game.MouseState;
 
 /* To use these event listeners, use this syntax : 
  * void toto(MouseState s) {
@@ -315,26 +316,4 @@ public class Functions {
  * maybe we could switch it to an interface or leave it non-abstract (ugly)
  */
 abstract class State {
-}
-
-/**
- * A MouseState is passed as a parameter to the user-defined callback functions
- * so it must stay as intuitive as possible
- */
-class MouseState extends State {
-
-    private java.awt.event.MouseEvent m_evt;
-    private int m_button;
-
-    MouseState(java.awt.event.MouseEvent evt) {
-        m_evt = evt;
-    }
-
-    MouseState(int button) {
-        m_button = button;
-    }
-    /* 
-     * TODO add covenience methods such as x and y. Maybe leave them public
-     * in case the user prefers to use s.x rather than x.getX() ?
-     */
 }
