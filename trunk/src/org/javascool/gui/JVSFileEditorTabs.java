@@ -98,7 +98,7 @@ public class JVSFileEditorTabs extends JVSTabs {
             file.setName(tabTitle);
         }
         // We add the tab
-        this.add(tabTitle, "", editors.get(fileId));
+        add(tabTitle, "", editors.get(fileId));
         // Store the new fileId by the tab name
         JVSFileEditorTabs.fileIds.put(tabTitle, fileId);
         // Select the new tab

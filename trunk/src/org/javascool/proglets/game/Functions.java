@@ -6,15 +6,14 @@
  * 
  * gmatheron : guillaume.matheron.06@gmail.com
  */
-
-
-
 package org.javascool.proglets.game;
 
+import java.awt.event.MouseEvent;
 import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.javascool.tools.Console;
+import org.javascool.tools.Macros;
 
 /*
  * To use these event listeners, use this syntax : 
@@ -25,205 +24,200 @@ import org.javascool.tools.Console;
  *     onClick("toto");
  * }
  */
-
 /**
  * 
  * @author gmatheron
  */
 public class Functions {
+    private static Functions m_singleton;
+    private boolean m_mouseDown[] = {false, false, false};
     /*
      * These arrays are designed to store the functions the user assigned a listener
      * A convenience type is used : CallbackFunction
      */
-    private java.util.ArrayList<CallbackFunction> m_onClick;
-    private java.util.ArrayList<CallbackFunction> m_onMouseEntered;
-    private java.util.ArrayList<CallbackFunction> m_onMouseExited;
-    private java.util.ArrayList<CallbackFunction> m_onMousePressed;
-    private java.util.ArrayList<CallbackFunction> m_onMouseReleased;
-    
+    private java.util.ArrayList<String> m_onClick;
+    private java.util.ArrayList<String> m_onMouseEntered;
+    private java.util.ArrayList<String> m_onMouseExited;
+    private java.util.ArrayList<String> m_onMousePressed;
+    private java.util.ArrayList<String> m_onMouseReleased;
+    private java.util.ArrayList<String> m_onMouseDown;
+    private java.util.ArrayList<String> m_onMouseUp;
+    private java.util.ArrayList<String> m_onMouseMoved;
+    private java.util.ArrayList<String> m_onMouseDragged;
+
     /**
      * Used to create a listener that will callback the specified function
      * with one MouseState argument
      * @param s The function to callback
      */
-    public void onClick(String s) {
-        try {
-            m_onClick.add(new CallbackFunction(Console.getProgram().getClass().getMethod(s, MouseState.class)));
-        } catch (NoSuchMethodException ex) {
-            //Maybe generate better errors ?
-            Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SecurityException ex) {
-            Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public static void onClick(String s) {
+        m_singleton.m_onClick.add(s);
     }
-    
+
     /**
      * Used to create a listener that will callback the specified function
      * with one MouseState argument
      * @param s The function to callback
      */
-    public void onMouseEntered(String s) {
-        try {
-            m_onMouseEntered.add(new CallbackFunction(Console.getProgram().getClass().getMethod(s, MouseState.class)));
-        } catch (NoSuchMethodException ex) {
-            //Maybe generate better errors ?
-            Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SecurityException ex) {
-            Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public static void onMouseEntered(String s) {
+        m_singleton.m_onMouseEntered.add(s);
     }
-    
+
     /**
      * Used to create a listener that will callback the specified function
      * with one MouseState argument
      * @param s The function to callback
      */
-    public void onMouseExited(String s) {
-        try {
-            m_onMouseExited.add(new CallbackFunction(Console.getProgram().getClass().getMethod(s, MouseState.class)));
-        } catch (NoSuchMethodException ex) {
-            //Maybe generate better errors ?
-            Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SecurityException ex) {
-            Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public static void onMouseExited(String s) {
+        m_singleton.m_onMouseExited.add(s);
     }
-    
+
     /**
      * Used to create a listener that will callback the specified function
      * with one MouseState argument
      * @param s The function to callback
      */
-    public void onMousePressed(String s) {
-        try {
-            m_onMousePressed.add(new CallbackFunction(Console.getProgram().getClass().getMethod(s, MouseState.class)));
-        } catch (NoSuchMethodException ex) {
-            //Maybe generate better errors ?
-            Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SecurityException ex) {
-            Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public static void onMousePressed(String s) {
+        m_singleton.m_onMousePressed.add(s);
     }
-    
+
     /**
      * Used to create a listener that will callback the specified function
      * with one MouseState argument
      * @param s The function to callback
      */
-    public void onMouseReleased(String s) {
+    public static void onMouseReleased(String s) {
+        m_singleton.m_onMouseReleased.add(s);
+    }
+
+    public static void onMouseDown(String s) {
+        m_singleton.m_onMouseDown.add(s);
+    }
+
+    public static void onMouseUp(String s) {
+        m_singleton.m_onMouseUp.add(s);
+    }
+
+    public static void onMouseMoved(String s) {
+        m_singleton.m_onMouseMoved.add(s);
+    }
+
+    public static void onMouseDragged(String s) {
+        m_singleton.m_onMouseDragged.add(s);
+    }
+
+    public static void call(String method, State s) {
         try {
-            m_onMouseReleased.add(new CallbackFunction(Console.getProgram().getClass().getMethod(s, MouseState.class)));
-        } catch (NoSuchMethodException ex) {
-            //Maybe generate better errors ?
-            Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SecurityException ex) {
-            Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    //TODO
-    /**
-     * This method should be called at init (see bug report #005)
-     * It creates the listeners
-     */
-    public void start() {
-        /********* START ANONYMOUS CLASS ***************/
-        new java.awt.event.MouseListener() {
-
-            @Override
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                for (int i = 0; i < m_onClick.size(); i++) {
-                    m_onClick.get(i).call(new MouseState(evt));
-                }
-            }
-
-            @Override
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                for (int i = 0; i < m_onClick.size(); i++) {
-                    m_onMouseEntered.get(i).call(new MouseState(evt));
-                }
-            }
-
-            @Override
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                for (int i = 0; i < m_onClick.size(); i++) {
-                    m_onMouseExited.get(i).call(new MouseState(evt));
-                }
-            }
-
-            @Override
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                for (int i = 0; i < m_onClick.size(); i++) {
-                    m_onMousePressed.get(i).call(new MouseState(evt));
-                }
-            }
-
-            @Override
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                for (int i = 0; i < m_onClick.size(); i++) {
-                    m_onMouseReleased.get(i).call(new MouseState(evt));
-                }
-            }
-        };
-        /********* END ANONYMOUS CLASS ***************/
-    }
-
-    /**
-     * Convenience function to surround a java.lang.reflect.Method
-     * This notably avoids having to create try/catch blocks each time a call
-     * is performed (see Functions.start)
-     * 
-     * If this class is deleted, also delete the class State
-     */
-    class CallbackFunction {
-
-        private java.lang.reflect.Method m_method;
-
-        public CallbackFunction(java.lang.reflect.Method m) {
-            m_method = m;
-        }
-
-        public void call(State s) {
-            //Maybe generate better errors ?
             try {
-                m_method.invoke(Console.getProgram(), s);
+                Console.getProgram().getClass().getMethod(method, State.class).invoke(Console.getProgram(), s);
             } catch (IllegalAccessException ex) {
                 Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IllegalArgumentException ex) {
                 Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
             } catch (InvocationTargetException ex) {
                 Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SecurityException ex) {
-                Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
             }
+        } catch (NoSuchMethodException ex) {
+            Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SecurityException ex) {
+            Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
+    //TODO
     /**
-     * Superclass of all the states. This class is mainly used in CallbackFunction
-     * so if CallbackFunction is deleted maybe State should be deleted too.
-     * 
-     * If an abstract (State) class can't be declared into a non-abstract class (Functions)
-     * maybe we could switch it to an interface or leave it non-abstract (ugly)
+     * This method should be called at init (see bug report #005)
+     * It creates the listeners
      */
-    abstract class State {
-    }
+    public static void start() {
+        m_singleton=new Functions();
+        
+        m_singleton.m_onClick=new java.util.ArrayList<String>();
+        m_singleton.m_onMouseDown=new java.util.ArrayList<String>();
+        m_singleton.m_onMouseDragged=new java.util.ArrayList<String>();
+        m_singleton.m_onMouseEntered=new java.util.ArrayList<String>();
+        m_singleton.m_onMouseExited=new java.util.ArrayList<String>();
+        m_singleton.m_onMouseMoved=new java.util.ArrayList<String>();
+        m_singleton.m_onMousePressed=new java.util.ArrayList<String>();
+        m_singleton.m_onMousePressed=new java.util.ArrayList<String>();
+        m_singleton.m_onMouseReleased=new java.util.ArrayList<String>();
+        m_singleton.m_onMouseUp=new java.util.ArrayList<String>();
+        
+        Clock c = new Clock();
+        c.setFps(30);
+        new Thread(c).start();
 
-    /**
-     * A MouseState is passed as a parameter to the user-defined callback functions
-     * so it must stay as intuitive as possible
-     */
-    class MouseState extends State {
+        /********* START ANONYMOUS CLASSES ***************/
+        Macros.getProgletPanel().addMouseListener(
+                new java.awt.event.MouseListener() {
 
-        private java.awt.event.MouseEvent m_evt;
+                    @Override
+                    public void mouseClicked(java.awt.event.MouseEvent evt) {
+                        for (int i = 0; i < m_singleton.m_onClick.size(); i++) {
+                            call(m_singleton.m_onClick.get(i), (new MouseState(evt)));
+                        }
+                        System.err.println("Mouse Clicked");
+                    }
 
-        MouseState(java.awt.event.MouseEvent evt) {
-            m_evt = evt;
-        }
-        /* 
-         * TODO add covenience methods such as x and y. Maybe leave them public
-         * in case the user prefers to use s.x rather than x.getX() ?
-         */
+                    @Override
+                    public void mouseEntered(java.awt.event.MouseEvent evt) {
+                        for (int i = 0; i < m_singleton.m_onMouseEntered.size(); i++) {
+                            call(m_singleton.m_onMouseEntered.get(i), (new MouseState(evt)));
+                        }
+                    }
+
+                    @Override
+                    public void mouseExited(java.awt.event.MouseEvent evt) {
+                        for (int i = 0; i < m_singleton.m_onMouseExited.size(); i++) {
+                            call(m_singleton.m_onMouseExited.get(i), (new MouseState(evt)));
+                        }
+                    }
+
+                    @Override
+                    public void mousePressed(java.awt.event.MouseEvent evt) {
+                        for (int i = 0; i < m_singleton.m_onMousePressed.size(); i++) {
+                            call(m_singleton.m_onMousePressed.get(i), (new MouseState(evt)));
+                        }
+                        if (evt.getButton() == java.awt.event.MouseEvent.BUTTON1) {
+                            m_singleton.m_mouseDown[0] = true;
+                        } else if (evt.getButton() == java.awt.event.MouseEvent.BUTTON2) {
+                           m_singleton. m_mouseDown[1] = true;
+                        } else if (evt.getButton() == java.awt.event.MouseEvent.BUTTON3) {
+                            m_singleton.m_mouseDown[2] = true;
+                        }
+                    }
+
+                    @Override
+                    public void mouseReleased(java.awt.event.MouseEvent evt) {
+                        for (int i = 0; i < m_singleton.m_onMouseReleased.size(); i++) {
+                            call(m_singleton.m_onMouseReleased.get(i), (new MouseState(evt)));
+                        }
+                        if (evt.getButton() == java.awt.event.MouseEvent.BUTTON1) {
+                            m_singleton.m_mouseDown[0] = false;
+                        } else if (evt.getButton() == java.awt.event.MouseEvent.BUTTON2) {
+                            m_singleton.m_mouseDown[1] = false;
+                        } else if (evt.getButton() == java.awt.event.MouseEvent.BUTTON3) {
+                            m_singleton.m_mouseDown[2] = false;
+                        }
+                    }
+                });
+        new java.awt.event.MouseMotionListener() {
+
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                for (int i = 0; i < m_singleton.m_onMouseDragged.size(); i++) {
+                    call(m_singleton.m_onMouseDragged.get(i), (new MouseState(e)));
+                }
+            }
+
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                for (int i = 0; i < m_singleton.m_onMouseMoved.size(); i++) {
+                    call(m_singleton.m_onMouseMoved.get(i), (new MouseState(e)));
+                }
+            }
+        };
+        /********* END ANONYMOUS CLASSES ***************/
     }
 
     /**
@@ -236,4 +230,72 @@ public class Functions {
         public void call() {
         }
     }
+
+    public static class Clock implements Runnable {
+
+        private int m_fps;
+
+        @Override
+        public void run() {
+            while (true) {
+                try {
+                    Thread.sleep(1000 / m_fps);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                tick();
+            }
+        }
+
+        public void setFps(int fps) {
+            m_fps = fps;
+        }
+
+        private void tick() {
+            for (int j = 0; j < 3; j++) {
+                if (m_singleton.m_mouseDown[j]) {
+                    for (int i = 0; i < m_singleton.m_onMouseDown.size(); i++) {
+                        call(m_singleton.m_onMouseDown.get(i), new MouseState(j));
+                    }
+                } else {
+                    for (int i = 0; i < m_singleton.m_onMouseUp.size(); i++) {
+                        call(m_singleton.m_onMouseUp.get(i), new MouseState(j));
+                    }
+                }
+            }
+        }
+    }
+
+    
+}
+
+/**
+ * Superclass of all the states.
+ * 
+ * If an abstract (State) class can't be declared into a non-abstract class (Functions)
+ * maybe we could switch it to an interface or leave it non-abstract (ugly)
+ */
+abstract class State {
+}
+
+/**
+ * A MouseState is passed as a parameter to the user-defined callback functions
+ * so it must stay as intuitive as possible
+ */
+class MouseState extends State {
+
+    private java.awt.event.MouseEvent m_evt;
+    private int m_button;
+
+    MouseState(java.awt.event.MouseEvent evt) {
+        m_evt = evt;
+    }
+
+    MouseState(int button) {
+        m_button = button;
+    }
+    /* 
+     * TODO add covenience methods such as x and y. Maybe leave them public
+     * in case the user prefers to use s.x rather than x.getX() ?
+     */
 }
