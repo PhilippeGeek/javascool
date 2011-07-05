@@ -9,6 +9,7 @@
 package org.javascool.proglets.game;
 
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.logging.Level;
@@ -16,6 +17,7 @@ import java.util.logging.Logger;
 import org.javascool.tools.Console;
 import org.javascool.tools.Macros;
 import org.javascool.proglets.game.MouseState;
+import org.javascool.proglets.game.MouseWheelState;
 
 /* To use these event listeners, use this syntax : 
  * void toto(MouseState s) {
@@ -48,6 +50,8 @@ public class Functions {
     private java.util.ArrayList<String> m_onMouseMoved;
     private java.util.ArrayList<String> m_onMouseDragged;
     private java.util.ArrayList<String> m_onMouseWheelUp;
+    private java.util.ArrayList<String> m_onMouseWheelDown;
+    private java.util.ArrayList<String> m_onMouseWheelMoved;
 
     public static void test(){
         try {
@@ -143,6 +147,14 @@ public class Functions {
     public static void onMouseWheelUp(String s) {
         m_singleton.m_onMouseWheelUp.add(s);
     }
+    
+    public static void onMouseWheelDown(String s) {
+        m_singleton.m_onMouseWheelDown.add(s);
+    }
+    
+    public static void onMouseWheelMoved(String s) {
+        m_singleton.m_onMouseWheelMoved.add(s);
+    }
 
     /**
      * Calls the specified end-user-defined method, passing as a parameter the specified state.
@@ -220,30 +232,22 @@ public class Functions {
             new java.awt.event.MouseListener() {
                 @Override
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
-                    for (int i = 0; i < m_singleton.m_onClick.size(); i++) {
-                        call(m_singleton.m_onClick.get(i), (new MouseState(evt)));
-                    }
+                    callback(m_singleton.m_onClick, (new MouseState(evt)));
                 }
 
                 @Override
                 public void mouseEntered(java.awt.event.MouseEvent evt) {
-                    for (int i = 0; i < m_singleton.m_onMouseEntered.size(); i++) {
-                        call(m_singleton.m_onMouseEntered.get(i), (new MouseState(evt)));
-                    }
+                    callback(m_singleton.m_onMouseEntered, (new MouseState(evt)));
                 }
 
                 @Override
                 public void mouseExited(java.awt.event.MouseEvent evt) {
-                    for (int i = 0; i < m_singleton.m_onMouseExited.size(); i++) {
-                        call(m_singleton.m_onMouseExited.get(i), (new MouseState(evt)));
-                    }
+                    callback(m_singleton.m_onMouseExited, (new MouseState(evt)));
                 }
 
                 @Override
                 public void mousePressed(java.awt.event.MouseEvent evt) {
-                    for (int i = 0; i < m_singleton.m_onMousePressed.size(); i++) {
-                        call(m_singleton.m_onMousePressed.get(i), (new MouseState(evt)));
-                    }
+                    callback(m_singleton.m_onMousePressed, (new MouseState(evt)));
                     if (evt.getButton() == java.awt.event.MouseEvent.BUTTON1) {
                         m_singleton.m_mouseDown[0] = true;
                     } else if (evt.getButton() == java.awt.event.MouseEvent.BUTTON2) {
@@ -255,9 +259,7 @@ public class Functions {
 
                 @Override
                 public void mouseReleased(java.awt.event.MouseEvent evt) {
-                    for (int i = 0; i < m_singleton.m_onMouseReleased.size(); i++) {
-                        call(m_singleton.m_onMouseReleased.get(i), (new MouseState(evt)));
-                    }
+                    callback(m_singleton.m_onMouseReleased, (new MouseState(evt)));
                     if (evt.getButton() == java.awt.event.MouseEvent.BUTTON1) {
                         m_singleton.m_mouseDown[0] = false;
                     } else if (evt.getButton() == java.awt.event.MouseEvent.BUTTON2) {
@@ -273,27 +275,40 @@ public class Functions {
 
                 @Override
                 public void mouseDragged(MouseEvent e) {
-                    for (int i = 0; i < m_singleton.m_onMouseDragged.size(); i++) {
-                        call(m_singleton.m_onMouseDragged.get(i), (new MouseState(e)));
-                    }
+                    callback(m_singleton.m_onMouseDragged, (new MouseState(e)));
                 }
 
                 @Override
                 public void mouseMoved(MouseEvent e) {
-                    for (int i = 0; i < m_singleton.m_onMouseMoved.size(); i++) {
-                        call(m_singleton.m_onMouseMoved.get(i), (new MouseState(e)));
-                    }
+                    callback(m_singleton.m_onMouseMoved, (new MouseState(e)));
+                }
+            }
+        );
+        Macros.getProgletPanel().addMouseWheelListener(
+            new java.awt.event.MouseWheelListener() {
+                public void mouseWheelMoved(MouseWheelEvent e) {
+                    int copy=m_singleton.m_mouseWheelPosition;
+                    m_singleton.m_mouseWheelPosition+=e.getScrollAmount();
+                    if (copy>m_singleton.m_mouseWheelPosition)
+                        callback(m_singleton.m_onMouseWheelDown,(new MouseWheelState(e)));
+                    else
+                        callback(m_singleton.m_onMouseWheelUp,(new MouseWheelState(e)));
                 }
             }
         );
         /********* END ANONYMOUS CLASSES ***************/
     }
-
+    
+    private static void callback(java.util.ArrayList<String> functions, State s) {
+        for (int i=0; i<functions.size(); i++) {
+            call(functions.get(i),s);
+        }
+    }
+    
     /**
      * TODO
      */
     class Sprite {
-
         private javax.swing.JPanel m_panel;
     }
 
