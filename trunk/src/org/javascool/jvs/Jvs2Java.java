@@ -236,4 +236,5 @@ public class Jvs2Java {
     }
     /** The java runnable wich has been compiled */
     public static Runnable runnable = null;
+    public static String lastClass="";
 }
