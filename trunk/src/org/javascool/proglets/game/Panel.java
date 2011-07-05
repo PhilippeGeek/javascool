@@ -10,6 +10,8 @@
  */
 package org.javascool.proglets.game;
 
+import org.javascool.tools.Macros;
+
 /**
  *
  * @author Philippe Vienne
@@ -21,6 +23,11 @@ public class Panel extends javax.swing.JPanel {
         initComponents();
     }
 
+    public void help(){
+        Macros.echo("ABCD");
+        this.removeAll();
+    }
+    
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
