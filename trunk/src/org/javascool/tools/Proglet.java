@@ -11,6 +11,8 @@ import java.io.File;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JPanel;
@@ -28,6 +30,7 @@ import org.javascool.pml.Pml;
 public class Proglet {
 
     private Pml conf;
+    private ArrayList<String> depClass;
     private JPanel panel = new JPanel();
     private File help;
     private Boolean jvsFunctions = false;
@@ -93,6 +96,10 @@ public class Proglet {
         if(!this.conf.getString("name").equals("")){
             this.name=this.conf.getString("name");
         }
+        if(!this.conf.getString("javaImport").equals("")){
+            this.depClass=new ArrayList<String>();
+            this.depClass.addAll(Arrays.asList(this.conf.getString("javaImport").split(",")));
+        }
         if(!this.help.exists()){
             this.help=null;
         }
@@ -127,6 +134,13 @@ public class Proglet {
 
     public String getHelpFileUrl(){
         return this.help.toURI().toString();
+    }
+    
+    public ArrayList<String> getJavaDependance(){
+        if(this.depClass==null){
+            return new ArrayList<String>();
+        }
+        return this.depClass;
     }
     
     public JPanel getPanel() {
