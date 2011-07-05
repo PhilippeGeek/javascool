@@ -193,9 +193,10 @@ public class Console extends JPanel {
         if (start) {
             if (Console.program != null) {
                 (Console.runThread = new Thread(new Runnable() {
+
                     @Override
                     public void run() {
-                        if(Proglet.classExists(JVSMainPanel.getCurrentProglet().getPackage() + ".Functions")) {
+                        if (Proglet.classExists(JVSMainPanel.getCurrentProglet().getPackage() + ".Functions")) {
                             try {
                                 Class.forName(JVSMainPanel.getCurrentProglet().getPackage() + ".Functions").getMethod("start").invoke(null);    //start() must be static so no object has to be specified to Method.invoke
                             } catch (IllegalAccessException ex) {
@@ -213,29 +214,50 @@ public class Console extends JPanel {
                         }
                         try {
                             Console.program.run();
+                            if (Proglet.classExists(JVSMainPanel.getCurrentProglet().getPackage() + ".Functions")) {
+                                try {
+                                    System.out.println("cleaning...");
+                                    Class.forName(JVSMainPanel.getCurrentProglet().getPackage() + ".Functions").getMethod("stop").invoke(null);    //stop() must be static so no object has to be specified to Method.invoke
+                                } catch (IllegalAccessException ex) {
+                                    Logger.getLogger(Console.class.getName()).log(Level.SEVERE, null, ex);
+                                } catch (IllegalArgumentException ex) {
+                                    Logger.getLogger(Console.class.getName()).log(Level.SEVERE, null, ex);
+                                } catch (InvocationTargetException ex) {
+                                    Logger.getLogger(Console.class.getName()).log(Level.SEVERE, null, ex);
+                                } catch (NoSuchMethodException ex) {
+                                } catch (SecurityException ex) {
+                                    Logger.getLogger(Console.class.getName()).log(Level.SEVERE, null, ex);
+                                } catch (ClassNotFoundException ex) {
+                                    Logger.getLogger(Console.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            Console.runThread = null;
+                            Console.toolbar.afterRunning();
                         } catch (Throwable e) {
                             if (!"Programme arrêté !".equals(e.getMessage())) {
                                 System.err.println(e.getMessage());
                             }
-                        }
-                        if(Proglet.classExists(JVSMainPanel.getCurrentProglet().getPackage() + ".Functions")) {
-                            try {
-                                Class.forName(JVSMainPanel.getCurrentProglet().getPackage() + ".Functions").getMethod("stop").invoke(null);    //start() must be static so no object has to be specified to Method.invoke
-                            } catch (IllegalAccessException ex) {
-                                Logger.getLogger(Console.class.getName()).log(Level.SEVERE, null, ex);
-                            } catch (IllegalArgumentException ex) {
-                                Logger.getLogger(Console.class.getName()).log(Level.SEVERE, null, ex);
-                            } catch (InvocationTargetException ex) {
-                                Logger.getLogger(Console.class.getName()).log(Level.SEVERE, null, ex);
-                            } catch (NoSuchMethodException ex) {
-                            } catch (SecurityException ex) {
-                                Logger.getLogger(Console.class.getName()).log(Level.SEVERE, null, ex);
-                            } catch (ClassNotFoundException ex) {
-                                Logger.getLogger(Console.class.getName()).log(Level.SEVERE, null, ex);
+                            if (Proglet.classExists(JVSMainPanel.getCurrentProglet().getPackage() + ".Functions")) {
+                                try {
+                                    System.out.println("cleaning...");
+                                    Class.forName(JVSMainPanel.getCurrentProglet().getPackage() + ".Functions").getMethod("stop").invoke(null);    //stop() must be static so no object has to be specified to Method.invoke
+                                } catch (IllegalAccessException ex) {
+                                    Logger.getLogger(Console.class.getName()).log(Level.SEVERE, null, ex);
+                                } catch (IllegalArgumentException ex) {
+                                    Logger.getLogger(Console.class.getName()).log(Level.SEVERE, null, ex);
+                                } catch (InvocationTargetException ex) {
+                                    Logger.getLogger(Console.class.getName()).log(Level.SEVERE, null, ex);
+                                } catch (NoSuchMethodException ex) {
+                                } catch (SecurityException ex) {
+                                    Logger.getLogger(Console.class.getName()).log(Level.SEVERE, null, ex);
+                                } catch (ClassNotFoundException ex) {
+                                    Logger.getLogger(Console.class.getName()).log(Level.SEVERE, null, ex);
+                                }
                             }
+                            Console.runThread = null;
+                            Console.toolbar.afterRunning();
                         }
-                        Console.runThread = null;
-                        Console.toolbar.afterRunning();
+
                     }
                 })).start();
             } else {
