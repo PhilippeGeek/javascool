@@ -51,7 +51,7 @@ public class Jvs2Java {
     public static String translate(String jvsCode) {
         String text = jvsCode;
         // Here we check and correct a missing "void main()"
-        if (!text.replaceAll("[ \n\r\t]+", " ").matches(".*void[ ]+main[ ]*\\([ ]*\\).*")&&Jvs2Java.reportError) {
+        if (!text.replaceAll("[ \n\r\t]+", " ").matches(".*void[ ]+main[ ]*\\([ ]*\\).*") && Jvs2Java.reportError) {
             if (text.replaceAll("[ \n\r\t]+", " ").matches(".*main[ ]*\\([ ]*\\).*")) {
                 System.out.println("Attention: il faut mettre \"void\" devant \"main()\" pour que le programme puisque se compiler");
                 text = text.replaceFirst("main[ ]*\\([ ]*\\)", "void main()");
@@ -93,18 +93,20 @@ public class Jvs2Java {
                 head.append("import static ").append(JVSMainPanel.getCurrentProglet().getPackage()).append(".Functions.*;");
             }
             if (!JVSMainPanel.getCurrentProglet().getJavaDependance().equals(new ArrayList<String>())) {
-                for(String dep:JVSMainPanel.getCurrentProglet().getJavaDependance())
+                for (String dep : JVSMainPanel.getCurrentProglet().getJavaDependance()) {
                     head.append("import ").append(dep).append(";");
+                }
             }
             //head.append("import proglet.paintbrush.*;");
             // Declares the proglet's core as a Runnable in the Applet
             head.append("public class JvsToJavaTranslated").append(Jvs2Java.uid).append(" implements Runnable{");
             head.append("  private static final long serialVersionUID = ").append(uid).append("L;");
-            
+
             head.append("  public void run() { main(); new File(System.getProperty(\"java.io.tmpdir\")+\"").append(File.separator.equals("\\") ? "\\\\" : "/").append("JvsToJavaTranslated").append(Jvs2Java.uid).append(".class\").delete(); }");
-            body.append("}\n");
         }
-        return (head.toString() + body.toString());
+        String finalBody = body.toString();
+        System.err.println(finalBody);
+        return (head.toString() + finalBody + "}");
     }
 
     /** Translate a jvs line to a java line 
@@ -114,7 +116,9 @@ public class Jvs2Java {
      */
     private static String translateOnce(String line) {
         // Translates the while statement with sleep
+        line.replaceAll("^(( |\t)*((?!(public|private|protected))( |\n)+)?[a-zA-Z0-9_]+( |\n)+[a-zA-Z0-9_]+ *\\(.*\\)( |\n)*\\{( |\n)*)$", "public $1");
         line = line.replaceAll("(while.*\\{)", "$1 sleep(20);");
+        line = line.replaceAll("([A-Za-z0-9_\\-]+)::([A-Za-z0-9_\\-]+)\\(\\)", "org.javascool.proglets.$1.Functions.$2()");
         //line = line.replaceAll("(while\\(true\\)\\{)", "$1 sleep(50);");
         // Translates the Synthe proglet @tone macro
         line = line.replaceFirst("@tone:(.*)\\s*;",
@@ -184,7 +188,18 @@ public class Jvs2Java {
         // Show errors
         for (Diagnostic diagnostic : diagnostics.getDiagnostics()) {
             String javaDiagnostic = diagnostic.getMessage(Locale.FRENCH);
-            String jvsDiagnostic = javaDiagnostic.split(":", 3)[javaDiagnostic.split(":", 3).length - 1];
+            String jvsDiagnostic = javaDiagnostic.split(" ", 2)[1];
+            if (jvsDiagnostic.equals("not a statement")) {
+                jvsDiagnostic = "La variable indiqué n'existe pas";
+            } else if (jvsDiagnostic.equals("';' expected")) {
+                jvsDiagnostic = "Il manque un point virgule à la fin de la ligne";
+                /*
+                 */
+            } else if (jvsDiagnostic.matches("incompatible types\nfound[ ]+:[ ]+int\nrequired:[ ]+java.lang.String")) {
+                jvsDiagnostic = "La variable indiqué n'existe pas";
+            } else {
+                jvsDiagnostic = "Erreur Java en Anglais : \n" + jvsDiagnostic;
+            }
             if (Jvs2Java.reportError) {
                 JVSMainPanel.reportCompileError((int) diagnostic.getLineNumber(), jvsDiagnostic);
             }
@@ -236,5 +251,5 @@ public class Jvs2Java {
     }
     /** The java runnable wich has been compiled */
     public static Runnable runnable = null;
-    public static String lastClass="";
+    public static String lastClass = "";
 }
