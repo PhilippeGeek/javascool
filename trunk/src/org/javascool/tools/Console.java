@@ -8,10 +8,14 @@ import java.awt.Color;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.lang.reflect.InvocationTargetException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import org.javascool.gui.JVSMainPanel;
 import org.javascool.gui.JVSToolBar;
 
 /**
@@ -187,19 +191,49 @@ public class Console extends JPanel {
         if (start) {
             if (Console.program != null) {
                 (Console.runThread = new Thread(new Runnable() {
-
                     @Override
                     public void run() {
+                        if(Proglet.classExists(JVSMainPanel.getCurrentProglet().getPackage() + ".Functions")) {
+                            try {
+                                Class.forName(JVSMainPanel.getCurrentProglet().getPackage() + ".Functions").getMethod("start").invoke(null);    //start() must be static so no object has to be specified to Method.invoke
+                            } catch (IllegalAccessException ex) {
+                                Logger.getLogger(Console.class.getName()).log(Level.SEVERE, null, ex);
+                            } catch (IllegalArgumentException ex) {
+                                Logger.getLogger(Console.class.getName()).log(Level.SEVERE, null, ex);
+                            } catch (InvocationTargetException ex) {
+                                Logger.getLogger(Console.class.getName()).log(Level.SEVERE, null, ex);
+                            } catch (NoSuchMethodException ex) {
+                            } catch (SecurityException ex) {
+                                Logger.getLogger(Console.class.getName()).log(Level.SEVERE, null, ex);
+                            } catch (ClassNotFoundException ex) {
+                                Logger.getLogger(Console.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
                         try {
                             Console.program.run();
-                            Console.runThread = null;
-                            Console.toolbar.afterRunning();
                         } catch (Throwable e) {
                             if (!"Programme arrêté !".equals(e.getMessage())) {
                                 System.err.println(e.getMessage());
                             }
-                            Console.toolbar.afterRunning();
                         }
+                        if(Proglet.classExists(JVSMainPanel.getCurrentProglet().getPackage() + ".Functions")) {
+                            try {
+                                Class.forName(JVSMainPanel.getCurrentProglet().getPackage() + ".Functions").getMethod("stop").invoke(null);    //start() must be static so no object has to be specified to Method.invoke
+                            } catch (IllegalAccessException ex) {
+                                Logger.getLogger(Console.class.getName()).log(Level.SEVERE, null, ex);
+                            } catch (IllegalArgumentException ex) {
+                                Logger.getLogger(Console.class.getName()).log(Level.SEVERE, null, ex);
+                            } catch (InvocationTargetException ex) {
+                                Logger.getLogger(Console.class.getName()).log(Level.SEVERE, null, ex);
+                            } catch (NoSuchMethodException ex) {
+                            } catch (SecurityException ex) {
+                                Logger.getLogger(Console.class.getName()).log(Level.SEVERE, null, ex);
+                            } catch (ClassNotFoundException ex) {
+                                Logger.getLogger(Console.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                        Console.runThread = null;
+                        Console.toolbar.afterRunning();
                     }
                 })).start();
             } else {
