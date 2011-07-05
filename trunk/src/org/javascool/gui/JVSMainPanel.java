@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.text.BadLocationException;
 import org.javascool.JVSFile;
 import org.javascool.JvsMain;
+import org.javascool.tools.Macros;
 import org.javascool.tools.Proglet;
 import org.javascool.tools.ProgletManager;
 
@@ -168,15 +169,8 @@ public final class JVSMainPanel extends JPanel {
      * @see DiagnosticCollector
      */
     public static void reportCompileError(int line, String explication) {
-        JOptionPane.showMessageDialog(JVSMainPanel.getThisInStatic(),
-                "<html>Erreur lors de la compilation à la ligne " + line + ".<br/>Voici l'explication du compilateur : " + explication + "</html>",
-                "Erreur de compilation",
-                JOptionPane.ERROR_MESSAGE);
-        try {
-            JVSMainPanel.getEditorTabs().getEditor(JVSMainPanel.getEditorTabs().getCurrentFileId()).getRTextArea().addLineHighlight(line - 1, Color.red);
-        } catch (BadLocationException ex) {
-            Logger.getLogger(JVSMainPanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        org.javascool.tools.Console.clear();
+        Macros.echo("-------------------\nErreur lors de la compilation à la ligne " + line + ".\n" + explication + "\n-------------------\n");
     }
 
     /** Handle the close application task
