@@ -10,13 +10,13 @@ package org.javascool.proglets.game;
 
 import java.awt.event.MouseEvent;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.javascool.tools.Console;
 import org.javascool.tools.Macros;
 
-/*
- * To use these event listeners, use this syntax : 
+/* To use these event listeners, use this syntax : 
  * void toto(MouseState s) {
  *     ...
  * }
@@ -24,6 +24,8 @@ import org.javascool.tools.Macros;
  *     onClick("toto");
  * }
  */
+
+
 /**
  * 
  * @author gmatheron
@@ -31,8 +33,7 @@ import org.javascool.tools.Macros;
 public class Functions {
     private static Functions m_singleton;
     private boolean m_mouseDown[] = {false, false, false};
-    /*
-     * These arrays are designed to store the functions the user assigned a listener
+    /* These arrays are designed to store the functions the user assigned a listener
      * A convenience type is used : CallbackFunction
      */
     private java.util.ArrayList<String> m_onClick;
@@ -90,35 +91,71 @@ public class Functions {
         m_singleton.m_onMouseReleased.add(s);
     }
 
+    /**
+     * Used to create a listener that will callback the specified function
+     * with one MouseState argument
+     * @param s The function to callback
+     */
     public static void onMouseDown(String s) {
         m_singleton.m_onMouseDown.add(s);
     }
 
+    /**
+     * Used to create a listener that will callback the specified function
+     * with one MouseState argument
+     * @param s The function to callback
+     */
     public static void onMouseUp(String s) {
         m_singleton.m_onMouseUp.add(s);
     }
 
+    /**
+     * Used to create a listener that will callback the specified function
+     * with one MouseState argument
+     * @param s The function to callback
+     */
     public static void onMouseMoved(String s) {
         m_singleton.m_onMouseMoved.add(s);
     }
 
+    /**
+     * Used to create a listener that will callback the specified function
+     * with one MouseState argument
+     * @param s The function to callback
+     */
     public static void onMouseDragged(String s) {
         m_singleton.m_onMouseDragged.add(s);
     }
 
-    public static void call(String method, State s) {
+    /**
+     * Calls the specified end-user-defined method, passing as a parameter the specified state.
+     * If the function is undefined with one argument, it will be called with no arguments.
+     * @param method The end-user-defined method to call
+     * @param s The state to pass
+     */
+    private static void call(String method, State s) {
         try {
-            try {
-                Console.getProgram().getClass().getMethod(method, State.class).invoke(Console.getProgram(), s);
-            } catch (IllegalAccessException ex) {
-                Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IllegalArgumentException ex) {
-                Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (InvocationTargetException ex) {
-                Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } catch (NoSuchMethodException ex) {
+            Console.getProgram().getClass().getMethod(method, State.class).invoke(Console.getProgram(), s);
+        } catch (IllegalAccessException ex) {
             Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalArgumentException ex) {
+            Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InvocationTargetException ex) {
+            Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchMethodException ex) {
+            try {
+                Console.getProgram().getClass().getMethod(method).invoke(Console.getProgram());
+            } catch (IllegalAccessException ex2) {
+                Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex2);
+            } catch (IllegalArgumentException ex2) {
+                Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex2);
+            } catch (InvocationTargetException ex2) {
+                Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex2);
+            } catch (NoSuchMethodException ex2) {
+                Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex2);
+            } catch (SecurityException ex2) {
+                Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex2);
+            }
         } catch (SecurityException ex) {
             Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -126,12 +163,18 @@ public class Functions {
 
     //TODO
     /**
-     * This method should be called at init (see bug report #005)
-     * It creates the listeners
+     * This method should be called during init (see bug report #005)
+     * It creates the listeners, the clock and the singleton
      */
     public static void start() {
+        /* A singleton is used to be able to define non-static classes inside Functions
+         * The functions the end-user can call are all static, but they refer
+         * to non-static attributes using this singleton static attribute
+         */
         m_singleton=new Functions();
         
+        /* These arrays store the listeners that should be called when an event occurs
+         */
         m_singleton.m_onClick=new java.util.ArrayList<String>();
         m_singleton.m_onMouseDown=new java.util.ArrayList<String>();
         m_singleton.m_onMouseDragged=new java.util.ArrayList<String>();
@@ -156,7 +199,6 @@ public class Functions {
                         for (int i = 0; i < m_singleton.m_onClick.size(); i++) {
                             call(m_singleton.m_onClick.get(i), (new MouseState(evt)));
                         }
-                        System.err.println("Mouse Clicked");
                     }
 
                     @Override
@@ -226,9 +268,6 @@ public class Functions {
     class Sprite {
 
         private javax.swing.JPanel m_panel;
-
-        public void call() {
-        }
     }
 
     public static class Clock implements Runnable {
