@@ -77,16 +77,21 @@ public class Proglet {
     public Proglet(String progletName) {
         this.name = progletName;
         this.packageName = "org.javascool.proglets."+progletName;
+        this.conf=new Pml();
         this.setupPanel();
         this.setupJvsFunctions();
         try {
             try {
+                this.conf.load(Class.forName("org.javascool.JvsMain").getResource("proglets/" + name + "/Proglet.pml").toURI().toString());
                 this.help=new File(Class.forName("org.javascool.JvsMain").getResource("proglets/" + name + "/Help.html").toURI());
             } catch (URISyntaxException ex) {
                 Logger.getLogger(Proglet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Proglet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if(!this.conf.getString("name").equals("")){
+            this.name=this.conf.getString("name");
         }
         if(!this.help.exists()){
             this.help=null;
@@ -114,9 +119,16 @@ public class Proglet {
     }
 
     private void setupJvsFunctions(File functionFile) {
-        this.jvsFunctions=false;
+        if (functionFile.exists()){
+            Jvs2Java.javaCompile(functionFile.getPath());
+            
+        }
     }
 
+    public String getHelpFileUrl(){
+        return this.help.toURI().toString();
+    }
+    
     public JPanel getPanel() {
         return this.panel;
     }
@@ -159,6 +171,16 @@ public class Proglet {
                 throw new Exception("La class à charger n'est pas un JPanel");
             }
             return (JPanel) o;
+        } catch (Throwable e) {
+            throw new RuntimeException("Erreur: impossible de charger la class, erreur : " + e.getMessage());
+        }
+    }
+    
+    private static void loadFromClass(String path) throws Throwable {
+        try {
+            File javaClass = new File(path);
+            URL[] urls = new URL[]{new URL("file:" + javaClass.getParent() + File.separator)};
+            Class< ?> j_class = new URLClassLoader(urls).loadClass(javaClass.getName().replaceAll("\\.class", ""));
         } catch (Throwable e) {
             throw new RuntimeException("Erreur: impossible de charger la class, erreur : " + e.getMessage());
         }

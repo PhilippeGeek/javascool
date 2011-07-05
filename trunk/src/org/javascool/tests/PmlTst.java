@@ -1,4 +1,6 @@
-import org.javascool.Pml;
+package org.javascool.tests;
+
+import org.javascool.pml.Pml;
 
 /** Read/write test of Pml data structures. */
 public class PmlTst {
@@ -7,11 +9,7 @@ public class PmlTst {
      * @param argv Not used.
      */
   public static void main(String argv[]) {
-    tst("{test coco=titi toto}", "pml");
-    tst("{test coco=titi toto=} ", "pml");
-    tst("{hello you=\"Philou & Guillaume\" me=vthierry 1 2 3 hi=  } ", "pml");
-    tst("<root><toto>ABCD</toto></root>", "pml");
-    tst("<root><toto>ABCD</toto><toto>ADER</toto></root>", "xml");
+    tst("{proglet {name {\"Jeux\"}} {author {\"Guillaume Matheron\"}} {package{\"org.javascool.proglet.game\"}}}", "xml");
   }
   // Read and then write in normalized format
   private static void tst(String string, String format) {

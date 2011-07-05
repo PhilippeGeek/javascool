@@ -2,6 +2,7 @@ package org.javascool.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.io.Console;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -69,7 +70,7 @@ public final class JVSMainPanel extends JPanel {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(JVSMainPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
-        ((JVSTabs)JVSMainPanel.getMainPane().getRightComponent()).add("Web", "",jvsHtmlDisplay);
+        ((JVSTabs) JVSMainPanel.getMainPane().getRightComponent()).add("Web", "", jvsHtmlDisplay);
         JVSMainPanel.loadProglet("game");
     }
 
@@ -342,9 +343,8 @@ public final class JVSMainPanel extends JPanel {
 
     public static void loadProglet(String name) {
         if (JVSMainPanel.pgman.getProglet(name) != null) {
-            if (currentProglet != null) {
-                ((JVSTabs) JVSMainPanel.getMainPane().getRightComponent()).remove(currentProglet.getPanel());
-            }
+            ((JVSTabs) JVSMainPanel.getMainPane().getRightComponent()).removeAll();
+            ((JVSTabs) JVSMainPanel.getMainPane().getRightComponent()).add("Console","",new org.javascool.tools.Console());
             JVSMainPanel.currentProglet = JVSMainPanel.pgman.getProglet(name);
             if (JVSMainPanel.currentProglet.getPanel() != null) {
                 ((JVSTabs) JVSMainPanel.getMainPane().getRightComponent()).add(currentProglet.getName(), "", JVSMainPanel.currentProglet.getPanel());
