@@ -101,13 +101,16 @@ public class Console extends JPanel {
             this.addTool("Stop", "org/javascool/doc-files/icon16/stop.png", Console.stop);
             this.resetTimeRunning();
             this.addSeparator();
+            this.remove(this.timeRunning);
             this.add(this.timeRunning);
             this.revalidate();
         }
 
         public void afterRunning() {
+            this.reset();
             this.programCompiled();
             this.addSeparator();
+            this.remove(this.timeRunning);
             this.add(this.timeRunning);
             this.revalidate();
         }
@@ -177,7 +180,6 @@ public class Console extends JPanel {
     /** Stop the current program */
     public static void stopProgram() {
         Console.run(false);
-        Console.toolbar.afterRunning();
     }
 
     /** Runs/Stops the program.
