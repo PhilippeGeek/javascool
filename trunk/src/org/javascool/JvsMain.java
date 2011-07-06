@@ -152,12 +152,13 @@ public class JvsMain {
      */
     public static void main(String[] usage) {
         try {
-            System.out.println("" + title + " is starting ...");
+            System.err.println("" + title + " is starting ...");
             org.javascool.JvsMain.setUpSystem();
             JvsMain.setUpJVSMainFrame();
             JvsMain.getJvsMainFrame().setVisible(true);
             JvsMain.getJvsMainPanel().revalidate();
             JvsMain.getJvsMainFrame().pack();
+            JvsMain.getJvsMainFrame().setExtendedState(JFrame.MAXIMIZED_BOTH);
         } catch (Exception e) {
             System.err.println("Erreur Java : \n"+e.getMessage()+"\nCall stack: \n");
             e.printStackTrace(System.err);

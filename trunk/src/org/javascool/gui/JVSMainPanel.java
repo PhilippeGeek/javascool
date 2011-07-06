@@ -3,6 +3,8 @@ package org.javascool.gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.io.Console;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.text.BadLocationException;
 import org.javascool.JVSFile;
 import org.javascool.JvsMain;
+import org.javascool.Utils;
 import org.javascool.tools.Macros;
 import org.javascool.tools.Proglet;
 import org.javascool.tools.ProgletManager;
@@ -73,6 +76,12 @@ public final class JVSMainPanel extends JPanel {
         }
         ((JVSTabs) JVSMainPanel.getMainPane().getRightComponent()).add("Web", "", jvsHtmlDisplay);
         JVSMainPanel.loadProglet("game");
+        Utils.addPathForClassLoader("C:/Users/Philippe Vienne/Documents/NetBeansProjects/jvs/lib/processing.zip");
+        URL[] urls = ((URLClassLoader) Thread.currentThread().getContextClassLoader()).getURLs();
+        for(URL url:urls){
+            System.err.println(url.toString());
+        }
+        System.err.println(Thread.currentThread().getContextClassLoader().getResource("toxi"));
     }
 
     /** Get the toolbar
@@ -94,7 +103,7 @@ public final class JVSMainPanel extends JPanel {
      * @see JVSFileEditorTabs
      */
     public static void compileFile() {
-        JVSFileEditorTabs.compileFile(JVSMainPanel.getEditorTabs().getCurrentFileId());
+        JVSMainPanel.getEditorTabs().compileFile(JVSMainPanel.getEditorTabs().getCurrentFileId());
     }
 
     /** Open a file
@@ -138,7 +147,7 @@ public final class JVSMainPanel extends JPanel {
         } else {
             getEditorTabs().closeFile(getEditorTabs().getCurrentFileId());
         }
-        if (JVSMainPanel.getEditorTabs().tabs.entrySet().toArray().length == 0) {
+        if (JVSMainPanel.getEditorTabs().getOppenedFileCount() == 0) {
             JVSMainPanel.newFile();
         }
     }
@@ -354,8 +363,8 @@ public final class JVSMainPanel extends JPanel {
      * @see JVSFileEditorTabs
      * @return The JVSFileEditorTabs instance
      */
-    public static JVSFileEditorTabs getEditorTabs() {
-        return ((JVSFileEditorTabs) JVSMainPanel.mainPane.getLeftComponent());
+    public static FileEditorTabs getEditorTabs() {
+        return ((FileEditorTabs) JVSMainPanel.mainPane.getLeftComponent());
     }
     
     public static JVSWidgetPanel getWidgetTabs(){

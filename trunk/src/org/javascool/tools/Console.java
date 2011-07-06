@@ -5,10 +5,16 @@ package org.javascool.tools;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.lang.reflect.InvocationTargetException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
@@ -17,6 +23,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import org.javascool.gui.JVSMainPanel;
 import org.javascool.gui.JVSToolBar;
+import org.javascool.proglets.dico.Functions;
 
 /**
  * Class Console
@@ -164,6 +171,11 @@ public class Console extends JPanel {
         Console.toolbar.updateTimeRunning("0 min 0 sec");
         Console.toolbar.programRunning();
         Console.clear();
+        URL[] urls = ((URLClassLoader) Thread.currentThread().getContextClassLoader()).getURLs();
+        for (URL url : urls) {
+            System.out.println(url.toString());
+        }
+        
         new Thread(new Runnable() {
 
             @Override

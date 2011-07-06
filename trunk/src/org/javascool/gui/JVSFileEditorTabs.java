@@ -16,7 +16,7 @@ import org.javascool.tools.Console;
  * A powerful JVSTabs to manage a multi-file editing. It only support JVSFile.
  * @author Philippe Vienne
  */
-public class JVSFileEditorTabs extends JVSTabs {
+public class JVSFileEditorTabs extends JVSTabs implements FileEditorTabs{
 
     /** Store all JVSEditor in an HashMap by the fileId */
     private static HashMap<String, JVSEditor> editors = new HashMap<String, JVSEditor>();
@@ -33,6 +33,7 @@ public class JVSFileEditorTabs extends JVSTabs {
     /** Open a new empty Java's cool file in tmp
      * @return The file's tempory id in editor tabs
      */
+    @Override
     public String openNewFile() {
         return this.openFile(new JVSFile(JVSFile.defaultCode));
     }
@@ -41,6 +42,7 @@ public class JVSFileEditorTabs extends JVSTabs {
      * @param url The url to the file (used by File())
      * @return The file's tempory id in editor tabs
      */
+    @Override
     public String open(String url) {
         return this.openFile(new JVSFile(url, true));
     }
@@ -110,6 +112,7 @@ public class JVSFileEditorTabs extends JVSTabs {
     /** Close an opened file
      * @param fileId The file ID
      */
+    @Override
     public void closeFile(String fileId) {
         if (this.getTabId(fileId) != -1) { // We check if file is opened
             String tab_title = this.getTitleAt(this.getTabId(fileId)); // Save the tap title (Useful)
@@ -128,6 +131,7 @@ public class JVSFileEditorTabs extends JVSTabs {
     /** Get the Current file ID
      * @return An file id
      */
+    @Override
     public String getCurrentFileId() {
         String tab_name = this.getTitleAt(this.getSelectedIndex()); // Get the tab name opened to find the id
         String fileId = JVSFileEditorTabs.fileIds.get(tab_name); // We get the id
@@ -135,6 +139,7 @@ public class JVSFileEditorTabs extends JVSTabs {
     }
 
     /** Save the current file */
+    @Override
     public Boolean saveCurrentFile() {
         return this.saveFile(this.getCurrentFileId()); // We just save the file
     }
@@ -142,6 +147,7 @@ public class JVSFileEditorTabs extends JVSTabs {
     /** Check if the current file is in tempory memory
      * @return True if is tempory
      */
+    @Override
     public Boolean currentFileIsTmp() {
         return JVSFileEditorTabs.files.get(this.getCurrentFileId()).isTmp(); // Check in the JVS File object if is tempory
     }
@@ -150,7 +156,8 @@ public class JVSFileEditorTabs extends JVSTabs {
      * @param fileId The id of the file to javaCompile
      * @return True on success, false in case of error. Can return true if file is not openned
      */
-    public static Boolean compileFile(String fileId) {
+    @Override
+    public Boolean compileFile(String fileId) {
         if (!JVSFileEditorTabs.fileIds.containsValue(fileId)) { // Check if id is opened
             return true; // Return true because file is not opened
         }
@@ -167,6 +174,7 @@ public class JVSFileEditorTabs extends JVSTabs {
      * @param fileId The id of the file to save
      * @return True on success, false in case of error. Can return true if file is not openned
      */
+    @Override
     public Boolean saveFile(String fileId) {
         if (!JVSFileEditorTabs.fileIds.containsValue(fileId)) { // Check if id is opened
             return true; // Return true because file is not opened
@@ -185,6 +193,7 @@ public class JVSFileEditorTabs extends JVSTabs {
      * @param fileId The id of the file to save
      * @return See saveFile()
      */
+    @Override
     public Boolean saveFilePromptWhere(String fileId) {
         JFileChooser fc = new JFileChooser(); // We create a file chooser
         fc.setApproveButtonText("Enregistrer");
@@ -231,6 +240,7 @@ public class JVSFileEditorTabs extends JVSTabs {
     }
 
     /** Get the tabId for an fileId */
+    @Override
     public int getTabId(String fileId) {
         if (JVSFileEditorTabs.fileIds.containsValue(fileId)) { // We check if fileId exist
             return this.indexOfComponent(JVSFileEditorTabs.editors.get(fileId)); // Get index from the editor
@@ -243,6 +253,7 @@ public class JVSFileEditorTabs extends JVSTabs {
      * @param newTitle The new title
      * @return The success
      */
+    @Override
     public Boolean editTabName(String fileId, String newTitle) {
         String tabTitle = newTitle; // create the new title
         if (this.indexOfTab(newTitle) != -1) { // Check if tab with its name exist
@@ -263,6 +274,7 @@ public class JVSFileEditorTabs extends JVSTabs {
      * @param tabName The tab Name
      * @return The file Id
      */
+    @Override
     public String getFileId(String tabName) {
         if (JVSFileEditorTabs.fileIds.containsKey(tabName)) { // Check if tabName exist
             return JVSFileEditorTabs.fileIds.get(tabName); // Return the id
@@ -272,6 +284,7 @@ public class JVSFileEditorTabs extends JVSTabs {
     }
 
     /** Get a file from its ID */
+    @Override
     public JVSFile getFile(String id) {
         if (JVSFileEditorTabs.files.containsKey(id)) { // Check if id exist
             return JVSFileEditorTabs.files.get(id); // Return the JVSFile
@@ -281,6 +294,7 @@ public class JVSFileEditorTabs extends JVSTabs {
     }
 
     /** Get the editor for an ID */
+    @Override
     public JVSEditor getEditor(String fileId) {
         if (JVSFileEditorTabs.editors.containsKey(fileId)) { // Check if fileId exist
             return JVSFileEditorTabs.editors.get(fileId); // Return the editor
@@ -299,5 +313,10 @@ public class JVSFileEditorTabs extends JVSTabs {
     /** Get the Main Panel to have main functions */
     private static JVSMainPanel getJvsMainPanel() {
         return JvsMain.getJvsMainPanel();
+    }
+
+    @Override
+    public int getOppenedFileCount() {
+        return this.tabs.entrySet().toArray().length;
     }
 }
