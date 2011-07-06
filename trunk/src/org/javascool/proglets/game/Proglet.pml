@@ -4,6 +4,6 @@
     author="Guillaume Matheron" 
     package="org.javascool.proglet.game"
     panel="Panel"
-    javaImport="javax.swing.*,org.javascool.proglets.game.MouseState"
+    javaImport="javax.swing.*,org.javascool.proglets.game.*"
     javaCallBeforeStart="start()"
 }

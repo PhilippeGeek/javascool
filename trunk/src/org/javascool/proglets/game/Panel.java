@@ -10,22 +10,43 @@
  */
 package org.javascool.proglets.game;
 
+import java.awt.Color;
 import org.javascool.tools.Macros;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 /**
  *
- * @author Philippe Vienne
+ * @author gmatheron
  */
 public class Panel extends javax.swing.JPanel {
-
+    java.util.ArrayList<Drawable> m_items;
+    
     /** Creates new form Panel */
     public Panel() {
+        m_items=new java.util.ArrayList<Drawable>();
         initComponents();
     }
 
     public void help(){
-        Macros.echo("ABCD");
         this.removeAll();
+    }
+    
+    public void stop() {
+        m_items.removeAll(m_items);
+    }
+    
+    @Override
+    public void paintComponent(Graphics g) {
+        g.setColor(Color.BLACK);
+        g.fillRect(0, 0, this.getWidth(), this.getHeight());
+        g.setColor(Color.WHITE);
+        for (int i=0; i<m_items.size(); i++)
+            m_items.get(i).draw(g);
+    }
+    
+    public void addItem(Drawable d) {
+        m_items.add(d);
     }
     
     /** This method is called from within the constructor to
@@ -37,23 +58,17 @@ public class Panel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jSeparator1 = new javax.swing.JSeparator();
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 512, Short.MAX_VALUE)
+            .addGap(0, 512, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(369, 369, 369))
+            .addGap(0, 391, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JSeparator jSeparator1;
     // End of variables declaration//GEN-END:variables
 }
