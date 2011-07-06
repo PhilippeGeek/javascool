@@ -4,6 +4,8 @@
  */
 package org.javascool.proglets.game;
 
+import java.util.logging.Logger;
+
 /**
  *
  * @author gmatheron
@@ -34,4 +36,5 @@ public class Geometry extends Positionable {
     public void scale(float w, float h) {
         m_w=w; m_h=h;
     }
+    private static final Logger LOG = Logger.getLogger(Geometry.class.getName());
 }

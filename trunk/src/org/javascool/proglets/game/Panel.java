@@ -11,18 +11,19 @@
 package org.javascool.proglets.game;
 
 import java.awt.Color;
-import org.javascool.tools.Macros;
+import java.util.logging.Logger;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 
 /**
  *
  * @author gmatheron
  */
 public class Panel extends javax.swing.JPanel {
-    java.util.ArrayList<Drawable> m_items;
+    private static final long serialVersionUID = 1L;
+    private java.util.ArrayList<Drawable> m_items;
     
     /** Creates new form Panel */
+    @SuppressWarnings("CollectionWithoutInitialCapacity")
     public Panel() {
         m_items=new java.util.ArrayList<Drawable>();
         initComponents();
@@ -33,7 +34,7 @@ public class Panel extends javax.swing.JPanel {
     }
     
     public void stop() {
-        m_items.removeAll(m_items);
+        getM_items().removeAll(getM_items());
     }
     
     @Override
@@ -41,12 +42,13 @@ public class Panel extends javax.swing.JPanel {
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, this.getWidth(), this.getHeight());
         g.setColor(Color.WHITE);
-        for (int i=0; i<m_items.size(); i++)
-            m_items.get(i).draw(g);
+        for (int i=0; i<getM_items().size(); i++) {
+            getM_items().get(i).draw(g);
+        }
     }
     
     public void addItem(Drawable d) {
-        m_items.add(d);
+        getM_items().add(d);
     }
     
     /** This method is called from within the constructor to
@@ -71,4 +73,21 @@ public class Panel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * @return the m_items
+     */
+    @SuppressWarnings("ReturnOfCollectionOrArrayField")
+    public java.util.ArrayList<Drawable> getM_items() {
+        return m_items;
+    }
+
+    /**
+     * @param m_items the m_items to set
+     */
+    @SuppressWarnings("AssignmentToCollectionOrArrayFieldFromParameter")
+    public void setM_items(java.util.ArrayList<Drawable> m_items) {
+        this.m_items = m_items;
+    }
+    private static final Logger LOG = Logger.getLogger(Panel.class.getName());
 }

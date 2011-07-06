@@ -5,7 +5,7 @@
 package org.javascool.proglets.game;
 
 import java.awt.Graphics;
-import java.awt.Graphics2D;
+import java.util.logging.Logger;
 import org.javascool.tools.Macros;
 
 /**
@@ -13,7 +13,7 @@ import org.javascool.tools.Macros;
  * @author gmatheron
  */
 public class Oval extends Geometry implements Drawable {
-    boolean m_solid;
+    private boolean m_solid;
     
     public Oval(int x, int y, int w, int h) {
         super(x,y,w,h);
@@ -29,9 +29,26 @@ public class Oval extends Geometry implements Drawable {
     
     @Override
     public void draw(Graphics g) {
-        if (m_solid)
+        if (isM_solid()) {
             g.fillOval((int)getX(), (int)getY(), (int)getWidth(), (int)getHeight());
-        else
+        }
+        else {
             g.drawOval((int)getX(), (int)getY(), (int)getWidth(), (int)getHeight());
+        }
+    }
+    private static final Logger LOG = Logger.getLogger(Oval.class.getName());
+
+    /**
+     * @return the m_solid
+     */
+    public boolean isM_solid() {
+        return m_solid;
+    }
+
+    /**
+     * @param m_solid the m_solid to set
+     */
+    public void setM_solid(boolean m_solid) {
+        this.m_solid = m_solid;
     }
 }
