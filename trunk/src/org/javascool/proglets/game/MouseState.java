@@ -23,8 +23,8 @@ public class MouseState extends State {
     }
     
     MouseState() {
-        m_x=(int) Functions.getM_singleton().getM_mousePosRelativeToPanelX();
-        m_y=(int) Functions.getM_singleton().getM_mousePosRelativeToPanelY();
+        m_x=(int) Functions.getSingleton().m_mousePosRelativeToPanelX;
+        m_y=(int) Functions.getSingleton().m_mousePosRelativeToPanelY;
         m_button=-1;
     }
     

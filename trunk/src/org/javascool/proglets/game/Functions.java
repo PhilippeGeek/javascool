@@ -472,6 +472,7 @@ public class Functions {
 class State {
     private static final Logger LOG = Logger.getLogger(State.class.getName());
 
-    private State() {
+    @SuppressWarnings("PublicConstructorInNonPublicClass")
+    public State() {
     }
 }
