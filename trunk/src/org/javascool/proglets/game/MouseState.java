@@ -11,16 +11,29 @@ package org.javascool.proglets.game;
  */
 public class MouseState extends State {
 
-    private java.awt.event.MouseEvent m_evt;
+    private int m_x, m_y;
     private int m_button;
 
     MouseState(java.awt.event.MouseEvent evt) {
-        m_evt = evt;
+        m_x=evt.getX();
+        m_y=evt.getY();
+        m_button=evt.getButton();
     }
-
-    MouseState(int button) {
-        m_button = button;
+    
+    MouseState() {
+        m_x=(int) Functions.m_singleton.m_mousePosRelativeToPanelX;
+        m_y=(int) Functions.m_singleton.m_mousePosRelativeToPanelY;
+        m_button=-1;
     }
+    
+    public int getX() {
+        return m_x;
+    }
+    
+    public int getY() {
+        return m_y;
+    }
+    
     /* 
      * TODO add covenience methods such as x and y. Maybe leave them public
      * in case the user prefers to use s.x rather than x.getX() ?

@@ -14,8 +14,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.javascool.tools.Macros;
-import javax.swing.*;
-import java.awt.Graphics2D;
+import java.awt.MouseInfo;
 
 /* To use these event listeners, use this syntax : 
  * void toto(MouseState s) {
@@ -31,7 +30,7 @@ import java.awt.Graphics2D;
  */
 public class Functions {
 
-    private static Functions m_singleton;
+    public static Functions m_singleton;
     private boolean m_mouseDown[] = {false, false, false};
     private int m_mouseWheelPosition = 0;
     /* These arrays are designed to store the functions the user assigned a listener
@@ -49,6 +48,7 @@ public class Functions {
     private java.util.ArrayList<String> m_onMouseWheelUp;
     private java.util.ArrayList<String> m_onMouseWheelDown;
     private java.util.ArrayList<String> m_onMouseWheelMoved;
+    private java.util.ArrayList<String> m_onFrame;
     private java.awt.event.MouseListener m_mouseListener;
     private java.awt.event.MouseMotionListener m_mouseMotionListener;
     private java.awt.event.MouseWheelListener m_mouseWheelListener;
@@ -134,16 +134,39 @@ public class Functions {
         m_singleton.m_onMouseDragged.add(s);
     }
 
+    /**
+     * Used to create a listener that will callback the specified function
+     * with one MouseState argument
+     * @param s The function to callback
+     */
     public static void onMouseWheelUp(String s) {
         m_singleton.m_onMouseWheelUp.add(s);
     }
 
+    /**
+     * Used to create a listener that will callback the specified function
+     * with one MouseState argument
+     * @param s The function to callback
+     */
     public static void onMouseWheelDown(String s) {
         m_singleton.m_onMouseWheelDown.add(s);
     }
 
+    /**
+     * Used to create a listener that will callback the specified function
+     * with one MouseState argument
+     * @param s The function to callback
+     */
     public static void onMouseWheelMoved(String s) {
         m_singleton.m_onMouseWheelMoved.add(s);
+    }
+    
+    /**
+     * Used to create a listener that will callback the specified function
+     * @param s The function to callback
+     */
+    public static void onFrame(String s) {
+        m_singleton.m_onFrame.add(s);
     }
 
     /**
@@ -154,27 +177,60 @@ public class Functions {
      */
     private static void call(String method, State s) {
         try {
-            Macros.getProgram().getClass().getMethod(method, State.class).invoke(Macros.getProgram(), s);
+            for (int i=0; i<Macros.getProgram().getClass().getMethods().length; i++) {
+                java.lang.reflect.Method m=Macros.getProgram().getClass().getMethods()[i];
+                if (m.getName().equals(method)) {
+                    int params=m.getParameterTypes().length;
+                    if (params==0) m.invoke(Macros.getProgram());
+                    else if (params==1) {
+                        if (m.getParameterTypes()[0].getSuperclass().getSimpleName().equals("State")) {
+                            m.invoke(Macros.getProgram(), m.getParameterTypes()[0].cast(s));
+                        }
+                        else {
+                            org.javascool.JvsMain.reportBug(new NoSuchMethodException("The specified method "+method+" takes one parameter but it must extend State to be valid"));
+                        }
+                    }
+                    else
+                        org.javascool.JvsMain.reportBug(new NoSuchMethodException("The specified method "+method+" must take zero or one parameter"));
+                }
+            }
+            //TODO tell if method not found
         } catch (IllegalAccessException ex) {
             Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalArgumentException ex) {
             Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InvocationTargetException ex) {
             Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NoSuchMethodException ex) {
-            try {
-                Macros.getProgram().getClass().getMethod(method).invoke(Macros.getProgram());
-            } catch (IllegalAccessException ex2) {
-                Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex2);
-            } catch (IllegalArgumentException ex2) {
-                Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex2);
-            } catch (InvocationTargetException ex2) {
-                Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex2);
-            } catch (NoSuchMethodException ex2) {
-                Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex2);
-            } catch (SecurityException ex2) {
-                Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex2);
+        } catch (SecurityException ex) {
+            Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    /**
+     * Calls the specified end-user-defined method
+     * @param method The end-user-defined method to call
+     */
+    private static void call(String method) {
+        try {
+            for (int i=0; i<Macros.getProgram().getClass().getMethods().length; i++) {
+                java.lang.reflect.Method m=Macros.getProgram().getClass().getMethods()[i];
+                if (m.getName().equals(method)) {
+                    int params=m.getParameterTypes().length;
+                    if (params==0) m.invoke(Macros.getProgram());
+                    else if (params==1) {
+                        org.javascool.JvsMain.reportBug(new NoSuchMethodException("The specified method "+method+" cannot take a parameter with this listener"));
+                    }
+                    else
+                        org.javascool.JvsMain.reportBug(new NoSuchMethodException("The specified method "+method+" must take zero parameters"));
+                }
             }
+            //TODO tell if method not found
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalArgumentException ex) {
+            Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InvocationTargetException ex) {
+            Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SecurityException ex) {
             Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -192,6 +248,7 @@ public class Functions {
         Macros.getProgletPanel().removeMouseWheelListener(m_singleton.m_mouseWheelListener);
         (Panel)(Macros.getProgletPanel()).stop();*/
     }
+    
     private static Clock m_clock;
 
     /**
@@ -216,6 +273,10 @@ public class Functions {
         m_singleton.m_onMousePressed = new java.util.ArrayList<String>();
         m_singleton.m_onMouseReleased = new java.util.ArrayList<String>();
         m_singleton.m_onMouseUp = new java.util.ArrayList<String>();
+        m_singleton.m_onFrame = new java.util.ArrayList<String>();
+        m_singleton.m_onMouseWheelDown = new java.util.ArrayList<String>();
+        m_singleton.m_onMouseWheelUp = new java.util.ArrayList<String>();
+        m_singleton.m_onMouseWheelMoved = new java.util.ArrayList<String>();
 
         /* The clock object will 'tick' each 1/30s. it will then call the callback
          * functions for onMouseDown, onMouseUp, etc if needed
@@ -229,84 +290,96 @@ public class Functions {
          * functions for this event.
          * Possible optimization : only register a listener if an event is defined
          */
-        /********* START ANONYMOUS CLASSES ***************/
-        m_singleton.m_mouseListener = new java.awt.event.MouseListener() {
+        {
+            /********* START ANONYMOUS CLASSES ***************/
+            m_singleton.m_mouseListener = new java.awt.event.MouseListener() {
 
-            @Override
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                callback(m_singleton.m_onClick, (new MouseState(evt)));
-            }
-
-            @Override
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                callback(m_singleton.m_onMouseEntered, (new MouseState(evt)));
-            }
-
-            @Override
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                callback(m_singleton.m_onMouseExited, (new MouseState(evt)));
-            }
-
-            @Override
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                callback(m_singleton.m_onMousePressed, (new MouseState(evt)));
-                if (evt.getButton() == java.awt.event.MouseEvent.BUTTON1) {
-                    m_singleton.m_mouseDown[0] = true;
-                } else if (evt.getButton() == java.awt.event.MouseEvent.BUTTON2) {
-                    m_singleton.m_mouseDown[1] = true;
-                } else if (evt.getButton() == java.awt.event.MouseEvent.BUTTON3) {
-                    m_singleton.m_mouseDown[2] = true;
+                @Override
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    callback(m_singleton.m_onClick, (new MouseState(evt)));
                 }
-            }
 
-            @Override
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                callback(m_singleton.m_onMouseReleased, (new MouseState(evt)));
-                if (evt.getButton() == java.awt.event.MouseEvent.BUTTON1) {
-                    m_singleton.m_mouseDown[0] = false;
-                } else if (evt.getButton() == java.awt.event.MouseEvent.BUTTON2) {
-                    m_singleton.m_mouseDown[1] = false;
-                } else if (evt.getButton() == java.awt.event.MouseEvent.BUTTON3) {
-                    m_singleton.m_mouseDown[2] = false;
+                @Override
+                public void mouseEntered(java.awt.event.MouseEvent evt) {
+                    callback(m_singleton.m_onMouseEntered, (new MouseState(evt)));
                 }
-            }
-        };
-        Macros.getProgletPanel().addMouseListener(m_singleton.m_mouseListener);
 
-        m_singleton.m_mouseMotionListener = new java.awt.event.MouseMotionListener() {
-
-            @Override
-            public void mouseDragged(MouseEvent e) {
-                callback(m_singleton.m_onMouseDragged, (new MouseState(e)));
-            }
-
-            @Override
-            public void mouseMoved(MouseEvent e) {
-                callback(m_singleton.m_onMouseMoved, (new MouseState(e)));
-            }
-        };
-        Macros.getProgletPanel().addMouseMotionListener(m_singleton.m_mouseMotionListener);
-
-        m_singleton.m_mouseWheelListener = new java.awt.event.MouseWheelListener() {
-
-            @Override
-            public void mouseWheelMoved(MouseWheelEvent e) {
-                int copy = m_singleton.m_mouseWheelPosition;
-                m_singleton.m_mouseWheelPosition += e.getScrollAmount();
-                if (copy > m_singleton.m_mouseWheelPosition) {
-                    callback(m_singleton.m_onMouseWheelDown, (new MouseWheelState(e)));
-                } else {
-                    callback(m_singleton.m_onMouseWheelUp, (new MouseWheelState(e)));
+                @Override
+                public void mouseExited(java.awt.event.MouseEvent evt) {
+                    callback(m_singleton.m_onMouseExited, (new MouseState(evt)));
                 }
-            }
-        };
-        Macros.getProgletPanel().addMouseWheelListener(m_singleton.m_mouseWheelListener);
+
+                @Override
+                public void mousePressed(java.awt.event.MouseEvent evt) {
+                    callback(m_singleton.m_onMousePressed, (new MouseState(evt)));
+                    if (evt.getButton() == java.awt.event.MouseEvent.BUTTON1) {
+                        m_singleton.m_mouseDown[0] = true;
+                    } else if (evt.getButton() == java.awt.event.MouseEvent.BUTTON2) {
+                        m_singleton.m_mouseDown[1] = true;
+                    } else if (evt.getButton() == java.awt.event.MouseEvent.BUTTON3) {
+                        m_singleton.m_mouseDown[2] = true;
+                    }
+                }
+
+                @Override
+                public void mouseReleased(java.awt.event.MouseEvent evt) {
+                    callback(m_singleton.m_onMouseReleased, (new MouseState(evt)));
+                    if (evt.getButton() == java.awt.event.MouseEvent.BUTTON1) {
+                        m_singleton.m_mouseDown[0] = false;
+                    } else if (evt.getButton() == java.awt.event.MouseEvent.BUTTON2) {
+                        m_singleton.m_mouseDown[1] = false;
+                    } else if (evt.getButton() == java.awt.event.MouseEvent.BUTTON3) {
+                        m_singleton.m_mouseDown[2] = false;
+                    }
+                }
+            };
+            Macros.getProgletPanel().addMouseListener(m_singleton.m_mouseListener);
+
+            m_singleton.m_mouseMotionListener = new java.awt.event.MouseMotionListener() {
+                @Override
+                public void mouseDragged(MouseEvent e) {
+                    m_singleton.m_mousePosRelativeToPanelX=e.getX();
+                    m_singleton.m_mousePosRelativeToPanelY=e.getY();
+                    callback(m_singleton.m_onMouseDragged, (new MouseState(e)));
+                    callback(m_singleton.m_onMouseMoved, (new MouseState(e)));
+                }
+
+                @Override
+                public void mouseMoved(MouseEvent e) {
+                    m_singleton.m_mousePosRelativeToPanelX=e.getX();
+                    m_singleton.m_mousePosRelativeToPanelY=e.getY();
+                    callback(m_singleton.m_onMouseMoved, (new MouseState(e)));
+                }
+            };
+            Macros.getProgletPanel().addMouseMotionListener(m_singleton.m_mouseMotionListener);
+
+            m_singleton.m_mouseWheelListener = new java.awt.event.MouseWheelListener() {
+                @Override
+                public void mouseWheelMoved(MouseWheelEvent e) {
+                    int copy = m_singleton.m_mouseWheelPosition;
+                    m_singleton.m_mouseWheelPosition += e.getWheelRotation();
+                    if (copy > m_singleton.m_mouseWheelPosition) {
+                        callback(m_singleton.m_onMouseWheelDown, (new MouseWheelState(e,m_singleton.m_mouseWheelPosition)));
+                    } else {
+                        callback(m_singleton.m_onMouseWheelUp, (new MouseWheelState(e,m_singleton.m_mouseWheelPosition)));
+                    }
+                    callback(m_singleton.m_onMouseWheelMoved, (new MouseWheelState(e,m_singleton.m_mouseWheelPosition)));
+                }
+            };
+            Macros.getProgletPanel().addMouseWheelListener(m_singleton.m_mouseWheelListener);
+        }
         /********* END ANONYMOUS CLASSES ***************/
     }
 
     private static void callback(java.util.ArrayList<String> functions, State s) {
         for (int i = 0; i < functions.size(); i++) {
             call(functions.get(i), s);
+        }
+    }
+    
+    private static void callback(java.util.ArrayList<String> functions) {
+        for (int i=0; i<functions.size(); i++) {
+            call(functions.get(i));
         }
     }
 
@@ -342,28 +415,32 @@ public class Functions {
         public void setFps(int fps) {
             m_fps = fps;
         }
-
+        
         private void tick() {
             for (int j = 0; j < 3; j++) {
                 if (m_singleton.m_mouseDown[j]) {
                     for (int i = 0; i < m_singleton.m_onMouseDown.size(); i++) {
-                        call(m_singleton.m_onMouseDown.get(i), new MouseState(j));
+                        call(m_singleton.m_onMouseDown.get(i), new MouseState());
                     }
                 } else {
                     for (int i = 0; i < m_singleton.m_onMouseUp.size(); i++) {
-                        call(m_singleton.m_onMouseUp.get(i), new MouseState(j));
+                        call(m_singleton.m_onMouseUp.get(i), new MouseState());
                     }
                 }
             }
+            callback(m_singleton.m_onFrame);
             
             Macros.getProgletPanel().repaint();
         }
 
         public void exitClean() {
             m_exit = true;
-            System.out.println("exiting...");
+            System.out.println("exiting clock...");
         }
     }
+    
+    float m_mousePosRelativeToPanelX;
+    float m_mousePosRelativeToPanelY;
 }
 
 /**
@@ -371,6 +448,9 @@ public class Functions {
  * 
  * If an abstract (State) class can't be declared into a non-abstract class (Functions)
  * maybe we could switch it to an interface or leave it non-abstract (ugly)
+ * 
+ * PLEASE NOTE THAT ALL THE SUBCLASSES OF STATE MUST BE FINAL : ALL THE STATES MUST DIRECTLY
+ * EXTEND THIS CLASS. See 'call' for details
  */
 abstract class State {
 }

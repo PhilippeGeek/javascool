@@ -6,14 +6,20 @@ import java.awt.event.MouseWheelEvent;
  *
  * @author gmatheron
  */
-class MouseWheelState extends State {
-    private java.awt.event.MouseWheelEvent m_evt;
-    public MouseWheelState(MouseWheelEvent e) {
-        m_evt=e;
+public class MouseWheelState extends State {
+    private int m_pos;
+    private int m_delta;
+    
+    public MouseWheelState(MouseWheelEvent e, int position) {
+        m_delta=e.getWheelRotation();
+        m_pos=position;
     }
     
-    /* 
-     * TODO add covenience methods such as x and y. Maybe leave them public
-     * in case the user prefers to use s.x rather than x.getX() ?
-     */
+    public int getPosition() {
+        return m_pos;
+    }
+    
+    public int getMove() {
+        return m_delta;
+    }
 }
