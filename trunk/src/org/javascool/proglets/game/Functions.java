@@ -62,6 +62,15 @@ public class Functions {
     private java.awt.event.MouseMotionListener m_mouseMotionListener;
     private java.awt.event.MouseWheelListener m_mouseWheelListener;
 
+    
+    public static int mouseX() {
+        return (int)m_singleton.m_mousePosRelativeToPanelX;
+    }
+    
+    public static int mouseY() {
+        return (int)m_singleton.m_mousePosRelativeToPanelY;
+    }
+    
     /**
      * Used to create a listener that will callback the specified function
      * with one MouseState argument
@@ -299,7 +308,7 @@ public class Functions {
          * functions for onMouseDown, onMouseUp, etc if needed
          */
         m_clock = new Clock();
-        m_clock.setFps(30);
+        m_clock.setFps(300);
         (new Thread(m_clock)).start();
 
         /* Define a few anonymous classes that will define the proglet's behavior
@@ -414,7 +423,15 @@ public class Functions {
         
         @Override
         public void run() {
-            tick();
+            while (true) {
+                try {
+                    Thread.sleep(1000/m_fps);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                tick();
+                if (m_exit) break;
+            }
         }
 
         public void setFps(int fps) {
@@ -437,14 +454,6 @@ public class Functions {
             callback(getSingleton().m_onFrame);
             
             Macros.getProgletPanel().repaint();
-            
-            Timer t=new Timer();
-            t.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    tick();
-                }
-            },(1000/m_fps));
         }
         
         public void exitClean() {
