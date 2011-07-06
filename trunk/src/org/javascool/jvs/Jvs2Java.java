@@ -119,7 +119,8 @@ public class Jvs2Java {
     private static String translateOnce(String line) {
         // Translates the while statement with sleep
         line = line.replaceAll("(while.*\\{)", "$1 sleep(20);");
-        line = line.replaceAll("([A-Za-z0-9_\\-]+)::([A-Za-z0-9_\\-]+)\\(\\)", "org.javascool.proglets.$1.Functions.$2()");
+        
+        line = line.replaceAll("([A-Za-z0-9_\\-]+)::([A-Za-z0-9_\\-]+)", "org.javascool.proglets.$1.Functions.$2");
         //line = line.replaceAll("(while\\(true\\)\\{)", "$1 sleep(50);");
         // Translates the Synthe proglet @tone macro
         line = line.replaceFirst("@tone:(.*)\\s*;",
@@ -194,12 +195,14 @@ public class Jvs2Java {
                 jvsDiagnostic = "La variable indiqué n'existe pas";
             } else if (jvsDiagnostic.equals("';' expected")) {
                 jvsDiagnostic = "Il manque un point virgule à la fin de la ligne";
-                /*
+                /* 
                  */
-            } else if (jvsDiagnostic.matches("incompatible types\nfound[ ]+:[ ]+int\nrequired:[ ]+java.lang.String")) {
-                jvsDiagnostic = "La variable indiqué n'existe pas";
+            } else if (jvsDiagnostic.matches(".*\\W*found\\W*:\\W([A-Za-z\\.]*)\\Wrequired:\\W([A-Za-z\\.]*)")) {
+                jvsDiagnostic = jvsDiagnostic.replaceAll("incompatible\\Wtypes\\W*found\\W*:\\W([A-Za-z\\.]*)\\Wrequired:\\W([A-Za-z\\.]*)","Vous avez mis une valeur de type $1 alors qu'il faut une valeur de type $2");
+            } else if (jvsDiagnostic.matches("package org\\.javascool\\.proglets\\.[A-Za-z0-9_]+ does not exist")) {
+                jvsDiagnostic = jvsDiagnostic.replaceAll("package org\\.javascool\\.proglets\\.([A-Za-z0-9_]+) does not exist","La proglet $1 n'existe pas");
             } else {
-                jvsDiagnostic = "Erreur Java en Anglais : \n" + jvsDiagnostic;
+                jvsDiagnostic = "Erreur Java inconnue : \n" + jvsDiagnostic;
             }
             if (Jvs2Java.reportError) {
                 JVSMainPanel.reportCompileError((int) diagnostic.getLineNumber(), jvsDiagnostic);

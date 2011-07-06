@@ -94,7 +94,7 @@ public class JVSToolBar extends JToolBar {
 
             @Override
             public void run() {
-                JVSFileEditorTabs.compileFile(JVSMainPanel.getEditorTabs().getCurrentFileId());
+                JVSMainPanel.compileFile();
             }
         });
         this.add(Box.createHorizontalGlue());
@@ -131,7 +131,7 @@ public class JVSToolBar extends JToolBar {
      * @param action Button action.
      * @return The added button.
      */
-    private final JButton addTool(String label, String icon, ActionListener action) {
+    private JButton addTool(String label, String icon, ActionListener action) {
         String buttonId = "MenuButton-" + UUID.randomUUID().toString();
         JButton button = icon == null ? new JButton(label) : new JButton(label, Utils.getIcon(icon));
         button.addActionListener(action);
