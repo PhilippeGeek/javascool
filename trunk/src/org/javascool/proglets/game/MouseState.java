@@ -4,6 +4,8 @@
  */
 package org.javascool.proglets.game;
 
+import java.util.logging.Logger;
+
 
 /**
  * A MouseState is passed as a parameter to the user-defined callback functions
@@ -21,8 +23,8 @@ public class MouseState extends State {
     }
     
     MouseState() {
-        m_x=(int) Functions.m_singleton.m_mousePosRelativeToPanelX;
-        m_y=(int) Functions.m_singleton.m_mousePosRelativeToPanelY;
+        m_x=(int) Functions.getM_singleton().getM_mousePosRelativeToPanelX();
+        m_y=(int) Functions.getM_singleton().getM_mousePosRelativeToPanelY();
         m_button=-1;
     }
     
@@ -38,4 +40,5 @@ public class MouseState extends State {
      * TODO add covenience methods such as x and y. Maybe leave them public
      * in case the user prefers to use s.x rather than x.getX() ?
      */
+    private static final Logger LOG = Logger.getLogger(MouseState.class.getName());
 }

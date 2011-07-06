@@ -1,6 +1,7 @@
 package org.javascool.proglets.game;
 
 import java.awt.event.MouseWheelEvent;
+import java.util.logging.Logger;
 
 /**
  *
@@ -22,4 +23,5 @@ public class MouseWheelState extends State {
     public int getMove() {
         return m_delta;
     }
+    private static final Logger LOG = Logger.getLogger(MouseWheelState.class.getName());
 }
