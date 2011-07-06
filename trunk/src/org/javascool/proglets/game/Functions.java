@@ -468,6 +468,10 @@ public class Functions {
  * PLEASE NOTE THAT ALL THE SUBCLASSES OF STATE MUST BE FINAL : ALL THE STATES MUST DIRECTLY
  * EXTEND THIS CLASS. See 'call' for details
  */
-@SuppressWarnings({"MarkerInterface", "MultipleTopLevelClassesInFile"})
-interface State {
+@SuppressWarnings("MultipleTopLevelClassesInFile")
+class State {
+    private static final Logger LOG = Logger.getLogger(State.class.getName());
+
+    private State() {
+    }
 }
