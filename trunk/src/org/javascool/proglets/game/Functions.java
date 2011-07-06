@@ -14,6 +14,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.javascool.tools.Macros;
+import javax.swing.*;
+import java.awt.Graphics2D;
 
 /* To use these event listeners, use this syntax : 
  * void toto(MouseState s) {
@@ -183,10 +185,12 @@ public class Functions {
      * It stops the timer and should delete the listeners (//TODO)
      */
     public static void stop() {
+        /*
         m_clock.exitClean();
         Macros.getProgletPanel().removeMouseListener(m_singleton.m_mouseListener);
         Macros.getProgletPanel().removeMouseMotionListener(m_singleton.m_mouseMotionListener);
         Macros.getProgletPanel().removeMouseWheelListener(m_singleton.m_mouseWheelListener);
+        (Panel)(Macros.getProgletPanel()).stop();*/
     }
     private static Clock m_clock;
 
@@ -310,8 +314,10 @@ public class Functions {
      * TODO
      */
     class Sprite {
-
         private javax.swing.JPanel m_panel;
+        Sprite() {
+            
+        }
     }
 
     public static class Clock implements Runnable {
@@ -349,6 +355,8 @@ public class Functions {
                     }
                 }
             }
+            
+            Macros.getProgletPanel().repaint();
         }
 
         public void exitClean() {
