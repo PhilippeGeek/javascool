@@ -13,6 +13,8 @@ package org.javascool.proglets.game;
 import java.awt.Color;
 import java.util.logging.Logger;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
 
 /**
  *
@@ -42,9 +44,14 @@ public class Panel extends javax.swing.JPanel {
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, this.getWidth(), this.getHeight());
         g.setColor(Color.WHITE);
+        
+        BufferedImage backBuffer=new BufferedImage(this.getWidth(),this.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        
         for (int i=0; i<getM_items().size(); i++) {
-            getM_items().get(i).draw(g);
+            getM_items().get(i).draw(backBuffer.getGraphics());
         }
+        
+        g.drawImage(backBuffer, 0, 0, null);
     }
     
     public void addItem(Drawable d) {

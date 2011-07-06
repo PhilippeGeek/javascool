@@ -19,12 +19,12 @@ import org.javascool.tools.Macros;
 public class Sprite extends Geometry implements Drawable {
     private BufferedImage m_image;
     
-    Sprite(float x, float y, float w, float h) {
+    public Sprite(float x, float y, float w, float h) {
         super(x,y,w,h);
         ((Panel)Macros.getProgletPanel()).addItem(this);
     }
     
-    void load(String fileName) {
+    public void load(String fileName) {
         try {
             m_image=ImageIO.read(new File(fileName));
         }
@@ -32,7 +32,7 @@ public class Sprite extends Geometry implements Drawable {
             org.javascool.JvsMain.reportBug(e); //TODO
         }
     }
-
+    
     @Override
     public void draw(Graphics g) {
         if (m_image!=null) {
