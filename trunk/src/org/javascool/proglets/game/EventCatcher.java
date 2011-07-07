@@ -16,20 +16,21 @@ package org.javascool.proglets.game;
  * @author gmatheron
  */
 public interface EventCatcher {
+
     /**
      * Should return true if the event concerns this object
      * @param e The mouse's state (in case of a MouseEvent or a MouseMotionEvent)
      * @return true if the event concerns this object
      */
     public boolean isForMe(MouseState e);
-    
+
     /**
      * Should return true if the event concerns this object
      * @param e The mouse's wheel's state (in case of a MouseWheelEvent)
      * @return true if the event concerns this object
      */
     public boolean isForMe(MouseWheelState e);
-    
+
     /**
      * Should return true if the event concerns this object
      * @return true if the event concerns this object

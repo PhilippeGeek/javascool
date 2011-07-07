@@ -14,19 +14,20 @@ import java.util.logging.Logger;
  * @author gmatheron
  */
 public class EventListener {
+
     private String m_method;
     private EventCatcher m_object;
-    
+
     /**
      * Creates a new EventListener
      * @param method The callback method
      * @param object The EventCatcher that will tell if the event should be triggered
      */
     public EventListener(String method, EventCatcher object) {
-        m_method=method;
-        m_object=object;
+        m_method = method;
+        m_object = object;
     }
-    
+
     /**
      * Gets the callback method's name
      * @return the callback method's name
@@ -34,7 +35,7 @@ public class EventListener {
     public String getMethod() {
         return m_method;
     }
-    
+
     /**
      * Gets the EventCatcher
      * @return the EventCatcher
@@ -42,6 +43,5 @@ public class EventListener {
     public EventCatcher getObject() {
         return m_object;
     }
-    
     private static final Logger LOG = Logger.getLogger(EventListener.class.getName());
 }

@@ -6,13 +6,13 @@ package org.javascool.proglets.game;
 
 import java.util.logging.Logger;
 
-
 /**
  * A MouseState is passed as a parameter to the user-defined callback functions
  * so it must stay as intuitive as possible
  * @author gmatheron
  */
 public class MouseState extends State {
+
     /**
      * The mouse's position relative to the panel
      */
@@ -27,20 +27,20 @@ public class MouseState extends State {
      * @param evt The MouseEvent from which to construct the MouseState
      */
     MouseState(java.awt.event.MouseEvent evt) {
-        m_x=evt.getX();
-        m_y=evt.getY();
-        m_button=evt.getButton();
+        m_x = evt.getX();
+        m_y = evt.getY();
+        m_button = evt.getButton();
     }
-    
+
     /**
      * Creates a new MouseState based on the current cursor's position
      */
     MouseState() {
-        m_x=(int) Functions.getSingleton().m_mousePosRelativeToPanelX;
-        m_y=(int) Functions.getSingleton().m_mousePosRelativeToPanelY;
-        m_button=-1;
+        m_x = (int) Functions.getSingleton().m_mousePosRelativeToPanelX;
+        m_y = (int) Functions.getSingleton().m_mousePosRelativeToPanelY;
+        m_button = -1;
     }
-    
+
     /**
      * Gets the X position of the cursor defined by this MouseState
      * @return the X position of the cursor defined by this MouseState
@@ -48,7 +48,7 @@ public class MouseState extends State {
     public int getX() {
         return m_x;
     }
-    
+
     /**
      * Gets the Y position of the cursor defined by this MouseState
      * @return the Y position of the cursor defined by this MouseState
@@ -56,6 +56,5 @@ public class MouseState extends State {
     public int getY() {
         return m_y;
     }
-    
     private static final Logger LOG = Logger.getLogger(MouseState.class.getName());
 }

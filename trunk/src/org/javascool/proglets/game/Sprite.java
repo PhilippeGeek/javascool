@@ -17,11 +17,12 @@ import org.javascool.tools.Macros;
  * @author gmatheron
  */
 public class Sprite extends Geometry implements Drawable {
+
     /**
      * The image
      */
     private BufferedImage m_image;
-    
+
     /**
      * Creates the image and registers it into the render area
      * @param x The X position of the topleft corner of the image
@@ -30,10 +31,10 @@ public class Sprite extends Geometry implements Drawable {
      * @param h The height of the image
      */
     public Sprite(int x, int y, int w, int h) {
-        super(x,y,w,h);
-        ((Panel)Macros.getProgletPanel()).addItem(this);
+        super(x, y, w, h);
+        ((Panel) Macros.getProgletPanel()).addItem(this);
     }
-    
+
     /**
      * Loads the image from a file. This must be done before drawing starts.
      * If the file is not found a bug will be reported
@@ -43,13 +44,12 @@ public class Sprite extends Geometry implements Drawable {
      */
     public void load(String fileName) {
         try {
-            m_image=ImageIO.read(new File(fileName));
-        }
-        catch (IOException e) {
+            m_image = ImageIO.read(new File(fileName));
+        } catch (IOException e) {
             org.javascool.JvsMain.reportBug(e); //TODO
         }
     }
-    
+
     /**
      * Draws the sprite to the specified Graphics buffer. It the image is not loaded
      * it won't be displayed but it can still catch events !
@@ -57,10 +57,9 @@ public class Sprite extends Geometry implements Drawable {
      */
     @Override
     public void draw(Graphics g) {
-        if (m_image!=null) {
+        if (m_image != null) {
             g.drawImage(m_image, getX(), getY(), getWidth(), getHeight(), null);
         }
     }
-    
     private static final Logger LOG = Logger.getLogger(Sprite.class.getName());
 }
