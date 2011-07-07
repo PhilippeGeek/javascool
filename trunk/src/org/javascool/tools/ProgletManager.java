@@ -86,7 +86,7 @@ public class ProgletManager {
         //ProgletManager.proglets.put("game", new Proglet("game"));
         if (!JvsMain.getJvsConf().get("sketchbook").equals("")) {
             try {
-                System.err.println("Load sketchbook ...");
+                //System.err.println("Load sketchbook ...");
                 //this.installProgletDir(new File(JvsMain.getJvsConf().get("sketchbook")));
             } catch (Exception ex) {
                 Logger.getLogger(ProgletManager.class.getName()).log(Level.SEVERE, null, ex);

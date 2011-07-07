@@ -94,7 +94,7 @@ public class Jvs2Java {
             head.append("import java.util.logging.*;");
             head.append("import static org.javascool.tools.Macros.*;");
             if (JVSMainPanel.getCurrentProglet().getJvsFunctionsToInclude()) {
-                head.append("import static ").append(JVSMainPanel.getCurrentProglet().getPackage()).append(".Functions.*;");
+                head.append("import static ").append(JVSMainPanel.getCurrentProglet().getFullPackageName()).append(".Functions.*;");
             }
             if (!JVSMainPanel.getCurrentProglet().getJavaDependance().equals(new ArrayList<String>())) {
                 for (String dep : JVSMainPanel.getCurrentProglet().getJavaDependance()) {
@@ -106,31 +106,20 @@ public class Jvs2Java {
             head.append("public class JvsToJavaTranslated").append(Jvs2Java.uid).append(" implements Runnable{");
             head.append("  private static final long serialVersionUID = ").append(uid).append("L;");
             head.append("  public void run() {");
-            head.append(" URL[] urls = ((URLClassLoader) Thread.currentThread().getContextClassLoader()).getURLs();"
-                    + "ArrayList<URL> newUrls = new ArrayList<URL>();"
-                    + "newUrls.addAll(Arrays.asList(urls));"
-                    + "try {"
-                    + "     newUrls.add(new File(\"" + "C:/Users/Philippe Vienne/Documents/NetBeansProjects/jvs/lib/processing.zip" + "\").toURI().toURL());"
-                    + "} catch (MalformedURLException ex) {"
-                    + "     Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);"
-                    + "}"
-                    + "URL[] newUrlsArray = new URL[newUrls.size()];"
-                    + "for (int i = 0; i < newUrls.size(); i++) {"
-                    + "     newUrlsArray[i] = newUrls.get(i);"
-                    + "}"
-                    + "URLClassLoader newLoader = new URLClassLoader(newUrlsArray);"
-                    + "Thread.currentThread().setContextClassLoader(newLoader);");
+            head.append(JVSMainPanel.getCurrentProglet().getJavaCodeToIncludeBefore());
             head.append(" main(); new File(System.getProperty(\"java.io.tmpdir\")+\"");
             head.append(File.separator.equals("\\") ? "\\\\" : "/");
             head.append("JvsToJavaTranslated");
             head.append(Jvs2Java.uid);
-            head.append(".class\").delete(); }");
+            head.append(".class\").delete(); ");
+            head.append(JVSMainPanel.getCurrentProglet().getJavaCodeToIncludeAfter());
+            head.append("}");
         }
         String finalBody = body.toString().replaceAll("((^|\n)([ \t]*)(?!((public|private|protected)([ \t]+)))([A-Za-z0-1_]+)([ ]+)([A-Za-z0-1_]+)\\(([^()]*)\\)([ ]*)\\{([ \t]*)(\n|$))", "public $1")/*.replaceAll("^(( |\t)*((?!(public|private|protected))( |\n)+)?[a-zA-Z0-9_]+( |\n)+[a-zA-Z0-9_]+ *\\(.*\\)( |\n)*\\{( |\n)*)$", "public $1")*/;
         finalBody = finalBody.toString().replaceAll("(^|[\n\t ])foreach[\n\t ]*\\(([A-Za-z0-9_.]+)[\n\t ]+([A-Za-z0-9_.]+)[\n\t ]+in[\n\t ]+([A-Za-z0-9_.]+)[\n\t ]*\\)[\n\t ]*\\{","for (int tmpsystemi=0; tmpsystemi<$4.size(); tmpsystemi++) {$2 $3=($2)($4.get(tmpsystemi));");
-        System.err.println("** Java Final Code**");
+        System.err.println("** Java Final Code **");
         System.err.println(head.toString() + finalBody + "}");
-        System.err.println("****");
+        System.err.println("*********************");
         return (head.toString() + finalBody + "}");
     }
 

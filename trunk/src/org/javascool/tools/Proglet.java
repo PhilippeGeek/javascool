@@ -42,6 +42,7 @@ public class Proglet {
     private JPanel panel = new JPanel();
     private JVSHtmlDisplay help;
     private Boolean jvsFunctions = false;
+    private String[] observer = {"",""};
     private String fullPackageName = "org.javascool.proglets.tools";
     private String name = "";
     private String packageName = "ingredients";
@@ -112,6 +113,13 @@ public class Proglet {
                 this.depClass = new ArrayList<String>();
                 this.depClass.addAll(Arrays.asList(this.conf.getString("javaImport").split(",")));
             }
+            System.err.println(this.conf.toString("xml"));
+            if (!this.conf.getString("javaCallBefore").equals("")) {
+                this.observer[0]=this.conf.getString("javaCallBefore");
+            }
+            if (!this.conf.getString("javaCallAfter").equals("")) {
+                this.observer[1]=this.conf.getString("javaCallAfter");
+            }
         } else {
             throw new Exception("No configuration file for " + packageName);
         }
@@ -126,6 +134,7 @@ public class Proglet {
             }
         } else {
             System.err.println("No panel for proglet " + packageName);
+            this.panel=null;
         }
 
         // Install the proglet functions
@@ -134,6 +143,7 @@ public class Proglet {
             this.jvsFunctions = true;
         } else {
             System.err.println("No functions for proglet " + packageName);
+            this.jvsFunctions=false;
         }
         
         // Install the help file
@@ -143,6 +153,7 @@ public class Proglet {
             this.help.load(Utils.toUrl("org/javascool/proglets/" + packageName + "/Help.html").toString());
         } else {
             System.err.println("No help for proglet " + packageName);
+            this.help=null;
         }
         
     }
@@ -190,17 +201,28 @@ public class Proglet {
         }
         return this.depClass;
     }
+    
+    public String getJavaCodeToIncludeBefore(){
+        return this.observer[0];
+    }
+    public String getJavaCodeToIncludeAfter(){
+        return this.observer[1];
+    }
 
     public JPanel getPanel() {
         return this.panel;
     }
 
-    public String getPackage() {
+    public String getFullPackageName() {
         return this.fullPackageName;
+    }
+    
+    public String getPackageName(){
+        return this.packageName;
     }
 
     public String getName() {
-        return "Proglet " + name;
+        return this.name;
     }
 
     public Boolean getJvsFunctionsToInclude() {

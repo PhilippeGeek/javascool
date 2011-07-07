@@ -5,5 +5,6 @@
     package="org.javascool.proglet.game"
     panel="Panel"
     javaImport="javax.swing.*,org.javascool.proglets.game.*"
-    javaCallBeforeStart="start()"
+    javaCallBefore="start();"
+    javaCallAfter="stop();"
 }
