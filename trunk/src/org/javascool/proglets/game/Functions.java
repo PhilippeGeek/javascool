@@ -245,6 +245,7 @@ public class Functions implements EventCatcher {
      * @param s The state to pass
      */
     private static void call(String method, Object s) {
+        boolean found=false;
         try {
             for (int i = 0; i < Macros.getProgram().getClass().getMethods().length; i++) {
                 java.lang.reflect.Method m = Macros.getProgram().getClass().getMethods()[i];
@@ -252,18 +253,14 @@ public class Functions implements EventCatcher {
                     int params = m.getParameterTypes().length;
                     if (params == 0) {
                         m.invoke(Macros.getProgram());
+                        found=true;
                     } else if (params == 1) {
                         if (m.getParameterTypes()[0] == s.getClass()) {
                             m.invoke(Macros.getProgram(), m.getParameterTypes()[0].cast(s));
-                        } else {
-                            //            org.javascool.JvsMain.reportBug(new NoSuchMethodException("The specified method " + method + " takes one parameter but it must be of type "++" to be valid"));
                         }
-                    } else {
-                        //          org.javascool.JvsMain.reportBug(new NoSuchMethodException("The specified method " + method + " must take zero or one parameter"));
                     }
                 }
             }
-            //TODO tell if method not found
         } catch (IllegalAccessException ex) {
             Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalArgumentException ex) {
@@ -272,6 +269,10 @@ public class Functions implements EventCatcher {
             Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SecurityException ex) {
             Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        if (!found) {
+            Logger.getLogger(Functions.class.getName()).log(Level.SEVERE,null,new Exception("Callback method "+method+" not found"));
         }
     }
 
@@ -280,18 +281,16 @@ public class Functions implements EventCatcher {
      * @param method The end-user-defined method to call
      */
     private static void call(String method) {
+        boolean found=false;
         try {
             for (int i = 0; i < Macros.getProgram().getClass().getMethods().length; i++) {
                 java.lang.reflect.Method m = Macros.getProgram().getClass().getMethods()[i];
                 if (m.getName().equals(method)) {
                     if (m.getParameterTypes().length == 0) {
-                        m.invoke(Macros.getProgram());
-                    } else {
-                        org.javascool.JvsMain.reportBug(new NoSuchMethodException("The specified method " + method + " must take zero parameters"));
+                        m.invoke(Macros.getProgram()); found=true;
                     }
                 }
             }
-            //TODO tell if method not found
         } catch (IllegalAccessException ex) {
             Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalArgumentException ex) {
@@ -301,9 +300,13 @@ public class Functions implements EventCatcher {
         } catch (SecurityException ex) {
             Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        if (!found) {
+            Logger.getLogger(Functions.class.getName()).log(Level.SEVERE,null,new Exception("Callback method "+method+" not found"));
+        }
     }
 
-    /** //TODO
+    /**
      * This method should be called after the program finishes running
      * It stops the timer and should delete the listeners (//TODO)
      */
@@ -445,8 +448,8 @@ public class Functions implements EventCatcher {
         //</editor-fold>
     }
 
-    /**TODO
-     * Calls each function of the specified array if the EventCatcher accepts it
+    /**
+     * Calls each function of the specified array if the EventCatcher accepts it or is set to always
      * @param functions The functions to call
      */
     private static void callback(java.util.ArrayList<EventListener> functions) {
