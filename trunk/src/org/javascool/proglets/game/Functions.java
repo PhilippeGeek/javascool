@@ -311,12 +311,12 @@ public class Functions implements EventCatcher {
      * It stops the timer and should delete the listeners (//TODO)
      */
     public static void stop() {
-        /*
         m_clock.exitClean();
         Macros.getProgletPanel().removeMouseListener(m_singleton.m_mouseListener);
         Macros.getProgletPanel().removeMouseMotionListener(m_singleton.m_mouseMotionListener);
         Macros.getProgletPanel().removeMouseWheelListener(m_singleton.m_mouseWheelListener);
-        (Panel)(Macros.getProgletPanel()).stop();*/
+        Panel p=(Panel)(Macros.getProgletPanel());
+        p.stop();
     }
     /**
      * Stores a running clock that ticks at each frame and triggers frame-driven events
