@@ -1,9 +1,4 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
  * Panel.java
  *
  * Created on 1 juil. 2011, 11:02:55
@@ -16,45 +11,62 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 /**
- *
+ * Defines the proglet's main panel and render area
  * @author gmatheron
  */
 public class Panel extends javax.swing.JPanel {
     private static final long serialVersionUID = 1L;
+    
+    /**
+     * Dynamic list of objects that should be drawn to the fame render area
+     */
     private java.util.ArrayList<Drawable> m_items;
     
-    /** Creates new form Panel */
+    /** Creates new Panel and initiates the list of Drawable */
     @SuppressWarnings("CollectionWithoutInitialCapacity")
     public Panel() {
         m_items=new java.util.ArrayList<Drawable>();
         initComponents();
     }
-
-    public void help(){
-        this.removeAll();
-    }
     
+    /**
+     * Removes all the Drawable from the render area
+     */
     public void stop() {
-        getM_items().removeAll(getM_items());
+        m_items.removeAll(m_items);
     }
     
+    /**
+     * Paints the current frame to the specified Graphics buffer
+     * @param g The Graphics buffer of which to draw
+     */
     @Override
     public void paintComponent(Graphics g) {
+        //Clear the screen
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, this.getWidth(), this.getHeight());
+        
+        //Set default color
         g.setColor(Color.WHITE);
         
+        //Create backbuffer
         BufferedImage backBuffer=new BufferedImage(this.getWidth(),this.getHeight(), BufferedImage.TYPE_INT_ARGB);
         
-        for (int i=0; i<getM_items().size(); i++) {
-            getM_items().get(i).draw(backBuffer.getGraphics());
+        //Draw all Drawable
+        for (int i=0; i<m_items.size(); i++) {
+            m_items.get(i).draw(backBuffer.getGraphics());
         }
         
+        // Blit !
         g.drawImage(backBuffer, 0, 0, null);
     }
     
+    /**
+     * Adds a Drawable to the render scene
+     * @param d The Drawable to add to the render scene
+     */
     public void addItem(Drawable d) {
-        getM_items().add(d);
+        m_items.add(d);
     }
     
     /** This method is called from within the constructor to
@@ -80,20 +92,6 @@ public class Panel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 
-    /**
-     * @return the m_items
-     */
-    @SuppressWarnings("ReturnOfCollectionOrArrayField")
-    public java.util.ArrayList<Drawable> getM_items() {
-        return m_items;
-    }
-
-    /**
-     * @param m_items the m_items to set
-     */
-    @SuppressWarnings("AssignmentToCollectionOrArrayFieldFromParameter")
-    public void setM_items(java.util.ArrayList<Drawable> m_items) {
-        this.m_items = m_items;
-    }
+    
     private static final Logger LOG = Logger.getLogger(Panel.class.getName());
 }
