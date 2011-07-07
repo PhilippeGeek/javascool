@@ -29,7 +29,7 @@ import java.util.TimerTask;
  * 
  * @author gmatheron
  */
-public class Functions {
+public class Functions implements EventCatcher {
 
     private static Functions m_singleton;
 
@@ -45,22 +45,22 @@ public class Functions {
     /* These arrays are designed to store the functions the user assigned a listener
      * A convenience type is used : CallbackFunction
      */
-    private java.util.ArrayList<String> m_onClick;
-    private java.util.ArrayList<String> m_onMouseEntered;
-    private java.util.ArrayList<String> m_onMouseExited;
-    private java.util.ArrayList<String> m_onMousePressed;
-    private java.util.ArrayList<String> m_onMouseReleased;
-    private java.util.ArrayList<String> m_onMouseDown;
-    private java.util.ArrayList<String> m_onMouseUp;
-    private java.util.ArrayList<String> m_onMouseMoved;
-    private java.util.ArrayList<String> m_onMouseDragged;
-    private java.util.ArrayList<String> m_onMouseWheelUp;
-    private java.util.ArrayList<String> m_onMouseWheelDown;
-    private java.util.ArrayList<String> m_onMouseWheelMoved;
-    private java.util.ArrayList<String> m_onFrame;
-    private java.awt.event.MouseListener m_mouseListener;
-    private java.awt.event.MouseMotionListener m_mouseMotionListener;
-    private java.awt.event.MouseWheelListener m_mouseWheelListener;
+    public java.util.ArrayList<EventListener> m_onClick;
+    public java.util.ArrayList<EventListener> m_onMouseEntered;
+    public java.util.ArrayList<EventListener> m_onMouseExited;
+    public java.util.ArrayList<EventListener> m_onMousePressed;
+    public java.util.ArrayList<EventListener> m_onMouseReleased;
+    public java.util.ArrayList<EventListener> m_onMouseDown;
+    public java.util.ArrayList<EventListener> m_onMouseUp;
+    public java.util.ArrayList<EventListener> m_onMouseMoved;
+    public java.util.ArrayList<EventListener> m_onMouseDragged;
+    public java.util.ArrayList<EventListener> m_onMouseWheelUp;
+    public java.util.ArrayList<EventListener> m_onMouseWheelDown;
+    public java.util.ArrayList<EventListener> m_onMouseWheelMoved;
+    public java.util.ArrayList<EventListener> m_onFrame;
+    public java.awt.event.MouseListener m_mouseListener;
+    public java.awt.event.MouseMotionListener m_mouseMotionListener;
+    public java.awt.event.MouseWheelListener m_mouseWheelListener;
 
     
     public static int mouseX() {
@@ -77,7 +77,7 @@ public class Functions {
      * @param s The function to callback
      */
     public static void onClick(String s) {
-        m_singleton.m_onClick.add(s);
+        m_singleton.m_onClick.add(new EventListener(s,m_singleton));
     }
 
     /**
@@ -86,7 +86,7 @@ public class Functions {
      * @param s The function to callback
      */
     public static void onMouseEntered(String s) {
-        m_singleton.m_onMouseEntered.add(s);
+        m_singleton.m_onMouseEntered.add(new EventListener(s,m_singleton));
     }
 
     /**
@@ -95,7 +95,7 @@ public class Functions {
      * @param s The function to callback
      */
     public static void onMouseExited(String s) {
-        m_singleton.m_onMouseExited.add(s);
+        m_singleton.m_onMouseExited.add(new EventListener(s,m_singleton));
     }
 
     /**
@@ -104,7 +104,7 @@ public class Functions {
      * @param s The function to callback
      */
     public static void onMousePressed(String s) {
-        m_singleton.m_onMousePressed.add(s);
+        m_singleton.m_onMousePressed.add(new EventListener(s,m_singleton));
     }
 
     /**
@@ -113,7 +113,7 @@ public class Functions {
      * @param s The function to callback
      */
     public static void onMouseReleased(String s) {
-        m_singleton.m_onMouseReleased.add(s);
+        m_singleton.m_onMouseReleased.add(new EventListener(s,m_singleton));
     }
 
     /**
@@ -122,7 +122,7 @@ public class Functions {
      * @param s The function to callback
      */
     public static void onMouseDown(String s) {
-        m_singleton.m_onMouseDown.add(s);
+        m_singleton.m_onMouseDown.add(new EventListener(s,m_singleton));
     }
 
     /**
@@ -131,7 +131,7 @@ public class Functions {
      * @param s The function to callback
      */
     public static void onMouseUp(String s) {
-        m_singleton.m_onMouseUp.add(s);
+        m_singleton.m_onMouseUp.add(new EventListener(s,m_singleton));
     }
 
     /**
@@ -140,7 +140,7 @@ public class Functions {
      * @param s The function to callback
      */
     public static void onMouseMoved(String s) {
-        m_singleton.m_onMouseMoved.add(s);
+        m_singleton.m_onMouseMoved.add(new EventListener(s,m_singleton));
     }
 
     /**
@@ -149,7 +149,7 @@ public class Functions {
      * @param s The function to callback
      */
     public static void onMouseDragged(String s) {
-        m_singleton.m_onMouseDragged.add(s);
+        m_singleton.m_onMouseDragged.add(new EventListener(s,m_singleton));
     }
 
     /**
@@ -158,7 +158,7 @@ public class Functions {
      * @param s The function to callback
      */
     public static void onMouseWheelUp(String s) {
-        m_singleton.m_onMouseWheelUp.add(s);
+        m_singleton.m_onMouseWheelUp.add(new EventListener(s,m_singleton));
     }
 
     /**
@@ -167,7 +167,7 @@ public class Functions {
      * @param s The function to callback
      */
     public static void onMouseWheelDown(String s) {
-        m_singleton.m_onMouseWheelDown.add(s);
+        m_singleton.m_onMouseWheelDown.add(new EventListener(s,m_singleton));
     }
 
     /**
@@ -176,7 +176,7 @@ public class Functions {
      * @param s The function to callback
      */
     public static void onMouseWheelMoved(String s) {
-        m_singleton.m_onMouseWheelMoved.add(s);
+        m_singleton.m_onMouseWheelMoved.add(new EventListener(s,m_singleton));
     }
     
     /**
@@ -185,7 +185,7 @@ public class Functions {
      */
     @SuppressWarnings("AccessingNonPublicFieldOfAnotherObject")
     public static void onFrame(String s) {
-        m_singleton.m_onFrame.add(s);
+        m_singleton.m_onFrame.add(new EventListener(s,m_singleton));
     }
 
     /**
@@ -290,19 +290,19 @@ public class Functions {
 
         /* These arrays store the listeners that should be called when an event occurs
          */
-        m_singleton.m_onClick = new java.util.ArrayList<String>();
-        m_singleton.m_onMouseDown = new java.util.ArrayList<String>();
-        m_singleton.m_onMouseDragged = new java.util.ArrayList<String>();
-        m_singleton.m_onMouseEntered = new java.util.ArrayList<String>();
-        m_singleton.m_onMouseExited = new java.util.ArrayList<String>();
-        m_singleton.m_onMouseMoved = new java.util.ArrayList<String>();
-        m_singleton.m_onMousePressed = new java.util.ArrayList<String>();
-        m_singleton.m_onMouseReleased = new java.util.ArrayList<String>();
-        m_singleton.m_onMouseUp = new java.util.ArrayList<String>();
-        m_singleton.m_onFrame = new java.util.ArrayList<String>();
-        m_singleton.m_onMouseWheelDown = new java.util.ArrayList<String>();
-        m_singleton.m_onMouseWheelUp = new java.util.ArrayList<String>();
-        m_singleton.m_onMouseWheelMoved = new java.util.ArrayList<String>();
+        m_singleton.m_onClick = new java.util.ArrayList<EventListener>();
+        m_singleton.m_onMouseDown = new java.util.ArrayList<EventListener>();
+        m_singleton.m_onMouseDragged = new java.util.ArrayList<EventListener>();
+        m_singleton.m_onMouseEntered = new java.util.ArrayList<EventListener>();
+        m_singleton.m_onMouseExited = new java.util.ArrayList<EventListener>();
+        m_singleton.m_onMouseMoved = new java.util.ArrayList<EventListener>();
+        m_singleton.m_onMousePressed = new java.util.ArrayList<EventListener>();
+        m_singleton.m_onMouseReleased = new java.util.ArrayList<EventListener>();
+        m_singleton.m_onMouseUp = new java.util.ArrayList<EventListener>();
+        m_singleton.m_onFrame = new java.util.ArrayList<EventListener>();
+        m_singleton.m_onMouseWheelDown = new java.util.ArrayList<EventListener>();
+        m_singleton.m_onMouseWheelUp = new java.util.ArrayList<EventListener>();
+        m_singleton.m_onMouseWheelMoved = new java.util.ArrayList<EventListener>();
 
         /* The clock object will 'tick' each 1/30s. it will then call the callback
          * functions for onMouseDown, onMouseUp, etc if needed
@@ -322,22 +322,22 @@ public class Functions {
 
                 @Override
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
-                    callback(getSingleton().m_onClick, (new MouseState(evt)));
+                    callback(getSingleton().m_onClick, evt);
                 }
 
                 @Override
                 public void mouseEntered(java.awt.event.MouseEvent evt) {
-                    callback(getSingleton().m_onMouseEntered, (new MouseState(evt)));
+                    callback(getSingleton().m_onMouseEntered, evt);
                 }
 
                 @Override
                 public void mouseExited(java.awt.event.MouseEvent evt) {
-                    callback(getSingleton().m_onMouseExited, (new MouseState(evt)));
+                    callback(getSingleton().m_onMouseExited, evt);
                 }
 
                 @Override
                 public void mousePressed(java.awt.event.MouseEvent evt) {
-                    callback(getSingleton().m_onMousePressed, (new MouseState(evt)));
+                    callback(getSingleton().m_onMousePressed, evt);
                     if (evt.getButton() == java.awt.event.MouseEvent.BUTTON1) {
                         m_singleton.m_mouseDown[0] = true;
                     } else if (evt.getButton() == java.awt.event.MouseEvent.BUTTON2) {
@@ -349,7 +349,7 @@ public class Functions {
 
                 @Override
                 public void mouseReleased(java.awt.event.MouseEvent evt) {
-                    callback(getSingleton().m_onMouseReleased, (new MouseState(evt)));
+                    callback(getSingleton().m_onMouseReleased, evt);
                     if (evt.getButton() == java.awt.event.MouseEvent.BUTTON1) {
                         m_singleton.m_mouseDown[0] = false;
                     } else if (evt.getButton() == java.awt.event.MouseEvent.BUTTON2) {
@@ -366,15 +366,15 @@ public class Functions {
                 public void mouseDragged(MouseEvent e) {
                     m_singleton.m_mousePosRelativeToPanelX=e.getX();
                     m_singleton.m_mousePosRelativeToPanelY=e.getY();
-                    callback(getSingleton().m_onMouseDragged, (new MouseState(e)));
-                    callback(getSingleton().m_onMouseMoved, (new MouseState(e)));
+                    callback(getSingleton().m_onMouseDragged, e);
+                    callback(getSingleton().m_onMouseMoved, e);
                 }
 
                 @Override
                 public void mouseMoved(MouseEvent e) {
                     m_singleton.m_mousePosRelativeToPanelX=e.getX();
                     m_singleton.m_mousePosRelativeToPanelY=e.getY();
-                    callback(getSingleton().m_onMouseMoved, (new MouseState(e)));
+                    callback(getSingleton().m_onMouseMoved, e);
                 }
             };
             Macros.getProgletPanel().addMouseMotionListener(m_singleton.m_mouseMotionListener);
@@ -385,11 +385,11 @@ public class Functions {
                     int copy = getSingleton().m_mouseWheelPosition;
                     m_singleton.m_mouseWheelPosition += e.getWheelRotation();
                     if (copy > getSingleton().m_mouseWheelPosition) {
-                        callback(getSingleton().m_onMouseWheelDown, (new MouseWheelState(e,getSingleton().m_mouseWheelPosition)));
+                        callback(getSingleton().m_onMouseWheelDown, e);
                     } else {
-                        callback(getSingleton().m_onMouseWheelUp, (new MouseWheelState(e,getSingleton().m_mouseWheelPosition)));
+                        callback(getSingleton().m_onMouseWheelUp, e);
                     }
-                    callback(getSingleton().m_onMouseWheelMoved, (new MouseWheelState(e,getSingleton().m_mouseWheelPosition)));
+                    callback(getSingleton().m_onMouseWheelMoved, e);
                 }
             };
             Macros.getProgletPanel().addMouseWheelListener(m_singleton.m_mouseWheelListener);
@@ -397,16 +397,46 @@ public class Functions {
         /********* END ANONYMOUS CLASSES ***************/
     }
 
-    private static void callback(java.util.ArrayList<String> functions, State s) {
+    private static void callback(java.util.ArrayList<EventListener> functions, MouseEvent e) {
+        MouseState s;
+        if (e==null) s=new MouseState();
+        else s=new MouseState(e);
         for (int i = 0; i < functions.size(); i++) {
-            call(functions.get(i), s);
+            if (functions.get(i).getObject().isForMe(s)) {
+                call(functions.get(i).getMethod(), s);
+            }
+        }
+    }
+    private static void callback(java.util.ArrayList<EventListener> functions, MouseWheelEvent e) {
+        if (e==null) {callback(functions,(MouseEvent)e); return;}
+        
+        MouseWheelState s=new MouseWheelState(e, m_singleton.m_mouseWheelPosition);
+        for (int i = 0; i < functions.size(); i++) {
+            if (functions.get(i).getObject().isForMe(s)) {
+                call(functions.get(i).getMethod(), s);
+            }
         }
     }
     
-    private static void callback(java.util.ArrayList<String> functions) {
+    private static void callback(java.util.ArrayList<EventListener> functions) {
         for (int i=0; i<functions.size(); i++) {
-            call(functions.get(i));
+            if (functions.get(i).getObject().isForMe()) {
+                call(functions.get(i).getMethod());
+            }
         }
+    }
+
+    public boolean isForMe(MouseState e) {
+        return true;
+    }
+
+    public boolean isForMe(MouseWheelState e) {
+        return true;
+    }
+
+    @Override
+    public boolean isForMe() {
+        return true;
     }
 
     /**
@@ -442,13 +472,9 @@ public class Functions {
         private void tick() {
             for (int j = 0; j < 3; j++) {
                 if (getSingleton().m_mouseDown[j]) {
-                    for (int i = 0; i < getSingleton().m_onMouseDown.size(); i++) {
-                        call(getSingleton().m_onMouseDown.get(i), new MouseState());
-                    }
+                    callback(getSingleton().m_onMouseDown, null);
                 } else {
-                    for (int i = 0; i < getSingleton().m_onMouseUp.size(); i++) {
-                        call(getSingleton().m_onMouseUp.get(i), new MouseState());
-                    }
+                    callback(getSingleton().m_onMouseUp, null);
                 }
             }
             callback(getSingleton().m_onFrame);

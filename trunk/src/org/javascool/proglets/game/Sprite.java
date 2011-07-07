@@ -19,7 +19,7 @@ import org.javascool.tools.Macros;
 public class Sprite extends Geometry implements Drawable {
     private BufferedImage m_image;
     
-    public Sprite(float x, float y, float w, float h) {
+    public Sprite(int x, int y, int w, int h) {
         super(x,y,w,h);
         ((Panel)Macros.getProgletPanel()).addItem(this);
     }
