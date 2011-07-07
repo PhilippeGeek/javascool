@@ -12,7 +12,7 @@ import java.util.logging.Logger;
  * above them.
  * @author gmatheron
  */
-public abstract class Geometry extends LinkedEventGroup {
+public abstract class Geometry extends Accessible {
 
     /**
      * Stores the width, height and xy position of the object (relative to the
@@ -143,32 +143,10 @@ public abstract class Geometry extends LinkedEventGroup {
 
     /**
      * Returns true if the mouse is over the object
-     * @param e The mouseEvent from which to extract the cursor's position
-     * @return true if the mouse is over the object
-     */
-    @Override
-    public boolean isForMe(MouseState e) {
-        return (e.getX() > m_x && e.getX() < m_x + m_w && e.getY() > m_y && e.getY() < m_y + m_h);
-    }
-
-    /**
-     * Returns true if the mouse is over the object
-     * @param f Not used
-     * @return true if the mouse is over the object
-     */
-    @Override
-    public boolean isForMe(MouseWheelState f) {
-        MouseState e = new MouseState();
-        return (e.getX() > m_x && e.getX() < m_x + m_w && e.getY() > m_y && e.getY() < m_y + m_h);
-    }
-
-    /**
-     * Returns true if the mouse is over the object
      * @return true if the mouse is over the object
      */
     @Override
     public boolean isForMe() {
-        MouseState e = new MouseState();
-        return (e.getX() > m_x && e.getX() < m_x + m_w && e.getY() > m_y && e.getY() < m_y + m_h);
+        return (Functions.mouseX() > m_x && Functions.mouseX() < m_x + m_w && Functions.mouseY() > m_y && Functions.mouseY() < m_y + m_h);
     }
 }

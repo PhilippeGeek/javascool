@@ -17,6 +17,7 @@ public class EventListener {
 
     private String m_method;
     private EventCatcher m_object;
+    private boolean m_always;
 
     /**
      * Creates a new EventListener
@@ -26,6 +27,18 @@ public class EventListener {
     public EventListener(String method, EventCatcher object) {
         m_method = method;
         m_object = object;
+        m_always=false;
+    }
+    
+    /**TODO
+     * Creates a new EventListener
+     * @param method The callback method
+     * @param object The EventCatcher that will tell if the event should be triggered
+     */
+    public EventListener(String method, EventCatcher object, boolean always) {
+        m_method = method;
+        m_object = object;
+        m_always=always;
     }
 
     /**
@@ -43,5 +56,13 @@ public class EventListener {
     public EventCatcher getObject() {
         return m_object;
     }
+    
+    /**TODO
+     * 
+     */
+    public boolean getAlways() {
+        return m_always;
+    }
+    
     private static final Logger LOG = Logger.getLogger(EventListener.class.getName());
 }

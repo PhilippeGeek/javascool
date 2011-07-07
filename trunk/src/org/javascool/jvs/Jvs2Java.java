@@ -127,7 +127,7 @@ public class Jvs2Java {
             head.append(".class\").delete(); }");
         }
         String finalBody = body.toString().replaceAll("((^|\n)([ \t]*)(?!((public|private|protected)([ \t]+)))([A-Za-z0-1_]+)([ ]+)([A-Za-z0-1_]+)\\(([^()]*)\\)([ ]*)\\{([ \t]*)(\n|$))", "public $1")/*.replaceAll("^(( |\t)*((?!(public|private|protected))( |\n)+)?[a-zA-Z0-9_]+( |\n)+[a-zA-Z0-9_]+ *\\(.*\\)( |\n)*\\{( |\n)*)$", "public $1")*/;
-        finalBody = finalBody.toString().replaceAll("(^|[\n\t ])foreach[\n\t ]*\\(([A-Za-z0-9_.]+)[\n\t ]+([A-Za-z0-9_.]+)[\n\t ]+in[\n\t ]+([A-Za-z0-9_.]+)[\n\t ]*\\)[\n\t ]*\\{","foreach (int tmpsystemi=0; tmpsystemi<$4.size(); tmpsystemi++) {$2 $3=$4.get(tmpsystemi);");
+        finalBody = finalBody.toString().replaceAll("(^|[\n\t ])foreach[\n\t ]*\\(([A-Za-z0-9_.]+)[\n\t ]+([A-Za-z0-9_.]+)[\n\t ]+in[\n\t ]+([A-Za-z0-9_.]+)[\n\t ]*\\)[\n\t ]*\\{","for (int tmpsystemi=0; tmpsystemi<$4.size(); tmpsystemi++) {$2 $3=($2)($4.get(tmpsystemi));");
         System.err.println("** Java Final Code**");
         System.err.println(head.toString() + finalBody + "}");
         System.err.println("****");

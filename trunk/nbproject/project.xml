@@ -19,5 +19,21 @@
             <definitions>./lib/nblibraries.properties</definitions>
         </libraries>
         <references xmlns="http://www.netbeans.org/ns/ant-project-references/1"/>
+        <spellchecker-wordlist xmlns="http://www.netbeans.org/ns/spellchecker-wordlist/1">
+            <word>catched</word>
+            <word>clock's</word>
+            <word>fps</word>
+            <word>framerate</word>
+            <word>int</word>
+            <word>mouse's</word>
+            <word>panel's</word>
+            <word>proglet</word>
+            <word>proglet's</word>
+            <word>recieve</word>
+            <word>refactor</word>
+            <word>topleft</word>
+            <word>transmited</word>
+            <word>wheel's</word>
+        </spellchecker-wordlist>
     </configuration>
 </project>
