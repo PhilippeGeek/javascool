@@ -23,25 +23,42 @@ import org.javascool.tools.Macros;
  *     onClick("toto");
  * }
  */
+
 /**
+ * Main class for this proglet, it implements EventCatcher to allow it to catch
+ * events : is you simply use
+ * <code>onClick("exit");</code>
+ * Functions will be used as EventCatcher (but it always return true and catches the event when triggered)
  * 
  * @author gmatheron
  */
 public class Functions implements EventCatcher {
-
+    /*
+     * See getSingleton()
+     */
     private static Functions m_singleton;
 
     /**
+     * A singleton is used more for legacy than anything else. Everything could be
+     * declared static but it probably would be a mess to refactor everything...
      * @return the singleton
      */
     public static Functions getSingleton() {
         return m_singleton;
     }
     
+    /**
+     * Stores the state of each mouse button
+     */
     private boolean m_mouseDown[] = {false, false, false};
+    
+    /**
+     * Stores position of the mouse wheel (in blocks) relative to its state at the
+     * beginning of the user-defined program (to be checked)
+     */
     private int m_mouseWheelPosition = 0;
     /* These arrays are designed to store the functions the user assigned a listener
-     * A convenience type is used : CallbackFunction
+     * A convenience type is used : EventListener
      */
     @SuppressWarnings("PublicField")
     public java.util.ArrayList<EventListener> m_onClick;
@@ -76,11 +93,22 @@ public class Functions implements EventCatcher {
     @SuppressWarnings("PublicField")
     public java.awt.event.MouseWheelListener m_mouseWheelListener;
 
-    
+    /**
+     * Returns the mouse X position relative to the top-left corner of the
+     * proglet panel
+     * @return the mouse X position relative to the top-left corner of the
+     * proglet panel
+     */
     public static int mouseX() {
         return (int)m_singleton.m_mousePosRelativeToPanelX;
     }
     
+    /**
+     * Returns the mouse Y position relative to the top-left corner of the
+     * proglet panel
+     * @return the mouse Y position relative to the top-left corner of the
+     * proglet panel
+     */
     public static int mouseY() {
         return (int)m_singleton.m_mousePosRelativeToPanelY;
     }
@@ -168,7 +196,7 @@ public class Functions implements EventCatcher {
 
     /**
      * Used to create a listener that will callback the specified function
-     * with one MouseState argument
+     * with one MouseWheelState argument
      * @param s The function to callback
      */
     public static void onMouseWheelUp(String s) {
@@ -177,7 +205,7 @@ public class Functions implements EventCatcher {
 
     /**
      * Used to create a listener that will callback the specified function
-     * with one MouseState argument
+     * with one MouseWheelState argument
      * @param s The function to callback
      */
     public static void onMouseWheelDown(String s) {
@@ -186,7 +214,7 @@ public class Functions implements EventCatcher {
 
     /**
      * Used to create a listener that will callback the specified function
-     * with one MouseState argument
+     * with one MouseWheelState argument
      * @param s The function to callback
      */
     public static void onMouseWheelMoved(String s) {
@@ -288,6 +316,9 @@ public class Functions implements EventCatcher {
         (Panel)(Macros.getProgletPanel()).stop();*/
     }
     
+    /**
+     * Stores a running clock that ticks at each frame and triggers frame-driven events
+     */
     private static Clock m_clock;
 
     /**
@@ -330,25 +361,26 @@ public class Functions implements EventCatcher {
          * functions for this event.
          * Possible optimization : only register a listener if an event is defined
          */
+        //<editor-fold defaultstate="collapsed" desc="Anonymous classes">
         {
             /********* START ANONYMOUS CLASSES ***************/
             m_singleton.m_mouseListener = new java.awt.event.MouseListener() {
-
+                
                 @Override
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
                     callback(getSingleton().m_onClick, evt);
                 }
-
+                
                 @Override
                 public void mouseEntered(java.awt.event.MouseEvent evt) {
                     callback(getSingleton().m_onMouseEntered, evt);
                 }
-
+                
                 @Override
                 public void mouseExited(java.awt.event.MouseEvent evt) {
                     callback(getSingleton().m_onMouseExited, evt);
                 }
-
+                
                 @Override
                 public void mousePressed(java.awt.event.MouseEvent evt) {
                     callback(getSingleton().m_onMousePressed, evt);
@@ -360,7 +392,7 @@ public class Functions implements EventCatcher {
                         m_singleton.m_mouseDown[2] = true;
                     }
                 }
-
+                
                 @Override
                 public void mouseReleased(java.awt.event.MouseEvent evt) {
                     callback(getSingleton().m_onMouseReleased, evt);
@@ -374,7 +406,7 @@ public class Functions implements EventCatcher {
                 }
             };
             Macros.getProgletPanel().addMouseListener(m_singleton.m_mouseListener);
-
+            
             m_singleton.m_mouseMotionListener = new java.awt.event.MouseMotionListener() {
                 @Override
                 public void mouseDragged(MouseEvent e) {
@@ -383,7 +415,7 @@ public class Functions implements EventCatcher {
                     callback(getSingleton().m_onMouseDragged, e);
                     callback(getSingleton().m_onMouseMoved, e);
                 }
-
+                
                 @Override
                 public void mouseMoved(MouseEvent e) {
                     m_singleton.m_mousePosRelativeToPanelX=e.getX();
@@ -392,7 +424,7 @@ public class Functions implements EventCatcher {
                 }
             };
             Macros.getProgletPanel().addMouseMotionListener(m_singleton.m_mouseMotionListener);
-
+            
             m_singleton.m_mouseWheelListener = new java.awt.event.MouseWheelListener() {
                 @Override
                 public void mouseWheelMoved(MouseWheelEvent e) {
@@ -407,10 +439,17 @@ public class Functions implements EventCatcher {
                 }
             };
             Macros.getProgletPanel().addMouseWheelListener(m_singleton.m_mouseWheelListener);
+            /********* END ANONYMOUS CLASSES ***************/
         }
-        /********* END ANONYMOUS CLASSES ***************/
+        //</editor-fold>
     }
 
+    /**
+     * Calls each function of the specified array if the EventCatcher accepts it
+     * @param functions The functions to call
+     * @param e The MouseEvent to transmit them. If it is null, then the current mouse
+     * state will be transmited
+     */
     private static void callback(java.util.ArrayList<EventListener> functions, MouseEvent e) {
         MouseState s;
         if (e==null) {
@@ -425,6 +464,15 @@ public class Functions implements EventCatcher {
             }
         }
     }
+    
+    /**
+     * Calls each function of the specified array if the EventCatcher accepts it
+     * @param functions The functions to call
+     * @param e The MouseWheelEvent to transmit them. If it is null, then the
+     * current mouse state will be transmited, using the 
+     * "private static void callback(ArrayList<EventListener>, MouseEvent)"
+     * version of this function.
+     */
     private static void callback(java.util.ArrayList<EventListener> functions, MouseWheelEvent e) {
         if (e==null) {callback(functions,(MouseEvent)e); return;}
         
@@ -436,6 +484,10 @@ public class Functions implements EventCatcher {
         }
     }
     
+    /**
+     * Calls each function of the specified array if the EventCatcher accepts it
+     * @param functions The functions to call
+     */
     private static void callback(java.util.ArrayList<EventListener> functions) {
         for (int i=0; i<functions.size(); i++) {
             if (functions.get(i).getObject().isForMe()) {
@@ -444,33 +496,64 @@ public class Functions implements EventCatcher {
         }
     }
 
+    /**
+     * A function directly assigned to the main panel will always be catched, so return true;
+     * @param e Not used
+     * @return true
+     */
     @Override
     public boolean isForMe(MouseState e) {
         return true;
     }
 
+    /**
+     * A function directly assigned to the main panel will always be catched, so return true;
+     * @param e Not used
+     * @return true
+     */
     @Override
     public boolean isForMe(MouseWheelState e) {
         return true;
     }
 
+    /**
+     * A function directly assigned to the main panel will always be catched, so return true;
+     * @return true
+     */
     @Override
     public boolean isForMe() {
         return true;
     }
 
     /**
-     * TODO
+     * This class allows the proglet to trigger events regularly. Depending on the
+     * selected framerate (see setFps(int)), a main routine will be executed at the given 
+     * speed. At each loop, the clock will call the tick() method.
      */
     @SuppressWarnings("PublicInnerClass")
     public static class Clock implements Runnable {
-
+        /**
+         * Set to true when the clock needs to exit
+         */
         private boolean m_exit = false;
+        /**
+         * Defines the framerate that the clock will try to achieve
+         */
         private int m_fps=30;
 
+        /**
+         * Default constructor, does nothing : see run()
+         */
         Clock() {
         }
         
+        /**
+         * The clock is intended to be run as a thread, so it implements Runnable.
+         * When ran, the clock will tick regularly. Be sure to call the setFps(int)
+         * before running the clock, or it should (not tested) tick at 30 fps.
+         * This method will break when m_exit is set to true (latency can be a bit more
+         * that 1/m_fps seconds.
+         */
         @Override
         @SuppressWarnings("SleepWhileInLoop")
         public void run() {
@@ -487,10 +570,26 @@ public class Functions implements EventCatcher {
             }
         }
 
+        /**
+         * Sets the target framerate. For the moment (//TODO) the real framerate
+         * will be inferior to the target because the proglet just waits for 
+         * 1/m_fps seconds between each tick, so the duration of the tick is
+         * not included. Please note that the execution of the callback function
+         * is modal (it will block the clock's thread) so make sure to make
+         * callback functions that return quickly.
+         * @param fps 
+         */
         public void setFps(int fps) {
             m_fps = fps;
         }
         
+        /**
+         * Triggers : 
+         *     - The mouseDown event if any mouse button is pressed
+         *     - The mouseUp event if no mouse button is pressed
+         *     - The onFrame event
+         * Forces the proglet panel to repaint
+         */
         @SuppressWarnings("AccessingNonPublicFieldOfAnotherObject")
         private void tick() {
             for (int j = 0; j < 3; j++) {
@@ -510,6 +609,9 @@ public class Functions implements EventCatcher {
         }
     }
     
+    /**
+     * Stores the cursor's position relative to the panel's topleft corner
+     */
     @SuppressWarnings("PublicField")
     public float m_mousePosRelativeToPanelX;
     @SuppressWarnings("PublicField")
