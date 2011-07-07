@@ -7,7 +7,6 @@ package org.javascool.proglets.game;
 import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JPanel;
 import org.javascool.tools.Macros;
 
 /**

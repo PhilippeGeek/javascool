@@ -4,6 +4,8 @@
  */
 package org.javascool.proglets.game;
 
+import java.util.logging.Logger;
+
 /**
  *
  * @author gmatheron
@@ -23,4 +25,5 @@ public class EventListener {
     public EventCatcher getObject() {
         return m_object;
     }
+    private static final Logger LOG = Logger.getLogger(EventListener.class.getName());
 }
