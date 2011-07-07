@@ -219,7 +219,7 @@ public class Console extends JPanel {
                                 Logger.getLogger(Console.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         }
-                        try {
+                       /* try {*/
                             Console.program.run();
                             if (Proglet.classExists(JVSMainPanel.getCurrentProglet().getPackage() + ".Functions")) {
                                 try {
@@ -240,7 +240,7 @@ public class Console extends JPanel {
                             }
                             Console.runThread = null;
                             Console.toolbar.afterRunning();
-                        } catch (Throwable e) {
+                      /*  } catch (Throwable e) {
                             if (!"Programme arrêté !".equals(e.getMessage())) {
                                 System.err.println(e.getMessage());
                             }
@@ -263,7 +263,7 @@ public class Console extends JPanel {
                             }
                             Console.runThread = null;
                             Console.toolbar.afterRunning();
-                        }
+                        }*/
 
                     }
                 })).start();
