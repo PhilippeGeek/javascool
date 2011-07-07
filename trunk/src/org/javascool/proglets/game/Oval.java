@@ -30,10 +30,10 @@ public class Oval extends Geometry implements Drawable {
     @Override
     public void draw(Graphics g) {
         if (isM_solid()) {
-            g.fillOval((int)getX(), (int)getY(), (int)getWidth(), (int)getHeight());
+            g.fillOval(getX(), getY(), getWidth(), getHeight());
         }
         else {
-            g.drawOval((int)getX(), (int)getY(), (int)getWidth(), (int)getHeight());
+            g.drawOval(getX(), getY(), getWidth(), getHeight());
         }
     }
     private static final Logger LOG = Logger.getLogger(Oval.class.getName());

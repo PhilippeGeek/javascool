@@ -36,7 +36,7 @@ public class Sprite extends Geometry implements Drawable {
     @Override
     public void draw(Graphics g) {
         if (m_image!=null) {
-            g.drawImage(m_image, (int)getX(), (int)getY(), (int)getWidth(), (int)getHeight(), null);
+            g.drawImage(m_image, getX(), getY(), getWidth(), getHeight(), null);
         }
     }
     private static final Logger LOG = Logger.getLogger(Sprite.class.getName());

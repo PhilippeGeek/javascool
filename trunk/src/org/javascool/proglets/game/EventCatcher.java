@@ -4,9 +4,6 @@
  */
 package org.javascool.proglets.game;
 
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseWheelEvent;
-
 /**
  *
  * @author gmatheron

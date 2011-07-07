@@ -13,7 +13,6 @@ package org.javascool.proglets.game;
 import java.awt.Color;
 import java.util.logging.Logger;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 
 /**

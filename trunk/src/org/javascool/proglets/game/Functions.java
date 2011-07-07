@@ -14,8 +14,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.javascool.tools.Macros;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /* To use these event listeners, use this syntax : 
  * void toto(MouseState s) {
@@ -45,21 +43,37 @@ public class Functions implements EventCatcher {
     /* These arrays are designed to store the functions the user assigned a listener
      * A convenience type is used : CallbackFunction
      */
+    @SuppressWarnings("PublicField")
     public java.util.ArrayList<EventListener> m_onClick;
+    @SuppressWarnings("PublicField")
     public java.util.ArrayList<EventListener> m_onMouseEntered;
+    @SuppressWarnings("PublicField")
     public java.util.ArrayList<EventListener> m_onMouseExited;
+    @SuppressWarnings("PublicField")
     public java.util.ArrayList<EventListener> m_onMousePressed;
+    @SuppressWarnings("PublicField")
     public java.util.ArrayList<EventListener> m_onMouseReleased;
+    @SuppressWarnings("PublicField")
     public java.util.ArrayList<EventListener> m_onMouseDown;
+    @SuppressWarnings("PublicField")
     public java.util.ArrayList<EventListener> m_onMouseUp;
+    @SuppressWarnings("PublicField")
     public java.util.ArrayList<EventListener> m_onMouseMoved;
+    @SuppressWarnings("PublicField")
     public java.util.ArrayList<EventListener> m_onMouseDragged;
+    @SuppressWarnings("PublicField")
     public java.util.ArrayList<EventListener> m_onMouseWheelUp;
+    @SuppressWarnings("PublicField")
     public java.util.ArrayList<EventListener> m_onMouseWheelDown;
+    @SuppressWarnings("PublicField")
     public java.util.ArrayList<EventListener> m_onMouseWheelMoved;
+    @SuppressWarnings("PublicField")
     public java.util.ArrayList<EventListener> m_onFrame;
+    @SuppressWarnings("PublicField")
     public java.awt.event.MouseListener m_mouseListener;
+    @SuppressWarnings("PublicField")
     public java.awt.event.MouseMotionListener m_mouseMotionListener;
+    @SuppressWarnings("PublicField")
     public java.awt.event.MouseWheelListener m_mouseWheelListener;
 
     
@@ -399,8 +413,12 @@ public class Functions implements EventCatcher {
 
     private static void callback(java.util.ArrayList<EventListener> functions, MouseEvent e) {
         MouseState s;
-        if (e==null) s=new MouseState();
-        else s=new MouseState(e);
+        if (e==null) {
+            s=new MouseState();
+        }
+        else {
+            s=new MouseState(e);
+        }
         for (int i = 0; i < functions.size(); i++) {
             if (functions.get(i).getObject().isForMe(s)) {
                 call(functions.get(i).getMethod(), s);
@@ -426,10 +444,12 @@ public class Functions implements EventCatcher {
         }
     }
 
+    @Override
     public boolean isForMe(MouseState e) {
         return true;
     }
 
+    @Override
     public boolean isForMe(MouseWheelState e) {
         return true;
     }
@@ -452,6 +472,7 @@ public class Functions implements EventCatcher {
         }
         
         @Override
+        @SuppressWarnings("SleepWhileInLoop")
         public void run() {
             while (true) {
                 try {
@@ -460,7 +481,9 @@ public class Functions implements EventCatcher {
                     Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 tick();
-                if (m_exit) break;
+                if (m_exit) {
+                    break;
+                }
             }
         }
 
