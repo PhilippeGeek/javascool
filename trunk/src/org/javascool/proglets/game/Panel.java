@@ -15,27 +15,27 @@ import java.awt.image.BufferedImage;
  * @author gmatheron
  */
 public class Panel extends javax.swing.JPanel {
+
     private static final long serialVersionUID = 1L;
-    
     /**
      * Dynamic list of objects that should be drawn to the fame render area
      */
     private java.util.ArrayList<Drawable> m_items;
-    
+
     /** Creates new Panel and initiates the list of Drawable */
     @SuppressWarnings("CollectionWithoutInitialCapacity")
     public Panel() {
-        m_items=new java.util.ArrayList<Drawable>();
+        m_items = new java.util.ArrayList<Drawable>();
         initComponents();
     }
-    
+
     /**
      * Removes all the Drawable from the render area
      */
     public void stop() {
         m_items.removeAll(m_items);
     }
-    
+
     /**
      * Paints the current frame to the specified Graphics buffer
      * @param g The Graphics buffer of which to draw
@@ -45,22 +45,22 @@ public class Panel extends javax.swing.JPanel {
         //Clear the screen
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, this.getWidth(), this.getHeight());
-        
+
         //Set default color
         g.setColor(Color.WHITE);
-        
+
         //Create backbuffer
-        BufferedImage backBuffer=new BufferedImage(this.getWidth(),this.getHeight(), BufferedImage.TYPE_INT_ARGB);
-        
+        BufferedImage backBuffer = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_ARGB);
+
         //Draw all Drawable
-        for (int i=0; i<m_items.size(); i++) {
+        for (int i = 0; i < m_items.size(); i++) {
             m_items.get(i).draw(backBuffer.getGraphics());
         }
-        
+
         // Blit !
         g.drawImage(backBuffer, 0, 0, null);
     }
-    
+
     /**
      * Adds a Drawable to the render scene
      * @param d The Drawable to add to the render scene
@@ -68,7 +68,7 @@ public class Panel extends javax.swing.JPanel {
     public void addItem(Drawable d) {
         m_items.add(d);
     }
-    
+
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -91,7 +91,5 @@ public class Panel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
-
-    
     private static final Logger LOG = Logger.getLogger(Panel.class.getName());
 }

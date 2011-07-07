@@ -13,11 +13,12 @@ import org.javascool.tools.Macros;
  * @author gmatheron
  */
 public class Oval extends Geometry implements Drawable {
+
     /**
      * True if the oval should be filled, false otherwise
      */
     private boolean m_solid;
-    
+
     /**
      * Creates and draws a non-filled oval
      * @param x The X position of the topleft corner of the rectangle that fits the oval
@@ -26,11 +27,11 @@ public class Oval extends Geometry implements Drawable {
      * @param h The height of the topleft corner of the rectangle that fits the oval
      */
     public Oval(int x, int y, int w, int h) {
-        super(x,y,w,h);
-        m_solid=true;
-        ((Panel)Macros.getProgletPanel()).addItem(this);
+        super(x, y, w, h);
+        m_solid = true;
+        ((Panel) Macros.getProgletPanel()).addItem(this);
     }
-    
+
     /**
      * Creates and draws an oval
      * @param x The X position of the topleft corner of the rectangle that fits the oval
@@ -40,11 +41,11 @@ public class Oval extends Geometry implements Drawable {
      * @param solid True if the oval should be filled, false otherwise
      */
     public Oval(int x, int y, int w, int h, boolean solid) {
-        super(x,y,w,h);
-        ((Panel)Macros.getProgletPanel()).addItem(this);
-        m_solid=solid;
+        super(x, y, w, h);
+        ((Panel) Macros.getProgletPanel()).addItem(this);
+        m_solid = solid;
     }
-    
+
     /**
      * Draws the oval to a Graphics buffer.
      * @param g The Graphics buffer on which to draw the oval
@@ -53,11 +54,9 @@ public class Oval extends Geometry implements Drawable {
     public void draw(Graphics g) {
         if (m_solid) {
             g.fillOval(getX(), getY(), getWidth(), getHeight());
-        }
-        else {
+        } else {
             g.drawOval(getX(), getY(), getWidth(), getHeight());
         }
     }
-    
     private static final Logger LOG = Logger.getLogger(Oval.class.getName());
 }
