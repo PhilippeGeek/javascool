@@ -11,20 +11,24 @@ import org.javascool.tools.Proglet;
  *
  * @author Philippe Vienne
  */
-public class JVSWidgetPanel extends JVSTabs{
-    
+public class JVSWidgetPanel extends JVSTabs {
+
     private String progletTabId;
-    
-    public JVSWidgetPanel(){
+
+    public JVSWidgetPanel() {
         super();
     }
-    
-    public void setProglet(Proglet proglet){
-        this.progletTabId=this.add(proglet.getName(),"", proglet.getPanel());
+
+    public void setProglet(Proglet proglet) {
+        if (proglet.getPanel() != null) {
+            this.progletTabId = this.add("Proglet "+proglet.getName(), "", proglet.getPanel());
+        }
+        if (proglet.getHelpFileUrl()!=null){
+            this.add("Aide de la proglet", "", proglet.getHelpFileUrl());
+        }
     }
-    
-    public JPanel getProgletPanel(){
+
+    public JPanel getProgletPanel() {
         return this.getPanel(progletTabId);
     }
-    
 }
