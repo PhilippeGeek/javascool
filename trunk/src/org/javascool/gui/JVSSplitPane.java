@@ -31,7 +31,6 @@ public class JVSSplitPane extends JSplitPane{
         this.setRightComponent(JVSSplitPane.tabs);
         this.setVisible(true);
         this.validate();
-        this.setDividerLocation(500);
     }
     
     /** Get the left component */

@@ -184,7 +184,7 @@ public class JVSToolBar extends JToolBar {
     private void generateProgletMenu() {
         
         final JPopupMenu jPopupMenu = new JPopupMenu();
-        JMenuItem menuitem=new JMenuItem("Installer un scketchbook");
+        JMenuItem menuitem=new JMenuItem("Installer un sketchbook");
         menuitem.addActionListener(new ActionListener(){
 
             @Override
@@ -194,6 +194,17 @@ public class JVSToolBar extends JToolBar {
             
         });
         jPopupMenu.add(menuitem);
+        menuitem=new JMenuItem("Désinstaller le sketchbook");
+        menuitem.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JvsMain.getJvsConf().set("sketchbook", "");
+            }
+            
+        });
+        jPopupMenu.add(menuitem);
+        jPopupMenu.addSeparator();
         menuitem=new JMenuItem("Changer de proglet");
         menuitem.addActionListener(new ActionListener(){
 

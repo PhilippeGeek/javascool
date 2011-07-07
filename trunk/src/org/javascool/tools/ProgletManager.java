@@ -8,7 +8,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FilenameFilter;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
@@ -33,11 +40,54 @@ public class ProgletManager {
     private static HashMap<String, Proglet> proglets = new HashMap<String, Proglet>();
 
     public ProgletManager() {
-        ProgletManager.proglets.put("game", new Proglet("game"));
-        if(!JvsMain.getJvsConf().get("sketchbook").equals("")){
+        try {
+            String proglet;
+            File progletDir = new File(Thread.currentThread().getContextClassLoader().getResource("org/javascool/proglets").toURI());
+            for (File dir : progletDir.listFiles()) {
+                if (dir.isDirectory()) {
+                    proglet = dir.getName();
+                    try {
+                        ProgletManager.proglets.put(proglet, new Proglet(proglet));
+                    } catch (Exception ex) {
+                        System.err.println("Auto-destruct proglet " + proglet + ", error during load. Exception : " + ex.getMessage());
+                        if (ex.getMessage().startsWith("No configuration file")) {
+                            ProgletManager.proglets.remove(proglet);
+                        } else {
+                            ProgletManager.proglets.remove(proglet);
+                        }
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            if (ex.getMessage().equals("URI is not hierarchical")) {
+                try {
+                    System.err.println("We are in a jar");
+                    for (String proglet : ProgletManager.listProgletInTheJar(Utils.classLoader.getResource("org/javascool/proglets").toString().replaceAll("file:", "").replaceAll("jar:", "").replaceAll("%20", " "))) {
+                        proglet = proglet.split("/")[proglet.split("/").length - 1];
+                        try {
+                            ProgletManager.proglets.put(proglet, new Proglet(proglet));
+                        } catch (Exception exep) {
+                            System.err.println("Auto-destruct proglet " + proglet + ", error during load. Exception : " + exep.getMessage());
+                            if (ex.getMessage().startsWith("No configuration file")) {
+                                ProgletManager.proglets.remove(proglet);
+                            } else {
+                                ProgletManager.proglets.remove(proglet);
+                            }
+                        }
+                    }
+                } catch (Exception ex1) {
+                    Logger.getLogger(ProgletManager.class.getName()).log(Level.SEVERE, null, ex1);
+                }
+            } else {
+                Logger.getLogger(ProgletManager.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+        //ProgletManager.proglets.put("game", new Proglet("game"));
+        if (!JvsMain.getJvsConf().get("sketchbook").equals("")) {
             try {
                 System.err.println("Load sketchbook ...");
-                this.installProgletDir(new File(JvsMain.getJvsConf().get("sketchbook")));
+                //this.installProgletDir(new File(JvsMain.getJvsConf().get("sketchbook")));
             } catch (Exception ex) {
                 Logger.getLogger(ProgletManager.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -96,12 +146,14 @@ public class ProgletManager {
                 }
             }
         })) {
+            System.err.println("Chargement de " + directory + File.separator + dir);
             if (ProgletManager.proglets.containsKey(dir)) {
                 Dialog.error("Erreur lors du chargement", "Le proglet " + dir + " est déjà chargé");
             } else {
                 try {
                     ProgletManager.proglets.put(dir, new Proglet(new File(directory.getPath() + File.separator + dir)));
                 } catch (Exception e) {
+                    System.err.println("Erreur " + e.getMessage() + " lors du chargement de " + dir);
                 }
             }
         }
@@ -127,7 +179,7 @@ public class ProgletManager {
             public void actionPerformed(ActionEvent e) {
                 Object selectedValue = list.getSelectedValue();
                 for (String key : progletsForHumans.keySet()) {
-                    if(progletsForHumans.get(key).equals(selectedValue)){
+                    if (progletsForHumans.get(key).equals(selectedValue)) {
                         JVSMainPanel.loadProglet(key);
                     }
                 }
@@ -140,5 +192,29 @@ public class ProgletManager {
         int y = (JvsMain.getJvsMainFrame().getY()) + (JvsMain.getJvsMainFrame().getHeight() - height) / 2;
         frame.setBounds(x, y, width, height);
         frame.setVisible(true);
+    }
+
+    private static List<String> listProgletInTheJar(String path) throws IOException {
+        Macros.echo("Searching in " + path);
+        List<String> classFiles = new ArrayList<String>();
+        final String[] parts = path.split("!");
+        if (parts.length == 2) {
+            try {
+                String jarFilename = parts[0];
+                String relativePath = parts[1].replace(File.separatorChar, '/').substring(1);
+                JarFile jarFile = new JarFile(jarFilename);
+                final Enumeration<JarEntry> entries = jarFile.entries();
+                while (entries.hasMoreElements()) {
+                    final JarEntry entry = entries.nextElement();
+                    final String entryName = entry.getName();
+                    if (entryName.startsWith(relativePath) && entry.isDirectory() && !entryName.equals(relativePath + "/")) {
+                        classFiles.add(entryName);
+                    }
+                }
+            } catch (Exception ex) {
+                Macros.echo("Erreur : " + ex.getMessage());
+            }
+        }
+        return classFiles;
     }
 }

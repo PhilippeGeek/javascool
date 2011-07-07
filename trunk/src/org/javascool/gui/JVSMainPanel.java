@@ -76,13 +76,7 @@ public final class JVSMainPanel extends JPanel {
         }
         ((JVSTabs) JVSMainPanel.getMainPane().getRightComponent()).add("Web", "", jvsHtmlDisplay);
         JVSMainPanel.loadProglet("game");
-        Utils.addPathForClassLoader("C:/Users/Philippe Vienne/Documents/NetBeansProjects/jvs/lib/processing.zip");
-        URL[] urls = ((URLClassLoader) Thread.currentThread().getContextClassLoader()).getURLs();
-        for(URL url:urls){
-            System.err.println(url.toString());
-        }
-        System.err.println(Thread.currentThread().getContextClassLoader().getResource("toxi"));
-    }
+   }
 
     /** Get the toolbar
      * @return The toolbar

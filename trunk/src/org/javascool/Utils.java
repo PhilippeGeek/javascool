@@ -55,6 +55,8 @@ import javax.swing.JOptionPane;
  */
 public class Utils {
 
+    public static URLClassLoader classLoader=((URLClassLoader) Thread.currentThread().getContextClassLoader());
+    
     private Utils() {
     }
     private static final long serialVersionUID = 1L;
@@ -67,7 +69,7 @@ public class Utils {
      * @param path The path to add
      */
     public static void addPathForClassLoader(String path) {
-        URL[] urls = ((URLClassLoader) Thread.currentThread().getContextClassLoader()).getURLs();
+        URL[] urls = classLoader.getURLs();
         ArrayList<URL> newUrls = new ArrayList<URL>();
         newUrls.addAll(Arrays.asList(urls));
         try {
@@ -80,6 +82,7 @@ public class Utils {
             newUrlsArray[i] = newUrls.get(i);
         }
         URLClassLoader newLoader = new URLClassLoader(newUrlsArray);
+        classLoader=newLoader;
         Thread.currentThread().setContextClassLoader(newLoader);
     }
 

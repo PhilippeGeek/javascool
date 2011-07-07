@@ -9,7 +9,6 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
-import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.javascool.gui.JVSMainPanel;
 import org.javascool.pml.Pml;
 import org.javascool.tools.Macros;
@@ -19,7 +18,7 @@ import org.javascool.tools.Macros;
  * @author Philippe Vienne
  */
 public class JvsMain {
-
+    
     public static final String title = "Java's Cool 3.3";
     public static final String logo = "org/javascool/doc-files/logo.png";
     public static final String logo32 = "org/javascool/doc-files/icon32/logo.png";
@@ -135,7 +134,7 @@ public class JvsMain {
 
     /** Test if we are on Mac */
     public static Boolean isMac() {
-        return RSyntaxTextArea.isOSX();
+        return false;
     }
     
     /** Function used to report a bug */

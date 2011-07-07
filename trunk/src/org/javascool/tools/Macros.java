@@ -4,8 +4,15 @@
 
 package org.javascool.tools;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JPanel;
+import org.javascool.JvsMain;
+import org.javascool.Utils;
 import org.javascool.gui.JVSMainPanel;
 
 /** Contain useful function for help student to program
@@ -108,5 +115,16 @@ public class Macros {
   
   public static Object getProgram(){
       return org.javascool.tools.Console.getProgram().getClass().cast(org.javascool.tools.Console.getProgram());
+  }
+  
+  public static File getUserResource(String location){
+        try {
+            Utils.addPathForClassLoader(JVSMainPanel.getEditorTabs().getFile(JVSMainPanel.getEditorTabs().getCurrentFileId()).getFile().getParentFile().toURI().toString());
+            return new File(Utils.classLoader.findResource(location).toURI());
+        } catch (URISyntaxException ex) {
+            System.out.println("erreur");
+            //Logger.getLogger(Macros.class.getName()).log(Level.SEVERE, null, ex);
+            return new File(".");
+        }
   }
 }
