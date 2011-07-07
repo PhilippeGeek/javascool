@@ -23,10 +23,12 @@ public abstract class LinkedEventGroup implements EventCatcher {
     
     private static final Logger LOG = Logger.getLogger(LinkedEventGroup.class.getName());
 
-    /**TODO
+    /**
      * Used to create a listener that will callback the specified function
      * with one MouseState argument
      * @param s The function to callback
+     * @param always If set to true, the callback will always be performed for the
+     * element even if the event did not occur on it.
      */
     public void onClick(String s, boolean always) {
         Functions.getSingleton().m_onClick.add(new EventListener(s, this, always));

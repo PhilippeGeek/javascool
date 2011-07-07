@@ -30,10 +30,12 @@ public class EventListener {
         m_always=false;
     }
     
-    /**TODO
+    /**
      * Creates a new EventListener
      * @param method The callback method
      * @param object The EventCatcher that will tell if the event should be triggered
+     * @param always If set to true the event will be triggered even if the EventCatcher
+     * refuses it (typically if the mouse isn't over the object)
      */
     public EventListener(String method, EventCatcher object, boolean always) {
         m_method = method;
@@ -57,8 +59,9 @@ public class EventListener {
         return m_object;
     }
     
-    /**TODO
-     * 
+    /**
+     * Returns true if the event should be called whatever the response of the EventCatcher is
+     * @return true if the event should be called whatever the response of the EventCatcher is
      */
     public boolean getAlways() {
         return m_always;
