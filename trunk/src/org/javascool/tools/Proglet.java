@@ -7,7 +7,14 @@
  **************************************************************/
 package org.javascool.tools;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -18,6 +25,7 @@ import java.util.logging.Logger;
 import javax.swing.JPanel;
 import org.javascool.JVSFile;
 import org.javascool.Utils;
+import org.javascool.gui.JVSHtmlDisplay;
 import org.javascool.gui.JVSMainPanel;
 import org.javascool.gui.JVSMainPanel.Dialog;
 import org.javascool.jvs.Jvs2Java;
@@ -32,10 +40,11 @@ public class Proglet {
     private Pml conf;
     private ArrayList<String> depClass;
     private JPanel panel = new JPanel();
-    private File help;
+    private JVSHtmlDisplay help;
     private Boolean jvsFunctions = false;
-    private String packageName="org.javascool.proglets.tools";
+    private String fullPackageName = "org.javascool.proglets.tools";
     private String name = "";
+    private String packageName = "ingredients";
 
     public Proglet(File directory) throws Exception {
         if (!directory.exists() || !directory.isDirectory()) {
@@ -70,85 +79,124 @@ public class Proglet {
             }
         }
         if (new File(directory.getPath() + File.separator + "Help.html").exists()) {
-            this.help=new File(directory.getPath() + File.separator + "Help.html");
+            //this.help = new File(directory.getPath() + File.separator + "Help.html");
         }
         if (new File(directory.getPath() + File.separator + "functions.jvs").exists()) {
             this.setupJvsFunctions(new File(directory.getPath() + File.separator + "functions.jvs"));
         }
     }
 
-    public Proglet(String progletName) {
+    public Proglet(String progletName) throws Exception {
+        this(progletName, true);
+        return;
+    }
+
+    private Proglet(String progletName, Boolean fromjar) throws Exception {
+
+        // Set the name
         this.name = progletName;
-        this.packageName = "org.javascool.proglets."+progletName;
-        this.conf=new Pml();
-        this.setupPanel();
-        this.setupJvsFunctions();
-        try {
-            try {
-                this.conf.load(Class.forName("org.javascool.JvsMain").getResource("proglets/" + name + "/Proglet.pml").toURI().toString());
-                this.help=new File(Class.forName("org.javascool.JvsMain").getResource("proglets/" + name + "/Help.html").toURI());
-            } catch (URISyntaxException ex) {
-                Logger.getLogger(Proglet.class.getName()).log(Level.SEVERE, null, ex);
+        // Set the package name
+        this.packageName=progletName;
+        // It's an official package, so it's in org.javascool.proglets
+        this.fullPackageName = "org.javascool.proglets." + progletName;
+        // We will store configuration
+        this.conf = new Pml();
+
+        // Read Configuration
+        if (ClassLoader.getSystemResourceAsStream("org/javascool/proglets/" + packageName + "/Proglet.pml") != null) {
+            this.conf.reset(Proglet.convertStreamToString(ClassLoader.getSystemResourceAsStream("org/javascool/proglets/" + packageName + "/Proglet.pml")));
+            if (!this.conf.getString("name").equals("")) {
+                this.name = this.conf.getString("name");
             }
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Proglet.class.getName()).log(Level.SEVERE, null, ex);
+            if (!this.conf.getString("javaImport").equals("")) {
+                this.depClass = new ArrayList<String>();
+                this.depClass.addAll(Arrays.asList(this.conf.getString("javaImport").split(",")));
+            }
+        } else {
+            throw new Exception("No configuration file for " + packageName);
         }
-        if(!this.conf.getString("name").equals("")){
-            this.name=this.conf.getString("name");
+
+        // Install the panel
+        if (Proglet.classExists("org.javascool.proglets." + this.packageName + ".Panel")) {
+            try {
+                System.err.println("Load panel for proglet " + packageName);
+                panel = (JPanel) Class.forName("org.javascool.proglets." + this.packageName + ".Panel").newInstance();
+            } catch (Exception ex) {
+                throw ex;
+            }
+        } else {
+            System.err.println("No panel for proglet " + packageName);
         }
-        if(!this.conf.getString("javaImport").equals("")){
-            this.depClass=new ArrayList<String>();
-            this.depClass.addAll(Arrays.asList(this.conf.getString("javaImport").split(",")));
+
+        // Install the proglet functions
+        if (Proglet.classExists("org.javascool.proglets." + this.packageName + ".Functions")) {
+            System.err.println("Load functions for proglet " + packageName);
+            this.jvsFunctions = true;
+        } else {
+            System.err.println("No functions for proglet " + packageName);
         }
-        if(!this.help.exists()){
-            this.help=null;
+        
+        // Install the help file
+        if (ClassLoader.getSystemResourceAsStream("org/javascool/proglets/" + packageName + "/Help.html") != null) {
+            System.err.println("Load help for proglet " + packageName);
+            this.help=new JVSHtmlDisplay();
+            this.help.load(Utils.toUrl("org/javascool/proglets/" + packageName + "/Help.html").toString());
+        } else {
+            System.err.println("No help for proglet " + packageName);
         }
+        
     }
 
-    private void setupPanel() {
-        if (Proglet.classExists("org.javascool.proglets." + this.name + ".Panel")) {
-            try {
-                panel = (JPanel) Class.forName("org.javascool.proglets." + this.name + ".Panel").newInstance();
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(Proglet.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (InstantiationException ex) {
-                Logger.getLogger(Proglet.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IllegalAccessException ex) {
-                Logger.getLogger(Proglet.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
+    /** Convert a Stream to a String
+     * To convert the InputStream to String we use the
+     * Reader.read(char[] buffer) method. We iterate until the
+     * Reader return -1 which means there's no more data to
+     * read. We use the StringWriter class to produce the string.
+     */
+    private static String convertStreamToString(InputStream is) throws IOException {
+        if (is != null) {
+            Writer writer = new StringWriter();
+            char[] buffer = new char[1024];
 
-    private void setupJvsFunctions() {
-        if (Proglet.classExists("org.javascool.proglets." + this.name + ".Functions")) {
-            this.jvsFunctions=true;
+            try {
+                Reader reader = new BufferedReader(
+                        new InputStreamReader(is, "UTF-8"));
+                int n;
+                while ((n = reader.read(buffer)) != -1) {
+                    writer.write(buffer, 0, n);
+                }
+            } finally {
+                is.close();
+            }
+            return writer.toString();
+        } else {
+            return "";
         }
     }
 
     private void setupJvsFunctions(File functionFile) {
-        if (functionFile.exists()){
+        if (functionFile.exists()) {
             Jvs2Java.javaCompile(functionFile.getPath());
-            
         }
     }
 
-    public String getHelpFileUrl(){
-        return this.help.toURI().toString();
+    public JPanel getHelpFileUrl() {
+        return this.help;
     }
-    
-    public ArrayList<String> getJavaDependance(){
-        if(this.depClass==null){
+
+    public ArrayList<String> getJavaDependance() {
+        if (this.depClass == null) {
             return new ArrayList<String>();
         }
         return this.depClass;
     }
-    
+
     public JPanel getPanel() {
         return this.panel;
     }
-    
-    public String getPackage(){
-        return this.packageName;
+
+    public String getPackage() {
+        return this.fullPackageName;
     }
 
     public String getName() {
@@ -179,17 +227,23 @@ public class Proglet {
         try {
             File javaClass = new File(path);
             URL[] urls = new URL[]{new URL("file:" + javaClass.getParent() + File.separator)};
-            Class< ?> j_class = new URLClassLoader(urls).loadClass(javaClass.getName().replaceAll("\\.class", ""));
+            Macros.echo(javaClass.getName().replaceAll("\\.class", ""));
+            Class< ?> j_class;
+            if (path.endsWith("org" + File.separator + "javascool" + File.separator + "proglets" + File.separator + javaClass.getParentFile().getName() + File.separator + "Panel.class")) {
+                j_class = Utils.classLoader.loadClass("org.javascool.proglets." + javaClass.getParentFile().getName() + ".Panel");
+            } else {
+                j_class = new URLClassLoader(urls).loadClass(javaClass.getName().replaceAll("\\.class", ""));
+            }
             Object o = j_class.newInstance();
             if (!(o instanceof JPanel)) {
                 throw new Exception("La class à charger n'est pas un JPanel");
             }
             return (JPanel) o;
         } catch (Throwable e) {
-            throw new RuntimeException("Erreur: impossible de charger la class, erreur : " + e.getMessage());
+            throw new RuntimeException("Erreur: impossible de charger la class" + path + ", erreur : " + e.getMessage());
         }
     }
-    
+
     private static void loadFromClass(String path) throws Throwable {
         try {
             File javaClass = new File(path);

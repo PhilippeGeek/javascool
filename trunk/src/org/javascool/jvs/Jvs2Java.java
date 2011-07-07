@@ -87,7 +87,11 @@ public class Jvs2Java {
             head.append("import java.util.ArrayList;");
             head.append("import java.util.Map;");
             head.append("import java.io.*;");
-            head.append("import java.util.HashMap;");
+            head.append("import java.net.*;");
+            head.append("import java.util.*;");
+            head.append("import org.javascool.*;");
+            head.append("import org.javascool.gui.*;");
+            head.append("import java.util.logging.*;");
             head.append("import static org.javascool.tools.Macros.*;");
             if (JVSMainPanel.getCurrentProglet().getJvsFunctionsToInclude()) {
                 head.append("import static ").append(JVSMainPanel.getCurrentProglet().getPackage()).append(".Functions.*;");
@@ -101,12 +105,31 @@ public class Jvs2Java {
             // Declares the proglet's core as a Runnable in the Applet
             head.append("public class JvsToJavaTranslated").append(Jvs2Java.uid).append(" implements Runnable{");
             head.append("  private static final long serialVersionUID = ").append(uid).append("L;");
-
-            head.append("  public void run() { main(); new File(System.getProperty(\"java.io.tmpdir\")+\"").append(File.separator.equals("\\") ? "\\\\" : "/").append("JvsToJavaTranslated").append(Jvs2Java.uid).append(".class\").delete(); }");
+            head.append("  public void run() {");
+            head.append(" URL[] urls = ((URLClassLoader) Thread.currentThread().getContextClassLoader()).getURLs();"
+                    + "ArrayList<URL> newUrls = new ArrayList<URL>();"
+                    + "newUrls.addAll(Arrays.asList(urls));"
+                    + "try {"
+                    + "     newUrls.add(new File(\"" + "C:/Users/Philippe Vienne/Documents/NetBeansProjects/jvs/lib/processing.zip" + "\").toURI().toURL());"
+                    + "} catch (MalformedURLException ex) {"
+                    + "     Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);"
+                    + "}"
+                    + "URL[] newUrlsArray = new URL[newUrls.size()];"
+                    + "for (int i = 0; i < newUrls.size(); i++) {"
+                    + "     newUrlsArray[i] = newUrls.get(i);"
+                    + "}"
+                    + "URLClassLoader newLoader = new URLClassLoader(newUrlsArray);"
+                    + "Thread.currentThread().setContextClassLoader(newLoader);");
+            head.append(" main(); new File(System.getProperty(\"java.io.tmpdir\")+\"");
+            head.append(File.separator.equals("\\") ? "\\\\" : "/");
+            head.append("JvsToJavaTranslated");
+            head.append(Jvs2Java.uid);
+            head.append(".class\").delete(); }");
         }
-        String finalBody = body.toString().replaceAll("((^|\n)([ \t]*)(?!((public|private|protected)([ \t]+)))([A-Za-z0-1_]*)([ ]+)([A-Za-z0-1_]*)\\(([^()]*)\\)([ ]*)\\{([ \t]*)(\n|$))", "public $1")/*.replaceAll("^(( |\t)*((?!(public|private|protected))( |\n)+)?[a-zA-Z0-9_]+( |\n)+[a-zA-Z0-9_]+ *\\(.*\\)( |\n)*\\{( |\n)*)$", "public $1")*/;
-        System.err.println("****");
-        System.err.println(finalBody);
+        String regex = "((^|\n)([ \t]*)(?!((public|private|protected|else|if)([ \t]+)))((.*)([A-Za-z0-1_]+)([ ]+)(.*)([A-Za-z0-1_]+)\\(([^()]*)\\)([ ]*))\\{([ \t]*)(\n|$))";
+        String finalBody = body.toString().replaceAll(regex, "public $1");
+        System.err.println("** Java Final Code**");
+        System.err.println(head.toString() + finalBody + "}");
         System.err.println("****");
         return (head.toString() + finalBody + "}");
     }
@@ -119,7 +142,7 @@ public class Jvs2Java {
     private static String translateOnce(String line) {
         // Translates the while statement with sleep
         line = line.replaceAll("(while.*\\{)", "$1 sleep(20);");
-        
+
         line = line.replaceAll("([A-Za-z0-9_\\-]+)::([A-Za-z0-9_\\-]+)", "org.javascool.proglets.$1.Functions.$2");
         //line = line.replaceAll("(while\\(true\\)\\{)", "$1 sleep(50);");
         // Translates the Synthe proglet @tone macro
@@ -198,9 +221,9 @@ public class Jvs2Java {
                 /* 
                  */
             } else if (jvsDiagnostic.matches(".*\\W*found\\W*:\\W([A-Za-z\\.]*)\\Wrequired:\\W([A-Za-z\\.]*)")) {
-                jvsDiagnostic = jvsDiagnostic.replaceAll("incompatible\\Wtypes\\W*found\\W*:\\W([A-Za-z\\.]*)\\Wrequired:\\W([A-Za-z\\.]*)","Vous avez mis une valeur de type $1 alors qu'il faut une valeur de type $2");
+                jvsDiagnostic = jvsDiagnostic.replaceAll("incompatible\\Wtypes\\W*found\\W*:\\W([A-Za-z\\.]*)\\Wrequired:\\W([A-Za-z\\.]*)", "Vous avez mis une valeur de type $1 alors qu'il faut une valeur de type $2");
             } else if (jvsDiagnostic.matches("package org\\.javascool\\.proglets\\.[A-Za-z0-9_]+ does not exist")) {
-                jvsDiagnostic = jvsDiagnostic.replaceAll("package org\\.javascool\\.proglets\\.([A-Za-z0-9_]+) does not exist","La proglet $1 n'existe pas");
+                jvsDiagnostic = jvsDiagnostic.replaceAll("package org\\.javascool\\.proglets\\.([A-Za-z0-9_]+) does not exist", "La proglet $1 n'existe pas");
             } else {
                 jvsDiagnostic = "Erreur Java inconnue : \n" + jvsDiagnostic;
             }

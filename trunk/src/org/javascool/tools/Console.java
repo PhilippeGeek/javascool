@@ -23,7 +23,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import org.javascool.gui.JVSMainPanel;
 import org.javascool.gui.JVSToolBar;
-import org.javascool.proglets.dico.Functions;
 
 /**
  * Class Console
@@ -171,10 +170,6 @@ public class Console extends JPanel {
         Console.toolbar.updateTimeRunning("0 min 0 sec");
         Console.toolbar.programRunning();
         Console.clear();
-        URL[] urls = ((URLClassLoader) Thread.currentThread().getContextClassLoader()).getURLs();
-        for (URL url : urls) {
-            System.out.println(url.toString());
-        }
         
         new Thread(new Runnable() {
 
