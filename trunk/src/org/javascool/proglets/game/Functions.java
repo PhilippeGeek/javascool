@@ -228,13 +228,23 @@ public class Functions implements EventCatcher {
         m_singleton.m_onFrame.add(new EventListener(s, m_singleton));
     }
 
+    public static boolean classExtends(Class<?> sub, Class<?> superClass) {
+        if (sub.getSuperclass() == superClass) {
+            return true;
+        } else if (sub.getSuperclass() == Object.class) {
+            return false;
+        } else {
+            return classExtends(sub.getSuperclass(), superClass);
+        }
+    }
+
     /**
      * Calls the specified end-user-defined method, passing as a parameter the specified state.
      * If the function is undefined with one argument, it will be called with no arguments.
      * @param method The end-user-defined method to call
      * @param s The state to pass
      */
-    private static void call(String method, State s) {
+    private static void call(String method, Object s) {
         try {
             for (int i = 0; i < Macros.getProgram().getClass().getMethods().length; i++) {
                 java.lang.reflect.Method m = Macros.getProgram().getClass().getMethods()[i];
@@ -243,13 +253,13 @@ public class Functions implements EventCatcher {
                     if (params == 0) {
                         m.invoke(Macros.getProgram());
                     } else if (params == 1) {
-                        if (m.getParameterTypes()[0].getSuperclass().getSimpleName().equals("State")) {
+                        if (m.getParameterTypes()[0] == s.getClass()) {
                             m.invoke(Macros.getProgram(), m.getParameterTypes()[0].cast(s));
                         } else {
-                            org.javascool.JvsMain.reportBug(new NoSuchMethodException("The specified method " + method + " takes one parameter but it must extend State to be valid"));
+                            //            org.javascool.JvsMain.reportBug(new NoSuchMethodException("The specified method " + method + " takes one parameter but it must be of type "++" to be valid"));
                         }
                     } else {
-                        org.javascool.JvsMain.reportBug(new NoSuchMethodException("The specified method " + method + " must take zero or one parameter"));
+                        //          org.javascool.JvsMain.reportBug(new NoSuchMethodException("The specified method " + method + " must take zero or one parameter"));
                     }
                 }
             }
@@ -274,11 +284,8 @@ public class Functions implements EventCatcher {
             for (int i = 0; i < Macros.getProgram().getClass().getMethods().length; i++) {
                 java.lang.reflect.Method m = Macros.getProgram().getClass().getMethods()[i];
                 if (m.getName().equals(method)) {
-                    int params = m.getParameterTypes().length;
-                    if (params == 0) {
+                    if (m.getParameterTypes().length == 0) {
                         m.invoke(Macros.getProgram());
-                    } else if (params == 1) {
-                        org.javascool.JvsMain.reportBug(new NoSuchMethodException("The specified method " + method + " cannot take a parameter with this listener"));
                     } else {
                         org.javascool.JvsMain.reportBug(new NoSuchMethodException("The specified method " + method + " must take zero parameters"));
                     }
@@ -360,22 +367,22 @@ public class Functions implements EventCatcher {
 
                 @Override
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
-                    callback(getSingleton().m_onClick, evt);
+                    callback(getSingleton().m_onClick);
                 }
 
                 @Override
                 public void mouseEntered(java.awt.event.MouseEvent evt) {
-                    callback(getSingleton().m_onMouseEntered, evt);
+                    callback(getSingleton().m_onMouseEntered);
                 }
 
                 @Override
                 public void mouseExited(java.awt.event.MouseEvent evt) {
-                    callback(getSingleton().m_onMouseExited, evt);
+                    callback(getSingleton().m_onMouseExited);
                 }
 
                 @Override
                 public void mousePressed(java.awt.event.MouseEvent evt) {
-                    callback(getSingleton().m_onMousePressed, evt);
+                    callback(getSingleton().m_onMousePressed);
                     if (evt.getButton() == java.awt.event.MouseEvent.BUTTON1) {
                         m_singleton.m_mouseDown[0] = true;
                     } else if (evt.getButton() == java.awt.event.MouseEvent.BUTTON2) {
@@ -387,7 +394,7 @@ public class Functions implements EventCatcher {
 
                 @Override
                 public void mouseReleased(java.awt.event.MouseEvent evt) {
-                    callback(getSingleton().m_onMouseReleased, evt);
+                    callback(getSingleton().m_onMouseReleased);
                     if (evt.getButton() == java.awt.event.MouseEvent.BUTTON1) {
                         m_singleton.m_mouseDown[0] = false;
                     } else if (evt.getButton() == java.awt.event.MouseEvent.BUTTON2) {
@@ -405,15 +412,15 @@ public class Functions implements EventCatcher {
                 public void mouseDragged(MouseEvent e) {
                     m_singleton.m_mousePosRelativeToPanelX = e.getX();
                     m_singleton.m_mousePosRelativeToPanelY = e.getY();
-                    callback(getSingleton().m_onMouseDragged, e);
-                    callback(getSingleton().m_onMouseMoved, e);
+                    callback(getSingleton().m_onMouseDragged);
+                    callback(getSingleton().m_onMouseMoved);
                 }
 
                 @Override
                 public void mouseMoved(MouseEvent e) {
                     m_singleton.m_mousePosRelativeToPanelX = e.getX();
                     m_singleton.m_mousePosRelativeToPanelY = e.getY();
-                    callback(getSingleton().m_onMouseMoved, e);
+                    callback(getSingleton().m_onMouseMoved);
                 }
             };
             Macros.getProgletPanel().addMouseMotionListener(m_singleton.m_mouseMotionListener);
@@ -425,11 +432,11 @@ public class Functions implements EventCatcher {
                     int copy = getSingleton().m_mouseWheelPosition;
                     m_singleton.m_mouseWheelPosition += e.getWheelRotation();
                     if (copy > getSingleton().m_mouseWheelPosition) {
-                        callback(getSingleton().m_onMouseWheelDown, e);
+                        callback(getSingleton().m_onMouseWheelDown);
                     } else {
-                        callback(getSingleton().m_onMouseWheelUp, e);
+                        callback(getSingleton().m_onMouseWheelUp);
                     }
-                    callback(getSingleton().m_onMouseWheelMoved, e);
+                    callback(getSingleton().m_onMouseWheelMoved);
                 }
             };
             Macros.getProgletPanel().addMouseWheelListener(m_singleton.m_mouseWheelListener);
@@ -438,78 +445,20 @@ public class Functions implements EventCatcher {
         //</editor-fold>
     }
 
-    /**
-     * Calls each function of the specified array if the EventCatcher accepts it
-     * @param functions The functions to call
-     * @param e The MouseEvent to transmit them. If it is null, then the current mouse
-     * state will be transmited
-     */
-    private static void callback(java.util.ArrayList<EventListener> functions, MouseEvent e) {
-        MouseState s;
-        if (e == null) {
-            s = new MouseState();
-        } else {
-            s = new MouseState(e);
-        }
-        for (int i = 0; i < functions.size(); i++) {
-            if (functions.get(i).getObject().isForMe(s)) {
-                call(functions.get(i).getMethod(), s);
-            }
-        }
-    }
-
-    /**
-     * Calls each function of the specified array if the EventCatcher accepts it
-     * @param functions The functions to call
-     * @param e The MouseWheelEvent to transmit them. If it is null, then the
-     * current mouse state will be transmited, using the 
-     * "private static void callback(ArrayList<EventListener>, MouseEvent)"
-     * version of this function.
-     */
-    private static void callback(java.util.ArrayList<EventListener> functions, MouseWheelEvent e) {
-        if (e == null) {
-            callback(functions, (MouseEvent) e);
-            return;
-        }
-
-        MouseWheelState s = new MouseWheelState(e, m_singleton.m_mouseWheelPosition);
-        for (int i = 0; i < functions.size(); i++) {
-            if (functions.get(i).getObject().isForMe(s)) {
-                call(functions.get(i).getMethod(), s);
-            }
-        }
-    }
-
-    /**
+    /**TODO
      * Calls each function of the specified array if the EventCatcher accepts it
      * @param functions The functions to call
      */
     private static void callback(java.util.ArrayList<EventListener> functions) {
         for (int i = 0; i < functions.size(); i++) {
-            if (functions.get(i).getObject().isForMe()) {
-                call(functions.get(i).getMethod());
+            if (functions.get(i).getObject().isForMe() || functions.get(i).getAlways()) {
+                if (functions.get(i).getObject() == null) {
+                    call(functions.get(i).getMethod());
+                } else {
+                    call(functions.get(i).getMethod(), functions.get(i).getObject());
+                }
             }
         }
-    }
-
-    /**
-     * A function directly assigned to the main panel will always be catched, so return true;
-     * @param e Not used
-     * @return true
-     */
-    @Override
-    public boolean isForMe(MouseState e) {
-        return true;
-    }
-
-    /**
-     * A function directly assigned to the main panel will always be catched, so return true;
-     * @param e Not used
-     * @return true
-     */
-    @Override
-    public boolean isForMe(MouseWheelState e) {
-        return true;
     }
 
     /**
@@ -591,9 +540,9 @@ public class Functions implements EventCatcher {
         private void tick() {
             for (int j = 0; j < 3; j++) {
                 if (getSingleton().m_mouseDown[j]) {
-                    callback(getSingleton().m_onMouseDown, null);
+                    callback(getSingleton().m_onMouseDown);
                 } else {
-                    callback(getSingleton().m_onMouseUp, null);
+                    callback(getSingleton().m_onMouseUp);
                 }
             }
             callback(getSingleton().m_onFrame);
