@@ -29,7 +29,7 @@ import org.javascool.gui.JVSToolBar;
  * @author Philippe Vienne
  */
 public class Console extends JPanel {
-
+    private static boolean running;
     /** The current JVS Program */
     private static Runnable program;
     /** The current Thread */
@@ -167,6 +167,7 @@ public class Console extends JPanel {
 
     /** Start the current program */
     public static void startProgram() {
+        Console.running=true;
         Console.toolbar.updateTimeRunning("0 min 0 sec");
         Console.toolbar.programRunning();
         Console.clear();
@@ -186,6 +187,7 @@ public class Console extends JPanel {
 
     /** Stop the current program */
     public static void stopProgram() {
+        Console.running=false;
         Console.run(false);
         Console.runThread=null;
         Console.toolbar.afterRunning();
@@ -206,7 +208,7 @@ public class Console extends JPanel {
         if (start) {
             if (Console.program != null) {
                 (Console.runThread = new Thread(new Runnable() {
-
+                    
                     @Override
                     public void run() {
 
@@ -235,7 +237,7 @@ public class Console extends JPanel {
      * @param text The text to add
      */
     private static void updateTextPane(final String text) {
-        Console.outputPane.setText(Console.outputPane.getText() + text);
+        Console.outputPane.append(text);
     }
 
     /** Redirect the console outPut */
@@ -270,11 +272,7 @@ public class Console extends JPanel {
 
     /** Say if a program is running */
     public static Boolean isRunning() {
-        if (Console.runThread != null) {
-            return true;
-        } else {
-            return false;
-        }
+        return running;
     }
 
     /** Set a new program

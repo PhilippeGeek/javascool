@@ -17,15 +17,14 @@ import org.javascool.tools.Macros;
  * @author gmatheron
  */
 public class Sprite extends Geometry implements Drawable {
-    //TODO hide();
     //TODO random(int, int);
-    //TODO destroy()
     //TODO kbd events
     //TODO member vars
     /**
      * The image
      */
     private BufferedImage m_image;
+    private boolean m_visible=true;
 
     /**
      * Creates the image and registers it into the render area
@@ -61,9 +60,22 @@ public class Sprite extends Geometry implements Drawable {
      */
     @Override
     public void draw(Graphics g) {
-        if (m_image != null) {
+        if (m_image != null && m_visible) {
             g.drawImage(m_image, (int)getX(), (int)getY(), (int)getWidth(), (int)getHeight(), null);
         }
     }
+    
+    public void show() {
+        m_visible=true;
+    }
+    
+    public void hide() {
+        m_visible=false;
+    }
+    
+    public void destroy() {
+        
+    }
+    
     private static final Logger LOG = Logger.getLogger(Sprite.class.getName());
 }

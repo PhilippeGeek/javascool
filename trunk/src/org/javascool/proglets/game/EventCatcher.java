@@ -21,4 +21,5 @@ public interface EventCatcher {
      * @return true if the event concerns this object
      */
     public boolean isForMe();
+    public boolean isDestroyed();
 }

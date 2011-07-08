@@ -8,6 +8,7 @@
  */
 package org.javascool.proglets.game;
 
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 import java.lang.reflect.InvocationTargetException;
@@ -39,6 +40,11 @@ public class Functions implements EventCatcher {
 
     private static Functions m_singleton;
 
+    @Override
+    public boolean isDestroyed() {
+        return false;
+    }
+    
     /**
      * A singleton is used more for legacy than anything else. Everything could be
      * declared static but it probably would be a mess to refactor everything...
@@ -51,11 +57,15 @@ public class Functions implements EventCatcher {
      * Stores the state of each mouse button
      */
     private boolean m_mouseDown[] = {false, false, false};
+    
+    private java.util.ArrayList<Character> m_keysPressed;
+    
     /**
      * Stores position of the mouse wheel (in blocks) relative to its state at the
      * beginning of the user-defined program (to be checked)
      */
     private double m_mouseWheelPosition = 0;
+    
     /* These arrays are designed to store the functions the user assigned a listener
      * A convenience type is used : EventListener
      */
@@ -86,11 +96,21 @@ public class Functions implements EventCatcher {
     @SuppressWarnings("PublicField")
     public java.util.ArrayList<EventListener> m_onFrame;
     @SuppressWarnings("PublicField")
+    public java.util.ArrayList<EventListener> m_onKeyPressed;
+    @SuppressWarnings("PublicField")
+    public java.util.ArrayList<EventListener> m_onKeyReleased;
+    @SuppressWarnings("PublicField")
+    public java.util.ArrayList<EventListener> m_onKeyDown;
+    @SuppressWarnings("PublicField")
+    public java.util.ArrayList<EventListener> m_onKeyUp;
+    @SuppressWarnings("PublicField")
     public java.awt.event.MouseListener m_mouseListener;
     @SuppressWarnings("PublicField")
     public java.awt.event.MouseMotionListener m_mouseMotionListener;
     @SuppressWarnings("PublicField")
     public java.awt.event.MouseWheelListener m_mouseWheelListener;
+    @SuppressWarnings("PublicField")
+    public java.awt.event.KeyListener m_keyListener;
 
     /**
      * Returns the mouse X position relative to the top-left corner of the
@@ -219,6 +239,42 @@ public class Functions implements EventCatcher {
     public static void onMouseWheelMoved(String s) {
         m_singleton.m_onMouseWheelMoved.add(new EventListener(s, m_singleton));
     }
+    
+    /**
+     * Used to create a listener that will callback the specified function
+     * with one MouseWheelState argument
+     * @param s The function to callback
+     */
+    public static void onKeyPressed(String s) {
+        m_singleton.m_onKeyPressed.add(new EventListener(s, m_singleton));
+    }
+    
+    /**
+     * Used to create a listener that will callback the specified function
+     * with one MouseWheelState argument
+     * @param s The function to callback
+     */
+    public static void onKeyReleased(String s) {
+        m_singleton.m_onKeyReleased.add(new EventListener(s, m_singleton));
+    }
+    
+    /**
+     * Used to create a listener that will callback the specified function
+     * with one MouseWheelState argument
+     * @param s The function to callback
+     */
+    public static void onKeyDown(String s) {
+        m_singleton.m_onKeyDown.add(new EventListener(s, m_singleton));
+    }
+    
+    /**
+     * Used to create a listener that will callback the specified function
+     * with one MouseWheelState argument
+     * @param s The function to callback
+     */
+    public static void onKeyUp(String s) {
+        m_singleton.m_onKeyUp.add(new EventListener(s, m_singleton));
+    }
 
     /**
      * Used to create a listener that will callback the specified function
@@ -269,7 +325,6 @@ public class Functions implements EventCatcher {
         } catch (IllegalArgumentException ex) {
             Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InvocationTargetException ex) {
-            System.out.println(ex.getCause());
             Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SecurityException ex) {
             Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
@@ -311,8 +366,8 @@ public class Functions implements EventCatcher {
     }
 
     /**
-     * This method should be called after the program finishes running
-     * It stops the timer and should delete the listeners (//TODO)
+     * This method is called after the program finishes running by Clock
+     * It stops the timer and deletes the listeners
      */
     public static void stop() {
         m_clock.exitClean();
@@ -333,6 +388,10 @@ public class Functions implements EventCatcher {
         m_singleton.m_onMouseWheelDown.removeAll(m_singleton.m_onMouseWheelDown);
         m_singleton.m_onMouseWheelUp.removeAll(m_singleton.m_onMouseWheelUp);
         m_singleton.m_onMouseWheelMoved.removeAll(m_singleton.m_onMouseWheelMoved);
+        m_singleton.m_onKeyDown.removeAll(m_singleton.m_onKeyDown);
+        m_singleton.m_onKeyUp.removeAll(m_singleton.m_onKeyUp);
+        m_singleton.m_onKeyPressed.removeAll(m_singleton.m_onKeyPressed);
+        m_singleton.m_onKeyReleased.removeAll(m_singleton.m_onKeyReleased);
         
         Panel p=(Panel)(Macros.getProgletPanel());
         p.stop();
@@ -354,6 +413,8 @@ public class Functions implements EventCatcher {
          */
         m_singleton = new Functions();
 
+        m_singleton.m_keysPressed = new java.util.ArrayList<Character>(); 
+        
         /* These arrays store the listeners that should be called when an event occurs
          */
         m_singleton.m_onClick = new java.util.ArrayList<EventListener>();
@@ -369,12 +430,16 @@ public class Functions implements EventCatcher {
         m_singleton.m_onMouseWheelDown = new java.util.ArrayList<EventListener>();
         m_singleton.m_onMouseWheelUp = new java.util.ArrayList<EventListener>();
         m_singleton.m_onMouseWheelMoved = new java.util.ArrayList<EventListener>();
+        m_singleton.m_onKeyDown = new java.util.ArrayList<EventListener>();
+        m_singleton.m_onKeyUp = new java.util.ArrayList<EventListener>();
+        m_singleton.m_onKeyPressed = new java.util.ArrayList<EventListener>();
+        m_singleton.m_onKeyReleased = new java.util.ArrayList<EventListener>();
 
         /* The clock object will 'tick' each 1/30s. it will then call the callback
          * functions for onMouseDown, onMouseUp, etc if needed
          */
         m_clock = new Clock();
-        m_clock.setFps(300);
+        m_clock.setFps(30);
         (new Thread(m_clock)).start();
 
         /* Define a few anonymous classes that will define the proglet's behavior
@@ -390,6 +455,7 @@ public class Functions implements EventCatcher {
                 @Override
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
                     callback(getSingleton().m_onClick);
+                    Macros.getProgletPanel().grabFocus();
                 }
 
                 @Override
@@ -462,9 +528,28 @@ public class Functions implements EventCatcher {
                 }
             };
             Macros.getProgletPanel().addMouseWheelListener(m_singleton.m_mouseWheelListener);
+            
+            m_singleton.m_keyListener=new java.awt.event.KeyListener() {
+                @Override
+                public void keyTyped(KeyEvent e) {
+                }
+
+                @Override
+                public void keyPressed(KeyEvent e) {
+                    m_singleton.m_keysPressed.add(e.getKeyChar());
+                    System.out.println(m_singleton.m_keysPressed);
+                }
+
+                @Override
+                public void keyReleased(KeyEvent e) {
+                    m_singleton.m_keysPressed.remove((Object)(e.getKeyChar()));
+                }
+            };
+            Macros.getProgletPanel().addKeyListener(m_singleton.m_keyListener);
             /********* END ANONYMOUS CLASSES ***************/
         }
         //</editor-fold>
+        Macros.getProgletPanel().grabFocus();
     }
 
     /**
@@ -474,10 +559,12 @@ public class Functions implements EventCatcher {
     private static void callback(java.util.ArrayList<EventListener> functions) {
         for (int i = 0; i < functions.size(); i++) {
             if (functions.get(i).getObject().isForMe() || functions.get(i).getAlways()) {
-                if (functions.get(i).getObject() == null) {
-                    call(functions.get(i).getMethod());
-                } else {
-                    call(functions.get(i).getMethod(), functions.get(i).getObject());
+                if (!functions.get(i).getObject().isDestroyed()) {
+                    if (functions.get(i).getObject() == null) {
+                        call(functions.get(i).getMethod());
+                    } else {
+                        call(functions.get(i).getMethod(), functions.get(i).getObject());
+                    }
                 }
             }
         }
@@ -508,7 +595,8 @@ public class Functions implements EventCatcher {
          * Defines the framerate that the clock will try to achieve
          */
         private double m_fps = 30;
-
+        private double m_lastTick = 0;
+        
         /**
          * Default constructor, does nothing : see run()
          */
@@ -525,28 +613,29 @@ public class Functions implements EventCatcher {
         @Override
         @SuppressWarnings("SleepWhileInLoop")
         public void run() {
+            double targetTimeMs=1000/m_fps;
+            
             while (true) {
-                if (!Console.isRunning()) {
+                if (!Console.isRunning() || m_exit) {
                     break;
                 }
+                
+                m_lastTick=System.currentTimeMillis();
+                tick();
+                
+                double timeMs=System.currentTimeMillis()-m_lastTick;
+                double sleepMs=targetTimeMs-timeMs;
                 try {
-                    Thread.sleep((int)(1000 / m_fps));
+                    if (sleepMs>0) Thread.sleep((int)(sleepMs));
                 } catch (InterruptedException ex) {
                     Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                tick();
-                if (m_exit) {
-                    break;
                 }
             }
             stop();
         }
 
         /**
-         * Sets the target framerate. For the moment (//TODO) the real framerate
-         * will be inferior to the target because the proglet just waits for 
-         * 1/m_fps seconds between each tick, so the duration of the tick is
-         * not included. Please note that the execution of the callback function
+         * Sets the target framerate. Please note that the execution of the callback function
          * is modal (it will block the clock's thread) so make sure to make
          * callback functions that return quickly.
          * @param fps 
@@ -588,6 +677,16 @@ public class Functions implements EventCatcher {
     @SuppressWarnings("PublicField")
     public float m_mousePosRelativeToPanelY;
     private static final Logger LOG = Logger.getLogger(Functions.class.getName());
+    
+    public static char KEY_A=65, KEY_B=66, KEY_C=67, KEY_D=68, KEY_E=69, KEY_F=70, KEY_G=71, KEY_H=72, KEY_I=73, KEY_J=74;
+    public static char KEY_K=75, KEY_L=76, KEY_M=77, KEY_N=78, KEY_O=79, KEY_P=80, KEY_Q=81, KEY_R=82, KEY_S=83, KEY_T=84;
+    public static char KEY_U=85, KEY_V=86, KEY_W=87, KEY_X=88, KEY_Y=89, KEY_Z=90;
+    public static char KEY_SHIFT=16, KEY_ESC=27, KEY_F1=112, KEY_F2=113, KEY_F3=114, KEY_F4=115, KEY_F5=116, KEY_F6=117;
+    public static char KEY_F7=118, KEY_F8=119, KEY_F9=120, KEY_F10=121, KEY_F11=122, KEY_F12=123, KEY_SCROLLLOCK=145;
+    public static char KEY_PAUSE=19, KEY_BACKSPACE=8, KEY_DOLLAR=515, KEY_RETURN=10, KEY_CAPSLOCK=20, KEY_STAR=151;
+    public static char KEY_INFERIOR=153, KEY_CTRL=17, KEY_WIN=524, KEY_ALT=18, KEY_SPACE=32, KEY_MENU=525, KEY_LEFT=37;
+    public static char KEY_DOWN=40, KEY_RIGHT=39, KEY_UP=38, KEY_HOME=36, KEY_PAGEUP=33, KEY_END=35, KEY_PAGEDOWN=34;
+    public static char KEY_DEL=127, KEY_INSERT=155, KEY_NUMLOCK=144;
 }
 
 /**
