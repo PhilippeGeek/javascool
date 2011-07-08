@@ -13,6 +13,7 @@ import java.awt.event.MouseWheelEvent;
 import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.javascool.tools.Console;
 import org.javascool.tools.Macros;
 
 /* To use these event listeners, use this syntax : 
@@ -507,6 +508,7 @@ public class Functions implements EventCatcher {
         @SuppressWarnings("SleepWhileInLoop")
         public void run() {
             while (true) {
+                if (!Console.isRunning()) break;
                 try {
                     Thread.sleep(1000 / m_fps);
                 } catch (InterruptedException ex) {
@@ -517,6 +519,7 @@ public class Functions implements EventCatcher {
                     break;
                 }
             }
+            stop();
         }
 
         /**
