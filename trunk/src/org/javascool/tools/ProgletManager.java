@@ -37,7 +37,22 @@ import org.javascool.pml.Pml;
  */
 public class ProgletManager {
 
+    private static String defaultProglet;
     private static HashMap<String, Proglet> proglets = new HashMap<String, Proglet>();
+
+    /**
+     * @return the defaultProglet
+     */
+    public static String getDefaultProglet() {
+        return defaultProglet;
+    }
+
+    /**
+     * @param aDefaultProglet the defaultProglet to set
+     */
+    public static void setDefaultProglet(String aDefaultProglet) {
+        defaultProglet = aDefaultProglet;
+    }
 
     public ProgletManager() {
         try {

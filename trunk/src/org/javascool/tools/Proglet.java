@@ -113,7 +113,9 @@ public class Proglet {
                 this.depClass = new ArrayList<String>();
                 this.depClass.addAll(Arrays.asList(this.conf.getString("javaImport").split(",")));
             }
-            System.err.println(this.conf.toString("xml"));
+            if (this.conf.getString("default").equals("true")) {
+                ProgletManager.setDefaultProglet(this.packageName);
+            }
             if (!this.conf.getString("javaCallBefore").equals("")) {
                 this.observer[0]=this.conf.getString("javaCallBefore");
             }
