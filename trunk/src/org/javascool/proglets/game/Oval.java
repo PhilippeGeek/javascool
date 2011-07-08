@@ -26,7 +26,7 @@ public class Oval extends Geometry implements Drawable {
      * @param w The width of the topleft corner of the rectangle that fits the oval
      * @param h The height of the topleft corner of the rectangle that fits the oval
      */
-    public Oval(int x, int y, int w, int h) {
+    public Oval(double x, double y, double w, double h) {
         super(x, y, w, h);
         m_solid = true;
         ((Panel) Macros.getProgletPanel()).addItem(this);
@@ -40,7 +40,7 @@ public class Oval extends Geometry implements Drawable {
      * @param h The height of the topleft corner of the rectangle that fits the oval
      * @param solid True if the oval should be filled, false otherwise
      */
-    public Oval(int x, int y, int w, int h, boolean solid) {
+    public Oval(double x, double y, double w, double h, boolean solid) {
         super(x, y, w, h);
         ((Panel) Macros.getProgletPanel()).addItem(this);
         m_solid = solid;
@@ -53,9 +53,9 @@ public class Oval extends Geometry implements Drawable {
     @Override
     public void draw(Graphics g) {
         if (m_solid) {
-            g.fillOval(getX(), getY(), getWidth(), getHeight());
+            g.fillOval((int)getX(), (int)getY(), (int)getWidth(), (int)getHeight());
         } else {
-            g.drawOval(getX(), getY(), getWidth(), getHeight());
+            g.drawOval((int)getX(), (int)getY(), (int)getWidth(), (int)getHeight());
         }
     }
     private static final Logger LOG = Logger.getLogger(Oval.class.getName());
