@@ -17,7 +17,9 @@ import org.javascool.tools.Macros;
  * @author gmatheron
  */
 public class Sprite extends Geometry implements Drawable {
-
+    //TODO hide();
+    //TODO random(int, int);
+    
     /**
      * The image
      */
