@@ -13,7 +13,6 @@ import java.util.logging.Logger;
  * @author gmatheron
  */
 public abstract class Geometry extends Accessible {
-
     /**
      * Stores the width, height and xy position of the object (relative to the
      * origin of the panel and in pixels)

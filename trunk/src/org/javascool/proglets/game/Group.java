@@ -12,7 +12,7 @@ import java.util.logging.Logger;
  * @author gmatheron
  */
 public class Group extends Accessible implements Iterable<Accessible> {
-
+    private boolean m_destroyed;
     private static final long serialVersionUID = 1L;
     private static final Logger LOG = Logger.getLogger(Group.class.getName());
     private ArrayList<Accessible> m_items;
@@ -42,6 +42,14 @@ public class Group extends Accessible implements Iterable<Accessible> {
     @Override
     public boolean isForMe() {
         throw new UnsupportedOperationException("Not supported.");
+    }
+    
+    public void remove(int i) {
+        m_items.remove(i);
+    }
+    
+    public void remove(Accessible a) {
+        m_items.remove(a);
     }
 
     /**
