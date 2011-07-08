@@ -10,6 +10,33 @@
 <project name="Java's_Cool_Core" default="default" basedir=".">
     <description>Builds, tests, and runs the project Java's Cool Core.</description>
     <import file="nbproject/build-impl.xml"/>
+    <target name="-post-jar">
+        <mkdir dir="tmp"/>
+        <unzip dest="tmp">
+            <fileset dir="dist">
+                <include name="**/*.jar"/>
+                <include name="*.jar"/>
+            </fileset>
+        </unzip>
+        <jar destfile="javascool.jar" basedir="tmp">
+            <!-- define MANIFEST.MF -->
+            <manifest>
+                <attribute name="Built-By" value="INRIA" />
+                <attribute name="Main-Class" value="org.javascool.JvsMain" />
+                <section name="common">
+                    <attribute name="Specification-Title" value="${component.name}" />
+                    <attribute name="Specification-Version" value="${component.version}" />
+                    <attribute name="Specification-Vendor" value="${component.vendor}" />
+                    <attribute name="Implementation-Title" value="${component.name}" />
+                    <attribute name="Implementation-Version" value="${component.version} ${TODAY}" />
+                    <attribute name="Implementation-Vendor" value="${component.vendor}" />
+                </section>
+                <!-- finally, use the magically generated libs path -->
+                <attribute name="Class-Path" value="${libs.project}" />
+            </manifest>
+        </jar>
+        <delete dir="tmp"/>
+    </target>
     <!--
 
     There exist several targets which are by default empty and which can be 
