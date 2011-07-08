@@ -210,24 +210,19 @@ public class ProgletManager {
     }
 
     private static List<String> listProgletInTheJar(String path) throws IOException {
-        Macros.echo("Searching in " + path);
         List<String> classFiles = new ArrayList<String>();
         final String[] parts = path.split("!");
         if (parts.length == 2) {
-            try {
-                String jarFilename = parts[0];
-                String relativePath = parts[1].replace(File.separatorChar, '/').substring(1);
-                JarFile jarFile = new JarFile(jarFilename);
-                final Enumeration<JarEntry> entries = jarFile.entries();
-                while (entries.hasMoreElements()) {
-                    final JarEntry entry = entries.nextElement();
-                    final String entryName = entry.getName();
-                    if (entryName.startsWith(relativePath) && entry.isDirectory() && !entryName.equals(relativePath + "/")) {
-                        classFiles.add(entryName);
-                    }
+            String jarFilename = parts[0];
+            String relativePath = parts[1].replace(File.separatorChar, '/').substring(1);
+            JarFile jarFile = new JarFile(jarFilename);
+            final Enumeration<JarEntry> entries = jarFile.entries();
+            while (entries.hasMoreElements()) {
+                final JarEntry entry = entries.nextElement();
+                final String entryName = entry.getName();
+                if (entryName.startsWith(relativePath) && entry.isDirectory() && !entryName.equals(relativePath + "/")) {
+                    classFiles.add(entryName);
                 }
-            } catch (Exception ex) {
-                Macros.echo("Erreur : " + ex.getMessage());
             }
         }
         return classFiles;

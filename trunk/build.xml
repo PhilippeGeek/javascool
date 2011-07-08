@@ -11,31 +11,46 @@
     <description>Builds, tests, and runs the project Java's Cool Core.</description>
     <import file="nbproject/build-impl.xml"/>
     <target name="-post-jar">
+        <echo message="Delete keystore" level="info"/>
+        <delete file="keystore"/>
+        <echo message="Generate new key" level="info"/>
+        <genkey alias="javascool" keystore="keystore" storepass="mer,d,azof" validity="730">
+            <dname>
+                <param name="CN" value="INRIA"/>
+                <param name="OU" value="javascool.gforge.inria.fr"/>
+                <param name="O"  value="inria.fr"/>
+                <param name="C"  value="FR"/>
+            </dname>
+        </genkey>
+        <echo message="--------------------------------" level="info"/>
         <mkdir dir="tmp"/>
+        <echo message="Unjar libs and Java's Cool" level="info"/>
         <unzip dest="tmp">
             <fileset dir="dist">
                 <include name="**/*.jar"/>
                 <include name="*.jar"/>
             </fileset>
         </unzip>
+        <echo message="Create the ditributable JAR" level="info"/>
         <jar destfile="javascool.jar" basedir="tmp">
-            <!-- define MANIFEST.MF -->
             <manifest>
+                <attribute name="Created-By" value="Philippe VIENNE and Guillaume MATHERON" />
                 <attribute name="Built-By" value="INRIA" />
+                <attribute name="Built-Date" value="${TODAY}" />        
+                <attribute name="Implementation-Title" value="Java's Cool" /> 
+                <attribute name="Implementation-Vendor" value="INRIA" />     
+                <attribute name="Implementation-Version" value="3.3 Alpha"/>
                 <attribute name="Main-Class" value="org.javascool.JvsMain" />
-                <section name="common">
-                    <attribute name="Specification-Title" value="${component.name}" />
-                    <attribute name="Specification-Version" value="${component.version}" />
-                    <attribute name="Specification-Vendor" value="${component.vendor}" />
-                    <attribute name="Implementation-Title" value="${component.name}" />
-                    <attribute name="Implementation-Version" value="${component.version} ${TODAY}" />
-                    <attribute name="Implementation-Vendor" value="${component.vendor}" />
-                </section>
-                <!-- finally, use the magically generated libs path -->
-                <attribute name="Class-Path" value="${libs.project}" />
+                <attribute name="Class-Path" value="" />
             </manifest>
         </jar>
+        <echo message="Sign the jar" level="info"/>
+        <signjar jar="javascool.jar" alias="javascool" keystore="keystore" storepass="mer,d,azof"/>
+        <echo message="Clean ..." level="info"/>
         <delete dir="tmp"/>
+        <echo message="--------------------------------" level="info"/>
+        <echo message="And run Java's cool" level="info"/>
+        <java jar="javascool.jar"/>
     </target>
     <!--
 
