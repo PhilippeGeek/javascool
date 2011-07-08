@@ -187,6 +187,8 @@ public class Console extends JPanel {
     /** Stop the current program */
     public static void stopProgram() {
         Console.run(false);
+        Console.runThread=null;
+        Console.toolbar.afterRunning();
     }
 
     /** Runs/Stops the program.
@@ -194,7 +196,11 @@ public class Console extends JPanel {
      */
     private static void run(boolean start) {
         if (Console.runThread != null) {
-            Console.runThread.interrupt();
+            try {
+                Console.runThread.interrupt();
+            } catch (Exception e) {
+                System.err.println("Erreur : "+e.getMessage());
+            }
             Console.runThread = null;
         }
         if (start) {
