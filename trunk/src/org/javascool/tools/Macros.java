@@ -197,6 +197,10 @@ public class Macros {
     public static Object getProgram() {
         return org.javascool.tools.Console.getProgram().getClass().cast(org.javascool.tools.Console.getProgram());
     }
+    
+    public static JVSMainPanel getJvs(){
+        return JVSMainPanel.getThisInStatic();
+    }
 
     public static File getUserResource(String location) {
         try {

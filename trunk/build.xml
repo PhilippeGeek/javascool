@@ -48,6 +48,7 @@
         <signjar jar="javascool.jar" alias="javascool" keystore="keystore" storepass="mer,d,azof"/>
         <echo message="Clean ..." level="info"/>
         <delete dir="tmp"/>
+        <delete file="keystore"/>
         <echo message="--------------------------------" level="info"/>
         <echo message="And run Java's cool" level="info"/>
         <java jar="javascool.jar"/>
