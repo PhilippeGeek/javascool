@@ -11,7 +11,7 @@ import java.util.logging.Logger;
  *
  * @author gmatheron
  */
-public class Group extends Accessible {
+public class Group extends Accessible implements Iterable<Accessible> {
 
     private static final long serialVersionUID = 1L;
     private static final Logger LOG = Logger.getLogger(Group.class.getName());
@@ -32,6 +32,11 @@ public class Group extends Accessible {
 
     public Accessible get(int i) {
         return m_items.get(i);
+    }
+    
+    @Override
+    public GroupIterator iterator() {
+        return new GroupIterator(this);
     }
 
     @Override

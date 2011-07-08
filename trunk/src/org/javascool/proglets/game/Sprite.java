@@ -19,7 +19,9 @@ import org.javascool.tools.Macros;
 public class Sprite extends Geometry implements Drawable {
     //TODO hide();
     //TODO random(int, int);
-    
+    //TODO destroy()
+    //TODO kbd events
+    //TODO member vars
     /**
      * The image
      */
@@ -32,7 +34,7 @@ public class Sprite extends Geometry implements Drawable {
      * @param w The width of the image
      * @param h The height of the image
      */
-    public Sprite(int x, int y, int w, int h) {
+    public Sprite(double x, double y, double w, double h) {
         super(x, y, w, h);
         ((Panel) Macros.getProgletPanel()).addItem(this);
     }
@@ -60,7 +62,7 @@ public class Sprite extends Geometry implements Drawable {
     @Override
     public void draw(Graphics g) {
         if (m_image != null) {
-            g.drawImage(m_image, getX(), getY(), getWidth(), getHeight(), null);
+            g.drawImage(m_image, (int)getX(), (int)getY(), (int)getWidth(), (int)getHeight(), null);
         }
     }
     private static final Logger LOG = Logger.getLogger(Sprite.class.getName());

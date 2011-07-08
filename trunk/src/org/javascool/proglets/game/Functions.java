@@ -55,7 +55,7 @@ public class Functions implements EventCatcher {
      * Stores position of the mouse wheel (in blocks) relative to its state at the
      * beginning of the user-defined program (to be checked)
      */
-    private int m_mouseWheelPosition = 0;
+    private double m_mouseWheelPosition = 0;
     /* These arrays are designed to store the functions the user assigned a listener
      * A convenience type is used : EventListener
      */
@@ -98,8 +98,8 @@ public class Functions implements EventCatcher {
      * @return the mouse X position relative to the top-left corner of the
      * proglet panel
      */
-    public static int mouseX() {
-        return (int) m_singleton.m_mousePosRelativeToPanelX;
+    public static double mouseX() {
+        return (double) m_singleton.m_mousePosRelativeToPanelX;
     }
 
     /**
@@ -108,8 +108,8 @@ public class Functions implements EventCatcher {
      * @return the mouse Y position relative to the top-left corner of the
      * proglet panel
      */
-    public static int mouseY() {
-        return (int) m_singleton.m_mousePosRelativeToPanelY;
+    public static double mouseY() {
+        return (double) m_singleton.m_mousePosRelativeToPanelY;
     }
 
     /**
@@ -257,7 +257,9 @@ public class Functions implements EventCatcher {
                         found=true;
                     } else if (params == 1) {
                         if (m.getParameterTypes()[0] == s.getClass()) {
+                             m.getParameterTypes()[0].cast(s);
                             m.invoke(Macros.getProgram(), m.getParameterTypes()[0].cast(s));
+                            found=true;
                         }
                     }
                 }
@@ -267,6 +269,7 @@ public class Functions implements EventCatcher {
         } catch (IllegalArgumentException ex) {
             Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InvocationTargetException ex) {
+            System.out.println(ex.getCause());
             Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SecurityException ex) {
             Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
@@ -448,7 +451,7 @@ public class Functions implements EventCatcher {
 
                 @Override
                 public void mouseWheelMoved(MouseWheelEvent e) {
-                    int copy = getSingleton().m_mouseWheelPosition;
+                    double copy = getSingleton().m_mouseWheelPosition;
                     m_singleton.m_mouseWheelPosition += e.getWheelRotation();
                     if (copy > getSingleton().m_mouseWheelPosition) {
                         callback(getSingleton().m_onMouseWheelDown);
@@ -504,7 +507,7 @@ public class Functions implements EventCatcher {
         /**
          * Defines the framerate that the clock will try to achieve
          */
-        private int m_fps = 30;
+        private double m_fps = 30;
 
         /**
          * Default constructor, does nothing : see run()
@@ -514,7 +517,7 @@ public class Functions implements EventCatcher {
 
         /**
          * The clock is intended to be run as a thread, so it implements Runnable.
-         * When ran, the clock will tick regularly. Be sure to call the setFps(int)
+         * When ran, the clock will tick regularly. Be sure to call the setFps(double)
          * before running the clock, or it should (not tested) tick at 30 fps.
          * This method will break when m_exit is set to true (latency can be a bit more
          * that 1/m_fps seconds.
@@ -527,7 +530,7 @@ public class Functions implements EventCatcher {
                     break;
                 }
                 try {
-                    Thread.sleep(1000 / m_fps);
+                    Thread.sleep((int)(1000 / m_fps));
                 } catch (InterruptedException ex) {
                     Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -548,7 +551,7 @@ public class Functions implements EventCatcher {
          * callback functions that return quickly.
          * @param fps 
          */
-        public void setFps(int fps) {
+        public void setFps(float fps) {
             m_fps = fps;
         }
 

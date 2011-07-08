@@ -18,20 +18,20 @@ public abstract class Geometry extends Accessible {
      * Stores the width, height and xy position of the object (relative to the
      * origin of the panel and in pixels)
      */
-    private int m_w, m_h, m_x, m_y;
-
+    private double m_w, m_h, m_x, m_y;
+    
     /**
      * Constructs an object based solely on its position (its size will be 0x0)
      * @param x The X coordinate of the object's position
      * @param y The Y coordinate of the object's position
      */
-    public Geometry(int x, int y) {
+    public Geometry(double x, double y) {
         m_x = x;
         m_y = y;
         m_w = 0;
         m_h = 0;
     }
-
+    
     /**
      * Constructs an object based on its position and size
      * @param x The X coordinate of the object's position
@@ -39,7 +39,7 @@ public abstract class Geometry extends Accessible {
      * @param w The object's width
      * @param h The object's height
      */
-    public Geometry(int x, int y, int w, int h) {
+    public Geometry(double x, double y, double w, double h) {
         m_x = x;
         m_y = y;
         m_w = w;
@@ -60,7 +60,7 @@ public abstract class Geometry extends Accessible {
      * Get the object's width
      * @return the object's width
      */
-    public int getWidth() {
+    public double getWidth() {
         return m_w;
     }
 
@@ -68,7 +68,7 @@ public abstract class Geometry extends Accessible {
      * Get the object's height
      * @return the object's height
      */
-    public int getHeight() {
+    public double getHeight() {
         return m_h;
     }
 
@@ -76,7 +76,7 @@ public abstract class Geometry extends Accessible {
      * Get the object's X coordinate
      * @return the object's X coordinate
      */
-    public int getX() {
+    public double getX() {
         return m_x;
     }
 
@@ -84,7 +84,7 @@ public abstract class Geometry extends Accessible {
      * Get the object's Y coordinate
      * @return the object's Y coordinate
      */
-    public int getY() {
+    public double getY() {
         return m_y;
     }
 
@@ -92,7 +92,7 @@ public abstract class Geometry extends Accessible {
      * Sets the object's width
      * @param w the object's width
      */
-    public void setWidth(int w) {
+    public void setWidth(double w) {
         m_w = w;
     }
 
@@ -100,7 +100,7 @@ public abstract class Geometry extends Accessible {
      * Sets the object's height
      * @param h the object's height
      */
-    public void setHeight(int h) {
+    public void setHeight(double h) {
         m_h = h;
     }
 
@@ -108,7 +108,7 @@ public abstract class Geometry extends Accessible {
      * Sets the object's X position
      * @param x the object's X position
      */
-    public void setX(int x) {
+    public void setX(double x) {
         m_x = x;
     }
 
@@ -116,7 +116,7 @@ public abstract class Geometry extends Accessible {
      * Sets the object's Y position
      * @param y the object's Y position
      */
-    public void setY(int y) {
+    public void setY(double y) {
         m_y = y;
     }
 
@@ -125,7 +125,7 @@ public abstract class Geometry extends Accessible {
      * @param w the object's width
      * @param h the object's height
      */
-    public void scale(int w, int h) {
+    public void scale(double w, double h) {
         m_w = w;
         m_h = h;
     }
@@ -135,7 +135,7 @@ public abstract class Geometry extends Accessible {
      * @param x the object's X position
      * @param y the object's Y position
      */
-    public void position(int x, int y) {
+    public void position(double x, double y) {
         m_x = x;
         m_y = y;
     }
