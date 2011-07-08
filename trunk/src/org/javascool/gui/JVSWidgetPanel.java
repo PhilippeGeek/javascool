@@ -31,4 +31,10 @@ public class JVSWidgetPanel extends JVSTabs {
     public JPanel getProgletPanel() {
         return this.getPanel(progletTabId);
     }
+    
+    public void focusOnProgletPanel(){
+        if(progletTabId!=null){
+            this.switchToTab(progletTabId);
+        }
+    }
 }

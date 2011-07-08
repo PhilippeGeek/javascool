@@ -13,6 +13,7 @@ import java.util.Set;
 import java.util.UUID;
 import javax.swing.Box;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
@@ -20,6 +21,7 @@ import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 import org.javascool.JvsMain;
 import org.javascool.Utils;
+import org.javascool.tools.Console;
 
 /** The JVS top tool bar
  * @author Philippe VIENNE
@@ -34,6 +36,10 @@ public class JVSToolBar extends JToolBar {
      * The map associate a String to a Runnable
      */
     private HashMap<JButton, Runnable> actions = new HashMap<JButton, Runnable>();
+    
+    private JButton startButton;
+    private JButton stopButton;
+    private JLabel execTime;
 
     /** Create the JVSToolBar
      * 
@@ -97,6 +103,31 @@ public class JVSToolBar extends JToolBar {
                 JVSMainPanel.compileFile();
             }
         });
+        
+        this.startButton=this.addTool("Executer", "org/javascool/doc-files/icon16/run.png", new Runnable(){
+
+            @Override
+            public void run() {
+                Console.startProgram();
+            }
+        
+        });
+        this.startButton.setVisible(false);
+        
+        this.stopButton=this.addTool("Arrêter", "org/javascool/doc-files/icon16/stop.png", new Runnable(){
+
+            @Override
+            public void run() {
+                Console.stopProgram();
+            }
+        
+        });
+        this.stopButton.setVisible(false);
+        
+        this.execTime=new JLabel("Temps d'execution : ");
+        this.add(this.execTime);
+        this.execTime.setVisible(false);
+        
         this.add(Box.createHorizontalGlue());
         this.generateProgletMenu();
     }
@@ -224,6 +255,40 @@ public class JVSToolBar extends JToolBar {
             }
         });
         return;
+    }
+    
+    public void activeStartButton(){
+        this.startButton.setVisible(true);
+        this.revalidate();
+    }
+    
+    public void desactiveStartButton(){
+        this.startButton.setVisible(false);
+        this.revalidate();
+    }
+    
+    public void activeStopButton(){
+        this.stopButton.setVisible(true);
+        this.revalidate();
+    }
+    
+    public void desactiveStopButton(){
+        this.stopButton.setVisible(false);
+        this.revalidate();
+    }
+    
+    public void activeExecTimer(){
+        this.execTime.setVisible(true);
+        this.revalidate();
+    }
+    
+    public void desactiveExecTimer(){
+        this.execTime.setVisible(false);
+        this.revalidate();
+    }
+    
+    public void updateTimer(int sec){
+        
     }
 
     /** Get the Main Panel to have main functions */

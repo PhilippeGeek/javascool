@@ -97,6 +97,8 @@ public final class JVSMainPanel extends JPanel {
      * @see JVSFileEditorTabs
      */
     public static void compileFile() {
+        org.javascool.tools.Console.stopProgram();
+        JVSMainPanel.getEditorTabs().saveCurrentFile();
         JVSMainPanel.getEditorTabs().compileFile(JVSMainPanel.getEditorTabs().getCurrentFileId());
     }
 
