@@ -316,6 +316,21 @@ public class Functions implements EventCatcher {
         Macros.getProgletPanel().removeMouseListener(m_singleton.m_mouseListener);
         Macros.getProgletPanel().removeMouseMotionListener(m_singleton.m_mouseMotionListener);
         Macros.getProgletPanel().removeMouseWheelListener(m_singleton.m_mouseWheelListener);
+        
+        m_singleton.m_onClick.removeAll(m_singleton.m_onClick);
+        m_singleton.m_onMouseDown.removeAll(m_singleton.m_onMouseDown);
+        m_singleton.m_onMouseDragged.removeAll(m_singleton.m_onMouseDragged);
+        m_singleton.m_onMouseEntered.removeAll(m_singleton.m_onMouseEntered);
+        m_singleton.m_onMouseExited.removeAll(m_singleton.m_onMouseExited);
+        m_singleton.m_onMouseMoved.removeAll(m_singleton.m_onMouseMoved);
+        m_singleton.m_onMousePressed.removeAll(m_singleton.m_onMousePressed);
+        m_singleton.m_onMouseReleased.removeAll(m_singleton.m_onMouseReleased);
+        m_singleton.m_onMouseUp.removeAll(m_singleton.m_onMouseUp);
+        m_singleton.m_onFrame.removeAll(m_singleton.m_onFrame);
+        m_singleton.m_onMouseWheelDown.removeAll(m_singleton.m_onMouseWheelDown);
+        m_singleton.m_onMouseWheelUp.removeAll(m_singleton.m_onMouseWheelUp);
+        m_singleton.m_onMouseWheelMoved.removeAll(m_singleton.m_onMouseWheelMoved);
+        
         Panel p=(Panel)(Macros.getProgletPanel());
         p.stop();
     }
@@ -508,7 +523,9 @@ public class Functions implements EventCatcher {
         @SuppressWarnings("SleepWhileInLoop")
         public void run() {
             while (true) {
-                if (!Console.isRunning()) break;
+                if (!Console.isRunning()) {
+                    break;
+                }
                 try {
                     Thread.sleep(1000 / m_fps);
                 } catch (InterruptedException ex) {
