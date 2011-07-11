@@ -67,6 +67,13 @@ public class JVSToolBar extends JToolBar {
 
     /** Initialize the toolBar with default button and setUps */
     private void init() {
+        this.addTool("Nouvel activité", "org/javascool/doc-files/icon16/new.png", new Runnable() {
+
+            @Override
+            public void run() {
+                JVSMainPanel.closeProglet();
+            }
+        });
         this.addTool("Nouveau fichier", "org/javascool/doc-files/icon16/new.png", new Runnable() {
 
             @Override
