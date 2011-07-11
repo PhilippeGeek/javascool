@@ -64,9 +64,5 @@ public class Sprite extends Geometry implements Drawable {
         }
     }
     
-    public void destroy() {
-        
-    }
-    
     private static final Logger LOG = Logger.getLogger(Sprite.class.getName());
 }
