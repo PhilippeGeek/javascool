@@ -44,7 +44,7 @@ public class Functions implements EventCatcher {
     public boolean isDestroyed() {
         return false;
     }
-    
+
     /**
      * A singleton is used more for legacy than anything else. Everything could be
      * declared static but it probably would be a mess to refactor everything...
@@ -57,15 +57,12 @@ public class Functions implements EventCatcher {
      * Stores the state of each mouse button
      */
     private boolean m_mouseDown[] = {false, false, false};
-    
-    private java.util.ArrayList<Character> m_keysPressed;
-    
+    private java.util.ArrayList<Integer> m_keysPressed;
     /**
      * Stores position of the mouse wheel (in blocks) relative to its state at the
      * beginning of the user-defined program (to be checked)
      */
     private double m_mouseWheelPosition = 0;
-    
     /* These arrays are designed to store the functions the user assigned a listener
      * A convenience type is used : EventListener
      */
@@ -239,7 +236,7 @@ public class Functions implements EventCatcher {
     public static void onMouseWheelMoved(String s) {
         m_singleton.m_onMouseWheelMoved.add(new EventListener(s, m_singleton));
     }
-    
+
     /**
      * Used to create a listener that will callback the specified function
      * with one MouseWheelState argument
@@ -248,7 +245,7 @@ public class Functions implements EventCatcher {
     public static void onKeyPressed(String s) {
         m_singleton.m_onKeyPressed.add(new EventListener(s, m_singleton));
     }
-    
+
     /**
      * Used to create a listener that will callback the specified function
      * with one MouseWheelState argument
@@ -257,7 +254,7 @@ public class Functions implements EventCatcher {
     public static void onKeyReleased(String s) {
         m_singleton.m_onKeyReleased.add(new EventListener(s, m_singleton));
     }
-    
+
     /**
      * Used to create a listener that will callback the specified function
      * with one MouseWheelState argument
@@ -266,7 +263,7 @@ public class Functions implements EventCatcher {
     public static void onKeyDown(String s) {
         m_singleton.m_onKeyDown.add(new EventListener(s, m_singleton));
     }
-    
+
     /**
      * Used to create a listener that will callback the specified function
      * with one MouseWheelState argument
@@ -302,7 +299,7 @@ public class Functions implements EventCatcher {
      * @param s The state to pass
      */
     private static void call(String method, Object s) {
-        boolean found=false;
+        boolean found = false;
         try {
             for (int i = 0; i < Macros.getProgram().getClass().getMethods().length; i++) {
                 java.lang.reflect.Method m = Macros.getProgram().getClass().getMethods()[i];
@@ -310,12 +307,12 @@ public class Functions implements EventCatcher {
                     int params = m.getParameterTypes().length;
                     if (params == 0) {
                         m.invoke(Macros.getProgram());
-                        found=true;
+                        found = true;
                     } else if (params == 1) {
                         if (m.getParameterTypes()[0] == s.getClass()) {
-                             m.getParameterTypes()[0].cast(s);
+                            m.getParameterTypes()[0].cast(s);
                             m.invoke(Macros.getProgram(), m.getParameterTypes()[0].cast(s));
-                            found=true;
+                            found = true;
                         }
                     }
                 }
@@ -329,9 +326,9 @@ public class Functions implements EventCatcher {
         } catch (SecurityException ex) {
             Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         if (!found) {
-            Logger.getLogger(Functions.class.getName()).log(Level.SEVERE,null,new Exception("Callback method "+method+" not found"));
+            Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, new Exception("Callback method " + method + " not found"));
         }
     }
 
@@ -340,13 +337,14 @@ public class Functions implements EventCatcher {
      * @param method The end-user-defined method to call
      */
     private static void call(String method) {
-        boolean found=false;
+        boolean found = false;
         try {
             for (int i = 0; i < Macros.getProgram().getClass().getMethods().length; i++) {
                 java.lang.reflect.Method m = Macros.getProgram().getClass().getMethods()[i];
                 if (m.getName().equals(method)) {
                     if (m.getParameterTypes().length == 0) {
-                        m.invoke(Macros.getProgram()); found=true;
+                        m.invoke(Macros.getProgram());
+                        found = true;
                     }
                 }
             }
@@ -359,9 +357,9 @@ public class Functions implements EventCatcher {
         } catch (SecurityException ex) {
             Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         if (!found) {
-            Logger.getLogger(Functions.class.getName()).log(Level.SEVERE,null,new Exception("Callback method "+method+" not found"));
+            Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, new Exception("Callback method " + method + " not found"));
         }
     }
 
@@ -374,7 +372,7 @@ public class Functions implements EventCatcher {
         Macros.getProgletPanel().removeMouseListener(m_singleton.m_mouseListener);
         Macros.getProgletPanel().removeMouseMotionListener(m_singleton.m_mouseMotionListener);
         Macros.getProgletPanel().removeMouseWheelListener(m_singleton.m_mouseWheelListener);
-        
+
         m_singleton.m_onClick.removeAll(m_singleton.m_onClick);
         m_singleton.m_onMouseDown.removeAll(m_singleton.m_onMouseDown);
         m_singleton.m_onMouseDragged.removeAll(m_singleton.m_onMouseDragged);
@@ -392,8 +390,8 @@ public class Functions implements EventCatcher {
         m_singleton.m_onKeyUp.removeAll(m_singleton.m_onKeyUp);
         m_singleton.m_onKeyPressed.removeAll(m_singleton.m_onKeyPressed);
         m_singleton.m_onKeyReleased.removeAll(m_singleton.m_onKeyReleased);
-        
-        Panel p=(Panel)(Macros.getProgletPanel());
+
+        Panel p = (Panel) (Macros.getProgletPanel());
         p.stop();
     }
     /**
@@ -413,8 +411,8 @@ public class Functions implements EventCatcher {
          */
         m_singleton = new Functions();
 
-        m_singleton.m_keysPressed = new java.util.ArrayList<Character>(); 
-        
+        m_singleton.m_keysPressed = new java.util.ArrayList<Integer>();
+
         /* These arrays store the listeners that should be called when an event occurs
          */
         m_singleton.m_onClick = new java.util.ArrayList<EventListener>();
@@ -528,21 +526,26 @@ public class Functions implements EventCatcher {
                 }
             };
             Macros.getProgletPanel().addMouseWheelListener(m_singleton.m_mouseWheelListener);
-            
-            m_singleton.m_keyListener=new java.awt.event.KeyListener() {
+
+            m_singleton.m_keyListener = new java.awt.event.KeyListener() {
+
                 @Override
                 public void keyTyped(KeyEvent e) {
                 }
 
                 @Override
-                public void keyPressed(KeyEvent e) {
-                    m_singleton.m_keysPressed.add(e.getKeyChar());
+                public void keyPressed(KeyEvent e) {    //TODO do callbacks
+                    if (e.getKeyChar() == 65635) {
+                        return;
+                    }
+                    m_singleton.m_keysPressed.add(e.getKeyCode());
                     System.out.println(m_singleton.m_keysPressed);
                 }
 
                 @Override
                 public void keyReleased(KeyEvent e) {
-                    m_singleton.m_keysPressed.remove((Object)(e.getKeyChar()));
+                    //Object cast so that the char given isn't taken as an index number
+                    m_singleton.m_keysPressed.remove((Object) e.getKeyCode());
                 }
             };
             Macros.getProgletPanel().addKeyListener(m_singleton.m_keyListener);
@@ -558,13 +561,11 @@ public class Functions implements EventCatcher {
      */
     private static void callback(java.util.ArrayList<EventListener> functions) {
         for (int i = 0; i < functions.size(); i++) {
-            if (functions.get(i).getObject().isForMe() || functions.get(i).getAlways()) {
-                if (!functions.get(i).getObject().isDestroyed()) {
-                    if (functions.get(i).getObject() == null) {
-                        call(functions.get(i).getMethod());
-                    } else {
-                        call(functions.get(i).getMethod(), functions.get(i).getObject());
-                    }
+            if (functions.get(i).getObject() == null) {
+                call(functions.get(i).getMethod());
+            } else {
+                if (functions.get(i).getObject().isForMe() || functions.get(i).getAlways()) {
+                    call(functions.get(i).getMethod(), functions.get(i).getObject());
                 }
             }
         }
@@ -577,6 +578,17 @@ public class Functions implements EventCatcher {
     @Override
     public boolean isForMe() {
         return true;
+    }
+
+    public static boolean keyDown(int code) {
+        for (int i = 0; i < m_singleton.m_keysPressed.size(); i++) {
+            if (m_singleton.m_keysPressed.get(i) == code) {
+                System.out.println("true");
+                return true;
+            }
+        }
+        System.out.println("false");
+        return false;
     }
 
     /**
@@ -596,7 +608,7 @@ public class Functions implements EventCatcher {
          */
         private double m_fps = 30;
         private double m_lastTick = 0;
-        
+
         /**
          * Default constructor, does nothing : see run()
          */
@@ -613,20 +625,22 @@ public class Functions implements EventCatcher {
         @Override
         @SuppressWarnings("SleepWhileInLoop")
         public void run() {
-            double targetTimeMs=1000/m_fps;
-            
+            double targetTimeMs = 1000 / m_fps;
+
             while (true) {
                 if (!Console.isRunning() || m_exit) {
                     break;
                 }
-                
-                m_lastTick=System.currentTimeMillis();
+
+                m_lastTick = System.currentTimeMillis();
                 tick();
-                
-                double timeMs=System.currentTimeMillis()-m_lastTick;
-                double sleepMs=targetTimeMs-timeMs;
+
+                double timeMs = System.currentTimeMillis() - m_lastTick;
+                double sleepMs = targetTimeMs - timeMs;
                 try {
-                    if (sleepMs>0) Thread.sleep((int)(sleepMs));
+                    if (sleepMs > 0) {
+                        Thread.sleep((int) (sleepMs));
+                    }
                 } catch (InterruptedException ex) {
                     Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -660,8 +674,14 @@ public class Functions implements EventCatcher {
                     callback(getSingleton().m_onMouseUp);
                 }
             }
-            callback(getSingleton().m_onFrame);
 
+            if (m_singleton.m_keysPressed.size() != 0) {
+                callback(getSingleton().m_onKeyDown);
+            }
+            callback(getSingleton().m_onKeyUp);
+
+
+            callback(getSingleton().m_onFrame);
             Macros.getProgletPanel().repaint();
         }
 
@@ -677,16 +697,15 @@ public class Functions implements EventCatcher {
     @SuppressWarnings("PublicField")
     public float m_mousePosRelativeToPanelY;
     private static final Logger LOG = Logger.getLogger(Functions.class.getName());
-    
-    public static char KEY_A=65, KEY_B=66, KEY_C=67, KEY_D=68, KEY_E=69, KEY_F=70, KEY_G=71, KEY_H=72, KEY_I=73, KEY_J=74;
-    public static char KEY_K=75, KEY_L=76, KEY_M=77, KEY_N=78, KEY_O=79, KEY_P=80, KEY_Q=81, KEY_R=82, KEY_S=83, KEY_T=84;
-    public static char KEY_U=85, KEY_V=86, KEY_W=87, KEY_X=88, KEY_Y=89, KEY_Z=90;
-    public static char KEY_SHIFT=16, KEY_ESC=27, KEY_F1=112, KEY_F2=113, KEY_F3=114, KEY_F4=115, KEY_F5=116, KEY_F6=117;
-    public static char KEY_F7=118, KEY_F8=119, KEY_F9=120, KEY_F10=121, KEY_F11=122, KEY_F12=123, KEY_SCROLLLOCK=145;
-    public static char KEY_PAUSE=19, KEY_BACKSPACE=8, KEY_DOLLAR=515, KEY_RETURN=10, KEY_CAPSLOCK=20, KEY_STAR=151;
-    public static char KEY_INFERIOR=153, KEY_CTRL=17, KEY_WIN=524, KEY_ALT=18, KEY_SPACE=32, KEY_MENU=525, KEY_LEFT=37;
-    public static char KEY_DOWN=40, KEY_RIGHT=39, KEY_UP=38, KEY_HOME=36, KEY_PAGEUP=33, KEY_END=35, KEY_PAGEDOWN=34;
-    public static char KEY_DEL=127, KEY_INSERT=155, KEY_NUMLOCK=144;
+    public static char KEY_A = 65, KEY_B = 66, KEY_C = 67, KEY_D = 68, KEY_E = 69, KEY_F = 70, KEY_G = 71, KEY_H = 72, KEY_I = 73, KEY_J = 74;
+    public static char KEY_K = 75, KEY_L = 76, KEY_M = 77, KEY_N = 78, KEY_O = 79, KEY_P = 80, KEY_Q = 81, KEY_R = 82, KEY_S = 83, KEY_T = 84;
+    public static char KEY_U = 85, KEY_V = 86, KEY_W = 87, KEY_X = 88, KEY_Y = 89, KEY_Z = 90;
+    public static char KEY_SHIFT = 16, KEY_ESC = 27, KEY_F1 = 112, KEY_F2 = 113, KEY_F3 = 114, KEY_F4 = 115, KEY_F5 = 116, KEY_F6 = 117;
+    public static char KEY_F7 = 118, KEY_F8 = 119, KEY_F9 = 120, KEY_F10 = 121, KEY_F11 = 122, KEY_F12 = 123, KEY_SCROLLLOCK = 145;
+    public static char KEY_PAUSE = 19, KEY_BACKSPACE = 8, KEY_DOLLAR = 515, KEY_RETURN = 10, KEY_CAPSLOCK = 20, KEY_STAR = 151;
+    public static char KEY_INFERIOR = 153, KEY_CTRL = 17, KEY_WIN = 524, KEY_ALT = 18, KEY_SPACE = 32, KEY_MENU = 525, KEY_LEFT = 37;
+    public static char KEY_DOWN = 40, KEY_RIGHT = 39, KEY_UP = 38, KEY_HOME = 36, KEY_PAGEUP = 33, KEY_END = 35, KEY_PAGEDOWN = 34;
+    public static char KEY_DEL = 127, KEY_INSERT = 155, KEY_NUMLOCK = 144;
 }
 
 /**

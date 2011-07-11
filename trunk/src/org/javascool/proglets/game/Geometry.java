@@ -19,6 +19,8 @@ public abstract class Geometry extends Accessible {
      */
     private double m_w, m_h, m_x, m_y;
     
+    private boolean m_visible=true;
+    
     /**
      * Constructs an object based solely on its position (its size will be 0x0)
      * @param x The X coordinate of the object's position
@@ -147,5 +149,17 @@ public abstract class Geometry extends Accessible {
     @Override
     public boolean isForMe() {
         return (Functions.mouseX() > m_x && Functions.mouseX() < m_x + m_w && Functions.mouseY() > m_y && Functions.mouseY() < m_y + m_h);
+    }
+    
+    public void show() {
+        m_visible=true;
+    }
+    
+    public void hide() {
+        m_visible=false;
+    }
+    
+    public boolean isVisible() {
+        return m_visible;
     }
 }
