@@ -366,11 +366,9 @@ public final class JVSMainPanel extends JPanel {
         }
     }
     
-    public static void reportRuntimeBug(String ex,Boolean stop){
+    public static void reportRuntimeBug(String ex){
         Dialog.error("Erreur du logiciel", ex);
-        if(stop){
-            org.javascool.tools.Console.stopProgram();
-        }
+        org.javascool.tools.Console.stopProgram();
     }
 
     public static ProgletManager getProgletManager() {
