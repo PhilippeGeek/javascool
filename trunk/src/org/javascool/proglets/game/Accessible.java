@@ -55,7 +55,7 @@ public abstract class Accessible extends LinkedEventGroup {
                 prop=s;
             }
         }
-        if (exists) {
+        if (!exists) {
             addProperty(name,o);
         }
         else {
