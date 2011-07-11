@@ -262,4 +262,20 @@ public abstract class LinkedEventGroup implements EventCatcher {
     public void onFrame(String s) {
         Functions.getSingleton().m_onFrame.add(new EventListener(s, this));
     }
+    
+    public void onKeyUp(String s) {
+        Functions.getSingleton().m_onKeyUp.add(new EventListener(s, this));
+    }
+    
+    public void onKeyDown(String s) {
+        Functions.getSingleton().m_onKeyDown.add(new EventListener(s, this));
+    }
+    
+    public void onKeyPressed(String s) {
+        Functions.getSingleton().m_onKeyPressed.add(new EventListener(s, this));
+    }
+    
+    public void onKeyReleased(String s) {
+        Functions.getSingleton().m_onKeyReleased.add(new EventListener(s,this));
+    }
 }
