@@ -65,18 +65,19 @@ public final class JVSMainPanel extends JPanel {
 
     /** Setup Main Panel */
     private void setupMainPanel() {
-        //tabs.add("Test", JvsMain.logo16, new JPanel());
-        JVSMainPanel.newFile();
-        this.add(mainPane, BorderLayout.CENTER);
-        JVSHtmlDisplay jvsHtmlDisplay = new JVSHtmlDisplay();
-        try {
-            jvsHtmlDisplay.load(Class.forName("org.javascool.JvsMain").getResource("doc-files/about-main.htm").toString());
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(JVSMainPanel.class.getName()).log(Level.SEVERE, null, ex);
+        this.add(new JVSStartPanel());
+    }
+    
+    public static void closeProglet(){
+        if(JVSMainPanel.closeAllFiles()){
+            JVSMainPanel.getThisInStatic().removeAll();
+            JVSMainPanel.getThisInStatic().add(JVSMainPanel.toolbar);
+            JVSMainPanel.getThisInStatic().add(new JVSStartPanel());
+            JVSMainPanel.getThisInStatic().revalidate();
+        } else {
+            
         }
-        ((JVSTabs) JVSMainPanel.getMainPane().getRightComponent()).add("Web", "", jvsHtmlDisplay);
-        JVSMainPanel.loadProglet(ProgletManager.getDefaultProglet());
-   }
+    }
 
     /** Get the toolbar
      * @return The toolbar
@@ -257,6 +258,8 @@ public final class JVSMainPanel extends JPanel {
         for (Object fileId : JVSMainPanel.haveToSave.keySet().toArray()) {
             if (JVSMainPanel.haveToSave.get((String) fileId)) {
                 j++;
+            } else {
+                JVSMainPanel.getEditorTabs().closeFile((String) fileId);
             }
         }
         // If user no have dialog to stop close, we create one
@@ -341,14 +344,32 @@ public final class JVSMainPanel extends JPanel {
     }
 
     public static void loadProglet(String name) {
-        if (JVSMainPanel.pgman.getProglet(name) != null) {
-            ((JVSTabs) JVSMainPanel.getMainPane().getRightComponent()).removeAll();
-            ((JVSTabs) JVSMainPanel.getMainPane().getRightComponent()).add("Console","",new org.javascool.tools.Console());
-            JVSMainPanel.currentProglet = JVSMainPanel.pgman.getProglet(name);
-            JVSMainPanel.getWidgetTabs().setProglet(currentProglet);
-        } else {
-            Dialog.error("Impossible de continuer", "La proglet " + name + " ne peut pas être chargé car elle n'existe pas.");
+        try {
+            JVSMainPanel.getThisInStatic().removeAll();
+            JVSMainPanel.newFile();
+            JVSMainPanel.getThisInStatic().add(JVSMainPanel.getToolBar(), BorderLayout.NORTH);
+            JVSMainPanel.getThisInStatic().add(JVSMainPanel.getMainPane(), BorderLayout.CENTER);
+            JVSMainPanel.getThisInStatic().revalidate();
+            JVSMainPanel.getMainPane().revalidate();
+            JVSMainPanel.getMainPane().setDividerLocation(JVSMainPanel.getThisInStatic().getWidth()/2);
+            JVSMainPanel.getMainPane().revalidate();
+            if (JVSMainPanel.pgman.getProglet(name) != null) {
+                ((JVSTabs) JVSMainPanel.getMainPane().getRightComponent()).removeAll();
+                ((JVSTabs) JVSMainPanel.getMainPane().getRightComponent()).add("Console", "", new org.javascool.tools.Console());
+                JVSMainPanel.currentProglet = JVSMainPanel.pgman.getProglet(name);
+                JVSMainPanel.getWidgetTabs().setProglet(currentProglet);
+            } else {
+                Dialog.error("Impossible de continuer", "La proglet " + name + " ne peut pas être chargé car elle n'existe pas.");
+            }
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
         }
+    }
+    
+    public static void reportRuntimeBug(String ex){
+        Macros.echo("------- Erreur du logiciel --------\n"
+                  + ex +"\n"
+                  + "-----------------------------------\n");
     }
 
     public static ProgletManager getProgletManager() {
@@ -362,8 +383,8 @@ public final class JVSMainPanel extends JPanel {
     public static FileEditorTabs getEditorTabs() {
         return ((FileEditorTabs) JVSMainPanel.mainPane.getLeftComponent());
     }
-    
-    public static JVSWidgetPanel getWidgetTabs(){
+
+    public static JVSWidgetPanel getWidgetTabs() {
         return (JVSWidgetPanel) JVSMainPanel.mainPane.getRightComponent();
     }
 
@@ -376,7 +397,7 @@ public final class JVSMainPanel extends JPanel {
      * @return The current instance of JvsMainPanel
      */
     public static JVSMainPanel getThisInStatic() {
-        return JvsMain.getJvsMainPanel();
+        return JvsMain.getJvs();
     }
 
     public static class Dialog {
