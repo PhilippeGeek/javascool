@@ -5,7 +5,7 @@
 	<TITLE></TITLE>
 	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.3  (Unix)">
 	<META NAME="CREATED" CONTENT="20110704;16375800">
-	<META NAME="CHANGED" CONTENT="20110711;11225400">
+	<META NAME="CHANGED" CONTENT="20110711;16351200">
 	<STYLE TYPE="text/css">
 	<!--
 		@page { margin: 0.79in }
@@ -27,24 +27,61 @@
 <H1 CLASS="western">I.La “proglet” game</H1>
 <P STYLE="margin-bottom: 0in"><BR>
 </P>
-<P STYLE="margin-bottom: 0in">Index</P>
-<UL>
-	<LI><P STYLE="margin-bottom: 0in">Coder un jeu : structure de votre
-	programme</P>
-	<LI><P STYLE="margin-bottom: 0in">Les nouveaux objets : Sprite,
-	Oval, Rect, etc.</P>
-	<LI><P STYLE="margin-bottom: 0in">La gestion des collections</P>
-	<LI><P STYLE="margin-bottom: 0in">La gestion des évènements</P>
-	<LI><P STYLE="margin-bottom: 0in">Le gestion des évènements de
-	collection</P>
-	<LI><P STYLE="margin-bottom: 0in">La gestion des collisions</P>
-	<LI><P STYLE="margin-bottom: 0in">Les HUD</P>
-</UL>
+<DIV ID="Table of Contents1" DIR="LTR" STYLE="background: transparent">
+	<DIV ID="Table of Contents1_Head" DIR="LTR">
+		<P STYLE="margin-top: 0.17in; page-break-after: avoid"><FONT FACE="Liberation Sans, sans-serif"><FONT SIZE=4 STYLE="font-size: 16pt"><B>Table
+		of Contents</B></FONT></FONT></P>
+	</DIV>
+	<P STYLE="margin-bottom: 0in">I.  La “proglet” game	1</P>
+	<P STYLE="margin-bottom: 0in">II.  Coder un jeu&nbsp;: structure de
+	votre programme	1</P>
+	<P STYLE="margin-left: 0.2in; margin-bottom: 0in">II.A.  La boucle
+	principale	1</P>
+	<P STYLE="margin-left: 0.2in; margin-bottom: 0in">II.B. 
+	Programmation procédurale ou évènementielle&nbsp;?	2</P>
+	<P STYLE="margin-bottom: 0in">III.  Les nouveaux objets	3</P>
+	<P STYLE="margin-left: 0.2in; margin-bottom: 0in">III.A.  L'objet
+	'Sprite'	3</P>
+	<P STYLE="margin-left: 0.2in; margin-bottom: 0in">III.B.  L'objet
+	'Oval'	3</P>
+	<P STYLE="margin-left: 0.2in; margin-bottom: 0in">III.C.  L'objet
+	'Rect'	4</P>
+	<P STYLE="margin-bottom: 0in">IV.  Gestion intelligente des
+	évènements	4</P>
+	<P STYLE="margin-left: 0.2in; margin-bottom: 0in">IV.A.  Les types
+	d'évènements	4</P>
+	<P STYLE="margin-left: 0.2in; margin-bottom: 0in">IV.B.  La fonction
+	de callback	5</P>
+	<P STYLE="margin-left: 0.2in; margin-bottom: 0in">IV.C.  Liste des
+	évènements disponibles	7</P>
+	<P STYLE="margin-left: 0.2in; margin-bottom: 0in">IV.D.  Les
+	évènements clavier	7</P>
+	<P STYLE="margin-left: 0.2in; margin-bottom: 0in">IV.E.  En règle
+	générale	8</P>
+	<P STYLE="margin-bottom: 0in">V.  Gestion des groupes	8</P>
+	<P STYLE="margin-left: 0.2in; margin-bottom: 0in">V.A.  Pouvoir
+	stocker des éléments	8</P>
+	<P STYLE="margin-bottom: 0in">VI.  Les évènements de groupe	9</P>
+	<P STYLE="margin-bottom: 0in">VII.  Propriétés	10</P>
+	<P STYLE="margin-left: 0.2in; margin-bottom: 0in">VII.A. 
+	addProperty	11</P>
+	<P STYLE="margin-left: 0.2in; margin-bottom: 0in">VII.B. 
+	getProperty	11</P>
+	<P STYLE="margin-left: 0.2in; margin-bottom: 0in">VII.C. 
+	setProperty	11</P>
+	<P STYLE="margin-bottom: 0in">VIII.  Collisions	11</P>
+	<P STYLE="margin-left: 0.2in; margin-bottom: 0in">VIII.A.  Détection
+	de collisions	11</P>
+	<P STYLE="margin-left: 0.2in; margin-bottom: 0in">VIII.B.  Réaction
+	aux collisions	12</P>
+</DIV>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
 <P STYLE="margin-bottom: 0in"><BR>
 </P>
 <P STYLE="margin-bottom: 0in">Cette proglet permet de créer des
 petits jeux vidéo facilement pour s'initier à la programmation.</P>
-<P STYLE="margin-bottom: 0in">Elle met à disposition deux
+<P STYLE="margin-bottom: 0in">Elle met à disposition plusieurs
 fonctionnalités principales : 
 </P>
 <UL>
@@ -53,7 +90,9 @@ fonctionnalités principales :
 	<LI><P STYLE="margin-bottom: 0in">La gestion du dessin d'images
 	(“sprites”)</P>
 	<LI><P STYLE="margin-bottom: 0in">La gestion des collections (Group
-	– field – foreach)</P>
+	– field – for...in)</P>
+	<LI><P STYLE="margin-bottom: 0in">Les propriétés</P>
+	<LI><P STYLE="margin-bottom: 0in">Les collisions</P>
 </UL>
 <P STYLE="margin-bottom: 0in"><BR>
 </P>
@@ -108,16 +147,16 @@ moins de 1 point de vie</FONT></FONT></P>
 <P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
 <FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>		Afficher
 l'écran de Game Over</FONT></FONT></P>
-<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">	Afficher
-l'image du joueur à la nouvelle position	</SPAN></FONT></FONT></P>
-<P><BR><BR>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>	Afficher l'image
+du joueur à la nouvelle position	</FONT></FONT></P>
+<P STYLE="font-weight: normal"><BR><BR>
 </P>
-<P><SPAN STYLE="font-weight: normal">Aide sur les notations&nbsp;:
-l'opérateur d'affectation (=) est utilisé en programmation&nbsp;: </SPAN>
+<P STYLE="font-weight: normal">Aide sur les notations&nbsp;:
+l'opérateur d'affectation (=) est utilisé en programmation&nbsp;: 
 </P>
-<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">vie=0</SPAN></FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>vie=0</FONT></FONT></P>
 <P STYLE="margin-bottom: 0in"><SPAN STYLE="font-weight: normal">Signifie
 qu'on </SPAN><B>affecte</B><SPAN STYLE="font-weight: normal"> à la
 </SPAN><B>variable</B><SPAN STYLE="font-weight: normal"> 'vie' la
@@ -125,8 +164,8 @@ valeur 0. Après l'instruction, la variable 'vie' aura pour valeur 0
 (si vous avez besoin d'un rappel sur les variables, voir la proglet
 'Ingrédients des algorithmes'). L'instruction </SPAN>
 </P>
-<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">vie=vie-1</SPAN></FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>vie=vie-1</FONT></FONT></P>
 <P STYLE="margin-bottom: 0in"><SPAN STYLE="font-weight: normal">Signifie
 donc qu'on affecte à la variable 'vie' la valeur 'vie-1'. On appelle
 cela une </SPAN><B>décrémentation</B><SPAN STYLE="font-weight: normal">&nbsp;:
@@ -183,8 +222,10 @@ Exemple&nbsp;:
 <BR>
 </P>
 <P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>Afficher l'image
-du joueur</FONT></FONT></P>
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>Afficher l'La
+proglet offre la possibilité d'associer des évènements à un
+groupe. Associer un évènement à un groupe revient à l'associer à
+chacun de ses membre&nbsp;: image du joueur</FONT></FONT></P>
 <P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
 <FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>En boucle 10
 fois&nbsp;:</FONT></FONT></P>
@@ -250,8 +291,11 @@ charge une image qui est maintenant affichée à l'écran</FONT></FONT></P>
 <FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>s.position(20,20)&nbsp;;	//On
 déplace l'image</FONT></FONT></P>
 <P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>s.scale(50,50)&nbsp;;		//On
-modifie la taille de l'image</FONT></FONT></P>
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>s.scale(5La
+proglet offre la possibilité d'associer des évènements à un
+groupe. Associer un évènement à un groupe revient à l'associer à
+chacun de ses membre&nbsp;: 0,50)&nbsp;;		//On modifie la taille de
+l'image</FONT></FONT></P>
 <P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
 <FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>int x=s.getX()&nbsp;;</FONT></FONT></P>
 <P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
@@ -376,11 +420,11 @@ Rect (un rectangle)). Elles sont appelées avec un paramètre : le
 nom de la </SPAN></FONT><FONT SIZE=3><B>fonction de callback</B></FONT><FONT SIZE=3><SPAN STYLE="font-weight: normal">
 (voir section ci-dessous). C'est la fonction qui est exécutée
 lorsque l'évènement est déclenché.</SPAN></FONT></P>
-<P STYLE="margin-bottom: 0in"><FONT SIZE=3><SPAN STYLE="font-weight: normal">Un
+<P STYLE="margin-bottom: 0in; font-weight: normal"><FONT SIZE=3>Un
 deuxième paramètre peut être spécifié : s'il vaut 'true' la
 fonction de callback sera exécutée même si l'évènement n'a pas
 lieu dans la zone de l'objet. L'utilité d'une telle fonctionnalité
-est détaillée dans la section 'callback'.</SPAN></FONT></P>
+est détaillée dans la section 'callback'.</FONT></P>
 <H2 CLASS="western">IV.B.La fonction de callback</H2>
 <H3 CLASS="western">IV.B.1.Dans le cas d'un évènement global</H3>
 <P STYLE="margin-bottom: 0in">La conftion de callback est une
@@ -653,111 +697,102 @@ soit environ 30 fois par seconde. On peut l'utiliser par exemple pour
 tester si deux images sont en collision, ce qui serait impossible
 sinon car il n'existe pas d'évènement pour cela, ou encore pour
 déplacer tous les ennemis vers le joueur en permanence.</P>
-<H2 CLASS="western">IV.D.<FONT SIZE=3 STYLE="font-size: 13pt"><B>Les
-évènements clavier</B></FONT></H2>
-<P><FONT SIZE=3 STYLE="font-size: 13pt"><SPAN STYLE="font-weight: normal">Les
+<H2 CLASS="western"><FONT SIZE=3><B>IV.D.Les évènements clavier</B></FONT></H2>
+<P STYLE="font-weight: normal"><FONT SIZE=3 STYLE="font-size: 13pt">Les
 évènements clavier sont un peu particuliers&nbsp;: déclarés sur
 un objet ou un groupe, ils ne sont activés que si une touche est
 enfoncée alors que le pointeur de la souris est sur l'objet ou un
 objet du groupe. Même si plusieurs touches sont enfoncées,
 l'évènement n'est déclenché qu'une fois. Cela permet de traiter
-l'évènement de cette façon&nbsp;: </SPAN></FONT>
+l'évènement de cette façon&nbsp;: </FONT>
 </P>
-<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">void
-deplacement(Sprite s) {</SPAN></FONT></FONT></P>
-<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">	if
-(keyDown(''Z'')) {</SPAN></FONT></FONT></P>
-<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">		s.position(s.getX(),s.getY()-1);</SPAN></FONT></FONT></P>
-<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">	}</SPAN></FONT></FONT></P>
-<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">	if
-(keyDown(''S'')) {</SPAN></FONT></FONT></P>
-<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">		s.position(s.getX(),s.getY()+1);</SPAN></FONT></FONT></P>
-<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">	}</SPAN></FONT></FONT></P>
-<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">	if
-(keyDown(''Q'')) {</SPAN></FONT></FONT></P>
-<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">		s.position(g.getX()-1,s.getY());</SPAN></FONT></FONT></P>
-<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">	}</SPAN></FONT></FONT></P>
-<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">	if
-(keyDown(''D'')) {</SPAN></FONT></FONT></P>
-<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">		s.position(g.getX()+1,s.getY());</SPAN></FONT></FONT></P>
-<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">	}</SPAN></FONT></FONT></P>
-<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">}</SPAN></FONT></FONT></P>
-<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">void
-main() {</SPAN></FONT></FONT></P>
-<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">	Sprite
-s=new Sprite();</SPAN></FONT></FONT></P>
-<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">	s.load(''elephant.png'');</SPAN></FONT></FONT></P>
-<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">	s.onKeyDown(''deplacement'');</SPAN></FONT></FONT></P>
-<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">	while(true);</SPAN></FONT></FONT></P>
-<P STYLE="margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">		}</SPAN></FONT></FONT></P>
-<P STYLE="margin-bottom: 0in"><SPAN STYLE="font-weight: normal">Si
-l'évènement est déclaré comme un événèment global, son
-comportement est le même&nbsp;: il n'est appelé qu'une fois par
-frame au maximum. En revanche, il est possible de déclarer un
-évènement clavier sur un objet de type 'Key' ('touche' en
-français). Exemple&nbsp;: </SPAN>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>void
+deplacement(Sprite s) {</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>	if
+(keyDown(''Z'')) {</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>		s.position(s.getX(),s.getY()-1);</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>	}</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>	if
+(keyDown(''S'')) {</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>		s.position(s.getX(),s.getY()+1);</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>	}</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>	if
+(keyDown(''Q'')) {</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>		s.position(g.getX()-1,s.getY());</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>	}</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>	if
+(keyDown(''D'')) {</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>		s.position(g.getX()+1,s.getY());</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>	}</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>}</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>void main() {</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>	Sprite s=new
+Sprite();</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>	s.load(''elephant.png'');</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>	s.onKeyDown(''deplacement'');</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>	while(true);</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>		}</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in; font-weight: normal">Si l'évènement
+est déclaré comme un événèment global, son comportement est le
+même&nbsp;: il n'est appelé qu'une fois par frame au maximum. En
+revanche, il est possible de déclarer un évènement clavier sur un
+objet de type 'Key' ('touche' en français). Exemple&nbsp;: 
 </P>
-<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">Sprite
-personnage;</SPAN></FONT></FONT></P>
-<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">void
-avancer() {</SPAN></FONT></FONT></P>
-<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">	personnage.position(personnage.getX()+1,personnage.getY());</SPAN></FONT></FONT></P>
-<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">}</SPAN></FONT></FONT></P>
-<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">void
-reculer() {</SPAN></FONT></FONT></P>
-<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">	personnage.position(personnage.getX()-1,personnage.getY());</SPAN></FONT></FONT></P>
-<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">}</SPAN></FONT></FONT></P>
-<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">void
-main() {</SPAN></FONT></FONT></P>
-<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">	Key
-k=new Key(''D'');</SPAN></FONT></FONT></P>
-<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">	k.onKeyDown(''avancer'');</SPAN></FONT></FONT></P>
-<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">	(new
+<P STYLE="margin-left: 1in; margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>Sprite
+personnage;</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>void avancer() {</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>	personnage.position(personnage.getX()+1,personnage.getY());</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>}</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>void reculer() {</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>	personnage.position(personnage.getX()-1,personnage.getY());</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>}</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>void main() {</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>	Key k=new
+Key(''D'');</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>	k.onKeyDown(''avancer'');</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>	(new
 Key(''Q'')).onKeyDown(''reculer'');	//Ces deux écritures sont
-équivalentes</SPAN></FONT></FONT></P>
-<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">}</SPAN></FONT></FONT></P>
-<P STYLE="margin-bottom: 0in"><SPAN STYLE="font-weight: normal">La
-façon dont vous programmerez vos évènements clavier a peu
-d'importance&nbsp;: elle dépend du type d'évènement et de vos
-préférences.</SPAN></P>
-<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">	
-</SPAN></FONT></FONT>
+équivalentes</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>}</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in; font-weight: normal">La façon dont
+vous programmerez vos évènements clavier a peu d'importance&nbsp;:
+elle dépend du type d'évènement et de vos préférences.</P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>	 </FONT></FONT>
 </P>
-<H2 CLASS="western">IV.E.<FONT SIZE=3 STYLE="font-size: 13pt"><B>En
-règle générale</B></FONT></H2>
+<H2 CLASS="western"><FONT SIZE=3><B>IV.E.En règle générale</B></FONT></H2>
 <UL>
 	<LI><P STYLE="margin-bottom: 0in">Une fonction de callback peut être
 	appelée par plusieurs évènements</P>
@@ -773,15 +808,17 @@ règle générale</B></FONT></H2>
 <H1 CLASS="western">V.Gestion des groupes</H1>
 <P>Un groupe est une collection d'objets du même type. Par exemple,
 on pourrait faire un groupe contenant tous les ennemis et un groupe
-contenant tous les amis.</P>
+contenant tous les amis. La création de groupes offre plusieurs
+avantages&nbsp;: 
+</P>
 <H2 CLASS="western">V.A.Pouvoir stocker des éléments</H2>
-<P><SPAN STYLE="font-weight: normal">Par exemple, nous avons créé
-50 'Sprite' ennemis mais comment tous les stocker&nbsp;? On pourrait
+<P STYLE="font-weight: normal">Par exemple, nous avons créé 50
+'Sprite' ennemis mais comment tous les stocker&nbsp;? On pourrait
 définir les évènements sur chaque ennemi mais ils seraient alors
 incapables d'interagir entre eux. En effet, lorsque la fonction de
 callback est appellée, elle reçoit en paramètre l'ennemi concerné,
 mais il est alors impossible de connaître la liste de tous les
-ennemis. La seule solution est d'utiliser une collection.</SPAN></P>
+ennemis. La seule solution est d'utiliser une collection.</P>
 <P><SPAN STYLE="font-weight: normal">Note&nbsp;: une variable </SPAN><B>definie</B><SPAN STYLE="font-weight: normal">
 (et non </SPAN><B>déclarée</B><SPAN STYLE="font-weight: normal">)
 directement dans le programme (à l'extérieur de la fonction main()
@@ -790,73 +827,70 @@ elle accessible dans tout le programme. Il faut par contre veiller à
 la </SPAN><B>déclarer</B><SPAN STYLE="font-weight: normal"> avant de
 l'utiliser (en général dans la fonction main()). Exemple&nbsp;: </SPAN>
 </P>
-<P STYLE="margin-left: 0.9in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto"><A NAME="__DdeLink__84_1746738779"></A>
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">Group
-poissons&nbsp;;		//Déclaration de la variable poissons</SPAN></FONT></FONT></P>
-<P STYLE="margin-left: 0.9in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">void
-seRegrouper() {</SPAN></FONT></FONT></P>
-<P STYLE="margin-left: 0.9in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">	for
-(Sprite poisson in poissons) {	//La variable poisson désignera à
-tour de rôle tous les poissons</SPAN></FONT></FONT></P>
-<P STYLE="margin-left: 0.9in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">		int
-posX=200&nbsp;;</SPAN></FONT></FONT></P>
-<P STYLE="margin-left: 0.9in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">		int
-posY=200&nbsp;;</SPAN></FONT></FONT></P>
-<P STYLE="margin-left: 0.9in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">		if
+<P STYLE="margin-left: 0.9in; margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto"><A NAME="__DdeLink__84_1746738779"></A>
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>Group
+poissons&nbsp;;		//Déclaration de la variable poissons</FONT></FONT></P>
+<P STYLE="margin-left: 0.9in; margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>void
+seRegrouper() {</FONT></FONT></P>
+<P STYLE="margin-left: 0.9in; margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>	for (Sprite
+poisson in poissons) {	//La variable poisson désignera à tour de
+rôle tous les poissons</FONT></FONT></P>
+<P STYLE="margin-left: 0.9in; margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>		int posX=200&nbsp;;</FONT></FONT></P>
+<P STYLE="margin-left: 0.9in; margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>		int posY=200&nbsp;;</FONT></FONT></P>
+<P STYLE="margin-left: 0.9in; margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>		if
 (poisson.getX()&gt;posX) poisson.position(poisson.getX()-1,
-poisson.getY())&nbsp;;</SPAN></FONT></FONT></P>
-<P STYLE="margin-left: 0.9in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">		else
-poisson.position(poisson.getX()+1, poisson.getY())&nbsp;;</SPAN></FONT></FONT></P>
-<P STYLE="margin-left: 0.9in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">		if
+poisson.getY())&nbsp;;</FONT></FONT></P>
+<P STYLE="margin-left: 0.9in; margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>		else
+poisson.position(poisson.getX()+1, poisson.getY())&nbsp;;</FONT></FONT></P>
+<P STYLE="margin-left: 0.9in; margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>		if
 (poisson.getX()&gt;posY) poisson.position(poisson.getX(),
-poisson.getY()-1)&nbsp;;</SPAN></FONT></FONT></P>
-<P STYLE="margin-left: 0.9in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">		else
-poisson.position(poisson.getX(), poisson.getY()+1)&nbsp;;</SPAN></FONT></FONT></P>
-<P STYLE="margin-left: 0.9in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">	}</SPAN></FONT></FONT></P>
-<P STYLE="margin-left: 0.9in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">}</SPAN></FONT></FONT></P>
-<P STYLE="margin-left: 0.9in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">void
-main() {</SPAN></FONT></FONT></P>
-<P STYLE="margin-left: 0.9in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">	poissons=new
-Group()&nbsp;;</SPAN></FONT></FONT></P>
-<P STYLE="margin-left: 0.9in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">	for
-(int i=0&nbsp;; i&lt;20&nbsp;; i++) {</SPAN></FONT></FONT></P>
-<P STYLE="margin-left: 0.9in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">		Sprite
-poisson=new Sprite(random(0,500),random(0,500),20,20)&nbsp;;</SPAN></FONT></FONT></P>
-<P STYLE="margin-left: 0.9in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">		poisson.load(''poisson.png'')&nbsp;;</SPAN></FONT></FONT></P>
-<P STYLE="margin-left: 0.9in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">		poissons.add(poisson)&nbsp;;</SPAN></FONT></FONT></P>
-<P STYLE="margin-left: 0.9in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">	}</SPAN></FONT></FONT></P>
-<P STYLE="margin-left: 0.9in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">	onFrame(«&nbsp;seRegrouper&nbsp;»)&nbsp;;</SPAN></FONT></FONT></P>
-<P STYLE="margin-left: 0.9in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">}</SPAN></FONT></FONT></P>
+poisson.getY()-1)&nbsp;;</FONT></FONT></P>
+<P STYLE="margin-left: 0.9in; margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>		else
+poisson.position(poisson.getX(), poisson.getY()+1)&nbsp;;</FONT></FONT></P>
+<P STYLE="margin-left: 0.9in; margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>	}</FONT></FONT></P>
+<P STYLE="margin-left: 0.9in; margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>}</FONT></FONT></P>
+<P STYLE="margin-left: 0.9in; margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>void main() {</FONT></FONT></P>
+<P STYLE="margin-left: 0.9in; margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>	poissons=new
+Group()&nbsp;;</FONT></FONT></P>
+<P STYLE="margin-left: 0.9in; margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>	for (int i=0&nbsp;;
+i&lt;20&nbsp;; i++) {</FONT></FONT></P>
+<P STYLE="margin-left: 0.9in; margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>		Sprite
+poisson=new Sprite(random(0,500),random(0,500),20,20)&nbsp;;</FONT></FONT></P>
+<P STYLE="margin-left: 0.9in; margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>		poisson.load(''poisson.png'')&nbsp;;</FONT></FONT></P>
+<P STYLE="margin-left: 0.9in; margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>		poissons.add(poisson)&nbsp;;</FONT></FONT></P>
+<P STYLE="margin-left: 0.9in; margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>	}</FONT></FONT></P>
+<P STYLE="margin-left: 0.9in; margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>	onFrame(«&nbsp;seRegrouper&nbsp;»)&nbsp;;</FONT></FONT></P>
+<P STYLE="margin-left: 0.9in; margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>}</FONT></FONT></P>
 <P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
 <BR>
 </P>
 <P STYLE="margin-bottom: 0in"><FONT FACE="Liberation Sans, sans-serif">Syntaxe
 de la boucle for...in&nbsp;: </FONT>
 </P>
-<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><FONT FACE="Liberation Sans, sans-serif">for
-(Type variable in collection) {</FONT></FONT></FONT></P>
-<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><FONT FACE="Liberation Sans, sans-serif">}</FONT></FONT></FONT></P>
+<P STYLE="margin-left: 0.9in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>f<SPAN STYLE="font-weight: normal">or
+(Type variable in collection) {</SPAN></FONT></FONT></P>
+<P STYLE="margin-left: 0.9in; margin-bottom: 0in; font-weight: normal; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>}</FONT></FONT></P>
 <P STYLE="margin-bottom: 0in"><BR>
 </P>
 <P STYLE="margin-bottom: 0in"><FONT FACE="Liberation Sans, sans-serif">Les
@@ -865,8 +899,257 @@ qu'il y a d'éléments dans la collection spécifiée. La variable
 prendra tour à tour la valeur de chaque élément de la collection.
 Vérifier que le type spécifié correspond bien au type de variables
 que contient la collection.</FONT></P>
-<H1 CLASS="western">VI.<FONT FACE="Liberation Sans, sans-serif">Les
-évènements de groupe</FONT></H1>
+<H1 CLASS="western">VI.Les évènements de groupe</H1>
+<P>La proglet offre la possibilité d'associer des évènements à un
+groupe. Associer un évènement à un groupe revient à l'associer à
+chacun de ses membre. Ces deux codes sont donc équivalents&nbsp;: 
+</P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>Group enemies=new
+Group()&nbsp;;</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>for (int i=0&nbsp;;
+i&lt;10&nbsp;; i++) {</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>	Sprite enemy=new
+Sprite(0,0,50,50)&nbsp;;</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>	enemy.onClick(«&nbsp;mourir&nbsp;»)&nbsp;;</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>	enemies.add(enemy)&nbsp;;</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>}</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in">et</P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>Group enemies=new
+Group()&nbsp;;</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>for(int i=0&nbsp;;
+i&lt;10&nbsp;; i++) {</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>	Sprite enemy=new
+Sprite(0,0,50,50)&nbsp;;</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>	enemies.add(enemy)&nbsp;;</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>}</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>enemies.onClick(«&nbsp;mourir&nbsp;»)&nbsp;;</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in">La fonction 'mourir' est définie de la
+même façon dans les deux cas&nbsp;: elle prend un Sprite en
+paramètre. <B>La fonction de callback d'un évènement de groupe
+prend en paramètre le type d'objet stocké dans le groupe.</B><SPAN STYLE="font-weight: normal">
+La deuxième écriture est plus lisible, et on la préfèrera en
+général. L'avantage au niveau code peut paraître mince lorsque
+tous les éléments du groupe sont définis dans une boucle, mais il
+est beaucoup plus évident hors d'un groupe. Comparez&nbsp;: </SPAN>
+</P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">Group
+enemies=new Group()&nbsp;;</SPAN></FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
+<BR>
+</P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">Sprite
+enemy1=new Sprite(0,0,20,20)&nbsp;;</SPAN></FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">enemy1.onClick(«&nbsp;mourir&nbsp;»)&nbsp;;</SPAN></FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">enemies.add(enemy1)&nbsp;;</SPAN></FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
+<BR>
+</P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">Sprite
+enemy2=new Sprite(60,60,20,20)&nbsp;;</SPAN></FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">enemy2.onClick(«&nbsp;mourir&nbsp;»)&nbsp;;</SPAN></FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">enemies.add(enemy2)&nbsp;;</SPAN></FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
+<BR>
+</P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">Sprite
+enemy3=new Sprite(120,120,20,20)&nbsp;;</SPAN></FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">enemy3.onClick(«&nbsp;mourir&nbsp;»)&nbsp;;</SPAN></FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">enemies.add(enemy3)&nbsp;;</SPAN></FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><SPAN STYLE="font-weight: normal">et</SPAN></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">Group
+enemies=new Group()&nbsp;;</SPAN></FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
+<BR>
+</P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">Sprite
+enemy1=new Sprite(0,0,20,20)&nbsp;;</SPAN></FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">enemies.add(enemy1)&nbsp;;</SPAN></FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
+<BR>
+</P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">Sprite
+enemy2=new Sprite(60,60,20,20)&nbsp;;</SPAN></FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">enemies.add(enemy2)&nbsp;;</SPAN></FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
+<BR>
+</P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">Sprite
+enemy3=new Sprite(120,120,20,20)&nbsp;;</SPAN></FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">enemies.add(enemy3)&nbsp;;</SPAN></FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
+<BR>
+</P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2><SPAN STYLE="font-weight: normal">enemies.onClick(«&nbsp;mourir&nbsp;»)&nbsp;;</SPAN></FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><SPAN STYLE="font-weight: normal">Le
+second code est plus court et plus compréhensible. De plus, on peut
+modifier les fonctions de callback (ou en rajouter) sans modifier
+plusieurs lignes de code. En revanche, </SPAN><B>la fonction de
+callback n'est définie que pour les objets appartenant déjà à la
+collection. Elle ne s'applique pas aux objets rajoutés par la suite.
+</B>
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<H1 CLASS="western"><B>VII.Propriétés</B></H1>
+<P STYLE="font-weight: normal">La proglet vous propose de stocker des
+variables dans des variables, c'est-à-dire que vous pouvez stocker
+des nombres ou tout autre objet à l'intérieur d'un objet. Cela peut
+être utile par exemple pour stocker le nombre de points de vie d'un
+ennemi dans un sprite. Ainsi, quand la fonction de callback reçoit
+le sprite en argument, elle peut en extraire et modifier sa vie.
+Exemple&nbsp;: 
+</P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>void main(){</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>	int i=5;</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>	Sprite s=new
+Sprite(0,0,10,10);</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>	s.addProperty(&quot;vie&quot;,i);</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>	Integer
+in=s.getProperty(int,&quot;vie&quot;);</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>	in=in+1;</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>	s.setProperty(&quot;vie&quot;,in);</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>	echo(s.getProperty(int,&quot;vie&quot;));	//Affiche
+'6'</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>}</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in">L'usage des variables personnalisées
+est fortement recommandé.</P>
+<H2 CLASS="western">VII.A.addProperty</H2>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>addProperty(String
+s, Object o)</FONT></FONT></P>
+<P>Cette fonction peut être appelée sur tout objet de cette proglet
+(voir section 'Les nouveaux objets'). Elle ajoute une variable
+personnalisée (propriété) sur l'objet spécifié. Elle prend deux
+paramètres&nbsp;: le nom de la propriété et sa valeur. Le nom doit
+être placé entre guillemets.</P>
+<H2 CLASS="western">VII.B.getProperty</H2>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>getProperty(type,
+String s)</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in">Cette fonction peut être appelée sur
+les mêmes objets que addProperty. Elle prend deux paramètres&nbsp;:
+le premier est le type d'objet stocké, sans guillemets, et le second
+est le nom de l'objet à charger. Vérifiez bien que le type spécifié
+correspond bien au type d'objet que vous avez stocké, ou le
+comportement de votre programme sera imprévisible.</P>
+<H2 CLASS="western">VII.C.setProperty</H2>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>setProperty(String
+s, Object o)</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in">Cette fonction peut être appelée sur
+les mêmes objets que addProperty. Elle permet de modifier la valeur
+d'une propriété.</P>
+<H1 CLASS="western"><B>VIII.Collisions</B></H1>
+<P STYLE="font-weight: normal">La proglet vous propose de détecter
+une collision entre deux objets grâce à plusieurs fonctions
+statiques&nbsp;: 
+</P>
+<H2 CLASS="western">VIII.A.Détection de collisions</H2>
+<H3 CLASS="western">VIII.A.1.collisionRectToRect</H3>
+<P>Cette fonction statique prend huit paramètres et renvoie vrai si
+une collision existe entre deux rectangles, sinon faux&nbsp;: 
+</P>
+<P STYLE="margin-left: 0.69in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>collisionRectToRect(double
+x1, double y1, double w1, double h1, double x2, double y2, double w2,
+double h2)</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in">x1 et y1 représentent la position du
+premier objet (coin haut-gauche), w1 et h1 sa largeur et hauteur.</P>
+<P STYLE="margin-bottom: 0in">x2 et y2 représentent la position du
+second objet (coin haut-gauche), w2 et h2 sa largeur et hauteur.</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<H3 CLASS="western">VIII.A.2.collisionCircleToCircle</H3>
+<P>Cette fonction statique prend six paramètres et renvoie vrai si
+une collision existe entre deux cercles, sinon faux&nbsp;:</P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>collisionCircleToCircle(double
+x1, double y1, double r1, double x2, double y2, double r2)</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in">x1 et y1 représentent la position du
+premier cercle (le coin haut-gauche du carré qui encadre le cercle),
+r1 représente son rayon. Idem pour le second cercle.</P>
+<H3 CLASS="western">VIII.A.3.collisionCircleToRect</H3>
+<P>Cette fonction statique prend sept paramètres et renvoie vrai si
+une collision existe entre un cercle et un rectangle, sinon faux&nbsp;:
+</P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>collisionCircleToRect(double
+x1, double y1,double r1, double x2, double y2, double w2, double h2)</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in">x1 et y1 reésentent la position du
+cercle (coin haut-gauche du carré qui encadre le cercle), r1 son
+rayon, x2 et y2 la position du rectangle (coin haut-gauche), w2 et h2
+sa taille.</P>
+<H2 CLASS="western">VIII.B.Réaction aux collisions</H2>
+<H3 CLASS="western">VIII.B.1.elasticCircleCollision</H3>
+<P>Cette fonction statique calcule le résultat d'un choc élastique
+(rechercher ce terme) entre deux cercles placés à leur point de
+contact, et possédant chacun deux variables personnalisées vx et vy
+représentant leurs vitesses respectives (voir le chapitre concernant
+les variables personnalisées). Avant le calcul de la collision la
+fonction reposisionCircles sera appelée pour garantir la fiabilité
+du résultat. Les cercles verront leur vitesses modifiées afin de
+simuler un choc élastique (sans rotation).</P>
+<P><A NAME="__DdeLink__828_2063934678"></A>Les Oval passés en
+paramètre doivent être des cercles pour que l'algorithme
+fonctionne, et les cercles doivent être placés en contact ou
+s'inter-pénétrant légèrement.</P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>elasticCircleCollision(Oval
+o1, Oval o2)</FONT></FONT></P>
+<H3 CLASS="western">VIII.B.2.replaceCircles</H3>
+<P>Cette fonction statique replace deux cercles se superposant
+légèrement de telle sorte qu'ils soient tangeants. Elle est très
+utile pour éviter les chevauchements.</P>
+<P>Les Oval passés en paramètre doivent être des cercles pour que
+l'algorithme fonctionne, et les cercles doivent être placés en
+contact ou s'inter-pénétrant légèrement.</P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in; widows: 4; orphans: 4; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L, serif"><FONT SIZE=2>replaceCircles(Oval
+o1, Oval o2)</FONT></FONT></P>
 <P><BR><BR>
 </P>
 </BODY>
