@@ -158,6 +158,7 @@ public class JVSFileEditorTabs extends JVSTabs implements FileEditorTabs{
      */
     @Override
     public Boolean compileFile(String fileId) {
+        Console.stopProgram();
         if (!JVSFileEditorTabs.fileIds.containsValue(fileId)) { // Check if id is opened
             return true; // Return true because file is not opened
         }

@@ -36,6 +36,7 @@ public class Group extends Accessible implements Iterable<Accessible> {
     
     @SuppressWarnings("CollectionWithoutInitialCapacity")
     public Group() {
+        super();
         m_items = new ArrayList<Accessible>();
         m_self.add(this);
     }

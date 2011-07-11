@@ -13,6 +13,7 @@ public class Key extends Accessible {
     private boolean m_deleted=false;
     
     public Key(int code) {
+        super();
         m_code=code;
     }
     public int getCode() {
