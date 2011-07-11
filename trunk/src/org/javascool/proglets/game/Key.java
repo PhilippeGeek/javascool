@@ -10,6 +10,8 @@ package org.javascool.proglets.game;
  */
 public class Key extends Accessible {
     public int m_code=0;
+    private boolean m_deleted=false;
+    
     public Key(int code) {
         m_code=code;
     }

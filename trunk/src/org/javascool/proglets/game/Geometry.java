@@ -20,6 +20,7 @@ public abstract class Geometry extends Accessible {
     private double m_w, m_h, m_x, m_y;
     
     private boolean m_visible=true;
+    private boolean m_deleted=false;
     
     /**
      * Constructs an object based solely on its position (its size will be 0x0)
@@ -161,5 +162,16 @@ public abstract class Geometry extends Accessible {
     
     public boolean isVisible() {
         return m_visible;
+    }
+    
+    public void delete() {
+        hide();
+        destroy();
+        m_deleted=true;
+        Group.updateAll();
+    }
+    
+    public boolean isDeleted() {
+        return m_deleted;
     }
 }

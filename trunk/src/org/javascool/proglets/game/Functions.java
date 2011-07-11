@@ -539,7 +539,6 @@ public class Functions implements EventCatcher {
                         return;
                     }
                     m_singleton.m_keysPressed.add(e.getKeyCode());
-                    System.out.println(m_singleton.m_keysPressed);
                 }
 
                 @Override
@@ -561,10 +560,10 @@ public class Functions implements EventCatcher {
      */
     private static void callback(java.util.ArrayList<EventListener> functions) {
         for (int i = 0; i < functions.size(); i++) {
-            if (functions.get(i).getObject() == null) {
+            if (functions.get(i).getObject() == null && (functions.get(i).getObject().isForMe() || functions.get(i).getAlways()) && !functions.get(i).getObject().isDestroyed()) {
                 call(functions.get(i).getMethod());
             } else {
-                if (functions.get(i).getObject().isForMe() || functions.get(i).getAlways()) {
+                if ((functions.get(i).getObject().isForMe() || functions.get(i).getAlways()) && !functions.get(i).getObject().isDestroyed()) {
                     call(functions.get(i).getMethod(), functions.get(i).getObject());
                 }
             }
@@ -583,11 +582,9 @@ public class Functions implements EventCatcher {
     public static boolean keyDown(int code) {
         for (int i = 0; i < m_singleton.m_keysPressed.size(); i++) {
             if (m_singleton.m_keysPressed.get(i) == code) {
-                System.out.println("true");
                 return true;
             }
         }
-        System.out.println("false");
         return false;
     }
 
