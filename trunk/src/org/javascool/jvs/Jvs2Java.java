@@ -116,7 +116,7 @@ public class Jvs2Java {
             head.append("}");
         }
         String finalBody = body.toString().replaceAll("((^|\n)([ \t]*)(?!((public|private|protected)([ \t]+)))([A-Za-z0-1_]+)([ ]+)([A-Za-z0-1_]+)\\(([^()]*)\\)([ ]*)\\{([ \t]*)(\n|$))", "public $1")/*.replaceAll("^(( |\t)*((?!(public|private|protected))( |\n)+)?[a-zA-Z0-9_]+( |\n)+[a-zA-Z0-9_]+ *\\(.*\\)( |\n)*\\{( |\n)*)$", "public $1")*/;
-        finalBody = finalBody.toString().replaceAll("(^|[\n\t ])foreach[\n\t ]*\\(([A-Za-z0-9_.]+)[\n\t ]+([A-Za-z0-9_.]+)[\n\t ]+in[\n\t ]+([A-Za-z0-9_.]+)[\n\t ]*\\)[\n\t ]*\\{","for (int tmpsystemi=0; tmpsystemi<$4.size(); tmpsystemi++) {$2 $3=($2)($4.get(tmpsystemi));");
+        finalBody = finalBody.toString().replaceAll("(^|[\n\t ])for[\n\t ]*\\(([A-Za-z0-9_.]+)[\n\t ]+([A-Za-z0-9_.]+)[\n\t ]+in[\n\t ]+([A-Za-z0-9_.]+)[\n\t ]*\\)[\n\t ]*\\{","for (int tmpsystemi=0; tmpsystemi<$4.size(); tmpsystemi++) {$2 $3=($2)($4.get(tmpsystemi));");
         System.err.println("** Java Final Code **");
         System.err.println(head.toString() + finalBody + "}");
         System.err.println("*********************");
@@ -131,7 +131,11 @@ public class Jvs2Java {
     private static String translateOnce(String line) {
         // Translates the while statement with sleep
         line = line.replaceAll("(while.*\\{)", "$1 sleep(20);");
-
+      /*  line = line.replaceAll("int ([a-zA-Z0-9_]+)( |\t)","Integer $1 ");
+        line = line.replaceAll("double ([a-zA-Z0-9_]+)( |\t|=)","Double $1 ");*/
+        line = line.replaceAll("(.*[^a-zA-Z0-9_])([a-zA-Z0-9_]+[ \t=]*\\.getProperty[ \t=]*\\()[ \t=]*([a-zA-Z0-9_]+)[ \t=]*,([^)]*\\))(.*)","$1(($3)$2$4)$5");
+        line = line.replaceAll("\\(int\\)","(Integer)");
+        line = line.replaceAll("\\(double\\)","(Double)");
         line = line.replaceAll("([A-Za-z0-9_\\-]+)::([A-Za-z0-9_\\-]+)", "org.javascool.proglets.$1.Functions.$2");
         //line = line.replaceAll("(while\\(true\\)\\{)", "$1 sleep(50);");
         // Translates the Synthe proglet @tone macro

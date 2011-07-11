@@ -587,7 +587,24 @@ public class Functions implements EventCatcher {
         }
         return false;
     }
+    
+    public static boolean collisionCircleToRect(double x1, double y1, double r1, double x2, double y2, double w2, double h2) {
+      //  if (distance(x1,y1,x2+w2/2,y2+h2/2)>Math.sqrt((w2*w2)/4+(h2*h2)/4)) return false;
+        double xc=x1+r1;
+        double yc=y1+r1;
+        if (yc>y2 && yc<y2+h2) return (Math.abs(xc-(x2+w2/2))<r1+w2/2);
+        if (xc>x2 && xc<x2+w2) return (Math.abs(yc-(y2+h2/2))<r1+h2/2);
+        if (yc<y2 && xc<x2) return (distance(xc,yc,x2,y2)<r1);
+        if (yc<y2 && xc>x2+w2) return (distance(xc,yc,x2+w2,y2)<r1);
+        if (yc>y2+h2 && xc<x2) return (distance(xc,yc,x2,y2+h2)<r1);
+        if (yc>y2+h2 && xc>x2+w2) return (distance(xc,yc,x2+w2,y2+h2)<r1);
+        return false;
+    }
 
+    public static double distance(double x1, double y1, double x2, double y2) {
+        return Math.sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
+    }
+    
     /**
      * This class allows the proglet to trigger events regularly. Depending on the
      * selected framerate (see setFps(int)), a main routine will be executed at the given 

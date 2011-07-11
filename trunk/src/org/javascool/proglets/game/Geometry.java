@@ -28,6 +28,7 @@ public abstract class Geometry extends Accessible {
      * @param y The Y coordinate of the object's position
      */
     public Geometry(double x, double y) {
+        super();
         m_x = x;
         m_y = y;
         m_w = 0;
@@ -42,6 +43,7 @@ public abstract class Geometry extends Accessible {
      * @param h The object's height
      */
     public Geometry(double x, double y, double w, double h) {
+        super();
         m_x = x;
         m_y = y;
         m_w = w;
@@ -52,6 +54,7 @@ public abstract class Geometry extends Accessible {
      * Constructs an object places at position (0,0) and with size 0x0
      */
     public Geometry() {
+        super();
         m_w = 0;
         m_h = 0;
         m_x = 0;
