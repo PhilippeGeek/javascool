@@ -13,54 +13,53 @@ import java.util.ArrayList;
 public abstract class Accessible extends LinkedEventGroup {
     private boolean m_superDestroyed=false;
     private boolean m_superDeleted=false;
-    private ArrayList<StoredProperty<?>> m_props;
+    private ArrayList<StoredProperty> m_props;
     
     @SuppressWarnings("CollectionWithoutInitialCapacity")
     public Accessible() {
-        m_props=new ArrayList<StoredProperty<?>>();
+        m_props=new ArrayList<StoredProperty>();
     }
     
-    public void addProperty(StoredProperty<?> p) {
-        for (StoredProperty<?> s : m_props) {
-            if (s.getName().equals(p.getName())) {
+    public void addProperty(String name, Object o) {
+        for (StoredProperty s : m_props) {
+            if (s.getName().equals(name)) {
                 //TODO throw error
             }
         }
-        m_props.add(p);
+        m_props.add(new StoredProperty(name, o, o.getClass()));
     }
     
     public void removeProperty(String name) {
-        for (StoredProperty<?> s : m_props) {
+        for (StoredProperty s : m_props) {
             if (s.getName().equals("name")) {
                 m_props.remove(s);
             }
         }
     }
     
-    public StoredProperty<?> getProperty(String name) {
-        for (StoredProperty<?> s : m_props) {
+    public Object getProperty(String name) {
+        for (StoredProperty s : m_props) {
             if (s.getName().equals(name)) {
-                return (s);
+                return (s.getType().cast(s.getObject()));
             }
         }
         return null;
     }
     
-    public void setProperty(StoredProperty<?> p) {
+    public void setProperty(String name, Object o) {
         boolean exists=false;
-        StoredProperty<?> prop=null;
-        for (StoredProperty<?> s : m_props) {
-            if (s.getName().equals(p.getName())) {
+        StoredProperty prop=null;
+        for (StoredProperty s : m_props) {
+            if (s.getName().equals(name)) {
                 exists=true;
                 prop=s;
             }
         }
-        if (!exists) {
-            addProperty(p);
+        if (exists) {
+            addProperty(name,o);
         }
         else {
-            m_props.remove(prop);
-            addProperty(p);
+            prop.setObject(o);
         }
     }
     
