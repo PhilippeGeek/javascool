@@ -366,10 +366,11 @@ public final class JVSMainPanel extends JPanel {
         }
     }
     
-    public static void reportRuntimeBug(String ex){
-        Macros.echo("------- Erreur du logiciel --------\n"
-                  + ex +"\n"
-                  + "-----------------------------------\n");
+    public static void reportRuntimeBug(String ex,Boolean stop){
+        Dialog.error("Erreur du logiciel", ex);
+        if(stop){
+            org.javascool.tools.Console.stopProgram();
+        }
     }
 
     public static ProgletManager getProgletManager() {
