@@ -329,6 +329,11 @@ public class Functions implements EventCatcher {
 
         if (!found) {
             Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, new Exception("Callback method " + method + " not found"));
+            for (int i = 0; i < Macros.getProgram().getClass().getMethods().length; i++) {
+                java.lang.reflect.Method m = Macros.getProgram().getClass().getMethods()[i];
+                System.out.println(m.getName());
+            }
+            System.out.println("");
         }
     }
 
