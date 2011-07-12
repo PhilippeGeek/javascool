@@ -68,7 +68,14 @@ public class JVSHtmlDisplay extends JPanel {
             @Override
             public void hyperlinkUpdate(HyperlinkEvent e) {
                 if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
-                    load(e.getDescription());
+                    if (e.getDescription().startsWith("jvs://file:")) {
+                        System.out.println("Load : "+e.getDescription());
+                        System.out.println(e.getDescription().substring(11));
+                        JVSMainPanel.openFileFromJar(e.getDescription().substring(11));
+                    }
+                    else {
+                        load(e.getDescription());
+                    }
                 }
             }
         });
