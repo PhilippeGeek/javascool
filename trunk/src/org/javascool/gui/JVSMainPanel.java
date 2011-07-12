@@ -130,10 +130,10 @@ public final class JVSMainPanel extends JPanel {
      * @see JVSFileEditorTabs
      */
     public static void openFileFromJar(String fileName) {
-        InputStream file = ClassLoader.getSystemClassLoader().getResourceAsStream(fileName);
         String file2="org/javascool/proglets/"+JVSMainPanel.getCurrentProglet().getPackageName()+"/"+fileName;
-        System.out.println(file2);
-        JVSMainPanel.getEditorTabs().open("org/javascool/proglets/"+JVSMainPanel.getCurrentProglet().getPackageName()+"/"+fileName);
+        InputStream file = ClassLoader.getSystemClassLoader().getResourceAsStream(file2);
+        System.out.println("load:"+file2);
+        JVSMainPanel.getEditorTabs().open(file);
         //TOTO error management
     }
 
