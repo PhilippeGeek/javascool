@@ -23,6 +23,7 @@ import java.util.Arrays;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.tools.Diagnostic;
 import javax.tools.DiagnosticCollector;
@@ -44,6 +45,7 @@ public class Proglet {
     private Pml conf;
     private ArrayList<String> depClass;
     private JPanel panel = new JPanel();
+    private ImageIcon icon;
     private Boolean hasPanel = false;
     private JVSHtmlDisplay help;
     private Boolean jvsFunctions = false;
@@ -62,7 +64,7 @@ public class Proglet {
         this.fullPackageName = "org.javascool.proglets." + progletName;
         // We will store configuration
         this.conf = new Pml();
-
+        
         // Read Configuration
         if (ClassLoader.getSystemResourceAsStream("org/javascool/proglets/" + packageName + "/Proglet.pml") != null) {
             this.conf.reset(Proglet.convertStreamToString(ClassLoader.getSystemResourceAsStream("org/javascool/proglets/" + packageName + "/Proglet.pml")));
@@ -81,6 +83,15 @@ public class Proglet {
             }
             if (!this.conf.getString("javaCallAfter").equals("")) {
                 this.observer[1] = this.conf.getString("javaCallAfter");
+            }
+            if (!this.conf.getString("logo").equals("")) {
+                String logo = this.conf.getString("logo");
+                if (ClassLoader.getSystemResourceAsStream("org/javascool/proglets/" + packageName + "/"+logo) != null) {
+                    this.icon = Utils.getIcon("org/javascool/proglets/"+this.packageName+"/"+logo);
+                }
+            }
+            if(this.icon==null){
+                this.icon = Utils.getIcon("org/javascool/doc-files/icons/scripts.png");
             }
         } else {
             throw new Exception("No configuration file for " + packageName);
@@ -242,5 +253,19 @@ public class Proglet {
         } catch (Throwable e) {
             throw new RuntimeException("Erreur: impossible de charger la class, erreur : " + e.getMessage());
         }
+    }
+
+    /**
+     * @return the icon
+     */
+    public ImageIcon getIcon() {
+        return icon;
+    }
+
+    /**
+     * @param icon the icon to set
+     */
+    public void setIcon(ImageIcon icon) {
+        this.icon = icon;
     }
 }

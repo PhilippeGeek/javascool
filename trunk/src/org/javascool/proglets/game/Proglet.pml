@@ -8,4 +8,5 @@
     javaImport="javax.swing.*,org.javascool.proglets.game.*"
     javaCallBefore="start();"
     javaCallAfter="stop();"
+    logo="games.png"
 }

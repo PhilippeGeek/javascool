@@ -11,6 +11,7 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -107,6 +108,10 @@ public class ProgletManager {
 
     public Proglet getProglet(String name) {
         return ProgletManager.proglets.get(name);
+    }
+    
+    public Collection<Proglet> getProglets() {
+        return ProgletManager.proglets.values();
     }
 
     public void installNewProglet() {

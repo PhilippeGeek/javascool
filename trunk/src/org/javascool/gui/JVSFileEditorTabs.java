@@ -154,10 +154,12 @@ public class JVSFileEditorTabs extends JVSTabs implements FileEditorTabs{
         }
         // We add the tab
         add(tabTitle, "", editors.get(fileId));
+
         // Store the new fileId by the tab name
         JVSFileEditorTabs.fileIds.put(tabTitle, fileId);
         // Select the new tab
         this.setSelectedIndex(this.getTabId(fileId));
+        this.setTabComponentAt(this.getTabId(fileId),new TabPanel(this,fileId));
         // Return the new file id
         return fileId;
     }
