@@ -3,8 +3,11 @@
  *******************************************************************************/
 package org.javascool.pml;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 import java.util.Vector;
@@ -105,10 +108,16 @@ public class Pml {
      * @return This, allowing to use the <tt>Pml pml= new Pml().reset(..)</tt> construct.
      */
     public final Pml load(String location, String format) {
-        if(format.equals("pml")){
-            return reset(Utils.loadString(location).replaceAll("\n", ""), format);
+        try {
+            if(format.equals("pml")){
+                return reset(Utils.loadString(location).replaceAll("\n", ""), format);
+            }
+            return reset(Utils.loadString(location), format);
         }
-        return reset(Utils.loadString(location), format);
+        /**/ catch (IOException ex) {
+            Logger.getLogger(Pml.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return reset("");
     }
     /**/
 

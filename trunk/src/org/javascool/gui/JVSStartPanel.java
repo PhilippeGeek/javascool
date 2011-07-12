@@ -12,6 +12,7 @@ import java.awt.event.MouseListener;
 import java.util.HashMap;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import org.javascool.Utils;
@@ -65,11 +66,11 @@ public class JVSStartPanel extends JPanel{
     private JPanel createShortcut(String icon,String title,final Runnable start){
         JPanel panel=new JPanel();
         //panel.setLayout(new BorderLayout(10,10));
-        JLabel label=new JLabel(title,Utils.getIcon("org/javascool/doc-files/icons/"+icon+".png"),JLabel.CENTER);
+        JButton label=new JButton(title,Utils.getIcon("org/javascool/doc-files/icons/"+icon+".png"));
         label.setVerticalTextPosition(JLabel.BOTTOM);
         label.setHorizontalTextPosition(JLabel.CENTER);
         panel.add(label);
-        panel.addMouseListener(new MouseListener(){
+        label.addMouseListener(new MouseListener(){
 
             @Override
             public void mouseClicked(MouseEvent e) {

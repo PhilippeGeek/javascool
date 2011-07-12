@@ -5,7 +5,10 @@
 package org.javascool;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -38,7 +41,12 @@ public class JVSConf {
     }
 
     private void loadConf() {
-        String[] confFile = Utils.loadString(configurationFile.getAbsolutePath()).split("\n");
+        String[] confFile = null;
+        try {
+            confFile = Utils.loadString(configurationFile.getAbsolutePath()).split("\n");
+        } catch (IOException ex) {
+            Logger.getLogger(JVSConf.class.getName()).log(Level.SEVERE, null, ex);
+        }
         for (String confLine : confFile) {
             if (confLine.split(":", 2).length == 2) {
                 conf.put(confLine.split(":", 2)[0], confLine.split(":", 2)[1]);

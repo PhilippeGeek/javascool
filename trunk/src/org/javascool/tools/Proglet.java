@@ -20,9 +20,13 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JPanel;
+import javax.tools.Diagnostic;
+import javax.tools.DiagnosticCollector;
+import javax.tools.JavaFileObject;
 import org.javascool.JVSFile;
 import org.javascool.Utils;
 import org.javascool.gui.JVSHtmlDisplay;
@@ -40,64 +44,20 @@ public class Proglet {
     private Pml conf;
     private ArrayList<String> depClass;
     private JPanel panel = new JPanel();
+    private Boolean hasPanel = false;
     private JVSHtmlDisplay help;
     private Boolean jvsFunctions = false;
-    private String[] observer = {"",""};
+    private Boolean packagedInJvs = true;
+    private String[] observer = {"", ""};
     private String fullPackageName = "org.javascool.proglets.tools";
     private String name = "";
     private String packageName = "ingredients";
 
-    public Proglet(File directory) throws Exception {
-        if (!directory.exists() || !directory.isDirectory()) {
-            throw new Exception(directory + " is not a proglet folder");
-        }
-        this.name = directory.getName();
-        if (new File(directory.getPath() + File.separator + "Panel.class").exists()) {
-            try {
-                this.panel = Proglet.loadPanelFromClass(directory.getPath() + File.separator + "Panel.class");
-            } catch (Throwable ex) {
-                Logger.getLogger(Proglet.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else if (new File(directory.getPath() + File.separator + "Panel.jvs").exists()) {
-            if (Jvs2Java.javaCompile(directory.getPath() + File.separator + "Panel.jvs").getDiagnostics().isEmpty()) {
-                try {
-                    this.panel = Proglet.loadPanelFromClass(directory.getPath() + File.separator + "Panel.class");
-                } catch (Throwable ex) {
-                    Logger.getLogger(Proglet.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            } else {
-                Dialog.error("Erreur de chargement", "La proglet " + name + " n'as pas pu être chargé car il y a eu une erreur de compilation dans le Panel");
-            }
-        } else if (new File(directory.getPath() + File.separator + "Panel.java").exists()) {
-            if (Jvs2Java.javaCompile(directory.getPath() + File.separator + "Panel.java").getDiagnostics().isEmpty()) {
-                try {
-                    this.panel = Proglet.loadPanelFromClass(directory.getPath() + File.separator + "Panel.class");
-                } catch (Throwable ex) {
-                    Logger.getLogger(Proglet.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            } else {
-                Dialog.error("Erreur de chargement", "La proglet " + name + " n'as pas pu être chargé car il y a eu une erreur de compilation dans le Panel");
-            }
-        }
-        if (new File(directory.getPath() + File.separator + "Help.html").exists()) {
-            //this.help = new File(directory.getPath() + File.separator + "Help.html");
-        }
-        if (new File(directory.getPath() + File.separator + "functions.jvs").exists()) {
-            this.setupJvsFunctions(new File(directory.getPath() + File.separator + "functions.jvs"));
-        }
-    }
-
     public Proglet(String progletName) throws Exception {
-        this(progletName, true);
-        return;
-    }
-
-    private Proglet(String progletName, Boolean fromjar) throws Exception {
-
         // Set the name
         this.name = progletName;
         // Set the package name
-        this.packageName=progletName;
+        this.packageName = progletName;
         // It's an official package, so it's in org.javascool.proglets
         this.fullPackageName = "org.javascool.proglets." + progletName;
         // We will store configuration
@@ -117,10 +77,10 @@ public class Proglet {
                 ProgletManager.setDefaultProglet(this.packageName);
             }
             if (!this.conf.getString("javaCallBefore").equals("")) {
-                this.observer[0]=this.conf.getString("javaCallBefore");
+                this.observer[0] = this.conf.getString("javaCallBefore");
             }
             if (!this.conf.getString("javaCallAfter").equals("")) {
-                this.observer[1]=this.conf.getString("javaCallAfter");
+                this.observer[1] = this.conf.getString("javaCallAfter");
             }
         } else {
             throw new Exception("No configuration file for " + packageName);
@@ -131,12 +91,13 @@ public class Proglet {
             try {
                 System.err.println("Load panel for proglet " + packageName);
                 panel = (JPanel) Class.forName("org.javascool.proglets." + this.packageName + ".Panel").newInstance();
+                hasPanel = true;
             } catch (Exception ex) {
                 throw ex;
             }
         } else {
             System.err.println("No panel for proglet " + packageName);
-            this.panel=null;
+            this.panel = null;
         }
 
         // Install the proglet functions
@@ -145,19 +106,19 @@ public class Proglet {
             this.jvsFunctions = true;
         } else {
             System.err.println("No functions for proglet " + packageName);
-            this.jvsFunctions=false;
+            this.jvsFunctions = false;
         }
-        
+
         // Install the help file
         if (ClassLoader.getSystemResourceAsStream("org/javascool/proglets/" + packageName + "/Help.html") != null) {
             System.err.println("Load help for proglet " + packageName);
-            this.help=new JVSHtmlDisplay();
+            this.help = new JVSHtmlDisplay();
             this.help.load(Utils.toUrl("org/javascool/proglets/" + packageName + "/Help.html").toString());
         } else {
             System.err.println("No help for proglet " + packageName);
-            this.help=null;
+            this.help = null;
         }
-        
+
     }
 
     /** Convert a Stream to a String
@@ -193,6 +154,10 @@ public class Proglet {
         }
     }
 
+    public Boolean hasPanel(){
+        return this.hasPanel;
+    }
+    
     public JPanel getHelpFileUrl() {
         return this.help;
     }
@@ -203,11 +168,12 @@ public class Proglet {
         }
         return this.depClass;
     }
-    
-    public String getJavaCodeToIncludeBefore(){
+
+    public String getJavaCodeToIncludeBefore() {
         return this.observer[0];
     }
-    public String getJavaCodeToIncludeAfter(){
+
+    public String getJavaCodeToIncludeAfter() {
         return this.observer[1];
     }
 
@@ -218,8 +184,8 @@ public class Proglet {
     public String getFullPackageName() {
         return this.fullPackageName;
     }
-    
-    public String getPackageName(){
+
+    public String getPackageName() {
         return this.packageName;
     }
 
@@ -268,11 +234,11 @@ public class Proglet {
         }
     }
 
-    private static void loadFromClass(String path) throws Throwable {
+    private static Class<?> loadFromClass(String path) throws Throwable {
         try {
             File javaClass = new File(path);
             URL[] urls = new URL[]{new URL("file:" + javaClass.getParent() + File.separator)};
-            Class< ?> j_class = new URLClassLoader(urls).loadClass(javaClass.getName().replaceAll("\\.class", ""));
+            return new URLClassLoader(urls).loadClass(javaClass.getName().replaceAll("\\.class", ""));
         } catch (Throwable e) {
             throw new RuntimeException("Erreur: impossible de charger la class, erreur : " + e.getMessage());
         }
