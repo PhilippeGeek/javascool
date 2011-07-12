@@ -91,18 +91,14 @@ public class ProgletManager {
                         }
                     }
                 } catch (Exception ex1) {
-                    Logger.getLogger(ProgletManager.class.getName()).log(Level.SEVERE, null, ex1);
                 }
             } else {
-                Logger.getLogger(ProgletManager.class.getName()).log(Level.SEVERE, null, ex);
             }
-
         }
-        //ProgletManager.proglets.put("game", new Proglet("game"));
         if (!JvsMain.getJvsConf().get("sketchbook").equals("")) {
             try {
-                //System.err.println("Load sketchbook ...");
-                //this.installProgletDir(new File(JvsMain.getJvsConf().get("sketchbook")));
+                System.err.println("Load sketchbook ...");
+                this.installProgletDir(new File(JvsMain.getJvsConf().get("sketchbook")));
             } catch (Exception ex) {
                 Logger.getLogger(ProgletManager.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -150,28 +146,7 @@ public class ProgletManager {
             throw new Exception(directory + " is not a proglet folder");
         }
         JvsMain.getJvsConf().set("sketchbook", directory.getPath());
-        for (String dir : directory.list(new FilenameFilter() {
-
-            @Override
-            public boolean accept(File dir, String name) {
-                if (dir.isDirectory()) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        })) {
-            System.err.println("Chargement de " + directory + File.separator + dir);
-            if (ProgletManager.proglets.containsKey(dir)) {
-                Dialog.error("Erreur lors du chargement", "Le proglet " + dir + " est déjà chargé");
-            } else {
-                try {
-                    ProgletManager.proglets.put(dir, new Proglet(new File(directory.getPath() + File.separator + dir)));
-                } catch (Exception e) {
-                    System.err.println("Erreur " + e.getMessage() + " lors du chargement de " + dir);
-                }
-            }
-        }
+        
     }
 
     public void changeProglet() {

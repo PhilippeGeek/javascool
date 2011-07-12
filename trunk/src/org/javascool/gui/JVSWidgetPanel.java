@@ -26,6 +26,9 @@ public class JVSWidgetPanel extends JVSTabs {
         if (proglet.getHelpFileUrl()!=null){
             this.add("Aide de la proglet", "", proglet.getHelpFileUrl());
         }
+        JVSHtmlDisplay memo = new org.javascool.gui.JVSHtmlDisplay();
+        memo.load("org/javascool/doc-files/memo.html");
+        this.add("Memo", "", memo);
     }
 
     public JPanel getProgletPanel() {

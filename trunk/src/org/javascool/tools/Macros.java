@@ -62,8 +62,38 @@ public class Macros {
         echo("" + set);
     }
     
-    /**
-     * @deprecated 
+    /** Show a String on the console
+     * @param string The string to show
+     */
+    public static void println(String string) {
+        System.out.println(string);
+    }
+
+    public static void println(int string) {
+        println("" + string);
+    }
+
+    public static void println(double string) {
+        println("" + string);
+    }
+
+    public static void println(boolean string) {
+        println("" + string);
+    }
+
+    public static < A, B> void println(java.util.Map<A, B> map) {
+        println("" + map);
+    }
+
+    public static < A> void println(java.util.List<A> list) {
+        println("" + list);
+    }
+
+    public static < A> void println(java.util.Set<A> set) {
+        println("" + set);
+    }
+
+    /** Renvoie un nombre entier aléatoire uniformément distribué entre deux valeurs (maximum inclus).
      * @param min
      * @param max
      * @return 
@@ -162,6 +192,15 @@ public class Macros {
         }
     }
 
+    // Alias of integer
+    public static int readInt(){
+        return readInteger();
+    }
+    
+    public static int readInt(String quest){
+        return readInteger(quest);
+    }
+    
     /** Prompt a number to the user */
     public static int readInteger() {
         return readInteger("Entrez un nombre : ");
@@ -186,6 +225,14 @@ public class Macros {
         }
     }
 
+    // Alias of Boolean
+    public static Boolean readBool(){
+        return readBoolean();
+    }
+    public static Boolean readBool(String quest){
+        return readBoolean(quest);
+    }
+    
     public static Boolean readBoolean(){
         return readBoolean("Voulez vous continuer ?");
     }

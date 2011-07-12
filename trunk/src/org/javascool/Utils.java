@@ -55,8 +55,8 @@ import javax.swing.JOptionPane;
  */
 public class Utils {
 
-    public static URLClassLoader classLoader=((URLClassLoader) Thread.currentThread().getContextClassLoader());
-    
+    public static URLClassLoader classLoader = ((URLClassLoader) Thread.currentThread().getContextClassLoader());
+
     private Utils() {
     }
     private static final long serialVersionUID = 1L;
@@ -82,7 +82,7 @@ public class Utils {
             newUrlsArray[i] = newUrls.get(i);
         }
         URLClassLoader newLoader = new URLClassLoader(newUrlsArray);
-        classLoader=newLoader;
+        classLoader = newLoader;
         Thread.currentThread().setContextClassLoader(newLoader);
     }
 
@@ -222,22 +222,18 @@ public class Utils {
      * @throws IllegalArgumentException If the URL is malformed.
      * @throws RuntimeException if an I/O exception has occurred.
      */
-    public static String loadString(String location) {
-        try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(toUrl(location).openStream()), 10240);
-            StringBuilder buffer = new StringBuilder();
-            char chars[] = new char[10240];
-            while (true) {
-                int l = reader.read(chars);
-                if (l == -1) {
-                    break;
-                }
-                buffer.append(chars, 0, l);
+    public static String loadString(String location) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(toUrl(location).openStream()), 10240);
+        StringBuilder buffer = new StringBuilder();
+        char chars[] = new char[10240];
+        while (true) {
+            int l = reader.read(chars);
+            if (l == -1) {
+                break;
             }
-            return buffer.toString();
-        } catch (IOException e) {
-            throw new RuntimeException(e + " when loading: " + location);
+            buffer.append(chars, 0, l);
         }
+        return buffer.toString();
     }
 
     /** Saves a char-sequence in an URL textual contents.

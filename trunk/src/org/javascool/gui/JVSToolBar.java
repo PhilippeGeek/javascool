@@ -111,10 +111,11 @@ public class JVSToolBar extends JToolBar {
             }
         });
         
-        this.startButton=this.addTool("Executer", "org/javascool/doc-files/icon16/run.png", new Runnable(){
+        this.startButton=this.addTool("Executer", "org/javascool/doc-files/icon16/play.png", new Runnable(){
 
             @Override
             public void run() {
+                Console.stopProgram();
                 Console.startProgram();
             }
         
@@ -131,7 +132,7 @@ public class JVSToolBar extends JToolBar {
         });
         this.stopButton.setVisible(false);
         
-        this.execTime=new JLabel("Temps d'execution : ");
+        this.execTime=new JLabel("  Temps d'execution : 0 min 0 sec");
         this.add(this.execTime);
         this.execTime.setVisible(false);
         
@@ -295,7 +296,7 @@ public class JVSToolBar extends JToolBar {
     }
     
     public void updateTimer(int sec){
-        
+        this.execTime.setText("  Temps d'éxecution : "+sec/60+" min "+sec%60+" sec");
     }
 
     /** Get the Main Panel to have main functions */

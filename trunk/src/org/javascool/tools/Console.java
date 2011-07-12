@@ -34,6 +34,8 @@ public class Console extends JPanel {
     private static Runnable program;
     /** The current Thread */
     private static Thread runThread;
+    /** The timer Thread */
+    private static Thread timeThread;
     /** The new console */
     private static JTextArea outputPane = Console.getConsoleTextPane();
     /** ScrollPane for the console */
@@ -98,35 +100,29 @@ public class Console extends JPanel {
 
         public void programCompiled() {
             this.reset();
-            this.addTool("Lancer", "org/javascool/doc-files/icon16/play.png", Console.run);
+            JVSMainPanel.getToolBar().activeStartButton();
+            JVSMainPanel.getToolBar().activeExecTimer();
             this.revalidate();
         }
 
         public void programRunning() {
-            this.reset();
-            this.addTool("Stop", "org/javascool/doc-files/icon16/stop.png", Console.stop);
-            this.resetTimeRunning();
-            this.addSeparator();
-            this.remove(this.timeRunning);
-            this.add(this.timeRunning);
+            //JVSMainPanel.getToolBar().desactiveStartButton();
+            JVSMainPanel.getToolBar().activeStopButton();
             this.revalidate();
         }
 
         public void afterRunning() {
-            this.reset();
-            this.programCompiled();
-            this.addSeparator();
-            this.remove(this.timeRunning);
-            this.add(this.timeRunning);
+            JVSMainPanel.getToolBar().desactiveStopButton();
+            JVSMainPanel.getToolBar().activeStartButton();
             this.revalidate();
         }
 
-        public void updateTimeRunning(String time) {
-            this.timeRunning.setText("Temps d'éxecution : " + time);
+        public void updateTimeRunning(int sec) {
+            JVSMainPanel.getToolBar().updateTimer(sec);
         }
 
         public void resetTimeRunning() {
-            this.timeRunning.setText("Temps d'éxecution : 0 min 0 sec");
+            JVSMainPanel.getToolBar().updateTimer(0);
         }
     }
 
@@ -167,28 +163,43 @@ public class Console extends JPanel {
 
     /** Start the current program */
     public static void startProgram() {
+        Console.stopProgram();
+        if(JVSMainPanel.getCurrentProglet().hasPanel()){
+            JVSMainPanel.getWidgetTabs().focusOnProgletPanel();
+        }
         Console.running=true;
-        Console.toolbar.updateTimeRunning("0 min 0 sec");
-        Console.toolbar.programRunning();
+        Console.toolbar.updateTimeRunning(0);
+        
         Console.clear();
-
-        new Thread(new Runnable() {
+        
+        Console.timeThread=new Thread(new Runnable() {
 
             @Override
             public void run() {
                 Console.run(true);
-                for (int t = 0; Console.isRunning(); t++) {
-                    Console.toolbar.updateTimeRunning("" + (t / 60) + " min " + (t % 60) + " sec");
+                for (int t = 0; Console.running; t++) {
+                    Console.toolbar.updateTimeRunning(t);
                     Macros.sleep(1000);
                 }
             }
-        }).start();
+        });
+        Console.timeThread.start();
+        Console.toolbar.programRunning();
     }
 
     /** Stop the current program */
     public static void stopProgram() {
         Console.running=false;
         Console.run(false);
+        if (Console.timeThread != null) {
+            try {
+                Console.timeThread.interrupt();
+            } catch (Exception e) {
+                System.err.println("Erreur : "+e.getMessage());
+            }
+            Console.timeThread = null;
+        }
+        Console.timeThread=null;
         Console.runThread=null;
         Console.toolbar.afterRunning();
     }

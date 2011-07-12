@@ -34,12 +34,12 @@ public class JvsMain {
     static void setUpSystem() {
         //<editor-fold defaultstate="collapsed" desc="Style setup">
         try {
-            /*for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+            for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
                     UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
-            }*/UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            }
         } catch (Exception e) {
             String os = System.getProperty("os.name");
             if (os.startsWith("Windows")) {
