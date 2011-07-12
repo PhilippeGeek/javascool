@@ -1,0 +1,90 @@
+//$jvs#proglet:default
+Group poissons;
+double radius=5;
+double gravity=0.4;
+double mouseGravity=0;
+
+void seRegrouper(Oval poisson) {
+	double nbPoissons=poissons.size();
+	double sommeX=0;
+	double sommeY=0;
+	double sumCoef=0;
+	double sumForce=0;
+	for (Oval autrePoisson in poissons) {
+		if (!autrePoisson.equals(poisson)) {
+			double deltaX=autrePoisson.getX()-poisson.getX();
+			double deltaY=autrePoisson.getY()-poisson.getY();
+			
+			double force=(float)(gravity/(Math.sqrt(deltaX*deltaX+deltaY*deltaY)));
+			sumForce+=force;
+			
+			double vecX=autrePoisson.getX()-poisson.getX();
+			double vecY=autrePoisson.getY()-poisson.getY();
+			double vecNorm=(double)(Math.sqrt(vecX*vecX+vecY*vecY));
+			vecX /= vecNorm;
+			vecY /= vecNorm;
+			vecX*=force;
+			vecY*=force;
+			sommeX=sommeX+vecX;
+			sommeY=sommeY+vecY;
+		}
+	}
+
+/*	double deltaX=mouseX()-poisson.getX();
+	double deltaY=mouseY()-poisson.getY();
+	double force=(float)(mouseGravity/(Math.sqrt(deltaX*deltaX+deltaY*deltaY)));
+	sumForce+=force;
+	if (force<3) {
+		double vecX=mouseX()-poisson.getX();
+		double vecY=mouseY()-poisson.getY();
+		double vecNorm=(double)(Math.sqrt(vecX*vecX+vecY*vecY));
+		vecX /= vecNorm;
+		vecY /= vecNorm;
+		vecX*=force;
+		vecY*=force;
+		sommeX=sommeX+vecX;
+		sommeY=sommeY+vecY;
+	}
+	*/
+	poisson.position(poisson.getX()+(double)(sommeX), poisson.getY()+(double)(sommeY));
+	
+	for (Oval autrePoisson in poissons) {
+		if (autrePoisson!=poisson) {
+			double ax=poisson.getX(); double ay=poisson.getY();
+			double bx=autrePoisson.getX(); double by=autrePoisson.getY();
+			double vecABX=bx-ax; double vecABY=by-ay;
+			double normAB=(double)Math.sqrt(vecABX*vecABX+vecABY*vecABY);
+			if (normAB<2*radius) {
+				double overlap=2*radius-normAB;
+				vecABX /= normAB; vecABY /= normAB;
+				vecABX *= overlap/2; vecABY *= overlap/2;
+				autrePoisson.position(autrePoisson.getX()+vecABX, autrePoisson.getY()+vecABY);
+				poisson.position(poisson.getX()-vecABX, poisson.getY()-vecABY);
+			}
+		}
+	}
+}
+
+void quit() {
+	for (Oval poisson in poissons) {
+		poisson.hide();
+		poisson.destroy();
+	}
+}
+
+void destroy(Oval s) {
+	s.delete();
+}
+void main() {
+	poissons=new Group();
+	for (int i=0;i<200;i++) {
+		Oval poisson=new Oval((int)(Math.random()*1000),(int)(Math.random()*1000),2*radius,2*radius);
+		poissons.add(poisson);
+	}
+		poissons.onFrame("seRegrouper",true);
+		poissons.onClick("destroy");
+
+	Key a=new Key(KEY_A);
+	a.onKeyDown("quit");
+	while(true);
+}

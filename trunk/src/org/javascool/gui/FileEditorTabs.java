@@ -1,5 +1,6 @@
 package org.javascool.gui;
 
+import java.io.InputStream;
 import org.javascool.JVSFile;
 import org.javascool.editor.JVSEditor;
 
@@ -19,6 +20,12 @@ public interface FileEditorTabs {
      * @return The file's tempory id in editor tabs
      */
     public String open(String url);
+    
+    /** Open a new empty Java's cool file in tmp
+     * @param stream The url to the file (used by File())
+     * @return The file's tempory id in editor tabs
+     */
+    public String open(InputStream stream);
 
     /** Close an opened file
      * @param fileId The file ID

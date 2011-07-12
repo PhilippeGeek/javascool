@@ -3,6 +3,7 @@ package org.javascool.gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.io.Console;
+import java.io.InputStream;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.HashMap;
@@ -121,6 +122,19 @@ public final class JVSMainPanel extends JPanel {
             JVSMainPanel.haveToSave.put(fileId, false);
         } else {
         }
+    }
+    
+    /** Open a specified file
+     * Start a file chooser and open selected file
+     * @see JFileChooser
+     * @see JVSFileEditorTabs
+     */
+    public static void openFileFromJar(String fileName) {
+        InputStream file = ClassLoader.getSystemClassLoader().getResourceAsStream(fileName);
+        String file2="org/javascool/proglets/"+JVSMainPanel.getCurrentProglet().getPackageName()+"/"+fileName;
+        System.out.println(file2);
+        JVSMainPanel.getEditorTabs().open("org/javascool/proglets/"+JVSMainPanel.getCurrentProglet().getPackageName()+"/"+fileName);
+        //TOTO error management
     }
 
     /** Save the current file
