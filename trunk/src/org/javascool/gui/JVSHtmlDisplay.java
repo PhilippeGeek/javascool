@@ -68,10 +68,40 @@ public class JVSHtmlDisplay extends JPanel {
             @Override
             public void hyperlinkUpdate(HyperlinkEvent e) {
                 if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
-                    if (e.getDescription().startsWith("jvs://file:")) {
-                        System.out.println("Load : "+e.getDescription());
-                        System.out.println(e.getDescription().substring(11));
-                        JVSMainPanel.openFileFromJar(e.getDescription().substring(11));
+                    if (e.getDescription().startsWith("jvs://")) {
+                        /**
+                         * Use this syntax for jvs:// links : 
+                         * jvs://action1:param1:param2:param3,action2:param1:param2,action3
+                         * Where actions can be 
+                         *  - openjvs (1 param : the filename (must be in same proglet))
+                         *  - openhtml (2 params : the html file to load (same as openjvs) in a new tab, and its name)
+                         */
+                        String[] actions=e.getDescription().substring(6).split(",");
+                        String type="";     //The type of url (activity, proglet, webpage, etc.)
+                        for (String action : actions) {
+                            String[] params=action.split(":");
+                            if (params[0].equals("openjvs")) {
+                                if (params.length!=2) {
+                                    //TODO
+                                }
+                                else {
+                                    JVSMainPanel.openFileFromJar(params[1]);
+                                }
+                            }
+                            else if (params[0].equals("openhtml")) {
+                                if (params.length!=3) {
+                                    //TODO
+                                }
+                                else {
+                                    JVSHtmlDisplay n=new JVSHtmlDisplay();
+                                    String file2="org/javascool/proglets/"+JVSMainPanel.getCurrentProglet().getPackageName()+"/"+params[1];
+                                    n.load(file2);
+                                    JVSMainPanel.getWidgetTabs().addTab(params[2],n);
+                                    JVSMainPanel.getWidgetTabs().grabFocus();
+                                    
+                                }
+                            }
+                        }
                     }
                     else {
                         load(e.getDescription());
