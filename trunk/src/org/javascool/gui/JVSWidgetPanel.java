@@ -26,9 +26,7 @@ public class JVSWidgetPanel extends JVSTabs {
         if (proglet.getHelpFileUrl()!=null){
             this.add("Aide de la proglet", "", proglet.getHelpFileUrl());
         }
-        JVSHtmlDisplay memo = new org.javascool.gui.JVSHtmlDisplay();
-        memo.load("org/javascool/doc-files/memo.html");
-        this.add("Memo", "", memo);
+        this.openWebTab("org/javascool/doc-files/memo.html","Mémo");
     }
 
     public JPanel getProgletPanel() {
@@ -39,5 +37,12 @@ public class JVSWidgetPanel extends JVSTabs {
         if(progletTabId!=null){
             this.switchToTab(progletTabId);
         }
+    }
+    
+    public void openWebTab(String url,String tabName){
+        JVSHtmlDisplay memo = new org.javascool.gui.JVSHtmlDisplay();
+        memo.load("org/javascool/doc-files/memo.html");
+        this.add(tabName, "", memo);
+        this.setTabComponentAt(this.indexOfTab(tabName),new TabPanel(this));
     }
 }

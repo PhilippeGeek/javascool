@@ -115,7 +115,7 @@ public final class JVSMainPanel extends JPanel {
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             String path = fc.getSelectedFile().getAbsolutePath();
             if (noFileEdited) {
-                JVSMainPanel.closeFile();
+                //JVSMainPanel.closeFile();
                 noFileEdited = false;
             }
             String fileId = JVSMainPanel.getEditorTabs().open(path);
@@ -151,16 +151,26 @@ public final class JVSMainPanel extends JPanel {
      * @see JVSFileEditorTabs
      */
     public static void closeFile() {
+        JVSMainPanel.closeFile(false);
+    }
+    
+    /** Close the current file
+     * @see JVSFileEditorTabs
+     */
+    public static Boolean closeFile(Boolean retur) {
         if (JVSMainPanel.haveToSave.get(getEditorTabs().getCurrentFileId())) {
             if (saveFileIdBeforeClose(getEditorTabs().getCurrentFileId()) == 1) {
                 getEditorTabs().closeFile(getEditorTabs().getCurrentFileId());
+                return true;
             }
+            return false;
         } else {
             getEditorTabs().closeFile(getEditorTabs().getCurrentFileId());
         }
         if (JVSMainPanel.getEditorTabs().getOppenedFileCount() == 0) {
             JVSMainPanel.newFile();
         }
+        return true;
     }
 
     /** Update haveToSave for a file
@@ -178,6 +188,10 @@ public final class JVSMainPanel extends JPanel {
      */
     public static void haveNotToSave(String fileId) {
         JVSMainPanel.haveToSave.put(fileId, false);
+    }
+    
+    public static Boolean getHasToSave(String fileId){
+        return JVSMainPanel.haveToSave.get(fileId);
     }
 
     /** Show a compile error for an human
@@ -333,7 +347,7 @@ public final class JVSMainPanel extends JPanel {
      * @param fileId The file id
      * @return 1 meen that file is saved or that user not want to save the file. 0 meen that there was an error during the save of file. -1 meen that user want to stop all that happend (Cancel option).
      */
-    private static int saveFileIdBeforeClose(String fileId) {
+    public static int saveFileIdBeforeClose(String fileId) {
         JVSFile file = JVSMainPanel.getEditorTabs().getFile(fileId);
         int result = JOptionPane.showConfirmDialog(
                 JvsMain.getJvsMainFrame(),
@@ -376,7 +390,8 @@ public final class JVSMainPanel extends JPanel {
                 Dialog.error("Impossible de continuer", "La proglet " + name + " ne peut pas être chargé car elle n'existe pas.");
             }
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            System.err.println(e);
+            e.printStackTrace();
         }
     }
     

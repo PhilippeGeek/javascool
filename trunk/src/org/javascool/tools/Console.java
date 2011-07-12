@@ -225,15 +225,13 @@ public class Console extends JPanel {
 
                         try {
                             Console.program.run();
-                            Console.runThread = null;
-                            Console.toolbar.afterRunning();
+                            Console.stopProgram();
                         } catch (Throwable e) {
                             if (!"Programme arrêté !".equals(e.getMessage())) {
                                 System.err.println(e.getMessage());
                                 e.printStackTrace(System.err);
                             }
-                            Console.runThread = null;
-                            Console.toolbar.afterRunning();
+                            Console.stopProgram();
                         }
 
                     }
