@@ -61,11 +61,25 @@ public class Macros {
     public static < A> void echo(java.util.Set<A> set) {
         echo("" + set);
     }
-
-    /** Renvoie un nombre entier aléatoire uniformément distribué entre deux valeurs (maximum inclus).
+    
+    /**
+     * @deprecated 
+     * @param min
+     * @param max
+     * @return 
      */
     public static int random(int min, int max) {
-        return (int) Math.floor(min + (0.999 + max - min) * Math.random());
+        return randomInteger(min, max);
+    }
+    
+    /** Renvoie un nombre entier aléatoire uniformément distribué entre deux valeurs (maximum inclus).
+     */
+    public static int randomInteger(int min, int max) {
+        return (int) Math.floor(min + (0.99999 + max - min) * Math.random());
+    }
+    
+    public static double randomDouble(double min, double max) {
+        return (Math.random()*(max-min)+min);
     }
 
     /** Renvoie true si deux chaines de caratères sont égales, faux sinon.
