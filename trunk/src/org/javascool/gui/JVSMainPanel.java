@@ -151,26 +151,16 @@ public final class JVSMainPanel extends JPanel {
      * @see JVSFileEditorTabs
      */
     public static void closeFile() {
-        JVSMainPanel.closeFile(false);
-    }
-    
-    /** Close the current file
-     * @see JVSFileEditorTabs
-     */
-    public static Boolean closeFile(Boolean retur) {
         if (JVSMainPanel.haveToSave.get(getEditorTabs().getCurrentFileId())) {
             if (saveFileIdBeforeClose(getEditorTabs().getCurrentFileId()) == 1) {
                 getEditorTabs().closeFile(getEditorTabs().getCurrentFileId());
-                return true;
             }
-            return false;
         } else {
             getEditorTabs().closeFile(getEditorTabs().getCurrentFileId());
         }
         if (JVSMainPanel.getEditorTabs().getOppenedFileCount() == 0) {
             JVSMainPanel.newFile();
         }
-        return true;
     }
 
     /** Update haveToSave for a file
