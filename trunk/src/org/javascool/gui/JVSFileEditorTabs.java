@@ -227,10 +227,10 @@ public class JVSFileEditorTabs extends JVSTabs implements FileEditorTabs{
         if (!JVSFileEditorTabs.fileIds.containsValue(fileId)) { // Check if id is opened
             return true; // Return true because file is not opened
         }
+        JVSFileEditorTabs.currentCompiledFile=fileId;
         if (Jvs2Java.jvsCompile(JVSFileEditorTabs.editors.get(fileId).getText())) {
             Console.clear();
             Console.setProgram(Jvs2Java.runnable);
-            JVSFileEditorTabs.currentCompiledFile=fileId;
             return true;
         } else {
             return false;

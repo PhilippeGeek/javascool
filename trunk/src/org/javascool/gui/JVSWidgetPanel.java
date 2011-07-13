@@ -39,6 +39,10 @@ public class JVSWidgetPanel extends JVSTabs {
         }
     }
     
+    public void showConsole(){
+        this.setSelectedIndex(this.indexOfTab("Console"));
+    }
+    
     public void openWebTab(String url,String tabName){
         JVSHtmlDisplay memo = new org.javascool.gui.JVSHtmlDisplay();
         memo.load(url);
