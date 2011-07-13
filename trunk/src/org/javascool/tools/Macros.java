@@ -20,6 +20,8 @@ import org.javascool.gui.JVSMainPanel;
  */
 public class Macros {
 
+    public static int debuglinenumber=0;
+    
     private Macros() {
     }
 

@@ -4,12 +4,21 @@
  */
 package org.javascool.proglets.game;
 
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
+import java.awt.image.FilteredImageSource;
+import java.awt.image.ImageFilter;
+import java.awt.image.ImageProducer;
+import java.awt.image.RGBImageFilter;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import org.javascool.gui.JVSMainPanel;
 import org.javascool.tools.Macros;
 
 /**
@@ -17,9 +26,35 @@ import org.javascool.tools.Macros;
  * @author gmatheron
  */
 public class Sprite extends Geometry implements Drawable {
-    //TODO random(int, int);
-    //TODO kbd events
-    //TODO member vars
+    //TODO update doc and javadoc
+    public void makeColorTransparent (float r, float g, float b) {
+        final Color color=new Color((float)(r/255),(float)(g/255),(float)(b/255));
+        ImageFilter filter = new RGBImageFilter() {
+            // the color we are looking for... Alpha bits are set to opaque
+            public int markerRGB = color.getRGB() | 0xFF000000;
+            @Override
+            public final int filterRGB(int x, int y, int rgb) {
+                if ( ( rgb | 0xFF000000 ) == markerRGB ) {
+                    // Mark the alpha bits as zero - transparent
+                    return 0x00FFFFFF & rgb;
+                }
+                else {
+                  return rgb;
+                }
+            }
+        }; 
+        ImageProducer ip = new FilteredImageSource(m_image.getSource(), filter);
+        Image image=Toolkit.getDefaultToolkit().createImage(ip);
+        m_image = new BufferedImage(
+            image.getWidth(null), image.getHeight(null),
+            BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = m_image.createGraphics();
+        g2.drawImage(image, 0, 0, null);
+        g2.dispose();
+
+    }
+
+    
     /**
      * The image
      */
@@ -48,7 +83,7 @@ public class Sprite extends Geometry implements Drawable {
         try {
             m_image = ImageIO.read(new File(fileName));
         } catch (IOException e) {
-            org.javascool.JvsMain.reportBug(e); //TODO
+            JVSMainPanel.reportRuntimeBug("Le fichier "+fileName+" n'extste pas");
         }
     }
 

@@ -2,13 +2,18 @@ package org.javascool.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.image.BufferedImage;
 import java.io.Console;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -16,6 +21,7 @@ import javax.swing.text.BadLocationException;
 import org.javascool.JVSFile;
 import org.javascool.JvsMain;
 import org.javascool.Utils;
+import org.javascool.editor.JVSEditor;
 import org.javascool.tools.Macros;
 import org.javascool.tools.Proglet;
 import org.javascool.tools.ProgletManager;
@@ -99,6 +105,7 @@ public final class JVSMainPanel extends JPanel {
      * @see JVSFileEditorTabs
      */
     public static void compileFile() {
+        JVSMainPanel.getEditorTabs().getEditor(JVSFileEditorTabs.getCurrentCompiledFile()).removeLineSignals();
         org.javascool.tools.Console.stopProgram();
         JVSMainPanel.getEditorTabs().saveCurrentFile();
         JVSMainPanel.getEditorTabs().compileFile(JVSMainPanel.getEditorTabs().getCurrentFileId());
@@ -385,11 +392,26 @@ public final class JVSMainPanel extends JPanel {
         }
     }
     
-    public static void reportRuntimeBug(String ex){
-        Dialog.error("Erreur du logiciel", ex);
+    public static void reportRuntimeBug(String ex) {
+        StackTraceElement[] stack=Thread.currentThread().getStackTrace();
+        int line=0;
+        for (StackTraceElement elem : stack) {
+            if (elem.getFileName().startsWith("JvsToJavaTranslated")) {
+                line=elem.getLineNumber();
+            }
+            else System.err.println(elem.getClassName());
+        }
+        if (JVSMainPanel.getEditorTabs().getEditor(JVSFileEditorTabs.getCurrentCompiledFile())!=null) {
+            JVSMainPanel.getEditorTabs().getEditor(JVSFileEditorTabs.getCurrentCompiledFile()).signalLine(line);
+        }
         org.javascool.tools.Console.stopProgram();
+        Dialog.error("Erreur du logiciel à la ligne "+line, ex);
     }
-
+    
+    public static void reportApplicationBug(String ex) {
+        Dialog.error("Erreur dans Java's Cool", ex);
+    }
+    
     public static ProgletManager getProgletManager() {
         return JVSMainPanel.pgman;
     }

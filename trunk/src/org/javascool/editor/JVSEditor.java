@@ -9,13 +9,21 @@ import java.awt.Color;
 import java.awt.Event;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
+import javax.swing.text.BadLocationException;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rtextarea.Gutter;
 import org.fife.ui.rtextarea.RTextScrollPane;
 import org.javascool.JvsMain;
+import org.javascool.gui.JVSFileEditorTabs;
 import org.javascool.gui.JVSMainPanel;
 
 /** Define a JVSEditor
@@ -39,6 +47,7 @@ public class JVSEditor extends JPanel implements Editor{
         scrollPane = new RTextScrollPane(TextPane, true);
         Gutter gutter = scrollPane.getGutter();
         gutter.setBorderColor(Color.BLUE);
+        
         this.add(scrollPane,BorderLayout.CENTER);
         this.setVisible(true);
     }
@@ -109,5 +118,31 @@ public class JVSEditor extends JPanel implements Editor{
     /** Get the RSyntaxTextArea */
     public RSyntaxTextArea getRTextArea(){
         return TextPane;
+    }
+    
+    public RTextScrollPane getScrollPane() {
+        return scrollPane;
+    }
+    
+    public void removeLineSignals() {
+        getScrollPane().getGutter().removeAllTrackingIcons();
+    }
+    
+    public void signalLine(int line){
+        Gutter gutter = getScrollPane().getGutter();
+        gutter.setBookmarkingEnabled(true);
+        ImageIcon icon=null;
+        BufferedImage img;
+        try {
+            img = ImageIO.read(ClassLoader.getSystemResourceAsStream("org/javascool/doc-files/icon16/error.png"));
+            icon=new ImageIcon(img);
+        } catch (IOException ex1) {
+        }
+        try {
+            getRTextArea().setCaretPosition(getRTextArea().getLineStartOffset(line-1));
+            getScrollPane().getGutter().addLineTrackingIcon(line-1, icon);
+        } catch (BadLocationException ex) {
+            Logger.getLogger(JVSEditor.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

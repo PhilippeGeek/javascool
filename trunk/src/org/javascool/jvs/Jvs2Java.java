@@ -74,10 +74,10 @@ public class Jvs2Java {
                     head.append(line);
                     body.append("//").append(line).append("\n");
                     if (line.matches("^\\s*package[^;]*;\\s*$")) {
-                        System.out.println("Attention: on ne peut normallement pas définir de package Java en JavaScool\n le programme risque de ne pas s'exécuter correctement");
+                        System.out.println("Attention: on ne peut normalement pas définir de package Java en JavaScool\n le programme risque de ne pas s'exécuter correctement");
                     }
                 } else {
-                    body.append(translateOnce(line)).append("\n");
+                    body.append(translateOnce(line,i)).append("\n");
                 }
                 i++;
             }
@@ -121,20 +121,15 @@ public class Jvs2Java {
         System.err.println("*********************");
         return (head.toString() + finalBody + "}");
     }
-
+    
     /** Translate a jvs line to a java line 
      * Translate with replace
      * @param line
      * @return 
      */
-    private static String translateOnce(String line) {
+    private static String translateOnce(String line, int lineNumber) {
         // Translates the while statement with sleep
         line = line.replaceAll("(while.*\\{)", "$1 sleep(20);");
-      /*  line = line.replaceAll("int ([a-zA-Z0-9_]+)( |\t)","Integer $1 ");
-        line = line.replaceAll("double ([a-zA-Z0-9_]+)( |\t|=)","Double $1 ");*/
-        line = line.replaceAll("(.*[^a-zA-Z0-9_])([a-zA-Z0-9_]+[ \t=]*\\.getProperty[ \t=]*\\()[ \t=]*([a-zA-Z0-9_]+)[ \t=]*,([^)]*\\))(.*)","$1(($3)$2$4)$5");
- //       line = line.replaceAll("\\(int\\)","(Integer)");
- //       line = line.replaceAll("\\(double\\)","(Double)");
         line = line.replaceAll("([A-Za-z0-9_\\-]+)::([A-Za-z0-9_\\-]+)", "org.javascool.proglets.$1.Functions.$2");
         //line = line.replaceAll("(while\\(true\\)\\{)", "$1 sleep(50);");
         // Translates the Synthe proglet @tone macro

@@ -33,6 +33,15 @@ public class JVSFileEditorTabs extends JVSTabs implements FileEditorTabs{
     private static HashMap<String, JVSFile> files = new HashMap<String, JVSFile>();
     /** Store all fileIds in an HashMap by the tab name */
     private static HashMap<String, String> fileIds = new HashMap<String, String>();
+    /** The current compiled file */
+    private static String currentCompiledFile = "";
+
+    /**
+     * @return the currentCompiledFile
+     */
+    public static String getCurrentCompiledFile() {
+        return currentCompiledFile;
+    }
 
     /** Create a new JVSFileEditorTabs */
     public JVSFileEditorTabs() {
@@ -119,6 +128,7 @@ public class JVSFileEditorTabs extends JVSTabs implements FileEditorTabs{
         JVSEditor editor = new JVSEditor();
         // Set text in the editor
         editor.setText(file.getCode());
+        
         // Add listener for edit
         editor.getRTextArea().getDocument().addDocumentListener(new DocumentListener() {
 
@@ -220,6 +230,7 @@ public class JVSFileEditorTabs extends JVSTabs implements FileEditorTabs{
         if (Jvs2Java.jvsCompile(JVSFileEditorTabs.editors.get(fileId).getText())) {
             Console.clear();
             Console.setProgram(Jvs2Java.runnable);
+            JVSFileEditorTabs.currentCompiledFile=fileId;
             return true;
         } else {
             return false;

@@ -4,6 +4,7 @@
  */
 package org.javascool.proglets.game;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 /**
@@ -13,4 +14,5 @@ import java.awt.Graphics;
 public abstract interface Drawable {
     public abstract void draw(Graphics g);
     public abstract boolean isVisible();
+    public abstract Color initColor();
 }

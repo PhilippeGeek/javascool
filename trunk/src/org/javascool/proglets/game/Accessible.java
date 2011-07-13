@@ -5,6 +5,7 @@
 package org.javascool.proglets.game;
 
 import java.util.ArrayList;
+import org.javascool.gui.JVSMainPanel;
 
 /**
  *
@@ -20,10 +21,11 @@ public abstract class Accessible extends LinkedEventGroup {
         m_props=new ArrayList<StoredProperty>();
     }
     
+    //TODO javadoc and update doc
     public void addProperty(String name, Object o) {
         for (StoredProperty s : m_props) {
             if (s.getName().equals(name)) {
-                //TODO throw error
+                JVSMainPanel.reportRuntimeBug("Impossible de rajouter une propriété nommée "+name+" car une propriété de ce nom existe déjà");
             }
         }
         m_props.add(new StoredProperty(name, o, o.getClass()));
