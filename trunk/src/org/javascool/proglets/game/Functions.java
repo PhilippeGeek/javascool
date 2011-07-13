@@ -11,9 +11,15 @@ package org.javascool.proglets.game;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.javascool.gui.JVSFileEditorTabs;
+import org.javascool.gui.JVSMainPanel;
 import org.javascool.tools.Console;
 import org.javascool.tools.Macros;
 
@@ -34,6 +40,44 @@ import org.javascool.tools.Macros;
  * @author gmatheron
  */
 public class Functions implements EventCatcher {
+    //TODO javadoc
+    public static InputStream tryFile(String filePath, String fileName) {
+        File inJvsDir=new File(filePath+"/"+fileName);
+        if (inJvsDir.exists()) {
+            try {
+                return (new FileInputStream(filePath+"/"+fileName));
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return null;
+    }
+    
+    //TODO javadoc
+    public static InputStream getRessource(String fileName) {
+        /*
+         * Try .jvs dir
+         */
+        InputStream ret;
+        
+        String path=JVSMainPanel.getEditorTabs().getFile(JVSFileEditorTabs.getCurrentCompiledFile()).getPath().replaceAll(File.separator, "/");
+        path=path.replaceAll("^(.*)/[^/]+$","$1");
+        ret=tryFile(path, fileName);
+        if (ret!=null) return ret;
+        
+        ret=tryFile(System.getProperty("user.dir"),fileName);
+        if (ret!=null) return ret;
+        
+        ret=tryFile(System.getProperty("user.home"),fileName);
+        if (ret!=null) return ret;
+        
+        ret = ClassLoader.getSystemResourceAsStream("org/javascool/proglets/"+JVSMainPanel.getCurrentProglet().getPackageName()+"/"+fileName);
+        if (ret!=null) return ret;
+        
+        return null;
+    }
+    
+    
     /*
      * See getSingleton()
      */
@@ -691,6 +735,8 @@ public class Functions implements EventCatcher {
          */
         @SuppressWarnings("AccessingNonPublicFieldOfAnotherObject")
         private void tick() {
+            
+        getRessource("test.txt");   //DEBUG
             for (int j = 0; j < 3; j++) {
                 if (getSingleton().m_mouseDown[j]) {
                     callback(getSingleton().m_onMouseDown);
