@@ -197,12 +197,12 @@ public class Jvs2Java {
         // Delete the tmp Java source file
         tmpJavaFile.delete();
 
-        // Show errors
+        //TODO Show errors
         for (Diagnostic diagnostic : diagnostics.getDiagnostics()) {
             String javaDiagnostic = diagnostic.getMessage(Locale.FRENCH);
             String jvsDiagnostic = javaDiagnostic.split(" ", 2)[1];
             if (jvsDiagnostic.equals("not a statement")) {
-                jvsDiagnostic = "La variable indiqué n'existe pas";
+                jvsDiagnostic = "La variable indiquée n'existe pas";
             } else if (jvsDiagnostic.equals("';' expected")) {
                 jvsDiagnostic = "Il manque un point virgule à la fin de la ligne";
                 /* 

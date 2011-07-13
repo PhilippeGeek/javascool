@@ -202,6 +202,10 @@ public final class JVSMainPanel extends JPanel {
     public static void reportCompileError(int line, String explication) {
         org.javascool.tools.Console.clear();
         Macros.echo("-------------------\nErreur lors de la compilation à la ligne " + line + ".\n" + explication + "\n-------------------\n");
+        JVSMainPanel.getWidgetTabs().showConsole();
+        if (JVSMainPanel.getEditorTabs().getEditor(JVSFileEditorTabs.getCurrentCompiledFile())!=null) {
+            JVSMainPanel.getEditorTabs().getEditor(JVSFileEditorTabs.getCurrentCompiledFile()).signalLine(line);
+        }
     }
 
     /** Handle the close application task
