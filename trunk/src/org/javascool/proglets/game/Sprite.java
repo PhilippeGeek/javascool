@@ -16,6 +16,8 @@ import java.awt.image.ImageProducer;
 import java.awt.image.RGBImageFilter;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import org.javascool.gui.JVSMainPanel;
@@ -83,7 +85,16 @@ public class Sprite extends Geometry implements Drawable {
         try {
             m_image = ImageIO.read(new File(fileName));
         } catch (IOException e) {
-            JVSMainPanel.reportRuntimeBug("Le fichier "+fileName+" n'extste pas");
+            InputStream stream=Functions.getRessource(fileName);
+            if (stream==null)
+                JVSMainPanel.reportRuntimeBug("Le fichier "+fileName+" n'extste pas");
+            else {
+                try {
+                    m_image=ImageIO.read(stream);
+                } catch (IOException ex) {
+                    JVSMainPanel.reportRuntimeBug("Le fichier "+fileName+" est illisible");
+                }
+            }
         }
     }
 
