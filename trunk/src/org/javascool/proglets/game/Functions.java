@@ -414,6 +414,9 @@ public class Functions implements EventCatcher {
          * The functions the end-user can call are all static, but they refer
          * to non-static attributes using this singleton static attribute
          */
+        
+        if (m_singleton!=null) stop();
+        
         m_singleton = new Functions();
 
         m_singleton.m_keysPressed = new java.util.ArrayList<Integer>();
@@ -539,17 +542,19 @@ public class Functions implements EventCatcher {
                 }
 
                 @Override
-                public void keyPressed(KeyEvent e) {    //TODO do callbacks
+                public void keyPressed(KeyEvent e) {
                     if (e.getKeyChar() == 65635) {
                         return;
                     }
                     m_singleton.m_keysPressed.add(e.getKeyCode());
+                    callback(getSingleton().m_onKeyPressed);
                 }
 
                 @Override
                 public void keyReleased(KeyEvent e) {
                     //Object cast so that the char given isn't taken as an index number
                     m_singleton.m_keysPressed.remove((Object) e.getKeyCode());
+                    callback(getSingleton().m_onKeyReleased);
                 }
             };
             Macros.getProgletPanel().addKeyListener(m_singleton.m_keyListener);

@@ -41,8 +41,9 @@ public class JVSWidgetPanel extends JVSTabs {
     
     public void openWebTab(String url,String tabName){
         JVSHtmlDisplay memo = new org.javascool.gui.JVSHtmlDisplay();
-        memo.load("org/javascool/doc-files/memo.html");
+        memo.load(url);
         this.add(tabName, "", memo);
         this.setTabComponentAt(this.indexOfTab(tabName),new TabPanel(this));
+        this.setSelectedComponent(memo);
     }
 }

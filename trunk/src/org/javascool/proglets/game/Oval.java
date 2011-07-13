@@ -52,6 +52,7 @@ public class Oval extends Geometry implements Drawable {
      */
     @Override
     public void draw(Graphics g) {
+        g.setColor(m_color);
         if (m_solid) {
             g.fillOval((int)getX(), (int)getY(), (int)getWidth(), (int)getHeight());
         } else {

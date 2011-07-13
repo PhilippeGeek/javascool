@@ -82,7 +82,7 @@ public class JVSHtmlDisplay extends JPanel {
                             String[] params=action.split(":");
                             if (params[0].equals("openjvs")) {
                                 if (params.length!=2) {
-                                    //TODO
+                                    JVSMainPanel.reportApplicationBug("Lien jvs mal formé");
                                 }
                                 else {
                                     JVSMainPanel.openFileFromJar(params[1]);
@@ -90,15 +90,11 @@ public class JVSHtmlDisplay extends JPanel {
                             }
                             else if (params[0].equals("openhtml")) {
                                 if (params.length!=3) {
-                                    //TODO
+                                    JVSMainPanel.reportApplicationBug("Lien jvs mal formé");
                                 }
                                 else {
-                                    JVSHtmlDisplay n=new JVSHtmlDisplay();
                                     String file2="org/javascool/proglets/"+JVSMainPanel.getCurrentProglet().getPackageName()+"/"+params[1];
-                                    n.load(file2);
-                                    JVSMainPanel.getWidgetTabs().addTab(params[2],n);
-                                    JVSMainPanel.getWidgetTabs().grabFocus();
-                                    
+                                    JVSMainPanel.getWidgetTabs().openWebTab(file2, params[2]);
                                 }
                             }
                         }

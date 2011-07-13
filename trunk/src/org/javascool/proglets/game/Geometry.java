@@ -4,7 +4,9 @@
  */
 package org.javascool.proglets.game;
 
+import java.awt.Color;
 import java.util.logging.Logger;
+import org.javascool.gui.JVSMainPanel;
 
 /**
  * This class is parent of all the objects that are rectangular, that can be
@@ -12,12 +14,13 @@ import java.util.logging.Logger;
  * above them.
  * @author gmatheron
  */
-public abstract class Geometry extends Accessible {
+public abstract class Geometry extends Accessible implements Drawable {
     /**
      * Stores the width, height and xy position of the object (relative to the
      * origin of the panel and in pixels)
      */
-    private double m_w, m_h, m_x, m_y;
+    protected double m_w, m_h, m_x, m_y;
+    protected Color m_color;
     
     private boolean m_visible=true;
     private boolean m_deleted=false;
@@ -33,6 +36,7 @@ public abstract class Geometry extends Accessible {
         m_y = y;
         m_w = 0;
         m_h = 0;
+        m_color=new Color(1,1,1,1);
     }
     
     /**
@@ -48,6 +52,7 @@ public abstract class Geometry extends Accessible {
         m_y = y;
         m_w = w;
         m_h = h;
+        m_color=new Color((float)1.0,(float)1.0,(float)1.0,(float)1.0);
     }
 
     /**
@@ -59,6 +64,7 @@ public abstract class Geometry extends Accessible {
         m_h = 0;
         m_x = 0;
         m_y = 0;
+        m_color=new Color(1,1,1,1);
     }
 
     /**
@@ -144,6 +150,16 @@ public abstract class Geometry extends Accessible {
         m_x = x;
         m_y = y;
     }
+    
+    public void setColor(double r, double g, double b, double a) {
+        try {
+            m_color=new Color((float)(r/255), (float)(g/255), ((float)b/255), (float)a);
+        } catch (IllegalArgumentException e) {
+            JVSMainPanel.reportRuntimeBug("Impossible de créer une couleur si les valeurs spécifiées ne sont pas comprises "
+                    +"entre 0 et 255 pour r, g et b et entre 0 et 1 pour alpha");
+        }
+    }
+    
     private static final Logger LOG = Logger.getLogger(Geometry.class.getName());
 
     /**
@@ -176,5 +192,11 @@ public abstract class Geometry extends Accessible {
     
     public boolean isDeleted() {
         return m_deleted;
+    }
+    
+    @Override
+    public Color initColor() {
+        System.out.println(m_color);
+        return m_color;
     }
 }
