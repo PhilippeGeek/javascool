@@ -107,17 +107,20 @@ public class SketchbookCompiler {
     //TODO javadoc
     private static void copyfile(String srFile, String dtFile) {
         try {
-            File f2 = new File(dtFile);
-            InputStream in = new FileInputStream(srFile);
-            OutputStream out = new FileOutputStream(f2);
+            if (!(new File(srFile)).isDirectory()) {
+                File f2 = new File(dtFile);
+                InputStream in = new FileInputStream(srFile);
+                OutputStream out = new FileOutputStream(f2);
 
-            byte[] buf = new byte[1024];
-            int len;
-            while ((len = in.read(buf)) > 0) {
-                out.write(buf, 0, len);
+                byte[] buf = new byte[1024];
+                int len;
+                while ((len = in.read(buf)) > 0) {
+                    out.write(buf, 0, len);
+                }
+                in.close();
+                out.close();
             }
-            in.close();
-            out.close();
+            else (new File(dtFile)).mkdirs();
         } catch (FileNotFoundException ex) {
             System.err.println(ex.getMessage() + " in the specified directory. Error on file " + srFile);
             System.exit(0);
@@ -156,28 +159,27 @@ public class SketchbookCompiler {
         ArrayList<String> filenamesJar = new ArrayList<String>();   //Name in jar
 
         for (int i=0; i<this.files.size(); i++) {
-            this.files.set(i,this.files.get(i).replaceAll(File.separator+"([^"+File.separator+"]+)$", "$1"));
             String file=this.files.get(i);
-            if (file.endsWith(File.separator)) {
-                File dir = new File(tmpDir+File.separator+file);
-                dir.mkdirs();
-            } else if (!file.contains("META-INF")) {
-                if (!this.isInJar) {
-                    System.out.println("file="+file);
-                    copyfile(file, tmpDir+File.separator+file);
-                }
-                else {
-                    copyresource(file, tmpDir+File.separator+file);
-                }
-                filenamesJar.add(file);
-            } else if (!this.isInJar) {
-                if (new File(file).isDirectory()) {
+            if (this.isInJar) {
+                if (file.endsWith(File.separator)) {
                     File dir = new File(tmpDir+File.separator+file);
                     dir.mkdirs();
+                }
+                else if (!file.contains("META-INF")) {
+                    copyresource(file, tmpDir+File.separator+file);
+                }
+            }
+            else {
+                String wdPath=new File(this.jvsPath).getAbsolutePath();
+                String dest=file.replace(new File(this.jvsPath).getAbsolutePath() 
+                            + (new File(this.jvsPath).getAbsolutePath().endsWith(File.separator)?"":File.separator), "");
+                
+                if (new File(file).isDirectory()) {
+                    File dir = new File(tmpDir+File.separator+dest);
+                    dir.mkdirs();
                 } else if (!file.contains("META-INF")) {
-                    String destStr = file.replace(new File(this.jvsPath).getAbsolutePath() + File.separator, "");
-                    copyfile(file, tmpDir+File.separator+destStr);
-                    filenamesJar.add(destStr);
+                    copyfile(file, tmpDir+File.separator+dest);
+                    filenamesJar.add(dest);
                 }
             }
         }
@@ -226,10 +228,11 @@ public class SketchbookCompiler {
         ArrayList<String> pathFiles = new ArrayList<String>();
         File directory = new File(path);
         for (File file : directory.listFiles()) {
-            pathFiles.add(file.getPath());
             if (file.isDirectory()) {
+                pathFiles.add(file.getPath()+"/");
                 pathFiles.addAll(this.listFilesInPath(file.getAbsolutePath()));
             }
+            else pathFiles.add(file.getPath());
         }
         return pathFiles;
     }
