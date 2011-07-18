@@ -86,7 +86,7 @@ public class SketchbookCompiler {
         try {
             File f2 = new File(dtFile);
             InputStream in = ClassLoader.getSystemResourceAsStream(srFile);
-            
+
             OutputStream out = new FileOutputStream(f2);
 
             byte[] buf = new byte[1024];
@@ -97,7 +97,7 @@ public class SketchbookCompiler {
             in.close();
             out.close();
         } catch (FileNotFoundException ex) {
-            System.out.println(ex.getMessage() + " in the specified directory. Error on file "+srFile);
+            System.out.println(ex.getMessage() + " in the specified directory. Error on file " + srFile);
             System.exit(0);
         } catch (IOException e) {
             e.printStackTrace();
@@ -116,7 +116,8 @@ public class SketchbookCompiler {
                 this.isInJar = true;
                 this.files = this.listFilesInJar(this.jvsPath);
             } else {
-                this.jvsPath = ClassLoader.getSystemClassLoader().getResource("org/javascool/").toURI().getPath();
+                this.jvsPath = ClassLoader.getSystemClassLoader().getResource("").toURI().getPath();
+                System.out.println("Path : " + this.jvsPath);
                 this.isInJar = false;
                 this.files = this.listFilesInPath(this.jvsPath);
             }
@@ -136,28 +137,33 @@ public class SketchbookCompiler {
 
         for (String file : this.files) {
             if (file.endsWith("/")) {
-                File dir = new File(tmpDir + "/" + file);
+                File dir = new File(tmpDir+File.separator+file);
                 dir.mkdirs();
-            } else if (!file.contains("META-INF")) {
-                if (this.isInJar)
-                    copyfile(file, tmpDir+"/"+file);
-                else
-                    copyresource(file, tmpDir+"/"+file);
+            } else if (!file.contains("META-INF") && this.isInJar) {
+                // FIXME : copyresource(file, tmpDir+"/"+file);
                 filenamesJar.add(file);
+            } else if (!this.isInJar) {
+                System.out.println(file + " > " + tmpDir+File.separator+file);
+                if (new File(file).isDirectory()) {
+                    File dir = new File(tmpDir+File.separator+file);
+                    dir.mkdirs();
+                } else if (!file.contains("META-INF")) {
+                    copyfile(file, tmpDir+File.separator+file);
+                    filenamesJar.add(file);
+                }
             }
             System.out.println("Copied " + file);
         }
-        
         filenamesJar.add("META-INF/MANIFEST.MF");
         String manifest = new String();
         manifest += "Manifest-Version: 1.0\n";
         manifest += "Created-By: INRIA\n";
         manifest += "Main-Class: org.javascool.JvsMain\n";
-        FileWriter fstream=new FileWriter(tmpDir+"/META-INF/MANIFEST.MF");
-        BufferedWriter outs=new BufferedWriter(fstream);
+        FileWriter fstream = new FileWriter(tmpDir + "/META-INF/MANIFEST.MF");
+        BufferedWriter outs = new BufferedWriter(fstream);
         outs.write(manifest);
         outs.close();
-        
+
         // Create a buffer for reading the files
         byte[] buf = new byte[1024];
 
@@ -190,7 +196,7 @@ public class SketchbookCompiler {
             e.printStackTrace();
             System.out.println(e);
         }
-        
+
         System.out.println("Jar creation completed");
     }
 
@@ -198,7 +204,7 @@ public class SketchbookCompiler {
         ArrayList<String> pathFiles = new ArrayList<String>();
         File directory = new File(path);
         for (File file : directory.listFiles()) {
-            pathFiles.add(file.getAbsolutePath());
+            pathFiles.add(file.getPath());
             if (file.isDirectory()) {
                 pathFiles.addAll(this.listFilesInPath(file.getAbsolutePath()));
             }
