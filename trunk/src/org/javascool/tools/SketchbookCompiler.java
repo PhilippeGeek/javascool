@@ -15,16 +15,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
+import org.javascool.Utils;
 
 /**
  *
@@ -85,7 +84,7 @@ public class SketchbookCompiler {
     private static void copyfile(String srFile, String dtFile) {
         try {
             File f2 = new File(dtFile);
-            InputStream in = ClassLoader.getSystemResourceAsStream(srFile);
+            InputStream in = new FileInputStream(srFile);
 
             OutputStream out = new FileOutputStream(f2);
 
@@ -97,10 +96,10 @@ public class SketchbookCompiler {
             in.close();
             out.close();
         } catch (FileNotFoundException ex) {
-            System.out.println(ex.getMessage() + " in the specified directory. Error on file " + srFile);
+            System.err.println(ex.getMessage() + " in the specified directory. Error on file " + srFile);
             System.exit(0);
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(System.err);
             System.out.println(e.getMessage());
         }
     }
@@ -117,7 +116,6 @@ public class SketchbookCompiler {
                 this.files = this.listFilesInJar(this.jvsPath);
             } else {
                 this.jvsPath = ClassLoader.getSystemClassLoader().getResource("").toURI().getPath();
-                System.out.println("Path : " + this.jvsPath);
                 this.isInJar = false;
                 this.files = this.listFilesInPath(this.jvsPath);
             }
@@ -127,7 +125,6 @@ public class SketchbookCompiler {
 
         // Create a tmp directory
         File tmpDir = this.getTmpDir();
-        System.out.println(tmpDir);
         tmpDir.mkdirs();
 
 
@@ -143,41 +140,37 @@ public class SketchbookCompiler {
                 // FIXME : copyresource(file, tmpDir+"/"+file);
                 filenamesJar.add(file);
             } else if (!this.isInJar) {
-                System.out.println(file + " > " + tmpDir+File.separator+file);
                 if (new File(file).isDirectory()) {
                     File dir = new File(tmpDir+File.separator+file);
                     dir.mkdirs();
                 } else if (!file.contains("META-INF")) {
-                    copyfile(file, tmpDir+File.separator+file);
-                    filenamesJar.add(file);
+                    String destStr = file.replace(new File(this.jvsPath).getAbsolutePath() + File.separator, "");
+                    copyfile(file, tmpDir+File.separator+destStr);
+                    filenamesJar.add(destStr);
                 }
             }
-            System.out.println("Copied " + file);
         }
         filenamesJar.add("META-INF/MANIFEST.MF");
         String manifest = new String();
         manifest += "Manifest-Version: 1.0\n";
         manifest += "Created-By: INRIA\n";
         manifest += "Main-Class: org.javascool.JvsMain\n";
-        FileWriter fstream = new FileWriter(tmpDir + "/META-INF/MANIFEST.MF");
-        BufferedWriter outs = new BufferedWriter(fstream);
-        outs.write(manifest);
-        outs.close();
+        Utils.saveString(tmpDir + "/META-INF/MANIFEST.MF", manifest);
 
         // Create a buffer for reading the files
         byte[] buf = new byte[1024];
 
         try {
             // Create the ZIP file
-            String outFilename = "outfile.jar";
+            String outFilename = "javascool-rebuild.jar";
             ZipOutputStream out = new ZipOutputStream(new FileOutputStream(outFilename));
 
             // Compress the files
             for (int i = 0; i < filenamesJar.size(); i++) {
-                FileInputStream in = new FileInputStream(tmpDir+"/"+filenamesJar.get(i));
+                FileInputStream in = new FileInputStream(tmpDir+File.separator+filenamesJar.get(i));
 
                 // Add ZIP entry to output stream.
-                out.putNextEntry(new ZipEntry(filenamesJar.get(i)));   //FIXME
+                out.putNextEntry(new ZipEntry(filenamesJar.get(i).replace(File.separator, "/")));   //FIXME
 
                 // Transfer bytes from the file to the ZIP file
                 int len;
@@ -193,11 +186,9 @@ public class SketchbookCompiler {
             // Complete the ZIP file
             out.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(System.err);
             System.out.println(e);
         }
-
-        System.out.println("Jar creation completed");
     }
 
     private ArrayList<String> listFilesInPath(String path) {
