@@ -107,6 +107,9 @@ public class SketchbookCompiler {
 
     public SketchbookCompiler() throws IOException {
         // List files in the path
+        /*
+         * All files to copy are put in an arraylist as strings : this.files
+         */
         try {
             if (ClassLoader.getSystemClassLoader().getResource("org/javascool").toString().split("!").length > 1) {
                 this.jvsPath = ClassLoader.getSystemClassLoader().getResource("org/javascool/").toString().replaceAll("file:", "").replaceAll("jar:", "").replaceAll("%20", " ").split("!")[0];
@@ -127,24 +130,24 @@ public class SketchbookCompiler {
         tmpDir.mkdirs();
 
 
-        // These are the files to include in the ZIP file
-        ArrayList<String> filenames = new ArrayList<String>();
-        ArrayList<String> filenamesJar = new ArrayList<String>();
+        // These are the files to include in the ZIP file with names
+        // such as org/javascool/a.class
+        ArrayList<String> filenamesJar = new ArrayList<String>();   //Name in jar
 
         for (String file : this.files) {
             if (file.endsWith("/")) {
                 File dir = new File(tmpDir + "/" + file);
                 dir.mkdirs();
             } else if (!file.contains("META-INF")) {
-                File dest = new File(tmpDir + "/" + file);
-                copyfile(file, dest.getAbsolutePath());
-                filenames.add(dest.getAbsolutePath());
+                if (this.isInJar)
+                    copyfile(file, tmpDir+"/"+file);
+                else
+                    copyresource(file, tmpDir+"/"+file);
                 filenamesJar.add(file);
             }
             System.out.println("Copied " + file);
         }
         
-        filenames.add((new File(tmpDir+"/META-INF/MANIFEST.MF")).getAbsolutePath());
         filenamesJar.add("META-INF/MANIFEST.MF");
         String manifest = new String();
         manifest += "Manifest-Version: 1.0\n";
@@ -164,8 +167,8 @@ public class SketchbookCompiler {
             ZipOutputStream out = new ZipOutputStream(new FileOutputStream(outFilename));
 
             // Compress the files
-            for (int i = 0; i < filenames.size(); i++) {
-                FileInputStream in = new FileInputStream(filenames.get(i));
+            for (int i = 0; i < filenamesJar.size(); i++) {
+                FileInputStream in = new FileInputStream(tmpDir+"/"+filenamesJar.get(i));
 
                 // Add ZIP entry to output stream.
                 out.putNextEntry(new ZipEntry(filenamesJar.get(i)));   //FIXME
