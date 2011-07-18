@@ -167,6 +167,7 @@ public class SketchbookCompiler {
                 }
                 else if (!file.contains("META-INF")) {
                     copyresource(file, tmpDir+File.separator+file);
+                    filenamesJar.add(file);
                 }
             }
             else {
