@@ -11,7 +11,7 @@
     <description>Builds, tests, and runs the project Java's Cool Core.</description>
     <import file="nbproject/build-impl.xml"/>
     <target name="-post-jar">
-        <echo message="Delete keystore" level="info"/>
+        <!--<echo message="Delete keystore" level="info"/>
         <delete file="keystore"/>
         <echo message="Generate new key" level="info"/>
         <genkey alias="javascool" keystore="keystore" storepass="mer,d,azof" validity="730">
@@ -22,12 +22,13 @@
                 <param name="C"  value="FR"/>
             </dname>
         </genkey>
-        <echo message="--------------------------------" level="info"/>
+        <echo message="- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -" level="info"/>-->
         <mkdir dir="tmp"/>
         <echo message="Unjar libs and Java's Cool" level="info"/>
         <unzip dest="tmp">
             <fileset dir="dist">
                 <include name="**/*.jar"/>
+		<include name="**/*.zip"/>
                 <include name="*.jar"/>
             </fileset>
         </unzip>
@@ -40,12 +41,12 @@
                 <attribute name="Implementation-Title" value="Java's Cool" /> 
                 <attribute name="Implementation-Vendor" value="INRIA" />     
                 <attribute name="Implementation-Version" value="3.3 Alpha"/>
-                <attribute name="Main-Class" value="org.javascool.JvsMain" />
+                <attribute name="Main-Class" value="org.javascool.tools.SketchbookCompiler" />
                 <attribute name="Class-Path" value="" />
             </manifest>
         </jar>
-        <echo message="Sign the jar" level="info"/>
-        <signjar jar="javascool.jar" alias="javascool" keystore="keystore" storepass="mer,d,azof"/>
+        <!--<echo message="Sign the jar" level="info"/>
+        <signjar jar="javascool.jar" alias="javascool" keystore="keystore" storepass="mer,d,azof"/>-->
         <echo message="Clean ..." level="info"/>
         <delete dir="tmp"/>
         <delete file="keystore"/>
