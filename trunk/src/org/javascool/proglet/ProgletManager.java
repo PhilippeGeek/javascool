@@ -1,15 +1,11 @@
 /**************************************************************
  * Philippe VIENNE, Copyright (C) 2011.  All rights reserved. *
  **************************************************************/
-package org.javascool.tools;
+package org.javascool.proglet;
 
-import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import org.javascool.proglet.Proglet;
 import java.io.File;
-import java.io.FilenameFilter;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
@@ -19,18 +15,10 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.DefaultListModel;
-import javax.swing.JButton;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JList;
-import javax.swing.JScrollPane;
 import javax.swing.filechooser.FileFilter;
 import org.javascool.JvsMain;
-import org.javascool.Utils;
-import org.javascool.gui.JVSMainPanel;
-import org.javascool.gui.JVSMainPanel.Dialog;
-import org.javascool.pml.Pml;
+import org.javascool.tools.Utils;
 
 /** The proglets manager class
  * This class list and store all opened proglets
@@ -41,22 +29,24 @@ public class ProgletManager {
     private static String defaultProglet;
     private static HashMap<String, Proglet> proglets = new HashMap<String, Proglet>();
 
-    /**
+    /** Get the default proglet
      * @return the defaultProglet
      */
     public static String getDefaultProglet() {
         return defaultProglet;
     }
 
-    /**
+    /** Set a new default proglet
      * @param aDefaultProglet the defaultProglet to set
      */
     public static void setDefaultProglet(String aDefaultProglet) {
         defaultProglet = aDefaultProglet;
     }
 
+    /** Start and construct the proglet manager */
     public ProgletManager() {
         try {
+            // We are NOT in a jar
             String proglet;
             File progletDir = new File(Thread.currentThread().getContextClassLoader().getResource("org/javascool/proglets").toURI());
             for (File dir : progletDir.listFiles()) {
@@ -75,9 +65,9 @@ public class ProgletManager {
                 }
             }
         } catch (Exception ex) {
+            // We are IN a JAR
             if (ex.getMessage().equals("URI is not hierarchical")) {
                 try {
-                    System.err.println("We are in a jar");
                     for (String proglet : ProgletManager.listProgletInTheJar(Utils.classLoader.getResource("org/javascool/proglets").toString().replaceAll("file:", "").replaceAll("jar:", "").replaceAll("%20", " "))) {
                         proglet = proglet.split("/")[proglet.split("/").length - 1];
                         try {
@@ -96,25 +86,26 @@ public class ProgletManager {
             } else {
             }
         }
-        if (!JvsMain.getJvsConf().get("sketchbook").equals("")) {
-            try {
-                System.err.println("Load sketchbook ...");
-                this.installProgletDir(new File(JvsMain.getJvsConf().get("sketchbook")));
-            } catch (Exception ex) {
-                Logger.getLogger(ProgletManager.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+        // TODO : Remake the sketchbook
     }
 
+    /** Get a proglet
+     * @param name The name of the proglet
+     * @return The proglet Object
+     */
     public Proglet getProglet(String name) {
         return ProgletManager.proglets.get(name);
     }
     
+    /** Get all proglets
+     * @return Proglets as a collection
+     */
     public Collection<Proglet> getProglets() {
         return ProgletManager.proglets.values();
     }
 
-    public void installNewProglet() {
+    /** Set up a new sketchbook */
+    public void installNewSketchbook() {
         JFileChooser fc = new JFileChooser();
         fc.setFileFilter(new FileFilter() {
 
@@ -133,12 +124,14 @@ public class ProgletManager {
             }
         });
         fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        switch (fc.showDialog(JvsMain.getJvsMainFrame(), "Installer le scketchbook")) {
+        switch (fc.showDialog(JvsMain.getJvsMainFrame(), "Installer le "
+                + "scketchbook")) {
             case JFileChooser.APPROVE_OPTION:
                 try {
                     this.installProgletDir(fc.getSelectedFile());
                 } catch (Exception ex) {
-                    Logger.getLogger(ProgletManager.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ProgletManager.class.getName()).log(
+                            Level.SEVERE, null, ex);
                 }
                 break;
             default:
@@ -146,49 +139,18 @@ public class ProgletManager {
         }
     }
 
+    /** Install a new Sketchbook directory
+     * @param directory The directory to install
+     * @throws Exception If this directory cannot be set as Scketchbook
+     */
     private void installProgletDir(File directory) throws Exception {
         if (!directory.exists() || !directory.isDirectory()) {
             throw new Exception(directory + " is not a proglet folder");
         }
         JvsMain.getJvsConf().set("sketchbook", directory.getPath());
-        
     }
 
-    public void changeProglet() {
-        // Create the frame
-        String title = "Changer de proglet";
-        final JFrame frame = new JFrame(title);
-        frame.setIconImage(Utils.getIcon("org/javascool/logo.png").getImage());
-        JButton valid = new JButton("Changer");
-        final HashMap<String, String> progletsForHumans = new HashMap<String, String>();
-        for (String key : ProgletManager.proglets.keySet()) {
-            progletsForHumans.put(key, ProgletManager.proglets.get(key).getName());
-        }
-        final JList list = new JList(progletsForHumans.values().toArray());
-        JScrollPane scrollingList = new JScrollPane(list);
-        frame.getContentPane().add(scrollingList, BorderLayout.CENTER);
-        frame.getContentPane().add(valid, BorderLayout.SOUTH);
-        valid.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Object selectedValue = list.getSelectedValue();
-                for (String key : progletsForHumans.keySet()) {
-                    if (progletsForHumans.get(key).equals(selectedValue)) {
-                        JVSMainPanel.loadProglet(key);
-                    }
-                }
-                frame.dispose();
-            }
-        });
-        int width = 300;
-        int height = 300;
-        int x = (JvsMain.getJvsMainFrame().getX()) + (JvsMain.getJvsMainFrame().getWidth() - width) / 2;
-        int y = (JvsMain.getJvsMainFrame().getY()) + (JvsMain.getJvsMainFrame().getHeight() - height) / 2;
-        frame.setBounds(x, y, width, height);
-        frame.setVisible(true);
-    }
-
+    /** List all proglets in the current jar */
     private static List<String> listProgletInTheJar(String path) throws IOException {
         List<String> classFiles = new ArrayList<String>();
         final String[] parts = path.split("!");

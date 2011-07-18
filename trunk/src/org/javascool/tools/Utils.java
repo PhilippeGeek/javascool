@@ -1,7 +1,7 @@
 /*******************************************************************************
  * Thierry.Vieville@sophia.inria.fr, Copyright (C) 2010.  All rights reserved. *
  *******************************************************************************/
-package org.javascool;
+package org.javascool.tools;
 
 // Used for URL formation
 import java.net.MalformedURLException;
@@ -32,8 +32,10 @@ import java.util.HashMap;
 import java.io.File;
 
 // Used for the sax interface
+import java.io.FileNotFoundException;
 import java.io.StringReader;
 import java.io.StringWriter;
+import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.TransformerException;
@@ -48,6 +50,8 @@ import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import javax.swing.JOptionPane;
+import javax.xml.transform.TransformerFactoryConfigurationError;
+import javax.xml.transform.URIResolver;
 
 /** This factory contains useful methods to interface javascool with the environment.
  * @see <a href="Utils.java.html">source code</a>
@@ -356,7 +360,7 @@ public class Utils {
     }
     /** String2name conversion table.
      */
-    private static HashMap<String, String> string2name;
+    private final static HashMap<String, String> string2name;
 
     static {
         string2name = new HashMap<String, String>();
@@ -424,26 +428,20 @@ public class Utils {
      * @throws IllegalArgumentException if a syntax error has occurred.
      *
      */
-    public static String xml2xml(String xml, String xsl) {
-        // Compile the XSL tranformation
+    public static String xml2xml(String xml, String xsl) throws TransformerException {
+        StringWriter strOut = new StringWriter();
+        StreamSource xslStreamSource = new StreamSource(Utils.toUrl(xsl).toString().replaceAll("%20", " "));
+        StreamSource xmlStreamSource = new StreamSource(Utils.toUrl(xml).toString().replaceAll("%20", " "));
+        StreamResult convertResult = new StreamResult(strOut);
         try {
             if (!tranformers.containsKey(xsl)) {
-                tranformers.put(xsl, tfactory.newTemplates(new StreamSource(new StringReader(xsl))).newTransformer());
+                tranformers.put(xsl, tfactory.newTemplates(xslStreamSource).newTransformer());
             }
         } catch (TransformerConfigurationException e) {
             throw new RuntimeException(e + " when compiling: " + xsl);
         }
-        // Apply the transformation
-        try {
-            if (xml == null) {
-                xml = "<null/>";
-            }
-            StringWriter writer = new StringWriter();
-            tranformers.get(xsl).transform(new StreamSource(new StringReader(xml)), new StreamResult(writer));
-            return writer.toString();
-        } catch (TransformerException e) {
-            throw new IllegalArgumentException(e.getMessageAndLocation());
-        }
+        tranformers.get(xsl).transform(xmlStreamSource, convertResult);
+        return strOut.toString();
     }
     // Cash mechanism
     private static TransformerFactory tfactory;
@@ -482,7 +480,7 @@ public class Utils {
                 replaceAll("&ccedil;", "ç").
                 // Eliminate spurious constructs
                 replaceAll("<[!?][^>]*>", "").
-                replaceAll("&nbsp;", " ").
+                replaceAll("&nbsp;", "&#160;").
                 // Encapsulate non XML constructs
                 replaceAll("(<(meta|img|hr|br|link)[^>/]*)/?>", "$1/>");
     }

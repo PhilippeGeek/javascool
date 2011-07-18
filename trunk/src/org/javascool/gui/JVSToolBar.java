@@ -6,7 +6,6 @@ package org.javascool.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Set;
@@ -14,14 +13,12 @@ import java.util.UUID;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JToolBar;
-import javax.swing.KeyStroke;
 import org.javascool.JvsMain;
-import org.javascool.Utils;
-import org.javascool.tools.Console;
+import org.javascool.tools.Utils;
+import org.javascool.widgets.Console;
 
 /** The JVS top tool bar
  * @author Philippe VIENNE
@@ -228,7 +225,7 @@ public class JVSToolBar extends JToolBar {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                JVSMainPanel.getProgletManager().installNewProglet();
+                JVSMainPanel.getProgletManager().installNewSketchbook();
             }
             
         });
@@ -249,7 +246,7 @@ public class JVSToolBar extends JToolBar {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                JVSMainPanel.getProgletManager().changeProglet();
+                JVSMainPanel.closeProglet();
             }
             
         });

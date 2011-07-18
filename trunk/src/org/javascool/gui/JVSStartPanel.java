@@ -17,8 +17,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import org.javascool.Utils;
-import org.javascool.tools.Proglet;
+import org.javascool.tools.Utils;
+import org.javascool.proglet.Proglet;
 
 /**
  *
@@ -61,7 +61,6 @@ public class JVSStartPanel extends JPanel {
 
     private JPanel createShortcut(ImageIcon icon, String title, final Runnable start) {
         JPanel panel = new JPanel();
-        //panel.setLayout(new BorderLayout(10,10));
         JButton label = new JButton(title, icon);
         label.setVerticalTextPosition(JLabel.BOTTOM);
         label.setHorizontalTextPosition(JLabel.CENTER);

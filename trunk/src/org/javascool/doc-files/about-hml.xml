@@ -21,7 +21,7 @@
     <div class="tag" title="page">
       <param name="title"    type="string"               >Titre de la page.</param>
       <param name="icon"     type="location" value="null">Icone permettant de reconnaitre la page.</param>
-      <param name="author"   type="identity"             >Nom et email de l'auteur sous la forme <c>Prenom Nom &lt;email></c>.</param>
+      <param name="author"   type="identity"             >Nom et email de l'auteur sous la forme?.</param>
       <param name="tags"     type="name*"                >Liste de mots-clé de la page, séparés par des espaces, un mot composé étant construit avec le titre <c>-</c>.</param>
       <param name="style"    type="location" value="null">Ficher de style CSS de la page.</param>
       <param name="script"   type="location" value="null">Fichier des fonctions JavaScript de la page.</param>
@@ -140,7 +140,7 @@
     c'est à dire un mot du texte qui sera rendu de manière particulière.</p>
     </p>
     <div title="Discussion">
-      Cette construction correspond aux éléments HTML <c>&lt;a href="..">.</c> et <c>&lt;img src="..">.</c> et à tous les éléments (tel que <c>&lt;object ...</c>), 
+      Cette construction correspond aux éléments HTML <c><a href=".."/>.</c> et <c><img src=".."/>.</c> et à tous les éléments (tel que <c>&lt;object ...</c>), 
       qui incluent des contenus dans le texte.
       L'intégration des ces éléments étant considéré comme au-delà de la compétence d'un rédacteur de texte, la présente spécification se propose de les encapsuler, 
       pour être utilisés sans ce donner la peine de les programmer.

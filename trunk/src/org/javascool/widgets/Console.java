@@ -1,34 +1,28 @@
 /**************************************************************
  * Philippe VIENNE, Copyright (C) 2011.  All rights reserved. *
  **************************************************************/
-package org.javascool.tools;
+package org.javascool.widgets;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.lang.reflect.InvocationTargetException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import org.javascool.gui.JVSMainPanel;
 import org.javascool.gui.JVSToolBar;
+import org.javascool.tools.Macros;
 
 /**
  * Class Console
  * @author Philippe Vienne
  */
 public class Console extends JPanel {
+
+    /** Flag to say if a program is running */
     private static boolean running;
     /** The current JVS Program */
     private static Runnable program;
@@ -42,26 +36,9 @@ public class Console extends JPanel {
     private static JScrollPane scrolledOutputPane;
     /** ToolBar for the console */
     private static JVSConsoleToolBar toolbar;
-    // Runnables for buttons
-    private static Runnable stop = new Runnable() {
 
-        @Override
-        public void run() {
-            Console.stopProgram();
-            //Console.toolbar.programCompiled();
-        }
-    };
-    private static Runnable run = new Runnable() {
-
-        @Override
-        public void run() {
-            Console.startProgram();
-        }
-    };
-
+    /** The top tool bar in the console */
     private static class JVSConsoleToolBar extends JVSToolBar {
-
-        public JLabel timeRunning = new JLabel();
 
         public JVSConsoleToolBar() {
             super(true);
@@ -69,6 +46,7 @@ public class Console extends JPanel {
             this.setFloatable(false);
         }
 
+        /** Reset all the tool bar */
         @Override
         public void reset() {
             setVisible(false);
@@ -87,17 +65,20 @@ public class Console extends JPanel {
             revalidate();
         }
 
+        /** Init the tool bar */
         private void init() {
             this.reset();
             this.add(new JLabel("Aucun programe à executer"));
         }
 
+        /** Function call if no program is compiled */
         public void programNotCompiled() {
             this.reset();
             this.add(new JLabel("Aucun programme à executer"));
             this.revalidate();
         }
 
+        /** Call after a success full comppilation */
         public void programCompiled() {
             this.reset();
             JVSMainPanel.getToolBar().activeStartButton();
@@ -105,22 +86,26 @@ public class Console extends JPanel {
             this.revalidate();
         }
 
+        /** Call when the program start */
         public void programRunning() {
-            //JVSMainPanel.getToolBar().desactiveStartButton();
+            JVSMainPanel.getToolBar().desactiveStartButton();
             JVSMainPanel.getToolBar().activeStopButton();
             this.revalidate();
         }
 
+        /** Call when the program stop */
         public void afterRunning() {
             JVSMainPanel.getToolBar().desactiveStopButton();
             JVSMainPanel.getToolBar().activeStartButton();
             this.revalidate();
         }
 
+        /** Function call to set up time running */
         public void updateTimeRunning(int sec) {
             JVSMainPanel.getToolBar().updateTimer(sec);
         }
 
+        /** Reset time running to 0 */
         public void resetTimeRunning() {
             JVSMainPanel.getToolBar().updateTimer(0);
         }
@@ -164,15 +149,15 @@ public class Console extends JPanel {
     /** Start the current program */
     public static void startProgram() {
         Console.stopProgram();
-        if(JVSMainPanel.getCurrentProglet().hasPanel()){
+        if (JVSMainPanel.getCurrentProglet().hasPanel()) {
             JVSMainPanel.getWidgetTabs().focusOnProgletPanel();
         }
-        Console.running=true;
+        Console.running = true;
         Console.toolbar.updateTimeRunning(0);
-        
+
         Console.clear();
-        
-        Console.timeThread=new Thread(new Runnable() {
+
+        Console.timeThread = new Thread(new Runnable() {
 
             @Override
             public void run() {
@@ -189,18 +174,23 @@ public class Console extends JPanel {
 
     /** Stop the current program */
     public static void stopProgram() {
-        Console.running=false;
+        Console.running = false;
         Console.run(false);
+        try{
+            Class functions=ClassLoader.getSystemClassLoader().loadClass(JVSMainPanel.getCurrentProglet().getFullPackageName()+".Functions");
+            functions.getMethod("stop").invoke(null);
+        } catch(Exception e){
+        }
         if (Console.timeThread != null) {
             try {
                 Console.timeThread.interrupt();
             } catch (Exception e) {
-                System.err.println("Erreur : "+e.getMessage());
+                System.err.println("Erreur : " + e.getMessage());
             }
             Console.timeThread = null;
         }
-        Console.timeThread=null;
-        Console.runThread=null;
+        Console.timeThread = null;
+        Console.runThread = null;
         Console.toolbar.afterRunning();
     }
 
@@ -212,14 +202,14 @@ public class Console extends JPanel {
             try {
                 Console.runThread.interrupt();
             } catch (Exception e) {
-                System.err.println("Erreur : "+e.getMessage());
+                System.err.println("Erreur : " + e.getMessage());
             }
             Console.runThread = null;
         }
         if (start) {
             if (Console.program != null) {
                 (Console.runThread = new Thread(new Runnable() {
-                    
+
                     @Override
                     public void run() {
 

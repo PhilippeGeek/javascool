@@ -1,4 +1,7 @@
 <p title="Aide à l'utilisation de l'interface">
+    <code>void main(){
+    toto();
+    }</code>
   <p>Utiliser l'interface se fait en trois temps: 
   (1) choisir son activité, 
   (2) éditer le fichier de travail en suivant ce qui est proposé dans la documentation, 

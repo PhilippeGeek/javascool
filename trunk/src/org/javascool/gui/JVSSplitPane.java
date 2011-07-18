@@ -7,7 +7,7 @@ package org.javascool.gui;
 import java.awt.Component;
 import javax.swing.JSplitPane;
 import org.javascool.JvsMain;
-import org.javascool.tools.Console;
+import org.javascool.widgets.Console;
 
 /** The main Split Pane
  * This JSplitPane is used to place the FileEditor and the rights tabs

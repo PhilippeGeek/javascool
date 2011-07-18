@@ -20,11 +20,11 @@ import javax.swing.JPanel;
 import javax.swing.text.BadLocationException;
 import org.javascool.JVSFile;
 import org.javascool.JvsMain;
-import org.javascool.Utils;
+import org.javascool.tools.Utils;
 import org.javascool.editor.JVSEditor;
 import org.javascool.tools.Macros;
-import org.javascool.tools.Proglet;
-import org.javascool.tools.ProgletManager;
+import org.javascool.proglet.Proglet;
+import org.javascool.proglet.ProgletManager;
 
 /** The main panel for Java's cool
  * This class wich is very static contain all that we need to run Java's cool like save and open file command.
@@ -106,7 +106,7 @@ public final class JVSMainPanel extends JPanel {
      */
     public static void compileFile() {
         JVSMainPanel.getEditorTabs().getEditor(JVSFileEditorTabs.getCurrentCompiledFile()).removeLineSignals();
-        org.javascool.tools.Console.stopProgram();
+        org.javascool.widgets.Console.stopProgram();
         JVSMainPanel.getEditorTabs().saveCurrentFile();
         JVSMainPanel.getEditorTabs().compileFile(JVSMainPanel.getEditorTabs().getCurrentFileId());
     }
@@ -200,7 +200,7 @@ public final class JVSMainPanel extends JPanel {
      * @see DiagnosticCollector
      */
     public static void reportCompileError(int line, String explication) {
-        org.javascool.tools.Console.clear();
+        org.javascool.widgets.Console.clear();
         Macros.echo("-------------------\nErreur lors de la compilation à la ligne " + line + ".\n" + explication + "\n-------------------\n");
         JVSMainPanel.getWidgetTabs().showConsole();
         if (JVSMainPanel.getEditorTabs().getEditor(JVSFileEditorTabs.getCurrentCompiledFile())!=null) {
@@ -373,6 +373,7 @@ public final class JVSMainPanel extends JPanel {
     }
 
     public static void loadProglet(String name) {
+        System.gc();
         try {
             JVSMainPanel.getThisInStatic().removeAll();
             JVSMainPanel.newFile();
@@ -384,7 +385,7 @@ public final class JVSMainPanel extends JPanel {
             JVSMainPanel.getMainPane().revalidate();
             if (JVSMainPanel.pgman.getProglet(name) != null) {
                 ((JVSTabs) JVSMainPanel.getMainPane().getRightComponent()).removeAll();
-                ((JVSTabs) JVSMainPanel.getMainPane().getRightComponent()).add("Console", "", new org.javascool.tools.Console());
+                ((JVSTabs) JVSMainPanel.getMainPane().getRightComponent()).add("Console", "", new org.javascool.widgets.Console());
                 JVSMainPanel.currentProglet = JVSMainPanel.pgman.getProglet(name);
                 JVSMainPanel.getWidgetTabs().setProglet(currentProglet);
             } else {
@@ -408,7 +409,7 @@ public final class JVSMainPanel extends JPanel {
         if (JVSMainPanel.getEditorTabs().getEditor(JVSFileEditorTabs.getCurrentCompiledFile())!=null) {
             JVSMainPanel.getEditorTabs().getEditor(JVSFileEditorTabs.getCurrentCompiledFile()).signalLine(line);
         }
-        org.javascool.tools.Console.stopProgram();
+        org.javascool.widgets.Console.stopProgram();
         Dialog.error("Erreur du logiciel à la ligne "+line, ex);
     }
     

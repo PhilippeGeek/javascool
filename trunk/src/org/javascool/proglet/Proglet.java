@@ -1,39 +1,22 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 /**************************************************************
  * Philippe VIENNE, Copyright (C) 2011.  All rights reserved. *
+ * INRIA, Copyright (C) 2011.  All rights reserved.           *
  **************************************************************/
-package org.javascool.tools;
+package org.javascool.proglet;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
-import javax.tools.Diagnostic;
-import javax.tools.DiagnosticCollector;
-import javax.tools.JavaFileObject;
-import org.javascool.JVSFile;
-import org.javascool.Utils;
+import org.javascool.tools.Utils;
 import org.javascool.gui.JVSHtmlDisplay;
-import org.javascool.gui.JVSMainPanel;
-import org.javascool.gui.JVSMainPanel.Dialog;
-import org.javascool.jvs.Jvs2Java;
 import org.javascool.pml.Pml;
 
 /**
@@ -42,19 +25,37 @@ import org.javascool.pml.Pml;
  */
 public class Proglet {
 
+    /** The proglet configuration */
     private Pml conf;
+    /** Class to add before compilation */
     private ArrayList<String> depClass;
+    /** The proglet's widget panel */
     private JPanel panel = new JPanel();
+    /** Icon of the proglet */
     private ImageIcon icon;
+    /** Say if we have a panel to show */
     private Boolean hasPanel = false;
+    /** The help panel of the proglet */
     private JVSHtmlDisplay help;
+    /** Say if the proglet has got functions 
+     * True signifie that we will include Function class at compilation in static
+     */
     private Boolean jvsFunctions = false;
-    private Boolean packagedInJvs = true;
+    /** Observers code wich run before and after run */
     private String[] observer = {"", ""};
+    /** Full proglet's package name */
     private String fullPackageName = "org.javascool.proglets.tools";
+    /** Human name for the proglet */
     private String name = "";
+    /** Proglet's package name */
     private String packageName = "ingredients";
 
+    /** Setup a proglet by its name
+     * The constructor load all proglets files and check if it's possible to run
+     * the proglet
+     * @param progletName The proglet package name in org.javascool.proglets.*
+     * @throws Exception If the proglet is corrumpted
+     */
     public Proglet(String progletName) throws Exception {
         // Set the name
         this.name = progletName;
@@ -66,14 +67,18 @@ public class Proglet {
         this.conf = new Pml();
         
         // Read Configuration
-        if (ClassLoader.getSystemResourceAsStream("org/javascool/proglets/" + packageName + "/Proglet.pml") != null) {
-            this.conf.reset(Proglet.convertStreamToString(ClassLoader.getSystemResourceAsStream("org/javascool/proglets/" + packageName + "/Proglet.pml")));
+        if (ClassLoader.getSystemResourceAsStream("org/javascool/proglets/" + 
+                packageName + "/Proglet.pml") != null) {
+            this.conf.reset(Proglet.convertStreamToString(
+                    ClassLoader.getSystemResourceAsStream("org/javascool/progle"
+                    + "ts/" + packageName + "/Proglet.pml")));
             if (!this.conf.getString("name").equals("")) {
                 this.name = this.conf.getString("name");
             }
             if (!this.conf.getString("javaImport").equals("")) {
                 this.depClass = new ArrayList<String>();
-                this.depClass.addAll(Arrays.asList(this.conf.getString("javaImport").split(",")));
+                this.depClass.addAll(Arrays.asList(this.conf.getString("javaImp"
+                        + "ort").split(",")));
             }
             if (this.conf.getString("default").equals("true")) {
                 ProgletManager.setDefaultProglet(this.packageName);
@@ -86,22 +91,27 @@ public class Proglet {
             }
             if (!this.conf.getString("logo").equals("")) {
                 String logo = this.conf.getString("logo");
-                if (ClassLoader.getSystemResourceAsStream("org/javascool/proglets/" + packageName + "/"+logo) != null) {
-                    this.icon = Utils.getIcon("org/javascool/proglets/"+this.packageName+"/"+logo);
+                if (ClassLoader.getSystemResourceAsStream("org/javascool/progle"
+                        + "ts/" + packageName + "/"+logo) != null) {
+                    this.icon = Utils.getIcon("org/javascool/proglets/"
+                            +this.packageName+"/"+logo);
                 }
             }
             if(this.icon==null){
-                this.icon = Utils.getIcon("org/javascool/doc-files/icons/scripts.png");
+                this.icon = Utils.getIcon("org/javascool/doc-files/icons/script"
+                        + "s.png");
             }
         } else {
             throw new Exception("No configuration file for " + packageName);
         }
 
         // Install the panel
-        if (Proglet.classExists("org.javascool.proglets." + this.packageName + ".Panel")) {
+        if (Proglet.classExists("org.javascool.proglets." + this.packageName 
+                + ".Panel")) {
             try {
                 System.err.println("Load panel for proglet " + packageName);
-                panel = (JPanel) Class.forName("org.javascool.proglets." + this.packageName + ".Panel").newInstance();
+                panel = (JPanel) Class.forName("org.javascool.proglets." 
+                        + this.packageName + ".Panel").newInstance();
                 hasPanel = true;
             } catch (Exception ex) {
                 throw ex;
@@ -112,7 +122,8 @@ public class Proglet {
         }
 
         // Install the proglet functions
-        if (Proglet.classExists("org.javascool.proglets." + this.packageName + ".Functions")) {
+        if (Proglet.classExists("org.javascool.proglets." + this.packageName 
+                + ".Functions")) {
             System.err.println("Load functions for proglet " + packageName);
             this.jvsFunctions = true;
         } else {
@@ -121,10 +132,12 @@ public class Proglet {
         }
 
         // Install the help file
-        if (ClassLoader.getSystemResourceAsStream("org/javascool/proglets/" + packageName + "/Help.html") != null) {
+        if (ClassLoader.getSystemResourceAsStream("org/javascool/proglets/" 
+                + packageName + "/Help.html") != null) {
             System.err.println("Load help for proglet " + packageName);
             this.help = new JVSHtmlDisplay();
-            this.help.load(Utils.toUrl("org/javascool/proglets/" + packageName + "/Help.html").toString());
+            this.help.load(Utils.toUrl("org/javascool/proglets/" + packageName 
+                    + "/Help.html").toString());
         } else {
             System.err.println("No help for proglet " + packageName);
             this.help = null;
@@ -138,7 +151,8 @@ public class Proglet {
      * Reader return -1 which means there's no more data to
      * read. We use the StringWriter class to produce the string.
      */
-    private static String convertStreamToString(InputStream is) throws IOException {
+    private static String convertStreamToString(InputStream is) 
+            throws IOException {
         if (is != null) {
             Writer writer = new StringWriter();
             char[] buffer = new char[1024];
@@ -159,20 +173,23 @@ public class Proglet {
         }
     }
 
-    private void setupJvsFunctions(File functionFile) {
-        if (functionFile.exists()) {
-            Jvs2Java.javaCompile(functionFile.getPath());
-        }
-    }
-
+    /** Say if we have a JPanel Widget
+     * @return True if proglet has got a Widget
+     */
     public Boolean hasPanel(){
         return this.hasPanel;
     }
     
-    public JPanel getHelpFileUrl() {
+    /** Get Help Widget
+     * @return The widget or null
+     */
+    public JPanel getHelpWidget() {
         return this.help;
     }
 
+    /** Get all java dependance of this proglet 
+     * @return Dependance as an ArrayList
+     */ 
     public ArrayList<String> getJavaDependance() {
         if (this.depClass == null) {
             return new ArrayList<String>();
@@ -180,34 +197,56 @@ public class Proglet {
         return this.depClass;
     }
 
+    /** Get java code to include before
+     * Used by Jvs2Java
+     * @return The code as a String
+     */
     public String getJavaCodeToIncludeBefore() {
         return this.observer[0];
     }
 
+    /** Get java code to include after
+     * Used by Jvs2Java
+     * @return The code as a String
+     */
     public String getJavaCodeToIncludeAfter() {
         return this.observer[1];
     }
 
+    /** Get the Widget Panel
+     * @return The widget panel or null
+     */
     public JPanel getPanel() {
         return this.panel;
     }
 
+    /** Get the full package name for this proglet
+     * Ex : "org.javascool.proglets.game"
+     * @return The package String
+     */
     public String getFullPackageName() {
         return this.fullPackageName;
     }
 
+    /** Get the package name for this proglet
+     * Ex : "game"
+     * @return The package string
+     */
     public String getPackageName() {
         return this.packageName;
     }
 
+    /** Get the human name of this proglet */
     public String getName() {
         return this.name;
     }
 
+    /** Say if we have to include Function class on compile */
     public Boolean getJvsFunctionsToInclude() {
         return this.jvsFunctions;
     }
 
+    /** Say if a class exist in the current class path */
     public static boolean classExists(String className) {
         try {
             Class.forName(className);
@@ -217,52 +256,14 @@ public class Proglet {
         }
     }
 
-    /** Dynamically loads a Java runnable class to be used during this session.
-     * @param path The path to the java class to load. The java class is supposed to belong to the "default" package, i.e. not to belong to a package.
-     * @return An instantiation of this Java class. If the object is a runnable, the current runnable is set.
-     *
-     * @throws RuntimeException if an I/O exception occurs during command execution.
-     * @throws IllegalArgumentException If the Java class name is not valid.
-     */
-    private static JPanel loadPanelFromClass(String path) throws Throwable {
-        try {
-            File javaClass = new File(path);
-            URL[] urls = new URL[]{new URL("file:" + javaClass.getParent() + File.separator)};
-            Macros.echo(javaClass.getName().replaceAll("\\.class", ""));
-            Class< ?> j_class;
-            if (path.endsWith("org" + File.separator + "javascool" + File.separator + "proglets" + File.separator + javaClass.getParentFile().getName() + File.separator + "Panel.class")) {
-                j_class = Utils.classLoader.loadClass("org.javascool.proglets." + javaClass.getParentFile().getName() + ".Panel");
-            } else {
-                j_class = new URLClassLoader(urls).loadClass(javaClass.getName().replaceAll("\\.class", ""));
-            }
-            Object o = j_class.newInstance();
-            if (!(o instanceof JPanel)) {
-                throw new Exception("La class à charger n'est pas un JPanel");
-            }
-            return (JPanel) o;
-        } catch (Throwable e) {
-            throw new RuntimeException("Erreur: impossible de charger la class" + path + ", erreur : " + e.getMessage());
-        }
-    }
-
-    private static Class<?> loadFromClass(String path) throws Throwable {
-        try {
-            File javaClass = new File(path);
-            URL[] urls = new URL[]{new URL("file:" + javaClass.getParent() + File.separator)};
-            return new URLClassLoader(urls).loadClass(javaClass.getName().replaceAll("\\.class", ""));
-        } catch (Throwable e) {
-            throw new RuntimeException("Erreur: impossible de charger la class, erreur : " + e.getMessage());
-        }
-    }
-
-    /**
+    /** Get the proglet's icon
      * @return the icon
      */
     public ImageIcon getIcon() {
         return icon;
     }
 
-    /**
+    /** Set a new icon to the proglet
      * @param icon the icon to set
      */
     public void setIcon(ImageIcon icon) {

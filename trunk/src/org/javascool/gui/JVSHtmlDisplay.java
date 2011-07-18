@@ -29,7 +29,7 @@ import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import org.javascool.Utils;
+import org.javascool.tools.Utils;
 
 /** Defines a panel in which a HTML text is shown.
  *
