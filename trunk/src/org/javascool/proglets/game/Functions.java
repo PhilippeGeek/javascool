@@ -20,7 +20,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.javascool.gui.JVSFileEditorTabs;
 import org.javascool.gui.JVSMainPanel;
-import org.javascool.tools.Console;
+import org.javascool.widgets.Console;
 import org.javascool.tools.Macros;
 
 /* To use these event listeners, use this syntax : 
@@ -417,7 +417,13 @@ public class Functions implements EventCatcher {
      * It stops the timer and deletes the listeners
      */
     public static void stop() {
+        Panel p = (Panel) (Macros.getProgletPanel());
+        p.stop();
+        try{
         m_clock.exitClean();
+        }catch(Exception e){
+            System.err.println(e.getMessage());
+        }
         Macros.getProgletPanel().removeMouseListener(m_singleton.m_mouseListener);
         Macros.getProgletPanel().removeMouseMotionListener(m_singleton.m_mouseMotionListener);
         Macros.getProgletPanel().removeMouseWheelListener(m_singleton.m_mouseWheelListener);
@@ -439,9 +445,7 @@ public class Functions implements EventCatcher {
         m_singleton.m_onKeyUp.removeAll(m_singleton.m_onKeyUp);
         m_singleton.m_onKeyPressed.removeAll(m_singleton.m_onKeyPressed);
         m_singleton.m_onKeyReleased.removeAll(m_singleton.m_onKeyReleased);
-
-        Panel p = (Panel) (Macros.getProgletPanel());
-        p.stop();
+        
     }
     /**
      * Stores a running clock that ticks at each frame and triggers frame-driven events

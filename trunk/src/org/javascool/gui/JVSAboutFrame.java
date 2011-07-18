@@ -13,7 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import org.javascool.JvsMain;
-import org.javascool.Utils;
+import org.javascool.tools.Utils;
 
 /** Open the About Windows
  * @author Philippe Vienne

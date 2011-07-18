@@ -5,7 +5,7 @@
 package org.javascool.gui;
 
 import javax.swing.JPanel;
-import org.javascool.tools.Proglet;
+import org.javascool.proglet.Proglet;
 
 /**
  *
@@ -23,8 +23,8 @@ public class JVSWidgetPanel extends JVSTabs {
         if (proglet.getPanel() != null) {
             this.progletTabId = this.add("Proglet "+proglet.getName(), "", proglet.getPanel());
         }
-        if (proglet.getHelpFileUrl()!=null){
-            this.add("Aide de la proglet", "", proglet.getHelpFileUrl());
+        if (proglet.getHelpWidget()!=null){
+            this.add("Aide de la proglet", "", proglet.getHelpWidget());
         }
         this.openWebTab("org/javascool/doc-files/memo.html","Mémo");
     }

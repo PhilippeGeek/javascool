@@ -4,7 +4,7 @@ import java.util.HashMap;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-import org.javascool.Utils;
+import org.javascool.tools.Utils;
 
 /** Create a tab structure
  * Java's cool Tab Structure is used to make easy JTabbedPane

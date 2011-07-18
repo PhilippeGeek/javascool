@@ -4,6 +4,7 @@
  */
 package org.javascool;
 
+import org.javascool.tools.Utils;
 import java.awt.event.WindowAdapter;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;

@@ -26,7 +26,7 @@ import javax.tools.JavaFileObject;
 import javax.tools.StandardJavaFileManager;
 import javax.tools.ToolProvider;
 import org.javascool.gui.JVSMainPanel;
-import org.javascool.tools.Console;
+import org.javascool.widgets.Console;
 
 /** This factory defines how a Jvs code is translated into a Java code and compiled.
  * The goal of the Jvs syntax is to ease the syntax when starting to program in an imperative language, like Java.
@@ -107,14 +107,19 @@ public class Jvs2Java {
             head.append("  private static final long serialVersionUID = ").append(uid).append("L;");
             head.append("  public void run() {");
             head.append(JVSMainPanel.getCurrentProglet().getJavaCodeToIncludeBefore());
-            head.append(" main(); new File(System.getProperty(\"java.io.tmpdir\")+\"");
+            head.append("try{ main(); new File(System.getProperty(\"java.io.tmpdir\")+\"");
             head.append(File.separator.equals("\\") ? "\\\\" : "/");
             head.append("JvsToJavaTranslated");
             head.append(Jvs2Java.uid);
-            head.append(".class\").delete(); ");
+            head.append(".class\").delete();");
+            head.append(JVSMainPanel.getCurrentProglet().getJavaCodeToIncludeAfter());
+            head.append("}catch(Exception e){ ");
             head.append(JVSMainPanel.getCurrentProglet().getJavaCodeToIncludeAfter());
             head.append("}");
+            head.append("}");
         }
+        //String finalBody = body.toString().replaceAll("((^|\n)([ \t]*)(?!((public|private|protected)([ \t]+)))([A-Za-z0-1_]+)([ ]+)([A-Za-z0-1_]+)\\(([^()]*)\\)([ ]*)\\{([ \t]*)(\n|$))", "public $1")/*.replaceAll("^(( |\t)*((?!(public|private|protected))( |\n)+)?[a-zA-Z0-9_]+( |\n)+[a-zA-Z0-9_]+ *\\(.*\\)( |\n)*\\{( |\n)*)$", "public $1")*/;
+        //finalBody = finalBody.toString().replaceAll("(^|[\n\t ])for[\n\t ]*\\(([A-Za-z0-9_.]+)[\n\t ]+([A-Za-z0-9_.]+)[\n\t ]+in[\n\t ]+([A-Za-z0-9_.]+)[\n\t ]*\\)[\n\t ]*\\{", "for (int tmpsystemi=0; tmpsystemi<$4.size(); tmpsystemi++) {$2 $3=($2)($4.get(tmpsystemi));");
         String finalBody = body.toString().replaceAll("((^|\n)([ \t]*)(?!((public|private|protected)([ \t]+)))([A-Za-z0-9_]+)([ ]+)([A-Za-z0-9_]+)\\(([^()]*)\\)([ ]*)\\{([ \t]*)(\n|$))", "public $1").replaceAll("(^|[\n\t ])for[\n\t ]*\\(([A-Za-z0-9_.]+)[\n\t ]+([A-Za-z0-9_.]+)[\n\t ]+in[\n\t ]+([A-Za-z0-9_.]+)[\n\t ]*\\)[\n\t ]*\\{","for (int tmpsystemi=0; tmpsystemi<$4.size(); tmpsystemi++) {$2 $3=($2)($4.get(tmpsystemi));");
         System.err.println("** Java Final Code **");
         System.err.println(head.toString() + finalBody + "}");
@@ -130,6 +135,11 @@ public class Jvs2Java {
     private static String translateOnce(String line, int lineNumber) {
         // Translates the while statement with sleep
         line = line.replaceAll("(while.*\\{)", "$1 sleep(20);");
+        /*  line = line.replaceAll("int ([a-zA-Z0-9_]+)( |\t)","Integer $1 ");
+        line = line.replaceAll("double ([a-zA-Z0-9_]+)( |\t|=)","Double $1 ");*/
+        line = line.replaceAll("(.*[^a-zA-Z0-9_])([a-zA-Z0-9_]+[ \t=]*\\.getProperty[ \t=]*\\()[ \t=]*([a-zA-Z0-9_]+)[ \t=]*,([^)]*\\))(.*)", "$1(($3)$2$4)$5");
+        line = line.replaceAll("\\(int\\)", "(Integer)");
+        line = line.replaceAll("\\(double\\)", "(Double)");
         line = line.replaceAll("([A-Za-z0-9_\\-]+)::([A-Za-z0-9_\\-]+)", "org.javascool.proglets.$1.Functions.$2");
         //line = line.replaceAll("(while\\(true\\)\\{)", "$1 sleep(50);");
         // Translates the Synthe proglet @tone macro

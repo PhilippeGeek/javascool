@@ -19,7 +19,7 @@ import org.javascool.JVSFile;
 import org.javascool.JvsMain;
 import org.javascool.editor.JVSEditor;
 import org.javascool.jvs.Jvs2Java;
-import org.javascool.tools.Console;
+import org.javascool.widgets.Console;
 
 /** The JVSFileEditorTabs
  * A powerful JVSTabs to manage a multi-file editing. It only support JVSFile.
