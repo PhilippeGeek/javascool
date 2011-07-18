@@ -81,11 +81,34 @@ public class SketchbookCompiler {
     }
 
     //TODO javadoc
+    private static void copyresource(String srFile, String dtFile) {
+        try {
+            File f2 = new File(dtFile);
+            InputStream in = ClassLoader.getSystemResourceAsStream(srFile);
+
+            OutputStream out = new FileOutputStream(f2);
+
+            byte[] buf = new byte[1024];
+            int len;
+            while ((len = in.read(buf)) > 0) {
+                out.write(buf, 0, len);
+            }
+            in.close();
+            out.close();
+        } catch (FileNotFoundException ex) {
+            System.out.println(ex.getMessage() + " in the specified directory. Error on resource "+srFile);
+            System.exit(0);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    //TODO javadoc
     private static void copyfile(String srFile, String dtFile) {
         try {
             File f2 = new File(dtFile);
             InputStream in = new FileInputStream(srFile);
-
             OutputStream out = new FileOutputStream(f2);
 
             byte[] buf = new byte[1024];
@@ -132,12 +155,20 @@ public class SketchbookCompiler {
         // such as org/javascool/a.class
         ArrayList<String> filenamesJar = new ArrayList<String>();   //Name in jar
 
-        for (String file : this.files) {
-            if (file.endsWith("/")) {
+        for (int i=0; i<this.files.size(); i++) {
+            this.files.set(i,this.files.get(i).replaceAll(File.separator+"([^"+File.separator+"]+)$", "$1"));
+            String file=this.files.get(i);
+            if (file.endsWith(File.separator)) {
                 File dir = new File(tmpDir+File.separator+file);
                 dir.mkdirs();
-            } else if (!file.contains("META-INF") && this.isInJar) {
-                // FIXME : copyresource(file, tmpDir+"/"+file);
+            } else if (!file.contains("META-INF")) {
+                if (!this.isInJar) {
+                    System.out.println("file="+file);
+                    copyfile(file, tmpDir+File.separator+file);
+                }
+                else {
+                    copyresource(file, tmpDir+File.separator+file);
+                }
                 filenamesJar.add(file);
             } else if (!this.isInJar) {
                 if (new File(file).isDirectory()) {
