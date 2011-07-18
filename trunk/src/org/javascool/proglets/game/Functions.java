@@ -658,6 +658,16 @@ public class Functions implements EventCatcher {
         if (yc>y2+h2 && xc>x2+w2) return (distance(xc,yc,x2+w2,y2+h2)<r1);
         return false;
     }
+    
+    //TESTME
+    public static boolean collisionCircleToCircle(double x1, double y1, double r1, double x2, double y2, double r2) {
+        return (distance(x1,y1,x2,y2)>r1+r2);
+    }
+    
+    //TESTME
+    public static boolean collisionRectToRect(double x1, double y1, double w1, double h1, double x2, double y2, double w2, double h2) {
+        return (x1<x2+w2 && x1+w1>x2 && y1<y2+h2 && y1+h1>y2);
+    }
 
     public static double distance(double x1, double y1, double x2, double y2) {
         return Math.sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
