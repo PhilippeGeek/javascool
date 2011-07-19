@@ -41,47 +41,59 @@ import org.javascool.tools.Macros;
  */
 public class Functions implements EventCatcher {
     //TODO javadoc
+
+    /**
+     * Tries to find the specified file. If found, the file is opened and a stream is returned
+     * @param filePath The path in which to look
+     * @param fileName The filename to open
+     * @return and InputStream or null
+     */
     public static InputStream tryFile(String filePath, String fileName) {
-        File inJvsDir=new File(filePath+"/"+fileName);
+        File inJvsDir = new File(filePath + "/" + fileName);
         if (inJvsDir.exists()) {
             try {
-                return (new FileInputStream(filePath+"/"+fileName));
+                return (new FileInputStream(filePath + "/" + fileName));
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return null;
     }
-    
+
     //TODO javadoc
     public static InputStream getRessource(String fileName) {
         /*
          * Try .jvs dir
          */
         InputStream ret;
-        
-        String path=JVSMainPanel.getEditorTabs().getFile(JVSFileEditorTabs.getCurrentCompiledFile()).getPath().replaceAll(File.separator, "/");
-        path=path.replaceAll("^(.*)/[^/]+$","$1");
-        ret=tryFile(path, fileName);
-        if (ret!=null) return ret;
-        
-        ret=tryFile(System.getProperty("user.dir"),fileName);
-        if (ret!=null) return ret;
-        
-        ret=tryFile(System.getProperty("user.home"),fileName);
-        if (ret!=null) return ret;
-        
-        ret = ClassLoader.getSystemResourceAsStream("org/javascool/proglets/"+JVSMainPanel.getCurrentProglet().getPackageName()+"/"+fileName);
-        if (ret!=null) return ret;
-        
+
+        String path = JVSMainPanel.getEditorTabs().getFile(JVSFileEditorTabs.getCurrentCompiledFile()).getPath().replaceAll(File.separator, "/");
+        path = path.replaceAll("^(.*)/[^/]+$", "$1");
+        ret = tryFile(path, fileName);
+        if (ret != null) {
+            return ret;
+        }
+
+        ret = tryFile(System.getProperty("user.dir"), fileName);
+        if (ret != null) {
+            return ret;
+        }
+
+        ret = tryFile(System.getProperty("user.home"), fileName);
+        if (ret != null) {
+            return ret;
+        }
+
+        ret = ClassLoader.getSystemResourceAsStream("org/javascool/proglets/" + JVSMainPanel.getCurrentProglet().getPackageName() + "/" + fileName);
+        if (ret != null) {
+            return ret;
+        }
+
         return null;
     }
-    
-    
     /*
      * See getSingleton()
      */
-
     private static Functions m_singleton;
 
     @Override
@@ -419,9 +431,9 @@ public class Functions implements EventCatcher {
     public static void stop() {
         Panel p = (Panel) (Macros.getProgletPanel());
         p.stop();
-        try{
-        m_clock.exitClean();
-        }catch(Exception e){
+        try {
+            m_clock.exitClean();
+        } catch (Exception e) {
             System.err.println(e.getMessage());
         }
         Macros.getProgletPanel().removeMouseListener(m_singleton.m_mouseListener);
@@ -445,7 +457,7 @@ public class Functions implements EventCatcher {
         m_singleton.m_onKeyUp.removeAll(m_singleton.m_onKeyUp);
         m_singleton.m_onKeyPressed.removeAll(m_singleton.m_onKeyPressed);
         m_singleton.m_onKeyReleased.removeAll(m_singleton.m_onKeyReleased);
-        
+
     }
     /**
      * Stores a running clock that ticks at each frame and triggers frame-driven events
@@ -462,9 +474,11 @@ public class Functions implements EventCatcher {
          * The functions the end-user can call are all static, but they refer
          * to non-static attributes using this singleton static attribute
          */
-        
-        if (m_singleton!=null) stop();
-        
+
+        if (m_singleton != null) {
+            stop();
+        }
+
         m_singleton = new Functions();
 
         m_singleton.m_keysPressed = new java.util.ArrayList<Integer>();
@@ -601,7 +615,7 @@ public class Functions implements EventCatcher {
                 @Override
                 public void keyReleased(KeyEvent e) {
                     //Object cast so that the char given isn't taken as an index number
-                    m_singleton.m_keysPressed.remove((Object) e.getKeyCode());
+                    m_singleton.m_keysPressed.remove((Integer) e.getKeyCode());
                     callback(getSingleton().m_onKeyReleased);
                 }
             };
@@ -645,34 +659,47 @@ public class Functions implements EventCatcher {
         }
         return false;
     }
-    
+
     public static boolean collisionCircleToRect(double x1, double y1, double r1, double x2, double y2, double w2, double h2) {
-      //  if (distance(x1,y1,x2+w2/2,y2+h2/2)>Math.sqrt((w2*w2)/4+(h2*h2)/4)) return false;
-        double xc=x1+r1;
-        double yc=y1+r1;
-        if (yc>y2 && yc<y2+h2) return (Math.abs(xc-(x2+w2/2))<r1+w2/2);
-        if (xc>x2 && xc<x2+w2) return (Math.abs(yc-(y2+h2/2))<r1+h2/2);
-        if (yc<y2 && xc<x2) return (distance(xc,yc,x2,y2)<r1);
-        if (yc<y2 && xc>x2+w2) return (distance(xc,yc,x2+w2,y2)<r1);
-        if (yc>y2+h2 && xc<x2) return (distance(xc,yc,x2,y2+h2)<r1);
-        if (yc>y2+h2 && xc>x2+w2) return (distance(xc,yc,x2+w2,y2+h2)<r1);
+        //  if (distance(x1,y1,x2+w2/2,y2+h2/2)>Math.sqrt((w2*w2)/4+(h2*h2)/4)) return false;
+        double xc = x1 + r1;
+        double yc = y1 + r1;
+        if (yc > y2 && yc < y2 + h2) {
+            return (Math.abs(xc - (x2 + w2 / 2)) < r1 + w2 / 2);
+        }
+        if (xc > x2 && xc < x2 + w2) {
+            return (Math.abs(yc - (y2 + h2 / 2)) < r1 + h2 / 2);
+        }
+        if (yc < y2 && xc < x2) {
+            return (distance(xc, yc, x2, y2) < r1);
+        }
+        if (yc < y2 && xc > x2 + w2) {
+            return (distance(xc, yc, x2 + w2, y2) < r1);
+        }
+        if (yc > y2 + h2 && xc < x2) {
+            return (distance(xc, yc, x2, y2 + h2) < r1);
+        }
+        if (yc > y2 + h2 && xc > x2 + w2) {
+            return (distance(xc, yc, x2 + w2, y2 + h2) < r1);
+        }
         return false;
     }
-    
+
+    /* //FIXME all coll functions */
     //TESTME
     public static boolean collisionCircleToCircle(double x1, double y1, double r1, double x2, double y2, double r2) {
-        return (distance(x1,y1,x2,y2)>r1+r2);
+        return (distance(x1, y1, x2, y2) > r1 + r2);
     }
-    
+
     //TESTME
     public static boolean collisionRectToRect(double x1, double y1, double w1, double h1, double x2, double y2, double w2, double h2) {
-        return (x1<x2+w2 && x1+w1>x2 && y1<y2+h2 && y1+h1>y2);
+        return (x1 < x2 + w2 && x1 + w1 > x2 && y1 < y2 + h2 && y1 + h1 > y2);
     }
 
     public static double distance(double x1, double y1, double x2, double y2) {
-        return Math.sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
+        return Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
     }
-    
+
     /**
      * This class allows the proglet to trigger events regularly. Depending on the
      * selected framerate (see setFps(int)), a main routine will be executed at the given 
@@ -749,8 +776,8 @@ public class Functions implements EventCatcher {
          */
         @SuppressWarnings("AccessingNonPublicFieldOfAnotherObject")
         private void tick() {
-            
-        getRessource("test.txt");   //DEBUG
+
+            getRessource("test.txt");   //DEBUG
             for (int j = 0; j < 3; j++) {
                 if (getSingleton().m_mouseDown[j]) {
                     callback(getSingleton().m_onMouseDown);
@@ -759,7 +786,7 @@ public class Functions implements EventCatcher {
                 }
             }
 
-            if (m_singleton.m_keysPressed.size() != 0) {
+            if (!m_singleton.m_keysPressed.isEmpty()) {
                 callback(getSingleton().m_onKeyDown);
             }
             callback(getSingleton().m_onKeyUp);
