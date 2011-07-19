@@ -41,7 +41,7 @@
                 <attribute name="Implementation-Title" value="Java's Cool" /> 
                 <attribute name="Implementation-Vendor" value="INRIA" />     
                 <attribute name="Implementation-Version" value="3.3 Alpha"/>
-                <attribute name="Main-Class" value="org.javascool.tools.SketchbookCompiler" />
+                <attribute name="Main-Class" value="org.javascool.JVSMain" />
                 <attribute name="Class-Path" value="" />
             </manifest>
         </jar>
