@@ -27,7 +27,14 @@ include("includes/get_wiki_page.php");
                 } 
                 return el;
             } 
-
+            
+            function loaded() {
+                applyLabelStyles();
+                addListeners();
+                showButtons();
+                plugContent();
+            }
+            
             function applyLabelStyles() {
                 var labels=getElementsByClass('label');
                 for (i=0; i<labels.length; i++) {
@@ -38,15 +45,90 @@ include("includes/get_wiki_page.php");
                     labels[i].innerHTML='<table class="labelclickable"><tr><td class="label-left"></td><td class="label-center">'+labels[i].innerHTML+'</td><td class="label-right"></td></tr></table>';
                 }
             }
-
+            
+            function addListeners() {
+                var lefts=getElementsByClass('menubegin');
+                for (i=0; i<lefts.length; i++) {
+                    lefts[i].addEventListener("mouseover", mouseOverMenuSide, false);
+                    lefts[i].addEventListener("mouseout", mouseOutMenuSide, false);
+                    lefts[i].addEventListener("click", mouseClickMenuSide, false);
+                }
+                var rights=getElementsByClass('menuend');
+                for (i=0; i<rights.length; i++) {
+                    rights[i].addEventListener("mouseover", mouseOverMenuSide, false);
+                    rights[i].addEventListener("mouseout", mouseOutMenuSide, false);
+                    rights[i].addEventListener("click", mouseClickMenuSide, false);
+                }
+                var middles=getElementsByClass('menuitem');
+                for (i=0; i<middles.length; i++) {
+                    middles[i].addEventListener("mouseover", mouseOverMenu, false);
+                    middles[i].addEventListener("mouseout", mouseOutMenu, false);
+                }
+            }
+            
+            function mouseOverMenuSide(event) {
+                var menuItemName=this.id.substr(0,this.id.length-2);
+                document.getElementById(menuItemName).className="menuitemselected";
+                document.getElementById(menuItemName+"_l").className="menuselectedbegin";
+                document.getElementById(menuItemName+"_r").className="menuselectedend";
+            }
+            
+            function mouseOutMenuSide(event) {
+                var menuItemName=this.id.substr(0,this.id.length-2);
+                document.getElementById(menuItemName).className="menuitem";
+                document.getElementById(menuItemName+"_l").className="menubegin";
+                document.getElementById(menuItemName+"_r").className="menuend";
+            }
+            
+            function mouseOverMenu(event) {
+                var menuItemName=this.id;
+                document.getElementById(menuItemName).className="menuitemselected";
+                document.getElementById(menuItemName+"_l").className="menuselectedbegin";
+                document.getElementById(menuItemName+"_r").className="menuselectedend";
+            }
+            
+            function mouseOutMenu(event) {
+                var menuItemName=this.id;
+                document.getElementById(menuItemName).className="menuitem";
+                document.getElementById(menuItemName+"_l").className="menubegin";
+                document.getElementById(menuItemName+"_r").className="menuend";
+            }
+            
+            function mouseClickMenuSide(event) {
+                var menuItemName=this.id.substr(0,this.id.length-2);
+                var elm=document.getElementById(menuItemName);
+                elm.onclick();
+            }
+            
             function gotoloc(loc) {
                 document.location=loc;
+            }
+            
+            var w=300;
+            var h=200;
+            
+            function showButtons() {
+                var middles=getElementsByClass('menuitem');
+                for (i=0; i<middles.length; i++) {
+                    middles[i].width=w+"px";
+                }
+                w--;
+                if (w>0)
+                    setTimeout("showButtons()",1);
+            }
+            
+            function plugContent() {
+                document.getElementById("mainPanel").style.marginTop=h+"px";
+                
+                h--;
+                if (h>-10) 
+                    setTimeout("plugContent()",1);
             }
 
         </script>
 
     </head>
-    <body onload="applyLabelStyles()">
+    <body onload="loaded()">
         <?php
         $page = (isset($_GET['page'])) ? $_GET['page'] : 'home';
         Sal::validatePage($page);
@@ -59,10 +141,9 @@ include("includes/get_wiki_page.php");
 
         include('pages/header.php');
         ?>
-        <div class="main2">
+        <div class="main2" id="mainPanel">
             <table class="main2"><tr class="top"><td class="topleft"></td><td class="top"></td><td class="topright"></td></tr>
                 <tr class="center"><td class="left"></td><td class="center">
-
                         <?php
                         include($include);
                         ?>
