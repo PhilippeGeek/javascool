@@ -1,10 +1,44 @@
-cat `pwd`/http.root/http.conf.src																													\
-| sed "s/WEB_DIR/$(echo `pwd` | sed -e 's/\\/\\\\/g' -e 's/\//\\\//g' -e 's/&/\\\&/g')/g"		\
-| sed "s/MOD_MIME/$(echo `locate mod_mime.so|tail -n 1` | sed -e 's/\\/\\\\/g' -e 's/\//\\\//g' -e 's/&/\\\&/g')/g"		\
-| sed "s/MOD_PHP/$(echo  `locate libphp5.so |tail -n 1` | sed -e 's/\\/\\\\/g' -e 's/\//\\\//g' -e 's/&/\\\&/g')/g"		\
-| sed "s/MOD_DIR/$(echo  `locate mod_dir.so |tail -n 1` | sed -e 's/\\/\\\\/g' -e 's/\//\\\//g' -e 's/&/\\\&/g')/g"		\
- > `pwd`/http.root/http.conf
- 
- 
-/usr/sbin/httpd -f `pwd`/http.root/http.conf -k start
+#
+# Lancement en local du site web, il faut apache et php installé
+#
 
+# Tue tous les serveurs locaux
+
+killall -KILL httpd 2> /dev/null
+
+# Crée un http.root minimal adapteé à la config locale
+
+/bin/rm -rf .http.root ; mkdir -p `pwd`/.http.root/conf `pwd`/.http.root/logs 
+
+# Génère les fichiers de conf
+
+cat > `pwd`/.http.root/conf/http.conf <<EOF
+Listen		 1234
+ServerName	 127.0.0.1
+ServerRoot	 "`pwd`/.http.root"
+DocumentRoot	 "`pwd`"
+LoadModule	 mime_module 	`locate mod_mime.so|tail -n 1`
+LoadModule	 php5_module 	`locate libphp5.so |tail -n 1`
+AddHandler	 php5-script	.php
+AddType		 text/css	.css
+DefaultType 	 text/php
+AddDefaultCharset UTF-8
+LoadModule	 dir_module	`locate mod_dir.so |tail -n 1`
+DirectoryIndex	 index.php
+EOF
+
+cat > `pwd`/.http.root/conf/mime.types <<EOF
+text/css		.css
+EOF
+
+# Lance le serveur apache
+
+/usr/sbin/httpd -f `pwd`/.http.root/conf/http.conf -k start
+
+# Liste les logs si il y a un problème
+
+sleep 1 ; cat `pwd`/.http.root/logs/error_log
+
+# Si l'option -show est donnée lance le browser
+
+if [ "$1" = -show ] ; then firefox http://127.0.0.1:1234 ; fi
