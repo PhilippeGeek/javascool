@@ -1,4 +1,4 @@
-<table class="header"><tr>
+<table class="header" id="header"><tr>
 <td class="menu-left"></td>
 <td class="logo"><a href="index.php"><img class="logo" src="pages/logo.png" alt="Java's Cool"/></a></td>
 

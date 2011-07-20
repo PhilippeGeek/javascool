@@ -33,7 +33,7 @@ include("includes/get_wiki_page.php");
                 addListeners();/*
                 showButtons();
                 plugContent();*/
-                updateAnimation();
+                updateAnimation(1);
             }
             
             function applyLabelStyles() {
@@ -102,6 +102,7 @@ include("includes/get_wiki_page.php");
             }
             
             function gotoloc(loc) {
+                
                 document.location=loc;
             }
             
@@ -126,26 +127,55 @@ include("includes/get_wiki_page.php");
                 if (h>0) 
                     setTimeout("plugContent()",1);
             }
+            function getPos(obj) {
+                var output = new Object();
+                var mytop=0, myleft=0;
+                while( obj) {
+                    mytop+= obj.offsetTop;
+                    myleft+= obj.offsetLeft;
+                    obj= obj.offsetParent;
+                }
+                output.left = myleft;
+                output.top = mytop;
+                return output;
+            }
             
-            function updateAnimation() {
+            function getSize(obj) {
+                var output=new Object();
+                output.width=obj.offsetWidth;
+                output.height=obj.offsetHeight;
+                return output;
+            }
+            
+            function updateAnimation(increment) {
                 var plugleft=document.getElementById("plugleft");
                 var plugright=document.getElementById("plugright");
+                framePosition=getPos(document.getElementById("header"));
+                var w=getSize(document.getElementById("header")).width;
+                
                 if (frame<30) {
                     plugleft.style.top=120-frame*3+"px";
-                    plugleft.style.left="120px";
+                    plugleft.style.left=(framePosition.left-316)+"px";
                     plugright.style.top=120-frame*3+"px";
-                    plugright.style.right="120px";
+                    plugright.style.left=(framePosition.left+w+316-document.getElementById("plugright").offsetWidth)+"px";
                 }
                 if (frame>30) {
-                    plugleft.style.left=120+(frame-30)*3+"px";
+                    plugleft.style.left=(framePosition.left-316)+(frame-30)*3+"px";
                     plugleft.style.top=30;
-                    plugright.style.right=120+(frame-30)*3+"px";
+                    plugright.style.left=(framePosition.left+w+316-document.getElementById("plugright").offsetWidth)-(frame-30)*3+"px";
                     plugright.style.top=30;
                 }
                 
-                frame++;
+                if (frame==60) {
+                    var lights=getElementsByClass("pluglight");
+                    for (i=0; i<lights.length; i++) {
+                        lights[i].src="images/ledgreen.png";
+                    }
+                }
+                
+                frame+=increment;
                 if (frame<65)
-                    setTimeout("updateAnimation()",100);
+                    setTimeout("updateAnimation("+increment+")",5);
             }
 
         </script>
@@ -170,11 +200,11 @@ include("includes/get_wiki_page.php");
                         <table style="width: 100%">
                             <tr>
                                 <td>
-                                    <img src="images/ledgreen.png" style="width: 50px; height: 50px;"/>
+                                    <img src="images/ledred.png" style="width: 50px; height: 50px;" class="pluglight" />
                                 </td>
                                 <td style="width: 100%"></td>
                                 <td>
-                                    <img src="images/ledred.png" style="width: 50px; height: 50px;"/>
+                                    <img src="images/ledred.png" style="width: 50px; height: 50px;" class="pluglight" />
                                 </td>
                             </tr>
                         </table>
