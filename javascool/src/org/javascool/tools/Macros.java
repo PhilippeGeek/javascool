@@ -22,6 +22,56 @@ public class Macros {
 
     public static int debuglinenumber=0;
     
+    /**
+     * Tries to find the specified file. If found, the file is opened and a stream is returned
+     * @param filePath The path in which to look
+     * @param fileName The filename to open
+     * @return and InputStream or null
+     */
+    public static InputStream tryFile(String filePath, String fileName) {
+        File inJvsDir = new File(filePath + "/" + fileName);
+        if (inJvsDir.exists()) {
+            try {
+                return (new FileInputStream(filePath + "/" + fileName));
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return null;
+    }
+
+    //TODO javadoc
+    public static InputStream getRessource(String fileName) {
+        /*
+         * Try .jvs dir
+         */
+        InputStream ret;
+
+        String path = JVSMainPanel.getEditorTabs().getFile(JVSFileEditorTabs.getCurrentCompiledFile()).getPath().replaceAll(File.separator, "/");
+        path = path.replaceAll("^(.*)/[^/]+$", "$1");
+        ret = tryFile(path, fileName);
+        if (ret != null) {
+            return ret;
+        }
+
+        ret = tryFile(System.getProperty("user.dir"), fileName);
+        if (ret != null) {
+            return ret;
+        }
+
+        ret = tryFile(System.getProperty("user.home"), fileName);
+        if (ret != null) {
+            return ret;
+        }
+
+        ret = ClassLoader.getSystemResourceAsStream("org/javascool/proglets/" + JVSMainPanel.getCurrentProglet().getPackageName() + "/" + fileName);
+        if (ret != null) {
+            return ret;
+        }
+
+        return null;
+    }
+    
     private Macros() {
     }
 
