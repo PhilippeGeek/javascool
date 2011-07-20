@@ -14,6 +14,7 @@
 </div>
 
 <div class="label2">Nous contacter directement</div>
+
 <?php echo get_wiki_page('JavaScool:Contacts'); ?>
 
 <img src="images/logo_INRIA.png" alt="INRIA" onClick="gotoloc('inria.fr')" class="imagelink"/>
