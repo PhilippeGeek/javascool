@@ -39,6 +39,7 @@ table.header td.logo {
     padding:3px;
     margin:0px;
     background-image:url(images/menu-item.png);
+    background-repeat: repeat-x;
 }
 
 table.header td.menuitem {
@@ -49,6 +50,7 @@ table.header td.menuitem {
     padding-top:0px;
     text-align:center;
     background-image:url(images/menu-item.png);
+    background-repeat: repeat-x;
     cursor:pointer;
 }
 
@@ -59,6 +61,7 @@ table.header td.menuitemselected {
     padding-right:0px;
     text-align:center;
     background-image:url(images/menu-active.png);
+    background-repeat: repeat-x;
     height:70px;
     margin:0px;
     padding-left:0px;
@@ -75,6 +78,7 @@ table.header td.menuselectedbegin {
     padding-right:0px;
     text-align:center;
     background-image:url(images/menu-active-left.png);
+    background-repeat: no-repeat;
     width:33px;
     min-width: 33px;
     height:71px;
@@ -93,6 +97,7 @@ table.header td.menubegin {
     padding-right:0px;
     text-align:center;
     background-image:url(images/menu-item.png);
+    background-repeat: repeat-x;
     width:33px;
     min-width: 33px;
     height:71px;
@@ -111,6 +116,7 @@ table.header td.menuselectedend {
     padding-right:0px;
     text-align:center;
     background-image:url(images/menu-active-right.png);
+    background-repeat: no-repeat;
     width:33px;
     min-width: 33px;
     height:71px;
@@ -129,6 +135,7 @@ table.header td.menuend {
     padding-right:0px;
     text-align:center;
     background-image:url(images/menu-item.png);
+    background-repeat: repeat-x;
     width:33px;
     min-width: 33px;
     height:71px;
@@ -142,6 +149,7 @@ table.header td.menuend {
 
 table.header td.menu-left {
     background-image:url(images/menu-left.png);
+    background-repeat: no-repeat;
     width:27px;
     min-width: 27px;
     height:70px;
@@ -150,6 +158,7 @@ table.header td.menu-left {
 
 table.header td.menu-right {
     background-image:url(images/menu-right.png);
+    background-repeat: no-repeat;
     width:27px;
     min-width: 27px;
     height:70px;
@@ -175,6 +184,7 @@ div.main2 {
 
 table.main2 tr.top td.topleft {
     background-image: url(images/topleft.png);
+    background-repeat: no-repeat;
     width: 27px;
     min-width: 27px;
     height: 29px;
@@ -183,6 +193,7 @@ table.main2 tr.top td.topleft {
 
 table.main2 tr.top td.topright {
     background-image: url(images/topright.png);
+    background-repeat: no-repeat;
     width: 29px;
     min-width: 29px;
     height: 29px;
@@ -191,6 +202,7 @@ table.main2 tr.top td.topright {
 
 table.main2 tr.top td.top {
     background-image: url(images/top.png);
+    background-repeat: repeat-x;
     width: 29px;
     min-width: 29px;
     height: 29px;
@@ -199,6 +211,7 @@ table.main2 tr.top td.top {
 
 table.main2 tr.center td.left {
     background-image: url(images/left.png);
+    background-repeat: repeat-x;
     width: 27px;
     min-width: 27px;
     height: 29px;
@@ -207,6 +220,7 @@ table.main2 tr.center td.left {
 
 table.main2 tr.center td.center {
     background-image: url(images/center.png);
+    background-repeat: repeat;
     width: 1px;
     height: 1px;
     padding:0px;
@@ -219,6 +233,7 @@ table.main2 tr.center td.center {
 
 table.main2 tr.center td.right {
     background-image: url(images/right.png);
+    background-repeat: repeat-y;
     width: 29px;
     min-width: 29px;
     height: 29px;
@@ -227,6 +242,7 @@ table.main2 tr.center td.right {
 
 table.main2 tr.bottom td.bottomleft {
     background-image: url(images/bottomleft.png);
+    background-repeat: repeat-y;
     width: 27px;
     min-width: 27px;
     height: 29px;
@@ -235,6 +251,7 @@ table.main2 tr.bottom td.bottomleft {
 
 table.main2 tr.bottom td.bottom {
     background-image: url(images/bottom.png);
+    background-repeat: repeat-x;
     width: 29px;
     height: 29px;
     padding:0px;
@@ -242,6 +259,7 @@ table.main2 tr.bottom td.bottom {
 
 table.main2 tr.bottom td.bottomright {
     background-image: url(images/bottomright.png);
+    background-repeat: no-repeat;
     width: 29px;
     min-width: 29px;
     height: 29px;
@@ -292,11 +310,13 @@ table.news td {
 
 table.news td.news-top {
     background-image: url(images/borderh.png);
+    background-repeat: repeat-x;
     height: 20px;
 }
 
 table.news td.news-bottom {
     background-image: url(images/borderh.png);
+    background-repeat: repeat-x;
     height: 20px;
 }
 
@@ -304,12 +324,14 @@ table.news td.news-leftborder {
     width: 10px;
     min-width: 10px;
     background-image: url(images/news-verticalborder.png);
+    background-repeat: repeat-y;
 }
 
 table.news td.news-rightborder {
     width: 10px;
     min-width: 10px;
     background-image: url(images/news-verticalborder.png);
+    background-repeat: repeat-y;
 }
 
 table.news td.news-left {
@@ -348,6 +370,7 @@ table.main td.main-topleft {
     min-width: 13px;
     min-height: 10px;
     background-image: url(images/main-topleft.png);
+    background-repeat: no-repeat;
 }
 
 table.main td.main-topright {
@@ -356,6 +379,7 @@ table.main td.main-topright {
     min-width: 13px;
     min-height: 10px;
     background-image: url(images/main-topright.png);
+    background-repeat: no-repeat;
 }
 
 table.main td.main-bottomleft {
@@ -364,6 +388,7 @@ table.main td.main-bottomleft {
     min-width: 13px;
     min-height: 10px;
     background-image: url(images/main-bottomleft.png);
+    background-repeat: no-repeat;
 }
 
 table.main td.main-bottomright {
@@ -372,24 +397,28 @@ table.main td.main-bottomright {
     min-width: 13px;
     min-height: 10px;
     background-image: url(images/main-bottomright.png);
+    background-repeat: no-repeat;
 }
 
 table.main td.main-leftborder {
     width: 10px;
     min-width: 10px;
     background-image: url(images/main-leftborder.png);
+    background-repeat: repeat-y;
 }
 
 table.main td.main-top {
     height: 3px;
     min-height: 3px;
     background-image: url(images/main-top.png);
+    background-repeat: repeat-x;
 }
 
 table.main td.main-bottom {
     height: 3px;
     min-height: 3px;
     background-image: url(images/main-bottom.png);
+    background-repeat: repeat-x;
 }
 
 table.main td.main-center {
@@ -400,6 +429,7 @@ table.main td.main-rightborder {
     width: 10px;
     min-width: 10px;
     background-image: url(images/main-rightborder.png);
+    background-repeat: repeat-y;
 }
 
 /*
@@ -432,6 +462,7 @@ td.label-left {
     height: 50px;
     min-height: 50px;
     background-image: url(images/label-left.png);
+    background-repeat: no-repeat;
 }
 
 td.label-right {
@@ -440,24 +471,28 @@ td.label-right {
     height: 50px;
     min-height: 50px;
     background-image: url(images/label-right.png);
+    background-repeat: repeat-y;
 }
 
 table.label td.label-center {
     height: 50px;
     min-height: 50px;
     background-image: url(images/label-center.png);
+    background-repeat: repeat-x;
 }
 
 table.labelclickable td.label-center:hover {
     height: 50px;
     min-height: 50px;
     background-image: url(images/label-hover.png);
+    background-repeat: repeat-x;
 }
 
 table.labelclickable td.label-center {
     height: 50px;
     min-height: 50px;
     background-image: url(images/label-center.png);
+    background-repeat: repeat-x;
 }
 
 span.label-arrow {
@@ -468,6 +503,7 @@ span.label-arrow {
     display:inline;
     float:left;
     background-image: url(images/label-separator.png);
+    background-repeat: no-repeat;
 }
 
 div.label2 {
@@ -490,6 +526,7 @@ td.proglet {
     max-width: 150px;
     max-height: 153px;
     background-image: url(images/proglet.png);
+    background-repeat: no-repeat;
     margin: 10px;
 }
 
@@ -510,6 +547,7 @@ td.progletclickable {
     max-width: 150px;
     max-height: 153px;
     background-image: url(images/proglet.png);
+    background-repeat: no-repeat;
     margin: 10px;
     cursor: pointer;
 }
@@ -522,6 +560,7 @@ td.progletclickable:hover {
     max-width: 150px;
     max-height: 153px;
     background-image: url(images/proglet-activated.png);
+    background-repeat: no-repeat;
     margin: 10px;
     cursor: pointer;
 }
