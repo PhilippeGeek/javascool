@@ -498,5 +498,6 @@ td.proglet span.proglet-image img {
  */
 
 ul.developpers {
-	
+	list-style-image: url(images/mail.png);
+    list-style-position: outside;
 }
