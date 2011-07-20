@@ -17,8 +17,11 @@
 
 <?php echo get_wiki_page('JavaScool:Contacts'); ?>
 
-<img src="images/logo_INRIA.png" alt="INRIA" onClick="gotoloc('inria.fr')" class="imagelink"/>
-<img src="images/logo_unisciel.png" alt="Unisciel" onClick="gotoloc('unisciel.fr')" class="imagelink"/>
-<img src="images/logo_fuscia.png" alt="Fuscia" onClick="gotoloc('fuscia.info')" class="imagelink"/>
-<img src="images/logo_linuxazur.png" alt="Linux Azur" onClick="gotoloc('linux-azur.org')" class="imagelink"/>
-<img src="images/logo_unice.gif" alt="INRIA" onClick="gotoloc('unice.fr')" class="imagelink"/>
+<div class="label2">Partenaires</div>
+
+<table><tr>
+<td><img src="images/logo_INRIA.png" alt="INRIA" onClick="gotoloc('http://www.inria.fr')" class="imagelink"/></td>
+<td><img src="images/logo_unisciel.png" alt="Unisciel" onClick="gotoloc('http://www.unisciel.fr')" class="imagelink"/></td>
+<td><img src="images/logo_fuscia.png" alt="Fuscia" onClick="gotoloc('http://fuscia.info')" class="imagelink"/></td>
+<td><img src="images/logo_unice.gif" alt="INRIA" onClick="gotoloc('http://unice.fr')" class="imagelink"/></td>
+</tr></table>
