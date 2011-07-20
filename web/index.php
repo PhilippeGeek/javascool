@@ -33,6 +33,7 @@ include("includes/get_wiki_page.php");
                 addListeners();/*
                 showButtons();
                 plugContent();*/
+                animationrunning=true;
                 updateAnimation(1);
             }
             
@@ -65,6 +66,15 @@ include("includes/get_wiki_page.php");
                     middles[i].addEventListener("mouseover", mouseOverMenu, false);
                     middles[i].addEventListener("mouseout", mouseOutMenu, false);
                 }
+                window.addEventListener("resize", windowResized, false);
+            }
+            
+            function windowResized() {
+                if (animationrunning) return;
+                framePosition=getPos(document.getElementById("header"));
+                var w=getSize(document.getElementById("header")).width;
+                document.getElementById("plugright").style.left=(framePosition.left+w+316-document.getElementById("plugright").offsetWidth)-(animationend-30)*3+"px";
+                document.getElementById("plugleft").style.left=(framePosition.left-316)+(frame-30)*3+"px";
             }
             
             function mouseOverMenuSide(event) {
@@ -147,6 +157,9 @@ include("includes/get_wiki_page.php");
                 return output;
             }
             
+            var animationend=85;
+            var animationrunning=false;
+            
             function updateAnimation(increment) {
                 var plugleft=document.getElementById("plugleft");
                 var plugright=document.getElementById("plugright");
@@ -166,7 +179,7 @@ include("includes/get_wiki_page.php");
                     plugright.style.top=30;
                 }
                 
-                if (frame==60) {
+                if (frame==80) {
                     var lights=getElementsByClass("pluglight");
                     for (i=0; i<lights.length; i++) {
                         lights[i].src="images/ledgreen.png";
@@ -174,8 +187,10 @@ include("includes/get_wiki_page.php");
                 }
                 
                 frame+=increment;
-                if (frame<65)
-                    setTimeout("updateAnimation("+increment+")",5);
+                if (frame<animationend)
+                    setTimeout("updateAnimation("+increment+")",10);
+                else
+                    animationrunning=false;
             }
 
         </script>
