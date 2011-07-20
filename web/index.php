@@ -30,9 +30,10 @@ include("includes/get_wiki_page.php");
             
             function loaded() {
                 applyLabelStyles();
-                addListeners();
+                addListeners();/*
                 showButtons();
-                plugContent();
+                plugContent();*/
+                updateAnimation();
             }
             
             function applyLabelStyles() {
@@ -106,6 +107,7 @@ include("includes/get_wiki_page.php");
             
             var w=300;
             var h=200;
+            var frame=1;
             
             function showButtons() {
                 var middles=getElementsByClass('menuitem');
@@ -121,8 +123,29 @@ include("includes/get_wiki_page.php");
                 document.getElementById("mainPanel").style.marginTop=h+"px";
                 
                 h--;
-                if (h>-10) 
+                if (h>0) 
                     setTimeout("plugContent()",1);
+            }
+            
+            function updateAnimation() {
+                var plugleft=document.getElementById("plugleft");
+                var plugright=document.getElementById("plugright");
+                if (frame<30) {
+                    plugleft.style.top=120-frame*3+"px";
+                    plugleft.style.left="120px";
+                    plugright.style.top=120-frame*3+"px";
+                    plugright.style.right="120px";
+                }
+                if (frame>30) {
+                    plugleft.style.left=120+(frame-30)*3+"px";
+                    plugleft.style.top=30;
+                    plugright.style.right=120+(frame-30)*3+"px";
+                    plugright.style.top=30;
+                }
+                
+                frame++;
+                if (frame<65)
+                    setTimeout("updateAnimation()",100);
             }
 
         </script>
@@ -144,6 +167,17 @@ include("includes/get_wiki_page.php");
         <div class="main2" id="mainPanel">
             <table class="main2"><tr class="top"><td class="topleft"></td><td class="top"></td><td class="topright"></td></tr>
                 <tr class="center"><td class="left"></td><td class="center">
+                        <table style="width: 100%">
+                            <tr>
+                                <td>
+                                    <img src="images/ledgreen.png" style="width: 50px; height: 50px;"/>
+                                </td>
+                                <td style="width: 100%"></td>
+                                <td>
+                                    <img src="images/ledred.png" style="width: 50px; height: 50px;"/>
+                                </td>
+                            </tr>
+                        </table>
                         <?php
                         include($include);
                         ?>

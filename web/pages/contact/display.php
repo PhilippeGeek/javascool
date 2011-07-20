@@ -5,8 +5,8 @@
 <div class="label2">L'&eacute;quipe de d&eacute;veloppement</div>
 <ul class="developpers">
     <li>Philippe Vienne &lt;philippe@vienne.fr></li>
-    <li>Guillaume Matheron &lt;guillaume@matheron.fr>></li>
-</ul> avec l'aide David Pichardie &lt;David.Pichardie@inria.fr> et Thierry Vi&eacute;ville &lt;thierry@vieville.fr>.
+    <li>Guillaume Matheron &lt;guillaumematheron06@gmail.com></li>
+</ul> <p>avec l'aide David Pichardie &lt;David.Pichardie@inria.fr> et Thierry Vi&eacute;ville &lt;thierry@vieville.fr>.</p>
 
 <div class="label2">Soumettre un bug ou proposer une fonctionnalit&eacute;</div>
 <p>Vous pouvez trouver notre syst&egrave;me de gestion des t&acirc;ches &agrave; l'adresse suivante : <a href="http://code.google.com/p/javascool/issues/list">http://code.google.com/p/javascool/issues/list</a></p>

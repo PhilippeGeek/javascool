@@ -10,3 +10,6 @@
 <td id="menu6_l" class="menu<?php echo(($page=="contact")?"selected":""); ?>begin"><td id="menu6" onclick="gotoloc('index.php?page=contact')" class="<?php echo(($page=="contact")?"menuitemselected":"menuitem"); ?>">Contact</td><td class="menu<?php echo(($page=="contact")?"selected":""); ?>end" id="menu6_r">
 
 <td class="menu-right"></td></tr></table>
+
+<img src="images/plugleft.png" alt="" id="plugleft" />
+<img src="images/plugright.png" alt="" id="plugright"/>
