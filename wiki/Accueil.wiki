@@ -1,9 +1,9 @@
 #summary Ce wiki n'est actuellement pas utilisé.
 
-* Aller sur le [http://wiki.inria.fr/sciencinfolycee/Cat%C3%A9gorie:JavaScool wiki] du [http://science-info-lycee.fr «SIL:O!]
-
-Liens :
-
+Voici:
 * Le [http://javascool.fr site officiel].
-
 * L'accès [http://code.google.com/p/javascool/source/browse web aux sources].
+* L'accès au [http://wiki.inria.fr/sciencinfolycee/Catégorie:JavaScool wiki] JavaScool du [http://science-info-lycee.fr «SIL:O!»]
+* Et aux applications 
+** [http://code.google.com/p/javascool/source/browse/tags/javascool.jar javascool] et 
+** [http://code.google.com/p/javascool/source/browse/tags/javascoolbuilder.jar javascoolbuilder]. 
