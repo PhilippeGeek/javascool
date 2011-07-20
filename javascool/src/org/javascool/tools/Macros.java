@@ -6,6 +6,9 @@ package org.javascool.tools;
 import org.javascool.widgets.Console;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
 import java.util.Calendar;
 import java.util.logging.Level;
@@ -13,6 +16,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import org.javascool.JVSMain;
+import org.javascool.gui.JVSFileEditorTabs;
 import org.javascool.gui.JVSMainPanel;
 
 /** Contain useful function for help student to program
@@ -34,7 +38,7 @@ public class Macros {
             try {
                 return (new FileInputStream(filePath + "/" + fileName));
             } catch (FileNotFoundException ex) {
-                Logger.getLogger(Functions.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Macros.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return null;
