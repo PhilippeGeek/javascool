@@ -22,7 +22,7 @@ import javax.swing.text.BadLocationException;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rtextarea.Gutter;
 import org.fife.ui.rtextarea.RTextScrollPane;
-import org.javascool.JvsMain;
+import org.javascool.JVSMain;
 import org.javascool.gui.JVSFileEditorTabs;
 import org.javascool.gui.JVSMainPanel;
 
@@ -66,11 +66,11 @@ public class JVSEditor extends JPanel implements Editor{
         textArea.setText("");
         
         KeyStroke key = KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.CTRL_MASK);
-        if(JvsMain.isMac()){
+        if(JVSMain.isMac()){
             key=KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.META_MASK);
         }
         KeyStroke copy_key = KeyStroke.getKeyStroke(KeyEvent.VK_C, Event.CTRL_MASK);
-        if(JvsMain.isMac()){
+        if(JVSMain.isMac()){
             copy_key=KeyStroke.getKeyStroke(KeyEvent.VK_C, Event.META_MASK);
         }
 

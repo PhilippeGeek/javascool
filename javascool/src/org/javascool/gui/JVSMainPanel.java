@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.text.BadLocationException;
 import org.javascool.JVSFile;
-import org.javascool.JvsMain;
+import org.javascool.JVSMain;
 import org.javascool.tools.Utils;
 import org.javascool.editor.JVSEditor;
 import org.javascool.tools.Macros;
@@ -28,7 +28,7 @@ import org.javascool.proglet.ProgletManager;
 
 /** The main panel for Java's cool
  * This class wich is very static contain all that we need to run Java's cool like save and open file command.
- * This class can only be called by JvsMain on instance otherwise it can throw very big errors
+ * This class can only be called by JVSMain on instance otherwise it can throw very big errors
  * @author Philippe Vienne
  */
 public final class JVSMainPanel extends JPanel {
@@ -48,8 +48,8 @@ public final class JVSMainPanel extends JPanel {
     private static Boolean noFileEdited = true;
 
     /** This is the initializer command for the main panel
-     * !! WARNING !! Call it only in JvsMain
-     * @see JvsMain
+     * !! WARNING !! Call it only in JVSMain
+     * @see JVSMain
      */
     public JVSMainPanel() {
         this.setVisible(true);
@@ -118,7 +118,7 @@ public final class JVSMainPanel extends JPanel {
      */
     public static void openFile() {
         final JFileChooser fc = new JFileChooser();
-        int returnVal = fc.showOpenDialog(JvsMain.getJvsMainFrame());
+        int returnVal = fc.showOpenDialog(JVSMain.getJvsMainFrame());
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             String path = fc.getSelectedFile().getAbsolutePath();
             if (noFileEdited) {
@@ -225,7 +225,7 @@ public final class JVSMainPanel extends JPanel {
         // If user no have dialog to stop close, we create one
         if (j == 0) {
             final int n = JOptionPane.showConfirmDialog(
-                    JvsMain.getJvsMainFrame(),
+                    JVSMain.getJvsMainFrame(),
                     "Voulez vous vraiment quitter Java's cool ?",
                     "Confirmation",
                     JOptionPane.YES_NO_OPTION);
@@ -294,7 +294,7 @@ public final class JVSMainPanel extends JPanel {
         // If user no have dialog to stop close, we create one
         if (j == 0) {
             final int n = JOptionPane.showConfirmDialog(
-                    JvsMain.getJvsMainFrame(),
+                    JVSMain.getJvsMainFrame(),
                     "Voulez vous vraiment continuer ?",
                     "Confirmation",
                     JOptionPane.YES_NO_OPTION);
@@ -351,7 +351,7 @@ public final class JVSMainPanel extends JPanel {
     public static int saveFileIdBeforeClose(String fileId) {
         JVSFile file = JVSMainPanel.getEditorTabs().getFile(fileId);
         int result = JOptionPane.showConfirmDialog(
-                JvsMain.getJvsMainFrame(),
+                JVSMain.getJvsMainFrame(),
                 "Voulez vous enregistrer " + file.getName() + " avant de continuer ?");
         if (result == JOptionPane.YES_OPTION) {
             if (JVSMainPanel.getEditorTabs().saveFile(fileId)) {
@@ -442,19 +442,19 @@ public final class JVSMainPanel extends JPanel {
      * @return The current instance of JvsMainPanel
      */
     public static JVSMainPanel getThisInStatic() {
-        return JvsMain.getJvs();
+        return JVSMain.getJvs();
     }
 
     public static class Dialog {
 
         /** Show a success dialog */
         public static void success(String title, String message) {
-            JOptionPane.showMessageDialog(JvsMain.getJvsMainFrame(), message, title, JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(JVSMain.getJvsMainFrame(), message, title, JOptionPane.INFORMATION_MESSAGE);
         }
 
         /** Show an error dialog */
         public static void error(String title, String message) {
-            JOptionPane.showMessageDialog(JvsMain.getJvsMainFrame(), message, title, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(JVSMain.getJvsMainFrame(), message, title, JOptionPane.ERROR_MESSAGE);
         }
     }
 }
