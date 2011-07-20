@@ -28,8 +28,6 @@ table.header td.logo {
 }
 
 table.header td.menuitem {
-    width:182px;
-    min-width: 182px;
     height:70px;
     margin:0px;
     padding-left:0px;
@@ -40,15 +38,6 @@ table.header td.menuitem {
     cursor:pointer;
 }
 
-table.header td.menuitem:hover {
-    background-color:#AAA;
-    margin:0px;
-    padding-left:0px;
-    padding-right:0px;
-    text-align:center;
-    background-image:url(images/menu-active.png);
-}
-
 table.header td.menuitemselected {
     background-color:#AAA;
     margin:0px;
@@ -56,14 +45,85 @@ table.header td.menuitemselected {
     padding-right:0px;
     text-align:center;
     background-image:url(images/menu-active.png);
-    width:182px;
-    min-width: 182px;
     height:70px;
     margin:0px;
     padding-left:0px;
     padding-right:0px;
     padding-top:0px;
     text-align:center;
+    cursor:pointer;
+}
+
+table.header td.menuselectedbegin {
+    background-color:#AAA;
+    margin:0px;
+    padding-left:0px;
+    padding-right:0px;
+    text-align:center;
+    background-image:url(images/menu-active-left.png);
+    width:33px;
+    min-width: 33px;
+    height:71px;
+    margin:0px;
+    padding-left:0px;
+    padding-right:0px;
+    padding-top:0px;
+    text-align:center;
+    cursor:pointer;
+}
+
+table.header td.menubegin {
+    background-color:#AAA;
+    margin:0px;
+    padding-left:0px;
+    padding-right:0px;
+    text-align:center;
+    background-image:url(images/menu-item.png);
+    width:33px;
+    min-width: 33px;
+    height:71px;
+    margin:0px;
+    padding-left:0px;
+    padding-right:0px;
+    padding-top:0px;
+    text-align:center;
+    cursor:pointer;
+}
+
+table.header td.menuselectedend {
+    background-color:#AAA;
+    margin:0px;
+    padding-left:0px;
+    padding-right:0px;
+    text-align:center;
+    background-image:url(images/menu-active-right.png);
+    width:33px;
+    min-width: 33px;
+    height:71px;
+    margin:0px;
+    padding-left:0px;
+    padding-right:0px;
+    padding-top:0px;
+    text-align:center;
+    cursor:pointer;
+}
+
+table.header td.menuend {
+    background-color:#AAA;
+    margin:0px;
+    padding-left:0px;
+    padding-right:0px;
+    text-align:center;
+    background-image:url(images/menu-item.png);
+    width:33px;
+    min-width: 33px;
+    height:71px;
+    margin:0px;
+    padding-left:0px;
+    padding-right:0px;
+    padding-top:0px;
+    text-align:center;
+    cursor:pointer;
 }
 
 table.header td.menu-left {
