@@ -1,4 +1,4 @@
-<table><tr><td><span class="labelclickable" onclick="gotoloc('index.php');">Java's Cool</span><span class="label-arrow"></span><span class="label">Accueil</span></td></tr></table><br />
+<table class="labelMain"><tr><td><span class="labelclickable" onclick="gotoloc('index.php');">Java's Cool</span><span class="label-arrow"></span><span class="label">Accueil</span></td></tr></table><br />
 
 <div class="home">
     <table class="home"><tr><td class="news">
