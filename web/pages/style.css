@@ -24,7 +24,7 @@ table.header td.logo {
 	text-align:center;
 	padding:3px;
 	margin:0px;
-	background-image:url(images/menu-item_bak.png);
+	background-image:url(images/menu-item.png);
 }
 
 table.header td.menuitem {
@@ -36,7 +36,7 @@ table.header td.menuitem {
 	padding-right:0px;
 	padding-top:0px;
 	text-align:center;
-	background-image:url(images/menu-item_bak.png);
+	background-image:url(images/menu-item.png);
 	cursor:pointer;
 }
 
@@ -46,7 +46,7 @@ table.header td.menuitem:hover {
 	padding-left:0px;
 	padding-right:0px;
 	text-align:center;
-	background-image:url(images/menu-active_bak.png);
+	background-image:url(images/menu-active.png);
 }
 
 table.header td.menuitemselected {
@@ -55,7 +55,7 @@ table.header td.menuitemselected {
 	padding-left:0px;
 	padding-right:0px;
 	text-align:center;
-	background-image:url(images/menu-active_bak.png);
+	background-image:url(images/menu-active.png);
 	width:182px;
 	min-width: 182px;
 	height:70px;
