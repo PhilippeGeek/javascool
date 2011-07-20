@@ -1,5 +1,7 @@
 <?php
 include('includes/sal.class.php');
+include("includes/get_wiki_page.php");
+
 ?>
 <!DOCTYPE html>
 <html>
