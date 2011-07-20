@@ -1,21 +1,32 @@
 /*
- * Menu and spacers
-*/
-
+ * Animations
+ */
+ 
 #plugleft {
     position: absolute;
     z-index: -100;
+    display:none;
 }
 
 #plugright {
     position: absolute;
     z-index: -100;
+    display:none;
 }
 
+/*
+ * Globals
+ */
+ 
 table {
     margin:auto;
     border-collapse:collapse;
 }
+
+
+/*
+ * Menu and spacers
+*/
 
 table.header {
     position:relative;
@@ -211,7 +222,7 @@ table.main2 tr.top td.top {
 
 table.main2 tr.center td.left {
     background-image: url(images/left.png);
-    background-repeat: repeat-x;
+    background-repeat: repeat-y;
     width: 27px;
     min-width: 27px;
     height: 29px;
@@ -264,6 +275,10 @@ table.main2 tr.bottom td.bottomright {
     min-width: 29px;
     height: 29px;
     padding:0px;
+}
+
+#mainPanel {
+    position: relative;
 }
 
 /*

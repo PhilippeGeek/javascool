@@ -33,10 +33,8 @@ include("includes/get_wiki_page.php");
                 addListeners();/*
                 showButtons();
                 plugContent();*/
-                animationrunning=true;
                 updateAnimation(1);
             }
-            
             function applyLabelStyles() {
                 var labels=getElementsByClass('label');
                 for (i=0; i<labels.length; i++) {
@@ -47,7 +45,6 @@ include("includes/get_wiki_page.php");
                     labels[i].innerHTML='<table class="labelclickable"><tr><td class="label-left"></td><td class="label-center">'+labels[i].innerHTML+'</td><td class="label-right"></td></tr></table>';
                 }
             }
-            
             function addListeners() {
                 var lefts=getElementsByClass('menubegin');
                 for (i=0; i<lefts.length; i++) {
@@ -68,7 +65,6 @@ include("includes/get_wiki_page.php");
                 }
                 window.addEventListener("resize", windowResized, false);
             }
-            
             function windowResized() {
                 if (animationrunning) return;
                 framePosition=getPos(document.getElementById("header"));
@@ -76,44 +72,40 @@ include("includes/get_wiki_page.php");
                 document.getElementById("plugright").style.left=(framePosition.left+w+316-document.getElementById("plugright").offsetWidth)-(animationend-30)*3+"px";
                 document.getElementById("plugleft").style.left=(framePosition.left-316)+(frame-30)*3+"px";
             }
-            
             function mouseOverMenuSide(event) {
                 var menuItemName=this.id.substr(0,this.id.length-2);
                 document.getElementById(menuItemName).className="menuitemselected";
                 document.getElementById(menuItemName+"_l").className="menuselectedbegin";
                 document.getElementById(menuItemName+"_r").className="menuselectedend";
             }
-            
             function mouseOutMenuSide(event) {
                 var menuItemName=this.id.substr(0,this.id.length-2);
                 document.getElementById(menuItemName).className="menuitem";
                 document.getElementById(menuItemName+"_l").className="menubegin";
                 document.getElementById(menuItemName+"_r").className="menuend";
             }
-            
             function mouseOverMenu(event) {
                 var menuItemName=this.id;
                 document.getElementById(menuItemName).className="menuitemselected";
                 document.getElementById(menuItemName+"_l").className="menuselectedbegin";
                 document.getElementById(menuItemName+"_r").className="menuselectedend";
             }
-            
             function mouseOutMenu(event) {
                 var menuItemName=this.id;
                 document.getElementById(menuItemName).className="menuitem";
                 document.getElementById(menuItemName+"_l").className="menubegin";
                 document.getElementById(menuItemName+"_r").className="menuend";
             }
-            
             function mouseClickMenuSide(event) {
                 var menuItemName=this.id.substr(0,this.id.length-2);
                 var elm=document.getElementById(menuItemName);
                 elm.onclick();
             }
-            
-            function gotoloc(loc) {
-                
+            function gotolocnow(loc) {
                 document.location=loc;
+            }
+            function gotoloc(loc) {
+                updateAnimation(-4,loc);
             }
             
             var w=300;
@@ -129,7 +121,6 @@ include("includes/get_wiki_page.php");
                 if (w>0)
                     setTimeout("showButtons()",1);
             }
-            
             function plugContent() {
                 document.getElementById("mainPanel").style.marginTop=h+"px";
                 
@@ -149,7 +140,6 @@ include("includes/get_wiki_page.php");
                 output.top = mytop;
                 return output;
             }
-            
             function getSize(obj) {
                 var output=new Object();
                 output.width=obj.offsetWidth;
@@ -161,8 +151,18 @@ include("includes/get_wiki_page.php");
             var animationrunning=false;
             
             function updateAnimation(increment) {
+                return updateAnimation(increment,"");
+            }
+            
+            function updateAnimation(increment,redirect) {
                 var plugleft=document.getElementById("plugleft");
                 var plugright=document.getElementById("plugright");
+                var mainPanel=document.getElementById("mainPanel");
+                if (!animationrunning) {
+                    animationrunning=true;
+                    plugleft.style.display="block";
+                    plugright.style.display="block";
+                }
                 framePosition=getPos(document.getElementById("header"));
                 var w=getSize(document.getElementById("header")).width;
                 
@@ -171,12 +171,13 @@ include("includes/get_wiki_page.php");
                     plugleft.style.left=(framePosition.left-316)+"px";
                     plugright.style.top=120-frame*3+"px";
                     plugright.style.left=(framePosition.left+w+316-document.getElementById("plugright").offsetWidth)+"px";
+                    mainPanel.style.top=(29*3-frame*3)+"px";
                 }
                 if (frame>30) {
                     plugleft.style.left=(framePosition.left-316)+(frame-30)*3+"px";
-                    plugleft.style.top=30;
+                    plugleft.style.top="30px";
                     plugright.style.left=(framePosition.left+w+316-document.getElementById("plugright").offsetWidth)-(frame-30)*3+"px";
-                    plugright.style.top=30;
+                    plugright.style.top="30px";
                 }
                 
                 if (frame==80) {
@@ -187,10 +188,12 @@ include("includes/get_wiki_page.php");
                 }
                 
                 frame+=increment;
-                if (frame<animationend)
-                    setTimeout("updateAnimation("+increment+")",10);
-                else
+                if (frame>=0 && frame<animationend)
+                    setTimeout("updateAnimation("+increment+",\""+redirect+"\")",10);
+                else {
                     animationrunning=false;
+                    if (redirect!="" && redirect!="undefined") gotolocnow(redirect);
+                }
             }
 
         </script>
