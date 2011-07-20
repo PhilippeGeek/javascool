@@ -445,6 +445,10 @@ table.label {
     float:left;
 }
 
+table.labelMain {
+    margin-left:0px;
+}
+
 table.labelclickable {
     display: block;
     float:left;

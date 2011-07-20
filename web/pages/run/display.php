@@ -1,4 +1,4 @@
-<table><tr><td><span class="labelclickable" onclick="gotoloc('index.php');">Java's Cool</span><span class="label-arrow"></span><span class="label">Lancement</span></td></tr></table><br />
+<table class="labelMain"><tr><td><span class="labelclickable" onclick="gotoloc('index.php');">Java's Cool</span><span class="label-arrow"></span><span class="label">Lancement</span></td></tr></table><br />
 <div class="display">
     <div class="label2">Linux</div>
 	Pour lancer Java's Cool sans installation, cliquez sur le lien ci-dessus. Si le lancement échoue, vous devrez probablement installer Java.

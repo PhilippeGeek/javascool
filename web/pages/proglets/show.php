@@ -6,7 +6,7 @@ Sal::validateProgletId($progletId);
 $progletName = Sal::progletIdToName($progletId);
 ?>
 
-<table>
+<table class="labelMain">
     <tr>
         <td>
             <span class="labelclickable" onclick="gotoloc('index.php');">Java's Cool</span>
