@@ -26,7 +26,6 @@ public class JVSWidgetPanel extends JVSTabs {
         if (proglet.getHelpWidget()!=null){
             this.add("Aide de la proglet", "", proglet.getHelpWidget());
         }
-        this.openWebTab("org/javascool/doc-files/memo.html","Mémo");
     }
 
     public JPanel getProgletPanel() {

@@ -6,7 +6,7 @@ package org.javascool.gui;
 
 import java.awt.Component;
 import javax.swing.JSplitPane;
-import org.javascool.JvsMain;
+import org.javascool.JVSMain;
 import org.javascool.widgets.Console;
 
 /** The main Split Pane
@@ -47,6 +47,6 @@ public class JVSSplitPane extends JSplitPane{
 
     /** Get the Main Panel to have main functions */
     private static JVSMainPanel getJvsMainPanel() {
-        return JvsMain.getJvsMainPanel();
+        return JVSMain.getJvsMainPanel();
     }
 }

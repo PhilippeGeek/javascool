@@ -18,7 +18,6 @@ import javax.swing.JEditorPane;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 import java.net.URL;
-import java.util.Vector;
 import java.net.URLEncoder;
 import java.net.URLDecoder;
 import javax.swing.text.Document;
@@ -52,9 +51,9 @@ public class JVSHtmlDisplay extends JPanel {
         bar.setBorderPainted(false);
         bar.setFloatable(false);
         try {
-            bar.add(home = new JButton("Page initiale", Utils.getIcon(Class.forName("org.javascool.JvsMain").getResource("doc-files/icon16/refresh.png").toString())));
-            bar.add(prev = new JButton("Page précédente", Utils.getIcon(Class.forName("org.javascool.JvsMain").getResource("doc-files/icon16/prev.png").toString())));
-            bar.add(next = new JButton("Page suivante", Utils.getIcon(Class.forName("org.javascool.JvsMain").getResource("doc-files/icon16/next.png").toString())));
+            bar.add(home = new JButton("Page initiale", Utils.getIcon(Class.forName("org.javascool.JVSMain").getResource("doc-files/icon16/refresh.png").toString())));
+            bar.add(prev = new JButton("Page précédente", Utils.getIcon(Class.forName("org.javascool.JVSMain").getResource("doc-files/icon16/prev.png").toString())));
+            bar.add(next = new JButton("Page suivante", Utils.getIcon(Class.forName("org.javascool.JVSMain").getResource("doc-files/icon16/next.png").toString())));
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(JVSHtmlDisplay.class.getName()).log(Level.SEVERE, null, ex);
         }

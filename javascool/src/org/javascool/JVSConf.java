@@ -23,7 +23,7 @@ public class JVSConf {
 
     public JVSConf() {
         if (!configurationFile.exists()) {
-            Utils.saveString(configurationFile.getAbsolutePath(), "version:" + JvsMain.title);
+            Utils.saveString(configurationFile.getAbsolutePath(), "version:" + JVSMain.title);
         }
         this.loadConf();
     }

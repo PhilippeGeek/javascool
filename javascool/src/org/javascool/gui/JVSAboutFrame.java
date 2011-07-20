@@ -12,7 +12,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import org.javascool.JvsMain;
+import org.javascool.JVSMain;
 import org.javascool.tools.Utils;
 
 /** Open the About Windows
@@ -22,12 +22,12 @@ public class JVSAboutFrame extends JDialog {
 
     /** Open a new aboutFrame */
     public JVSAboutFrame() {
-        super(new JFrame(), "About "+JvsMain.title, true);
+        super(new JFrame(), "About "+JVSMain.title, true);
         
-        this.setIconImage(Utils.getIcon(JvsMain.logo).getImage());
+        this.setIconImage(Utils.getIcon(JVSMain.logo).getImage());
         this.setLayout(new BorderLayout());
         getContentPane().add(new JLabel("<html>"+
-                JvsMain.title+" est un logiciel conçut en colaboration avec : <br/><center>"
+                JVSMain.title+" est un logiciel conçut en colaboration avec : <br/><center>"
                 + "Philippe Vienne<br/>"
                 + "Guillaume Matheron<br/>"
                 + "Thierry Viéville<br/>"

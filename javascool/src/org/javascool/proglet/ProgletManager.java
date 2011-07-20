@@ -17,7 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
-import org.javascool.JvsMain;
+import org.javascool.JVSMain;
 import org.javascool.tools.Utils;
 
 /** The proglets manager class
@@ -124,7 +124,7 @@ public class ProgletManager {
             }
         });
         fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        switch (fc.showDialog(JvsMain.getJvsMainFrame(), "Installer le "
+        switch (fc.showDialog(JVSMain.getJvsMainFrame(), "Installer le "
                 + "scketchbook")) {
             case JFileChooser.APPROVE_OPTION:
                 try {
@@ -147,7 +147,7 @@ public class ProgletManager {
         if (!directory.exists() || !directory.isDirectory()) {
             throw new Exception(directory + " is not a proglet folder");
         }
-        JvsMain.getJvsConf().set("sketchbook", directory.getPath());
+        JVSMain.getJvsConf().set("sketchbook", directory.getPath());
     }
 
     /** List all proglets in the current jar */

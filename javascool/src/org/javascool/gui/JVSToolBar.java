@@ -16,7 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JToolBar;
-import org.javascool.JvsMain;
+import org.javascool.JVSMain;
 import org.javascool.tools.Utils;
 import org.javascool.widgets.Console;
 
@@ -235,7 +235,7 @@ public class JVSToolBar extends JToolBar {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                JvsMain.getJvsConf().set("sketchbook", "");
+                JVSMain.getJvsConf().set("sketchbook", "");
             }
             
         });
@@ -298,6 +298,6 @@ public class JVSToolBar extends JToolBar {
 
     /** Get the Main Panel to have main functions */
     private static JVSMainPanel getJvsMainPanel() {
-        return JvsMain.getJvsMainPanel();
+        return JVSMain.getJvsMainPanel();
     }
 }

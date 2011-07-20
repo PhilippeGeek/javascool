@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import org.javascool.JVSFile;
-import org.javascool.JvsMain;
+import org.javascool.JVSMain;
 import org.javascool.editor.JVSEditor;
 import org.javascool.jvs.Jvs2Java;
 import org.javascool.widgets.Console;
@@ -379,7 +379,7 @@ public class JVSFileEditorTabs extends JVSTabs implements FileEditorTabs{
 
     /** Get the Main Panel to have main functions */
     private static JVSMainPanel getJvsMainPanel() {
-        return JvsMain.getJvsMainPanel();
+        return JVSMain.getJvsMainPanel();
     }
 
     @Override

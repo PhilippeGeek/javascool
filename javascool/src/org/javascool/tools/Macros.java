@@ -12,7 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import org.javascool.JvsMain;
+import org.javascool.JVSMain;
 import org.javascool.gui.JVSMainPanel;
 
 /** Contain useful function for help student to program
@@ -181,7 +181,7 @@ public class Macros {
      */
     public static String readString(String question) {
         String s = (String) JOptionPane.showInputDialog(
-                JvsMain.getJvsMainFrame(),
+                JVSMain.getJvsMainFrame(),
                 question,
                 "Java's cool",
                 JOptionPane.PLAIN_MESSAGE);
@@ -241,7 +241,7 @@ public class Macros {
     
     public static Boolean readBoolean(String question) {
         int r = JOptionPane.showConfirmDialog(
-                JvsMain.getJvsMainFrame(),
+                JVSMain.getJvsMainFrame(),
                 question,
                 "Java's cool",
                 JOptionPane.YES_NO_OPTION);
