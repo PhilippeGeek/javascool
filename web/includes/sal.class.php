@@ -5,7 +5,7 @@
  */
 class Sal {
     public static function validatePage($page) {
-        if (!preg_match('#^[a-zA-Z][A-Za-z0-9]+$#', $page))
+        if (!preg_match('#^[a-zA-Zé][A-Za-z0-9é]+$#', $page))
             die("Error : page name not valid");
     }
 
