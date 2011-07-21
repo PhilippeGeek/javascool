@@ -1,4 +1,4 @@
-package org.javascool.proglets.MaProglet;
+package org.javascool.proglets.maProglet;
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
