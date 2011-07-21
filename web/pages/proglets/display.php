@@ -3,7 +3,8 @@
     <table class="proglets">
         <tr>
             <?php
-            $proglets = array("ingredients", "game", "game", "game", "game", "game", "game", "game", "game", "game", "game", "game", "game", "game", "game", "game", "game", "game", "game", "game", "game", "game", "game");
+            $sketchbook=opendir('sketchbook');
+            $proglets = array();
             foreach ($proglets as &$id) {
                 $name = Sal::progletIdToName($id);
                 echo('<script type="text/javascript">document.write(\'<td class="progletclickable" onClick="gotoloc(\\\'index.php?page=proglets&action=show&id=' . $id . '\\\')"><span>' . $name . '</span><span class="proglet-image"><img src="images/' . $id . '.png" alt=""/></span></td>\');</script>');

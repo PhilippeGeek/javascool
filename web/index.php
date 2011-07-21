@@ -238,14 +238,15 @@ include("includes/get_wiki_page.php");
         function get_page_contents($name) {
             // Manage cache mechanism
             $cname = rawurlencode($name);
-            $cache = '/home/groups/javascool/htdocs/v3/.htcache';
-            if (!file_exists($cache))
-                mkdir($cache, 0777);
+            $cache = '.htcache';
+      /*      if (!file_exists($cache))
+                mkdir($cache, 0777);*/  //DEBUG
             if (file_exists($cache . '/' . $cname))
                 return file_get_contents($cache . '/' . $cname);
             else {
                 $notfound = "<h1>Désolé ! Cette page est en construction ou inacessible ..</h1><a href=\"javascript:history.back()\">Revenir en arri&egrave;re</a>";
                 if (ereg('^(api|doc):.*', $name)) {
+                    //TODO security
                     // Traitement d'une demande de page de doc java ou de doc du site
                     $pwd = getcwd();
                     $ext = ereg_replace('^(api|doc):.*', '\\1', $name);
@@ -257,6 +258,7 @@ include("includes/get_wiki_page.php");
                     else
                         $base = substr(realpath(dirname($file)), strlen($pwd) + 1);
                     $debug = "<pre>{pwd = '$pwd', ext = '$ext', pfx = '$pfx', name ='$name', base ='$base', file ='$file'}</pre>";
+                    echo $debug;
                     if (!file_exists($file))
                         return $notfound;
                     $page = file_get_contents($file);
@@ -286,7 +288,7 @@ include("includes/get_wiki_page.php");
 
         // Usage: http://javascool.gforge.inria.fr/?kezako=niquelekacheux
         if (isset($_GET['kezako']) && $_GET['kezako'] == 'niquelekacheux') {
-            passthru("rm -rf v3/.htcache .htcache", &$status);
+            passthru("rm -rf .htcache/*", &$status);
             echo "wraz.status = $status\n";
             exit;
         }
