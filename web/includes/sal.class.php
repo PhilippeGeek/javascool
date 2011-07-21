@@ -1,11 +1,11 @@
 <?php
-
+//TODO doc
 /*
  * Security abstraction layer
  */
 class Sal {
     public static function validatePage($page) {
-        if (!preg_match('#^[a-z][a-z0-9]+$#', $page))
+        if (!preg_match('#^[a-zA-Z][A-Za-z0-9]+$#', $page))
             die("Error : page name not valid");
     }
 

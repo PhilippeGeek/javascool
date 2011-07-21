@@ -60,15 +60,16 @@ function get_page_contents($name) {
   }
   file_put_contents($cache.'/'.$cname, $page); chmod($cache.'/'.$cname, 0666);
   return $page;
-}
+}/*
 // Usage: http://javascool.gforge.inria.fr/?kezako=niquelekacheux
 if(isset($_GET['kezako']) && $_GET['kezako'] == 'niquelekacheux') { passthru("rm -rf v3/.htcache .htcache", &$status); echo "wraz.status = $status\n"; exit; }
 
-// Usage: http://javascool.gforge.inria.fr/?page=<page>
+// Usage: http://javascool.gforge.inria.fr/?page=<page>&mode=wiki
   $name = isset($_GET['page']) ? $_GET['page'] : "Accueil";
   $page = get_page_contents($name);
-  $menu = get_page_contents("Menu");
+  $menu = get_page_contents("Menu");*/
 ?>
+
 <!DOCTYPE html PUBliC "-//W3C//Dtd XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/Dtd/xhtml1-transitional.dtd"> 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr"> 
 <head> 
