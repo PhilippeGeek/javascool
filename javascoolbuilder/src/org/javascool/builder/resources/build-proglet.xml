@@ -4,15 +4,19 @@
     
     <target name="default">
         <xslt destdir="." extension=".htm" style="${jvs.hdocxslt}">
-            <include name="**/*.xml"/>
-            <exclude name="build.xml"/>
+            <include name="*/*.xml"/>
             <classpath location="${jvs.saxon}" />
         </xslt>
         <xslt destdir="." extension=".html" style="${jvs.hdocxslt}">
-            <include name="**/*.xml"/>
-            <exclude name="build.xml"/>
+            <include name="*/*.xml"/>
             <classpath location="${jvs.saxon}" />
         </xslt>
+        <copy todir=".">
+            <fileset dir="${proglet.doc}">
+                <exclude name="**/*.xml"/>
+            </fileset>
+        </copy>
+        <delete dir="${proglet.doc}"/>
         <delete dir="${proglet.src}"/>
         <mkdir dir="${proglet.build}"/>
         <mkdir dir="${proglet.src}"/>

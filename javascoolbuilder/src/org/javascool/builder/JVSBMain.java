@@ -78,34 +78,40 @@ public class JVSBMain {
                         Logger.getLogger(JVSBMain.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
+                new File(progletDir.getPath() + File.separator + "docXml").mkdirs();
                 String[] docFiles = progletDir.list(new FilenameFilter() {
 
                     @Override
                     public boolean accept(File dir, String name) {
-                        if (name.endsWith("xml")&&!name.equals("build.xml")) {
+                        if (name.endsWith("xml") && !name.equals("build.xml")) {
                             return true;
                         } else {
                             return false;
                         }
                     }
                 });
+                System.out.println("Setup docs ...");
                 for (String name : docFiles) {
                     try {
+                        System.out.println("Setup doc : " + name);
                         String docFile = new String(org.javascool.tools.Utils.loadString(progletDir.getPath() + File.separator + name).getBytes(), "UTF-8");
                         docFile = Utils.htm2xml(docFile);
                         String[] splitCodeStart = docFile.split("<code>");
-                        docFile="";
-                        for(String codeToSplit:splitCodeStart){
-                            if(!codeToSplit.contains("</code>")){
-                                docFile=docFile+codeToSplit;
+                        docFile = "";
+                        for (String codeToSplit : splitCodeStart) {
+                            
+                            if (codeToSplit.split("</code>").length==1) {
+                                docFile = docFile + codeToSplit;
+                                System.out.println(codeToSplit);
                             } else {
-                                String code=codeToSplit.split("</code>", 2)[0];
-                                code = code.replace("<", "&#60;");
-                                code = code.replace(">", "&#62;");
-                                docFile=docFile+"<div class=\"code\">"+code+"</div>"+codeToSplit.split("</code>", 2)[1];
+                                String code = codeToSplit.split("</code>", 2)[0];
+                                System.out.println("Format Code");
+                                docFile = docFile + "<div class=\"code\">" + org.javascool.builder.doc.Formater.format(code) + "</div>" + codeToSplit.split("</code>", 2)[1];
+                                System.out.println(docFile);
                             }
+
                         }
-                        org.javascool.tools.Utils.saveString(progletDir.getPath() + File.separator + name, docFile);
+                        org.javascool.tools.Utils.saveString(progletDir.getPath() + File.separator + "docXml" + File.separator + name, docFile);
                     } catch (IOException ex) {
                         Logger.getLogger(JVSBMain.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -121,6 +127,7 @@ public class JVSBMain {
                 p.setUserProperty("jvs.saxon", "../saxon.jar");
                 p.setUserProperty("proglet.build", "../" + this.tmpDir.getName() + "/" + progletDir.getName() + "-build");
                 p.setUserProperty("proglet.name", progletDir.getName());
+                p.setUserProperty("proglet.doc", progletDir.getPath() + File.separator + "docXml" + File.separator);
                 p.setUserProperty("proglet.src", "../" + this.tmpDir.getName() + "/" + progletDir.getName() + "-src");
                 p.setUserProperty("jvs.tojar.tmp", "../" + this.tmpDir.getName() + "/tojar");
                 p.setUserProperty("jvs.newjar", "../javascool-personel.jar");
@@ -187,7 +194,7 @@ public class JVSBMain {
             out = new FileOutputStream(f2);
             System.out.println("Coping ...");
             buf = new byte[1024];
-            len=0;
+            len = 0;
             while ((len = in.read(buf)) > 0) {
                 out.write(buf, 0, len);
             }
@@ -202,7 +209,7 @@ public class JVSBMain {
             out = new FileOutputStream(f2);
             System.out.println("Coping ...");
             buf = new byte[1024];
-            len=0;
+            len = 0;
             while ((len = in.read(buf)) > 0) {
                 out.write(buf, 0, len);
             }
@@ -217,7 +224,7 @@ public class JVSBMain {
             out = new FileOutputStream(f2);
             System.out.println("Coping ...");
             buf = new byte[1024];
-            len=0;
+            len = 0;
             while ((len = in.read(buf)) > 0) {
                 out.write(buf, 0, len);
             }
@@ -233,9 +240,9 @@ public class JVSBMain {
         }
     }
 
-    private void removeJVSBase(){
+    private void removeJVSBase() {
     }
-    
+
     private void copyANTProgletBuild(File progletDir) {
         try {
             File f2 = new File(progletDir.getPath() + File.separator + "build.xml");
