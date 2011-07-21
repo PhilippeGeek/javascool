@@ -15,7 +15,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import org.javascool.JVSFile;
+import org.javascool.editor.JVSFile;
 import org.javascool.JVSMain;
 import org.javascool.editor.JVSEditor;
 import org.javascool.jvs.Jvs2Java;

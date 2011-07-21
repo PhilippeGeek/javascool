@@ -1,7 +1,7 @@
 package org.javascool.gui;
 
 import java.io.InputStream;
-import org.javascool.JVSFile;
+import org.javascool.editor.JVSFile;
 import org.javascool.editor.JVSEditor;
 
 /** The FileEditorTabs Interface

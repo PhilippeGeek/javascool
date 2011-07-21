@@ -18,7 +18,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.text.BadLocationException;
-import org.javascool.JVSFile;
+import org.javascool.editor.JVSFile;
 import org.javascool.JVSMain;
 import org.javascool.tools.Utils;
 import org.javascool.editor.JVSEditor;
