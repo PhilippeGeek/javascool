@@ -196,11 +196,40 @@ include("includes/get_wiki_page.php");
                 }
             }
 
+            document.onload = function() {
+              document.onselectstart = function() {return false;} // ie
+              document.onmousedown = function() {return false;} // mozilla
+            }
+
+            document.onload = function() {
+              var elements = getElementsByClass('noselect');
+              for (i=0; i<elements.length; i++) {
+                  elements[i].onselectstart = function () { return false; } // ie
+                  elements[i].onmousedown = function () { return false; } // mozilla
+              }
+            }
+
         </script>
 
     </head>
     <body onload="loaded()">
         <?php
+        function showBrowser($docs) {
+            echo ('<table class="labelMain"><tr><td>');
+            $i=0;
+            foreach($docs as $doc) {
+                if ($doc[1]!="") {
+                    $id=sha1(uniqid(rand()));
+                    echo('<span style="display:none" id="'.$id.'" class="labelclickable" onclick="gotoloc(\''.$doc[1].'\');">'.$doc[0].'</span><script type="text/javascript">document.getElementById(\''.$id.'\').style.display="inline";</script><noscript><a href="'.$doc[1].'">'.$doc[0].'</a></noscript>');
+                }
+                else
+                    echo('<span class="label">'.$doc[0].'</span>');
+                if ($i!=count($docs)-1) echo('<script type="text/javascript">document.write(\'<span class="label-arrow"></span>\');</script><noscript><img src="images/label-separator.png" alt=" -> " style="position:relative; top:7px; margin-left: 15px; margin-right: 15px;" /></noscript>');
+                $i++;
+            }
+            echo ('</td></tr></table><br />');
+        }
+        
         $page = (isset($_GET['page'])) ? $_GET['page'] : 'home';
         Sal::validatePage($page);
         $action = (isset($_GET['action'])) ? $_GET['action'] : 'display';
@@ -218,11 +247,19 @@ include("includes/get_wiki_page.php");
                         <table style="width: 100%">
                             <tr>
                                 <td>
-                                    <img src="images/ledred.png" style="width: 50px; height: 50px;" class="pluglight" />
+                                    <img src="images/ledred.png" style="width: 50px; height: 50px; display: none;" class="pluglight" id="led1"/>
+                                    <script>document.getElementById("led1").style.display="inline";</script>
+                                    <noscript>
+                                    <a href="index.php?action=jsinfo"><img src="images/ledblue.png" style="border: 0px; width: 50px; height: 50px;" class="pluglight" id="led1"/></a>
+                                    </noscript>
                                 </td>
                                 <td style="width: 100%"></td>
                                 <td>
-                                    <img src="images/ledred.png" style="width: 50px; height: 50px;" class="pluglight" />
+                                    <img src="images/ledred.png" style="width: 50px; height: 50px; display: none;" class="pluglight" id="led2"/>
+                                    <script>document.getElementById("led2").style.display="inline";</script>
+                                    <noscript>
+                                    <a href="index.php?action=jsinfo"><img src="images/ledblue.png" style="border: 0px; width: 50px; height: 50px;" class="pluglight" id="led2"/></a>
+                                    </noscript>
                                 </td>
                             </tr>
                         </table>
