@@ -6,7 +6,7 @@
         <include name="**/*.zip"/>
     </fileset>
     <property name="path.libs" refid="path.libs"/>
-    <property name="path.jar" value="../sketchbook/javascool-builder.jar"/>
+    <property name="path.jar" value="../web/sketchbook/javascool-builder.jar"/>
     <target name="clean">
     </target>
     <target name="build" depends="clean">

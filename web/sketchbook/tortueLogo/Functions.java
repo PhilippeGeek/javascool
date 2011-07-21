@@ -1,6 +1,5 @@
 package org.javascool.proglets.tortueLogo;
 import java.awt.Color;
-import javax.swing.JPanel;
 import org.javascool.tools.Macros;
 
 /** ÃƒÆ’Ã‚Â©finit une proglet javascool qui permet de simuler la tortue logo.

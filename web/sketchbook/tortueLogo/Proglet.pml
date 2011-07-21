@@ -1,5 +1,5 @@
 {
     proglet
     name="Tortue Logo"
-    author="Thierry Viéville"
+    author="Thierry ViÃ©ville"
 }
