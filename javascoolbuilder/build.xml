@@ -3,38 +3,35 @@
     <description>Builds, tests, and runs the project Java's Cool Core.</description>
     <fileset dir="lib" id="path.libs">
         <include name="**/*.jar"/>
-        <include name="*.zip"/>
+        <include name="**/*.zip"/>
     </fileset>
     <property name="path.libs" refid="path.libs"/>
     <property name="path.jar" value="../sketchbook/javascool-builder.jar"/>
     <target name="clean">
     </target>
     <target name="build" depends="clean">
-        <mkdir dir="build"/>
-        <javac srcdir="src" destdir="build" encoding="UTF-8" includeantruntime="false">
+        <mkdir dir="build/tojar"/>
+        <javac srcdir="src" destdir="build/tojar" encoding="UTF-8" includeantruntime="false">
             <classpath>
                 <path>
                     <fileset refid="path.libs"/>
                 </path>
             </classpath>
         </javac>
-        <copy todir="build">
+        <copy todir="build/tojar">
             <fileset dir="src">
                 <exclude name="**/*.java"/>
             </fileset>
         </copy>
-        <copy todir="build">
-            <fileset dir="lib-uncompress"/>
-        </copy>
-        <delete dir="build/META-INF"/>
+        <delete dir="build/tojar/META-INF"/>
     </target>
     <target name="setup-libs">
-        <unzip dest="lib-uncompress">
+        <unzip dest="build/tojar">
             <fileset refid="path.libs"/>
         </unzip>
     </target>
     <target name="jar" depends="build">
-        <jar destfile="${path.jar}" basedir="build">
+        <jar destfile="${path.jar}" basedir="build/tojar">
             <manifest>
                 <attribute name="Created-By" value="Philippe VIENNE and Guillaume MATHERON" />
                 <attribute name="Built-By" value="INRIA" />
