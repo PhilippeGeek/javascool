@@ -1,4 +1,4 @@
-<table class="labelMain"><tr><td><span class="labelclickable" onclick="gotoloc('index.php');">Java's Cool</span><span class="label-arrow"></span><span class="label">Accueil</span></td></tr></table><br />
+<?php showBrowser(array(array("Java's Cool","index.php"),array("Accueil",""))); ?>
 
 <div class="home">
     <table class="home"><tr><td class="news">

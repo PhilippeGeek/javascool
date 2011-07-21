@@ -6,18 +6,7 @@ Sal::validateProgletId($progletId);
 $progletName = Sal::progletIdToName($progletId);
 ?>
 
-<table class="labelMain">
-    <tr>
-        <td>
-            <span class="labelclickable" onclick="gotoloc('index.php');">Java's Cool</span>
-            <span class="label-arrow"></span>
-            <span class="labelclickable" onclick="gotoloc('index.php?page=proglets');">Proglets</span>
-            <span class="label-arrow"></span>
-            <span class="label"><?php echo $progletName ?></span>
-        </td>
-    </tr>
-</table>
-<br />
+<?php showBrowser(array(array("Java's Cool","index.php"),array("Proglets","index.php?page=proglets"),array($progletName,""))); ?>
 
 <table>
     <tr>

@@ -111,7 +111,7 @@ table.header td.menubegin {
     background-repeat: repeat-x;
     width:33px;
     min-width: 33px;
-    height:71px;
+    height:70px;
     margin:0px;
     padding-left:0px;
     padding-right:0px;
@@ -458,6 +458,7 @@ span.label:before {
 table.label {
     display: block;
     float:left;
+    cursor: default;
 }
 
 table.labelMain {
@@ -478,8 +479,8 @@ span.labelclickable {
 td.label-left {
     width: 10px;
     min-width: 10px;
-    height: 50px;
-    min-height: 50px;
+    height: 25px;
+    min-height: 25px;
     background-image: url(images/label-left.png);
     background-repeat: no-repeat;
 }
@@ -487,38 +488,38 @@ td.label-left {
 td.label-right {
     width: 10px;
     min-width: 10px;
-    height: 50px;
-    min-height: 50px;
+    height: 25px;
+    min-height: 25px;
     background-image: url(images/label-right.png);
     background-repeat: repeat-y;
 }
 
 table.label td.label-center {
-    height: 50px;
-    min-height: 50px;
+    height: 25px;
+    min-height: 25px;
     background-image: url(images/label-center.png);
     background-repeat: repeat-x;
 }
 
 table.labelclickable td.label-center:hover {
-    height: 50px;
-    min-height: 50px;
+    height: 25px;
+    min-height: 25px;
     background-image: url(images/label-hover.png);
     background-repeat: repeat-x;
 }
 
 table.labelclickable td.label-center {
-    height: 50px;
-    min-height: 50px;
+    height: 25px;
+    min-height: 25px;
     background-image: url(images/label-center.png);
     background-repeat: repeat-x;
 }
 
 span.label-arrow {
-    width: 50px;
-    min-width: 50px;
-    height: 50px;
-    min-height: 50px;
+    width: 25px;
+    min-width: 25px;
+    height: 25px;
+    min-height: 25px;
     display:inline;
     float:left;
     background-image: url(images/label-separator.png);

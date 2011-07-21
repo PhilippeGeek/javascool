@@ -1,4 +1,4 @@
-<table class="labelMain"><tr><td><span class="labelclickable" onclick="gotoloc('index.php');">Java's Cool</span><span class="label-arrow"></span><span class="label">Contact</span></td></tr></table><br />
+<?php showBrowser(array(array("Java's Cool","index.php"),array("Contact",""))); ?>
 
 <p>Java's Cool est d&eacute;velopp&eacute; par des partenaires et collègues d'Inria (Institut National de Recherche en Informatique et Automatique).</p>
 
