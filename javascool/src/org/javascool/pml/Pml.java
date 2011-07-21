@@ -580,12 +580,12 @@ public class Pml {
             if (pml == null) {
                 return "array()";
             } else {
-	      string.append("$"+Utils.toName(getTag())+" = array(\"_tag\" => "+quote(getTag()));
+	      string.append("$"+Utils.toName(pml.getTag())+" = array(\"_tag\" => "+quote(pml.getTag()));
 	      for (String name : pml.attributes()) {
-		string.append(", "+quote(name)+" => "+quote(pml.getChild(name)));
+		string.append(", "+quote(name)+" => "+quote(pml.getChild(name).toString()));
 	      }
 	      for (int n = 0; n < pml.getCount(); n++) {
-		string.append(", "+quote(pml.getChild(n)));
+		string.append(", "+quote(pml.getChild(n).toString()));
 	      }
 	      string.append(");");
 	    }
