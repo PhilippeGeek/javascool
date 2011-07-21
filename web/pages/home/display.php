@@ -27,7 +27,7 @@
                             <td class="main-leftborder"></td>
                             <td class="main-center">
                                 
-<?php echo get_page_contents('Accueil'); ?>
+<?php include('pages/home/document.html') ?>
                             </td>
                             <td class="main-rightborder"></td>
                             <td class="main-right"></td>
