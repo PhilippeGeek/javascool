@@ -384,12 +384,14 @@ public class Pml {
      * <li>"raw" To write in a normalized 1D plain text format (default).</li>
      * <li>"txt" To write in a normalized 2D plain text format.</li>
      * <li>"xml" To write in XML format, reducing tag and attribute names to valid XML names, and considering Pml without any attribute or elements as string.</li>
+     * <li>"php" To write in PHP format, as a <tt>array("_tag" = getTag(), . . "name" => "value", . . , "element");</tt>
      * </ul></div>
      */
     public String toString(String format) {
         return "xml".equals(format) ? new XmlWriter().toString(this)
-                : "raw".equals(format) ? new PlainWriter().toString(this, 0)
-                : new PlainWriter().toString(this, 180);
+	  : "raw".equals(format) ? new PlainWriter().toString(this, 0)
+	  : "php".equals(format) ? new PhpWriter().toString(this)
+	  : new PlainWriter().toString(this, 180);
     }
     /**/
 
@@ -565,6 +567,36 @@ public class Pml {
             }
             return name;
         }
+    }
+
+    /** Defines a PHP writer. */
+    private static class PhpWriter {
+
+        private StringBuffer string;
+
+        /** Converts the pml into a PHP 1D string. */
+        public String toString(Pml pml) {
+            string = new StringBuffer();
+            if (pml == null) {
+                return "array()";
+            } else {
+	      string.append("$"+Utils.toName(getTag())+" = array(\"_tag\" => "+quote(getTag()));
+	      for (String name : pml.attributes()) {
+		string.append(", "+quote(name)+" => "+quote(pml.getChild(name)));
+	      }
+	      for (int n = 0; n < pml.getCount(); n++) {
+		string.append(", "+quote(pml.getChild(n)));
+	      }
+	      string.append(");");
+	    }
+            return string.toString();
+        }
+
+        /** Quotes a string \" constructs into account. */
+        private static String quote(String string) {
+            return "\"" + string.replaceAll("\\\\", "\\\\\\\\").replaceAll("\"", "\\\\\"") + "\"";
+        }
+
     }
 
     /** Gets this logical-structure tag.
