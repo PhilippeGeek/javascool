@@ -212,17 +212,17 @@ public class Jvs2Java {
             String javaDiagnostic = diagnostic.getMessage(Locale.FRENCH);
             String jvsDiagnostic = javaDiagnostic.split(" ", 2)[1];
             if (jvsDiagnostic.equals("not a statement")) {
-                jvsDiagnostic = "La variable indiquée n'existe pas";
+                jvsDiagnostic = "L'instruction n'est pas valide.\n (Il se peut qu'une variable indiquée n'existe pas)";
             } else if (jvsDiagnostic.equals("';' expected")) {
-                jvsDiagnostic = "Il manque un point virgule à la fin de la ligne";
-                /* 
-                 */
+                jvsDiagnostic = "Un ';' est attendu (il peut manquer, ou une parenthèse être incorrecte, ..)";
             } else if (jvsDiagnostic.matches(".*\\W*found\\W*:\\W([A-Za-z\\.]*)\\Wrequired:\\W([A-Za-z\\.]*)")) {
-                jvsDiagnostic = jvsDiagnostic.replaceAll("incompatible\\Wtypes\\W*found\\W*:\\W([A-Za-z\\.]*)\\Wrequired:\\W([A-Za-z\\.]*)", "Vous avez mis une valeur de type $1 alors qu'il faut une valeur de type $2");
+                jvsDiagnostic = jvsDiagnostic.replaceAll("incompatible\\Wtypes\\W*found\\W*:\\W([A-Za-z\\.]*)\\Wrequired:\\W([A-Za-z\\.]*)", 
+                            "Vous avez mis une valeur de type $1 alors qu'il faut une valeur de type $2");
             } else if (jvsDiagnostic.matches("package org\\.javascool\\.proglets\\.[A-Za-z0-9_]+ does not exist")) {
-                jvsDiagnostic = jvsDiagnostic.replaceAll("package org\\.javascool\\.proglets\\.([A-Za-z0-9_]+) does not exist", "La proglet $1 n'existe pas");
+                jvsDiagnostic = jvsDiagnostic.replaceAll("package org\\.javascool\\.proglets\\.([A-Za-z0-9_]+) does not exist", 
+                            "La proglet $1 n'existe pas");
             } else {
-                jvsDiagnostic = "Erreur Java inconnue : \n" + jvsDiagnostic;
+                jvsDiagnostic = "Erreur Java : \n" + jvsDiagnostic;
             }
             if (Jvs2Java.reportError) {
                 JVSMainPanel.reportCompileError((int) diagnostic.getLineNumber(), jvsDiagnostic);
