@@ -1,3 +1,4 @@
 <?php showBrowser(array(array("Java's Cool","index.php"),array("Resources",""))); ?>
 
-<p>Les merdes à Thierry</p>
+
+<?php echo get_page_contents('Ressources'); ?>
