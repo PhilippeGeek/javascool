@@ -306,6 +306,14 @@ public class Macros {
                 return false;
         }
     }
+    
+    public static void message(String text){
+        int r = JOptionPane.showConfirmDialog(
+                JVSMain.getJvsMainFrame(),
+                text,
+                "Java's cool",
+                JOptionPane.YES_OPTION);
+    }
 
     public static JPanel getProgletPanel() {
         return JVSMainPanel.getWidgetTabs().getProgletPanel();

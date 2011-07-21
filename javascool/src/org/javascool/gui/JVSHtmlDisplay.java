@@ -36,14 +36,14 @@ import org.javascool.tools.Utils;
  * @serial exclude
  */
 public class JVSHtmlDisplay extends JPanel {
-    
+
     private static final long serialVersionUID = 1L;
     /** The Html Display pane. */
     private JEditorPane pane;
     /** The navigation buttons. */
     private JButton home, prev, next;
 
-    public JVSHtmlDisplay(){
+    public JVSHtmlDisplay() {
         // Builds the GUI
         setLayout(new BorderLayout());
         JToolBar bar = new JToolBar();
@@ -75,30 +75,26 @@ public class JVSHtmlDisplay extends JPanel {
                          *  - openjvs (1 param : the filename (must be in same proglet))
                          *  - openhtml (2 params : the html file to load (same as openjvs) in a new tab, and its name)
                          */
-                        String[] actions=e.getDescription().substring(6).split(",");
-                        String type="";     //The type of url (activity, proglet, webpage, etc.)
+                        String[] actions = e.getDescription().substring(6).split(",");
+                        String type = "";     //The type of url (activity, proglet, webpage, etc.)
                         for (String action : actions) {
-                            String[] params=action.split(":");
+                            String[] params = action.split(":");
                             if (params[0].equals("openjvs")) {
-                                if (params.length!=2) {
+                                if (params.length != 2) {
                                     JVSMainPanel.reportApplicationBug("Lien jvs mal formé");
-                                }
-                                else {
+                                } else {
                                     JVSMainPanel.openFileFromJar(params[1]);
                                 }
-                            }
-                            else if (params[0].equals("openhtml")) {
-                                if (params.length!=3) {
+                            } else if (params[0].equals("openhtml")) {
+                                if (params.length != 3) {
                                     JVSMainPanel.reportApplicationBug("Lien jvs mal formé");
-                                }
-                                else {
-                                    String file2="org/javascool/proglets/"+JVSMainPanel.getCurrentProglet().getPackageName()+"/"+params[1];
+                                } else {
+                                    String file2 = "org/javascool/proglets/" + JVSMainPanel.getCurrentProglet().getPackageName() + "/" + params[1];
                                     JVSMainPanel.getWidgetTabs().openWebTab(file2, params[2]);
                                 }
                             }
                         }
-                    }
-                    else {
+                    } else {
                         load(e.getDescription());
                     }
                 }
@@ -111,13 +107,13 @@ public class JVSHtmlDisplay extends JPanel {
             AbstractAction doHome, doPrev, doNext;
             pane.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_HOME, KeyEvent.CTRL_MASK), "home");
             pane.getActionMap().put("home", doHome = new AbstractAction("home") {
-                
+
                 private static final long serialVersionUID = 1L;
-                
+
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if (urls.hasHome()) {
-                        URL homeLink=urls.prev();
+                        URL homeLink = urls.prev();
                         urls.empty();
                         urls.add(homeLink);
                         load(urls.home().toString(), false);
@@ -129,9 +125,9 @@ public class JVSHtmlDisplay extends JPanel {
             home.setEnabled(false);
             pane.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, KeyEvent.CTRL_MASK), "backward");
             pane.getActionMap().put("backward", doPrev = new AbstractAction("backward") {
-                
+
                 private static final long serialVersionUID = 1L;
-                
+
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if (urls.hasPrev()) {;
@@ -144,9 +140,9 @@ public class JVSHtmlDisplay extends JPanel {
             prev.setEnabled(false);
             pane.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, KeyEvent.CTRL_MASK), "forward");
             pane.getActionMap().put("forward", doNext = new AbstractAction("forward") {
-                
+
                 private static final long serialVersionUID = 1L;
-                
+
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if (urls.hasNext()) {
@@ -191,20 +187,28 @@ public class JVSHtmlDisplay extends JPanel {
     }
 
     private JVSHtmlDisplay load(String location, boolean stack) {
-        try {
-            URL url = urls.empty() ? Utils.toUrl(location) : new URL(urls.current(), location);
-            if (stack) {
-                urls.push(url);
+        if (location.matches("^(http|https|rtsp|mailto):.*$")) {
+            try {
+                java.awt.Desktop.getDesktop().browse(new java.net.URI(location));
+            } catch (Exception e) {
+                reset("Cette page est à l'adresse internet: <tt>" + location.replaceFirst("^(mailto):.*", "$1: ...") + "</tt> (non accessible ici).");
             }
-            updateButtons();
-            if (urls.current().toString().startsWith(prefix)) {
-                pane.setText(URLDecoder.decode(urls.current().toString().substring(prefix.length()), "UTF-8"));
-            } else {
-                pane.getDocument().putProperty(Document.StreamDescriptionProperty, null);
-                pane.setPage(urls.current());
+        } else {
+            try {
+                URL url = urls.empty() ? Utils.toUrl(location) : new URL(urls.current(), location);
+                if (stack) {
+                    urls.push(url);
+                }
+                updateButtons();
+                if (urls.current().toString().startsWith(prefix)) {
+                    pane.setText(URLDecoder.decode(urls.current().toString().substring(prefix.length()), "UTF-8"));
+                } else {
+                    pane.getDocument().putProperty(Document.StreamDescriptionProperty, null);
+                    pane.setPage(urls.current());
+                }
+            } catch (Exception e) {
+                pane.setText("Upps : erreur de lien internet «" + e.toString() + "»");
             }
-        } catch (Exception e) {
-            pane.setText("Upps : erreur de lien internet «" + e.toString() + "»");
         }
         return this;
     }
@@ -216,10 +220,9 @@ public class JVSHtmlDisplay extends JPanel {
         /** Current index in the URL Vector. */
         private int current = -1;
 
-        public Stack(){
-            
+        public Stack() {
         }
-        
+
         /** Returns the current URL, if any. */
         public URL current() {
             return current < 0 ? null : get(current);
@@ -232,10 +235,10 @@ public class JVSHtmlDisplay extends JPanel {
 
         /** Pushs an URL in the stack. */
         public void push(URL url) {
-            if(this.size()>0){
-                this.current=this.size();
-            }else{
-                this.current=0;
+            if (this.size() > 0) {
+                this.current = this.size();
+            } else {
+                this.current = 0;
             }
             add(url);
         }
