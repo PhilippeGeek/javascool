@@ -6,15 +6,9 @@ package org.javascool.builder;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FilenameFilter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.UUID;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
@@ -36,10 +30,13 @@ public class JVSBMain {
     private String sketchbookUrlStr = "";
     private File sketchbook;
     private ArrayList<File> progletToInstall;
-    private File tmpDir;
-    private static ProgressBar pb;
+    static File tmpDir;
+    static ProgressBar pb;
+    static String baseJarFile;
+    static String hdocXsltFile;
+    static String saxonJarFile;
 
-    public JVSBMain() {
+    public JVSBMain() throws Exception {
         this.sketchbookUrlStr = new File(ClassLoader.getSystemResource("org/javascool/builder").getPath().split("!")[0]).getParent().replace("file:", "").replace("%20", " ");
         this.sketchbook = new File(this.sketchbookUrlStr);
 
@@ -47,108 +44,24 @@ public class JVSBMain {
             JVSBMain.pb = new ProgressBar();
             JVSBMain.pb.update(5, "Indexation du sketchbook ...");
             this.progletToInstall = JVSBMain.listProgletInDir(sketchbook);
-            this.sleep();
             JVSBMain.pb.update(10, "Création du répertoire temporaire ...");
             this.setupTmp();
-            this.sleep();
             JVSBMain.pb.update(20, "Copie des librairies ...");
             this.copyJVSBase();
+            JVSBMain.pb.update(25, "Copie de Java's cool ...");
             this.runJarAnt("setup");
-            this.sleep();
+            int i = this.progletToInstall.toArray().length;
             for (File progletDir : this.progletToInstall) {
-                JVSBMain.pb.update((50 / (this.progletToInstall.size() + 1)) + 25, "Compilation de " + progletDir.getName() + " ...");
-                String[] javaFiles = progletDir.list(new FilenameFilter() {
-
-                    @Override
-                    public boolean accept(File dir, String name) {
-                        if (name.endsWith("java")) {
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    }
-                });
-                for (String name : javaFiles) {
-                    try {
-                        String functionFile = new String(org.javascool.tools.Utils.loadString(progletDir.getPath() + File.separator + name).getBytes(), "UTF-8");
-                        functionFile = functionFile.replaceAll("package [^;]*;[\n]*", "");
-                        functionFile = "package org.javascool.proglets." + progletDir.getName() + ";\n" + functionFile;
-                        org.javascool.tools.Utils.saveString(progletDir.getPath() + File.separator + name, functionFile);
-                    } catch (IOException ex) {
-                        Logger.getLogger(JVSBMain.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-                new File(progletDir.getPath() + File.separator + "docXml").mkdirs();
-                String[] docFiles = progletDir.list(new FilenameFilter() {
-
-                    @Override
-                    public boolean accept(File dir, String name) {
-                        if (name.endsWith("xml") && !name.equals("build.xml")) {
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    }
-                });
-                System.out.println("Setup docs ...");
-                for (String name : docFiles) {
-                    try {
-                        System.out.println("Setup doc : " + name);
-                        String docFile = new String(org.javascool.tools.Utils.loadString(progletDir.getPath() + File.separator + name).getBytes(), "UTF-8");
-                        docFile = Utils.htm2xml(docFile);
-                        String[] splitCodeStart = docFile.split("<code>");
-                        docFile = "";
-                        for (String codeToSplit : splitCodeStart) {
-                            
-                            if (codeToSplit.split("</code>").length==1) {
-                                docFile = docFile + codeToSplit;
-                                System.out.println(codeToSplit);
-                            } else {
-                                String code = codeToSplit.split("</code>", 2)[0];
-                                System.out.println("Format Code");
-                                docFile = docFile + "<div class=\"code\">" + org.javascool.builder.doc.Formater.format(code) + "</div>" + codeToSplit.split("</code>", 2)[1];
-                                System.out.println(docFile);
-                            }
-
-                        }
-                        org.javascool.tools.Utils.saveString(progletDir.getPath() + File.separator + "docXml" + File.separator + name, docFile);
-                    } catch (IOException ex) {
-                        Logger.getLogger(JVSBMain.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-                this.copyANTProgletBuild(progletDir);
-                File buildFile = new File(progletDir.getAbsolutePath() + File.separator + "build.xml");
-                Project p = new Project();
-                p.setBaseDir(progletDir);
-                p.setUserProperty("ant.file", buildFile.getAbsolutePath());
-                p.setUserProperty("jvs.builderjar", "../javascool-builder.jar");
-                p.setUserProperty("jvs.basejar", "../base.jar");
-                p.setUserProperty("jvs.hdocxslt", "../hdoc2htm.xslt");
-                p.setUserProperty("jvs.saxon", "../saxon.jar");
-                p.setUserProperty("proglet.build", "../" + this.tmpDir.getName() + "/" + progletDir.getName() + "-build");
-                p.setUserProperty("proglet.name", progletDir.getName());
-                p.setUserProperty("proglet.doc", progletDir.getPath() + File.separator + "docXml" + File.separator);
-                p.setUserProperty("proglet.src", "../" + this.tmpDir.getName() + "/" + progletDir.getName() + "-src");
-                p.setUserProperty("jvs.tojar.tmp", "../" + this.tmpDir.getName() + "/tojar");
-                p.setUserProperty("jvs.newjar", "../javascool-personel.jar");
-                p.init();
-                ProjectHelper helper = ProjectHelper.getProjectHelper();
-                p.addReference("ant.projectHelper", helper);
-                p.addReference("includeantruntime", false);
-                helper.parse(p, buildFile);
-                DefaultLogger consoleLogger = new DefaultLogger();
-                consoleLogger.setErrorPrintStream(System.err);
-                consoleLogger.setOutputPrintStream(System.out);
-                consoleLogger.setMessageOutputLevel(Project.MSG_INFO);
-                p.addBuildListener(consoleLogger);
-                p.executeTarget(p.getDefaultTarget());
-                this.removeANTProgletBuild(progletDir);
+                JVSBMain.pb.update((50 / (i)) + 25, "Compilation de " + progletDir.getName() + " ...");
+                Proglet proglet = new Proglet(progletDir);
+                ProgletBuild progletBuild = new ProgletBuild(proglet);
+                progletBuild.build();
+                i--;
             }
             JVSBMain.pb.update(80, "Création du jar ...");
             this.runJarAnt("jar");
-            this.sleep();
-            JVSBMain.pb.dispose();
-            this.removeANTJarBuild(sketchbook);
+            JVSBMain.pb.canBeClosed(Boolean.TRUE);
+            JVSBMain.pb.update(100, "Terminé");
         } else {
             Dialog.error("Arret du Builder", "Vous devez mettre le JVSBuilder \nà la racine de votre sketchbook");
         }
@@ -170,186 +83,68 @@ public class JVSBMain {
         return progletList;
     }
 
-    private void copyJVSBase() {
-        try {
-            File f2 = new File(this.sketchbookUrlStr + File.separator + "base.jar");
-            InputStream in = ClassLoader.getSystemResourceAsStream("org/javascool/base.jar");
+    /** Copy all need files to the tmp directory */
+    private void copyJVSBase() throws FileNotFoundException, IOException {
+        ProgletBuild.copyFileFromJar("org/javascool/base.jar", tmpDir.getPath() + File.separator + "base.jar");
+        JVSBMain.baseJarFile=tmpDir.getPath() + File.separator + "base.jar";
+        ProgletBuild.copyFileFromJar("org/javascool/builder/resources/hdoc2htm.xslt", tmpDir.getPath() + File.separator + "hdoc2htm.xslt");
+        JVSBMain.hdocXsltFile=tmpDir.getPath() + File.separator + "hdoc2htm.xslt";
+        ProgletBuild.copyFileFromJar("org/javascool/builder/resources/hml2htm.xslt", tmpDir.getPath() + File.separator + "hml2htm.xslt");
+        ProgletBuild.copyFileFromJar("org/javascool/builder/resources/saxon.jar", tmpDir.getPath() + File.separator + "saxon.jar");
+        JVSBMain.saxonJarFile=tmpDir.getPath() + File.separator + "saxon.jar";
+        ProgletBuild.copyFileFromJar("org/javascool/builder/resources/build-jar.xml", tmpDir.getPath() + File.separator + "build.xml");
+    }
 
-            //For Overwrite the file.
-            OutputStream out = new FileOutputStream(f2);
-            System.out.println("Coping ...");
-            byte[] buf = new byte[1024];
-            int len;
-            while ((len = in.read(buf)) > 0) {
-                out.write(buf, 0, len);
-            }
-            in.close();
-            out.close();
-            System.out.println("JVS base copied");
-            f2.deleteOnExit();
-            f2 = new File(this.sketchbookUrlStr + File.separator + "hml2htm.xslt");
-            in = ClassLoader.getSystemResourceAsStream("org/javascool/builder/resources/hml2htm.xslt");
-
-            //For Overwrite the file.
-            out = new FileOutputStream(f2);
-            System.out.println("Coping ...");
-            buf = new byte[1024];
-            len = 0;
-            while ((len = in.read(buf)) > 0) {
-                out.write(buf, 0, len);
-            }
-            in.close();
-            out.close();
-            System.out.println("JVS base copied");
-            f2.deleteOnExit();
-            f2 = new File(this.sketchbookUrlStr + File.separator + "hdoc2htm.xslt");
-            in = ClassLoader.getSystemResourceAsStream("org/javascool/builder/resources/hdoc2htm.xslt");
-
-            //For Overwrite the file.
-            out = new FileOutputStream(f2);
-            System.out.println("Coping ...");
-            buf = new byte[1024];
-            len = 0;
-            while ((len = in.read(buf)) > 0) {
-                out.write(buf, 0, len);
-            }
-            in.close();
-            out.close();
-            System.out.println("JVS base copied");
-            f2.deleteOnExit();
-            f2 = new File(this.sketchbookUrlStr + File.separator + "saxon.jar");
-            in = ClassLoader.getSystemResourceAsStream("org/javascool/builder/resources/saxon.jar");
-
-            //For Overwrite the file.
-            out = new FileOutputStream(f2);
-            System.out.println("Coping ...");
-            buf = new byte[1024];
-            len = 0;
-            while ((len = in.read(buf)) > 0) {
-                out.write(buf, 0, len);
-            }
-            in.close();
-            out.close();
-            System.out.println("JVS base copied");
-            f2.deleteOnExit();
-        } catch (FileNotFoundException ex) {
-            System.out.println(ex.getMessage() + " in the specified directory.");
-            System.exit(0);
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
+    /** Run an ant target from build-jar.xml
+     * It use to global tasks like uncompress Java's cool base or build the 
+     * final jar
+     * @param target The ant target to run
+     * @throws FileNotFoundException An error when it copy the ant script
+     * @throws IOException An error when it copy the ant script
+     */
+    private void runJarAnt(String target)
+            throws FileNotFoundException, IOException {
+        if (!new File(tmpDir.getPath() + File.separator + "build.xml").exists()) {
+            this.copyJVSBase();
         }
+        File buildFile = new File(tmpDir.getPath() + File.separator
+                + "build.xml");
+        Project p = new Project();
+        p.setBaseDir(this.sketchbook);
+        p.setUserProperty("ant.file", buildFile.getPath());
+        p.setUserProperty("jvs.builderjar", this.sketchbook.getAbsolutePath()
+                + File.separator + "javascool-builder.jar");
+        p.setUserProperty("jvs.basejar", JVSBMain.baseJarFile);
+        p.setUserProperty("jvs.tojar.tmp", "" + tmpDir.getName() + "/tojar");
+        p.setUserProperty("jvs.tmp", "" + tmpDir.getName() + "");
+        p.setUserProperty("jvs.newjar", this.sketchbook.getAbsolutePath()
+                + File.separator + "javascool-personel.jar");
+        p.setUserProperty("jvs.jarname", "Java's cool Sketchbook");
+        p.init();
+        ProjectHelper helper = ProjectHelper.getProjectHelper();
+        p.addReference("ant.projectHelper", helper);
+        p.addReference("includeantruntime", false);
+        helper.parse(p, buildFile);
+        DefaultLogger consoleLogger = new DefaultLogger();
+        consoleLogger.setErrorPrintStream(System.out);
+        consoleLogger.setOutputPrintStream(System.out);
+        consoleLogger.setMessageOutputLevel(Project.MSG_INFO);
+        p.addBuildListener(consoleLogger);
+        p.executeTarget(target);
     }
 
-    private void removeJVSBase() {
-    }
-
-    private void copyANTProgletBuild(File progletDir) {
-        try {
-            File f2 = new File(progletDir.getPath() + File.separator + "build.xml");
-            InputStream in = ClassLoader.getSystemResourceAsStream("org/javascool/builder/resources/build-proglet.xml");
-
-            //For Overwrite the file.
-            OutputStream out = new FileOutputStream(f2);
-            System.out.println("Coping ...");
-            byte[] buf = new byte[1024];
-            int len;
-            while ((len = in.read(buf)) > 0) {
-                out.write(buf, 0, len);
-            }
-            in.close();
-            out.close();
-            System.out.println("JVS base copied");
-        } catch (FileNotFoundException ex) {
-            System.out.println(ex.getMessage() + " in the specified directory.");
-            System.exit(0);
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    private void removeANTProgletBuild(File progletDir) {
-        try {
-            File f2 = new File(progletDir.getPath() + File.separator + "build.xml");
-            f2.delete();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    private void copyANTJarBuild(File sketchbookDir) {
-        try {
-            File f2 = new File(sketchbookDir.getPath() + File.separator + "build.xml");
-            InputStream in = ClassLoader.getSystemResourceAsStream("org/javascool/builder/resources/build-jar.xml");
-
-            //For Overwrite the file.
-            OutputStream out = new FileOutputStream(f2);
-            System.out.println("Coping ...");
-            byte[] buf = new byte[1024];
-            int len;
-            while ((len = in.read(buf)) > 0) {
-                out.write(buf, 0, len);
-            }
-            in.close();
-            out.close();
-            System.out.println("JVS base copied");
-        } catch (FileNotFoundException ex) {
-            System.out.println(ex.getMessage() + " in the specified directory.");
-            System.exit(0);
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    private void removeANTJarBuild(File sketchbookDir) {
-        try {
-            File f2 = new File(sketchbookDir.getPath() + File.separator + "build.xml");
-            f2.delete();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    private void runJarAnt(String target) {
-        try {
-            if (!new File(this.sketchbook.getAbsolutePath() + File.separator + "build.xml").exists()) {
-                this.copyANTJarBuild(this.sketchbook);
-            }
-            File buildFile = new File(this.sketchbook.getAbsolutePath() + File.separator + "build.xml");
-            Project p = new Project();
-            p.setBaseDir(this.sketchbook);
-            p.setUserProperty("ant.file", buildFile.getPath());
-            p.setUserProperty("jvs.builderjar", "javascool-builder.jar");
-            p.setUserProperty("jvs.basejar", "base.jar");
-            p.setUserProperty("jvs.tojar.tmp", "" + this.tmpDir.getName() + "/tojar");
-            p.setUserProperty("jvs.tmp", "" + this.tmpDir.getName() + "");
-            p.setUserProperty("jvs.newjar", "javascool-personel.jar");
-            p.setUserProperty("jvs.jarname", "Java's cool Sketchbook");
-            p.init();
-
-            ProjectHelper helper = ProjectHelper.getProjectHelper();
-            p.addReference("ant.projectHelper", helper);
-            p.addReference("includeantruntime", false);
-            helper.parse(p, buildFile);
-            p.executeTarget(target);
-        } catch (Exception e) {
-            Utils.report(e);
-        }
-    }
-
+    /** Create a tmp Directory */
     private void setupTmp() {
-        try {
-            String uuid = UUID.randomUUID().toString();
-            this.tmpDir = new File(this.sketchbook.getPath() + File.separator + "tmp-" + uuid);
-            this.tmpDir.mkdirs();
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        }
+        String uuid = UUID.randomUUID().toString();
+        tmpDir = new File(this.sketchbook.getPath() + File.separator + "tmp-" + uuid);
+        tmpDir.mkdirs();
+        tmpDir.deleteOnExit();
     }
 
-    /** Sleep the Builder for 1 sec */
+    /** Sleep the Builder for 200 msec */
     private void sleep() {
         try {
-            Thread.sleep(1000);
+            Thread.sleep(200);
         } catch (Exception e) {
             throw new RuntimeException("Programme arrêté !");
         }
@@ -415,20 +210,15 @@ public class JVSBMain {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        System.out.println("---------------\n Start JVS Builder \n---------------");
         JVSBMain jVSBMain = null;
         try {
             JVSBMain.setUpSystem();
             jVSBMain = new JVSBMain();
         } catch (Exception e) {
             Utils.report(e);
-            System.out.println("Erreur : " + e.getLocalizedMessage());
-            e.printStackTrace(System.err);
-            JVSBMain.close();
             Dialog.error("Erreur fatal", "Le programme a du s'arreter, voici la cause : \n" + e.getLocalizedMessage());
+            JVSBMain.close();
             System.exit(1);
         }
-        System.out.println("---------------\n End JVS Builder \n---------------");
-        System.exit(0);
     }
 }

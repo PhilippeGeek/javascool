@@ -61,6 +61,10 @@ public class Utils {
 
     public static URLClassLoader classLoader = ((URLClassLoader) Thread.currentThread().getContextClassLoader());
 
+    public static String xml2xml(String value, String xml2pml) {
+        return "<root></root>";
+    }
+
     private Utils() {
     }
     private static final long serialVersionUID = 1L;
