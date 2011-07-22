@@ -360,7 +360,20 @@ public class Pml {
                         pml.add(p);
                     }
                 }
-                // Considers the Pml as a simple string
+                // Considers the Pml as a list of name=value
+            } else if ("=".equals(current(1))) {
+	      while("=".equals(current(1))) {
+		String t = current();
+		next(2);
+		if ("}".equals(current())) {
+		  pml.set(t, "true");
+		} else {
+		  Pml p = new Pml();
+		  parse(p);
+		  pml.set(t, p);
+		}
+	      }
+               // Considers the Pml as a simple string
             } else {
                 pml.setTag(b);
                 next();
