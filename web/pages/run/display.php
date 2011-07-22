@@ -3,6 +3,7 @@
 <!-- //TODO -->
 <div class="display">
     <div class="label2">Windows</div>&nbsp;<br />
+    <?php//TODO windaube screenshots?>
     <div class="label2">Linux</div>
 	Pour lancer Java's Cool sans installation, cliquez sur le lien ci-dessus. Si le lancement échoue, vous devrez probablement installer Java.
 	Sous linux, téléchargez le fichier .jar, puis suivez les instructions ci-dessous : 
@@ -12,5 +13,5 @@
     <div class="label2">Plus d'informations</div>
     <?php include('pages/run/lancement.php'); ?><br /><br /><br /><br />
     <div class="label2">Encore plus d'informations</div>
-    <?php include('pages/run/document.html'); ?>
+    <?php include('pages/run/document.php'); ?>
 </div>

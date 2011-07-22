@@ -16,11 +16,11 @@
 <p>As root you have to
 </p>
 <ol><li> Install the Sun JDK6 in a standard location, e.g. <i>/usr/java</i> 
-<ol><li> Gets, e.g. <i>jdk-6u21-linux-i586.bin</i>, from <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" class="external free" rel="nofollow">http://www.oracle.com/technetwork/java/javase/downloads/index.html</a> in <i>/tmp</i>
+<ol><li> Gets, e.g. <i>jdk-6u21-linux-i586.bin</i>, from <?php showLink('http://www.oracle.com/technetwork/java/javase/downloads/index.html','http://www.oracle.com/technetwork/java/javase/downloads/index.html','external'); ?> in <i>/tmp</i>
 </li><li> Runs <i>cd /usr/java&nbsp;; /tmp/jdk-6u21-linux-i586.bin</i> and follow instructions
 </li></ol>
 </li><li> Install the processing files
-<ol><li> Gets, e.g. <i>processing-1.4.2.1.tgz</i> from <a href="http://processing.org/download" class="external free" rel="nofollow">http://processing.org/download</a> 
+<ol><li> Gets, e.g. <i>processing-1.4.2.1.tgz</i> from <?php showLink('http://processing.org/download','http://processing.org/download','external'); ?> 
 </li><li> Copy processing in a standard location, e.g. <i>/usr/java</i> 
 <ol><li> <i>tar xvzf processing-1.4.2.1.tgz&nbsp;; mv processing-1.2.1 /usr/java&nbsp;; /bin/rm processing-1.4.2.1.tgz</i>
 </li></ol>
@@ -40,7 +40,7 @@
 </li><li> To see the applets in firefox you may have to
 <ol><li> <i>rpm -e java-1.6.0-openjdk-plugin</i> erase the open-jdk web browser plugin
 </li><li> <i>ln -s /usr/java/jdk1.6.0_21/jre/plugin/i386/ns7/libjavaplugin_oji.so /usr/lib/mozilla/plugins</i> install manually the JRE plugin
-</li><li> for <a href="http://blogs.sun.com/thinslice/entry/firefox_3_6_changes_the" class="external text" rel="nofollow">firefox-3.6</a> and latter 
+</li><li> for <?php showLink('http://blogs.sun.com/thinslice/entry/firefox_3_6_changes_the','firefox-3.6','external'); ?> and latter 
 <ol><li> <i>ln -s /usr/java/jdk1.6.0_22/jre/lib/i386/libnpjp2.so /usr/lib/mozilla/plugins</i> 
 </li></ol>
 </li></ol>
