@@ -1,9 +1,11 @@
 <?php
+
 //TODO doc
 /*
  * Security abstraction layer
  */
 class Sal {
+
     public static function validatePage($page) {
         if (!preg_match('#^[a-zA-Zé][A-Za-z0-9é]+$#', $page))
             die("Error : page name not valid");
@@ -25,5 +27,17 @@ class Sal {
         else if ($progletId == 'ingredients')
             return 'Ingr&eacute;dients';
     }
+
+    public static function validateApiUrl($a) {
+        if (!preg_match('#^[a-zA-Z0-9_-]+(/[a-zA-Z0-9_-]+)*.html$#', $a))
+            die("Error : api url not valid");
+    }
+
+    public static function validateAsIconFile($a) {
+        if (!preg_match('#^[a-zA-Z0-9_-]+\.(jpg|png|gif|jpeg)$#', $a))
+            die('Error : icon fileName not valid');
+    }
+
 }
+
 ?>

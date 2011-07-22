@@ -31,7 +31,7 @@
 </table>
 <br />
 
-<?php showButton(array('Voir la d&eacute;monstration','?page=proglets&action=demo&id='.$id)); ?>
+<?php showButton(array('Voir la documentation','?page=proglets&action=show&id='.$id)); ?>
 <div class="news">
     <table class="news">
         <tr class="news-top">

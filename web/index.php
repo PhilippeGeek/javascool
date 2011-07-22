@@ -10,7 +10,7 @@ include("includes/get_wiki_page.php");
         <!--FIXME <link rel="stylesheet" type="text/css" href="pages/style.css" /> -->
         <?php
         ?>
-        <style type="text/css"><?php include('pages/style.css'); //FIXME   ?></style>
+        <style type="text/css"><?php include('pages/style.css'); //FIXME      ?></style>
 
         <script type="text/javascript">
             function getElementsByClass( searchClass, domNode, tagName) { 
@@ -29,10 +29,13 @@ include("includes/get_wiki_page.php");
             
             function loaded() {
                 applyLabelStyles();
-                addListeners();/*
-                showButtons();
-                plugContent();*/
+                addListeners();
                 updateAnimation(1);
+               /*       var links=getElementsByClass("link");
+                for (i=0; i<links.length; i++) {
+                    var link=links[i];
+                    link.addEventListener('click',followLink,true);
+                }*/
             }
             function unloaded() {
                 updateAnimation(1);
@@ -109,6 +112,14 @@ include("includes/get_wiki_page.php");
             function gotoloc(loc) {
                 updateAnimation(-4,loc);
             }
+            function followLink(e) {
+                var elem=this;
+                window.alert(elem.alt);
+                updateAnimation(-4,elem.alt);
+                window.event.cancelBubble = true;
+                e.stopPropagation();
+                return false;
+            }
             
             var w=300;
             var h=200;
@@ -182,10 +193,16 @@ include("includes/get_wiki_page.php");
                     plugright.style.top="30px";
                 }
                 
-                if (frame==80) {
+                if (frame>80 && increment>0) {
                     var lights=getElementsByClass("pluglight");
                     for (i=0; i<lights.length; i++) {
                         lights[i].src="images/ledgreen.png";
+                    }
+                }
+                else if (frame<80 && increment<0) {
+                    var lights=getElementsByClass("pluglight");
+                    for (i=0; i<lights.length; i++) {
+                        lights[i].src="images/ledred.png";
                     }
                 }
                 
@@ -197,6 +214,15 @@ include("includes/get_wiki_page.php");
                     
                     if (redirect!="" && redirect!="undefined" && redirect) {gotolocnow(redirect);}
                 }
+            }
+            
+            function mouseOverLink(event) {
+                /*    document.getElementById("div_"+this.id).style.display="block";
+                document.getElementById("div_"+this.id).style.width="100px";
+                document.getElementById("div_"+this.id).style.cssFloat="right";
+                document.getElementById("div_"+this.id).style.position="absolute";
+                document.getElementById("div_"+this.id).style.top=mouseY+"px";
+                document.getElementById("div_"+this.id).style.left=mouseX+"px";*/
             }
 
             document.onload = function() {
@@ -211,21 +237,102 @@ include("includes/get_wiki_page.php");
                     elements[i].onmousedown = function () { return false; } // mozilla
                 }
             }
+            
+            var mouseX=0;
+            var mouseY=0;
+            
+            window.onmousemove=getMouseCoordinates;
+            function getMouseCoordinates(event)
+            {
+                ev = event || window.event;
+                mouseX=ev.pageX;
+                mouseY=ev.pageY;
+            }
 
+            var cX = 0; var cY = 0; var rX = 0; var rY = 0;
+            function UpdateCursorPosition(e){ cX = e.pageX; cY = e.pageY;}
+            function UpdateCursorPositionDocAll(e){ cX = event.clientX; cY = event.clientY;}
+            if(document.all) { document.onmousemove = UpdateCursorPositionDocAll; }
+            else { document.onmousemove = UpdateCursorPosition; }
+            function AssignPosition(d,h) {
+                if(self.pageYOffset) {
+                    rX = self.pageXOffset;
+                    rY = self.pageYOffset;
+                }
+                else if(document.documentElement && document.documentElement.scrollTop) {
+                    rX = document.documentElement.scrollLeft;
+                    rY = document.documentElement.scrollTop;
+                }
+                else if(document.body) {
+                    rX = document.body.scrollLeft;
+                    rY = document.body.scrollTop;
+                }
+                if(document.all) {
+                    cX += rX; 
+                    cY += rY;
+                }
+                d.style.left = (getAbsolutePosition(h).x) + "px";
+                d.style.top = (getAbsolutePosition(h).y-80) + "px";
+            }
+            function HideContent(d) {
+                if(d.length < 1) { return; }
+                document.getElementById(d).style.display = "none";
+            }
+            function ShowContent(d,h) {
+                if(d.length < 1) { return; }
+                var dd = document.getElementById(d);
+                var hh=document.getElementById(h);
+                AssignPosition(dd,hh);
+                dd.style.display = "block";
+            }
+            function ReverseContentDisplay(d,h) {
+                if(d.length < 1) { return; }
+                var dd = document.getElementById(d);
+                var hh=document.getElementById(h);
+                AssignPosition(dd,hh);
+                if(dd.style.display == "none") { dd.style.display = "block"; }
+                else { dd.style.display = "none"; }
+            }
+            function getAbsolutePosition(element) {
+                var r = { x: element.offsetLeft, y: element.offsetTop };
+                if (element.offsetParent) {
+                    var tmp = getAbsolutePosition(element.offsetParent);
+                    r.x += tmp.x;
+                    r.y += tmp.y;
+                }
+                return r;
+            }
         </script>
 
     </head>
+
+
     <!-- //TODO comment -->
     <body onload="loaded()" onunload="unloaded()">
         <?php
-        function showLink($link,$text,$type) {
+
+        function showLink($link, $text, $type) {
             //TODO security
-            if ($type=="proglet" || $type=="internal" || $type=="external" || type=="internal_newtab")
-                echo('<script type="text/javascript">document.write(\'<a href="#" onClick="gotoloc(\\\''.$link.'\\\')">'.$text.'</a>\');</script><noscript><a href="'.$link.'">'.$text.'</a></noscript>');
-            else if ($type=="file" || $type="wiki")
-                echo('<script type="text/javascript">document.write(\'<a href="#" onClick="gotolocnow(\\\''.$link.'\\\')">'.$text.'</a>\');</script><noscript><a href="'.$link.'">'.$text.'</a></noscript>');
+            $text = addslashes($text);
+            $id = sha1(uniqid(rand()));
+            $c="Clic gauche pour suivre lien, clic milieu pour ouvrir le lien dans un nouvel onglet";
+            if ($type == "proglet" || $type == "internal" || $type == "external" || type == "internal_newtab")
+                echo('<a href="' . $link . '">' . $text . '</a>');
+            else if ($type == "file" || $type = "wiki")
+                echo('<a href="' . $link . '">' . $text . '</a>');
             else
                 echo("INVALID LINK !!");
+        }
+
+        function showButton($doc) {
+            echo ('<table class="labelMain"><tr><td>');
+            if ($doc[1] != "") {
+                $id = sha1(uniqid(rand()));
+                echo('<span style="display:none" id="' . $id . '" class="labelclickable" onclick="gotoloc(\'' . $doc[1] . '\');">' . $doc[0] . '</span><script type="text/javascript">document.getElementById(\'' . $id . '\').style.display="inline";</script><noscript><a href="' . $doc[1] . '">' . $doc[0] . '</a></noscript>');
+            }
+            else
+                echo('<span class="label">' . $doc[0] . '</span>');
+            echo ('</td></tr></table><br />');
         }
         
         function showBrowser($docs) {
