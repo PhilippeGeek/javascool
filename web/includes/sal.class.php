@@ -15,7 +15,7 @@ class Sal {
     }
 
     public static function validateProgletId($progletId) {
-        if (!preg_match('#^[a-z][a-z0-9]+$#', $progletId))
+        if (!preg_match('#^[a-z][A-Za-z0-9]+$#', $progletId))
             die("Error : proglet id not valid");
     }
 

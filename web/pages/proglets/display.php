@@ -5,8 +5,15 @@
             <?php
             $sketchbook=opendir('sketchbook');
             $proglets = array();
+            $i=0;
+            while ($file=readdir($sketchbook)) {
+                if (!preg_match('#^\.#',$file)) {
+                    $proglets[$i]=$file;
+                    $i++;
+                }
+            }
             foreach ($proglets as &$id) {
-                $name = Sal::progletIdToName($id);
+                $name=$id; //TODO $name = Sal::progletIdToName($id);
                 echo('<script type="text/javascript">document.write(\'<td class="progletclickable" onClick="gotoloc(\\\'index.php?page=proglets&action=show&id=' . $id . '\\\')"><span>' . $name . '</span><span class="proglet-image"><img src="images/' . $id . '.png" alt=""/></span></td>\');</script>');
                 echo('<noscript><td class="progletclickable"><a href="index.php?page=proglets&action=show&id=' . $id . '"><span>' . $name . '</span><span class="proglet-image"><img style="border: 0px" src="images/' . $id . '.png" alt=""/></span></a></td></noscript>');
             }

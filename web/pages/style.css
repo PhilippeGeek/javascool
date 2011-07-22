@@ -23,14 +23,18 @@ table {
     border-collapse:collapse;
 }
 
+.imagelink {
+    border: 0px;
+}
 
 /*
  * Menu and spacers
-*/
+ */
 
 table.header {
     position:relative;
     top:10px;
+    z-index: 1000;
 }
 
 table.header td.logo img.logo {

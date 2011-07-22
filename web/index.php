@@ -34,6 +34,9 @@ include("includes/get_wiki_page.php");
                 plugContent();*/
                 updateAnimation(1);
             }
+            function unloaded() {
+                updateAnimation(1);
+            }
             function applyLabelStyles() {
                 var labels=getElementsByClass('label');
                 for (i=0; i<labels.length; i++) {
@@ -191,7 +194,8 @@ include("includes/get_wiki_page.php");
                     setTimeout("updateAnimation("+increment+",\""+redirect+"\")",10);
                 else {
                     animationrunning=false;
-                    if (redirect!="" && redirect!="undefined") gotolocnow(redirect);
+                    
+                    if (redirect!="" && redirect!="undefined" && redirect) {gotolocnow(redirect);}
                 }
             }
 
@@ -211,96 +215,19 @@ include("includes/get_wiki_page.php");
         </script>
 
     </head>
-    <body onload="loaded()">
-
+    <!-- //TODO comment -->
+    <body onload="loaded()" onunload="unloaded()">
         <?php
-
-        ///////////////////////////////////////////////////////////////////
-        // Script sous licence CeCILL                                    //
-        // Auteurs : (Philippe Vienne&Thierry Viéville)@inria.sophia.fr  //
-        ///////////////////////////////////////////////////////////////////
-        //
-            // Mécanisme de syndication des pages web à partir de http://wiki.inria.fr/sciencinfolycee
-        //
-
-            /* Fonction utilisée pour cracher les erreurs
-          function debug_error_handler($errno, $errstr, $errfile, $errline, $errcontext) { if ($errno != 8192) {
-          echo "<br/>\n".str_repeat("-", 120)."<br/>\nError #$errno: '$errstr' [in $errfile line $errline]<br/>\n"; echo str_repeat("-", 120)."<br/>\n<br/>\n";
-          } }
-          set_error_handler('debug_error_handler');
-         */
-
-        /* Utilisé pour tester en local
-          echo '<hr>';
-         */
-
-        // Récupère la page par syndication de la javadoc ou du wiki et gere les liens avec un mécanisme de cache
-        function get_page_contents($name) {
-            // Manage cache mechanism
-            $cname = rawurlencode($name);
-            $cache = '.htcache';
-      /*      if (!file_exists($cache))
-                mkdir($cache, 0777);*/  //DEBUG
-            if (file_exists($cache . '/' . $cname))
-                return file_get_contents($cache . '/' . $cname);
-            else {
-                $notfound = "<h1>Désolé ! Cette page est en construction ou inacessible ..</h1><a href=\"javascript:history.back()\">Revenir en arri&egrave;re</a>";
-                if (ereg('^(api|doc):.*', $name)) {
-                    //TODO security
-                    // Traitement d'une demande de page de doc java ou de doc du site
-                    $pwd = getcwd();
-                    $ext = ereg_replace('^(api|doc):.*', '\\1', $name);
-                    $pfx = ereg('^api:.*', $name) ? '/api' : '';
-                    $name = ereg_replace('^(api|doc):', '', $name);
-                    $file = $pwd . '' . $pfx . '/' . $name;
-                    if ($ext == 'api')
-                        $base = ereg_replace("api/", "", substr(realpath(dirname($file)), strlen($pwd) + 4));
-                    else
-                        $base = substr(realpath(dirname($file)), strlen($pwd) + 1);
-                    $debug = "<pre>{pwd = '$pwd', ext = '$ext', pfx = '$pfx', name ='$name', base ='$base', file ='$file'}</pre>";
-                    echo $debug;
-                    if (!file_exists($file))
-                        return $notfound;
-                    $page = file_get_contents($file);
-                    // Remplace tous les liens entre pages par des pages vues du site
-                    $page = ereg_replace('(href=|HREF=|location.replace[(])"([^/#\'][^:"]*)"', '\\1"?page=' . $ext . ':' . $base . '/\\2"', $page);
-                    $page = ereg_replace('(src|SRC)="([^/#\'][^:"]*)"', '\\1="' . $pfx . '/' . $base . '/\\2"', $page);
-                    // Passe en <pre></pre> les pages de source
-                    if (ereg("\.java$", $name))
-                        $page = "<pre>" . $page . "</pre>";
-                    $page = $page;
-                } else {
-                    // Recuperation de la page sur le wiki
-                    $page = file_get_contents('http://wiki.inria.fr/sciencinfolycee/JavaScool:' . $name . '?printable=yes&action=render');
-                    // Remplace tous les liens entre pages par des pages vues du site
-                    $page = ereg_replace('href="http://wiki.inria.fr/sciencinfolycee/JavaScool:', 'href="?page=', $page);
-                    // Remplace tous les liens wikis locaux pas des liens distants
-                    $page = ereg_replace('src="/wikis/sciencinfolycee', 'src="http://wiki.inria.fr/wikis/sciencinfolycee', $page);
-                    // Si le wiki signale une erreur alors on affiche la page en erreur
-                    if (ereg("<title>Erreur</title>", $page))
-                        return $notfound;
-                }
-                file_put_contents($cache . '/' . $cname, $page);
-                chmod($cache . '/' . $cname, 0666);
-                return $page;
-            }
+        function showLink($link,$text,$type) {
+            //TODO security
+            if ($type=="proglet" || $type=="internal" || $type=="external" || type=="internal_newtab")
+                echo('<script type="text/javascript">document.write(\'<a href="#" onClick="gotoloc(\\\''.$link.'\\\')">'.$text.'</a>\');</script><noscript><a href="'.$link.'">'.$text.'</a></noscript>');
+            else if ($type=="file" || $type="wiki")
+                echo('<script type="text/javascript">document.write(\'<a href="#" onClick="gotolocnow(\\\''.$link.'\\\')">'.$text.'</a>\');</script><noscript><a href="'.$link.'">'.$text.'</a></noscript>');
+            else
+                echo("INVALID LINK !!");
         }
-
-        // Usage: http://javascool.gforge.inria.fr/?kezako=niquelekacheux
-        if (isset($_GET['kezako']) && $_GET['kezako'] == 'niquelekacheux') {
-            passthru("rm -rf .htcache/*", &$status);
-            echo "wraz.status = $status\n";
-            exit;
-        }
-
-        // Usage: http://javascool.gforge.inria.fr/?page=<page>
-        $name = isset($_GET['page']) ? $_GET['page'] : "Accueil";
-        $page = get_page_contents($name);
-        ?>
-
-
-        <?php
-
+        
         function showBrowser($docs) {
             echo ('<table class="labelMain"><tr><td>');
             $i = 0;
@@ -324,12 +251,8 @@ include("includes/get_wiki_page.php");
         Sal::validateAction($action);
         $include = 'pages/' . $page . '/' . $action . '.php';
         if (!is_file($include)) {
-            //die("Page not found");
-            $pageContents = get_page_contents($page);
-            $include = "autowiki";
+            die("Page not found");
         }
-
-
         include('pages/header.php');
         ?>
 
@@ -356,10 +279,7 @@ include("includes/get_wiki_page.php");
                             </tr>
                         </table>
                         <?php
-                        if ($include == "autowiki")
-                            echo $pageContents;
-                        else
-                            include($include);
+                        include($include);
                         ?>
                     </td><td class="right"></td></tr>
                 <tr class="bottom"><td class="bottomleft"></td><td class="bottom"></td><td class="bottomright"></td></tr></table>
