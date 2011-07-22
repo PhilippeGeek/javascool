@@ -66,7 +66,9 @@ public class ProgletManager {
             }
         } catch (Exception ex) {
             // We are IN a JAR
-            if (ex.getMessage().equals("URI is not hierarchical")) {
+	  if (ex.getMessage() == null) {
+	    System.out.println("Erreur sans message");
+	  } else if (ex.getMessage().equals("URI is not hierarchical")) {
                 try {
                     for (String proglet : ProgletManager.listProgletInTheJar(Utils.classLoader.getResource("org/javascool/proglets").toString().replaceAll("file:", "").replaceAll("jar:", "").replaceAll("%20", " "))) {
                         proglet = proglet.split("/")[proglet.split("/").length - 1];
