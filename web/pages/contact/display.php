@@ -16,12 +16,11 @@
 <div class="label2">Nous contacter directement</div>
 
 <?php echo get_wiki_page('JavaScool:Contacts'); ?>
-
-<div class="label2">Partenaires</div>
+<br /><br /><hr />
 
 <table><tr>
-<td><img src="images/logo_INRIA.png" alt="INRIA" onClick="gotoloc('http://www.inria.fr')" class="imagelink"/></td>
-<td><img src="images/logo_unisciel.png" alt="Unisciel" onClick="gotoloc('http://www.unisciel.fr')" class="imagelink"/></td>
-<td><img src="images/logo_fuscia.png" alt="Fuscia" onClick="gotoloc('http://fuscia.info')" class="imagelink"/></td>
-<td><img src="images/logo_unice.gif" alt="INRIA" onClick="gotoloc('http://unice.fr')" class="imagelink"/></td>
+<td><?php showLink('http://www.inria.fr','<img src="images/logo_INRIA.png" alt="INRIA" class="imagelink"/>','external');?></td>
+<td><?php showLink('http://www.unisciel.fr','<img src="images/logo_unisciel.png" alt="Unisciel" class="imagelink"/>','external');?></td>
+<td><?php showLink('http://fuscia.info','<img src="images/logo_fuscia.png" alt="Fuscia" class="imagelink"/>','external');?></td>
+<td><?php showLink('http://unice.fr','<img src="images/logo_unice.gif" alt="INRIA" class="imagelink"/>','external');?></td>
 </tr></table>
