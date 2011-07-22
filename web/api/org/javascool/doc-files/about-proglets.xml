@@ -1,0 +1,123 @@
+<div title="Nos «proglets»">
+  <p>Une  «proglet» permet d'expérimenter des algorithmes qui s'appliquent sur des objets numériques. </p>
+  Plusieurs proglets<l class="note" link="1"/> sont disponibles ici, pour s'initier à la programmation et créer des exercices animés et interactifs:
+  <p class="table">
+    <p> <p></p>    <p></p>    <p></p>    <p></p> <p>Auteurs</p> <p></p> </p>
+    <p>
+      <p>«ingredients»</p>
+      <p><l link="../../../proglet/ingredients/doc-files/about-proglet.htm" text="Usage"/></p>
+      <p><l link="http://javascool.gforge.inria.fr/?page=api:proglet/ingredients/doc-files/the-proglet.htm" text="Proglet"/></p>
+      <p><l link="../../../proglet/ingredients/doc-files/index.htm" text="Activité"/></p>
+      <p>HbA<l class="note" link="4"/>, AA<l class="note" link="4"/>, GD<l class="note" link="4"/> et al. </p>
+      <p>utilisée pour 
+        <p>les apprentissages initiaux des ingrédients des algorithmes et</p>
+        <p>tous les exercices qui nécessitent des lectures aux clavier comme dans une «console».</p></p>
+    </p>
+    <p>
+      <p>«exosdemaths»</p>
+      <p><l link="../../../proglet/exosdemaths/doc-files/about-proglet.htm" text="Usage"/></p>
+      <p><l link="http://javascool.gforge.inria.fr/?page=api:proglet/exosdemaths/doc-files/the-proglet.htm" text="Proglet"/></p>
+      <p><l link="../../../proglet/exosdemaths/doc-files/index.htm" text="Activité"/></p>
+      <p>Jw1<l class="note" link="4"/> </p>
+      <p>utilisée pour les exercices qui nécessitent un tracé de courbes ou un petit affichage graphique.</p>
+    </p>
+    <p>
+      <p>«pixelsetcie»</p>
+      <p><l link="../../../proglet/pixelsetcie/doc-files/about-proglet.htm" text="Usage"/></p>
+      <p><l link="http://javascool.gforge.inria.fr/?page=api:proglet/pixelsetcie/doc-files/the-proglet.htm" text="Proglet"/></p>
+      <p><l link="../../../proglet/pixelsetcie/doc-files/index.htm" text="Activité"/></p>
+      <p>GD<l class="note" link="4"/> et al. </p>
+      <p>utilisée pour les exercices qui nécessitent de manipuler des images ou des graphismes 2D.</p>
+    </p>
+    <p>
+      <p>«paintbrush»</p>
+      <p><l link="../../../proglet/paintbrush/doc-files/about-proglet.htm" text="Usage"/></p>
+      <p><l link="http://javascool.gforge.inria.fr/?page=api:proglet/paintbrush/doc-files/the-proglet.htm" text="Proglet"/></p>
+      <p><l link="../../../proglet/paintbrush/doc-files/index.htm" text="Activité"/></p>
+      <p>DP<l class="note" link="4"/> et al. </p>
+      <p>utilisée pour les exercices qui nécessitent de manipuler un dessin et pour découvrir la notion de méthode.</p>
+    </p>
+    <p>
+      <p>«dichotomie»</p>
+      <p><l link="../../../proglet/dichotomie/doc-files/about-proglet.htm" text="Usage"/></p>
+      <p><l link="http://javascool.gforge.inria.fr/?page=api:proglet/dichotomie/doc-files/the-proglet.htm" text="Proglet"/></p>
+      <p><l link="../../../proglet/dichotomie/doc-files/index.htm" text="Activité"/></p>
+      <p>JPA<l class="note" link="4"/> et al.</p>
+      <p>utilisée pour, avec «convanalogique», comprendre le principe algorithmique de la dichotomie.</p>
+    </p>
+    <p>
+      <p>«convanalogique»</p>
+      <p><l link="../../../proglet/convanalogique/doc-files/about-proglet.htm" text="Usage"/></p>
+      <p><l link="http://javascool.gforge.inria.fr/?page=api:proglet/convanalogique/doc-files/the-proglet.htm" text="Proglet"/></p>
+      <p><l link="../../../proglet/convanalogique/doc-files/index.htm" text="Activité"/></p>
+      <p>JPA<l class="note" link="4"/> et al.</p>
+      <p>utilisée pour programmer des algorithmes de conversion analogique-digitaux.</p>
+    </p>
+    <p>
+      <p>«javaprog»</p>
+      <p><l link="../../../proglet/javaprog/doc-files/about-proglet.htm" text="Usage"/></p>
+      <p><l link="http://javascool.gforge.inria.fr/?page=api:proglet/javaprog/doc-files/the-proglet.htm" text="Proglet"/></p>
+      <p><!--l link="../../../proglet/javaprog/doc-files/index.htm" text="Activité"/--></p>
+      <p>Jv3<l class="note" link="4"/> </p>
+      <p>utilisée pour programmer tout ce que l'on souhaite en Java.</p>
+    </p>
+    <p>
+      <p>«synthesons»</p>
+      <p><l link="../../../proglet/synthesons/doc-files/about-proglet.htm" text="Usage"/></p>
+      <p><l link="http://javascool.gforge.inria.fr/?page=api:proglet/synthesons/doc-files/the-proglet.htm" text="Proglet"/></p>
+      <p><!--l link="../../../proglet/synthesons/doc-files/index.htm" text="Activité"/--></p>
+      <p>Jw1<l class="note" link="4"/> </p>
+      <p>utilisée pour des activités (plutôt d'un club de maths ou de science, ou lors d'un TPE) de découverte du signal sonore.</p>
+    </p>
+    <p>
+      <p>«goglemap»</p>
+      <p><l link="../../../proglet/goglemap/doc-files/about-proglet.htm" text="Usage"/></p>
+      <p><l link="http://javascool.gforge.inria.fr/?page=api:proglet/goglemap/doc-files/the-proglet.htm" text="Proglet"/></p>
+      <p><l link="../../../proglet/goglemap/doc-files/index.htm" text="Activité"/></p>
+      <p>DP<l class="note" link="4"/> et al. </p>
+      <p>utilisée pour les exercices qui nécessitent de manipuler un dessin et pour découvrir la notion de méthode.</p>
+    </p>
+    <p>
+      <p>«tortuelogo»</p>
+      <p><l link="../../../proglet/tortuelogo/doc-files/about-proglet.htm" text="Usage"/></p>
+      <p><l link="http://javascool.gforge.inria.fr/?page=api:proglet/tortuelogo/doc-files/the-proglet.htm" text="Proglet"/></p>
+      <p><!--l link="../../../proglet/tortuelogo/doc-files/index.htm" text="Activité"/--></p>
+      <p>Jw1<l class="note" link="4"/> </p>
+      <p>simule la «bonne vieille» <l link="http://fr.wikipedia.org/wiki/Logo_(langage)" text="tortue logo"/>, donc permet de faire beaucoup d'autres activités.</p>
+    </p>
+  </p>
+
+  <l class="include" link="about-pro-proglets.xml"/>
+
+  <p>Ne pas hésiter à nous <l link="http://javascool.gforge.inria.fr/v3/?page=Contacts" text="contacter"/> pour en savoir plus !</p>
+
+  <div class="notes">
+    <p title="Définition d'une «proglet»" id="1">
+      Une <c>proglet</c> est une petite <l link="http://fr.wikipedia.org/wiki/Applet" text="applette"/> qui permet de s'initier à la programmation de manière ludique.
+    Elle se présente sous forme d'une interface mettant en scènele/les concept(s) clé(s) à manipuler, sous forme visuel et/ou sonore, 
+    à la fois pour mieux comprendre l'objet numérique et pour offrir une démarche expérimentale concrète. 
+    Il s'agit ici de concourir à la compréhension des notions abstraites qui forment le fondement des sciences de l'information. 
+    <p>Ces <c>proglets</c> sont des exemples de «<c>gamelet</c>» (c'est à dire de grains pédagogiques interactifs pour un apprentissage ludique d'une notion), 
+    telle que définie par <l link="http://fuscia.info" text="fuscia"/>. On parle d' «<c>educlet</c>».</p>
+  </p>
+  <p title="Faire de nouvelles «proglets»" id ="2">
+    Un enseignant qui connait un peu de programmation peut facilement développer ces <l link="../Proglet.html" text="propres proglet's"/>.
+    Non sans vous inviter à nous demander (dans la mesure de notre disponibilité) de <i>vous la faire à partir de votre idée</i>, ou de vous y aider, 
+    et nous de faire partager les vôtres, etc.
+  </p>
+  <p title="Implémentation des  «proglets»" id ="3">
+    Chaque proglet<l class="note" link="1"/> est un <l link="http://fr.wikipedia.org/wiki/Open_source" text="code source libre"/>, 
+    programmée en Java et <l link="http://javascool.gforge.inria.fr/v3/?page=api:org/javascool/package-summary.html" text="documenté"/> pour sa libre redistribution, 
+    avec un accès au code source, et permettre des développements dérivés.
+  </p>
+  <p title="Auteurs et co-auteurs des  «proglets»" id="4">
+    AA: Aurélien Astoux; HbA: Hamdi ben Abdallah; GD et al.: collectif d'auteurs
+    des <l link="http://interstices.info/ingredients-algorithmes" text="«ingrédients des algorithmes»"/> et 
+    du <l link="http://interstices.info/reflet-numerique" text="«reflet numérique des objets»"/>;
+    CP : <l link="http://www-sop.inria.fr/members/Cecile.Picard" text="Cécile Picard-Limpens"/>;
+    DP : <l link="http://www.irisa.fr/celtique/pichardie" text="David Pichardie"/>;
+    JPA et al. :  collectif d'auteurs des activités de
+    <l link="http://tdc.cndp.fr/archives-des-numeros/linformatique.html" text="Textes et documents pour la classe l'«informatique»"/>;
+    Jw1 et Jv3 : développeur de <l class="javascool"/> web_v1 et v3.
+  </p>
+</div></div>

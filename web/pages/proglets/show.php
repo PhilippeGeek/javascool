@@ -5,8 +5,11 @@
     Sal::validateProgletId($id);
     if (!is_file("sketchbook/" . $id . "/proglet.php"))
         die("La proglet " . $id . " n'a pas de fichier proglet.php");
-    $name=""; $icon="";
+    $proglet=null;
     include("sketchbook/" . $id . "/proglet.php");  //TODO testme
+    if (isset($proglet['name'])) $name=$proglet['name']; else $name="";
+    if (isset($proglet['description'])) $desc=$proglet['description']; else $desc="";
+    if (isset($proglet['icon'])) $icon=$proglet['icon']; else $icon="";
     if ($name=="") $name=$id;
 
     $defaulticon="../../images/defaultProglet.png";
@@ -41,7 +44,7 @@
             <td class="news-left"></td>
             <td class="news-leftborder"></td>
             <td class="news-center">
-                <p>abcd</p>
+                <p><?php include('sketchbook/'.$id.'/Help.html'); ?></p>
             </td>
             <td class="news-rightborder"></td>
             <td class="news-right"></td>
