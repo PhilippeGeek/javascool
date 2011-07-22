@@ -25,7 +25,8 @@ import org.javascool.proglet.Proglet;
  * @author Philippe Vienne
  */
 public class JVSStartPanel extends JPanel {
-
+    private static final long serialVersionUID = 1L;
+    
     public JVSStartPanel() {
         this.setupLayout();
         this.add(this.setupShortcutPanel());

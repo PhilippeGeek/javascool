@@ -31,7 +31,7 @@ import org.javascool.gui.JVSMainPanel;
  * @author Philippe VIENNE
  */
 public class JVSEditor extends JPanel implements Editor{
-
+ private static final long serialVersionUID = 1L;
     /** The editor */
     private RSyntaxTextArea TextPane;
     /** The scroll pane */
@@ -78,7 +78,7 @@ public class JVSEditor extends JPanel implements Editor{
                 "save");
         textArea.getActionMap().put("save",
                 new AbstractAction() {
-
+ private static final long serialVersionUID = 1L;
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         JVSMainPanel.saveFile();
@@ -89,7 +89,7 @@ public class JVSEditor extends JPanel implements Editor{
                 "copy");
         textArea.getActionMap().put("copy",
                 new AbstractAction() {
-
+ private static final long serialVersionUID = 1L;
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         getRTextArea().copyAsRtf();

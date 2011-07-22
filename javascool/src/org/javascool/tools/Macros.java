@@ -81,7 +81,7 @@ public class Macros {
 
     /** Set accesible in JVS the JVSMainPanel
      * @see JVSMainPanel
-     * @return 
+     * @return The JVSMainPanel
      */
     public static JVSMainPanel getJVS() {
         return org.javascool.gui.JVSMainPanel.getThisInStatic();
@@ -152,7 +152,7 @@ public class Macros {
     /** Renvoie un nombre entier aléatoire uniformément distribué entre deux valeurs (maximum inclus).
      * @param min
      * @param max
-     * @return 
+     * @return Le nombre entier tiré au hasard.
      */
     public static int random(int min, int max) {
         return randomInteger(min, max);
@@ -234,7 +234,7 @@ public class Macros {
      * @return The user answer
      */
     public static String readString(String question) {
-        String s = (String) JOptionPane.showInputDialog(
+        String s = JOptionPane.showInputDialog(
                 JVSMain.getJvsMainFrame(),
                 question,
                 "Java's cool",

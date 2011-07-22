@@ -256,8 +256,8 @@ public class Group extends Accessible implements Iterable<Accessible> {
      * Used to create a listener that will callback the specified function
      * with one MouseState argument
      * @param s The function to callback
-     * @param always If set to true, the callback will always be performed for each
-     * element of the collection even if the event did not occur on one of the elements
+     * <!-- @param always If set to true, the callback will always be performed for each
+     * element of the collection even if the event did not occur on one of the elements-->
      */
     @Override
     public void onClick(String s) {

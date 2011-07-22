@@ -40,13 +40,13 @@ public class Jvs2Java {
 
     /**
      * This class can not be invoked
-     * @deprecated
      */
+     
     private Jvs2Java() {
     }
 
     /** Translates a Jvs code source.
-     * @param The jvs source code
+     * @param jvsCode The jvs source code
      */
     public static String translate(String jvsCode) {
         String text = jvsCode;
@@ -129,8 +129,9 @@ public class Jvs2Java {
     
     /** Translate a jvs line to a java line 
      * Translate with replace
-     * @param line
-     * @return 
+     * @param line The text line to translate.
+     * @param lineNumber The line numbr to translate.
+     * @return The java translated text.
      */
     private static String translateOnce(String line, int lineNumber) {
         // Translates the while statement with sleep
@@ -181,7 +182,7 @@ public class Jvs2Java {
 
     /** Compiles a Jvs code source.
      * <div>The jdk <tt>tool.jar</tt> must be in the path.</div>
-     * @param path The file path to javaCompile.
+     * @param jvsCode The java code to compile.
      * @return The compilation success
      */
     public static Boolean jvsCompile(String jvsCode) {

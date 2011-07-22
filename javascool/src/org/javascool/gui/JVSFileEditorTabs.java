@@ -26,7 +26,8 @@ import org.javascool.widgets.Console;
  * @author Philippe Vienne
  */
 public class JVSFileEditorTabs extends JVSTabs implements FileEditorTabs{
-
+ private static final long serialVersionUID = 1L;
+ 
     /** Store all JVSEditor in an HashMap by the fileId */
     private static HashMap<String, JVSEditor> editors = new HashMap<String, JVSEditor>();
     /** Store all JVSFile in an HashMap by the fileId */

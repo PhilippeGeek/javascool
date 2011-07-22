@@ -19,7 +19,8 @@ import org.javascool.tools.Utils;
  * @author Philippe Vienne
  */
 public class JVSAboutFrame extends JDialog {
-
+    private static final long serialVersionUID = 1L;
+ 
     /** Open a new aboutFrame */
     public JVSAboutFrame() {
         super(new JFrame(), "About "+JVSMain.title, true);

@@ -24,6 +24,7 @@ import org.javascool.widgets.Console;
  * @author Philippe VIENNE
  */
 public class JVSToolBar extends JToolBar {
+  private static final long serialVersionUID = 1L;
 
     /** HashMap for button list.
      * The map associate a String to a JButton
