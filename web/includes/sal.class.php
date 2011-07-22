@@ -12,7 +12,7 @@ class Sal {
     }
 
     public static function validateAction($action) {
-        if (!preg_match('#^[a-z][a-z0-9]+$#', $action))
+        if (!preg_match('#^[a-z][a-zA-Z0-9-]+$#', $action))
             die("Error : action name not valid");
     }
 

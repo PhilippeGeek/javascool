@@ -1,6 +1,13 @@
 /*
  * Animations
  */
+
+div.spec {
+  border: 1px groove black;
+  width: 60%;
+  margin: 10px;
+  padding: 5px;
+}
  
 #plugleft {
     position: absolute;
