@@ -12,7 +12,8 @@ import org.javascool.proglet.Proglet;
  * @author Philippe Vienne
  */
 public class JVSWidgetPanel extends JVSTabs {
-
+ private static final long serialVersionUID = 1L;
+ 
     private String progletTabId;
 
     public JVSWidgetPanel() {

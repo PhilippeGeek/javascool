@@ -32,6 +32,7 @@ import org.javascool.proglet.ProgletManager;
  * @author Philippe Vienne
  */
 public final class JVSMainPanel extends JPanel {
+  private static final long serialVersionUID = 1L;
 
     private static ProgletManager pgman = new ProgletManager();
     private static Proglet currentProglet;
@@ -195,9 +196,7 @@ public final class JVSMainPanel extends JPanel {
      * Open a dialog with compile error explains and hightlight the error line
      * @param line The line error
      * @param explication Human explain for that error
-     * @see Jvs2Java
      * @see Console
-     * @see DiagnosticCollector
      */
     public static void reportCompileError(int line, String explication) {
         org.javascool.widgets.Console.clear();
@@ -210,7 +209,7 @@ public final class JVSMainPanel extends JPanel {
 
     /** Handle the close application task
      * Check if all files are saved and if the user want to close the application
-     * @return True meen that app can be close and false that app can NOT be closed
+     * @return True mean that app can be close and false that app can NOT be closed
      */
     public static Boolean close() {
         String id = "";

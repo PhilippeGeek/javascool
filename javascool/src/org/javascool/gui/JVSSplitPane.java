@@ -14,7 +14,8 @@ import org.javascool.widgets.Console;
  * @author Philippe VIENNE
  */
 public class JVSSplitPane extends JSplitPane{
-    
+     private static final long serialVersionUID = 1L;
+     
     /** File editor tabs */
     private static JVSFileEditorTabs editor;
     /** The right tabs */

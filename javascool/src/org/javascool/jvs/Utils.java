@@ -19,7 +19,7 @@ public class Utils {
      * Save a String into a file
      * @param what
      * @param where
-     * @return
+     * @return True on succes, false on failure.
      * @throws IOException 
      */
     public static Boolean saveString(String what, String where) throws IOException {

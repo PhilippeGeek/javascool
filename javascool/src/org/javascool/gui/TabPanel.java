@@ -41,7 +41,8 @@ import java.awt.event.*;
  * a JButton to close the tab it belongs to 
  */
 public class TabPanel extends JPanel {
-
+    private static final long serialVersionUID = 1L;
+ 
     private final JTabbedPane pane;
     private final String file;
 
@@ -61,6 +62,7 @@ public class TabPanel extends JPanel {
 
         //make JLabel read titles from JTabbedPane
         JLabel label = new JLabel() {
+    private static final long serialVersionUID = 1L;
 
             @Override
             public String getText() {
@@ -83,7 +85,8 @@ public class TabPanel extends JPanel {
     }
 
     private class TabButton extends JButton implements ActionListener {
-
+        private static final long serialVersionUID = 1L;
+    
         public TabButton() {
             int size = 17;
             setPreferredSize(new Dimension(size, size));

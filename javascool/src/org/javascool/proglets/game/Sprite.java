@@ -30,7 +30,7 @@ import org.javascool.tools.Macros;
 public class Sprite extends Geometry implements Drawable {
     //TODO update doc and javadoc
     public void makeColorTransparent (float r, float g, float b) {
-        final Color color=new Color((float)(r/255),(float)(g/255),(float)(b/255));
+        final Color color=new Color(r/255, g/255, b/255);
         ImageFilter filter = new RGBImageFilter() {
             // the color we are looking for... Alpha bits are set to opaque
             public int markerRGB = color.getRGB() | 0xFF000000;

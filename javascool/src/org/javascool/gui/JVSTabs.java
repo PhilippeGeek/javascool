@@ -11,7 +11,8 @@ import org.javascool.tools.Utils;
  * @author Philippe VIENNE
  */
 public class JVSTabs extends JTabbedPane {
-
+ private static final long serialVersionUID = 1L;
+ 
     protected HashMap<String, JPanel> tabs = new HashMap<String, JPanel>();
 
     public JVSTabs() {

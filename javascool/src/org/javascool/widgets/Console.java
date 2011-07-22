@@ -22,6 +22,8 @@ import org.javascool.tools.Macros;
  */
 public class Console extends JPanel {
 
+    private static final long serialVersionUID = 1L;
+  
     /** Flag to say if a program is running */
     private static boolean running;
     /** The current JVS Program */
@@ -39,6 +41,7 @@ public class Console extends JPanel {
 
     /** The top tool bar in the console */
     private static class JVSConsoleToolBar extends JVSToolBar {
+       private static final long serialVersionUID = 1L;
 
         public JVSConsoleToolBar() {
             super(true);
@@ -177,7 +180,7 @@ public class Console extends JPanel {
         Console.running = false;
         Console.run(false);
         try{
-            Class functions=ClassLoader.getSystemClassLoader().loadClass(JVSMainPanel.getCurrentProglet().getFullPackageName()+".Functions");
+            Class<?> functions=ClassLoader.getSystemClassLoader().loadClass(JVSMainPanel.getCurrentProglet().getFullPackageName()+".Functions");
             functions.getMethod("stop").invoke(null);
         } catch(Exception e){
         }
