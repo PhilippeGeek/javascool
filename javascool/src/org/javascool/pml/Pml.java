@@ -578,16 +578,16 @@ public class Pml {
         public String toString(Pml pml) {
             string = new StringBuffer();
             if (pml == null) {
-                return "array()";
+                return "<?php $pml = array(); ?>";
             } else {
-	      string.append("$"+Utils.toName(pml.getTag())+" = array(\"_tag\" => "+quote(pml.getTag()));
+	      string.append("<?php $"+Utils.toName(pml.getTag())+" = array(\"_tag\" => "+quote(pml.getTag()));
 	      for (String name : pml.attributes()) {
 		string.append(", "+quote(name)+" => "+quote(pml.getChild(name)));
 	      }
 	      for (int n = 0; n < pml.getCount(); n++) {
 		string.append(", "+quote(pml.getChild(n)));
 	      }
-	      string.append(");");
+	      string.append("); ?>");
 	    }
             return string.toString();
         }
