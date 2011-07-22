@@ -412,7 +412,7 @@ public class Pml {
      * @return This, allowing to use the <tt>Pml pml = new Pml().reset(..)</tt> construct.
      */
     public final Pml save(String location, String format) {
-        Utils.saveString(location, toString(format));
+        Utils.saveString(location, toString(format)+"\n");
         return this;
     }
     /**/
@@ -582,10 +582,10 @@ public class Pml {
             } else {
 	      string.append("$"+Utils.toName(pml.getTag())+" = array(\"_tag\" => "+quote(pml.getTag()));
 	      for (String name : pml.attributes()) {
-		string.append(", "+quote(name)+" => "+quote(pml.getChild(name).toString()));
+		string.append(", "+quote(name)+" => "+quote(pml.getChild(name)));
 	      }
 	      for (int n = 0; n < pml.getCount(); n++) {
-		string.append(", "+quote(pml.getChild(n).toString()));
+		string.append(", "+quote(pml.getChild(n)));
 	      }
 	      string.append(");");
 	    }
@@ -596,6 +596,9 @@ public class Pml {
         private static String quote(String string) {
             return "\"" + string.replaceAll("\\\\", "\\\\\\\\").replaceAll("\"", "\\\\\"") + "\"";
         }
+        private static String quote(Pml pml) {
+	  return quote(pml.getSize() == 0 ? pml.getTag() : pml.toString());
+	}
 
     }
 
@@ -918,12 +921,12 @@ public class Pml {
     static Pattern index = Pattern.compile("[0-9]+");
 
     /** Checks the well-formedness of a file by mirroring its Pml structure in a normalized format.
-     * @param usage <tt>java org.javascool.Pml input-file [output-file]</tt>
+     * @param usage <tt>java org.javascool.Pml input-file [output-file.(pml|xml|php)]</tt>
      * <p>- The file name be a PML, XML or HTML file name, with the corresponding extensions</p>.
      */
-    public static void main(String[] usage) {
-        if (usage.length > 0) {
-            new Pml().load(usage[0]).save(usage.length > 1 ? usage[0] : "stdout:");
-        }
+  public static void main(String[] usage) {
+    if (usage.length > 0) {
+      new Pml().load(usage[0]).save(usage.length > 1 ? usage[1] : "stdout:", (usage.length > 1 && usage[1].matches(".*\\.(pml|php|xml)")) ? usage[1].replaceFirst(".*\\.", "") : "pml");
     }
+  }
 }
