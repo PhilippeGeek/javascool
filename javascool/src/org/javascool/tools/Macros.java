@@ -3,6 +3,7 @@
  *******************************************************************************/
 package org.javascool.tools;
 
+import java.applet.Applet;
 import org.javascool.widgets.Console;
 import java.io.File;
 import java.io.IOException;
@@ -315,7 +316,7 @@ public class Macros {
                 JOptionPane.YES_OPTION);
     }
 
-    public static JPanel getProgletPanel() {
+    public static Applet getProgletPanel() {
         return JVSMainPanel.getWidgetTabs().getProgletPanel();
     }
 

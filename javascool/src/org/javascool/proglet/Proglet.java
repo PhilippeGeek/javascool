@@ -4,6 +4,7 @@
  **************************************************************/
 package org.javascool.proglet;
 
+import java.applet.Applet;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,7 +31,7 @@ public class Proglet {
     /** Class to add before compilation */
     private ArrayList<String> depClass;
     /** The proglet's widget panel */
-    private JPanel panel = new JPanel();
+    private Applet panel = new Applet();
     /** Icon of the proglet */
     private ImageIcon icon;
     /** Say if we have a panel to show */
@@ -110,7 +111,7 @@ public class Proglet {
                 + ".Panel")) {
             try {
                 System.err.println("Load panel for proglet " + packageName);
-                panel = (JPanel) Class.forName("org.javascool.proglets." 
+                panel = (Applet) Class.forName("org.javascool.proglets." 
                         + this.packageName + ".Panel").newInstance();
                 hasPanel = true;
             } catch (Exception ex) {
@@ -214,9 +215,10 @@ public class Proglet {
     }
 
     /** Get the Widget Panel
-     * @return The widget panel or null
+     * @return The widget panel or null, the panel is an Applet
      */
-    public JPanel getPanel() {
+    public Applet getPanel() {
+        this.panel.init();
         return this.panel;
     }
 
