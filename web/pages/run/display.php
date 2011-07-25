@@ -1,4 +1,14 @@
-<?php showBrowser(array(array("Java's Cool","index.php"),array("Lancement",""))); ?>
+<?php 
+    showBrowser(
+        array(
+            array("Java's Cool","index.php"),
+            array("Lancement","")
+        ),
+        array(
+            array("Licence","?page=home&action=licence")
+        )
+    );
+?>
 
 <!-- //TODO -->
 <div class="display">

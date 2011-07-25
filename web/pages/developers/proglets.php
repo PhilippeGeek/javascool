@@ -1,4 +1,12 @@
-<?php showBrowser(array(array("Java's Cool","index.php"),array("D&eacute;veloppeurs","?page=developers"),array("Proglets",""))); ?>
+<?php 
+    showBrowser(
+        array(
+            array("Java's Cool","index.php"),
+            array("D&eacute;veloppeurs","?page=developers"),
+            array("Sp&eacute;cifications d'une proglet","")
+        )
+    );
+?>
 
 <pre>
  - plugin javascool

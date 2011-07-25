@@ -1,4 +1,18 @@
- <table id="toc" class="toc"><tr><td><div id="toctitle"><h2>Sommaire</h2></div>
+<?php
+    showBrowser(
+        array(
+            array("Java's Cool","index.php"),
+            array("Accueil","index.php"),
+            array("FAQ","")
+        ),
+        array(
+            array("Cadrage","?page=home&action=cadrage"),
+            array("Manifeste","?page=home&action=manifest")
+        )
+    );
+?>
+
+<table id="toc" class="toc"><tr><td><div id="toctitle"><h2>Sommaire</h2></div>
 <ul>
 <li class="toclevel-1 tocsection-1"><a href="#A_propos_de_l.27enseignement_de_l.27informatique."><span class="tocnumber">1</span> <span class="toctext">A propos de l'enseignement de l'informatique.</span></a>
 <ul>

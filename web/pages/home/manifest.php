@@ -1,3 +1,17 @@
+<?php
+    showBrowser(
+        array(
+            array("Java's Cool","index.php"),
+            array("Accueil","index.php"),
+            array("Manifeste","")
+        ),
+        array(
+            array("Cadrage","?page=home&action=cadrage"),
+            array("FAQ","?page=home&action=faq")
+        )
+    );
+?>
+
 <p><br />
 </p>
 <h1> <span class="mw-headline" id="Subir_ou_ma.C3.AEtriser_la_r.C3.A9volution_du_num.C3.A9rique_.3F"> Subir ou maîtriser la révolution du numérique&nbsp;? </span></h1>

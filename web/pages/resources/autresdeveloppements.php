@@ -1,3 +1,16 @@
+<?php 
+    showBrowser(
+        array(
+            array("Java's Cool","?"),
+            array("Resources","?page=resources"),
+            array("Autres d&eacute;veloppements","")
+        ),
+        array(
+            array("Autres initiatives","?page=resources&action=autresinitiatives")
+        )
+    );
+?>
+
 <p><br />
 <b>Culture Scientifique&nbsp;: ateliers logiciels pour des réalisations culturelles ou pédagogiques.</b>
 </p><p>En partenariat avec le <?php showLink('http://deptinfo.unice.f','Master d\'Informatique de l\'Université de Nice-Sophia','external'); ?>, les enseignants des lycées partenaires sollicitent des groupes d'étudiants dans le cadre de leur projet de fin d'étude pour réaliser des logiciels à vocation pédagogique. Le projet est proposé par des professeurs et réalisé par des étudiants en informatique et co-encadré par un chercheur spécialiste du sujet. <br /><br /> Par ailleurs, dans le cadre d'un autre type de colloboration, la "<?php showLink('http://www.dessi.fr','Junior Entreprise','external'); ?>" accepte, à des tarifs compatibles avec les budgets publics, de réaliser plus ponctuellement des documents multi-média interactifs de culture scientifique tels que le <?php showLink('http://interstices.info/tatouage-son','tatouage de son','external'); ?>, les <?php showLink('http://interstices.info/algorithme-geometrique','algorithmes géométriques','external'); ?>, les <?php showLink('http://interstices.info/araignee','modèles bio-inspirés','external'); ?>. De même, de jeunes ingénieur(e)s de l'Ecole d'Ingénieur du campus STIC, <?php showLink('http://www.polytech.unice.fr','SophiaTech','external'); ?>, ont réalisé des "gamelets" permettant d'illustrer d'autres documents multi-média (par exemple sur la <?php showLink('http://interstices.info/display.jsp?id=c_14155','reconnaissance de formes','external'); ?>, la <?php showLink('http://interstices.info/display.jsp?id=c_14151','génération de trajectoires','external'); ?>, l'<?php showLink('http://interstices.info/display.jsp?id=c_14161','estimation paramétrique','external'); ?>).

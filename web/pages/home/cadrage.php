@@ -1,4 +1,18 @@
- <table id="toc" class="toc"><tr><td><div id="toctitle"><h2>Sommaire</h2></div>
+<?php
+    showBrowser(
+        array(
+            array("Java's Cool","index.php"),
+            array("Accueil","index.php"),
+            array("Cadrage","")
+        ),
+        array(
+            array("FAQ","?page=home&action=faq"),
+            array("Manifeste","?page=home&action=manifest")
+        )
+    );
+?>
+
+<table id="toc" class="toc"><tr><td><div id="toctitle"><h2>Sommaire</h2></div>
 <ul>
 <li class="toclevel-1 tocsection-1"><a href="#Trois_.C3.A9tapes_dans_l.27apprentissage_de_l.27informatique."><span class="tocnumber">1</span> <span class="toctext">Trois étapes dans l'apprentissage de l'informatique.</span></a>
 <ul>
