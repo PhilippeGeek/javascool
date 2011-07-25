@@ -31,7 +31,7 @@ public abstract class LinkedEventGroup implements EventCatcher {
      * element even if the event did not occur on it.
      */
     public void onClick(String s, boolean always) {
-        Functions.getSingleton().m_onClick.add(new EventListener(s, this, always));
+        PrivateFunctions.getFunctionsElementSingleton().m_onClick.add(new EventListener(s, this, always));
     }
 
     /**
@@ -40,7 +40,7 @@ public abstract class LinkedEventGroup implements EventCatcher {
      * @param s The function to callback
      */
     public void onMouseEntered(String s, boolean always) {
-        Functions.getSingleton().m_onMouseEntered.add(new EventListener(s, this, always));
+        PrivateFunctions.getFunctionsElementSingleton().m_onMouseEntered.add(new EventListener(s, this, always));
     }
 
     /**
@@ -49,7 +49,7 @@ public abstract class LinkedEventGroup implements EventCatcher {
      * @param s The function to callback
      */
     public void onMouseExited(String s, boolean always) {
-        Functions.getSingleton().m_onMouseExited.add(new EventListener(s, this, always));
+        PrivateFunctions.getFunctionsElementSingleton().m_onMouseExited.add(new EventListener(s, this, always));
     }
 
     /**
@@ -58,7 +58,7 @@ public abstract class LinkedEventGroup implements EventCatcher {
      * @param s The function to callback
      */
     public void onMousePressed(String s, boolean always) {
-        Functions.getSingleton().m_onMousePressed.add(new EventListener(s, this, always));
+        PrivateFunctions.getFunctionsElementSingleton().m_onMousePressed.add(new EventListener(s, this, always));
     }
 
     /**
@@ -67,7 +67,7 @@ public abstract class LinkedEventGroup implements EventCatcher {
      * @param s The function to callback
      */
     public void onMouseReleased(String s, boolean always) {
-        Functions.getSingleton().m_onMouseReleased.add(new EventListener(s, this, always));
+        PrivateFunctions.getFunctionsElementSingleton().m_onMouseReleased.add(new EventListener(s, this, always));
     }
 
     /**
@@ -76,7 +76,7 @@ public abstract class LinkedEventGroup implements EventCatcher {
      * @param s The function to callback
      */
     public void onMouseDown(String s, boolean always) {
-        Functions.getSingleton().m_onMouseDown.add(new EventListener(s, this, always));
+        PrivateFunctions.getFunctionsElementSingleton().m_onMouseDown.add(new EventListener(s, this, always));
     }
 
     /**
@@ -85,7 +85,7 @@ public abstract class LinkedEventGroup implements EventCatcher {
      * @param s The function to callback
      */
     public void onMouseUp(String s, boolean always) {
-        Functions.getSingleton().m_onMouseUp.add(new EventListener(s, this, always));
+        PrivateFunctions.getFunctionsElementSingleton().m_onMouseUp.add(new EventListener(s, this, always));
     }
 
     /**
@@ -94,7 +94,7 @@ public abstract class LinkedEventGroup implements EventCatcher {
      * @param s The function to callback
      */
     public void onMouseMoved(String s, boolean always) {
-        Functions.getSingleton().m_onMouseMoved.add(new EventListener(s, this, always));
+        PrivateFunctions.getFunctionsElementSingleton().m_onMouseMoved.add(new EventListener(s, this, always));
     }
 
     /**
@@ -103,7 +103,7 @@ public abstract class LinkedEventGroup implements EventCatcher {
      * @param s The function to callback
      */
     public void onMouseDragged(String s, boolean always) {
-        Functions.getSingleton().m_onMouseDragged.add(new EventListener(s, this, always));
+        PrivateFunctions.getFunctionsElementSingleton().m_onMouseDragged.add(new EventListener(s, this, always));
     }
 
     /**
@@ -112,7 +112,7 @@ public abstract class LinkedEventGroup implements EventCatcher {
      * @param s The function to callback
      */
     public void onMouseWheelUp(String s, boolean always) {
-        Functions.getSingleton().m_onMouseWheelUp.add(new EventListener(s, this, always));
+        PrivateFunctions.getFunctionsElementSingleton().m_onMouseWheelUp.add(new EventListener(s, this, always));
     }
 
     /**
@@ -121,7 +121,7 @@ public abstract class LinkedEventGroup implements EventCatcher {
      * @param s The function to callback
      */
     public void onMouseWheelDown(String s, boolean always) {
-        Functions.getSingleton().m_onMouseWheelDown.add(new EventListener(s, this, always));
+        PrivateFunctions.getFunctionsElementSingleton().m_onMouseWheelDown.add(new EventListener(s, this, always));
     }
 
     /**
@@ -130,7 +130,7 @@ public abstract class LinkedEventGroup implements EventCatcher {
      * @param s The function to callback
      */
     public void onMouseWheelMoved(String s, boolean always) {
-        Functions.getSingleton().m_onMouseWheelMoved.add(new EventListener(s, this, always));
+        PrivateFunctions.getFunctionsElementSingleton().m_onMouseWheelMoved.add(new EventListener(s, this, always));
     }
     
     /**
@@ -139,7 +139,7 @@ public abstract class LinkedEventGroup implements EventCatcher {
      * @param s The function to callback
      */
     public void onFrame(String s, boolean always) {
-        Functions.getSingleton().m_onFrame.add(new EventListener(s, this, always));
+        PrivateFunctions.getFunctionsElementSingleton().m_onFrame.add(new EventListener(s, this, always));
     }
     
     
@@ -152,7 +152,7 @@ public abstract class LinkedEventGroup implements EventCatcher {
      * element even if the event did not occur on it. -->
      */
     public void onClick(String s) {
-        Functions.getSingleton().m_onClick.add(new EventListener(s, this));
+        PrivateFunctions.getFunctionsElementSingleton().m_onClick.add(new EventListener(s, this));
     }
 
     /**
@@ -161,7 +161,7 @@ public abstract class LinkedEventGroup implements EventCatcher {
      * @param s The function to callback
      */
     public void onMouseEntered(String s) {
-        Functions.getSingleton().m_onMouseEntered.add(new EventListener(s, this));
+        PrivateFunctions.getFunctionsElementSingleton().m_onMouseEntered.add(new EventListener(s, this));
     }
 
     /**
@@ -170,7 +170,7 @@ public abstract class LinkedEventGroup implements EventCatcher {
      * @param s The function to callback
      */
     public void onMouseExited(String s) {
-        Functions.getSingleton().m_onMouseExited.add(new EventListener(s, this));
+        PrivateFunctions.getFunctionsElementSingleton().m_onMouseExited.add(new EventListener(s, this));
     }
 
     /**
@@ -179,7 +179,7 @@ public abstract class LinkedEventGroup implements EventCatcher {
      * @param s The function to callback
      */
     public void onMousePressed(String s) {
-        Functions.getSingleton().m_onMousePressed.add(new EventListener(s, this));
+        PrivateFunctions.getFunctionsElementSingleton().m_onMousePressed.add(new EventListener(s, this));
     }
 
     /**
@@ -188,7 +188,7 @@ public abstract class LinkedEventGroup implements EventCatcher {
      * @param s The function to callback
      */
     public void onMouseReleased(String s) {
-        Functions.getSingleton().m_onMouseReleased.add(new EventListener(s, this));
+        PrivateFunctions.getFunctionsElementSingleton().m_onMouseReleased.add(new EventListener(s, this));
     }
 
     /**
@@ -197,7 +197,7 @@ public abstract class LinkedEventGroup implements EventCatcher {
      * @param s The function to callback
      */
     public void onMouseDown(String s) {
-        Functions.getSingleton().m_onMouseDown.add(new EventListener(s, this));
+        PrivateFunctions.getFunctionsElementSingleton().m_onMouseDown.add(new EventListener(s, this));
     }
 
     /**
@@ -206,7 +206,7 @@ public abstract class LinkedEventGroup implements EventCatcher {
      * @param s The function to callback
      */
     public void onMouseUp(String s) {
-        Functions.getSingleton().m_onMouseUp.add(new EventListener(s, this));
+        PrivateFunctions.getFunctionsElementSingleton().m_onMouseUp.add(new EventListener(s, this));
     }
 
     /**
@@ -215,7 +215,7 @@ public abstract class LinkedEventGroup implements EventCatcher {
      * @param s The function to callback
      */
     public void onMouseMoved(String s) {
-        Functions.getSingleton().m_onMouseMoved.add(new EventListener(s, this));
+        PrivateFunctions.getFunctionsElementSingleton().m_onMouseMoved.add(new EventListener(s, this));
     }
 
     /**
@@ -224,7 +224,7 @@ public abstract class LinkedEventGroup implements EventCatcher {
      * @param s The function to callback
      */
     public void onMouseDragged(String s) {
-        Functions.getSingleton().m_onMouseDragged.add(new EventListener(s, this));
+        PrivateFunctions.getFunctionsElementSingleton().m_onMouseDragged.add(new EventListener(s, this));
     }
 
     /**
@@ -233,7 +233,7 @@ public abstract class LinkedEventGroup implements EventCatcher {
      * @param s The function to callback
      */
     public void onMouseWheelUp(String s) {
-        Functions.getSingleton().m_onMouseWheelUp.add(new EventListener(s, this));
+        PrivateFunctions.getFunctionsElementSingleton().m_onMouseWheelUp.add(new EventListener(s, this));
     }
 
     /**
@@ -242,7 +242,7 @@ public abstract class LinkedEventGroup implements EventCatcher {
      * @param s The function to callback
      */
     public void onMouseWheelDown(String s) {
-        Functions.getSingleton().m_onMouseWheelDown.add(new EventListener(s, this));
+        PrivateFunctions.getFunctionsElementSingleton().m_onMouseWheelDown.add(new EventListener(s, this));
     }
 
     /**
@@ -251,7 +251,7 @@ public abstract class LinkedEventGroup implements EventCatcher {
      * @param s The function to callback
      */
     public void onMouseWheelMoved(String s) {
-        Functions.getSingleton().m_onMouseWheelMoved.add(new EventListener(s, this));
+        PrivateFunctions.getFunctionsElementSingleton().m_onMouseWheelMoved.add(new EventListener(s, this));
     }
     
     /**
@@ -260,22 +260,22 @@ public abstract class LinkedEventGroup implements EventCatcher {
      * @param s The function to callback
      */
     public void onFrame(String s) {
-        Functions.getSingleton().m_onFrame.add(new EventListener(s, this));
+        PrivateFunctions.getFunctionsElementSingleton().m_onFrame.add(new EventListener(s, this));
     }
     
     public void onKeyUp(String s) {
-        Functions.getSingleton().m_onKeyUp.add(new EventListener(s, this));
+        PrivateFunctions.getFunctionsElementSingleton().m_onKeyUp.add(new EventListener(s, this));
     }
     
     public void onKeyDown(String s) {
-        Functions.getSingleton().m_onKeyDown.add(new EventListener(s, this));
+        PrivateFunctions.getFunctionsElementSingleton().m_onKeyDown.add(new EventListener(s, this));
     }
     
     public void onKeyPressed(String s) {
-        Functions.getSingleton().m_onKeyPressed.add(new EventListener(s, this));
+        PrivateFunctions.getFunctionsElementSingleton().m_onKeyPressed.add(new EventListener(s, this));
     }
     
     public void onKeyReleased(String s) {
-        Functions.getSingleton().m_onKeyReleased.add(new EventListener(s,this));
+        PrivateFunctions.getFunctionsElementSingleton().m_onKeyReleased.add(new EventListener(s,this));
     }
 }

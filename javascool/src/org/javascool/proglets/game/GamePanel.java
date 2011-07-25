@@ -1,32 +1,39 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * GamePanel.java
+ *
+ * Created on 1 juil. 2011, 11:02:55
  */
 package org.javascool.proglets.game;
 
-
-import java.applet.Applet;
 import java.awt.Color;
 import java.util.logging.Logger;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 import javax.swing.JApplet;
+import javax.swing.JPanel;
 
 /**
- *
+ * Defines the proglet's main panel and render area
  * @author gmatheron
  */
-public class Panel extends Applet {
+public class GamePanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
-    private static final Logger LOG = Logger.getLogger(Panel.class.getName());
-    
-    public Panel() {
-        setContentPane(new GamePanel());
+    /**
+     * Dynamic list of objects that should be drawn to the fame render area
+     */
+    private java.util.ArrayList<Drawable> m_items;
+
+    /** Creates new GamePanel and initiates the list of Drawable */
+    @SuppressWarnings("CollectionWithoutInitialCapacity")
+    public GamePanel() {
+        m_items = new java.util.ArrayList<Drawable>();
+        initComponents();
     }
 
     /**
      * Removes all the Drawable from the render area
      */
-    @Override
     public void stop() {
         m_items.removeAll(m_items);
     }
@@ -35,6 +42,7 @@ public class Panel extends Applet {
      * Paints the current frame to the specified Graphics buffer
      * @param g The Graphics buffer of which to draw
      */
+    @Override
     public void paintComponent(Graphics g) {
         //Clear the screen
         g.setColor(Color.BLACK);
@@ -48,12 +56,8 @@ public class Panel extends Applet {
 
         //Draw all Drawable
         for (int i = 0; i < m_items.size(); i++) {
-            if (m_items.get(i).isVisible()) {
-                backBuffer.getGraphics().setColor(m_items.get(i).initColor());
-            }
-            if (m_items.get(i).isVisible()) {
-                m_items.get(i).draw(backBuffer.getGraphics());
-            }
+            if (m_items.get(i).isVisible()) backBuffer.getGraphics().setColor(m_items.get(i).initColor());
+            if (m_items.get(i).isVisible()) m_items.get(i).draw(backBuffer.getGraphics());
         }
 
         // Blit !
@@ -90,6 +94,5 @@ public class Panel extends Applet {
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
-    private static final Logger LOG = Logger.getLogger(Panel.class.getName());
->>>>>>> .r237
+    private static final Logger LOG = Logger.getLogger(GamePanel.class.getName());
 }

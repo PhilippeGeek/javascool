@@ -81,7 +81,7 @@ public class Group extends Accessible implements Iterable<Accessible> {
     @Override
     public void onClick(String s, boolean always) {
         for (int i = 0; i < m_items.size(); i++) {
-            Functions.getSingleton().m_onClick.add(new EventListener(s, m_items.get(i), always));
+            PrivateFunctions.getFunctionsElementSingleton().m_onClick.add(new EventListener(s, m_items.get(i), always));
         }
     }
 
@@ -93,7 +93,7 @@ public class Group extends Accessible implements Iterable<Accessible> {
     @Override
     public void onMouseEntered(String s, boolean always) {
         for (int i = 0; i < m_items.size(); i++) {
-            Functions.getSingleton().m_onMouseEntered.add(new EventListener(s, m_items.get(i), always));
+            PrivateFunctions.getFunctionsElementSingleton().m_onMouseEntered.add(new EventListener(s, m_items.get(i), always));
         }
     }
 
@@ -105,7 +105,7 @@ public class Group extends Accessible implements Iterable<Accessible> {
     @Override
     public void onMouseExited(String s, boolean always) {
         for (int i = 0; i < m_items.size(); i++) {
-            Functions.getSingleton().m_onMouseExited.add(new EventListener(s, m_items.get(i), always));
+            PrivateFunctions.getFunctionsElementSingleton().m_onMouseExited.add(new EventListener(s, m_items.get(i), always));
         }
     }
 
@@ -117,7 +117,7 @@ public class Group extends Accessible implements Iterable<Accessible> {
     @Override
     public void onMousePressed(String s, boolean always) {
         for (int i = 0; i < m_items.size(); i++) {
-            Functions.getSingleton().m_onMousePressed.add(new EventListener(s, m_items.get(i), always));
+            PrivateFunctions.getFunctionsElementSingleton().m_onMousePressed.add(new EventListener(s, m_items.get(i), always));
         }
     }
 
@@ -129,7 +129,7 @@ public class Group extends Accessible implements Iterable<Accessible> {
     @Override
     public void onMouseReleased(String s, boolean always) {
         for (int i = 0; i < m_items.size(); i++) {
-            Functions.getSingleton().m_onMouseReleased.add(new EventListener(s, m_items.get(i), always));
+            PrivateFunctions.getFunctionsElementSingleton().m_onMouseReleased.add(new EventListener(s, m_items.get(i), always));
         }
     }
 
@@ -141,7 +141,7 @@ public class Group extends Accessible implements Iterable<Accessible> {
     @Override
     public void onMouseDown(String s, boolean always) {
         for (int i = 0; i < m_items.size(); i++) {
-            Functions.getSingleton().m_onMouseDown.add(new EventListener(s, m_items.get(i), always));
+            PrivateFunctions.getFunctionsElementSingleton().m_onMouseDown.add(new EventListener(s, m_items.get(i), always));
         }
     }
 
@@ -153,7 +153,7 @@ public class Group extends Accessible implements Iterable<Accessible> {
     @Override
     public void onMouseUp(String s, boolean always) {
         for (int i = 0; i < m_items.size(); i++) {
-            Functions.getSingleton().m_onMouseUp.add(new EventListener(s, m_items.get(i), always));
+            PrivateFunctions.getFunctionsElementSingleton().m_onMouseUp.add(new EventListener(s, m_items.get(i), always));
         }
     }
 
@@ -165,7 +165,7 @@ public class Group extends Accessible implements Iterable<Accessible> {
     @Override
     public void onMouseMoved(String s, boolean always) {
         for (int i = 0; i < m_items.size(); i++) {
-            Functions.getSingleton().m_onMouseMoved.add(new EventListener(s, m_items.get(i), always));
+            PrivateFunctions.getFunctionsElementSingleton().m_onMouseMoved.add(new EventListener(s, m_items.get(i), always));
         }
     }
 
@@ -177,7 +177,7 @@ public class Group extends Accessible implements Iterable<Accessible> {
     @Override
     public void onMouseDragged(String s, boolean always) {
         for (int i = 0; i < m_items.size(); i++) {
-            Functions.getSingleton().m_onMouseDragged.add(new EventListener(s, m_items.get(i), always));
+            PrivateFunctions.getFunctionsElementSingleton().m_onMouseDragged.add(new EventListener(s, m_items.get(i), always));
         }
     }
 
@@ -189,7 +189,7 @@ public class Group extends Accessible implements Iterable<Accessible> {
     @Override
     public void onMouseWheelUp(String s, boolean always) {
         for (int i = 0; i < m_items.size(); i++) {
-            Functions.getSingleton().m_onMouseWheelUp.add(new EventListener(s, m_items.get(i), always));
+            PrivateFunctions.getFunctionsElementSingleton().m_onMouseWheelUp.add(new EventListener(s, m_items.get(i), always));
         }
     }
 
@@ -201,7 +201,7 @@ public class Group extends Accessible implements Iterable<Accessible> {
     @Override
     public void onMouseWheelDown(String s, boolean always) {
         for (int i = 0; i < m_items.size(); i++) {
-            Functions.getSingleton().m_onMouseWheelDown.add(new EventListener(s, m_items.get(i), always));
+            PrivateFunctions.getFunctionsElementSingleton().m_onMouseWheelDown.add(new EventListener(s, m_items.get(i), always));
         }
     }
 
@@ -213,7 +213,7 @@ public class Group extends Accessible implements Iterable<Accessible> {
     @Override
     public void onMouseWheelMoved(String s, boolean always) {
         for (int i = 0; i < m_items.size(); i++) {
-            Functions.getSingleton().m_onMouseWheelMoved.add(new EventListener(s, m_items.get(i), always));
+            PrivateFunctions.getFunctionsElementSingleton().m_onMouseWheelMoved.add(new EventListener(s, m_items.get(i), always));
         }
     }
 
@@ -224,31 +224,31 @@ public class Group extends Accessible implements Iterable<Accessible> {
      */
     public void onFrame(String s, boolean always) {
         for (int i = 0; i < m_items.size(); i++) {
-            Functions.getSingleton().m_onFrame.add(new EventListener(s, m_items.get(i), always));
+            PrivateFunctions.getFunctionsElementSingleton().m_onFrame.add(new EventListener(s, m_items.get(i), always));
         }
     }
     
     public void onKeyDown(String s, boolean always) {
         for (int i=0; i<m_items.size(); i++) {
-            Functions.getSingleton().m_onKeyDown.add(new EventListener(s, m_items.get(i),always));
+            PrivateFunctions.getFunctionsElementSingleton().m_onKeyDown.add(new EventListener(s, m_items.get(i),always));
         }
     }
     
     public void onKeyUp(String s, boolean always) {
         for (int i=0; i<m_items.size(); i++) {
-            Functions.getSingleton().m_onKeyUp.add(new EventListener(s, m_items.get(i),always));
+            PrivateFunctions.getFunctionsElementSingleton().m_onKeyUp.add(new EventListener(s, m_items.get(i),always));
         }
     }
     
     public void onKeyPressed(String s, boolean always) {
         for (int i=0; i<m_items.size(); i++) {
-            Functions.getSingleton().m_onKeyPressed.add(new EventListener(s, m_items.get(i),always));
+            PrivateFunctions.getFunctionsElementSingleton().m_onKeyPressed.add(new EventListener(s, m_items.get(i),always));
         }
     }
     
     public void onKeyReleased(String s, boolean always) {
         for (int i=0; i<m_items.size(); i++) {
-            Functions.getSingleton().m_onKeyReleased.add(new EventListener(s, m_items.get(i),always));
+            PrivateFunctions.getFunctionsElementSingleton().m_onKeyReleased.add(new EventListener(s, m_items.get(i),always));
         }
     }
     
@@ -262,7 +262,7 @@ public class Group extends Accessible implements Iterable<Accessible> {
     @Override
     public void onClick(String s) {
         for (int i = 0; i < m_items.size(); i++) {
-            Functions.getSingleton().m_onClick.add(new EventListener(s, m_items.get(i)));
+            PrivateFunctions.getFunctionsElementSingleton().m_onClick.add(new EventListener(s, m_items.get(i)));
         }
     }
 
@@ -274,7 +274,7 @@ public class Group extends Accessible implements Iterable<Accessible> {
     @Override
     public void onMouseEntered(String s) {
         for (int i = 0; i < m_items.size(); i++) {
-            Functions.getSingleton().m_onMouseEntered.add(new EventListener(s, m_items.get(i)));
+            PrivateFunctions.getFunctionsElementSingleton().m_onMouseEntered.add(new EventListener(s, m_items.get(i)));
         }
     }
 
@@ -286,7 +286,7 @@ public class Group extends Accessible implements Iterable<Accessible> {
     @Override
     public void onMouseExited(String s) {
         for (int i = 0; i < m_items.size(); i++) {
-            Functions.getSingleton().m_onMouseExited.add(new EventListener(s, m_items.get(i)));
+            PrivateFunctions.getFunctionsElementSingleton().m_onMouseExited.add(new EventListener(s, m_items.get(i)));
         }
     }
 
@@ -298,7 +298,7 @@ public class Group extends Accessible implements Iterable<Accessible> {
     @Override
     public void onMousePressed(String s) {
         for (int i = 0; i < m_items.size(); i++) {
-            Functions.getSingleton().m_onMousePressed.add(new EventListener(s, m_items.get(i)));
+            PrivateFunctions.getFunctionsElementSingleton().m_onMousePressed.add(new EventListener(s, m_items.get(i)));
         }
     }
 
@@ -310,7 +310,7 @@ public class Group extends Accessible implements Iterable<Accessible> {
     @Override
     public void onMouseReleased(String s) {
         for (int i = 0; i < m_items.size(); i++) {
-            Functions.getSingleton().m_onMouseReleased.add(new EventListener(s, m_items.get(i)));
+            PrivateFunctions.getFunctionsElementSingleton().m_onMouseReleased.add(new EventListener(s, m_items.get(i)));
         }
     }
 
@@ -322,7 +322,7 @@ public class Group extends Accessible implements Iterable<Accessible> {
     @Override
     public void onMouseDown(String s) {
         for (int i = 0; i < m_items.size(); i++) {
-            Functions.getSingleton().m_onMouseDown.add(new EventListener(s, m_items.get(i)));
+            PrivateFunctions.getFunctionsElementSingleton().m_onMouseDown.add(new EventListener(s, m_items.get(i)));
         }
     }
 
@@ -334,7 +334,7 @@ public class Group extends Accessible implements Iterable<Accessible> {
     @Override
     public void onMouseUp(String s) {
         for (int i = 0; i < m_items.size(); i++) {
-            Functions.getSingleton().m_onMouseUp.add(new EventListener(s, m_items.get(i)));
+            PrivateFunctions.getFunctionsElementSingleton().m_onMouseUp.add(new EventListener(s, m_items.get(i)));
         }
     }
 
@@ -346,7 +346,7 @@ public class Group extends Accessible implements Iterable<Accessible> {
     @Override
     public void onMouseMoved(String s) {
         for (int i = 0; i < m_items.size(); i++) {
-            Functions.getSingleton().m_onMouseMoved.add(new EventListener(s, m_items.get(i)));
+            PrivateFunctions.getFunctionsElementSingleton().m_onMouseMoved.add(new EventListener(s, m_items.get(i)));
         }
     }
 
@@ -358,7 +358,7 @@ public class Group extends Accessible implements Iterable<Accessible> {
     @Override
     public void onMouseDragged(String s) {
         for (int i = 0; i < m_items.size(); i++) {
-            Functions.getSingleton().m_onMouseDragged.add(new EventListener(s, m_items.get(i)));
+            PrivateFunctions.getFunctionsElementSingleton().m_onMouseDragged.add(new EventListener(s, m_items.get(i)));
         }
     }
 
@@ -370,7 +370,7 @@ public class Group extends Accessible implements Iterable<Accessible> {
     @Override
     public void onMouseWheelUp(String s) {
         for (int i = 0; i < m_items.size(); i++) {
-            Functions.getSingleton().m_onMouseWheelUp.add(new EventListener(s, m_items.get(i)));
+            PrivateFunctions.getFunctionsElementSingleton().m_onMouseWheelUp.add(new EventListener(s, m_items.get(i)));
         }
     }
 
@@ -382,7 +382,7 @@ public class Group extends Accessible implements Iterable<Accessible> {
     @Override
     public void onMouseWheelDown(String s) {
         for (int i = 0; i < m_items.size(); i++) {
-            Functions.getSingleton().m_onMouseWheelDown.add(new EventListener(s, m_items.get(i)));
+            PrivateFunctions.getFunctionsElementSingleton().m_onMouseWheelDown.add(new EventListener(s, m_items.get(i)));
         }
     }
 
@@ -394,7 +394,7 @@ public class Group extends Accessible implements Iterable<Accessible> {
     @Override
     public void onMouseWheelMoved(String s) {
         for (int i = 0; i < m_items.size(); i++) {
-            Functions.getSingleton().m_onMouseWheelMoved.add(new EventListener(s, m_items.get(i)));
+            PrivateFunctions.getFunctionsElementSingleton().m_onMouseWheelMoved.add(new EventListener(s, m_items.get(i)));
         }
     }
 
@@ -405,31 +405,31 @@ public class Group extends Accessible implements Iterable<Accessible> {
      */
     public void onFrame(String s) {
         for (int i = 0; i < m_items.size(); i++) {
-            Functions.getSingleton().m_onFrame.add(new EventListener(s, m_items.get(i)));
+            PrivateFunctions.getFunctionsElementSingleton().m_onFrame.add(new EventListener(s, m_items.get(i)));
         }
     }
     
     public void onKeyDown(String s) {
         for (int i=0; i<m_items.size(); i++) {
-            Functions.getSingleton().m_onKeyDown.add(new EventListener(s, m_items.get(i)));
+            PrivateFunctions.getFunctionsElementSingleton().m_onKeyDown.add(new EventListener(s, m_items.get(i)));
         }
     }
     
     public void onKeyUp(String s) {
         for (int i=0; i<m_items.size(); i++) {
-            Functions.getSingleton().m_onKeyUp.add(new EventListener(s, m_items.get(i)));
+            PrivateFunctions.getFunctionsElementSingleton().m_onKeyUp.add(new EventListener(s, m_items.get(i)));
         }
     }
     
     public void onKeyPressed(String s) {
         for (int i=0; i<m_items.size(); i++) {
-            Functions.getSingleton().m_onKeyPressed.add(new EventListener(s, m_items.get(i)));
+            PrivateFunctions.getFunctionsElementSingleton().m_onKeyPressed.add(new EventListener(s, m_items.get(i)));
         }
     }
     
     public void onKeyReleased(String s) {
         for (int i=0; i<m_items.size(); i++) {
-            Functions.getSingleton().m_onKeyReleased.add(new EventListener(s, m_items.get(i)));
+            PrivateFunctions.getFunctionsElementSingleton().m_onKeyReleased.add(new EventListener(s, m_items.get(i)));
         }
     }
 }
