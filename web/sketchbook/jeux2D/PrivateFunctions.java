@@ -1,3 +1,4 @@
+package org.javascool.proglets.jeux2D;
 /**
  * PrivateFunctions.java
  * Part of Javascool proglet "game"
@@ -6,8 +7,6 @@
  * 
  * gmatheron : guillaume.matheron.06@gmail.com
  */
-package org.javascool.proglets.game;
-
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;

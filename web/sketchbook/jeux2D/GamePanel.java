@@ -1,10 +1,9 @@
+package org.javascool.proglets.jeux2D;
 /*
  * GamePanel.java
  *
  * Created on 1 juil. 2011, 11:02:55
  */
-package org.javascool.proglets.game;
-
 import java.awt.Color;
 import java.util.logging.Logger;
 import java.awt.Graphics;
