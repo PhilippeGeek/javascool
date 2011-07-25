@@ -1,4 +1,17 @@
-<?php showBrowser(array(array("Java's Cool","index.php"),array("Accueil",""))); ?>
+<?php 
+    showBrowser(
+        array(
+            array("Java's Cool","index.php"),
+            array("Accueil","")
+        ),
+        array(
+            array("Cadrage","?page=home&action=cadrage"),
+            array("FAQ","?page=home&action=faq"),
+            array("Licence","?page=home&action=licence"),
+            array("Manifeste","?page=home&action=manifest")
+        )
+    );
+?>
 
 
 <div class="home">
