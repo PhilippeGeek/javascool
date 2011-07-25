@@ -1,3 +1,15 @@
+<?php 
+    showBrowser(
+        array(
+            array("Java's Cool","?"),
+            array("Ailleurs","")
+        ),
+        array(
+            array("Cr&eacute;dits","?page=other&action=credits")
+        )
+    );
+?>
+
 <p><br />
 </p>
 <h1> <span class="mw-headline" id="Autres_outils_p.C3.A9dagogiques_pour_apprendre_l.27informatique"> Autres outils pédagogiques pour apprendre l'informatique </span></h1>

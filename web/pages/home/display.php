@@ -7,7 +7,6 @@
         array(
             array("Cadrage","?page=home&action=cadrage"),
             array("FAQ","?page=home&action=faq"),
-            array("Licence","?page=home&action=licence"),
             array("Manifeste","?page=home&action=manifest")
         )
     );

@@ -1,3 +1,13 @@
+<?php
+    showBrowser(
+        array(
+            array("Java's Cool","index.php"),
+            array("Lancement","?page=run"),
+            array("Licence","")
+        )
+    );
+?>
+
 <p><br />
 </p>
 <h1> <span class="mw-headline" id="Licences_appliqu.C3.A9es_.C3.A0_JavaScool"> Licences appliquées à JavaScool </span></h1>

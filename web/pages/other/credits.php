@@ -1,9 +1,21 @@
+<?php 
+    showBrowser(
+        array(
+            array("Java's Cool","?"),
+            array("Cr&eacute;dits","")
+        ),
+        array(
+            array("Ailleurs","?page=other&action=ailleurs")
+        )
+    );
+?>
+
 <p><br />
 </p>
 <h1> <span class="mw-headline" id="Histoire_de_l.27initiative_JavaScool"> Histoire de l'initiative JavaScool  </span></h1>
 <h2> <span class="mw-headline" id="JavaScool_V4.2C_2011-2012_:_la_version_actuelle"> JavaScool V4, 2011-2012&nbsp;: la version actuelle </span></h2>
 <ul><li> Deux jeunes lycéens s'emparent de JavaS'Cool en juillet 2011 et refondent le noyau, proposent un nouvel éditeur, un mécanisme de création de «proglets» et une «proglet» pour apprendre à programmer en créant des jeux 2D.
-<ul><li> Philippe Vienne &lt;philippe@vienne.fr&gt;
+<ul><li> Philippe Vienne &lt;<!-- //TODO !!! -->&gt;
 </li><li> Guillaume Matheron &lt;guillaumematheron06@gmail.com&gt;
 </li></ul>
 </li></ul>

@@ -1,3 +1,16 @@
+<?php 
+    showBrowser(
+        array(
+            array("Java's Cool","?"),
+            array("Resources","?page=resources"),
+            array("Autres initiatives","")
+        ),
+        array(
+            array("Autres d&eacute;veloppements","?page=resources&action=autresdeveloppements")
+        )
+    );
+?>
+
 <p><br />
 </p>
 <h1> <span class="mw-headline" id="Autres_initiatives_.28extra-scolaires.29_de_popularisation_de_l.27Informatique"> Autres initiatives (extra-scolaires) de popularisation de l'Informatique </span></h1>

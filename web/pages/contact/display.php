@@ -1,4 +1,11 @@
-<?php showBrowser(array(array("Java's Cool","index.php"),array("Contact",""))); ?>
+<?php 
+    showBrowser(
+        array(
+            array("Java's Cool","index.php"),
+            array("Contact","")
+        )
+    );
+?>
 
 <p>Java's Cool est d&eacute;velopp&eacute; par des partenaires et collègues d'Inria (Institut National de Recherche en Informatique et Automatique).</p>
 
