@@ -4,6 +4,8 @@
  */
 package org.javascool.gui;
 
+import java.applet.Applet;
+import javax.swing.JApplet;
 import javax.swing.JPanel;
 import org.javascool.proglet.Proglet;
 
@@ -29,8 +31,8 @@ public class JVSWidgetPanel extends JVSTabs {
         }
     }
 
-    public JPanel getProgletPanel() {
-        return this.getPanel(progletTabId);
+    public Applet getProgletPanel() {
+        return JVSMainPanel.getCurrentProglet().getPanel();
     }
     
     public void focusOnProgletPanel(){
