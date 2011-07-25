@@ -1,10 +1,10 @@
 
-<p title="La proglet 'game'">
+<p title="La proglet 'jeux2D'">
 
     <p title="Index">
         <table>
             <tr>
-                <td colspan="2">I.&nbsp; La proglet 'game'</td>
+                <td colspan="2">I.&nbsp; La proglet 'jeux2D'</td>
             </tr>
             <tr>
                 <td colspan="2">II.&nbsp; Coder un jeu : structure de votre programme</td>
@@ -95,14 +95,19 @@
     </p>
 
 
-    <p title="I. La proglet 'game'">
-Cette proglet permet de créer des petits jeux vidéo facilement pour s'initier à la programmation.
+    <p title="I. La proglet 'jeux2D'">
+        Cette proglet permet de créer des petits jeux vidéo 2D facilement pour s'initier à la programmation.
 Elle met à disposition plusieurs fonctionnalités principales : 
 La gestion intelligente des évènements
 La gestion du dessin d'images (“sprites”)
 La gestion des collections (Group – field – for...in)
 Les propriétés
 Les collisions
+        <p title="Pré-requis">
+Cette proglet a été conçue pour être accessible au plus grand nombre, et ne requiert aucune connaissance en création de jeux vidéo.
+Cependant, elle ne reprend pas les bases de la programmation Java's Cool et il est donc fortement conseillé de s'initier au fonctionnement
+d'un programme si ce n'est déjà fait avec la proglet 'ingredients'.
+        </p>
     </p>
 
     <p title="II. Coder un jeu : structure de votre programme">
@@ -164,7 +169,7 @@ Java's Cool permet d'utiliser les deux types de programmation mais l'accent sera
 
 
     <p title="III. Les nouveaux objets">
-La proglet 'game' simplifie l'affichage d'image, la lecture de sons et la gestion de la souris et du clavier en offrant des nouveaux types d'objets.
+La proglet 'jeux2D' simplifie l'affichage d'image, la lecture de sons et la gestion de la souris et du clavier en offrant des nouveaux types d'objets.
         <p title="III.A. L'objet 'Sprite'">
 Un sprite est une image positionnable sur l'écran. Il possède donc une taille, une image et une position. On peut l'utiliser de la façon suivante : 
             <code>//Les deux lignes suivantes peuvent être écrites : Sprite s=new Sprite(0,0,100,100);

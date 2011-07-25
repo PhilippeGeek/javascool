@@ -8,8 +8,8 @@ import java.awt.Color;
 import java.util.logging.Logger;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import javax.swing.JApplet;
 import javax.swing.JPanel;
+import org.javascool.proglets.game.Drawable;
 
 /**
  * Defines the proglet's main panel and render area
@@ -55,8 +55,12 @@ public class GamePanel extends JPanel {
 
         //Draw all Drawable
         for (int i = 0; i < m_items.size(); i++) {
-            if (m_items.get(i).isVisible()) backBuffer.getGraphics().setColor(m_items.get(i).initColor());
-            if (m_items.get(i).isVisible()) m_items.get(i).draw(backBuffer.getGraphics());
+            if (m_items.get(i).isVisible()) {
+                backBuffer.getGraphics().setColor(m_items.get(i).initColor());
+            }
+            if (m_items.get(i).isVisible()) {
+                m_items.get(i).draw(backBuffer.getGraphics());
+            }
         }
 
         // Blit !

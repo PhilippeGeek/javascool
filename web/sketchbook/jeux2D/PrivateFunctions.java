@@ -11,8 +11,11 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 import java.lang.reflect.InvocationTargetException;
+import java.util.EventListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.javascool.proglets.game.EventCatcher;
+import org.javascool.proglets.game.GamePanel;
 import org.javascool.widgets.Console;
 import org.javascool.tools.Macros;
 
@@ -200,7 +203,7 @@ public class PrivateFunctions implements EventCatcher {
      * It stops the timer and deletes the listeners
      */
     public static void stop() {
-        GamePanel p = (GamePanel) (Macros.getProgletPanel());
+        GamePanel p = ((Panel) (Macros.getProgletPanel())).getGamePanel();
         p.stop();
         try {
             m_clock.exitClean();
