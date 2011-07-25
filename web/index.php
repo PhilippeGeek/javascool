@@ -384,10 +384,10 @@ include("includes/get_wiki_page.php");
                                     </noscript>
                                 </td>
                             </tr>
-                        </table>
+                        </table><div id="mainContent">
                         <?php
                         include($include);
-                        ?>
+                        ?></div>
                     </td><td class="right"></td></tr>
                 <tr class="bottom"><td class="bottomleft"></td><td class="bottom"></td><td class="bottomright"></td></tr></table>
         </div>
