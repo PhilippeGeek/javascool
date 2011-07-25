@@ -24,7 +24,7 @@ public class Line extends Geometry implements Drawable {
      */
     public Line(double x, double y, double w, double h) {
         super(x, y, w, h);
-        ((Panel) Macros.getProgletPanel()).addItem(this);
+        ((GamePanel) Macros.getProgletPanel()).addItem(this);
     }
 
     /**
