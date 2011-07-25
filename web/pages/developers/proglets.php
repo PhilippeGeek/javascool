@@ -13,7 +13,7 @@
 
 <li> Tous les fichiers nécessaires au fonctionnement de la proglet sont placés dans un <em>dossier</em>.</li>
 
-<br>
+<br />
 
 <li> Le nom du dossier correspond à l'<em>identifiant</em> de la proglet.
 
@@ -27,7 +27,7 @@
 </div>
 On respecte ici la convention de nommage des packages Java. </li>
 
-<br>
+<br />
 
 <li>Les fichiers standards de la proglet: <ul>
   <li><tt>proglet.pml</tt> : le descripteur de la proglet.</li>
@@ -37,13 +37,13 @@ On respecte ici la convention de nommage des packages Java. </li>
 </ul> 
 
 <div class="spec"><tt>proglet.pml</tt> est un fichier texte de trois lignes données sous la forme:
-   <br>&nbsp; title = "Description en 1 à 2 lignes de la proglet"
-   <br>&nbsp; author = "Prenom Nom &lt;email@serveur>, Prenom Nom &lt;email@serveur>, .."
-   <br>&nbsp; icon = "Le nom de fichier de l'image qui décrit la proglet (<em>optionnel</em>)"
+   <br />&nbsp; title = "Description en 1 à 2 lignes de la proglet"
+   <br />&nbsp; author = "Prenom Nom &lt;email@serveur>, Prenom Nom &lt;email@serveur>, .."
+   <br />&nbsp; icon = "Le nom de fichier de l'image qui décrit la proglet (<em>optionnel</em>)"
 </div>
 
 <div class="spec"><tt>help.xml</tt> est un fichier en XML dont les balises sont <?php showLink("?page=developers&action=doc-xml", "définies ici", "internal");?>.
-<br>Il contient des liens vers les autres pages, il peut inclure une vidéo externe au site, qui montre le fonctionnement de la proglet, etc..
+<br />Il contient des liens vers les autres pages, il peut inclure une vidéo externe au site, qui montre le fonctionnement de la proglet, etc..
 </div>
 
 <div class="spec"><tt>Functions.java</tt> est une classe publique sans parent, qui contient uniquement les fonctions et constantes statiques et publiques, destinées à l'utilisateur. Elle est documentée soit en anglais, soit en français, à destination de l'élève. Tous les identificateurs utilisés dans cette classes deviennent des mots réservés. Il ne faut rien mettre d'autre dans cette classe.

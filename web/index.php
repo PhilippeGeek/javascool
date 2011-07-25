@@ -31,11 +31,6 @@ include("includes/get_wiki_page.php");
                 applyLabelStyles();
                 addListeners();
                 updateAnimation(1);
-               /*       var links=getElementsByClass("link");
-                for (i=0; i<links.length; i++) {
-                    var link=links[i];
-                    link.addEventListener('click',followLink,true);
-                }*/
             }
             function unloaded() {
                 updateAnimation(1);
@@ -74,8 +69,8 @@ include("includes/get_wiki_page.php");
                 if (animationrunning) return;
                 framePosition=getPos(document.getElementById("header"));
                 var w=getSize(document.getElementById("header")).width;
-                document.getElementById("plugright").style.left=(framePosition.left+w+316-document.getElementById("plugright").offsetWidth)-(animationend-30)*3+"px";
-                document.getElementById("plugleft").style.left=(framePosition.left-316)+(frame-30)*3+"px";
+                document.getElementById("plugright").style.left=(framePosition.left+w+400-document.getElementById("plugright").offsetWidth)-(animationend-30)*3+"px";
+                document.getElementById("plugleft").style.left=(framePosition.left-400)+(frame-30)*3+"px";
             }
             function mouseOverMenuSide(event) {
                 var menuItemName=this.id.substr(0,this.id.length-2);
@@ -181,15 +176,15 @@ include("includes/get_wiki_page.php");
                 
                 if (frame<30) {
                     plugleft.style.top=120-frame*3+"px";
-                    plugleft.style.left=(framePosition.left-316)+"px";
+                    plugleft.style.left=(framePosition.left-400)+"px";
                     plugright.style.top=120-frame*3+"px";
-                    plugright.style.left=(framePosition.left+w+316-document.getElementById("plugright").offsetWidth)+"px";
+                    plugright.style.left=(framePosition.left+w+400-document.getElementById("plugright").offsetWidth)+"px";
                     mainPanel.style.top=(29*3-frame*3)+"px";
                 }
                 if (frame>30) {
-                    plugleft.style.left=(framePosition.left-316)+(frame-30)*3+"px";
+                    plugleft.style.left=(framePosition.left-400)+(frame-30)*3+"px";
                     plugleft.style.top="30px";
-                    plugright.style.left=(framePosition.left+w+316-document.getElementById("plugright").offsetWidth)-(frame-30)*3+"px";
+                    plugright.style.left=(framePosition.left+w+400-document.getElementById("plugright").offsetWidth)-(frame-30)*3+"px";
                     plugright.style.top="30px";
                 }
                 
@@ -217,12 +212,6 @@ include("includes/get_wiki_page.php");
             }
             
             function mouseOverLink(event) {
-                /*    document.getElementById("div_"+this.id).style.display="block";
-                document.getElementById("div_"+this.id).style.width="100px";
-                document.getElementById("div_"+this.id).style.cssFloat="right";
-                document.getElementById("div_"+this.id).style.position="absolute";
-                document.getElementById("div_"+this.id).style.top=mouseY+"px";
-                document.getElementById("div_"+this.id).style.left=mouseX+"px";*/
             }
 
             document.onload = function() {
