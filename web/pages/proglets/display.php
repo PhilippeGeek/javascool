@@ -13,7 +13,7 @@
                 }
             }
             foreach ($proglets as $id) {
-                if (!preg_match('#\.#',$id)) {
+                if (!preg_match('#\.|^tmp#',$id)) {
                     Sal::validateProgletId($id);
                     if (!is_file("sketchbook/" . $id . "/proglet.php"))
                         die("La proglet " . $id . " n'a pas de fichier proglet.php");
