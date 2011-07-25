@@ -15,7 +15,7 @@
 
 <div class="label2">Nous contacter directement</div>
 
-<?php echo get_wiki_page('JavaScool:Contacts'); ?>
+<?php echo get_wiki_page('JavaScool:Contacts'); //TODO hardcode contact and rewrite links ?>
 <br /><br /><hr />
 
 <table><tr>

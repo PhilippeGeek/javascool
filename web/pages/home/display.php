@@ -7,7 +7,7 @@
                     <table class="news"><tr class="news-top"><td colspan="5" class="news-top"></td></tr><tr class="news-center"><td class="news-left"></td><td class="news-leftborder"></td><td class="news-center">
                                     <p>Une version améliorée de la 3.2 avec <i><?php showLink('index.php?page=proglets','«proglets»','internal'); ?></i> est <b><?php showLink('javascool.jar','disponible','file'); ?></b> !</p>
                                     <hr />
-                                    <p>abcd</p>
+                                    <p><a href="?page=sitemap">Plan du site</a></p>
                                 </td><td class="news-rightborder"></td><td class="news-right"></td></tr><tr class="news-bottom"><td colspan="5" class="news-bottom"></td></tr></table>
                 </div>
             </td><td class="main">
