@@ -213,11 +213,11 @@ table.main2 {
     margin-left: 30px;
     margin-right: 30px;
     margin-top:0px;
-    min-height: 100%;
 }
 
 div.main2 {
     width: 100%;
+    min-height: 500px;
 }
 
 table.main2 tr.top td.topleft {
@@ -311,6 +311,10 @@ table.main2 tr.bottom td.bottomright {
 /*
  * Contents
 */
+
+#mainContent {
+    min-height: 350px;
+}
 
 div.home div.news ul.news:before {
     content: "News : ";

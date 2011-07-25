@@ -76,9 +76,9 @@ showBrowser(
         <li>Des classes java accessibles &agrave; l'&eacute;l&egrave;ve. Par exemple, on pourrait ajouter une classe 'Image' qui
             faciliterait l'usage d'images dans Java's Cool</li>
         <li>Des fichiers .jvs qui servent d'exemple &agrave; l'&eacute;l&egrave;ve. Ces fichiers peuvent &ecirc;tre ouverts automatiquement
-            par un <?php showLink("?page=developers&action=jvs","lien jvs","internal"); ?> inclus dans l'aide de la proglet (fichier <tt>help.xml</tt>)</li>
+            par un <?php showLink("?page=developers&action=doc-jvs","lien jvs","internal"); ?> inclus dans l'aide de la proglet (fichier <tt>help.xml</tt>)</li>
         <li>Des fichiers <tt>.xml</tt> qui seront converts lors de l'appel &agrave; 
-            <?php showLink("?page=developers&action=javascoolbuilder","javascoolbuilder","internal"); ?> en fichiers <tt>.htm</tt>.
+            <?php showLink("?page=developers&action=doc-javascoolbuilder","javascoolbuilder","internal"); ?> en fichiers <tt>.htm</tt>.
             Ces fichiers sont accessible depuis l'aide de la proglet (voir la balise lien dans les
             <?php showLink("?page=developers&action=doc-xml", "sp&eacute;cifications du langage xml","internal"); ?></li>
 
