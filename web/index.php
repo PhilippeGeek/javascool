@@ -324,17 +324,27 @@ include("includes/get_wiki_page.php");
             echo ('</td></tr></table><br />');
         }
         
-        function showBrowser($docs) {
+        function showBrowser($parents, $brothers=array()) {
             echo ('<table class="labelMain"><tr><td>');
             $i = 0;
-            foreach ($docs as $doc) {
+            foreach ($parents as $doc) {
+                if ($i==count($parents)-1 && count($brothers)!=0) {
+                    $doc[0].=" (";
+                    $j=0;
+                    foreach($brothers as $brother) {
+                        $doc[0].='<a href="'.$brother[1].'">'.$brother[0].'</a>';
+                        if ($j!=count($brothers)-1) $doc[0].=', ';
+                        $j++;
+                    }
+                    $doc[0].=')';
+                }
                 if ($doc[1] != "") {
                     $id = sha1(uniqid(rand()));
                     echo('<span style="display:none" id="' . $id . '" class="labelclickable" onclick="gotoloc(\'' . $doc[1] . '\');">' . $doc[0] . '</span><script type="text/javascript">document.getElementById(\'' . $id . '\').style.display="inline";</script><noscript><a href="' . $doc[1] . '">' . $doc[0] . '</a></noscript>');
                 }
                 else
                     echo('<span class="label">' . $doc[0] . '</span>');
-                if ($i != count($docs) - 1)
+                if ($i != count($parents) - 1)
                     echo('<script type="text/javascript">document.write(\'<span class="label-arrow"></span>\');</script><noscript><img src="images/label-separator.png" alt=" -> " style="position:relative; top:7px; margin-left: 15px; margin-right: 15px;" /></noscript>');
                 $i++;
             }
