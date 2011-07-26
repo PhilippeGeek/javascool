@@ -217,8 +217,8 @@ public class JVSBMain {
         } catch (Exception e) {
             Utils.report(e);
             System.err.println("Le programme a du s'arreter, voici la cause : \n" + e.getLocalizedMessage());
-            JVSBMain.close();
-            System.exit(1);
+            JVSBMain.pb.update(100, "Erreur !!");
+            JVSBMain.pb.canBeClosed(Boolean.TRUE);
         }
     }
 }
