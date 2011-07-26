@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
-import org.javascool.proglets.game.Drawable;
+import org.javascool.proglets.jeux2D.Drawable;
 
 /**
  * Defines the proglet's main panel and render area

@@ -440,6 +440,10 @@ public class Utils {
                 replaceAll("&icirc;", "î").
                 replaceAll("&ouml;", "ö").
                 replaceAll("&ocirc;", "ô").
+                replaceAll("&ldquo;", "&#8220;").
+                replaceAll("&rdquo;", "&#8221;").
+                replaceAll("&laquo;", "&#171;").
+                replaceAll("&raquo;", "&#172;;").
                 replaceAll("&ugrave;", "ù").
                 replaceAll("&ccedil;", "ç").
                 // Eliminate spurious constructs

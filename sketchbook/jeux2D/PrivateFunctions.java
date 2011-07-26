@@ -1,7 +1,7 @@
 package org.javascool.proglets.jeux2D;
 /**
  * PrivateFunctions.java
- * Part of Javascool proglet "game"
+ * Part of Javascool proglet "jeux2D"
  * File creation : 20110704 at revision 48 by gmatheron (INRIA)
  * Last modification 20110704 by gmatheron (INRIA)
  * 
@@ -14,8 +14,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.EventListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.javascool.proglets.game.EventCatcher;
-import org.javascool.proglets.game.GamePanel;
+import org.javascool.proglets.jeux2D.EventCatcher;
+import org.javascool.proglets.jeux2D.GamePanel;
 import org.javascool.widgets.Console;
 import org.javascool.tools.Macros;
 

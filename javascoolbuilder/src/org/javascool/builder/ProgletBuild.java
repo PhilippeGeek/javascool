@@ -83,7 +83,7 @@ public class ProgletBuild {
             Dialog.error("Erreur", "Pas de fichier d'aide pour "+proglet.getName()+", la proglet ne sera pas construite.");
             return;
         }
-        if(this.proglet.getConf().getChild("title").equals("")||this.proglet.getConf().getChild("author").equals("")){
+        if(this.proglet.getConf().getString("title").isEmpty()||this.proglet.getConf().getString("author").isEmpty()){
             System.err.println("Error in configuration file for proglet : "+proglet.getName());
             Dialog.error("Erreur", "Le fichier de configuration de "+proglet.getName()+" ne respecte pas les spécifications, la proglet ne sera pas construite.");
             return;
@@ -115,7 +115,7 @@ public class ProgletBuild {
                 }
 
             }
-            org.javascool.tools.Utils.saveString(progletDir.getPath() + File.separator + "docXml" + File.separator + name, docFile);
+            org.javascool.tools.Utils.saveString(progletDir.getPath() + File.separator + "docXml" + File.separator + name, Utils.htm2xml(docFile));
         }
         ProgletBuild.copyFileFromJar("org/javascool/builder/resources/build-proglet.xml", progletDir.getPath() + File.separator + "build.xml");
         File buildFile = new File(progletDir.getAbsolutePath() + File.separator + "build.xml");
