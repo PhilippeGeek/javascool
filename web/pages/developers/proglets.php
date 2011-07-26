@@ -7,6 +7,7 @@
         ), array(
             array("XML","?page=developers&action=doc-xml"),
             array("jvs","?page=developers&action=doc-jvs"),
+            array("API","?page=api"),
             array("javascoolbuilder","?page=developers&action=doc-javascoolbuilder")
         )
     );
