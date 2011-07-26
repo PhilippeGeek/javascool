@@ -1,11 +1,15 @@
 <?php
-showBrowser(
+    showBrowser(
         array(
-            array("Java's Cool", "index.php"),
-            array("D&eacute;veloppeurs", "?page=developers"),
-            array("Sp&eacute;cifications d'une proglet", "")
+            array("Java's Cool","?"),
+            array("Développeurs","?page=developers"),
+            array("Spécification d'une proglet","")
+        ), array(
+            array("XML","?page=developers&action=doc-xml"),
+            array("jvs","?page=developers&action=doc-jvs"),
+            array("javascoolbuilder","?page=developers&action=doc-javascoolbuilder")
         )
-);
+    );
 ?>
 
 <pre>
