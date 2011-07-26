@@ -1,32 +1,23 @@
-		<div id="mw-page-base" class="noprint"></div>
-		<div id="mw-head-base" class="noprint"></div>
-		<!-- content -->
-		<div id="content" >
-			<a id="top"></a>
-			<div id="mw-js-message" style="display:none;"></div>
-						<!-- firstHeading -->
-			<h1 id="firstHeading" class="firstHeading">JavaScool:TPE-Methode</h1>
+<?php 
+    showBrowser(
+        array(
+            array("Java's Cool","?"),
+            array("Ressources","?page=resources"),
+            array("TPE","?page=tpe"),
+            array("Méthode","")
+        ),
+        array(
+            array("Démos","?page=tpe&action=demos"),
+            array("Exemples","?page=tpe&action=exemples"),
+            array("Idées","?page=tpe&action=idees"),
+            array("Interventions","?page=tpe&action=interventions"),
+            array("Pépites","?page=tpe&action=pepites"),
+            array("Quizz","?page=tpe&action=quizz"),
+            array("Revues","?page=tpe&action=revues")
+        )
+    );
+?>
 
-			<!-- /firstHeading -->
-			<!-- bodyContent -->
-			<div id="bodyContent">
-				<!-- tagline -->
-				<h3 id="siteSub">De Sciencinfolycee.</h3>
-				<!-- /tagline -->
-				<!-- subtitle -->
-				<div id="contentSub"></div>
-
-				<!-- /subtitle -->
-																<!-- jumpto -->
-				<div id="jump-to-nav">
-					Aller à : <a href="#mw-head">Navigation</a>,
-					<a href="#p-search">rechercher</a>
-				</div>
-				<!-- /jumpto -->
-								<!-- bodytext -->
-
-				<p><br />
-</p>
 <h2><span class="editsection">[<a href="/wikis/sciencinfolycee/index.php?title=JavaScool:TPE-Methode&amp;action=edit&amp;section=1" title="Modifier la section&nbsp;: Aide des scientifiques lors des TPE: description de la méthode">modifier</a>]</span> <span class="mw-headline" id="Aide_des_scientifiques_lors_des_TPE:_description_de_la_m.C3.A9thode"> Aide des scientifiques lors des TPE: description de la méthode </span></h2>
 <p><b>La méthode:</b>
 </p><p>Les lycéen(ne)s de 1ère scientifiques et littéraires ont à l'épreuve du baccalauréat une épreuve dite de <a href="http://eduscol.education.fr/cid47789/tpe.html" class="external text" rel="nofollow">TPE</a>&nbsp;: des travaux personnels encadrés, à faire eux-mêmes en petit groupe guidé par les enseignants d'au moins deux disciplines.  Dans le cadre de l'initiative de <a href="http://www.persan.asso.fr/science-participatives" class="external text" rel="nofollow">sciences participatives</a> et au delà, nous aidons les collègues enseignants en deux temps:

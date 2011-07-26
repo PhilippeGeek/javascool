@@ -14,6 +14,3 @@
     $api=preg_replace('#=\./#','=',$api);
     echo '<div id="javadoc">'.$api.'</div>';
 ?>
-
-
-ascool.gui.<A HREF="../../../org/javascool/gui/JVSStartPanel.html" title="class in org.javascool.gui"><B>JVSStartPanel</B></A><LI TYPE

@@ -1,3 +1,23 @@
+<?php 
+    showBrowser(
+        array(
+            array("Java's Cool","?"),
+            array("Ressources","?page=resources"),
+            array("TPE","?page=tpe"),
+            array("Quizz","")
+        ),
+        array(
+            array("Démos","?page=tpe&action=demos"),
+            array("Exemples","?page=tpe&action=exemples"),
+            array("Idées","?page=tpe&action=idees"),
+            array("Interventions","?page=tpe&action=interventions"),
+            array("Méthode","?page=tpe&action=methode"),
+            array("Pépites","?page=tpe&action=pepites"),
+            array("Revues","?page=tpe&action=revues")
+        )
+    );
+?>
+
 
 <p>Les partenaires de <a href="http://sophia-stic.polytechnice.fr">Sophi@Stic</a> s'associent à <a href="http://www.vsp.fr">VSP</a> 
 pour vous proposer ces quizz-vidéo afin de découvrir quelques facettes des travaux scientifiques de notre Campus 

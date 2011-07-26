@@ -1,31 +1,24 @@
-<div id="mw-page-base" class="noprint"></div>
-		<div id="mw-head-base" class="noprint"></div>
-		<!-- content -->
-		<div id="content" >
-			<a id="top"></a>
-			<div id="mw-js-message" style="display:none;"></div>
-						<!-- firstHeading -->
-			<h1 id="firstHeading" class="firstHeading">JavaScool:TPE-Accueil</h1>
+<?php 
+    showBrowser(
+        array(
+            array("Java's Cool","?"),
+            array("Ressources","?page=resources"),
+            array("TPE",""),
+            array("Accueil","")
+        ),
+        array(
+            array("Démos","?page=tpe&action=demos"),
+            array("Exemples","?page=tpe&action=exemples"),
+            array("Idées","?page=tpe&action=idees"),
+            array("Interventions","?page=tpe&action=interventions"),
+            array("Méthode","?page=tpe&action=methode"),
+            array("Pépites","?page=tpe&action=pepites"),
+            array("Quizz","?page=tpe&action=quizz"),
+            array("Revues","?page=tpe&action=revues")
+        )
+    );
+?>
 
-			<!-- /firstHeading -->
-			<!-- bodyContent -->
-			<div id="bodyContent">
-				<!-- tagline -->
-				<h3 id="siteSub">De Sciencinfolycee.</h3>
-				<!-- /tagline -->
-				<!-- subtitle -->
-				<div id="contentSub"></div>
-
-				<!-- /subtitle -->
-																<!-- jumpto -->
-				<div id="jump-to-nav">
-					Aller à : <a href="#mw-head">Navigation</a>,
-					<a href="#p-search">rechercher</a>
-				</div>
-				<!-- /jumpto -->
-								<!-- bodytext -->
-
-				<p><br />
 <b>Culture Scientifique&nbsp;: aider enseignants et élèves au niveau des Travaux Personnels Encadrés.</b>
 </p><p>L'<a href="http://www.inria.fr" class="external text" rel="nofollow">INRIA</a> et ses partenaires dans le cadre de "<a href="http://www.persan.asso.fr/science-participative" class="external text" rel="nofollow">sciences participatives</a>" propose des <a href="/sciencinfolycee/JavaScool:TPE-Sujets" title="JavaScool:TPE-Sujets">sujets</a> (et des <a href="/sciencinfolycee/JavaScool:TPE-Quizz" title="JavaScool:TPE-Quizz">idées vidéo</a>), avec une <a href="/sciencinfolycee/JavaScool:TPE-Methode" title="JavaScool:TPE-Methode">méthode</a> pour que les chercheurs aident au mieux pour cette épreuve du baccalauréat, dite de <a href="http://eduscol.education.fr/cid47789/tpe.html" class="external text" rel="nofollow">TPE</a> (voir quelques <a href="/sciencinfolycee/JavaScool:TPE-Exemples" title="JavaScool:TPE-Exemples">exemples</a>). L'INRIA fait aussi des <a href="/sciencinfolycee/JavaScool:TPE-Interventions" title="JavaScool:TPE-Interventions">interventions</a> dans les lycées.
 
