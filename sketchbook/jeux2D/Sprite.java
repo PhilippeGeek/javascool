@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.javascool.proglets.game;
+package org.javascool.proglets.jeux2D;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -71,7 +71,7 @@ public class Sprite extends Geometry implements Drawable {
      */
     public Sprite(double x, double y, double w, double h) {
         super(x, y, w, h);
-        ((GamePanel) Macros.getProgletPanel()).addItem(this);
+        ((Panel) Macros.getProgletPanel()).getGamePanel().addItem(this);
     }
 
     /**

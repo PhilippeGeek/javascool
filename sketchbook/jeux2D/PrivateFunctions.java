@@ -6,7 +6,7 @@
  * 
  * gmatheron : guillaume.matheron.06@gmail.com
  */
-package org.javascool.proglets.game;
+package org.javascool.proglets.jeux2D;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -46,6 +46,10 @@ public class PrivateFunctions implements EventCatcher {
         return false;
     }
 
+    public static GamePanel getGamePanel() {
+        return ((Panel)Macros.getProgletPanel()).getGamePanel();
+    }
+    
     /**
      * A singleton is used more for legacy than anything else. Everything could be
      * declared static but it probably would be a mess to refactor everything...
@@ -201,7 +205,7 @@ public class PrivateFunctions implements EventCatcher {
      * It stops the timer and deletes the listeners
      */
     public static void stop() {
-        GamePanel p = (GamePanel) (Macros.getProgletPanel());
+        GamePanel p = ((Panel)Macros.getProgletPanel()).getGamePanel();
         p.stop();
         try {
             m_clock.exitClean();
@@ -295,7 +299,7 @@ public class PrivateFunctions implements EventCatcher {
                 @Override
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
                     callback(getFunctionsElementSingleton().m_onClick);
-                    Macros.getProgletPanel().grabFocus();
+                    ((Panel)Macros.getProgletPanel()).getGamePanel().grabFocus();
                 }
 
                 @Override
@@ -395,7 +399,7 @@ public class PrivateFunctions implements EventCatcher {
             /********* END ANONYMOUS CLASSES ***************/
         }
         //</editor-fold>
-        Macros.getProgletPanel().grabFocus();
+        ((Panel)Macros.getProgletPanel()).getGamePanel().grabFocus();
     }
 
     /**
