@@ -230,7 +230,7 @@ Un deuxième paramètre peut être spécifié : s'il vaut 'true' la fonction de 
 
         <p title="IV.B. La fonction de callback">
             <p title="IV.B.1. Dans le cas d'un évènement global">
-La conftion de callback est une fonction définie par l'utilisateur qui est appelée automatiquement par le système lorsqu'un évènement se produit. Par exemple, le code : 
+La fonction de callback est une fonction définie par l'utilisateur qui est appelée automatiquement par le système lorsqu'un évènement se produit. Par exemple, le code : 
                 <code>onClick(“quitter”);</code>
 provoque l'appel de la fonction quitter() lorsque le joueur clique dans la zone de jeu. La fonction doit être déclarée 'public' (ou non spécifié)  : 
                 <code>void quitter() {		//OK

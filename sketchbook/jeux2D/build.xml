@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="javascool-${proglet.name}" default="default" basedir=".">
+    <description>Builds, tests, and runs the project Java's Cool Core.</description>
+    
+    <target name="default">
+        <xslt destdir="." extension=".htm" style="${jvs.hdocxslt}">
+            <include name="*/*.xml"/>
+            <classpath location="${jvs.saxon}" />
+        </xslt>
+        <xslt destdir="." extension=".html" style="${jvs.hdocxslt}">
+            <include name="*/*.xml"/>
+            <classpath location="${jvs.saxon}" />
+        </xslt>
+        <copy todir=".">
+            <fileset dir="${proglet.doc}">
+                <exclude name="**/*.xml"/>
+            </fileset>
+        </copy>
+        <delete dir="${proglet.doc}"/>
+        <delete dir="${proglet.src}"/>
+        <mkdir dir="${proglet.build}"/>
+        <mkdir dir="${proglet.src}"/>
+        <mkdir dir="${jvs.tojar.tmp}"/>
+        <copy todir="${proglet.src}">
+            <fileset dir="."/>
+        </copy>
+        <javac srcdir="${proglet.src}" destdir="${proglet.build}" includeantruntime="false" classpath="${jvs.basejar}">
+        </javac>
+        <copy todir="${proglet.build}">
+            <fileset dir="${proglet.src}">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+        <delete dir="${proglet.src}"/>
+        <mkdir dir="${jvs.tojar.tmp}/org/javascool/proglets/${proglet.name}"/>
+        <copy todir="${jvs.tojar.tmp}/org/javascool/proglets/${proglet.name}">
+            <fileset dir="${proglet.build}">
+                <exclude name="**/*.java"/>
+                <exclude name="org/"/>
+            </fileset>
+        </copy>
+        <copy todir="${jvs.tojar.tmp}/org/javascool/proglets/${proglet.name}">
+            <fileset dir="${proglet.build}/org/javascool/proglets/${proglet.name}">
+            </fileset>
+        </copy>
+        
+    </target>
+</project>
