@@ -138,7 +138,7 @@ public class JVSBMain {
         String uuid = UUID.randomUUID().toString();
         tmpDir = new File(this.sketchbook.getPath() + File.separator + "tmp-" + uuid);
         tmpDir.mkdirs();
-        tmpDir.deleteOnExit();
+        //tmpDir.deleteOnExit();
     }
 
     /** Sleep the Builder for 200 msec */
@@ -154,14 +154,14 @@ public class JVSBMain {
     public static void close() {
         if (JVSBMain.pb.isVisible()) {
             JVSBMain.pb.dispose();
-        }
+        }/*
         try {
             if (!suppr(JVSBMain.tmpDir)) {
                 Dialog.error("Error", "Le dossier temporaire n'a pas été supprimé automatiquement.\nIl se trouve à la racine de votre sketchbook.");
             }
         } catch (Exception e) {
             Utils.report(e);
-        }
+        }*/
         System.exit(0);
     }
 

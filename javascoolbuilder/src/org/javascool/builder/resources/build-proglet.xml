@@ -3,11 +3,11 @@
     <description>Builds, tests, and runs the project Java's Cool Core.</description>
     
     <target name="default">
-        <xslt destdir="." extension=".htm" style="${jvs.hdocxslt}">
+        <xslt destdir="${proglet.doc}" extension=".htm" style="${jvs.hdocxslt}">
             <include name="*/*.xml"/>
             <classpath location="${jvs.saxon}" />
         </xslt>
-        <xslt destdir="." extension=".html" style="${jvs.hdocxslt}">
+        <xslt destdir="${proglet.doc}" extension=".html" style="${jvs.hdocxslt}">
             <include name="*/*.xml"/>
             <classpath location="${jvs.saxon}" />
         </xslt>
@@ -27,15 +27,12 @@
         <javac srcdir="${proglet.src}" destdir="${proglet.build}" includeantruntime="false" classpath="${jvs.basejar}">
         </javac>
         <copy todir="${proglet.build}">
-            <fileset dir="${proglet.src}">
-                <exclude name="**/*.java"/>
-            </fileset>
+            <fileset dir="${proglet.src}"/>
         </copy>
         <delete dir="${proglet.src}"/>
         <mkdir dir="${jvs.tojar.tmp}/org/javascool/proglets/${proglet.name}"/>
         <copy todir="${jvs.tojar.tmp}/org/javascool/proglets/${proglet.name}">
             <fileset dir="${proglet.build}">
-                <exclude name="**/*.java"/>
                 <exclude name="org/"/>
             </fileset>
         </copy>
