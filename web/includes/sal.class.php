@@ -29,7 +29,7 @@ class Sal {
     }
 
     public static function validateApiUrl($a) {
-        if (!preg_match('#^[a-zA-Z0-9_-]+(/[a-zA-Z0-9_-]+)*.html$#', $a))
+        if (!preg_match('#^[a-zA-Z0-9_.-]+(/[a-zA-Z0-9._-]+)*.html$#', $a))
             die("Error : api url not valid");
     }
 
