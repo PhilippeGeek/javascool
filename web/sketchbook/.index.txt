@@ -1,3 +1,0 @@
-= Proglets proposées sur le site de JavaScool = 
-* Contient la liste des «proglets» validées ou en cours de validation.
-* Les proglets validées apparaissent sur http://javascool.fr
