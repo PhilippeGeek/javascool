@@ -86,12 +86,12 @@ public class JVSBMain {
     /** Copy all need files to the tmp directory */
     private void copyJVSBase() throws FileNotFoundException, IOException {
         ProgletBuild.copyFileFromJar("org/javascool/base.jar", tmpDir.getPath() + File.separator + "base.jar");
-        JVSBMain.baseJarFile=tmpDir.getPath() + File.separator + "base.jar";
+        JVSBMain.baseJarFile = tmpDir.getPath() + File.separator + "base.jar";
         ProgletBuild.copyFileFromJar("org/javascool/builder/resources/hdoc2htm.xslt", tmpDir.getPath() + File.separator + "hdoc2htm.xslt");
-        JVSBMain.hdocXsltFile=tmpDir.getPath() + File.separator + "hdoc2htm.xslt";
+        JVSBMain.hdocXsltFile = tmpDir.getPath() + File.separator + "hdoc2htm.xslt";
         ProgletBuild.copyFileFromJar("org/javascool/builder/resources/hml2htm.xslt", tmpDir.getPath() + File.separator + "hml2htm.xslt");
         ProgletBuild.copyFileFromJar("org/javascool/builder/resources/saxon.jar", tmpDir.getPath() + File.separator + "saxon.jar");
-        JVSBMain.saxonJarFile=tmpDir.getPath() + File.separator + "saxon.jar";
+        JVSBMain.saxonJarFile = tmpDir.getPath() + File.separator + "saxon.jar";
         ProgletBuild.copyFileFromJar("org/javascool/builder/resources/build-jar.xml", tmpDir.getPath() + File.separator + "build.xml");
     }
 
@@ -155,6 +155,26 @@ public class JVSBMain {
         if (JVSBMain.pb.isVisible()) {
             JVSBMain.pb.dispose();
         }
+        try {
+            if (!suppr(JVSBMain.tmpDir)) {
+                Dialog.error("Error", "Le dossier temporaire n'a pas été supprimé automatiquement.\nIl se trouve à la racine de votre sketchbook.");
+            }
+        } catch (Exception e) {
+            Utils.report(e);
+        }
+        System.exit(0);
+    }
+
+    public static Boolean suppr(File r) {
+        File[] fileList = r.listFiles();
+        Boolean s=true;
+        for (int i = 0; i < fileList.length; i++) {
+            if (fileList[i].isDirectory()) {
+                s=s&&suppr(fileList[i]);
+            }
+            s=s&&fileList[i].delete();
+        }
+        return s;
     }
 
     /** Setup the system to run Java's cool

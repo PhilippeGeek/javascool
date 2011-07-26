@@ -59,7 +59,7 @@
   </l>
 </xsl:template>
 
-<!--- 4: Spurious translation -->
+<!--- 4: Spurious translation 
 
 <xsl:template match="br|hr|form|input|select|option">
   <xsl:message>Unexpected tag: <xsl:value-of select="name(.)"/> !!</xsl:message>
@@ -67,6 +67,6 @@
 
 <xsl:template match="*">
   <xsl:message>Undefined tag: <xsl:value-of select="name(.)"/> !!</xsl:message>
-</xsl:template>
+</xsl:template>-->
 
 </xsl:stylesheet>
