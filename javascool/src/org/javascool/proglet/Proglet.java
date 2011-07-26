@@ -69,10 +69,10 @@ public class Proglet {
         
         // Read Configuration
         if (ClassLoader.getSystemResourceAsStream("org/javascool/proglets/" + 
-                packageName + "/Proglet.pml") != null) {
+                packageName + "/proglet.pml") != null) {
             this.conf.reset(Proglet.convertStreamToString(
                     ClassLoader.getSystemResourceAsStream("org/javascool/progle"
-                    + "ts/" + packageName + "/Proglet.pml")));
+                    + "ts/" + packageName + "/proglet.pml")));
             if (!this.conf.getString("name").equals("")) {
                 this.name = this.conf.getString("name");
             }
