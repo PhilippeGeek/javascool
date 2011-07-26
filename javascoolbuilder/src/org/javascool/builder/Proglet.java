@@ -46,8 +46,8 @@ public final class Proglet {
         this.conf = new Pml();
         this.path = progletFolder.getPath();
 
-        if (new File(path + File.separator + "Proglet.pml").exists()) {
-            this.conf.reset(Utils.loadString(new File(path + File.separator + "Proglet.pml").getPath()));
+        if (new File(path + File.separator + "proglet.pml").exists()) {
+            this.conf.reset(Utils.loadString(new File(path + File.separator + "proglet.pml").getPath()));
             if (!this.conf.getString("name").equals("")) {
                 this.name = this.conf.getString("name");
             }
@@ -70,7 +70,7 @@ public final class Proglet {
             hasPanel = false;
         }
         
-        if (new File(path + File.separator + "Help.xml").exists()) {
+        if (new File(path + File.separator + "help.xml").exists()) {
             hasHelp = true;
         } else {
             hasHelp = false;
