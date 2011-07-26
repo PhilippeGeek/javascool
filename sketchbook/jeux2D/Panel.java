@@ -7,7 +7,7 @@ import java.applet.Applet;
 import java.awt.Color;
 import java.util.logging.Logger;
 import javax.swing.JApplet;
-import org.javascool.proglets.game.GamePanel;
+import org.javascool.proglets.jeux2D.GamePanel;
 
 /**
  *
