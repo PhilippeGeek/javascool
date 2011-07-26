@@ -38,3 +38,6 @@
     le jar dans votre dossier sketchbook, et lancez le jar comme vous lanceriez Java's Cool (voir les 
     <?php showLink('?page=run','instructions sur comment lancer un jar','internal'); ?>).
 </p>
+
+<p>Si vous recevez des erreurs, elles s'afficheront dans le fenêtre de javascoolbuilder. Si vous avez besoin d'aide pour résoudre vos
+    erreurs, n'hésitez pas à nous <?php showLink('?page=contact','contacter','internal'); ?></p>
