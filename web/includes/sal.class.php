@@ -22,6 +22,7 @@ class Sal {
     }
 
     public static function progletIdToName($progletId) {
+        return $progletId;
         if ($progletId == 'game')
             return 'Jeux';
         else if ($progletId == 'ingredients')
