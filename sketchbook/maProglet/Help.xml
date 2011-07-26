@@ -1,0 +1,8 @@
+
+<p title="Bienvenu dans ma proglet">
+Ceci est une proglet de démonstration pour ceux qui veulent développer une proglet pour javascool.<br />
+Vous pouvez essayer le code : 
+<code>void main(){
+	test();
+}</code>
+</p>
