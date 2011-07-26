@@ -1,1 +1,0 @@
-$proglet = array("_tag" => "proglet", "icon" => "turtle.gif", "author" => "Thierry Viéville", "description" => "Simule la «bonne vieille» tortue logo, donc permet de faire beaucoup d'autres activités.", "name" => "Tortue Logo");
