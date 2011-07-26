@@ -73,10 +73,10 @@ public class Proglet {
             this.conf.reset(Proglet.convertStreamToString(
                     ClassLoader.getSystemResourceAsStream("org/javascool/progle"
                     + "ts/" + packageName + "/proglet.pml")));
-            if (!this.conf.getString("name").equals("")) {
+            if (!this.conf.getString("name").isEmpty()) {
                 this.name = this.conf.getString("name");
             }
-            if (!this.conf.getString("javaImport").equals("")) {
+            if (!this.conf.getString("javaImport").isEmpty()) {
                 this.depClass = new ArrayList<String>();
                 this.depClass.addAll(Arrays.asList(this.conf.getString("javaImp"
                         + "ort").split(",")));
@@ -84,13 +84,13 @@ public class Proglet {
             if (this.conf.getString("default").equals("true")) {
                 ProgletManager.setDefaultProglet(this.packageName);
             }
-            if (!this.conf.getString("javaCallBefore").equals("")) {
+            if (!this.conf.getString("javaCallBefore").isEmpty()) {
                 this.observer[0] = this.conf.getString("javaCallBefore");
             }
-            if (!this.conf.getString("javaCallAfter").equals("")) {
+            if (!this.conf.getString("javaCallAfter").isEmpty()) {
                 this.observer[1] = this.conf.getString("javaCallAfter");
             }
-            if (!this.conf.getString("logo").equals("")) {
+            if (!this.conf.getString("logo").isEmpty()) {
                 String logo = this.conf.getString("logo");
                 if (ClassLoader.getSystemResourceAsStream("org/javascool/progle"
                         + "ts/" + packageName + "/"+logo) != null) {
