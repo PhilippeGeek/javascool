@@ -61,15 +61,19 @@ public class ProgressBar extends javax.swing.JFrame {
 
     /** Redirect the console outPut */
     private void redirectSystemStreams() {
+        PrintStream oldOut=System.out;
+        final PrintStream errOut=System.err;
         OutputStream out = new OutputStream() {
 
             @Override
             public void write(final int b) throws IOException {
+                errOut.write(b);
                 updateTextPane(String.valueOf((char) b));
             }
 
             @Override
             public void write(byte[] b, int off, int len) throws IOException {
+                errOut.write(b, off, len);
                 updateTextPane(new String(b, off, len));
             }
 
@@ -78,7 +82,7 @@ public class ProgressBar extends javax.swing.JFrame {
                 write(b, 0, b.length);
             }
         };
-
+        
         System.setOut(new PrintStream(out, true));
         System.setErr(new PrintStream(out, true));
     }
@@ -161,7 +165,7 @@ public class ProgressBar extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -185,6 +189,7 @@ public class ProgressBar extends javax.swing.JFrame {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
+            @Override
             public void run() {
                 new ProgressBar().setVisible(true);
             }
