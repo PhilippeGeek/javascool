@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.javascool.proglets.game;
+package org.javascool.proglets.jeux2D;
 
 import java.awt.Graphics;
 import java.util.logging.Logger;
@@ -29,7 +29,7 @@ public class Rect extends Geometry implements Drawable {
     public Rect(double x, double y, double w, double h) {
         super(x, y, w, h);
         m_solid = true;
-        ((GamePanel) Macros.getProgletPanel()).addItem(this);
+        ((Panel) Macros.getProgletPanel()).getGamePanel().addItem(this);
     }
 
     /**
@@ -42,7 +42,7 @@ public class Rect extends Geometry implements Drawable {
      */
     public Rect(double x, double y, double w, double h, boolean solid) {
         super(x, y, w, h);
-        ((GamePanel) Macros.getProgletPanel()).addItem(this);
+        ((Panel) Macros.getProgletPanel()).getGamePanel().addItem(this);
         m_solid = solid;
     }
 

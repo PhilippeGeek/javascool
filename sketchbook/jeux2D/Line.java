@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.javascool.proglets.game;
+package org.javascool.proglets.jeux2D;
 
 //TODO update javadoc
 
@@ -24,7 +24,7 @@ public class Line extends Geometry implements Drawable {
      */
     public Line(double x, double y, double w, double h) {
         super(x, y, w, h);
-        ((GamePanel) Macros.getProgletPanel()).addItem(this);
+        PrivateFunctions.getGamePanel().addItem(this);
     }
 
     /**

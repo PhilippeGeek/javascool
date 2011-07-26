@@ -3,7 +3,7 @@
  *
  * Created on 1 juil. 2011, 11:02:55
  */
-package org.javascool.proglets.game;
+package org.javascool.proglets.jeux2D;
 
 import java.awt.Color;
 import java.util.logging.Logger;

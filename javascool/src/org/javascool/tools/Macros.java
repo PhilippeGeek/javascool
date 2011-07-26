@@ -204,6 +204,7 @@ public class Macros {
                 Thread.sleep(0, 10000);
             }
         } catch (Exception e) {
+            e.printStackTrace();
             throw new RuntimeException("Programme arrêté !");
         }
     }
