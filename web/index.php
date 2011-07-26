@@ -302,7 +302,7 @@ include("includes/get_wiki_page.php");
 
         function showLink($link, $text, $type) {
             //TODO security
-            $text = addslashes($text);
+            //$text = addslashes($text);
             $id = sha1(uniqid(rand()));
             $c="Clic gauche pour suivre lien, clic milieu pour ouvrir le lien dans un nouvel onglet";
             if ($type == "proglet" || $type == "internal" || $type == "external" || type == "internal_newtab")

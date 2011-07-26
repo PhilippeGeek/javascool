@@ -1,11 +1,13 @@
-<?php 
+<?php
     showBrowser(
         array(
-            array("Java's Cool","index.php"),
-            array("D&eacute;veloppeurs","")
-        ),
-        array(
-            array("Sp&eacute;cifications d'une proglet","?page=developers&action=proglets")
+            array("Java's Cool","?"),
+            array("Développeurs","")
+        ), array(
+            array("Proglet","?page=developers&action=proglets"),
+            array("XML","?page=developers&action=doc-xml"),
+            array("javascoolbuilder","?page=developers&action=doc-javascoolbuilder"),
+            array("jvs","?page=developers&action=doc-jvs")
         )
     );
 ?>
