@@ -19,7 +19,7 @@ public class ProgletFileNameFilter implements FilenameFilter {
             return false;
         } else if (new File(dir.getPath()+File.separator+name).isDirectory()) {
             File subDir=new File(dir.getPath()+File.separator+name);
-            if(new File(subDir.getPath()+File.separator+"Proglet.pml").exists()){
+            if(new File(subDir.getPath()+File.separator+"proglet.pml").exists()){
                 return true;
             } else {
                 return false;

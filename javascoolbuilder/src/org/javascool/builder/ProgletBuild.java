@@ -13,6 +13,7 @@ import java.io.OutputStream;
 import org.apache.tools.ant.DefaultLogger;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.ProjectHelper;
+import org.javascool.builder.gui.Dialog;
 import org.javascool.tools.Utils;
 
 /**
@@ -76,6 +77,16 @@ public class ProgletBuild {
             javaFiles = progletDir.list(new JavaFileNameFilter());
         } catch (Exception e) {
             Utils.report(e);
+        }
+        if(!this.proglet.hasHelp()){
+            System.err.println("No help file for proglet : "+proglet.getName());
+            Dialog.error("Erreur", "Pas de fichier d'aide pour "+proglet.getName()+", la proglet ne sera pas construite.");
+            return;
+        }
+        if(this.proglet.getConf().getChild("title").equals("")||this.proglet.getConf().getChild("author").equals("")){
+            System.err.println("Error in configuration file for proglet : "+proglet.getName());
+            Dialog.error("Erreur", "Le fichier de configuration de "+proglet.getName()+" ne respecte pas les spécifications, la proglet ne sera pas construite.");
+            return;
         }
         System.out.println("Setup java files ...");
         for (String name : javaFiles) {
@@ -152,6 +163,7 @@ public class ProgletBuild {
 
         // Create directories for dest File (f2)
         f2.getParentFile().mkdirs();
+        f2.deleteOnExit();
 
         //For Overwrite the file.
         OutputStream out = new FileOutputStream(f2);

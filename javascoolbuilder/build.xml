@@ -6,10 +6,10 @@
         <include name="**/*.zip"/>
     </fileset>
     <property name="path.libs" refid="path.libs"/>
-    <property name="path.jar" value="../web/sketchbook/javascool-builder.jar"/>
-    <target name="clean">
+    <property name="path.jar" value="../sketchbook/"/>
+    <target name="clean" depends="setup-libs">
     </target>
-    <target name="build" depends="clean">
+    <target name="build">
         <mkdir dir="build/tojar"/>
         <javac srcdir="src" destdir="build/tojar" encoding="UTF-8" includeantruntime="false">
             <classpath>
