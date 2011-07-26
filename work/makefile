@@ -1,3 +1,5 @@
+dft : cmp
+
 export PATH:=/usr/java/jdk1.6.0_22/bin:$(PATH)
 export CP = $(PWD)/../javascool/lib/RSyntaxTextArea.jar:$(PWD)/../javascool/lib/tools.zip
 
