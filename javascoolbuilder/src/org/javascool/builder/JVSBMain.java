@@ -216,7 +216,7 @@ public class JVSBMain {
             jVSBMain = new JVSBMain();
         } catch (Exception e) {
             Utils.report(e);
-            Dialog.error("Erreur fatal", "Le programme a du s'arreter, voici la cause : \n" + e.getLocalizedMessage());
+            System.err.println("Le programme a du s'arreter, voici la cause : \n" + e.getLocalizedMessage());
             JVSBMain.close();
             System.exit(1);
         }
