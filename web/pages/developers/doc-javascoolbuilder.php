@@ -7,6 +7,7 @@
         ), array(
             array("Proglet","?page=developers&action=proglets"),
             array("XML","?page=developers&action=doc-xml"),
+            array("API","?page=api"),
             array("jvs","?page=developers&action=doc-jvs")
         )
     );

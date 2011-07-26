@@ -1,3 +1,23 @@
+<?php 
+    showBrowser(
+        array(
+            array("Java's Cool","?"),
+            array("Ressources","?page=resources"),
+            array("TPE","?page=tpe"),
+            array("Revues","")
+        ),
+        array(
+            array("Démos","?page=tpe&action=demos"),
+            array("Exemples","?page=tpe&action=exemples"),
+            array("Idées","?page=tpe&action=idees"),
+            array("Interventions","?page=tpe&action=interventions"),
+            array("Méthode","?page=tpe&action=methode"),
+            array("Pépites","?page=tpe&action=pepites"),
+            array("Quizz","?page=tpe&action=quizz")
+        )
+    );
+?>
+
 Revues &agrave; disposition de
 tous les apprenants et curieux de sciences:<br />
 <br />

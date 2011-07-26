@@ -1,3 +1,23 @@
+<?php 
+    showBrowser(
+        array(
+            array("Java's Cool","?"),
+            array("Ressources","?page=resources"),
+            array("TPE","?page=tpe"),
+            array("Idées","")
+        ),
+        array(
+            array("Démos","?page=tpe&action=demos"),
+            array("Exemples","?page=tpe&action=exemples"),
+            array("Interventions","?page=tpe&action=interventions"),
+            array("Méthode","?page=tpe&action=methode"),
+            array("Pépites","?page=tpe&action=pepites"),
+            array("Quizz","?page=tpe&action=quizz"),
+            array("Revues","?page=tpe&action=revues")
+        )
+    );
+?>
+
 <div>
    
    <h2>Quelques id&eacute;es de TPE:</h2>

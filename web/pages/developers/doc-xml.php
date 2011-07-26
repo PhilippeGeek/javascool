@@ -7,6 +7,7 @@
         ), array(
             array("Proglet","?page=developers&action=proglets"),
             array("jvs","?page=developers&action=doc-jvs"),
+            array("API","?page=api"),
             array("javascoolbuilder","?page=developers&action=doc-javascoolbuilder")
         )
     );

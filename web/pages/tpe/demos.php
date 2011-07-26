@@ -1,3 +1,23 @@
+<?php 
+    showBrowser(
+        array(
+            array("Java's Cool","?"),
+            array("Ressources","?page=resources"),
+            array("TPE","?page=tpe"),
+            array("Démos","")
+        ),
+        array(
+            array("Exemples","?page=tpe&action=exemples"),
+            array("Idées","?page=tpe&action=idees"),
+            array("Interventions","?page=tpe&action=interventions"),
+            array("Méthode","?page=tpe&action=methode"),
+            array("Pépites","?page=tpe&action=pepites"),
+            array("Quizz","?page=tpe&action=quizz"),
+            array("Revues","?page=tpe&action=revues")
+        )
+    );
+?>
+
 <div id="mw-page-base" class="noprint"></div>
 		<div id="mw-head-base" class="noprint"></div>
 		<!-- content -->
