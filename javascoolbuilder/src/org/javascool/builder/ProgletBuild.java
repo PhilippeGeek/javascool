@@ -110,7 +110,6 @@ public class ProgletBuild {
                     docFile = docFile + codeToSplit;
                 } else {
                     String code = codeToSplit.split("</code>", 2)[0];
-                    System.out.println("Format Code");
                     docFile = docFile + "<div class=\"code\">" + org.javascool.builder.doc.Formater.format(code) + "</div>" + codeToSplit.split("</code>", 2)[1];
                 }
 
