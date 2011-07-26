@@ -11,14 +11,7 @@
     <description>Builds, tests, and runs the project Java's Cool Core.</description>
     <import file="nbproject/build-impl.xml"/>
     <target name="copy-javascool-for-builder">
-        <mkdir dir="tmp"/>
-        <unjar dest="tmp" src="javascool.jar"/>
-        <delete dir="tmp/org/javascool/proglets/game"/>
-        <jar destfile="../javascoolbuilder/src/org/javascool/base.jar" basedir="tmp">
-            <manifest>
-                <attribute name="Main-Class" value="org.javascool.JVSMain" />
-            </manifest>
-        </jar>
+        <copy file="javascool.jar" tofile="../javascoolbuilder/src/org/javascool/base.jar"/>
     </target>
     <target name="-post-jar">
         <!--<echo message="Delete keystore" level="info"/>
