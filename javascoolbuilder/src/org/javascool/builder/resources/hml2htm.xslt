@@ -149,7 +149,7 @@
 
 <xsl:template match="*"><xsl:text>
 </xsl:text>  
-<xsl:message>Unexpected tag: <xsl:value-of select="name(.)"/> !!</xsl:message>
+<!--xsl:message>Unexpected tag: <xsl:value-of select="name(.)"/> !!</xsl:message-->
 <xsl:element name="{name(.)}">
   <xsl:for-each select="@*"><xsl:attribute name="{name(.)}"><xsl:value-of select="."/></xsl:attribute></xsl:for-each>
   <xsl:apply-templates/>
