@@ -130,7 +130,7 @@
   </xsl:choose>
 </xsl:template>
 
-<!--- 4: Code copy -->
+<!--- 4: Code copy
 
 <xsl:template match="code">
   <xsl:apply-templates mode ="code"/>
@@ -143,7 +143,8 @@
   <xsl:apply-templates/>
 </xsl:element>
 </xsl:template>
-
+ -->
+ 
 <!--- 5: Spurious translation -->
 
 <xsl:template match="*"><xsl:text>
