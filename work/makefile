@@ -23,6 +23,9 @@ cmp :
 	cd $(SRC) ; jar cfm $(TMP)/javascool.jar $(TMP)/manifest.mf `find . -name '*.class'` ; find -name '*.class' -exec rm {} \;
 	java -cp $(CP) -jar $(TMP)/javascool.jar
 
+ssh :
+	@gnome-terminal -e "ssh scm.gforge.inria.fr 'cd /home/groups/javascool/htdocs ; bash -i'" 
+
 clean:
 	cd $(PWD)/.. ; find -name '*.class' -exec rm {} \;
 	rm -rf tmp/*
