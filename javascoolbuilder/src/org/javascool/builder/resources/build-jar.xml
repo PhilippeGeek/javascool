@@ -8,7 +8,7 @@
                 <attribute name="Class-Path" value="" />
             </manifest>
         </jar>
-     <!--//DEBUG   <delete dir="${jvs.tmp}"/>-->
+        <delete dir="${jvs.tmp}"/>
     </target>
     <target name="setup">
         <mkdir dir="${jvs.tojar.tmp}"/>
