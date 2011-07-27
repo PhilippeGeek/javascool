@@ -100,10 +100,11 @@ public class ProgletBuild {
         System.out.println("Setting up docs ...");
         for (String name : docFiles) {
             System.out.println("Setting up doc file : " + name);
-            // Mais le xslt est lancé avant ça ou après ? Il vaudrait mieux qu'il soit lancé avant, sinonil râle sur le code que tu génères
+            // Mais le xslt est lancé avant ça ou après ? Il vaudrait mieux qu'il soit lancé avant, sinon il râle sur le code que tu génères
             // ici !
             String docFile = new String(org.javascool.tools.Utils.loadString(progletDir.getPath() + File.separator + name).getBytes(), "UTF-8");
-//DEBUG            docFile = Utils.htm2xml(docFile);   //FIXME Ah ben non alors, c'est l'inverse ! On veut convertir du xml en htm !
+            docFile = Utils.htm2xml(docFile);   //FIXME Ah ben non alors, c'est l'inverse ! On veut convertir du xml en htm !
+            //EDIT ok j'ai compris, mais le nom de la fonction n'est vraiment pas très explicite...
             String[] splitCodeStart = docFile.split("<code>");
             docFile = "";
             for (String codeToSplit : splitCodeStart) {
@@ -146,6 +147,7 @@ public class ProgletBuild {
         System.out.println("Call ant to build the proglet : ");
         p.executeTarget(p.getDefaultTarget());
         System.out.println("Ant end to build the proglet");
+        buildFile.delete();
     }
 
     /** Copy a file from the jar
