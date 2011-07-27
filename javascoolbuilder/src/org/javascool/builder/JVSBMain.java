@@ -120,7 +120,7 @@ public class JVSBMain {
         p.setUserProperty("jvs.tmp", "" + tmpDir.getName() + "");
         p.setUserProperty("jvs.newjar", this.sketchbook.getAbsolutePath()
                 + File.separator + "javascool-personel.jar");
-        p.setUserProperty("jvs.jarname", "Java's cool Sketchbook");
+        p.setUserProperty("jvs.jarname", "Java's Cool Sketchbook");
         p.init();
         ProjectHelper helper = ProjectHelper.getProjectHelper();
         p.addReference("ant.projectHelper", helper);
