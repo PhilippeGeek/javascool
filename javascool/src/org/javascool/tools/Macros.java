@@ -204,8 +204,9 @@ public class Macros {
                 Thread.sleep(0, 10000);
             }
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException("Programme arrêté !");
+            // Ah ?
+      //      e.printStackTrace();
+       //     throw new RuntimeException("Programme arrêté !");
         }
     }
 
@@ -316,7 +317,7 @@ public class Macros {
                 "Java's cool",
                 JOptionPane.YES_OPTION);
     }
-
+    
     public static Applet getProgletPanel() {
         return JVSMainPanel.getWidgetTabs().getProgletPanel();
     }

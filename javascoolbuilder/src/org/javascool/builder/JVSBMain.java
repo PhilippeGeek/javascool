@@ -66,6 +66,7 @@ public class JVSBMain {
             JVSBMain.pb.update(100, "Terminé");
         } else {
             Dialog.error("Arret du Builder", "Vous devez mettre le JVSBuilder \nà la racine de votre sketchbook");
+            System.exit(0);
         }
 
     }
@@ -256,6 +257,7 @@ public class JVSBMain {
             System.err.println("Le programme a du s'arreter, voici la cause : \n" + e.getLocalizedMessage());
             JVSBMain.pb.update(100, "Erreur !!");
             JVSBMain.pb.canBeClosed(Boolean.TRUE);
+            System.exit(0);
         }
     }
 }

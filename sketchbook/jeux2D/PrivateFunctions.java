@@ -38,7 +38,7 @@ public class PrivateFunctions implements EventCatcher {
     /*
      * See getFunctionsElementSingleton()
      */
-    private static PrivateFunctions m_singleton;
+    public static PrivateFunctions m_singleton;
 
     @Override
     public boolean isDestroyed() {
@@ -46,7 +46,7 @@ public class PrivateFunctions implements EventCatcher {
     }
 
     public static GamePanel getGamePanel() {
-        return ((Panel)Macros.getProgletPanel()).getGamePanel();
+        return Panel.m_panel;
     }
     
     /**
@@ -204,16 +204,17 @@ public class PrivateFunctions implements EventCatcher {
      * It stops the timer and deletes the listeners
      */
     public static void stop() {
-        GamePanel p = ((Panel)Macros.getProgletPanel()).getGamePanel();
+        GamePanel p = Panel.m_panel;
         p.stop();
-        try {
+        m_exit=true;
+       /* try {
             m_clock.exitClean();
         } catch (Exception e) {
             System.err.println(e.getMessage());
-        }
-        Macros.getProgletPanel().removeMouseListener(m_singleton.m_mouseListener);
-        Macros.getProgletPanel().removeMouseMotionListener(m_singleton.m_mouseMotionListener);
-        Macros.getProgletPanel().removeMouseWheelListener(m_singleton.m_mouseWheelListener);
+        }*/
+        Panel.m_panel.removeMouseListener(m_singleton.m_mouseListener);
+        Panel.m_panel.removeMouseMotionListener(m_singleton.m_mouseMotionListener);
+        Panel.m_panel.removeMouseWheelListener(m_singleton.m_mouseWheelListener);
 
         m_singleton.m_onClick.removeAll(m_singleton.m_onClick);
         m_singleton.m_onMouseDown.removeAll(m_singleton.m_onMouseDown);
@@ -237,7 +238,7 @@ public class PrivateFunctions implements EventCatcher {
     /**
      * Stores a running clock that ticks at each frame and triggers frame-driven events
      */
-    private static Clock m_clock;
+    public static Clock m_clock;
 
     /**
      * This method is called during init
@@ -245,167 +246,14 @@ public class PrivateFunctions implements EventCatcher {
      */
     @SuppressWarnings({"AccessingNonPublicFieldOfAnotherObject", "CollectionWithoutInitialCapacity"})
     public static void start() {
-        /* A singleton is used to be able to define non-static classes inside PrivateFunctions
-         * The functions the end-user can call are all static, but they refer
-         * to non-static attributes using this singleton static attribute
-         */
-
-        if (m_singleton != null) {
-            stop();
-        }
-
-        m_singleton = new PrivateFunctions();
-
-        m_singleton.m_keysPressed = new java.util.ArrayList<Integer>();
-
-        /* These arrays store the listeners that should be called when an event occurs
-         */
-        m_singleton.m_onClick = new java.util.ArrayList<EventListener>();
-        m_singleton.m_onMouseDown = new java.util.ArrayList<EventListener>();
-        m_singleton.m_onMouseDragged = new java.util.ArrayList<EventListener>();
-        m_singleton.m_onMouseEntered = new java.util.ArrayList<EventListener>();
-        m_singleton.m_onMouseExited = new java.util.ArrayList<EventListener>();
-        m_singleton.m_onMouseMoved = new java.util.ArrayList<EventListener>();
-        m_singleton.m_onMousePressed = new java.util.ArrayList<EventListener>();
-        m_singleton.m_onMouseReleased = new java.util.ArrayList<EventListener>();
-        m_singleton.m_onMouseUp = new java.util.ArrayList<EventListener>();
-        m_singleton.m_onFrame = new java.util.ArrayList<EventListener>();
-        m_singleton.m_onMouseWheelDown = new java.util.ArrayList<EventListener>();
-        m_singleton.m_onMouseWheelUp = new java.util.ArrayList<EventListener>();
-        m_singleton.m_onMouseWheelMoved = new java.util.ArrayList<EventListener>();
-        m_singleton.m_onKeyDown = new java.util.ArrayList<EventListener>();
-        m_singleton.m_onKeyUp = new java.util.ArrayList<EventListener>();
-        m_singleton.m_onKeyPressed = new java.util.ArrayList<EventListener>();
-        m_singleton.m_onKeyReleased = new java.util.ArrayList<EventListener>();
-
-        /* The clock object will 'tick' each 1/30s. it will then call the callback
-         * functions for onMouseDown, onMouseUp, etc if needed
-         */
-        m_clock = new Clock();
-        m_clock.setFps(30);
-        (new Thread(m_clock)).start();
-
-        /* Define a few anonymous classes that will define the proglet's behavior
-         * when an event is performed. Uually the proglet will call all the callback
-         * functions for this event.
-         * Possible optimization : only register a listener if an event is defined
-         */
-        //<editor-fold defaultstate="collapsed" desc="Anonymous classes">
-        {
-            /********* START ANONYMOUS CLASSES ***************/
-            m_singleton.m_mouseListener = new java.awt.event.MouseListener() {
-
-                @Override
-                public void mouseClicked(java.awt.event.MouseEvent evt) {
-                    callback(getFunctionsElementSingleton().m_onClick);
-                    ((Panel)Macros.getProgletPanel()).getGamePanel().grabFocus();
-                }
-
-                @Override
-                public void mouseEntered(java.awt.event.MouseEvent evt) {
-                    callback(getFunctionsElementSingleton().m_onMouseEntered);
-                }
-
-                @Override
-                public void mouseExited(java.awt.event.MouseEvent evt) {
-                    callback(getFunctionsElementSingleton().m_onMouseExited);
-                }
-
-                @Override
-                public void mousePressed(java.awt.event.MouseEvent evt) {
-                    callback(getFunctionsElementSingleton().m_onMousePressed);
-                    if (evt.getButton() == java.awt.event.MouseEvent.BUTTON1) {
-                        m_singleton.m_mouseDown[0] = true;
-                    } else if (evt.getButton() == java.awt.event.MouseEvent.BUTTON2) {
-                        m_singleton.m_mouseDown[1] = true;
-                    } else if (evt.getButton() == java.awt.event.MouseEvent.BUTTON3) {
-                        m_singleton.m_mouseDown[2] = true;
-                    }
-                }
-
-                @Override
-                public void mouseReleased(java.awt.event.MouseEvent evt) {
-                    callback(getFunctionsElementSingleton().m_onMouseReleased);
-                    if (evt.getButton() == java.awt.event.MouseEvent.BUTTON1) {
-                        m_singleton.m_mouseDown[0] = false;
-                    } else if (evt.getButton() == java.awt.event.MouseEvent.BUTTON2) {
-                        m_singleton.m_mouseDown[1] = false;
-                    } else if (evt.getButton() == java.awt.event.MouseEvent.BUTTON3) {
-                        m_singleton.m_mouseDown[2] = false;
-                    }
-                }
-            };
-            Macros.getProgletPanel().addMouseListener(m_singleton.m_mouseListener);
-
-            m_singleton.m_mouseMotionListener = new java.awt.event.MouseMotionListener() {
-
-                @Override
-                public void mouseDragged(MouseEvent e) {
-                    m_singleton.m_mousePosRelativeToPanelX = e.getX();
-                    m_singleton.m_mousePosRelativeToPanelY = e.getY();
-                    callback(getFunctionsElementSingleton().m_onMouseDragged);
-                    callback(getFunctionsElementSingleton().m_onMouseMoved);
-                }
-
-                @Override
-                public void mouseMoved(MouseEvent e) {
-                    m_singleton.m_mousePosRelativeToPanelX = e.getX();
-                    m_singleton.m_mousePosRelativeToPanelY = e.getY();
-                    callback(getFunctionsElementSingleton().m_onMouseMoved);
-                }
-            };
-            Macros.getProgletPanel().addMouseMotionListener(m_singleton.m_mouseMotionListener);
-
-            m_singleton.m_mouseWheelListener = new java.awt.event.MouseWheelListener() {
-
-                @Override
-                public void mouseWheelMoved(MouseWheelEvent e) {
-                    double copy = getFunctionsElementSingleton().m_mouseWheelPosition;
-                    m_singleton.m_mouseWheelPosition += e.getWheelRotation();
-                    if (copy > getFunctionsElementSingleton().m_mouseWheelPosition) {
-                        callback(getFunctionsElementSingleton().m_onMouseWheelDown);
-                    } else {
-                        callback(getFunctionsElementSingleton().m_onMouseWheelUp);
-                    }
-                    callback(getFunctionsElementSingleton().m_onMouseWheelMoved);
-                }
-            };
-            Macros.getProgletPanel().addMouseWheelListener(m_singleton.m_mouseWheelListener);
-
-            m_singleton.m_keyListener = new java.awt.event.KeyListener() {
-
-                @Override
-                public void keyTyped(KeyEvent e) {
-                }
-
-                @Override
-                public void keyPressed(KeyEvent e) {
-                    if (e.getKeyChar() == 65635) {
-                        return;
-                    }
-                    m_singleton.m_keysPressed.add(e.getKeyCode());
-                    callback(getFunctionsElementSingleton().m_onKeyPressed);
-                }
-
-                @Override
-                public void keyReleased(KeyEvent e) {
-                    //Object cast so that the char given isn't taken as an index number
-                    m_singleton.m_keysPressed.remove((Integer) e.getKeyCode());
-                    callback(getFunctionsElementSingleton().m_onKeyReleased);
-                }
-            };
-            Macros.getProgletPanel().addKeyListener(m_singleton.m_keyListener);
-            /********* END ANONYMOUS CLASSES ***************/
-        }
-        //</editor-fold>
-        ((Panel)Macros.getProgletPanel()).getGamePanel().grabFocus();
+        
     }
 
     /**
      * Calls each function of the specified array if the EventCatcher accepts it or is set to always
      * @param functions The functions to call
      */
-    private static void callback(java.util.ArrayList<EventListener> functions) {
+    public static void callback(java.util.ArrayList<EventListener> functions) {
         for (int i = 0; i < functions.size(); i++) {
             if (functions.get(i).getObject() == null && (functions.get(i).getObject().isForMe() || functions.get(i).getAlways()) && !functions.get(i).getObject().isDestroyed()) {
                 call(functions.get(i).getMethod());
@@ -427,6 +275,11 @@ public class PrivateFunctions implements EventCatcher {
     }
 
     /**
+     * Set to true when the clock needs to exit
+     */
+    public static boolean m_exit = false;
+        
+    /**
      * This class allows the proglet to trigger events regularly. Depending on the
      * selected framerate (see setFps(int)), a main routine will be executed at the given 
      * speed. At each loop, the clock will call the tick() method.
@@ -434,10 +287,6 @@ public class PrivateFunctions implements EventCatcher {
     @SuppressWarnings("PublicInnerClass")
     public static class Clock implements Runnable {
 
-        /**
-         * Set to true when the clock needs to exit
-         */
-        private boolean m_exit = false;
         /**
          * Defines the framerate that the clock will try to achieve
          */
@@ -461,14 +310,16 @@ public class PrivateFunctions implements EventCatcher {
         @SuppressWarnings("SleepWhileInLoop")
         public void run() {
             double targetTimeMs = 1000 / m_fps;
-
+						System.err.println("Starting clock");
             while (true) {
                 if (!Console.isRunning() || m_exit) {
+                		System.err.println("Stopped clock. Console.isRunning()="+(Console.isRunning()?"yes":"no")+", m_exit="+(m_exit?"yes":"no"));
                     break;
                 }
 
                 m_lastTick = System.currentTimeMillis();
                 tick();
+                System.err.println("tick");
 
                 double timeMs = System.currentTimeMillis() - m_lastTick;
                 double sleepMs = targetTimeMs - timeMs;
@@ -480,7 +331,6 @@ public class PrivateFunctions implements EventCatcher {
                     Logger.getLogger(PrivateFunctions.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-            stop();
         }
 
         /**
@@ -502,7 +352,6 @@ public class PrivateFunctions implements EventCatcher {
          */
         @SuppressWarnings("AccessingNonPublicFieldOfAnotherObject")
         private void tick() {
-
             Macros.getRessource("test.txt");   //DEBUG
             for (int j = 0; j < 3; j++) {
                 if (getFunctionsElementSingleton().m_mouseDown[j]) {
@@ -519,7 +368,7 @@ public class PrivateFunctions implements EventCatcher {
 
 
             callback(getFunctionsElementSingleton().m_onFrame);
-            Macros.getProgletPanel().repaint();
+            Panel.m_panel.repaint();
         }
 
         public void exitClean() {

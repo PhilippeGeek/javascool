@@ -134,11 +134,11 @@ public class Proglet {
 
         // Install the help file
         if (ClassLoader.getSystemResourceAsStream("org/javascool/proglets/" 
-                + packageName + "/help.html") != null) {
+                + packageName + "/help.htm") != null) {
             System.err.println("Load help for proglet " + packageName);
             this.help = new JVSHtmlDisplay();
             this.help.load(Utils.toUrl("org/javascool/proglets/" + packageName 
-                    + "/help.html").toString());
+                    + "/help.htm").toString());
         } else {
             System.err.println("No help for proglet " + packageName);
             this.help = null;
@@ -218,10 +218,10 @@ public class Proglet {
      * @return The widget panel or null, the panel is an Applet
      */
     public Applet getPanel() {
-        try {
+        /*try {
             this.panel.init();
         } catch (Exception e) {
-        }
+        }*/
         return this.panel;
     }
 

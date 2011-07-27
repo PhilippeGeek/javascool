@@ -37,6 +37,7 @@ public class JVSToolBar extends JToolBar {
     
     private JButton startButton;
     private JButton stopButton;
+    private JButton compileButton;
     private JLabel execTime;
 
     /** Create the JVSToolBar
@@ -101,7 +102,7 @@ public class JVSToolBar extends JToolBar {
             }
         });
 
-        this.addTool("Compiler", "org/javascool/doc-files/icon16/compile.png", new Runnable() {
+        this.compileButton=this.addTool("Compiler", "org/javascool/doc-files/icon16/compile.png", new Runnable() {
 
             @Override
             public void run() {
@@ -113,7 +114,7 @@ public class JVSToolBar extends JToolBar {
 
             @Override
             public void run() {
-                Console.stopProgram();
+         //DEBUG       Console.stopProgram();
                 Console.startProgram();
             }
         
@@ -263,27 +264,37 @@ public class JVSToolBar extends JToolBar {
         return;
     }
     
-    public void activeStartButton(){
+    public void enableCompileButton(){
+        this.compileButton.setVisible(true);
+        this.revalidate();
+    }
+    
+    public void disableCompileButton(){
+        this.compileButton.setVisible(false);
+        this.revalidate();
+    }
+    
+    public void enableStartButton(){
         this.startButton.setVisible(true);
         this.revalidate();
     }
     
-    public void desactiveStartButton(){
+    public void desactivateStartButton(){
         this.startButton.setVisible(false);
         this.revalidate();
     }
     
-    public void activeStopButton(){
+    public void enableStopButton(){
         this.stopButton.setVisible(true);
         this.revalidate();
     }
     
-    public void desactiveStopButton(){
+    public void disableStopButton(){
         this.stopButton.setVisible(false);
         this.revalidate();
     }
     
-    public void activeExecTimer(){
+    public void enableExecTimer(){
         this.execTime.setVisible(true);
         this.revalidate();
     }
