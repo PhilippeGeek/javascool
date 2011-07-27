@@ -6,11 +6,11 @@
         <xslt destdir="${proglet.doc}" extension=".htm" style="${jvs.hdocxslt}">
             <include name="*/*.xml"/>
             <classpath location="${jvs.saxon}" />
-        </xslt>
+        </xslt><!-- Bah non, on cenvertit en htm ou en html, pas les deux !
         <xslt destdir="${proglet.doc}" extension=".html" style="${jvs.hdocxslt}">
             <include name="*/*.xml"/>
             <classpath location="${jvs.saxon}" />
-        </xslt>
+        </xslt>-->
         <copy todir=".">
             <fileset dir="${proglet.doc}">
                 <exclude name="**/*.xml"/>

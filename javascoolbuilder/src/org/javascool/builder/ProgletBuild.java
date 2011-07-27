@@ -88,7 +88,7 @@ public class ProgletBuild {
             Dialog.error("Erreur", "Le fichier de configuration de "+proglet.getName()+" ne respecte pas les spécifications, la proglet ne sera pas construite.");
             return;
         }
-        System.out.println("Setup java files ...");
+        System.out.println("Setting up java files ...");
         for (String name : javaFiles) {
             String functionFile = new String(org.javascool.tools.Utils.loadString(progletDir.getPath() + File.separator + name).getBytes(), "UTF-8");
             functionFile = functionFile.replaceAll("package [^;]*;[\n]*", "");
@@ -97,11 +97,13 @@ public class ProgletBuild {
         }
 
         String[] docFiles = progletDir.list(new DocumentationFileNameFilter());
-        System.out.println("Setup docs ...");
+        System.out.println("Setting up docs ...");
         for (String name : docFiles) {
-            System.out.println("Setup doc : " + name);
+            System.out.println("Setting up doc file : " + name);
+            // Mais le xslt est lancé avant ça ou après ? Il vaudrait mieux qu'il soit lancé avant, sinonil râle sur le code que tu génères
+            // ici !
             String docFile = new String(org.javascool.tools.Utils.loadString(progletDir.getPath() + File.separator + name).getBytes(), "UTF-8");
-            docFile = Utils.htm2xml(docFile);
+//DEBUG            docFile = Utils.htm2xml(docFile);   //FIXME Ah ben non alors, c'est l'inverse ! On veut convertir du xml en htm !
             String[] splitCodeStart = docFile.split("<code>");
             docFile = "";
             for (String codeToSplit : splitCodeStart) {
@@ -114,7 +116,7 @@ public class ProgletBuild {
                 }
 
             }
-            org.javascool.tools.Utils.saveString(progletDir.getPath() + File.separator + "docXml" + File.separator + name, Utils.htm2xml(docFile));
+            org.javascool.tools.Utils.saveString(progletDir.getPath() + File.separator + name, Utils.htm2xml(docFile));
         }
         ProgletBuild.copyFileFromJar("org/javascool/builder/resources/build-proglet.xml", progletDir.getPath() + File.separator + "build.xml");
         File buildFile = new File(progletDir.getAbsolutePath() + File.separator + "build.xml");

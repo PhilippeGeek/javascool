@@ -40,10 +40,12 @@ public class JVSBMain {
         this.sketchbookUrlStr = new File(ClassLoader.getSystemResource("org/javascool/builder").getPath().split("!")[0]).getParent().replace("file:", "").replace("%20", " ");
         this.sketchbook = new File(this.sketchbookUrlStr);
 
-        if (Dialog.questionYN("Bienvenu dans le JVSBuilder", "Bienvenu dans Java's cool builder.\nVotre sketchbook est apparament \n" + this.sketchbook.toString() + "\nEst-ce correct ?") == JOptionPane.OK_OPTION) {
+        if (Dialog.questionYN("Bienvenue dans le JVSBuilder", "Bienvenue dans Java's cool builder.\nVotre sketchbook est apparament \n" + this.sketchbook.toString() + "\nEst-ce correct ?") == JOptionPane.OK_OPTION) {
             JVSBMain.pb = new ProgressBar();
             JVSBMain.pb.update(5, "Indexation du sketchbook ...");
-            this.progletToInstall = JVSBMain.listProgletInDir(sketchbook);
+            this.progletToInstall = this.listProgletInDir(sketchbook);
+            JVSBMain.pb.update(7, "Suppression des répertoires temporaires qui traînent ...");
+            this.removeTmp();
             JVSBMain.pb.update(10, "Création du répertoire temporaire ...");
             this.setupTmp();
             JVSBMain.pb.update(20, "Copie des librairies ...");
@@ -102,8 +104,7 @@ public class JVSBMain {
      * @throws FileNotFoundException An error when it copy the ant script
      * @throws IOException An error when it copy the ant script
      */
-    private void runJarAnt(String target)
-            throws FileNotFoundException, IOException {
+    private void runJarAnt(String target) throws FileNotFoundException, IOException {
         if (!new File(tmpDir.getPath() + File.separator + "build.xml").exists()) {
             this.copyJVSBase();
         }
@@ -141,6 +142,21 @@ public class JVSBMain {
         //tmpDir.deleteOnExit();
     }
 
+    /** Removes the tmp directories that have been left by previous runs of jvsb */
+    private void removeTmp() {
+        File dir = new File(this.sketchbook.getPath());
+        String[] children = dir.list();
+        if (children == null) {
+            return;
+        } else {
+            for (String child : children) {
+                if (child.startsWith("tmp-")) {
+                    (new File(child)).delete();
+                }
+            }
+        }
+    }
+
     /** Sleep the Builder for 200 msec */
     private void sleep() {
         try {
@@ -156,23 +172,23 @@ public class JVSBMain {
             JVSBMain.pb.dispose();
         }/*
         try {
-            if (!suppr(JVSBMain.tmpDir)) {
-                Dialog.error("Error", "Le dossier temporaire n'a pas été supprimé automatiquement.\nIl se trouve à la racine de votre sketchbook.");
-            }
+        if (!suppr(JVSBMain.tmpDir)) {
+        Dialog.error("Error", "Le dossier temporaire n'a pas été supprimé automatiquement.\nIl se trouve à la racine de votre sketchbook.");
+        }
         } catch (Exception e) {
-            Utils.report(e);
+        Utils.report(e);
         }*/
         System.exit(0);
     }
 
     public static Boolean suppr(File r) {
         File[] fileList = r.listFiles();
-        Boolean s=true;
+        Boolean s = true;
         for (int i = 0; i < fileList.length; i++) {
             if (fileList[i].isDirectory()) {
-                s=s&&suppr(fileList[i]);
+                s = s && suppr(fileList[i]);
             }
-            s=s&&fileList[i].delete();
+            s = s && fileList[i].delete();
         }
         return s;
     }
