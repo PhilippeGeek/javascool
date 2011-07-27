@@ -15,7 +15,7 @@
 <xsl:template match="/*">
   <html>
     <head>
-      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
       <xsl:for-each select="@*"><xsl:choose>
         <xsl:when test="name(.) = 'title'"><title><xsl:value-of select="."/></title></xsl:when>
         <xsl:when test="name(.) = 'icon'"><link rel="shortcut icon" href="{.}"/></xsl:when>
