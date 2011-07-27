@@ -1,4 +1,4 @@
-dft : cmp
+dft : svn
 
 export PATH:=/usr/java/jdk1.6.0_22/bin:$(PATH)
 export CP = $(PWD)/../javascool/lib/RSyntaxTextArea.jar:$(PWD)/../javascool/lib/tools.zip
@@ -6,8 +6,11 @@ export CP = $(PWD)/../javascool/lib/RSyntaxTextArea.jar:$(PWD)/../javascool/lib/
 TMP = $(PWD)/tmp
 SRC = $(PWD)/../javascool/src
 
+svn : 
+	cd .. ; svn cleanup ; svn up ; svn ci -m 'modif mineure vthierry' ; svn status
+
 web :
-	svn up .. ; cd ../web ; ./start.sh -show
+	svn up .. ; cd ../web ; ./start.sh -show ; ./publis.sh
 
 doc :
 	rm -rf tmp/jdoc ; 	mkdir -p tmp/jdoc
