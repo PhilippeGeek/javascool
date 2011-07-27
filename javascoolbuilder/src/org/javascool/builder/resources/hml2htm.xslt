@@ -15,6 +15,7 @@
 <xsl:template match="/*">
   <html>
     <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
       <xsl:for-each select="@*"><xsl:choose>
         <xsl:when test="name(.) = 'title'"><title><xsl:value-of select="."/></title></xsl:when>
         <xsl:when test="name(.) = 'icon'"><link rel="shortcut icon" href="{.}"/></xsl:when>
@@ -129,7 +130,21 @@
   </xsl:choose>
 </xsl:template>
 
-<!--- 4: Spurious translation -->
+<!--- 4: Code copy -->
+
+<xsl:template match="code">
+  <xsl:apply-templates mode ="code"/>
+</xsl:template>
+    
+<xsl:template match="*" mode="code"><xsl:text>
+</xsl:text>  
+  <xsl:element name="{name(.)}">
+  <xsl:for-each select="@*"><xsl:attribute name="{name(.)}"><xsl:value-of select="."/></xsl:attribute></xsl:for-each>
+  <xsl:apply-templates/>
+</xsl:element>
+</xsl:template>
+
+<!--- 5: Spurious translation -->
 
 <xsl:template match="*"><xsl:text>
 </xsl:text>  
