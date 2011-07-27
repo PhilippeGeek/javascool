@@ -54,8 +54,16 @@
         <delete dir="tmp"/>
         <delete file="keystore"/>
         <echo message="--------------------------------" level="info"/>
-        <echo message="And run Java's cool" level="info"/>
-        <java jar="javascool.jar"/>
+        
+        <copy file="javascool.jar" tofile="../javascoolbuilder/src/org/javascool/base.jar"/>
+        
+        <subant target="build">
+          <fileset dir="../javascoolbuilder" includes="build.xml"/>
+        </subant>
+        
+        <subant target="jar">
+          <fileset dir="../javascoolbuilder" includes="build.xml"/>
+        </subant>
     </target>
     <!--
 

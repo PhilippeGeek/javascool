@@ -34,6 +34,7 @@ public class GamePanel extends JPanel {
      * Removes all the Drawable from the render area
      */
     public void stop() {
+    		System.err.println("In GamePanel.stop()");
         m_items.removeAll(m_items);
     }
 

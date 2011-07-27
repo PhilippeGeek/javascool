@@ -84,22 +84,24 @@ public class Console extends JPanel {
         /** Call after a success full comppilation */
         public void programCompiled() {
             this.reset();
-            JVSMainPanel.getToolBar().activeStartButton();
-            JVSMainPanel.getToolBar().activeExecTimer();
+            JVSMainPanel.getToolBar().enableStartButton();
+            JVSMainPanel.getToolBar().enableExecTimer();
             this.revalidate();
         }
 
         /** Call when the program start */
         public void programRunning() {
-            JVSMainPanel.getToolBar().desactiveStartButton();
-            JVSMainPanel.getToolBar().activeStopButton();
+            JVSMainPanel.getToolBar().desactivateStartButton();
+            JVSMainPanel.getToolBar().disableCompileButton();
+            JVSMainPanel.getToolBar().enableStopButton();
             this.revalidate();
         }
 
         /** Call when the program stop */
         public void afterRunning() {
-            JVSMainPanel.getToolBar().desactiveStopButton();
-            JVSMainPanel.getToolBar().activeStartButton();
+            JVSMainPanel.getToolBar().disableStopButton();
+            JVSMainPanel.getToolBar().enableStartButton();
+            JVSMainPanel.getToolBar().enableCompileButton();
             this.revalidate();
         }
 
@@ -151,11 +153,14 @@ public class Console extends JPanel {
 
     /** Start the current program */
     public static void startProgram() {
-        Console.stopProgram();
-        if (JVSMainPanel.getCurrentProglet().hasPanel()) {
-            JVSMainPanel.getWidgetTabs().focusOnProgletPanel();
-        }
+        System.err.println("In Console.startProgram");
+   //     if (Console.runThread != null && isRunning()) Console.stopProgram();
         Console.running = true;
+        if (JVSMainPanel.getCurrentProglet().hasPanel()) {
+            System.err.println("I have a panel !");
+            JVSMainPanel.getWidgetTabs().focusOnProgletPanel();
+            JVSMainPanel.getWidgetTabs().getProgletPanel().init();
+        } else System.err.println("No panel !");
         Console.toolbar.updateTimeRunning(0);
 
         Console.clear();
@@ -167,6 +172,7 @@ public class Console extends JPanel {
                 Console.run(true);
                 for (int t = 0; Console.running; t++) {
                     Console.toolbar.updateTimeRunning(t);
+                    //FIXME interrupted ? why ?
                     Macros.sleep(1000);
                 }
             }
@@ -178,17 +184,13 @@ public class Console extends JPanel {
     /** Stop the current program */
     public static void stopProgram() {
         Console.running = false;
+        if (JVSMainPanel.getCurrentProglet().hasPanel()) JVSMainPanel.getWidgetTabs().getProgletPanel().destroy();
         Console.run(false);
-        try{
-            Class<?> functions=ClassLoader.getSystemClassLoader().loadClass(JVSMainPanel.getCurrentProglet().getFullPackageName()+".Functions");
-            functions.getMethod("stop").invoke(null);
-        } catch(Exception e){
-        }
         if (Console.timeThread != null) {
             try {
                 Console.timeThread.interrupt();
             } catch (Exception e) {
-                System.err.println("Erreur : " + e.getMessage());
+             //   System.err.println("Erreur : " + e.getMessage());
             }
             Console.timeThread = null;
         }
