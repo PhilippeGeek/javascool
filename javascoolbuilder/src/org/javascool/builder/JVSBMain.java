@@ -139,7 +139,7 @@ public class JVSBMain {
         String uuid = UUID.randomUUID().toString();
         tmpDir = new File(this.sketchbook.getPath() + File.separator + "tmp-" + uuid);
         tmpDir.mkdirs();
-        //? tmpDir.deleteOnExit();
+        tmpDir.deleteOnExit();
     }
 
     /** Removes the tmp directories that have been left by previous runs of jvsb */
