@@ -3,8 +3,15 @@
     <description>Builds, tests, and runs the project Java's Cool Core.</description>
     
     <target name="default">
-        <xslt destdir="${proglet.doc}" extension=".htm" style="${jvs.hdocxslt}">
-            <include name="*/*.xml"/>
+        <mkdir dir="${proglet.doc}" />
+        <copy todir="${proglet.doc}">
+            <fileset dir=".">
+                <include name="*.xml" />
+                <exclude name="build.xml" />
+            </fileset>
+        </copy>
+        <xslt basedir="${proglet.doc}" destdir="${proglet.doc}" extension=".htm" style="${jvs.hdocxslt}">
+            <include name="*.xml"/>
             <classpath location="${jvs.saxon}" />
         </xslt><!-- Bah non, on cenvertit en htm ou en html, pas les deux !
         <xslt destdir="${proglet.doc}" extension=".html" style="${jvs.hdocxslt}">
@@ -29,7 +36,18 @@
         <copy todir="${proglet.build}">
             <fileset dir="${proglet.src}"/>
         </copy>
-        <delete dir="${proglet.src}"/>
+        <mkdir dir="${proglet.build}/src" />
+        <move todir="${proglet.build}/src">
+            <fileset dir="${proglet.build}">
+                <include name="*.java" />
+                <include name="*.xml" />
+                <exclude name="build.xml" />
+            </fileset>
+        </move>
+        
+        <delete file="${proglet.build}/build.xml"/>
+        <delete file="${proglet.build}/build.htm"/>
+        
         <mkdir dir="${jvs.tojar.tmp}/org/javascool/proglets/${proglet.name}"/>
         <copy todir="${jvs.tojar.tmp}/org/javascool/proglets/${proglet.name}">
             <fileset dir="${proglet.build}">
@@ -41,5 +59,7 @@
             </fileset>
         </copy>
         
+        <delete dir="${proglet.src}"/>
+        <delete dir="${proglet-build}"/>
     </target>
 </project>
