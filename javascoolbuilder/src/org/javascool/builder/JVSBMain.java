@@ -142,7 +142,8 @@ public class JVSBMain {
         tmpDir.deleteOnExit();
     }
 
-    /** Removes the tmp directories that have been left by previous runs of jvsb */
+    /** Removes the tmp directories that have been left by previous runs of jvsb 
+     Doesn't work :( */
     private void removeTmp() {
         File dir = new File(this.sketchbook.getPath());
         String[] children = dir.list();
