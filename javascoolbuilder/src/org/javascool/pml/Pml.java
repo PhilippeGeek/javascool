@@ -54,9 +54,17 @@ public class Pml {
      */
     public Pml reset(String value, String format) {
         if ("xml".equals(format)) {
-            return reset(Utils.xml2xml(value, xml2pml), "pml");
+            try {
+                return reset(Utils.xml2xml(value, xml2pml), "pml");
+            } catch (TransformerException ex) {
+                Logger.getLogger(Pml.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } else if ("htm".equals(format) || "html".equals(format)) {
-            return reset(Utils.xml2xml(Utils.htm2xml(value), xml2pml), "pml");
+            try {
+                return reset(Utils.xml2xml(Utils.htm2xml(value), xml2pml), "pml");
+            } catch (TransformerException ex) {
+                Logger.getLogger(Pml.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } else {
             // Initializes the Pml
             data = new HashMap<String, Pml>();
@@ -67,6 +75,7 @@ public class Pml {
             new PmlReader().read(value, this);
             return this;
         }
+        return this;
     }
     /**/
 
@@ -351,7 +360,20 @@ public class Pml {
                         pml.add(p);
                     }
                 }
-                // Considers the Pml as a simple string
+                // Considers the Pml as a list of name=value
+            } else if ("=".equals(current(1))) {
+	      while("=".equals(current(1))) {
+		String t = current();
+		next(2);
+		if ("}".equals(current())) {
+		  pml.set(t, "true");
+		} else {
+		  Pml p = new Pml();
+		  parse(p);
+		  pml.set(t, p);
+		}
+	      }
+               // Considers the Pml as a simple string
             } else {
                 pml.setTag(b);
                 next();
@@ -403,7 +425,7 @@ public class Pml {
      * @return This, allowing to use the <tt>Pml pml = new Pml().reset(..)</tt> construct.
      */
     public final Pml save(String location, String format) {
-        Utils.saveString(location, toString(format));
+        Utils.saveString(location, toString(format)+"\n");
         return this;
     }
     /**/
@@ -569,16 +591,16 @@ public class Pml {
         public String toString(Pml pml) {
             string = new StringBuffer();
             if (pml == null) {
-                return "array()";
+                return "<?php $pml = array(); ?>";
             } else {
-	      string.append("$"+Utils.toName(pml.getTag())+" = array(\"_tag\" => "+quote(pml.getTag()));
+	      string.append("<?php $"+Utils.toName(pml.getTag())+" = array(\"_tag\" => "+quote(pml.getTag()));
 	      for (String name : pml.attributes()) {
-		string.append(", "+quote(name)+" => "+quote(pml.getChild(name).toString()));
+		string.append(", "+quote(name)+" => "+quote(pml.getChild(name)));
 	      }
 	      for (int n = 0; n < pml.getCount(); n++) {
-		string.append(", "+quote(pml.getChild(n).toString()));
+		string.append(", "+quote(pml.getChild(n)));
 	      }
-	      string.append(");");
+	      string.append("); ?>");
 	    }
             return string.toString();
         }
@@ -587,6 +609,9 @@ public class Pml {
         private static String quote(String string) {
             return "\"" + string.replaceAll("\\\\", "\\\\\\\\").replaceAll("\"", "\\\\\"") + "\"";
         }
+        private static String quote(Pml pml) {
+	  return quote(pml.getSize() == 0 ? pml.getTag() : pml.toString());
+	}
 
     }
 
@@ -909,12 +934,12 @@ public class Pml {
     static Pattern index = Pattern.compile("[0-9]+");
 
     /** Checks the well-formedness of a file by mirroring its Pml structure in a normalized format.
-     * @param usage <tt>java org.javascool.Pml input-file [output-file]</tt>
+     * @param usage <tt>java org.javascool.Pml input-file [output-file.(pml|xml|php)]</tt>
      * <p>- The file name be a PML, XML or HTML file name, with the corresponding extensions</p>.
      */
-    public static void main(String[] usage) {
-        if (usage.length > 0) {
-            new Pml().load(usage[0]).save(usage.length > 1 ? usage[0] : "stdout:");
-        }
+  public static void main(String[] usage) {
+    if (usage.length > 0) {
+      new Pml().load(usage[0]).save(usage.length > 1 ? usage[1] : "stdout:", (usage.length > 1 && usage[1].matches(".*\\.(pml|php|xml)")) ? usage[1].replaceFirst(".*\\.", "") : "pml");
     }
+  }
 }
