@@ -5,47 +5,40 @@
     <target name="default">
         <mkdir dir="${proglet.doc}" />
         <copy todir="${proglet.doc}">
-            <fileset dir=".">
+            <fileset dir="doc">
                 <include name="*.xml" />
-                <exclude name="build.xml" />
             </fileset>
         </copy>
+        <delete dir="doc" />
         <xslt basedir="${proglet.doc}" destdir="${proglet.doc}" extension=".htm" style="${jvs.hdocxslt}">
-            <include name="${proglet.doc}/  *.xml"/>
+            <include name="*.xml"/>
             <classpath location="${jvs.saxon}" />
-        </xslt><!-- Bah non, on cenvertit en htm ou en html, pas les deux !
-        <xslt destdir="${proglet.doc}" extension=".html" style="${jvs.hdocxslt}">
-            <include name="*/*.xml"/>
-            <classpath location="${jvs.saxon}" />
-        </xslt>-->
-        <copy todir=".">
-            <fileset dir="${proglet.doc}">
-                <exclude name="**/*.xml"/>
-            </fileset>
-        </copy>
-        <delete dir="${proglet.doc}"/>
+        </xslt>
         <delete dir="${proglet.src}"/>
         <mkdir dir="${proglet.build}"/>
         <mkdir dir="${proglet.src}"/>
         <mkdir dir="${jvs.tojar.tmp}"/>
         <copy todir="${proglet.src}">
             <fileset dir="."/>
+            <fileset dir="${proglet.doc}">
+                <include name="*.htm"/>
+            </fileset>
         </copy>
+        <delete dir="${proglet.doc}"/>
         <javac srcdir="${proglet.src}" destdir="${proglet.build}" includeantruntime="false" classpath="${jvs.basejar}">
         </javac>
         <copy todir="${proglet.build}">
-            <fileset dir="${proglet.src}"/>
+            <fileset dir="${proglet.src}">
+                <exclude name="*.xml" />
+                <exclude name="*.java" />
+            </fileset>
         </copy>
         <mkdir dir="${proglet.build}/src" />
-        <move todir="${proglet.build}/src">
-            <fileset dir="${proglet.build}">
-                <include name="*.java" />
-                <include name="*.xml" />
-                <exclude name="build.xml" />
-            </fileset>
-        </move>
+        <copy todir="${proglet.build}/src">
+            <fileset dir="."/>
+        </copy>
         
-        <delete file="${proglet.build}/build.xml"/>
+        <delete file="${proglet.build}/*.xml"/>
         <delete file="${proglet.build}/build.htm"/>
         
         <mkdir dir="${jvs.tojar.tmp}/org/javascool/proglets/${proglet.name}"/>
@@ -59,7 +52,7 @@
             </fileset>
         </copy>
         
-        <delete dir="${proglet.src}"/>
-        <delete dir="${proglet-build}"/>
+  <!--      <delete dir="${proglet.src}"/>
+        <delete dir="${proglet-build}"/>-->
     </target>
 </project>
