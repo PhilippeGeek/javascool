@@ -140,13 +140,13 @@ public class JVSBMain {
         String uuid = UUID.randomUUID().toString();
         tmpDir = new File(this.sketchbook.getPath() + File.separator + "tmp-" + uuid);
         tmpDir.mkdirs();
-        tmpDir.deleteOnExit();
+   //     tmpDir.deleteOnExit();
     }
 
     /** Removes the tmp directories that have been left by previous runs of jvsb 
      Doesn't work :( */
     private void removeTmp() {
-        File dir = new File(this.sketchbook.getPath());
+   /*     File dir = new File(this.sketchbook.getPath());
         String[] children = dir.list();
         if (children == null) {
             return;
@@ -156,7 +156,7 @@ public class JVSBMain {
                     (new File(child)).delete();
                 }
             }
-        }
+        }*/
     }
 
     /** Sleep the Builder for 200 msec */

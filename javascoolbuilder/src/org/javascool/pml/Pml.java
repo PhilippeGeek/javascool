@@ -54,17 +54,9 @@ public class Pml {
      */
     public Pml reset(String value, String format) {
         if ("xml".equals(format)) {
-            try {
-                return reset(Utils.xml2xml(value, xml2pml), "pml");
-            } catch (TransformerException ex) {
-                Logger.getLogger(Pml.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            return reset(Utils.xml2xml(value, xml2pml), "pml");
         } else if ("htm".equals(format) || "html".equals(format)) {
-            try {
-                return reset(Utils.xml2xml(Utils.htm2xml(value), xml2pml), "pml");
-            } catch (TransformerException ex) {
-                Logger.getLogger(Pml.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            return reset(Utils.xml2xml(Utils.htm2xml(value), xml2pml), "pml");
         } else {
             // Initializes the Pml
             data = new HashMap<String, Pml>();
@@ -75,7 +67,6 @@ public class Pml {
             new PmlReader().read(value, this);
             return this;
         }
-        return this;
     }
     /**/
 

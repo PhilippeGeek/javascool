@@ -14,6 +14,7 @@ import org.apache.tools.ant.DefaultLogger;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.ProjectHelper;
 import org.javascool.builder.gui.Dialog;
+import org.javascool.pml.Pml;
 import org.javascool.tools.Utils;
 
 /**
@@ -96,8 +97,14 @@ public class ProgletBuild {
             org.javascool.tools.Utils.saveString(progletDir.getPath() + File.separator + name, functionFile);
         }
 
+        new Pml().load(progletDir.getPath() + File.separator + "proglet.pml").save(progletDir.getPath() + File.separator + "proglet.php", "php");
+        
+    /*    (new File(progletDir.getPath() + File.separator + "proglet.php")).deleteOnExit();
+        (new File(progletDir.getPath() + File.separator + "doc")).deleteOnExit();*/
+        
         String[] docFiles = progletDir.list(new DocumentationFileNameFilter());
         System.out.println("Setting up docs ...");
+        (new File(progletDir.getPath() + File.separator + "doc")).mkdir();
         for (String name : docFiles) {
             System.out.println("Setting up doc file : " + name);
             // Mais le xslt est lancé avant ça ou après ? Il vaudrait mieux qu'il soit lancé avant, sinon il râle sur le code que tu génères
@@ -113,11 +120,11 @@ public class ProgletBuild {
                     docFile = docFile + codeToSplit;
                 } else {
                     String code = codeToSplit.split("</code>", 2)[0];
-                    docFile = docFile + "<div class=\"code\">" + org.javascool.builder.doc.Formater.format(code) + "</div>" + codeToSplit.split("</code>", 2)[1];
+                    docFile = docFile + "<div class=\"code\"><code>" + org.javascool.builder.doc.Formater.format(code) + "</code></div>" + codeToSplit.split("</code>", 2)[1];
                 }
 
             }
-            org.javascool.tools.Utils.saveString(progletDir.getPath() + File.separator + name, Utils.htm2xml(docFile));
+            org.javascool.tools.Utils.saveString(progletDir.getPath() + File.separator + "doc" + File.separator + name, Utils.htm2xml(docFile));
         }
         ProgletBuild.copyFileFromJar("org/javascool/builder/resources/build-proglet.xml", progletDir.getPath() + File.separator + "build.xml");
         File buildFile = new File(progletDir.getAbsolutePath() + File.separator + "build.xml");
@@ -144,10 +151,12 @@ public class ProgletBuild {
         consoleLogger.setOutputPrintStream(System.out);
         consoleLogger.setMessageOutputLevel(Project.MSG_INFO);
         p.addBuildListener(consoleLogger);
-        System.out.println("Call ant to build the proglet : ");
+        System.out.println("Calling ant to build the proglet : ");
         p.executeTarget(p.getDefaultTarget());
-        System.out.println("Ant end to build the proglet");
+        System.out.println("Done");
         buildFile.delete();
+     /*   (new File(progletDir.getPath() + File.separator + "proglet.php")).delete();
+        (new File(progletDir.getPath() + File.separator + "doc")).delete();*/
     }
 
     /** Copy a file from the jar
