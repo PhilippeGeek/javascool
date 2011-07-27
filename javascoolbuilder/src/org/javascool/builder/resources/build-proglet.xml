@@ -11,7 +11,7 @@
             </fileset>
         </copy>
         <xslt basedir="${proglet.doc}" destdir="${proglet.doc}" extension=".htm" style="${jvs.hdocxslt}">
-            <include name="*.xml"/>
+            <include name="${proglet.doc}/  *.xml"/>
             <classpath location="${jvs.saxon}" />
         </xslt><!-- Bah non, on cenvertit en htm ou en html, pas les deux !
         <xslt destdir="${proglet.doc}" extension=".html" style="${jvs.hdocxslt}">
