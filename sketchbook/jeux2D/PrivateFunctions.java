@@ -233,7 +233,6 @@ public class PrivateFunctions implements EventCatcher {
         m_singleton.m_onKeyUp.removeAll(m_singleton.m_onKeyUp);
         m_singleton.m_onKeyPressed.removeAll(m_singleton.m_onKeyPressed);
         m_singleton.m_onKeyReleased.removeAll(m_singleton.m_onKeyReleased);
-
     }
     /**
      * Stores a running clock that ticks at each frame and triggers frame-driven events
