@@ -55,7 +55,7 @@
 <xsl:template name="div-2">
   <xsl:if test="count(@id)=1"><xsl:attribute name="id"><xsl:value-of select="@id"/></xsl:attribute></xsl:if>
   <xsl:if test="count(@class)=1"><xsl:attribute name="class"><xsl:value-of select="@class"/></xsl:attribute></xsl:if>
-  <xsl:if test="count(@id)=1"><a name="@id"></a></xsl:if>
+  <xsl:if test="count(@id)=1"><a name="{@id}"></a></xsl:if>
   <xsl:if test="count(@title)=1"><xsl:choose>
     <xsl:when test=".. = /"><h2><xsl:value-of select="@title"/>.</h2></xsl:when>
     <xsl:when test="../.. = /"><h3><xsl:value-of select="@title"/>.</h3></xsl:when>
