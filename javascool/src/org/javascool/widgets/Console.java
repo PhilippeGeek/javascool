@@ -163,7 +163,6 @@ public class Console extends JPanel {
         if (JVSMainPanel.getCurrentProglet().hasPanel()) {
             System.err.println("I have a panel !");
             JVSMainPanel.getWidgetTabs().focusOnProgletPanel();
-            JVSMainPanel.getWidgetTabs().getProgletPanel().init();
         } else System.err.println("No panel !");
         Console.toolbar.updateTimeRunning(0);
 

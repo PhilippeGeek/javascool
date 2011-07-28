@@ -390,6 +390,7 @@ public final class JVSMainPanel extends JPanel {
             } else {
                 Dialog.error("Impossible de continuer", "La proglet " + name + " ne peut pas être chargé car elle n'existe pas.");
             }
+            JVSMainPanel.getWidgetTabs().getProgletPanel().init();
         } catch (Exception e) {
             System.err.println(e);
             e.printStackTrace();
