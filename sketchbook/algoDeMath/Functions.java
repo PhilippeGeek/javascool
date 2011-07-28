@@ -1,3 +1,4 @@
+package org.javascool.proglets.algoDeMath;
 public class Functions {
 	//
   // This defines the javascool interface
