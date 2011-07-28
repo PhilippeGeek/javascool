@@ -55,9 +55,10 @@ if (!is_file($icon))
                         <param name="archive" value="proglets/javascool-proglet-<?php echo $id; ?>.jar" />
                         Applet failed to run.  No Java plug-in was found.
                     </object>
-                </p>-->
+                </p>
                     <applet code="org.javascool.proglets.<?php echo $id; ?>.Panel" archive="proglets/javascool-proglet-<?php echo $id; ?>.jar" width="560" height="720">
-                        abcd</applet>
+                        abcd</applet>-->
+                    Not implemented yet</p>
             </td>
             <td class="news-rightborder"></td>
             <td class="news-right"></td>

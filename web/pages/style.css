@@ -392,6 +392,7 @@ table.news td.news-right {
 
 table.news td.news-center {
     background-color: #666;
+    max-width: 300px;
 }
 
 table.home {
