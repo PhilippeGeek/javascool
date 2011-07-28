@@ -42,7 +42,7 @@ public class Panel extends JApplet {
          * to non-static attributes using this singleton static attribute
          */
 
-				System.err.println("in PaneL.init()");
+				System.err.println("in Panel.init()");
 
         if (PrivateFunctions.m_singleton != null) {
             stop();
@@ -200,6 +200,15 @@ public class Panel extends JApplet {
     }
     
     @Override
+    public void start() {
+    		Oval o=new Oval(0,0,100,100);
+    }
+    
+    @Override
+    public void stop() {
+    }
+    
+    @Override
     public void destroy() {
     		System.err.println("destroy was called");
         PrivateFunctions.stop();
@@ -213,7 +222,6 @@ public class Panel extends JApplet {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -225,6 +233,7 @@ public class Panel extends JApplet {
             .addGap(0, 391, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }

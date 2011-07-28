@@ -385,7 +385,7 @@ void main() {
 La façon dont vous programmerez vos évènements clavier a peu d'importance : elle dépend du type d'évènement et de vos préférences.
         </p>
 
-        <p title="IV.E. En règle générale">
+        <p title="IV.E. En règle générale" id="IV.E">
 Une fonction de callback peut être appelée par plusieurs évènements
 N'oubliez pas que les fonction (y compris de callback peuvent s'inter-appeler)
 Attention ! L'exécution du programme est bloquée tant que la fonction de callback s'exécute (on parle de fonction modale). Il faut donc se limiter à des fonctions qui ne bloquent pas ou peu l'exécution (évier les sleep(), bannir les boucles infinies, etc.)
