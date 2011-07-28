@@ -24,10 +24,10 @@
 
 <table>
     <tr>
-        <td class="proglet">
-            <span><?php echo $name; ?></span>
-            <span class="proglet-image"><img src="<?php echo($icon); ?>" alt=""/></span>
-        </td>
+        <?php
+        echo('<script type="text/javascript">document.write(\'<td class="progletclickable" onClick="gotoloc(\\\'proglets/javascool-proglet-' . $id . '.jar\\\')"><span>' . $id . '</span><span class="proglet-image"><img src="'.$icon.'" alt=""/></span></td>\');</script>');
+                    echo('<noscript><td class="progletclickable"><a href="proglets/javascool-proglet-' . $id . '.jar"><span>' . $id . '</span><span class="proglet-image"><img style="border: 0px" src="'.$icon.'" alt=""/></span></a></td></noscript>');
+                    ?>
     </tr>
 </table>
 <br />
@@ -42,7 +42,7 @@
             <td class="news-left"></td>
             <td class="news-leftborder"></td>
             <td class="news-center">
-                <p><?php include('sketchbook/'.$id.'/Help.html'); ?></p>
+                <p><div style="max-width: 100%"><?php include('proglets/'.$id.'/help.htm'); ?></div></p>
             </td>
             <td class="news-rightborder"></td>
             <td class="news-right"></td>
