@@ -2,7 +2,6 @@
 * David.Pichardie@inria.fr, Copyright (C) 2011.           All rights reserved. *
 *******************************************************************************/
 
-package proglet.goglemap;
 import java.util.*;
 import java.awt.BorderLayout;
 import java.awt.Graphics;
@@ -39,8 +38,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import org.javascool.Macros;
-import org.javascool.Utils;
+import org.javascool.tools.Macros;
+import org.javascool.tools.Utils;
 
 class GogleMapPanel extends JPanel implements ActionListener {
   private static final long serialVersionUID = 1L;
@@ -170,8 +169,8 @@ class GogleMapPanel extends JPanel implements ActionListener {
   private class ParcoursEnLargeur extends SwingWorker<Void, Void>{
     protected Void doInBackground() {
       me.clearMap();
-      GogleMapParcours.afficheToutesRoutesDirectes(me);
-      GogleMapParcours.parcoursLargeur(me, "Paris");
+      afficheToutesRoutesDirectes(me);
+      parcoursLargeur(me, "Paris");
       me.buttonBFS.setEnabled(true);
       me.buttonDFS.setEnabled(true);
       return null;
@@ -181,8 +180,8 @@ class GogleMapPanel extends JPanel implements ActionListener {
   private class ParcoursEnProfondeur extends SwingWorker<Void, Void>{
     protected Void doInBackground() {
       me.clearMap();
-      GogleMapParcours.afficheToutesRoutesDirectes(me);
-      GogleMapParcours.parcoursProfondeur(me, "Paris");
+      afficheToutesRoutesDirectes(me);
+      parcoursProfondeur(me, "Paris");
       me.buttonBFS.setEnabled(true);
       me.buttonDFS.setEnabled(true);
       return null;
