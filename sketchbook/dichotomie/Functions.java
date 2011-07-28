@@ -1,11 +1,5 @@
-/*******************************************************************************
-* Thierry.Vieville@sophia.inria.fr, Copyright (C) 2009.  All rights reserved. *
-*******************************************************************************/
-
-package org.javascool.proglet.dichotomie;
-
-import org.javascool.Utils;
-import org.javascool.Macros;
+import org.javascool.tools.Macros;
+import org.javascool.tools.Utils;
 
 // Used to define the gui
 import javax.swing.JPanel;
@@ -24,102 +18,8 @@ import javax.swing.JButton;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-/** Définit une proglet javascool qui permet d'expérimenter la recherche dichotomique.
- * @see <a href="doc-files/about-proglet.htm">Description</a>
- * @see <a href="doc-files/the-proglet.htm">La proglet</a>
- * @see <a href="Dichotomie.java.html">code source</a>
- * @serial exclude
- */
-public class Dichotomie implements org.javascool.Proglet {
-  private Dichotomie() {}
-  private static final long serialVersionUID = 1L;
-
-  // This defines the panel to display
-  private static class Panel extends JPanel {
-    private static final long serialVersionUID = 1L;
-
-    public Panel() {
-      super(new BorderLayout());
-      setBackground(Color.WHITE);
-      // Adds the background icon
-      JLayeredPane book = new JLayeredPane();
-      book.setPreferredSize(new Dimension(540, 350));
-      add(book);
-      JLabel icon = new JLabel();
-      icon.setBounds(10, 0, 540, 350);
-      icon.setIcon(Utils.getIcon("proglet/dichotomie/doc-files/dicho_background.png"));
-      book.add(icon, new Integer(1), 0);
-      // Adds the label and flag
-      name = new JLabel();
-      name.setBounds(90, 50, 150, 100);
-      book.add(name, new Integer(2), 0);
-      flag = new JLabel();
-      flag.setBounds(340, 100, 200, 100);
-      book.add(flag, new Integer(2), 1);
-      // Adds the prev/next buttons and page count label
-      JPanel tail = new JPanel();
-      add(tail, BorderLayout.SOUTH);
-      JButton prev = new JButton("<-");
-      tail.add(prev);
-      prev.addActionListener(new ActionListener() {
-                               public void actionPerformed(ActionEvent e) {
-                                 show(--current);
-                               }
-                             }
-                             );
-      JButton next = new JButton("->");
-      tail.add(next);
-      next.addActionListener(new ActionListener() {
-                               public void actionPerformed(ActionEvent e) {
-                                 show(++current);
-                               }
-                             }
-                             );
-      tail.add(new JLabel("       "));
-      num = new JLabel();
-      tail.add(num);
-      show(63);
-    }
-    /** Affiche une page.
-     * @param page L'index de la page de 0 à getSize() exclu.
-     */
-    public void show(int page) {
-      if(page < 0)
-        page = 0;
-      if(page >= dichoLength())
-        page = dichoLength() - 1;
-      current = page;
-      num.setText("" + page);
-      name.setText("<html><h2>" + dicho[page][0] + "</h2></html>");
-      flag.setIcon(Utils.getIcon("proglet/dichotomie/doc-files/" + dicho[page][1]));
-      Macros.sleep(150);
-    }
-    private JLabel name, flag, num;
-    private int current;
-  }
-
-  //
-  // This defines the tests on the panel
-  //
-
-  /**/public static void test() {
-    /*
-     *  // Tests if the dicho is sorted
-     *  for(int i = 1; i < dichoLength(); i++)
-     *  if (dichoCompare(dicho[i][0], i - 1) <= 0)
-     *  Macros.echo("Ahhh bad sort between "+dicho[i][0]+"#"+i+(dichoCompare(dicho[i][0], i - 1) == 0 ? " == " : " << ")+dicho[i-1][0]+"#"+(i-1));
-     *  // Tests the index function
-     *  for(int i = 0; i < dichoLength(); i++)
-     *  if (i != getPage(dicho[i][0]))
-     *  Macros.echo("Ohhh bad index for "+dicho[i][0]+"#"+i+" <> "+getPage(dicho[i][0]));
-     */
-    // Shows a few random pages
-    for(int i = 0; i < 26; i++) {
-      Macros.sleep(200);
-      panel.show(((int) (Math.random() * dichoLength())));
-    }
-  }
-  /** Gets the index of a given page.
+public class Functions {
+	/** Gets the index of a given page.
    * <div><tt>- DO NOT USE !!! This is the solution of the exercice !!!</tt></div>
    * @param pays The name to compare with.
    * @return The page index or -1 if the name is not on some page.
@@ -159,7 +59,7 @@ public class Dichotomie implements org.javascool.Proglet {
       page = 0;
     if(page >= dichoLength())
       page = dichoLength() - 1;
-    panel.show(page);
+    Panel.panel.show(page);
     return compareTo(name, page);
   }
   // Compares without accents
@@ -173,7 +73,7 @@ public class Dichotomie implements org.javascool.Proglet {
   public static final String pays[];
 
   // All the data sorted in alphabetic order, flags icons are available thanks to http://fr.wikipedia.org !
-  private static String dicho[][] = {
+  public static String dicho[][] = {
     { "Afghanistan", "100px-Flag_of_Afghanistan.svg.png", "http://fr.wikipedia.org/wiki/Afghanistan" },
     { "Afrique du Sud", "100px-Flag_of_South_Africa.svg.png", "http://fr.wikipedia.org/wiki/Afrique_du_Sud" },
     { "Albanie", "100px-Flag_of_Albania.svg.png", "http://fr.wikipedia.org/wiki/Albanie" },
@@ -373,7 +273,4 @@ public class Dichotomie implements org.javascool.Proglet {
     for(int n = 0; n < dicho.length; n++)
       pays[n] = dicho[n][0];
   }
-
-  /** Définition de l'interface graphique de la proglet. */
-  public static final Panel panel = new Panel();
 }
