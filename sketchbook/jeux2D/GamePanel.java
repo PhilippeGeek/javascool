@@ -45,7 +45,7 @@ public class GamePanel extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         //Clear the screen
-        g.setColor(Color.RED);
+        g.setColor(Color.BLACK);
         g.fillRect(0, 0, this.getWidth(), this.getHeight());
 
         //Set default color
