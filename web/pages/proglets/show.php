@@ -3,22 +3,20 @@
         die('Error');
     $id = $_GET['id'];
     Sal::validateProgletId($id);
-    if (!is_file("sketchbook/" . $id . "/proglet.php"))
+    if (!is_file("proglets/" . $id . "/proglet.php"))
         die("La proglet " . $id . " n'a pas de fichier proglet.php");
     $proglet=null;
-    include("sketchbook/" . $id . "/proglet.php");  //TODO testme
+    include("proglets/" . $id . "/proglet.php");  //TODO testme
     if (isset($proglet['name'])) $name=$proglet['name']; else $name="";
     if (isset($proglet['description'])) $desc=$proglet['description']; else $desc="";
-    if (isset($proglet['icon'])) $icon=$proglet['icon']; else $icon="";
+    if (isset($proglet['icon'])) $icon='proglets/'.$id.'/'.$proglet['icon']; else $icon="";
     if ($name=="") $name=$id;
 
-    $defaulticon="../../images/defaultProglet.png";
+    $defaulticon="images/defaultProglet.png";
                 
     if ($icon=="")
         $icon=$defaulticon;
-    else
-        Sal::validateAsIconFile($icon);
-    if (!is_file('sketchbook/' . $id . '/'.$icon))
+    if (!is_file($icon))
         $icon=$defaulticon;
 ?>
 
@@ -28,7 +26,7 @@
     <tr>
         <td class="proglet">
             <span><?php echo $name; ?></span>
-            <span class="proglet-image"><img src="<?php echo('sketchbook/' . $id . '/'.$icon.''); ?>" alt=""/></span>
+            <span class="proglet-image"><img src="<?php echo($icon); ?>" alt=""/></span>
         </td>
     </tr>
 </table>
