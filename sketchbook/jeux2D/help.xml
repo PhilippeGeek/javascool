@@ -108,7 +108,7 @@ Les collisions
     <p title="II. Coder un jeu : structure de votre programme" id="II">
         <p title="II.A. La boucle principale" id="II.A">
 Contrairement à un programme normal, le temps d'exécution d'un jeu n'est pas fixé : il peut durer quelques secondes comme plusieurs heures. De plus, certaines actions doivent être répétées, mais pas forcément dans le même ordre. Par exemple, le joueur perd une vie, puis l'ennemi en perd deux, puis meurt, et enfin le joueur perd encore une vie. L'ordre de ces évènements dépend hautement des actions de l'utilisateur sur le clavier et la souris. Ceci oblige à faire ce qu'on appelle une boucle principale. Il s'agit d'une boucle infinie qui s'exécute tant que le jeu n'est pas terminé. Cette boucle vérifie tous les évènements et y réagit si nécessaire. Un des rôles de cette boucle est de dessiner l'écran. Une fois que la boucle se termine, l'affichage est mis à jour. Il faut donc que cette boucle tourne très rapidement pour avoir un affichage fluide. Par exemple, pour avoir une cadence de rafraîchissement de 30 fps (Frames Per Seconde, rafraîchissements par seconde), la boucle principale doit mettre moins de 1/30e de seconde à s'exécuter. Voici un exemple de jeu avec une boucle principale :
-            <code>
+            <div class="code"><pre>
 position=0
 vie=5
 En boucle : 
@@ -122,7 +122,7 @@ En boucle :
 	Si le joueur a moins de 1 point de vie
 		Afficher l'écran de Game Over
 	Afficher l'image du joueur à la nouvelle position	
-            </code>
+            </pre></div>
 Aide sur les notations : l'opérateur d'affectation (=) est utilisé en programmation : 
             <code>vie=0</code>
 Signifie qu'on affecte à la variable 'vie' la valeur 0. Après l'instruction, la variable 'vie' aura pour valeur 0 (si vous avez besoin d'un rappel sur les variables, voir la proglet 'Ingrédients des algorithmes'). L'instruction 
@@ -132,7 +132,7 @@ Signifie donc qu'on affecte à la variable 'vie' la valeur 'vie-1'. On appelle c
 
         <p title="II.B. Programmation procédurale ou évènementielle ?" id="II.B">
 Il existe deux façons principales de programmer un jeu : l'approche procédurale et l'approche évènementielle. J'approche procédurale consiste à définir dans l'ordre logique les instructions à effectuer. Par exemple : 
-            <code>0 -> position
+            <div class="code"><pre>0 -> position
 En boucle : 
 	Si la touche droite est enfoncée
 		position+1 -> position
@@ -144,18 +144,18 @@ En boucle :
 	Si le joueur a moins de 1 point de vie
 		Afficher l'écran de Game Over
 	Afficher l'image du joueur à la nouvelle position
-            </code>
+            </pre></div>
 En général on préfère à l'approche procédurale l'approche évènementielle. En effet, cette approche prétend effectuer plusieurs actions en parallèle et simplifie l'ajout de modules au fur et à mesure de l'exécution du code. Exemple : 
 
 Afficher l'La proglet offre la possibilité d'associer des évènements à un groupe. Associer un évènement à un groupe revient à l'associer à chacun de ses membre : image du joueur
-            <code>En boucle 10 fois :
+            <div class="code"><pre>En boucle 10 fois :
 	Créer un ennemi
 	Définir 'ennemi touché' = appeler le bloc 'TouchéEnnemi'
 
 
 Bloc 'TouchéEnnemi' :
 	Retirer un point de vie à l'ennemi concerné
-            </code>
+            </pre></div>
 Avec une gestion procédurale, on aurait dû stocker la liste des ennemis en mémoire, puis tester à chaque boucle la position de chaque ennemi pour vérifier s'il est touché. Grâce à la programmation évènementielle, l'ordinateur se débrouille ! De plus, il peut traiter plusieurs évènements en même temps comme par exemple jouer un son, gérer la physique etc.
 
 Java's Cool permet d'utiliser les deux types de programmation mais l'accent sera mis dans ce document sur l'approche évènementielle car l'approche procédurale n'apporte rien de nouveau par rapport aux autres proglets.
@@ -169,17 +169,29 @@ La proglet 'game' simplifie l'affichage d'image, la lecture de sons et la gestio
 Un sprite est une image positionnable sur l'écran. Il possède donc une taille, une image et une position. On peut l'utiliser de la façon suivante : 
             <code>//Les deux lignes suivantes peuvent être écrites : Sprite s=new Sprite(0,0,100,100);
 Sprite s;
-s=new Sprite(0,0,100,100);	//On définit la position du sprite à (0,0) et sa taille à 100x100
-/*Les coordonnées et tailles sont toujours comptées en pixels : Il y a en gros une qurantaine de pixels par centimètre sur votre écran. La position est comptée à partir du coin supérieur gauche de votre écran : l'axe x est horizontal vers la droite et l'axe y vertical vers le bas.*/
-s.load("monimage.png");	//On charge une image qui est maintenant affichée à l'écran
-s.position(20,20);	//On déplace l'image
-s.scale(5La proglet offre la possibilité d'associer des évènements à un groupe. Associer un évènement à un groupe revient à l'associer à chacun de ses membre : 0,50);		//On modifie la taille de l'image
+//On définit la position du sprite à (0,0) et sa taille à 100x100
+s=new Sprite(0,0,100,100);	
+/*Les coordonnées et tailles sont toujours comptées en pixels : Il y a en gros
+une qurantaine de pixels par centimètre sur votre écran. La position est comptée
+ à partir du coin supérieur gauche de votre écran : l'axe x est horizontal vers 
+ la droite et l'axe y vertical vers le bas.*/
+//On charge une image qui est maintenant affichée à l'écran
+s.load("monimage.png");
+//On déplace l'image
+s.position(20,20);
+//On modifie la taille de l'image
+s.scale(50,50);		
 int x=s.getX();
-int y=s.getY();		//x et y contiennent maintenant la position du sprite
+int y=s.getY();
+//x et y contiennent maintenant la position du sprite
 int w=s.getWidth();		
-int h=s.getHeight();	//w et h contiennent maintenant la taille du sprite
-s.hide()			/*Le sprite est maintenant invisible (mais il peut encore reçevoir des 					évènements (voir la section évènements pour plus d'infos)*/
-s.destroy()		//Le sprite est invisible et ne reçoit plus d'évènements
+int h=s.getHeight();	
+//w et h contiennent maintenant la taille du sprite
+s.hide()
+/*Le sprite est maintenant invisible (mais il peut encore reçevoir des
+évènements (voir la section évènements pour plus d'infos)*/
+s.destroy()
+//Le sprite est invisible et ne reçoit plus d'évènements
             </code>
         </p>
 
@@ -209,7 +221,9 @@ Il se crée et s'utilise exactement comme l'objet 'Oval' mais représente un rec
     <p title="IV. Gestion intelligente des évènements" id="IV">
 La proglet permet de définir une fonction à exécuter lorsqu'un évènement se produit. Par exemple, on pourrait appeler la fonction tirer lorsque le joueur clique. Pour cela, on utilisera la syntaxe : 
         <code>onClick(“tirer”);
-Cette instruction se place généralement en début de programme. En effet, elle ne déclenche pas d'évènement, elle prévient juste l'ordinateur qu'il faudra appeler telle fonction si l'utilisateur clique. La fonction tirer doit être définie : 
+// Cette instruction se place généralement en début de programme.
+// En effet, elle ne déclenche pas d'évènement, elle prévient juste l'ordinateur qu'il faudra
+// appeler telle fonction si l'utilisateur clique. La fonction tirer doit être définie : 
 void tirer() {
 	println(“x=”+mouseX()+” y=”+mouseY());
 }
