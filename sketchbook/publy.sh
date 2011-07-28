@@ -1,3 +1,5 @@
+#!/bin/sh
+
 rm jvsbuilder.log >/dev/null 2>&1
 rm summary.log >/dev/null 2>&1
 
