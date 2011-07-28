@@ -1,3 +1,4 @@
+package org.javascool.proglets.algoDeMath;
 import javax.swing.JApplet;
 
 public class Panel extends JApplet {
