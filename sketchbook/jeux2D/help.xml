@@ -4,92 +4,92 @@
     <p title="Index">
         <table>
             <tr>
-                <td colspan="2"><l href="#I">I.&nbsp; La proglet 'game'</l></td>
+                <td colspan="2"><l link="#I" text="I.&nbsp; La proglet 'game'" /></td>
             </tr>
             <tr>
-                <td colspan="2"><l href="#II">II.&nbsp; Coder un jeu : structure de votre programme</l></td>
-            </tr>
-            <tr>
-                <td>&nbsp; &nbsp; </td>
-                <td><l href="#II.A">II.A.&nbsp; La boucle principale</l></td>
+                <td colspan="2"><l link="#II" text="II.&nbsp; Coder un jeu : structure de votre programme" /></td>
             </tr>
             <tr>
                 <td>&nbsp; &nbsp; </td>
-                <td><l href="#II.B">II.B.&nbsp; Programmation procédurale ou évènementielle ?</l></td>
-            </tr>
-            <tr>
-                <td colspan="2"><l href="#III">III.&nbsp; Les nouveaux objets</l></td>
+                <td><l link="#II.A" text="II.A.&nbsp; La boucle principale" /></td>
             </tr>
             <tr>
                 <td>&nbsp; &nbsp; </td>
-                <td><l href="#III.A">III.A.&nbsp; L'objet 'Sprite'</l></td>
+                <td><l link="#II.B" text="II.B.&nbsp; Programmation procédurale ou évènementielle ?" /></td>
+            </tr>
+            <tr>
+                <td colspan="2"><l link="#III" text="III.&nbsp; Les nouveaux objets" /></td>
             </tr>
             <tr>
                 <td>&nbsp; &nbsp; </td>
-                <td><l href="#III.B">III.B.&nbsp; L'objet 'Oval'</l></td>
+                <td><l link="#III.A" text="III.A.&nbsp; L'objet 'Sprite'" /></td>
             </tr>
             <tr>
                 <td>&nbsp; &nbsp; </td>
-                <td><l href="#III.C">III.C.&nbsp; L'objet 'Rect'</l></td>
-            </tr>
-            <tr>
-                <td colspan="2"><l href="#IV">IV.&nbsp; Gestion intelligente des évènements</l></td>
+                <td><l link="#III.B" text="III.B.&nbsp; L'objet 'Oval'" /></td>
             </tr>
             <tr>
                 <td>&nbsp; &nbsp; </td>
-                <td><l href="#IV.A">IV.A.&nbsp; Les types d'évènements</l></td>
+                <td><l link="#III.C" text="III.C.&nbsp; L'objet 'Rect'" /></td>
+            </tr>
+            <tr>
+                <td colspan="2"><l link="#IV" text="IV.&nbsp; Gestion intelligente des évènements" /></td>
             </tr>
             <tr>
                 <td>&nbsp; &nbsp; </td>
-                <td><l href="#IV.B">IV.B.&nbsp; La fonction de callback</l></td>
+                <td><l link="#IV.A" text="IV.A.&nbsp; Les types d'évènements" /></td>
             </tr>
             <tr>
                 <td>&nbsp; &nbsp; </td>
-                <td><l href="#IV.C">IV.C.&nbsp; Liste des évènements disponibles</l></td>
+                <td><l link="#IV.B" text="IV.B.&nbsp; La fonction de callback" /></td>
             </tr>
             <tr>
                 <td>&nbsp; &nbsp; </td>
-                <td><l href="#IV.D">IV.D.&nbsp; Les évènements clavier</l></td>
+                <td><l link="#IV.C" text="IV.C.&nbsp; Liste des évènements disponibles" /></td>
             </tr>
             <tr>
                 <td>&nbsp; &nbsp; </td>
-                <td><l href="#IV.E">IV.E.&nbsp; En règle générale</l></td>
-            </tr>
-            <tr>
-                <td colspan="2"><l href="#V">V.&nbsp; Gestion des groupes</l></td>
+                <td><l link="#IV.D" text="IV.D.&nbsp; Les évènements clavier" /></td>
             </tr>
             <tr>
                 <td>&nbsp; &nbsp; </td>
-                <td><l href="#V.A">V.A.&nbsp; Pouvoir stocker des éléments</l></td>
+                <td><l link="#IV.E" text="IV.E.&nbsp; En règle générale" /></td>
             </tr>
             <tr>
-                <td colspan="2"><l href="#VI">VI.&nbsp; Les évènements de groupe</l></td>
-            </tr>
-            <tr>
-                <td colspan="2"><l href="#VII">VII.&nbsp; Propriétés</l></td>
+                <td colspan="2"><l link="#V" text="V.&nbsp; Gestion des groupes" /></td>
             </tr>
             <tr>
                 <td>&nbsp; &nbsp; </td>
-                <td><l href="#VII.A">VII.A.&nbsp; addProperty</l></td>
+                <td><l link="#V.A" text="V.A.&nbsp; Pouvoir stocker des éléments" /></td>
+            </tr>
+            <tr>
+                <td colspan="2"><l link="#VI" text="VI.&nbsp; Les évènements de groupe" /></td>
+            </tr>
+            <tr>
+                <td colspan="2"><l link="#VII" text="VII.&nbsp; Propriétés" /></td>
             </tr>
             <tr>
                 <td>&nbsp; &nbsp; </td>
-                <td><l href="#VII.B">VII.B.&nbsp; getProperty</l></td>
+                <td><l link="#VII.A" text="VII.A.&nbsp; addProperty" /></td>
             </tr>
             <tr>
                 <td>&nbsp; &nbsp; </td>
-                <td><l href="#VII.C">VII.C.&nbsp; setProperty</l></td>
-            </tr>
-            <tr>
-                <td colspan="2"><l href="#VIII">VIII.&nbsp; Collisions</l></td>
+                <td><l link="#VII.B" text="VII.B.&nbsp; getProperty" /></td>
             </tr>
             <tr>
                 <td>&nbsp; &nbsp; </td>
-                <td><l href="#VIII">VIII.A.&nbsp; Détection de collisions</l></td>
+                <td><l link="#VII.C" text="VII.C.&nbsp; setProperty" /></td>
+            </tr>
+            <tr>
+                <td colspan="2"><l link="#VIII" text="VIII.&nbsp; Collisions" /></td>
             </tr>
             <tr>
                 <td>&nbsp; &nbsp; </td>
-                <td><l href="#VIII">VIII.B.&nbsp; Réaction aux collisions</l></td>
+                <td><l link="#VIII" text="VIII.A.&nbsp; Détection de collisions" /></td>
+            </tr>
+            <tr>
+                <td>&nbsp; &nbsp; </td>
+                <td><l link="#VIII" text="VIII.B.&nbsp; Réaction aux collisions" /></td>
             </tr>
         </table>
     </p>
