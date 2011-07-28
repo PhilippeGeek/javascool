@@ -32,6 +32,7 @@
             <fileset dir="${proglet.src}">
                 <exclude name="*.xml" />
                 <exclude name="*.java" />
+                <exclude name="demo.jvs" />
             </fileset>
         </copy>
         <mkdir dir="${proglet.build}/src" />
@@ -41,6 +42,7 @@
         
         <delete file="${proglet.build}/*.xml"/>
         <delete file="${proglet.build}/build.htm"/>
+        <delete file="${proglet.build}/demo.jvsc"/>
         
         <mkdir dir="${jvs.tojar.tmp}/org/javascool/proglets/${proglet.name}"/>
         <copy todir="${jvs.tojar.tmp}/org/javascool/proglets/${proglet.name}">
@@ -49,8 +51,7 @@
             </fileset>
         </copy>
         <copy todir="${jvs.tojar.tmp}/org/javascool/proglets/${proglet.name}">
-            <fileset dir="${proglet.build}/org/javascool/proglets/${proglet.name}">
-            </fileset>
+            <fileset dir="${proglet.build}/org/javascool/proglets/${proglet.name}"/>
         </copy>
         
         <delete dir="${proglet.src}"/>

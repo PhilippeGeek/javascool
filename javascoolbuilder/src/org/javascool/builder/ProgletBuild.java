@@ -4,9 +4,14 @@
  */
 package org.javascool.builder;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -14,6 +19,7 @@ import org.apache.tools.ant.DefaultLogger;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.ProjectHelper;
 import org.javascool.builder.gui.Dialog;
+import org.javascool.jvs.Jvs2Java;
 import org.javascool.pml.Pml;
 import org.javascool.tools.Utils;
 
@@ -45,7 +51,7 @@ public class ProgletBuild {
      * @throws IOException  
      */
     public ProgletBuild(org.javascool.builder.Proglet progletToCompile) throws FileNotFoundException, IOException {
-        proglet=progletToCompile;
+        proglet = progletToCompile;
         progletDir = proglet.getProgletDir();
         docDir = new File(JVSBMain.tmpDir.getPath() + File.separator + proglet.getPackageName() + "-doc");
         srcDir = new File(JVSBMain.tmpDir.getPath() + File.separator + proglet.getPackageName() + "-src");
@@ -55,9 +61,25 @@ public class ProgletBuild {
         docDir.mkdirs();
         srcDir.mkdirs();
         buildDir.mkdirs();
-        
+
     }
-    
+
+    private static String readFileAsString(String filePath)
+            throws java.io.IOException {
+        StringBuilder fileData = new StringBuilder(1000);
+        BufferedReader reader = new BufferedReader(
+                new FileReader(filePath));
+        char[] buf = new char[1024];
+        int numRead = 0;
+        while ((numRead = reader.read(buf)) != -1) {
+            String readData = String.valueOf(buf, 0, numRead);
+            fileData.append(readData);
+            buf = new char[1024];
+        }
+        reader.close();
+        return fileData.toString();
+    }
+
     /** Build the proglet
      * This function compile the proglet.<br/>
      * <p>
@@ -72,21 +94,21 @@ public class ProgletBuild {
      * @throws FileNotFoundException
      * @throws IOException 
      */
-    public void build() throws FileNotFoundException, IOException{
+    public void build() throws FileNotFoundException, IOException {
         String[] javaFiles = null;
         try {
             javaFiles = progletDir.list(new JavaFileNameFilter());
         } catch (Exception e) {
             Utils.report(e);
         }
-        if(!this.proglet.hasHelp()){
-            System.err.println("No help file for proglet : "+proglet.getName());
-            Dialog.error("Erreur", "Pas de fichier d'aide pour "+proglet.getName()+", la proglet ne sera pas construite.");
+        if (!this.proglet.hasHelp()) {
+            System.err.println("No help file for proglet : " + proglet.getName());
+            Dialog.error("Erreur", "Pas de fichier d'aide pour " + proglet.getName() + ", la proglet ne sera pas construite.");
             return;
         }
-        if(this.proglet.getConf().getString("title").isEmpty()||this.proglet.getConf().getString("author").isEmpty()){
-            System.err.println("Error in configuration file for proglet : "+proglet.getName());
-            Dialog.error("Erreur", "Le fichier de configuration de "+proglet.getName()+" ne respecte pas les spécifications, la proglet ne sera pas construite.");
+        if (this.proglet.getConf().getString("title").isEmpty() || this.proglet.getConf().getString("author").isEmpty()) {
+            System.err.println("Error in configuration file for proglet : " + proglet.getName());
+            Dialog.error("Erreur", "Le fichier de configuration de " + proglet.getName() + " ne respecte pas les spécifications, la proglet ne sera pas construite.");
             return;
         }
         System.out.println("Setting up java files ...");
@@ -98,10 +120,18 @@ public class ProgletBuild {
         }
 
         new Pml().load(progletDir.getPath() + File.separator + "proglet.pml").save(progletDir.getPath() + File.separator + "proglet.php", "php");
-        
-    /*    (new File(progletDir.getPath() + File.separator + "proglet.php")).deleteOnExit();
+
+        File demo = new File(progletDir.getPath() + File.separator + "demo.jvs");
+        if (demo.exists()) {
+            String demoC = readFileAsString(demo.getAbsolutePath());
+            String demoT = Jvs2Java.translate(demoC);
+            File demoO=new File(progletDir.getPath()+File.separator + "demo.jvsc");
+            BufferedWriter demoS=new BufferedWriter(new FileWriter(demoO));
+            demoS.write(demoT);
+            demoS.close();
+        }
+        /*    (new File(progletDir.getPath() + File.separator + "proglet.php")).deleteOnExit();
         (new File(progletDir.getPath() + File.separator + "doc")).deleteOnExit();*/
-        
         String[] docFiles = progletDir.list(new DocumentationFileNameFilter());
         System.out.println("Setting up docs ...");
         (new File(progletDir.getPath() + File.separator + "doc")).mkdir();
@@ -155,7 +185,7 @@ public class ProgletBuild {
         p.executeTarget(p.getDefaultTarget());
         System.out.println("Done");
         buildFile.delete();
-     /*   (new File(progletDir.getPath() + File.separator + "proglet.php")).delete();
+        /*   (new File(progletDir.getPath() + File.separator + "proglet.php")).delete();
         (new File(progletDir.getPath() + File.separator + "doc")).delete();*/
     }
 
