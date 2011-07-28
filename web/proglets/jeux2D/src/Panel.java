@@ -199,9 +199,67 @@ public class Panel extends JApplet {
 				m_panel.grabFocus();
     }
     
+		Group demo_poissons;
+    		
+    void demo_seRegrouper(Oval poisson) {
+			double nbPoissons=demo_poissons.size();
+			double sommeX=0;
+			double sommeY=0;
+			double sumCoef=0;
+			double sumForce=0;
+			for (int i=0; i<demo_poissons.size(); i++) {
+				Oval autrePoisson=(Oval)demo_poissons.get(i);
+				if (!autrePoisson.equals(poisson)) {
+					double deltaX=autrePoisson.getX()-poisson.getX();
+					double deltaY=autrePoisson.getY()-poisson.getY();
+	
+					double force=(float)(4/(Math.sqrt(deltaX*deltaX+deltaY*deltaY)));
+					sumForce+=force;
+	
+					double vecX=autrePoisson.getX()-poisson.getX();
+					double vecY=autrePoisson.getY()-poisson.getY();
+					double vecNorm=(double)(Math.sqrt(vecX*vecX+vecY*vecY));
+					vecX /= vecNorm;
+					vecY /= vecNorm;
+					vecX*=force;
+					vecY*=force;
+					sommeX=sommeX+vecX;
+					sommeY=sommeY+vecY;
+				}
+			}
+			
+			poisson.position(poisson.getX()+(double)(sommeX), poisson.getY()+(double)(sommeY));
+
+			for (int i=0; i<demo_poissons.size(); i++) {
+				Oval autrePoisson=(Oval)demo_poissons.get(i);
+				if (autrePoisson!=poisson) {
+					double ax=poisson.getX(); double ay=poisson.getY();
+					double bx=autrePoisson.getX(); double by=autrePoisson.getY();
+					double vecABX=bx-ax; double vecABY=by-ay;
+					double normAB=(double)Math.sqrt(vecABX*vecABX+vecABY*vecABY);
+					if (normAB<2*5) {
+						double overlap=2*5-normAB;
+						vecABX /= normAB; vecABY /= normAB;
+						vecABX *= overlap/2; vecABY *= overlap/2;
+						autrePoisson.position(autrePoisson.getX()+vecABX, autrePoisson.getY()+vecABY);
+						poisson.position(poisson.getX()-vecABX, poisson.getY()-vecABY);
+					}
+				}
+			}
+		}
+    		
     @Override
     public void start() {
-    		Oval o=new Oval(0,0,100,100);
+				demo_poissons=new Group();
+				for (int i=0;i<20;i++) {
+					Oval poisson=new Oval(Math.random()*1000,Math.random()*1000,2*5,2*5);
+					demo_poissons.add(poisson);
+				}
+
+				while(true) {
+					for (int i=0; i<demo_poissons.size(); i++)
+						demo_seRegrouper((Oval)demo_poissons.get(i));
+				}
     }
     
     @Override

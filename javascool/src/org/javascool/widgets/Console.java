@@ -3,6 +3,7 @@
  **************************************************************/
 package org.javascool.widgets;
 
+import java.applet.Applet;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.io.IOException;
@@ -151,8 +152,11 @@ public class Console extends JPanel {
         outputPane.setText("");
     }
 
+    public static boolean isInApplet=true;
+    
     /** Start the current program */
     public static void startProgram() {
+        isInApplet=false;
         System.err.println("In Console.startProgram");
    //     if (Console.runThread != null && isRunning()) Console.stopProgram();
         Console.running = true;
@@ -293,4 +297,11 @@ public class Console extends JPanel {
     public static Thread getRunThread() {
         return runThread;
     }
+    
+    public static void startAsApplet(Applet p) {
+        Console.running=true;
+        progletPanel=p;
+    }
+    
+    public static Applet progletPanel;
 }

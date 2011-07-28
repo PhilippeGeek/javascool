@@ -319,7 +319,8 @@ public class Macros {
     }
     
     public static Applet getProgletPanel() {
-        return JVSMainPanel.getWidgetTabs().getProgletPanel();
+        if (Console.progletPanel==null) return JVSMainPanel.getWidgetTabs().getProgletPanel();
+        else return Console.progletPanel;
     }
 
     public static Object getProgram() {
