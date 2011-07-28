@@ -373,6 +373,7 @@ public final class JVSMainPanel extends JPanel {
 
     public static void loadProglet(String name) {
         System.gc();
+        if (JVSMainPanel.getCurrentProglet()!=null && JVSMainPanel.getCurrentProglet().hasPanel()) JVSMainPanel.getWidgetTabs().getProgletPanel().destroy();
         try {
             JVSMainPanel.getThisInStatic().removeAll();
             JVSMainPanel.newFile();

@@ -187,7 +187,6 @@ public class Console extends JPanel {
     /** Stop the current program */
     public static void stopProgram() {
         Console.running = false;
-        if (JVSMainPanel.getCurrentProglet().hasPanel()) JVSMainPanel.getWidgetTabs().getProgletPanel().destroy();
         Console.run(false);
         if (Console.timeThread != null) {
             try {
