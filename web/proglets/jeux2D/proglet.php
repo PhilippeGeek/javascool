@@ -1,0 +1,1 @@
+<?php $proglet = array("_tag" => "proglet", "icon" => "games.png", "author" => "Guillaume Matheron <guillaumematheron06@gmail.com>", "title" => "Créez vos propres jeux vidéo en 2D", "javaImport" => "javax.swing.*,org.javascool.proglets.jeux2D.*"); ?>
