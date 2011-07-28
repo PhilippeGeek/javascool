@@ -10,7 +10,7 @@ Voici:
 Description de la liasse:
 # ''javascool'' : fichiers sources de l'application "apprenant" qui permet de manipuler des «proglets»;
 # ''javascoolbuilder'' : fichiers sources de l'application "formateur" qui permet de construire des «proglets»;
-# ''web/sketchbook'' : fichiers sources de l'application "formateur" qui permet de construire des «proglets»;
+# ''sketchbook'' : fichiers sources de l'application "formateur" qui permet de construire des «proglets»;
 autres 
 * ''branches'' : contient les copies archivées de la liasse des fichiers sources pour y revenir si besoin;
 * ''tags'' : contient les sauvegardes des versions livrées aux utilisateurs;
