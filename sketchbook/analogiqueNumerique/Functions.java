@@ -3,9 +3,14 @@ import javax.swing.JLabel;
 import java.awt.Dimension;
 import java.awt.BorderLayout;
 import javax.swing.JLayeredPane;
-import org.javascool.NumberInput;
+import javax.swing.JPanel;
+import java.awt.BorderLayout;
+import javax.swing.JApplet;
 
-public class test {
+public class Functions {
+	public static ProgletPanel panel;
+	
+	
   /**/public static void test() {
     /* Méthode brute
      *  {
