@@ -24,14 +24,14 @@
                 <include name="*.htm"/>
             </fileset>
         </copy>
-     <!--   <delete dir="${proglet.doc}"/>-->
+        <delete file="proglet.php" />
+        <delete dir="${proglet.doc}"/>
         <javac srcdir="${proglet.src}" destdir="${proglet.build}" includeantruntime="false" classpath="${jvs.basejar}">
         </javac>
         <copy todir="${proglet.build}">
             <fileset dir="${proglet.src}">
                 <exclude name="*.xml" />
                 <exclude name="*.java" />
-                <exclude name="proglet.php" />
             </fileset>
         </copy>
         <mkdir dir="${proglet.build}/src" />
@@ -53,7 +53,7 @@
             </fileset>
         </copy>
         
-  <!--      <delete dir="${proglet.src}"/>
-        <delete dir="${proglet-build}"/>-->
+        <delete dir="${proglet.src}"/>
+        <delete dir="${proglet-build}"/>
     </target>
 </project>

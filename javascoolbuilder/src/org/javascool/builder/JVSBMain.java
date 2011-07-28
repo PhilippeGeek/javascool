@@ -35,35 +35,36 @@ public class JVSBMain {
     static String baseJarFile;
     static String hdocXsltFile;
     static String saxonJarFile;
-
+    static boolean quiet=false;
+    
     public JVSBMain() throws Exception {
         this.sketchbookUrlStr = new File(ClassLoader.getSystemResource("org/javascool/builder").getPath().split("!")[0]).getParent().replace("file:", "").replace("%20", " ");
         this.sketchbook = new File(this.sketchbookUrlStr);
 
-        if (Dialog.questionYN("Bienvenue dans le JVSBuilder", "Bienvenue dans Java's cool builder.\nVotre sketchbook est apparament \n" + this.sketchbook.toString() + "\nEst-ce correct ?") == JOptionPane.OK_OPTION) {
-            JVSBMain.pb = new ProgressBar();
-            JVSBMain.pb.update(5, "Indexation du sketchbook ...");
+        if (quiet || Dialog.questionYN("Bienvenue dans le JVSBuilder", "Bienvenue dans Java's cool builder.\nVotre sketchbook est apparament \n" + this.sketchbook.toString() + "\nEst-ce correct ?") == JOptionPane.OK_OPTION) {
+            if (!quiet) JVSBMain.pb = new ProgressBar();
+            if (!quiet) JVSBMain.pb.update(5, "Indexation du sketchbook ...");
             this.progletToInstall = this.listProgletInDir(sketchbook);
-            JVSBMain.pb.update(7, "Suppression des répertoires temporaires qui traînent ...");
+            if (!quiet) JVSBMain.pb.update(7, "Suppression des répertoires temporaires qui traînent ...");
             this.removeTmp();
-            JVSBMain.pb.update(10, "Création du répertoire temporaire ...");
+            if (!quiet) JVSBMain.pb.update(10, "Création du répertoire temporaire ...");
             this.setupTmp();
-            JVSBMain.pb.update(20, "Copie des librairies ...");
+            if (!quiet) JVSBMain.pb.update(20, "Copie des librairies ...");
             this.copyJVSBase();
-            JVSBMain.pb.update(25, "Copie de Java's cool ...");
+            if (!quiet) JVSBMain.pb.update(25, "Copie de Java's cool ...");
             this.runJarAnt("setup");
             int i = this.progletToInstall.toArray().length;
             for (File progletDir : this.progletToInstall) {
-                JVSBMain.pb.update((50 / (i)) + 25, "Compilation de " + progletDir.getName() + " ...");
+                if (!quiet) JVSBMain.pb.update((50 / (i)) + 25, "Compilation de " + progletDir.getName() + " ...");
                 Proglet proglet = new Proglet(progletDir);
                 ProgletBuild progletBuild = new ProgletBuild(proglet);
                 progletBuild.build();
                 i--;
             }
-            JVSBMain.pb.update(80, "Création du jar ...");
+            if (!quiet) JVSBMain.pb.update(80, "Création du jar ...");
             this.runJarAnt("jar");
-            JVSBMain.pb.canBeClosed(Boolean.TRUE);
-            JVSBMain.pb.update(100, "Terminé");
+            if (!quiet) JVSBMain.pb.canBeClosed(Boolean.TRUE);
+            if (!quiet) JVSBMain.pb.update(100, "Terminé");
         } else {
             Dialog.error("Arret du Builder", "Vous devez mettre le JVSBuilder \nà la racine de votre sketchbook");
             System.exit(0);
@@ -120,7 +121,7 @@ public class JVSBMain {
         p.setUserProperty("jvs.tojar.tmp", "" + tmpDir.getName() + "/tojar");
         p.setUserProperty("jvs.tmp", "" + tmpDir.getName() + "");
         p.setUserProperty("jvs.newjar", this.sketchbook.getAbsolutePath()
-                + File.separator + "javascool-personel.jar");
+                + File.separator + "javascool-personnel.jar");
         p.setUserProperty("jvs.jarname", "Java's Cool Sketchbook");
         p.init();
         ProjectHelper helper = ProjectHelper.getProjectHelper();
@@ -170,7 +171,7 @@ public class JVSBMain {
 
     /** Close all opened window */
     public static void close() {
-        if (JVSBMain.pb.isVisible()) {
+        if (!quiet && JVSBMain.pb.isVisible()) {
             JVSBMain.pb.dispose();
         }/*
         try {
@@ -248,6 +249,18 @@ public class JVSBMain {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        if (args.length>0 && args[0].equals("-q")) quiet=true;
+        else if (args.length>0 && (args[0].equals("-h") || args[0].equals("--help"))) {
+            System.out.println("JavaScoolBuilder - Builds a Java's Cool customized jar");
+            System.out.println("Usage : java -jar javascool-builder.jar [-q]");
+            System.out.println("Options : ");
+            System.out.println("\t-q\tDisplays all output to the standard output and does not display dialogs");
+            System.exit(1);
+        } else if (args.length>0) {
+            System.out.println("java -jar javascool-builder.jar --help for more info");
+            System.exit(0);
+        }
+        
         JVSBMain jVSBMain = null;
         try {
             JVSBMain.setUpSystem();
@@ -255,8 +268,8 @@ public class JVSBMain {
         } catch (Exception e) {
             Utils.report(e);
             System.err.println("Le programme a du s'arreter, voici la cause : \n" + e.getLocalizedMessage());
-            JVSBMain.pb.update(100, "Erreur !!");
-            JVSBMain.pb.canBeClosed(Boolean.TRUE);
+            if (!quiet) JVSBMain.pb.update(100, "Erreur !!");
+            if (!quiet) JVSBMain.pb.canBeClosed(Boolean.TRUE);
             System.exit(0);
         }
     }
