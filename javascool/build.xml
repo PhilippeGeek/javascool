@@ -17,7 +17,7 @@
         <!--<echo message="Delete keystore" level="info"/>
         <delete file="keystore"/>
         <echo message="Generate new key" level="info"/>
-        <genkey alias="javascool" keystore="keystore" storepass="mer,d,azof" validity="730">
+        <genkey alias="javascool" keystore="keystore" storepass="*******" validity="730">
             <dname>
                 <param name="CN" value="INRIA"/>
                 <param name="OU" value="javascool.gforge.inria.fr"/>
