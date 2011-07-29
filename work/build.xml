@@ -1,14 +1,15 @@
 <!-- Construction des éléments de javascool (core), javascoolbuilder, et des proglets -->
 <project>
-
+  <property name="build.dir" value="../tags/build"/>
+  
   <target name="classes">
     <mkdir dir="../tags/build/classes"/>
-    <javac srcdir="src" destdir="../tags/build/classes"/>
+    <javac deprecation="true" srcdir="src" destdir="${build.dir}/classes"/>
   </target>
   
   <target name="javascool.jar" depends="classes" >
-    <mkdir dir="../tags/build/jar"/>
-    <jar destfile="../tags/javascool.jar" basedir="../tags/build/classes">
+    <mkdir dir="${build.dir}/jar"/>
+    <jar destfile="../tags/javascool.jar" basedir="${build.dir}/classes">
       <manifest>
         <attribute name="Main-Class" value="org.javascool.Core"/>
       </manifest>
@@ -20,10 +21,10 @@
   </target>
 
   <target name="javadoc">
-    <mkdir dir="../tags/build/web/api"/>
+    <mkdir dir="${build.dir}/web/api"/>
     <javadoc
       access="public" 
-      destdir="../tags/build/web/api"
+      destdir="${build.dir}/web/api"
       windowtitle="Java's Cool v4"
       doctitle="Java's Cool v4"
       author="true"
@@ -48,7 +49,7 @@
   </target>
   
   <target name="clean">
-    <delete dir="../tags/build"/>
+    <delete dir="${build.dir}"/>
   </target>
     
 </project>
