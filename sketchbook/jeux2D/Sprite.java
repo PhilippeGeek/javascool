@@ -84,7 +84,7 @@ public class Sprite extends Geometry implements Drawable {
         try {
             m_image = ImageIO.read(new File(fileName));
         } catch (IOException e) {
-            InputStream stream=Macros.getRessource(fileName);
+            InputStream stream=Macros.getResource(fileName);
             if (stream==null)
                 JVSMainPanel.reportRuntimeBug("Le fichier "+fileName+" n'extste pas");
             else {

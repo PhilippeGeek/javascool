@@ -351,7 +351,7 @@ public class PrivateFunctions implements EventCatcher {
          */
         @SuppressWarnings("AccessingNonPublicFieldOfAnotherObject")
         private void tick() {
-            Macros.getRessource("test.txt");   //DEBUG
+            Macros.getResource("test.txt");   //DEBUG
             for (int j = 0; j < 3; j++) {
                 if (getFunctionsElementSingleton().m_mouseDown[j]) {
                     callback(getFunctionsElementSingleton().m_onMouseDown);
