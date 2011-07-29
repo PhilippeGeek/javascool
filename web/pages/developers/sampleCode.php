@@ -18,7 +18,7 @@ showBrowser(
 <p>Cette page a pour but de vous expliquer comment créer une proglet concrètement. Elle présente une proglet d'exemple, 
     affichant simplement un bouton et un label, et permettant à l'utilisateur d'interagir avec ces derniers. Le code est
     commenté et détaillé, et vous pouvez télécharger : </p>
-<p><ul><li><?php showLink('proglets/sampleCode/sampleCode.zip','Les sources au format zip','file'); ?></li>
+<p><ul><li><?php showLink('proglets/sources-sampleCode.zip','Les sources au format zip','file'); ?></li>
     <li><?php showLink('proglets/javascool-proglet-sampleCode.jar','L\'exécutable au format jar','file'); ?></li></ul>
 </p>
 
