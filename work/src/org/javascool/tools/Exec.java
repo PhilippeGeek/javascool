@@ -20,7 +20,7 @@ public class Exec {
    * @param command La commande avec ses arguments séparés par des tabulations (caractère "\t") ou, sans cela, des espaces (caractère " ").
    * @param timeout Temporisation maximale avant la fin de la commande. Si 0, l'attente est indéfinie.
    * @return Le résultat: ce que la commande écrit en sortie.
-   * @throws RuntimeException Si une erreur d'entrée-sortie s'est produite lors de l'éxecution.
+   * @throws RuntimeException Si une erreur d'entrée-sortie s'est produite lors de l'exécution.
    * @throws IllegalStateException Si le statut de retour de la commande n'est pas 0 (donc a un numéro d'erreur) ou si la temporisation est dépassée.
    */
   public static String run(String command, int timeout) {

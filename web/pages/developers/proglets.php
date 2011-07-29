@@ -49,6 +49,7 @@ showBrowser(
     <li><tt>help.xml</tt> : le fichier de documentation de la proglet.</li>
 <li><tt>Functions.java</tt> : qui définit les fonctions proposées à l'élève (<em>optionnel</em>).</li>
 <li><tt>Panel.java</tt> : qui implémente l'applet graphique de la proglet (<em>optionnel</em>).</li>
+<li><tt>Translator.java</tt> : qui implémente la traduction de Jvs en Java spécifique de cette proglet (<em>optionnel</em>).</li>
 </ul> 
 
 <div class="spec"><tt>proglet.pml</tt> est un fichier texte de trois lignes données sous la forme:
@@ -64,11 +65,15 @@ showBrowser(
 <div class="spec"><tt>Functions.java</tt> est une classe publique sans parent, qui contient uniquement les fonctions et constantes statiques et publiques, destinées à l'utilisateur. Elle est documentée soit en anglais, soit en français, à destination de l'élève. Tous les identificateurs utilisés dans cette classes deviennent des mots réservés. Il ne faut rien mettre d'autre dans cette classe.
 </div>
 
-<div class="spec"><tt>Panel.java</tt> est une classe publique qui a <tt>java.awt.Applet</tt> comme parent. Par conséquent: <ul>
-        <li>La méthode <tt>init()</tt>, définie dans cette classe, qui permet de construire l'applet, initialiser les objets graphiques, gestionnaires d'événements, etc..</li>
+<div class="spec"><tt>Panel.java</tt> est une classe publique qui implémente <tt>org.javascool.core.Proglet</tt>. <ul>
+        <li>La méthode <tt>init()</tt>, définie dans cette classe, permet de construire l'applet, initialiser les objets graphiques, gestionnaires d'événements, etc..</li>
         <li>La méthode <tt>destroy()</tt>, appelée à la fermeture de la proglet, doit détruire ce que <tt>init()</tt> et l'élève ont fait.</li>
-        <li>La méthode <tt>start()</tt>, optionelle, n'est appelée que pour lancer une <em>démonstration</em> du fonctionnement de la proglet. La méthode <tt>stop()</tt> est appelée à l'arrêt de la démosntration.</li>
+        <li>La méthode <tt>start()</tt>, optionelle, n'est appelée que pour lancer une <em>démonstration</em> du fonctionnement de la proglet. La méthode <tt>stop()</tt> est appelée à l'arrêt de la démonstration.</li>
     </ul>
+</div>
+
+
+<div class="spec"><tt>Translator.java</tt> est une classe publique qui a pour parent <tt>org.javascool.core.Translator</tt> et permet de définir des variantes du langage pour la proglet: se référer à la documentation.
 </div>
 
 
