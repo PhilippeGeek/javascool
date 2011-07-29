@@ -47,6 +47,13 @@ then
 							echo Copie des fichiers de la proglet dans web
 							cp -rf org/javascool/proglets/${proglet} ../web/proglets >/dev/null 2>&1
 							mv javascool-personnel.jar ../web/proglets/javascool-proglet-${proglet}.jar >/dev/null 2>&1
+							mv ../web/proglets/${proglet}/src ../web/proglets/${proglet}/${proglet}
+							push=`pwd`
+							cd ../web/proglets/${proglet}
+							rm -f ../sources-${proglet}.zip >/dev/null 2>&1
+							zip -r ../sources-${proglet}.zip ${proglet} >/dev/null 2>&1
+							cd $push
+							mv ../web/proglets/${proglet}/${proglet} ../web/proglets/${proglet}/src
 							status="OK"
 						else
 							echo Erreur ! La proglet ${proglet} n\'a pas pu être compilée, voir jvsbuilder.log 1>&2
