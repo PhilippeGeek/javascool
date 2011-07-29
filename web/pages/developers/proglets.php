@@ -1,16 +1,18 @@
 <?php
-    showBrowser(
+showBrowser(
         array(
-            array("Java's Cool","?"),
-            array("Développeurs","?page=developers"),
-            array("Spécification d'une proglet","")
+    array("Java's Cool", "?"),
+    array("Développeurs", "?page=developers"),
+    array("Spécification d'une proglet", "")
         ), array(
-            array("XML","?page=developers&action=doc-xml"),
-            array("jvs","?page=developers&action=doc-jvs"),
-            array("API","?page=api"),
-            array("javascoolbuilder","?page=developers&action=doc-javascoolbuilder")
+    array("XML", "?page=developers&action=doc-xml"),
+    array("jvs", "?page=developers&action=doc-jvs"),
+    array("API", "?page=api"),
+    array("Exemple de proglet", "?page=developers&action=sampleCode"),
+    array("FAQ", "?page=developers&action=faq"),
+    array("javascoolbuilder", "?page=developers&action=doc-javascoolbuilder")
         )
-    );
+);
 ?>
 
 <pre>
@@ -51,8 +53,8 @@
 
 <div class="spec"><tt>proglet.pml</tt> est un fichier texte de trois lignes données sous la forme:
     <tt><br />&nbsp; title = "Description en 1 à 2 lignes de la proglet"
-    <br />&nbsp; author = "Prenom Nom &lt;email@serveur>, Prenom Nom &lt;email@serveur>, .."
-    <br />&nbsp; icon = "Le nom de fichier de l'image qui décrit la proglet" (<em>optionnel</em>)</tt>
+        <br />&nbsp; author = "Prenom Nom &lt;email@serveur>, Prenom Nom &lt;email@serveur>, .."
+        <br />&nbsp; icon = "Le nom de fichier de l'image qui décrit la proglet" (<em>optionnel</em>)</tt>
 </div>
 
 <div class="spec"><tt>help.xml</tt> est un fichier en XML dont les balises sont <?php showLink("?page=developers&action=doc-xml", "définies ici", "internal"); ?>.
@@ -81,11 +83,11 @@
         <li>Des classes java accessibles &agrave; l'&eacute;l&egrave;ve. Par exemple, on pourrait ajouter une classe 'Image' qui
             faciliterait l'usage d'images dans Java's Cool</li>
         <li>Des fichiers .jvs qui servent d'exemple &agrave; l'&eacute;l&egrave;ve. Ces fichiers peuvent &ecirc;tre ouverts automatiquement
-            par un <?php showLink("?page=developers&action=doc-jvs","lien jvs","internal"); ?> inclus dans l'aide de la proglet (fichier <tt>help.xml</tt>)</li>
-        <li>Des fichiers <tt>.xml</tt> qui seront converts lors de l'appel &agrave; 
-            <?php showLink("?page=developers&action=doc-javascoolbuilder","javascoolbuilder","internal"); ?> en fichiers <tt>.htm</tt>.
-            Ces fichiers sont accessible depuis l'aide de la proglet (voir la balise lien dans les
-            <?php showLink("?page=developers&action=doc-xml", "sp&eacute;cifications du langage xml","internal"); ?></li>
+            par un <?php showLink("?page=developers&action=doc-jvs", "lien jvs", "internal"); ?> inclus dans l'aide de la proglet (fichier <tt>help.xml</tt>)</li>
+<li>Des fichiers <tt>.xml</tt> qui seront converts lors de l'appel &agrave; 
+<?php showLink("?page=developers&action=doc-javascoolbuilder", "javascoolbuilder", "internal"); ?> en fichiers <tt>.htm</tt>.
+Ces fichiers sont accessible depuis l'aide de la proglet (voir la balise lien dans les
+<?php showLink("?page=developers&action=doc-xml", "sp&eacute;cifications du langage xml", "internal"); ?></li>
 
-    </ul>
+</ul>
 </li>

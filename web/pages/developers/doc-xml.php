@@ -8,6 +8,8 @@
             array("Proglet","?page=developers&action=proglets"),
             array("jvs","?page=developers&action=doc-jvs"),
             array("API","?page=api"),
+            array("Exemple de proglet","?page=developers&action=sampleCode"),
+            array("FAQ","?page=developers&action=faq"),
             array("javascoolbuilder","?page=developers&action=doc-javascoolbuilder")
         )
     );
