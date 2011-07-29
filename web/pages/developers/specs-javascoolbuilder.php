@@ -1,4 +1,21 @@
-<p>JavaScoolBuilder doit effectuer les actions suivantes : </p>
+<?php
+showBrowser(
+        array(
+    array("Java's Cool", "?"),
+    array("Développeurs", "?page=developers"),
+    array("Spécifications de javascoolbuilder", "")
+        ), array(
+    array("Proglet", "?page=developers&action=proglets"),
+    array("XML", "?page=developers&action=doc-xml"),
+    array("API", "?page=api"),
+    array("Exemple de proglet", "?page=developers&action=sampleCode"),
+    array("FAQ", "?page=developers&action=faq"),
+    array("jvs", "?page=developers&action=doc-jvs")
+        )
+);
+?>
+
+<p>JavaScoolBuilder effectue les actions suivantes : </p>
 <ul><li>Créer un jar contenant les fichiers .java de la proglet compilés. Les fichiers Panel.java et Functions.java sont optionnels, il
         est donc possible qu'aucune source java ne soit présente</li>
     <li>Créer un dossier src dans le jar final (dans le dossier de la proglet) contenant les sources java. Ce dossier doit être présent
