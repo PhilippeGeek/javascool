@@ -1,3 +1,11 @@
+#
+# nettoyer les fichier netbean
+# svn up
+# lancer netbean et CleanBuild de Core 
+# Dans sketchbook ./publy.sh
+# Dans web ./publi.sh
+#
+
 dft : cmp2
 
 export PATH:=/usr/java/jdk1.6.0_22/bin:$(PATH)
@@ -45,4 +53,10 @@ clean:
 	cd $(JVS) ; find -name '*.class' -exec rm {} \;
 	rm -rf tmp/*
 	svn status $(JVS)
+
+svnclean :
+	rm -rf `svn status $(JVS) | grep '^\?' | awk '{print $$2}'`
+	svn status
+
+
 

@@ -1,3 +1,4 @@
+package org.javascool.proglets.analogiqueNumerique;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import java.awt.Dimension;
