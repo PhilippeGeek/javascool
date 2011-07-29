@@ -1,3 +1,7 @@
+/*******************************************************************************
+* Thierry.Vieville@sophia.inria.fr, Copyright (C) 2010.  All rights reserved. *
+*******************************************************************************/
+
 package org.javascool.tools;
 
 import java.io.IOException;
@@ -9,7 +13,7 @@ import java.io.InputStreamReader;
  * @serial exclude
  */
 public class Exec {
-  // Empêche de construire cette classe qui n'est qu'utilitaire.
+  // @factory
   private Exec() {}
 
   /** Execute la commande et renvoie le résultat.
