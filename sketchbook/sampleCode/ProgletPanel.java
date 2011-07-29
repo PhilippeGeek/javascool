@@ -10,7 +10,7 @@ public class ProgletPanel extends Panel {
 	/** Construit un nouveau panel */
 	public ProgletPanel() {
 		// On crée un label
-		label=new Label("Bonjour !");
+		label=new Label("");
 		// Et on l'ajoute au panel
 		add(label,BorderLayout.NORTH);
 	}
