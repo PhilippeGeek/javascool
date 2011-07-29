@@ -1,0 +1,54 @@
+<!-- Construction des éléments de javascool (core), javascoolbuilder, et des proglets -->
+<project>
+
+  <target name="classes">
+    <mkdir dir="../tags/build/classes"/>
+    <javac srcdir="src" destdir="../tags/build/classes"/>
+  </target>
+  
+  <target name="javascool.jar" depends="classes" >
+    <mkdir dir="../tags/build/jar"/>
+    <jar destfile="../tags/javascool.jar" basedir="../tags/build/classes">
+      <manifest>
+        <attribute name="Main-Class" value="org.javascool.Core"/>
+      </manifest>
+    </jar>
+    <exec executable="sh">
+      <arg value="-c"/>
+      <arg value="ls -l ../tags/javascool.jar"/>
+    </exec>
+  </target>
+
+  <target name="javadoc">
+    <mkdir dir="../tags/build/web/api"/>
+    <javadoc
+      access="public" 
+      destdir="../tags/build/web/api"
+      windowtitle="Java's Cool v4"
+      doctitle="Java's Cool v4"
+      author="true"
+      version="true"
+      use="true"  
+      nodeprecated="true"
+      nohelp="true"
+      nonavbar="true"
+      notree="true"
+      charset="UTF-8"
+       >
+      <link href="http://download.oracle.com/javase/6/docs/api"/>
+      <link href="http://javadoc.fifesoft.com/rsyntaxtextarea"/>
+      <fileset dir="src" defaultexcludes="yes">
+        <include name="**/*.java"/>
+      </fileset>
+    </javadoc>
+  </target>
+
+  <target name="run" depends="javascool.jar">
+    <java jar="../tags/javascool.jar" fork="true"/>
+  </target>
+  
+  <target name="clean">
+    <delete dir="../tags/build"/>
+  </target>
+    
+</project>
