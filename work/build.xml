@@ -1,10 +1,11 @@
 <!-- Construction des éléments de javascool (core), javascoolbuilder, et des proglets -->
 <project>
   <property name="build.dir" value="../tags/build"/>
+  <property name="classpath" value="lib/jvs2html.jar"/>
   
   <target name="classes">
-    <mkdir dir=""${build.dir}/classes"/>
-    <javac deprecation="true" srcdir="src" destdir="${build.dir}/classes"/>
+    <mkdir dir="${build.dir}/classes"/>
+    <javac deprecation="true" classpath="${classpath}" srcdir="src" destdir="${build.dir}/classes"/>
   </target>
   
   <target name="javascool.jar" depends="classes" >
@@ -23,6 +24,7 @@
   <target name="javadoc">
     <mkdir dir="${build.dir}/web/api"/>
     <javadoc
+      classpath="${classpath}"
       access="public" 
       destdir="${build.dir}/web/api"
       windowtitle="Java's Cool v4"

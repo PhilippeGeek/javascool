@@ -21,6 +21,7 @@ import org.javascool.tools.Macros;
  * Class Console
  * @author Philippe Vienne
  */
+@Done
 public class Console extends JPanel {
 
     private static final long serialVersionUID = 1L;

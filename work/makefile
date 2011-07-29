@@ -1,12 +1,13 @@
 #
-# Makefile d'utilisaires développement de jvs4 (à terme seul ant sera utilisé)
+# Makefile de développement de jvs4.alpha.2 (à terme seul ant sera utilisé)
 #
 JVS = $(realpath ..)
 
 ant :
 #	Lance ant sur son build.xml
 	ant run
-	firefox ../tags/build/web/api/index.html 
+#ant javadoc ; firefox $(JVS)/tags/build/web/api/index.html 
+#java -cp $(JVS)/tags/javascool.jar:lib/jvs2html.jar:lib/lang3.jar org.javascool.tools.Jvs2Html tools/Jvs2Html.java
 
 #
 # Commandes de service pour gerer le site javascool

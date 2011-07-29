@@ -9,7 +9,6 @@ import de.java2html.javasource.JavaSource;
 import de.java2html.javasource.JavaSourceParser;
 import de.java2html.javasource.JavaSourceType;
 import de.java2html.options.JavaSourceConversionOptions;
-import de.java2html.options.JavaSourceStyleEntry;
 import de.java2html.util.RGB;
 import java.io.IOException;
 import java.io.StringReader;
