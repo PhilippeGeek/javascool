@@ -1,21 +1,12 @@
-= Bienvenue dans la liasse des fichiers sources de JavaS'Cool =
-Voici:
-* Le [http://javascool.fr site officiel].
-* L'accès [http://code.google.com/p/javascool/source/browse web aux sources].
-* L'accès au [http://wiki.inria.fr/sciencinfolycee/Catégorie:JavaScool wiki] JavaScool du [http://science-info-lycee.fr «SIL:O!»]
-* Et aux applications 
-** [http://code.google.com/p/javascool/source/browse/tags/javascool.jar javascool] et 
-** [http://code.google.com/p/javascool/source/browse/tags/javascoolbuilder.jar javascoolbuilder]. 
+= Bienvenue dans la liasse des fichiers sous SVN de JavaS'Cool =
 
 Description de la liasse:
-# ''javascool'' : fichiers sources de l'application "apprenant" qui permet de manipuler des «proglets»;
-# ''javascoolbuilder'' : fichiers sources de l'application "formateur" qui permet de construire des «proglets»;
-# ''sketchbook'' : fichiers sources de l'application "formateur" qui permet de construire des «proglets»;
-autres 
+* ''work'' : contient le projet logiciel avec tous les fichiers sources;
 * ''branches'' : contient les copies archivées de la liasse des fichiers sources pour y revenir si besoin;
 * ''tags'' : contient les sauvegardes des versions livrées aux utilisateurs;
-* ''web'' : fichiers et documents du site web [http://javascool.fr site officiel];
 tandis que 
-''index.txt'' sont des fichiers qui guident la personne amenée à travailler sur ces sources,
-''*-old'' sont des répertoires temporaires de travail, à ignorer. 
+''*-old'' sont des répertoires temporaires de travail, à ignorer;
 ''wiki' contient les fichiers du wiki de développement (actuellement inutilisé).
+
+Pour en savoir plus voir la [http://javascool.gforge.inria.fr/v4/index.php?page=api documentation].
+
