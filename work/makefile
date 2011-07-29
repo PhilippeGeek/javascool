@@ -21,13 +21,6 @@ svn :
 	rm -rf ../tags/build
 	cd $(JVS) ; svn cleanup ; svn up ; svn ci -m 'modif mineure vthierry' ; svn status
 
-# Commandes "dangeureuses" :
-
-cleansvn :
-#	Nettoie (donc détruit !) les fichiers non ajoutés au svn
-	$(HOME)/bin/rm.sh `svn status $(JVS) | grep '^\?' | awk '{print $$2}'`
-#
-
 docweb :
 	svn up .. ; cd ../web ; ./start.sh -show #; ./publis.sh
 
