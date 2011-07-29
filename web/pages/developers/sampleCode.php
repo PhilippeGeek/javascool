@@ -18,8 +18,8 @@ showBrowser(
 <p>Cette page a pour but de vous expliquer comment créer une proglet concrètement. Elle présente une proglet d'exemple, 
     affichant simplement un bouton et un label, et permettant à l'utilisateur d'interagir avec ces derniers. Le code est
     commenté et détaillé, et vous pouvez télécharger : </p>
-<p><ul><li><?php showLink('proglets/sources-sampleCode.zip','Les sources au format zip','file'); ?></li>
-    <li><?php showLink('proglets/javascool-proglet-sampleCode.jar','L\'exécutable au format jar','file'); ?></li></ul>
+<p><ul><li><?php showLink('proglets/sources-sampleCode.zip', 'Les sources au format zip', 'file'); ?></li>
+    <li><?php showLink('proglets/javascool-proglet-sampleCode.jar', 'L\'exécutable au format jar', 'file'); ?></li></ul>
 </p>
 
 <h1>proglet.pml</h1>
@@ -52,16 +52,32 @@ icon="sample.png"
     <li>La classe Panel doit hériter de la classe java.applet.Applet mais il est en général plus simple
         de la faire hériter de javax.swing.JApplet. Ceci est autorisé car javax.swing.JApplet hérite
         elle-même de java.applet.Applet.</li>
+    <li>On utilise ici la fonction Macros.readString(). Plus d'informations dans la 
+    <?php showLink('?page=developers&action=faq#fsfgs','FAQ','internal'); ?>
     <li>Consultez les <?php showLink('?page=developers&action=proglets', 'spécifications d\'une proglet', 'internal'); ?></li>
 </ul>
 <p>Code source du fichier Panel.java</p>
-<pre>import javax.swing.JApplet
+<pre>import javax.swing.JApplet;
+import org.javascool.tools.Macros;
 
 public class Panel extends JApplet {
-	public static ProgletPanel panel=new ProgletPanel();
+	private static ProgletPanel panel=new ProgletPanel();
 	
+	/** Constructeur par défaut */
+	public Panel() {
+		// Affiche panel en tant que panel principal de cette applet
+		setContentPane(panel);
+	}
+	
+	/** Récupérer le ProgletPanel affiché */
+	public static ProgletPanel getPanel() {
+		return panel;
+	}
+	
+	/** Juste pour montrer que cette méthode peut être implémentée */
 	public void init() {
-		// Juste pour montrer que cette méthode peut être implémentée
+        // On demande un texte à l'utilisateur et on l'affiche en label
+		panel.setText(Macros.readString());
 	}
 }</pre>
 
@@ -82,7 +98,7 @@ public class ProgletPanel extends Panel {
 	/** Construit un nouveau panel */
 	public ProgletPanel() {
 		// On crée un label
-		label=new Label("Bonjour !");
+		label=new Label("");
 		// Et on l'ajoute au panel
 		add(label,BorderLayout.NORTH);
 	}
@@ -116,9 +132,9 @@ public class Functions {
     au format htm lors de la compilation de la proglet. Pour lier les fichiers entre eux, vous
     devez donc y référer en tant que fichiers htm.</p>
 <p>Note : le nom du fichier help.xml est fixé par les spécifications d'une proglet</p>
-<pre><l link="exercice.htm" text="Exercice" /></pre><?php //TODO complete help     ?>
+<pre><l link="exercice.htm" text="Exercice" /></pre><?php //TODO complete help      ?>
 
 <h1>exercice.xml</h1>
 <p>Ce fichier est un fichier xml : il sera converti en htm et permet de créer une
     seconde page d'aide. Toutes les pages d'aide peuvent être liées les unes aux autres</p>
-<pre><l link="help.htm" text="Aide" /></pre><?php //TODO complete help     ?>
+<pre><l link="help.htm" text="Aide" /></pre><?php //TODO complete help      ?>
