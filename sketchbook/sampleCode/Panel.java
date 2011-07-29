@@ -1,3 +1,4 @@
+package org.javascool.proglets.sampleCode;
 import javax.swing.JApplet;
 import org.javascool.tools.Macros;
 
