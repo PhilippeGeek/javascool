@@ -32,7 +32,7 @@ public class Xml2Xml {
    * @return La chaîne en sortie.
    *
    * @throws IllegalArgumentException Si une erreur de syntaxe est détecté.
-   * @throws RuntimeException  Si une erreur d'entrée sortie s'est produite.
+   * @throws RuntimeException  Si une erreur d'entrée-sortie s'est produite.
    */
   public static String run(String xml, String xsl) {
     // Compile the XSL tranformation
@@ -62,6 +62,16 @@ public class Xml2Xml {
       System.setProperty("javax.xml.parsers.DocumentBuilderFactory", "com.icl.saxon.om.DocumentBuilderFactoryImpl");
     } catch(Throwable e) {
       System.err.println("Configuration error: " + e);
+    }
+  }
+
+  /** Lanceur de la transformation XML -XSLT-> XML.
+   * @param usage <tt>java org.javascool.tools.Xml2Xml input-file XSL-file [output-file]</tt>
+   */
+  public static void main(String[] usage) {
+    // @main
+    if (usage.length > 1) {
+      StringFile.save(usage.length > 2 ? usage[2] : "stdout:", run(StringFile.load(usage[0]), StringFile.load(usage[1])));
     }
   }
 }

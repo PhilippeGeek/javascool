@@ -40,7 +40,7 @@ public class StringFile {
    * </table>
    *
    * @throws IllegalArgumentException Si l'URL est mal formée.
-   * @throws RuntimeException Si une erreur d'entrée sortie s'est produite.
+   * @throws RuntimeException Si une erreur d'entrée-sortie s'est produite.
    */
   public static String load(String location) {
     try {
@@ -69,7 +69,7 @@ public class StringFile {
    * @param string Le texte à sauver.
    *
    * @throws IllegalArgumentException Si l'URL est mal formée.
-   * @throws RuntimeException Si une erreur d'entrée sortie s'est produite.
+   * @throws RuntimeException Si une erreur d'entrée-sortie s'est produite.
    */
   public static void save(String location, String string) {
     if(location.startsWith("stdout:")) {
@@ -106,7 +106,7 @@ public class StringFile {
 
   /** Renvoie une URL normalisée, dans le cas du système de fichier local ou d'une ressource Java du CLASSPATH.
    * @param location L'URL à normaliser.
-   * @param reading Precise si nous sommes en lecture (true) ou écriture (false)
+   * @param reading Précise si nous sommes en lecture (true) ou écriture (false)
    * @throws IllegalArgumentException Si l'URL est mal formée.
    */
   static URL toUrl(String location, boolean reading) {

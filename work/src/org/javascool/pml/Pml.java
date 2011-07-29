@@ -426,15 +426,17 @@ public class Pml {
       l += word.length();
     }
 
-    /** Retourne la cahînen en tenant compte des "{" "}" et \". */
+    /** Retourne la chaîne en tenant compte des "{" "}" et \". */
     private static String quote(String string) {
-      return string == null ? "null" : (string == null ? Utils.toName(string) == null : string.equals(Utils.toName(string))) || "\"{\"".equals(string) || "\"}\"".equals(string) ? string
-	: "\"" + string.replaceAll("\\\\", "\\\\\\\\").replaceAll("\"", "\\\\\"") + "\"";
+      return 
+	string == null ? "null" : 
+	string.matches("[a-zA-Z_][a-zA-Z0-9_]*") || "\"{\"".equals(string) || "\"}\"".equals(string) ? string :
+	"\"" + string.replaceAll("\\\\", "\\\\\\\\").replaceAll("\"", "\\\\\"") + "\"";
     }
   }
 
-  /** Gets this logical-structure tag.
-   * @return The tag name if defined when reseting the data structure, otherwise the Java class name.
+  /** Renvoie le type de ce PML.
+   * @return The tag définit lors de l'initialisation, sinon le nom de la classe du PML.
    */
   public final String getTag() {
     return tag;
@@ -446,7 +448,9 @@ public class Pml {
   }
   private String tag = getClass().getName();
 
-  /** Gets this logical-structure parent's reference if any. */
+  /** Renvoie le parent du PML si défini.
+   * @return Si ce PML est un sous-partie d'un PML renvoie son parent, sinon renvoie null.
+   */
   public final Pml getParent() {
     return parent;
   }
@@ -458,36 +462,35 @@ public class Pml {
   }
   private Pml parent = null;
 
-  /** Tests if a parameter value is defined.
-   * @param name The attribute's name or element's index.
-   * @return True if the value neither null nor equal to the empty string, else false.
+  /** Teste si un paramètre de ce PML est défini.
+   * <p>Cet appel est formellement équivalent à <tt>getChild(name) != null</tt></p>
+   * @param name Le nom de l'attribut ou l'index de l'élément (sous forme de chaîne ou d'entier).
+   * @return True si le paramètre est défini, false sinon.
    */
   public final boolean isDefined(String name) {
     return data.containsKey(name);
   }
-  /**/
-
+ // @variant
   public final boolean isDefined(int index) {
     return isDefined(Integer.toString(index));
   }
 
-  /** Gets a parameter as a logical-structure.
-   * @param name The attribute's name or element's index.
-   * @return A reference to the logical-structure's value if any, else null.
+  /** Renvoie la valeur d'un paramètre de ce PML.
+   * @param name Le nom de l'attribut ou l'index de l'élément (sous forme de chaîne ou d'entier).
+   * @return La valeur du paramètre, ou null si indéfini.
    */
   public Pml getChild(String name) {
     return data.get(name);
   }
-  /**/
-
+  // @variant
   public final Pml getChild(int index) {
     return getChild(Integer.toString(index));
   }
 
-  /** Gets a parameter value as a string.
-   * @param name The attribute's name or element's index.
-   * @param value The default value.
-   * @return The value as a string or the empty string if undefined.
+  /** Renvoie la valeur d'un paramètre de ce PML en tant que chaîne.
+   * @param name  Le nom de l'attribut ou l'index de l'élément (sous forme de chaîne ou d'entier).
+   * @param value La valeur par défaut, sinon "".
+   * @return La valeur de ce paramètre, si défini, sinon sa valeur par défaut.
    */
   public final String getString(String name, String value) {
     if( data.get(name)==null){
@@ -501,26 +504,23 @@ public class Pml {
     }
     return v != null ? v : value != null ? value : "";
   }
-  /**/
-
+  // @variant
   public final String getString(int index, String value) {
     return getString(Integer.toString(index), value);
   }
-  /**/
-
+  // @variant
   public final String getString(String name) {
     return getString(name, null);
   }
-  /**/
-
+  // @variant
   public final String getString(int index) {
     return getString(index, null);
   }
 
-  /** Gets a parameter value as a decimal.
-   * @param name The attribute's name or element's index.
-   * @param value The default value.
-   * @return The value as a decimal.
+  /** Renvoie la valeur d'un paramètre de ce PML en tant que décimal.
+   * @param name  Le nom de l'attribut ou l'index de l'élément (sous forme de chaîne ou d'entier).
+   * @param value La valeur par défaut, sinon "0".
+   * @return La valeur de ce paramètre, si défini, sinon sa valeur par défaut.
    */
   public final double getDecimal(String name, double value) {
     try {
@@ -529,26 +529,23 @@ public class Pml {
       return value;
     }
   }
-  /**/
-
+  // @variant
   public final double getDecimal(int index, double value) {
     return getDecimal(Integer.toString(index), value);
   }
-  /**/
-
+  // @variant
   public final double getDecimal(String name) {
     return getDecimal(name, 0);
   }
-  /**/
-
+  // @variant
   public final double getDecimal(int index) {
     return getDecimal(index, 0);
   }
 
-  /** Gets a parameter value as an integer.
-   * @param name The attribute's name or element's index.
-   * @param value The default value.
-   * @return The value as an integer.
+  /** Renvoie la valeur d'un paramètre de ce PML en tant qu'entier.
+   * @param name  Le nom de l'attribut ou l'index de l'élément (sous forme de chaîne ou d'entier).
+   * @param value La valeur par défaut, sinon "0".
+   * @return La valeur de ce paramètre, si défini, sinon sa valeur par défaut.
    */
   public final int getInteger(String name, int value) {
     try {
@@ -557,26 +554,23 @@ public class Pml {
       return value;
     }
   }
-  /**/
-
+  // @variant
   public final int getInteger(int index, int value) {
     return getInteger(Integer.toString(index), value);
   }
-  /**/
-
+  // @variant
   public final int getInteger(String name) {
     return getInteger(name, 0);
   }
-  /**/
-
+  // @variant
   public final int getInteger(int index) {
     return getInteger(index, 0);
   }
 
-  /** Sets a parameter value.
-   * @param name The attribute's name or element's index.
-   * @param value The parameter value, or <tt>null</tt> to unset the value.
-   * @return This, allowing to use the <tt>pml.set(..,..)...</tt> construct.
+  /** Définit la valeur d'un paramètre de ce PML.
+   * @param name  Le nom de l'attribut ou l'index de l'élément (sous forme de chaîne ou d'entier).
+   * @param value La valeur du paramètre (en tant que PML, entier, décimal ou entier).
+   * @return Cet objet, permettant de définir la construction <tt>Pml pml= new Pml().reset(..)</tt>.
    */
   public Pml set(String name, Pml value) {
     // Deletes the attribute value
@@ -603,60 +597,54 @@ public class Pml {
     count = -1;
     return this;
   }
-  /**/
-
+  // @variant
   public final Pml set(int index, Pml value) {
     return set(Integer.toString(index), value);
   }
-  /**/
-
+  // @variant
   public final Pml set(String name, String value) {
     Pml v = new Pml();
     v.reset(value);
     return set(name, v);
   }
-  /**/
-
+  // @variant
   public final Pml set(int index, String value) {
     return set(Integer.toString(index), value);
   }
-  /**/
-
+  // @variant
   public final Pml set(String name, double value) {
     return set(name, Double.toString(value));
   }
-  /**/
-
+  // @variant
   public final Pml set(int index, double value) {
     return set(Integer.toString(index), value);
   }
-  /**/
-
+  // @variant
   public final Pml set(String name, int value) {
     return set(name, Integer.toString(value));
   }
-  /**/
-
+  // @variant
   public final Pml set(int index, int value) {
     return set(Integer.toString(index), value);
   }
 
-  /** Unsets a parameter value.
-   * @param name The attribute's name or element's index.
-   * @return This, allowing to use the <tt>pml.del(..,..)...</tt> construct.
+  /** Elimine la valeur d'un paramètre de ce PML.
+   * <p>Cet appel est formellement équivalent à <tt>set(name, null);</tt></p>
+   * @param name  Le nom de l'attribut ou l'index de l'élément (sous forme de chaîne ou d'entier).
+   * @return Cet objet, permettant de définir la construction <tt>Pml pml= new Pml().reset(..)</tt>.
    */
   public Pml del(String name) {
     return set(name, (Pml) null);
   }
-  /**/
-
+  // @variant
   public final Pml del(int index) {
     return set(Integer.toString(index), (Pml) null);
   }
 
-  /** Adds an element's value.
-   * @param value The element value.
-   * @return This, allowing to use the <tt>pml.add(..)...</tt> construct.
+  /** Ajoute un élément à ce PML.
+   * <p>Cet appel est formellement équivalent à <tt>set(getCount(), value);</tt></p>
+   * @param value La valeur du paramètre (en tant que PML, entier, décimal ou entier).
+   * @return Cet objet, permettant de définir la construction <tt>Pml pml= new Pml().reset(..)</tt>.
    */
   public final Pml add(Pml value) {
     int c = getCount();
@@ -664,25 +652,24 @@ public class Pml {
     count = ++c;
     return this;
   }
-  /**/
-
+  // @variant
   public final Pml add(String value) {
     Pml v = new Pml();
     v.reset(value);
     return add(v);
   }
-  /**/
-
+  // @variant
   public final Pml add(double value) {
     return add(Double.toString(value));
   }
-  /**/
-
+  // @variant
   public final Pml add(int value) {
     return add(Integer.toString(value));
   }
 
-  /** Returns the number of elements. */
+  /** Renvoie le nombre d'éléments de ce PML.
+   * @return Le nombre d'éléments (indépendamment des attributs), les éléments null étant éliminés
+   */
   public int getCount() {
     if (count < 0) {
       count = 0;
@@ -696,14 +683,16 @@ public class Pml {
   }
   private int count = -1;
 
-  /** Returns the number of parameters (attributes and elements). */
+  /** Renvoie le nombre de paramètres de ce PML.
+   * @return Le nombre d'attributs et d'éléments. Si 0, ce PML correspond uniquement à une chaîne: son tag.
+   */
   public int getSize() {
     return data.size();
   }
 
-  /** Returns an attribute's names iterator.
-   * <p>- Attributes are enumerated using the construct <tt>for(String name : pml.attributes()) { Pml value = pml.getChild(name); .. }</tt>.</p>
-   * <p>- Elements are enumerated using the construct <tt>for(int n = 0; n &lt; pml.getCount(); n++) { Pml value = pml.getChild(n); .. }</tt>.</p>
+  /** Définir un itérateur sur les attributs de ce PML.
+   * <p>- Les attributes sont énumérés avec une construction de la forme: <tt>for(String name : pml.attributes()) { Pml value = pml.getChild(name); .. }</tt>.</p>
+   * <p>- Les éléments sont énumérés avec une construction de la forme:  <tt>for(int n = 0; n &lt; pml.getCount(); n++) { Pml value = pml.getChild(n); .. }</tt>.</p>
    */
   public final Iterable<String> attributes() {
     return new Iterable<String>() {
@@ -750,5 +739,4 @@ public class Pml {
     return index.matcher(name).matches();
   }
   static Pattern index = Pattern.compile("[0-9]+");
-
 }
