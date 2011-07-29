@@ -1,3 +1,4 @@
+package org.javascool.proglets.sampleCode;
 import java.lang.String;
 
 public class Functions {

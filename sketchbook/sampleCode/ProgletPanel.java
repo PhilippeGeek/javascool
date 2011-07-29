@@ -1,3 +1,4 @@
+package org.javascool.proglets.sampleCode;
 import java.awt.Panel;
 import java.awt.Label;
 import java.awt.BorderLayout;
