@@ -3,7 +3,7 @@
   <property name="build.dir" value="../tags/build"/>
   
   <target name="classes">
-    <mkdir dir="../tags/build/classes"/>
+    <mkdir dir=""${build.dir}/classes"/>
     <javac deprecation="true" srcdir="src" destdir="${build.dir}/classes"/>
   </target>
   

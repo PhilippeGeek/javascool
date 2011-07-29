@@ -1,4 +1,4 @@
-= Bienvenue dans la liasse des fichiers sous SVN de JavaS'Cool =
+= Bienvenue dans la liasse SVN des fichiers de JavaS'Cool =
 
 Description de la liasse:
 * ''work'' : contient le projet logiciel avec tous les fichiers sources;
@@ -9,4 +9,3 @@ tandis que
 ''wiki' contient les fichiers du wiki de développement (actuellement inutilisé).
 
 Pour en savoir plus voir la [http://javascool.gforge.inria.fr/v4/index.php?page=api documentation].
-

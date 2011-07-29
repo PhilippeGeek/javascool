@@ -38,7 +38,3 @@ EOF
 # Liste les logs si il y a un problème
 
 sleep 1 ; cat `pwd`/.http.root/logs/error_log
-
-# Si l'option -show est donnée lance le browser
-
-if [ "$1" = -show ] ; then firefox http://127.0.0.1:1234 ; fi
