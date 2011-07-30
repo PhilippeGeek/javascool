@@ -1,5 +1,5 @@
 #
-# Makefile de développement de jvs4.alpha.2 (à terme seul ant sera utilisé)
+# Makefile de développement de jvs4.alpha.2 à vthierry (à terme seul ant sera utilisé)
 #
 JVS = $(realpath ..)
 
@@ -19,14 +19,8 @@ ssh :
 	@gnome-terminal -e "ssh scm.gforge.inria.fr 'cd /home/groups/javascool/htdocs ; bash -i'" 
 
 svn : 
-	rm -rf ../tags/build
+	ant clean
 	cd $(JVS) ; svn cleanup ; svn up ; svn ci -m 'modif mineure vthierry' ; svn status
 
-docweb :
+publish :
 	svn up .. ; cd ../web ; ./start.sh -show #; ./publis.sh
-
-docant :
-	firefox file:///home/vthierry/doc/soft/ant/index.html
-
-docjvs: 
-	http://javascool.gforge.inria.fr/v3/?page=api:org/javascool/package-summary.html

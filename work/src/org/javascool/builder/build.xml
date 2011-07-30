@@ -1,0 +1,21 @@
+<!-- Construction des éléments de javascool (core), javascoolbuilder, et des proglets -->
+<project>
+  <!-- On utilise http://ant-contrib.sourceforge.net/tasks/tasks/index.html pour un meilleur interface -->
+  <taskdef resource="net/sf/antcontrib/antlib.xml"/>
+
+  <target name="test">
+    <for param="file">
+      <outofdate>
+        <sourcefiles>
+          <fileset dir="jvs-old/proglet" includes="**/*.xml"/>
+        </sourcefiles>
+        <mapper dir="jvs-old/proglet" type="glob" from="*.xml" to="jvs-old/proglet/*.htm"/>
+      </outofdate>
+      <sequential>
+        <propertyregex override="yes" property="file" input="@{file}" regexp=".*/([^\.]*)\.xml" replace="\1"/>
+        <echo>Need to generate a target html file from source file ${file} from @{file}</echo>
+      </sequential>
+    </for>
+  </target>
+
+</project>
