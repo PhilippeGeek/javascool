@@ -3,6 +3,9 @@
 #
 JVS = $(realpath ..)
 
+tst :
+	ant test
+
 ant :
 #	Lance ant sur son build.xml
 	ant run
