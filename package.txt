@@ -1,11 +1,11 @@
 = Bienvenue dans la liasse SVN des fichiers de JavaS'Cool =
 
 Description de la liasse:
-* ''work'' : contient le projet logiciel avec tous les fichiers sources;
+* ''work''     : contient le projet logiciel avec tous les fichiers sources;
 * ''branches'' : contient les copies archivées de la liasse des fichiers sources pour y revenir si besoin;
-* ''tags'' : contient les sauvegardes des versions livrées aux utilisateurs;
+* ''build''    : contient les sauvegardes des versions livrées aux utilisateurs;
 tandis que 
-''*-old'' sont des répertoires temporaires de travail, à ignorer;
-''wiki' contient les fichiers du wiki de développement (actuellement inutilisé).
+''*-old''      : sont des répertoires temporaires de travail, à ignorer;
+''wiki'        : contient les fichiers du wiki de développement (actuellement inutilisé).
 
 Pour en savoir plus voir la [http://javascool.gforge.inria.fr/v4/index.php?page=api documentation].
