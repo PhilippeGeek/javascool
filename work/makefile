@@ -15,6 +15,9 @@ ant :
 
 JVS = $(realpath ..)
 
+pwd :
+	nautilus $(JVS)
+
 ssh :
 	@gnome-terminal -e "ssh scm.gforge.inria.fr 'cd /home/groups/javascool/htdocs ; bash -i'" 
 
@@ -22,5 +25,5 @@ svn :
 	ant -q clean
 	cd $(JVS) ; svn cleanup ; svn up ; svn ci -m 'modif mineure vthierry' ; svn status
 
-publish :
+pub :
 	svn up .. ; cd ../web ; ./start.sh -show #; ./publis.sh
