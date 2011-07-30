@@ -53,8 +53,7 @@
   </target>
   
   <target name="clean">
-    <delete dir="../build/classes"/>
-    <delete dir="../build/web/api"/>
+    <delete dir="../build/*"/>
   </target>
     
 </project>

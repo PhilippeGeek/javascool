@@ -22,7 +22,7 @@ ssh :
 	@gnome-terminal -e "ssh scm.gforge.inria.fr 'cd /home/groups/javascool/htdocs ; bash -i'" 
 
 svn : 
-	ant -q clean
+	ant clean > /dev/null
 	cd $(JVS) ; svn cleanup ; svn up ; svn ci -m 'modif mineure vthierry' ; svn status
 
 pub :
