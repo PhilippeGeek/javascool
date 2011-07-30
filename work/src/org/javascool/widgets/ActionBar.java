@@ -1,4 +1,4 @@
-package org.javascool.widget;
+package org.javascool.widgets;
 
 import javax.swing.JToolBar;
 import javax.swing.JPopupMenu;
@@ -44,7 +44,7 @@ public class ActionBar extends JToolBar {
    * @return Le bouton ajouté.
    */
   public final JButton addTool(String label, String icon, Runnable action) {
-    JButton button = icon == null ? new JButton(label) : new JButton(label, org.javascool.tools.ConfUtils.getIcon(icon));
+    JButton button = icon == null ? new JButton(label) : new JButton(label, org.javascool.widgets.Macros.getIcon(icon));
     button.addActionListener(new ActionListener() {
 	
 	@Override
@@ -62,11 +62,11 @@ public class ActionBar extends JToolBar {
 
   /** Ajoute un composant à la bare d'outils.
    * @param id Nom du composant (ce nom restera invisible). Chaque bouton/item/étiquette doit avoir un nom différent.
-   * @param Le composant à ajouter.
+   * @param component Le composant à ajouter.
    */
-  public void addTool(String label, JComponent component) {   
+  public void addTool(String id, JComponent component) {   
     add(component);
-    buttons.put(label, component);
+    buttons.put(id, component);
     revalidate();
   }
 
@@ -95,11 +95,12 @@ public class ActionBar extends JToolBar {
     jPopupMenu = new JPopupMenu();
     add(Box.createHorizontalGlue());
     add(jPopupMenu);
+    return jPopupMenu;
   }
   private JPopupMenu jPopupMenu = null;
   
   /** Ajoute une action au menu de droite.
-   * @param label Nom du bouton. Chaque bouton/item/étiquette doit avoir un nom différent.
+   * @param title Nom du bouton. Chaque bouton/item/étiquette doit avoir un nom différent.
    * @param action Action associée au bouton.
    * @return Le bouton ajouté.
    */
@@ -112,6 +113,7 @@ public class ActionBar extends JToolBar {
 	}
       });
     jPopupMenu.add(menuitem);
+    return menuitem;
   }
 
   /** Ajoute un séparateur au menu de droite. */

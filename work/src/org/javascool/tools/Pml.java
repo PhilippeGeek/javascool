@@ -134,7 +134,9 @@ public class Pml {
   public final Pml load(String location, String format) {
     return reset(StringFile.load(location), format);
   }
-  // @variant
+  /** 
+   * @see #load(String, String)
+   */
   public final Pml load(String location) {
     return load(location, location.replaceAll("^.*\\.([A-Za-z]+)$", "$1"));
   }
@@ -148,7 +150,9 @@ public class Pml {
     StringFile.save(location, toString(format)+"\n");
     return this;
   }
-  // @variant
+  /** 
+   * @see #save(String, String)
+   */
   public final Pml save(String location) {
     return save(location, location.replaceAll("^.*\\.([A-Za-z]+)$", "$1"));
   }
@@ -620,7 +624,9 @@ public class Pml {
   public final boolean isDefined(String name) {
     return data.containsKey(name);
   }
- // @variant
+  /**
+   * @see #isDefined(String)
+   */
   public final boolean isDefined(int index) {
     return isDefined(Integer.toString(index));
   }
@@ -632,7 +638,9 @@ public class Pml {
   public Pml getChild(String name) {
     return data.get(name);
   }
-  // @variant
+  /**
+   * @see #getChild(String)
+   */
   public final Pml getChild(int index) {
     return getChild(Integer.toString(index));
   }
@@ -654,15 +662,21 @@ public class Pml {
     }
     return v != null ? v : value != null ? value : "";
   }
-  // @variant
+  /**
+   * @see #getString(String, String)
+   */
   public final String getString(int index, String value) {
     return getString(Integer.toString(index), value);
   }
-  // @variant
+  /**
+   * @see #getString(String, String)
+   */
   public final String getString(String name) {
     return getString(name, null);
   }
-  // @variant
+  /**
+   * @see #getString(String, String)
+   */
   public final String getString(int index) {
     return getString(index, null);
   }
@@ -679,15 +693,21 @@ public class Pml {
       return value;
     }
   }
-  // @variant
+  /**
+   * @see #getDecimal(String, double)
+   */
   public final double getDecimal(int index, double value) {
     return getDecimal(Integer.toString(index), value);
   }
-  // @variant
+  /**
+   * @see #getDecimal(String, double)
+   */
   public final double getDecimal(String name) {
     return getDecimal(name, 0);
   }
-  // @variant
+  /**
+   * @see #getDecimal(String, double)
+   */
   public final double getDecimal(int index) {
     return getDecimal(index, 0);
   }
@@ -704,15 +724,21 @@ public class Pml {
       return value;
     }
   }
-  // @variant
+  /**
+   * @see #getInteger(String, int)
+   */
   public final int getInteger(int index, int value) {
     return getInteger(Integer.toString(index), value);
   }
-  // @variant
+  /**
+   * @see #getInteger(String, int)
+   */
   public final int getInteger(String name) {
     return getInteger(name, 0);
   }
-  // @variant
+  /**
+   * @see #getInteger(String, int)
+   */
   public final int getInteger(int index) {
     return getInteger(index, 0);
   }
@@ -747,33 +773,47 @@ public class Pml {
     count = -1;
     return this;
   }
-  // @variant
+  /**
+   * @see #set(String, Pml)
+   */
   public final Pml set(int index, Pml value) {
     return set(Integer.toString(index), value);
   }
-  // @variant
+  /**
+   * @see #set(String, Pml)
+   */
   public final Pml set(String name, String value) {
     Pml v = new Pml();
     v.reset(value);
     return set(name, v);
   }
-  // @variant
+  /**
+   * @see #set(String, Pml)
+   */
   public final Pml set(int index, String value) {
     return set(Integer.toString(index), value);
   }
-  // @variant
+  /**
+   * @see #set(String, Pml)
+   */
   public final Pml set(String name, double value) {
     return set(name, Double.toString(value));
   }
-  // @variant
+  /**
+   * @see #set(String, Pml)
+   */
   public final Pml set(int index, double value) {
     return set(Integer.toString(index), value);
   }
-  // @variant
+  /**
+   * @see #set(String, Pml)
+   */
   public final Pml set(String name, int value) {
     return set(name, Integer.toString(value));
   }
-  // @variant
+  /**
+   * @see #set(String, Pml)
+   */
   public final Pml set(int index, int value) {
     return set(Integer.toString(index), value);
   }
@@ -786,7 +826,9 @@ public class Pml {
   public Pml del(String name) {
     return set(name, (Pml) null);
   }
-  // @variant
+  /**
+   * @see #del(String)
+   */
   public final Pml del(int index) {
     return set(Integer.toString(index), (Pml) null);
   }
@@ -802,17 +844,23 @@ public class Pml {
     count = ++c;
     return this;
   }
-  // @variant
+  /**
+   * @see #add(String)
+   */
   public final Pml add(String value) {
     Pml v = new Pml();
     v.reset(value);
     return add(v);
   }
-  // @variant
+  /**
+   * @see #add(String)
+   */
   public final Pml add(double value) {
     return add(Double.toString(value));
   }
-  // @variant
+  /**
+   * @see #add(String)
+   */
   public final Pml add(int value) {
     return add(Integer.toString(value));
   }
