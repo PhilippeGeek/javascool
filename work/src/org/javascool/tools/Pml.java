@@ -1,7 +1,7 @@
 /*******************************************************************************
  * Thierry.Vieville@sophia.inria.fr, Copyright (C) 2010.  All rights reserved. *
  *******************************************************************************/
-package org.javascool.pml;
+package org.javascool.tools;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -10,6 +10,9 @@ import java.util.regex.Pattern;
 
 import java.util.Vector;
 import javax.xml.transform.TransformerException;
+
+import org.javascool.tools.Xml2Xml;
+import org.javascool.tools.StringFile;
 
 /** Définit la syntaxe PML (Programmatic Markup Language) et son DOM (Data Object Model) Java.
  *
@@ -45,7 +48,7 @@ public class Pml {
 
   private HashMap<String, Pml> data = new HashMap<String, Pml>();
 
-  /** Initialise le PML en la lisant dans une chaîne de caractères.
+  /** Initialise la PML en la lisant dans une chaîne de caractères.
    * @param value La chaîne de syntaxe <tt>"{tag name = value .. element .. }"</tt>.
    * @return Cet objet, permettant de définir la construction <tt>Pml pml= new Pml().reset(..)</tt>.
    */
@@ -59,8 +62,27 @@ public class Pml {
     new PmlReader().read(value, this);
     return this;
   }
-
-  /** Initialise le PML en en recopiant le PML en entrée.
+  /** Initialise la PML en la lisant dans une chaîne de caractères dans un format donné.
+   * @param value La chaîne de syntaxe <tt>"{tag name = value .. element .. }"</tt>.
+   * @param format Les formats possible sont: <div id="input-format"><ul>
+   * <li>"PML" (valeur par défaut).</li>
+   * <li>"XML" pour utiliser les structure-logiques XML de la forme <tt>&lt;tag name = value .. > &lt;element .. &lt;/tag></tt>
+   * <li>"HTM" pour utiliser les structure-logiques HTML.</li>
+   * </ul></div>
+   * @return Cet objet, permettant de définir la construction <tt>Pml pml= new Pml().reset(..)</tt>.
+   */
+  public Pml reset(String value, String format) {
+    format = format.toLowerCase(); 
+    if ("xml".equals(format)) {
+      return reset(Xml2Xml.run(value, xml2pml), "pml");
+    } else if ("htm".equals(format) || "html".equals(format)) {
+      return reset(Xml2Xml.run(Xml2Xml.htm2xml(value), xml2pml), "pml");
+    } else {
+      reset(value);
+    }
+    return this;
+  }
+   /** Initialise la PML en en recopiant la PML en entrée.
    * @param pml Le PML à copier.
    */
   public Pml reset(Pml pml) {
@@ -81,6 +103,56 @@ public class Pml {
     return this;
   }
 
+ /** Retourne la PML sous forme de chaîne de caractères.
+  * @param format de sortie <div id="output-format"><ul>
+  * <li>"RAW" Retourne une chaîne 1D de longueur minimale (par défault).</li>
+  * <li>"TXT" Retourne une chaîne 2D formattée.</li>
+  * <li>"XML" Retourne une structure logique XML, 
+  * en réduisant les tag et attributs à des nom XML valides et en considérant les PML sans attribut ni élément comme des chaînes.<li>
+  * <li>"PHP" Retourne un élément de conde PHP de la forme:<tt>&lt;php $tag = array("_tag" = getTag(), . . "name" => "value", . . , "element");?></tt>.</li>
+  * </ul></div>
+  * @return La chaîne qui représente la PML.
+  */
+  public String toString(String format) {
+    format = format.toLowerCase(); 
+    return "xml".equals(format) ? new XmlWriter().toString(this)
+      : "raw".equals(format) ? new PlainWriter().toString(this, 0)
+      : "php".equals(format) ? new PhpWriter().toString(this)
+      : new PlainWriter().toString(this, 180);
+  }
+
+  @Override
+    public final String toString() {
+    return toString("pml");
+  }
+
+  /** Initialise la PML en la lisant dans un fichier donné.
+   * @param location  L'URL (Universal Resource Location) de chargement de <a href="StringFile.html#load-format">format standard</a>.
+   * @param format Le format de lecture parmi les <a href="#input-format">formats supportés</a>, par défaut donné par l'extension du fichier.
+   * @return Cet objet, permettant de définir la construction <tt>Pml pml= new Pml().load(..)</tt>.
+   */
+  public final Pml load(String location, String format) {
+    return reset(StringFile.load(location), format);
+  }
+  // @variant
+  public final Pml load(String location) {
+    return load(location, location.replaceAll("^.*\\.([A-Za-z]+)$", "$1"));
+  }
+
+  /** Sauve la PML dans un fichier donné.
+   * @param location  L'URL (Universal Resource Location) d'écriture de <a href="StringFile.html#save-format">format standard</a>.
+   * @param format Le format d'écriture parmi les <a href="#output-format">formats supportés</a>, par défaut donné par l'extension du fichier.
+   * @return Cet objet, permettant de définir la construction <tt>Pml pml= new Pml().save(..)</tt>.
+   */
+  public final Pml save(String location, String format) {
+    StringFile.save(location, toString(format)+"\n");
+    return this;
+  }
+  // @variant
+  public final Pml save(String location) {
+    return save(location, location.replaceAll("^.*\\.([A-Za-z]+)$", "$1"));
+  }
+  
   /** Definit l'analyseur lexical qui lit la chaîne mot à mot en normlisant les espaces et en titant le caractère '"'. */
   protected static class TokenReader {
 
@@ -323,27 +395,25 @@ public class Pml {
     }
   }
 
-
-  /** Retourne le PML sous forme de chaîne de caractères.
-   * @param inline Si true retourne une chaîne 1D de longueur minimale. Si faux retourne une chaîne 2D formattée.
-   * @return La chaîne qui représente le PML.
-   */
-  public String toString(boolean inline) {
-    return inline ?  new PlainWriter().toString(this, 0) : new PlainWriter().toString(this, 180);
-  }
-
-  @Override
-    public final String toString() {
-    return toString(true);
-  }
-
+  /** Définit le convertisseur de XML en PML. */
+  private static String xml2pml =
+    "<?xml version='1.0' encoding='utf-8'?>\n"
+    + "<xsl:stylesheet xmlns:xsl='http://www.w3.org/1999/XSL/Transform' version='1.0'>\n"
+    + "  <xsl:output method='xml' encoding='utf-8' omit-xml-declaration='yes'/>\n"
+    + "  <xsl:template match='*'>\n"
+    + "  {<xsl:value-of select='name(.)'/><xsl:text> </xsl:text>\n"
+    + "    <xsl:for-each select='@*'><xsl:value-of select='name(.)'/>=\"<xsl:value-of select=\"translate(., '&quot;','¨')\"/>\"<xsl:text> </xsl:text></xsl:for-each>\n"
+    + "    <xsl:apply-templates/>\n"
+    + "  }</xsl:template>\n"
+    + "</xsl:stylesheet>";
+  
   /** Définit le convertisseur de PML en chaîne de caractères. */
   private static class PlainWriter {
 
     private StringBuffer string;
     int width, l;
 
-    /** Convertit le PML en chaîne.
+    /** Convertit la PML en chaîne.
      * @param pml Le PML à convertir.
      * @param width si width == 0 retourne une chaîne 1D de longueur minimale, sinon retourne une chaîne 2D de la largeur donnée.
      * @return La chaîne générée.
@@ -434,6 +504,86 @@ public class Pml {
 	"\"" + string.replaceAll("\\\\", "\\\\\\\\").replaceAll("\"", "\\\\\"") + "\"";
     }
   }
+
+   /** Définit le convertisseur de PML en XMl. */
+    private static class XmlWriter {
+
+        private StringBuffer string;
+
+        /** Convertit la PML en cha^ine XML 1D. */
+        public String toString(Pml pml) {
+            string = new StringBuffer();
+            if (pml == null) {
+                return "<null/>";
+            }
+            write(pml);
+            return string.toString();
+        }
+
+        private void write(Pml pml) {
+            if (pml.getSize() == 0) {
+                string.append(" ").append(pml.getTag().replaceFirst("^\"([{}])\"$", "$1").replaceAll("&", "&amp;").replaceAll("<", "&lt;"));
+            } else {
+                string.append(" <").append(toName(pml.getTag()));
+                for (String name : pml.attributes()) {
+                    string.append(" ").append(toName(name)).append("=\"").append(pml.getChild(name).toString().replaceFirst("^\\{(.*)\\}$", "$1").replaceFirst("^\"(.*)\"$", "$1").
+                            replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll("\"", "&quot;")).append("\"");
+                }
+                if (pml.getCount() > 0) {
+                    string.append(">");
+                    for (int n = 0; n < pml.getCount(); n++) {
+                        write(pml.getChild(n));
+                    }
+                    string.append("</").append(toName(pml.getTag())).append(">");
+                } else {
+                    string.append("/>");
+                }
+            }
+        }
+    }
+
+  /**  Définit le convertisseur de PML en XMl. */
+    private static class PhpWriter {
+
+        private StringBuffer string;
+
+      /** Converti la PML en tableau PHP. */
+        public String toString(Pml pml) {
+            string = new StringBuffer();
+            if (pml == null) {
+                return "<?php $pml = array(); ?>";
+            } else {
+	      string.append("<?php $"+toName(pml.getTag())+" = array(\"_tag\" => "+quote(pml.getTag()));
+	      for (String name : pml.attributes()) {
+		string.append(", "+quote(name)+" => "+quote(pml.getChild(name)));
+	      }
+	      for (int n = 0; n < pml.getCount(); n++) {
+		string.append(", "+quote(pml.getChild(n)));
+	      }
+	      string.append("); ?>");
+	    }
+            return string.toString();
+        }
+
+        /** Prends en compte les \". */
+        private static String quote(String string) {
+            return "\"" + string.replaceAll("\\\\", "\\\\\\\\").replaceAll("\"", "\\\\\"") + "\"";
+        }
+        private static String quote(Pml pml) {
+	  return quote(pml.getSize() == 0 ? pml.getTag() : pml.toString());
+	}
+
+    }
+
+        private static String toName(String string) {
+            String c_0 = string.substring(0, 1);
+            String name = c_0.matches("_-") || Character.isLetter(c_0.charAt(0)) ? "" : "_";
+            for (int i = 0; i < string.length(); i++) {
+                String c_i = string.substring(i, i + 1);
+                name += c_i.matches("_-") || Character.isLetterOrDigit(c_i.charAt(0)) ? c_i : "_";
+            }
+            return name;
+        }
 
   /** Renvoie le type de ce PML.
    * @return The tag définit lors de l'initialisation, sinon le nom de la classe du PML.

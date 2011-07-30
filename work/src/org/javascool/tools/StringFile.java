@@ -31,13 +31,13 @@ public class StringFile {
 
   /** Lit un contenu textuel local ou distant en tenant compte de l'encodage UTF-8.
    *
-   * @param location Une URL (Universal Resource Location) de la forme: <table align="center">
+   * @param location Une URL (Universal Resource Location) de la forme: <div id="load-format"><table align="center">
    * <tr><td><tt>http:/<i>path-name</i></tt></td><td>pour aller chercher le contenu sur un site web</td></tr>
    * <tr><td><tt>http:/<i>path-name</i>?param_i=value_i&amp;..</tt></td><td>pour le récupérer sous forme de requête HTTP</td></tr>
    * <tr><td><tt>file:/<i>path-name</i></tt></td><td>pour le charger du système de fichier local ou en tant que ressource Java dans le CLASSPATH</td></tr>
    * <tr><td><tt>jar:/<i>jar-path-name</i>!/<i>jar-entry</i></tt></td><td>pour le charger d'une archive
    *  <div>(exemple:<tt>jar:http://javascool.gforge.inria.fr/javascool.jar!/META-INF/MANIFEST.MF</tt>)</div></td></tr>
-   * </table>
+   * </table></div>
    *
    * @throws IllegalArgumentException Si l'URL est mal formée.
    * @throws RuntimeException Si une erreur d'entrée-sortie s'est produite.
@@ -59,12 +59,12 @@ public class StringFile {
   }
   /** Ecrit un contenu textuel local ou distant en tenant compte de l'encodage UTF-8.
    *
-   * @param location @optional<"stdout:"> Une URL (Universal Resource Location) de la forme: <table>
+   * @param location @optional<"stdout:"> Une URL (Universal Resource Location) de la forme: <div id="save-format"><table>
    * <tr><td><tt>ftp:/<i>path-name</i></tt></td><td>pour sauver sur un site FTP.</td></tr>
-   * <tr><td><tt>file:/<i>path-name</i></tt></td><td>pour sauver dans le système de fichier local.</td></tr>
+   * <tr><td><tt>file:/<i>path-name</i></tt></td><td>pour sauver dans le système de fichier local (le <tt>file:</tt> est optionnel).</td></tr>
    * <tr><td><tt>mailto:<i>address</i>?subject=<i>subject</i></tt></td><td>pour envoyer un courriel avec le texte en contenu.</td></tr>
    * <tr><td><tt>stdout:/</tt></td><td>pour l'imprimer dans la console.</td></tr>
-   * </table>
+   * </table></div>
    *
    * @param string Le texte à sauver.
    *

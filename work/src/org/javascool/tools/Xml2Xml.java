@@ -24,8 +24,8 @@ import javax.xml.transform.stream.StreamResult;
  */
 public class Xml2Xml {
   // @factory
-
   private Xml2Xml() {}
+
   /** Convertit une chaîne XML en une autre chaîne XML selon des règles XSL.
    * @param xml La chaîne XML en entrée.
    * @param xsl La chaîne avec les règles de transformation XSL.
@@ -65,6 +65,39 @@ public class Xml2Xml {
     }
   }
 
+  /** Convertit une chaîne en HTML en chaîne XHTML.
+   * <p>Elimine les entitées HTML connues (tout n'est pas implémenté) et passe à de l'accentuation UTF-8, 
+   * élimine les constructions (commentaires, instructions) qui ne sont pas structures logiques XML et 
+   * ferme les balises pur avoir une syntaxe bien formée.</p>
+   * <p>C'est une commande "fragile" au sens où un text HTML mal formé ne sera pas correctement traduit.</p>
+   * @param htm La chaîne HTML en entrée.
+   * @return La cahîne XML en sortie.
+   */
+  public static String htm2xml(String htm) {
+    return htm. // Elimine les accentuation HTML
+      replaceAll("&agrave;", "à").
+      replaceAll("&acirc;", "â").
+      replaceAll("&eacute;", "é").
+      replaceAll("&egrave;", "è").
+      replaceAll("&euml;", "ë").
+      replaceAll("&ecirc;", "ê").
+      replaceAll("&iuml;", "ï").
+      replaceAll("&icirc;", "î").
+      replaceAll("&ouml;", "ö").
+      replaceAll("&ocirc;", "ô").
+      replaceAll("&ldquo;", "&#8220;").
+      replaceAll("&rdquo;", "&#8221;").
+      replaceAll("&laquo;", "&#171;").
+      replaceAll("&raquo;", "&#172;;").
+      replaceAll("&ugrave;", "ù").
+      replaceAll("&ccedil;", "ç").
+      // Eliminate les constructions étranges
+      replaceAll("<[!?][^>]*>", "").
+      replaceAll("&nbsp;", "&#160;").
+      // Encapsule les constructions non XML
+      replaceAll("(<(meta|img|hr|br|link)[^>/]*)/?>", "$1/>");
+  }
+  
   /** Lanceur de la transformation XML -XSLT-> XML.
    * @param usage <tt>java org.javascool.tools.Xml2Xml input-file XSL-file [output-file]</tt>
    */
