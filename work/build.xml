@@ -3,8 +3,8 @@
   <!-- On utilise http://ant-contrib.sourceforge.net/tasks/tasks/index.html pour un meilleur interface -->
   <taskdef resource="net/sf/antcontrib/antlib.xml"/>
 
-  <property name="build.dir" value="../tags/build"/>
-  <property name="classpath" value="lib/jvs2html.jar"/>
+  <property name="build.dir" value="../build/build"/>
+  <property name="classpath" value="lib/RSyntaxTextArea.jar:lib/jvs2html.jar"/>
 
   <target name="test">
     <for param="file">
@@ -28,14 +28,14 @@
   
   <target name="javascool.jar" depends="classes" >
     <mkdir dir="${build.dir}/jar"/>
-    <jar destfile="../tags/javascool.jar" basedir="${build.dir}/classes">
+    <jar destfile="../build/javascool.jar" basedir="${build.dir}/classes">
       <manifest>
         <attribute name="Main-Class" value="org.javascool.Core"/>
       </manifest>
     </jar>
     <exec executable="sh">
       <arg value="-c"/>
-      <arg value="ls -l ../tags/javascool.jar"/>
+      <arg value="ls -l ../build/javascool.jar"/>
     </exec>
   </target>
 
@@ -65,7 +65,7 @@
   </target>
 
   <target name="run" depends="javascool.jar">
-    <java jar="../tags/javascool.jar" fork="true"/>
+    <java jar="../build/javascool.jar" fork="true"/>
   </target>
   
   <target name="clean">
