@@ -3,14 +3,11 @@
 #
 JVS = $(realpath ..)
 
-tst :
-	ant test
-
 ant :
 #	Lance ant sur son build.xml
 	ant run
-	ant javadoc ; firefox $(JVS)/tags/build/web/api/index.html 
-#java -cp $(JVS)/tags/javascool.jar:lib/jvs2html.jar:lib/lang3.jar org.javascool.tools.Jvs2Html tools/Jvs2Html.java
+#	ant javadoc ; firefox $(JVS)/tags/build/web/api/index.html 
+#	java -cp $(JVS)/tags/javascool.jar:lib/jvs2html.jar:lib/lang3.jar org.javascool.tools.Jvs2Html tools/Jvs2Html.java
 
 #
 # Commandes de service pour gerer le site javascool
