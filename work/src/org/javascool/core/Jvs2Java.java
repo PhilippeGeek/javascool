@@ -15,7 +15,7 @@ public class Jvs2Java extends Translator {
   private Jvs2Java() { }
 
   /** Définit un mécanisme spécifique de traduction en plus du mécanisme standard. 
-   * @param translator Le mécanisme de traduction spécifique d'une proglet donnée.
+   * @param progletTranslator Le mécanisme de traduction spécifique d'une proglet donnée.
    * @return Cet objet, permettant de définir la construction <tt>Jvs2Java translator = new Jvs2Java().setProgletTranslator(..)</tt>.
    */
   public Jvs2Java setProgletTranslator(Translator progletTranslator) {
@@ -117,4 +117,17 @@ public class Jvs2Java extends Translator {
   }
   // Counter used to increment the serialVersionUID in order to reload the different versions of the class
   private static int uid = 1;
+
+
+  /** Lanceur de la conversion Jvs en Java.
+   * @param usage <tt>java org.javascool.core.Jvs2Java input-file [output-file]</tt>
+   */
+  public static void main(String[] usage) {
+    // @main
+    if (usage.length > 0) {
+      org.javascool.tools.StringFile.save(usage.length > 1 ? usage[1] : "stdout:", new Jvs2Java().translate(org.javascool.tools.StringFile.load(usage[0])));
+    }
+    // @todo faire avec spec proglet.
+  }
+
 }

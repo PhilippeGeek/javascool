@@ -1,4 +1,4 @@
-package org.javascool.widget;
+package org.javascool.widgets;
 
 import javax.swing.JPanel;
 import javax.swing.JButton;
@@ -30,10 +30,10 @@ public class StartStopButton extends JPanel {
   
   private void doStart() {
     if (started) 
-      doStrop();
+      doStop();
     started = true;
     startButton.setText("Arrêter");
-    startButton.setIcon(org.javascool.tools.ConfUtils.getIcon("org/javascool/widget/icons/stop.png"));
+    startButton.setIcon(org.javascool.widgets.Macros.getIcon("org/javascool/widget/icons/stop.png"));
     new Thread(new Runnable() {
 	
 	@Override
@@ -51,7 +51,7 @@ public class StartStopButton extends JPanel {
       stop();
       started = false;
       startButton.setText("Exécuter");
-      startButton.setIcon(org.javascool.tools.ConfUtils.getIcon("org/javascool/widget/icons/play.png"));
+      startButton.setIcon(org.javascool.widgets.Macros.getIcon("org/javascool/widget/icons/play.png"));
     }
   }
 

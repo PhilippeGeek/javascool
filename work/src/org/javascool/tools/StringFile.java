@@ -9,6 +9,8 @@ import java.net.URL;
 import java.io.File;
 import java.io.IOException;
 
+import org.javascool.widgets.Macros;
+
 // Used for URL read
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
@@ -44,7 +46,7 @@ public class StringFile {
    */
   public static String load(String location) {
     try {
-      BufferedReader reader = new BufferedReader(new InputStreamReader(toUrl(location, true).openStream()), 10240);
+      BufferedReader reader = new BufferedReader(new InputStreamReader(Macros.getResourceURL(location, true).openStream()), 10240);
       StringBuilder buffer = new StringBuilder();
       char chars[] = new char[10240];
       while(true) {
@@ -76,7 +78,7 @@ public class StringFile {
       System.out.println("\n" + location + " " + string);
       return;
     }
-    location = toUrl(location, false).toString();
+    location = Macros.getResourceURL(location, false).toString();
     try {
       OutputStreamWriter writer = location.startsWith("file:") ? getFileWriter(location.substring(5)) : getUrlWriter(location);
       for(int i = 0; i < string.length(); i++)
@@ -102,29 +104,6 @@ public class StringFile {
     if((parent != null) && (!parent.isDirectory()))
       parent.mkdirs();
     return new OutputStreamWriter(new FileOutputStream(location), "UTF-8");
-  }
-
-  /** Renvoie une URL normalisée, dans le cas du système de fichier local ou d'une ressource Java du CLASSPATH.
-   * @param location L'URL à normaliser.
-   * @param reading Précise si nous sommes en lecture (true) ou écriture (false)
-   * @throws IllegalArgumentException Si l'URL est mal formée.
-   */
-  static URL toUrl(String location, boolean reading) {
-    try {
-      if(location.matches("(file|ftp|http|https|jar|mailto|stdout):.*"))
-        return new URL(location);
-      if (reading) {
-	URL url = Thread.currentThread().getContextClassLoader().getResource(location);
-	if(url != null)
-	  return url;
-      }
-      File file = new File(location);
-      if(file.exists())
-        return new URL("file:" + file.getCanonicalPath());
-      return new URL("file:" + location);
-    } catch(IOException e) { 
-      throw new IllegalArgumentException(e + " : " + location + " is a malformed URL");
-    }
   }
 
 }
