@@ -9,6 +9,7 @@ public interface Proglet {
   public void init();
   /** Permet, à la fermeture de la proglet, doit détruire ce que init() et l'élève ont fait. */
   public void destroy();
+
   /** Cette méthode est appelée que pour lancer une démonstration du fonctionnement de la proglet.
    * <p>Elle n'est pas appellée lors de son fonctionnement en Proglet sauf les proglets <a href="http://processing.org"processing</a> (qui sont en fonctionnement continu).</p>
    */

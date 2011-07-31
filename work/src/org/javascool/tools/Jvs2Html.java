@@ -27,7 +27,7 @@ public class Jvs2Html {
    * @return Le code Html généré.
    * @throws RuntimeException Si une erreur d'entrée-sortie s'est produite lors de l'éxecution.
    */
-  public static String run(String code) { 
+  public static String run(String code) {
     try {
       StringReader stringReader = new StringReader(code);
       JavaSource source = new JavaSourceParser().parse(stringReader);
@@ -37,8 +37,7 @@ public class Jvs2Html {
       StringWriter writer = new StringWriter();
       converter.convert(source, options, writer);
       return writer.toString();
-    } catch (IOException e) {
-      throw new RuntimeException(e + " when converting: «" + code +"»");
+    } catch(IOException e) { throw new RuntimeException(e + " when converting: «" + code + "»");
     }
   }
   /** Lanceur de la conversion d'une portion de source Java ou Jvs en Html colorisé.
@@ -46,8 +45,7 @@ public class Jvs2Html {
    */
   public static void main(String[] usage) {
     // @main
-    if (usage.length > 0) {
+    if(usage.length > 0)
       StringFile.save(usage.length > 1 ? usage[1] : "stdout:", run(StringFile.load(usage[0])));
-    }
   }
 }

@@ -36,40 +36,40 @@ public class ErrorCatcher {
     return error instanceof RuntimeException ? (RuntimeException) error : new RuntimeException(error);
   }
   /** Ouvre une fenêtre d'alerte en cas d'exception intempestive et non prise en compte.
-   * <p> Installe un gestionnaire d'exception non interceptée qui recueille des informations sur: 
-   * les versions des composants logiciels, le nom du process, la trace de la pile et 
+   * <p> Installe un gestionnaire d'exception non interceptée qui recueille des informations sur:
+   * les versions des composants logiciels, le nom du process, la trace de la pile et
    * l'affiche dans une fenêtre séparée afin d'être recueillies et communiquées par l'utilisateur.</p>
    * @param header Un texte entête en HTML expliquant à l'utilisateur quoi faire avec cette sortie d'exception.
    * @param revision Numéro de révision de l'application pour avoir une trace en cas d'erreur.
    */
   public static void setUncaughtExceptionAlert(String header, int revision) {
     uncaughtExceptionAlertHeader = header;
-    System.setProperty("application.revision", ""+revision);
+    System.setProperty("application.revision", "" + revision);
     Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
-	public void uncaughtException(Thread t, Throwable e) {
-	  String s = "";
-	  if(uncaughtExceptionAlertOnce <= 1) {
-	    s += uncaughtExceptionAlertHeader + "\n<hr><pre>";
-	    for(String p : new String[] { "application.revision", "java.version", "os.name", "os.arch", "os.version" }
-		)
-	      s += "> " + p + " = " + System.getProperty(p) + "\n";
-	  }
-	  s += "> thread.name = " + t.getName() + "\n";
-	  s += "> throwable = " + e + "\n";
-	  if(0 < uncaughtExceptionAlertOnce)
-	    s += "> count = " + uncaughtExceptionAlertOnce + "\n";
-	  s += "> stack-trace = «\n";
-	  for(int i = 0; i < t.getStackTrace().length; i++)
-	    s += e.getStackTrace()[i] + (i < t.getStackTrace().length - 1 ? "\n" : "»");
-	  s += "</pre><hr>";
-	  if(uncaughtExceptionAlertOnce == 0) {
-	    org.javascool.widgets.Macros.message(s, true);
-	  } else {
-	    System.err.println(s);
-	  }
-	  uncaughtExceptionAlertOnce++;
-	}
-      });
+                                                public void uncaughtException(Thread t, Throwable e) {
+                                                  String s = "";
+                                                  if(uncaughtExceptionAlertOnce <= 1) {
+                                                    s += uncaughtExceptionAlertHeader + "\n<hr><pre>";
+                                                    for(String p: new String[] { "application.revision", "java.version", "os.name", "os.arch", "os.version" }
+                                                        )
+                                                      s += "> " + p + " = " + System.getProperty(p) + "\n";
+                                                  }
+                                                  s += "> thread.name = " + t.getName() + "\n";
+                                                  s += "> throwable = " + e + "\n";
+                                                  if(0 < uncaughtExceptionAlertOnce)
+                                                    s += "> count = " + uncaughtExceptionAlertOnce + "\n";
+                                                  s += "> stack-trace = «\n";
+                                                  for(int i = 0; i < t.getStackTrace().length; i++)
+                                                    s += e.getStackTrace()[i] + (i < t.getStackTrace().length - 1 ? "\n" : "»");
+                                                  s += "</pre><hr>";
+                                                  if(uncaughtExceptionAlertOnce == 0)
+                                                    org.javascool.widgets.Macros.message(s, true);
+                                                  else
+                                                    System.err.println(s);
+                                                  uncaughtExceptionAlertOnce++;
+                                                }
+                                              }
+                                              );
   }
   private static String uncaughtExceptionAlertHeader;
   private static int uncaughtExceptionAlertOnce = 0;

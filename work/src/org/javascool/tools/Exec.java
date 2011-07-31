@@ -30,47 +30,40 @@ public class Exec {
       Process process = Runtime.getRuntime().exec(command.trim().split((command.indexOf('\t') == -1) ? " " : "\t"));
       InputStreamReader stdout = new InputStreamReader(process.getInputStream());
       InputStreamReader stderr = new InputStreamReader(process.getErrorStream());
-      for (boolean waitfor = true; waitfor;) {
-	waitfor = false;
-	Thread.yield();
-	while (stdout.ready()) {
-	  waitfor = true;
-	  output.append((char) stdout.read());
-	}
-	while (stderr.ready()) {
-	  waitfor = true;
-	  output.append((char) stderr.read());
-	}
-	if (!waitfor) {
-	  try {
-	    process.exitValue();
-	  } catch (IllegalThreadStateException e1) {
-	    try {
-	      Thread.sleep(100);
-	    } catch (Exception e2) {
-	    }
-	    waitfor = true;
-	  }
-	}
-	if ((time > 0) && (System.currentTimeMillis() > time)) {
-	  throw new IllegalStateException("Command {" + command + "} timeout (>" + timeout + "s) output=[" + output + "]\n");
-	}
+      for(boolean waitfor = true; waitfor;) {
+        waitfor = false;
+        Thread.yield();
+        while(stdout.ready()) {
+          waitfor = true;
+          output.append((char) stdout.read());
+        }
+        while(stderr.ready()) {
+          waitfor = true;
+          output.append((char) stderr.read());
+        }
+        if(!waitfor) {
+          try {
+            process.exitValue();
+          } catch(IllegalThreadStateException e1) {
+            try {
+              Thread.sleep(100);
+            } catch(Exception e2) {}
+            waitfor = true;
+          }
+        }
+        if((time > 0) && (System.currentTimeMillis() > time)) throw new IllegalStateException("Command {" + command + "} timeout (>" + timeout + "s) output=[" + output + "]\n");
       }
       stdout.close();
       stderr.close();
       // Terminates the process
       process.destroy();
       try {
-	process.waitFor();
-      } catch (Exception e) {
-      }
+        process.waitFor();
+      } catch(Exception e) {}
       Thread.yield();
-      if (process.exitValue() != 0) {
-	throw new IllegalStateException("Command {" + command + "} error #" + process.exitValue() + " output=[\n" + output + "\n]\n");
-      }
+      if(process.exitValue() != 0) throw new IllegalStateException("Command {" + command + "} error #" + process.exitValue() + " output=[\n" + output + "\n]\n");
       return output.toString();
-    } catch (IOException e) {
-      throw new RuntimeException(e + " when executing: " + command);
+    } catch(IOException e) { throw new RuntimeException(e + " when executing: " + command);
     }
   }
 }
