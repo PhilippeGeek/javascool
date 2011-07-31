@@ -1,3 +1,5 @@
+//@deprecated voir org.javascool.tools.Pml
+
 /*******************************************************************************
  * Thierry.Vieville@sophia.inria.fr, Copyright (C) 2010.  All rights reserved. *
  *******************************************************************************/

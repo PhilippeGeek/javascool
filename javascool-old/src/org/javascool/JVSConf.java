@@ -1,7 +1,5 @@
-/* @deprecated voir org.javascool.tools.UserConfig
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+//@deprecated voir org.javascool.tools.UserConfig
+
 package org.javascool;
 
 import org.javascool.tools.Utils;

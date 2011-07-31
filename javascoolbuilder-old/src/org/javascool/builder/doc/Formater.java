@@ -1,3 +1,4 @@
+//@deprecated voir org.javascool.tools.Jvs2Html
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.

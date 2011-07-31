@@ -1,3 +1,5 @@
+//@deprecated voir org.javascool.widgets.Macro
+
 /*******************************************************************************
  * Thierry.Vieville@sophia.inria.fr, Copyright (C) 2009.  All rights reserved. *
  *******************************************************************************/

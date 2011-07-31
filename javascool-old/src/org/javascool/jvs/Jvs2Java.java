@@ -1,3 +1,6 @@
+//@deprecated voir org.javascool.core.Jva2Java
+
+
 /**************************************************************
  * Philippe VIENNE, Copyright (C) 2011.  All rights reserved. *
  **************************************************************/
