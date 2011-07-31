@@ -1,8 +1,8 @@
 /*********************************************************************************
- * Philippe.Vienne@sophia.inria.fr, Copyright (C) 2011.  All rights reserved.    *
- * Guillaume.Matheron@sophia.inria.fr, Copyright (C) 2011.  All rights reserved. *
- * Thierry.Vieville@sophia.inria.fr, Copyright (C) 2009.  All rights reserved.   *
- *********************************************************************************/
+* Philippe.Vienne@sophia.inria.fr, Copyright (C) 2011.  All rights reserved.    *
+* Guillaume.Matheron@sophia.inria.fr, Copyright (C) 2011.  All rights reserved. *
+* Thierry.Vieville@sophia.inria.fr, Copyright (C) 2009.  All rights reserved.   *
+*********************************************************************************/
 
 package org.javascool.widgets;
 
@@ -28,7 +28,7 @@ public class Macros {
   private Macros() {}
 
   //
-  //  Macros d'entrées / sorties en lien avec la console
+  // Macros d'entrées / sorties en lien avec la console
   //
 
   /** Affiche dans la console une chaîne de caractères ou la représentation textuelle d'un objet sur la console.
@@ -77,7 +77,7 @@ public class Macros {
    * @see #echo(String)
    */
   public static void println(double d) {
-        println("" + d);
+    println("" + d);
   }
   /**
    * @see #echo(String)
@@ -91,12 +91,12 @@ public class Macros {
   public static void println(Object o) {
     println("" + o);
   }
-  
   /** Affiche dans la console une chaîne de caractères ou la représentation textuelle d'un objet sur la console sans retour à la ligne.
    * @param string La chaine ou l'objet à afficher sous sa représentation textuelle.
    */
   public static void print(String string) {
-    System.out.print(string); System.out.flush();
+    System.out.print(string);
+    System.out.flush();
   }
   /**
    * @see #print(String)
@@ -108,7 +108,7 @@ public class Macros {
    * @see #print(String)
    */
   public static void print(double d) {
-        print("" + d);
+    print("" + d);
   }
   /**
    * @see #print(String)
@@ -130,15 +130,15 @@ public class Macros {
   public static void message(String text, boolean html) {
     JEditorPane p = new JEditorPane();
     p.setEditable(false);
-    if (html)
+    if(html)
       p.setContentType("text/html");
     p.setText(text);
     p.setSize(800, 600);
     JOptionPane.showMessageDialog(
-				  org.javascool.core.Desktop.getInstance().getFrame(),
-				  new JScrollPane(p),
-				  "Java's Cool",
-				  JOptionPane.PLAIN_MESSAGE);
+      org.javascool.core.Desktop.getInstance().getFrame(),
+      new JScrollPane(p),
+      "Java's Cool",
+      JOptionPane.PLAIN_MESSAGE);
   }
   /**
    * @see #message(String, boolean)
@@ -151,19 +151,19 @@ public class Macros {
    * @return La chaîne lue.
    */
   public static String readString(String question) {
-    if (inputBuffer.isPopable()) return inputBuffer.popString();
+    if(inputBuffer.isPopable())
+      return inputBuffer.popString();
     String s = JOptionPane.showInputDialog(
-					   org.javascool.core.Desktop.getInstance().getFrame(),
-					   question,
-					   "Java's cool",
-                JOptionPane.PLAIN_MESSAGE);
-    if ((s != null) && (s.length() > 0)) {
+      org.javascool.core.Desktop.getInstance().getFrame(),
+      question,
+      "Java's cool",
+      JOptionPane.PLAIN_MESSAGE);
+    if((s != null) && (s.length() > 0))
       return s;
-    } else if (s == null || s.length() == 0) {
+    else if((s == null) || (s.length() == 0))
       return "";
-    } else {
+    else
       return Macros.readString(question);
-    }
   }
   /**
    * @see #readString(String)
@@ -171,39 +171,37 @@ public class Macros {
   public static String readString() {
     return Macros.readString("Entrez une chaîne :");
   }
-  
   /** Lit un nombre entier dans une fenêtre présentée à l'utilisateur.
    * @param question Une invite qui décrit la valeur à entrer (optionel).
    * @return La valeur lue.
    */
   public static int readInteger(String question) {
-    if (inputBuffer.isPopable()) return inputBuffer.popInteger();
+    if(inputBuffer.isPopable())
+      return inputBuffer.popInteger();
     String s = Macros.readString(question);
     try {
       return Integer.decode(s);
-    } catch (Exception e) {
-      if (!question.endsWith(" (Merci d'entrer un nombre)")) {
-	question = question + " (Merci d'entrer un nombre)";
-      }
-      if (s.equals("")) {
-	return 0;
-      }
+    } catch(Exception e) {
+      if(!question.endsWith(" (Merci d'entrer un nombre)"))
+        question = question + " (Merci d'entrer un nombre)";
+      if(s.equals(""))
+        return 0;
       return readInteger(question);
     }
   }
-  /** 
+  /**
    * @see #readInteger(String)
    */
   public static int readInteger() {
     return readInteger("Entrez un nombre entier : ");
   }
-  /** 
+  /**
    * @see #readInteger(String)
    */
   public static int readInt(String question) {
     return readInteger(question);
   }
-  /** 
+  /**
    * @see #readInteger(String)
    */
   public static int readInt() {
@@ -214,62 +212,62 @@ public class Macros {
    * @return La valeur lue.
    */
   public static double readDecimal(String question) {
-    if (inputBuffer.isPopable()) return inputBuffer.popDecimal();
+    if(inputBuffer.isPopable())
+      return inputBuffer.popDecimal();
     String s = Macros.readString(question);
     try {
       return Double.parseDouble(s);
-    } catch (Exception e) {
-      if (!question.endsWith(" (Merci d'entrer un nombre)")) {
-	question = question + " (Merci d'entrer un nombre)";
-      }
-      if (s.equals("")) {
-	return 0;
-      }
+    } catch(Exception e) {
+      if(!question.endsWith(" (Merci d'entrer un nombre)"))
+        question = question + " (Merci d'entrer un nombre)";
+      if(s.equals(""))
+        return 0;
       return readDecimal(question);
     }
   }
-  /** 
+  /**
    * @see #readDecimal(String)
    */
   public static double readDecimal() {
     return readDecimal("Entrez un nombre décimal : ");
   }
-  /** 
+  /**
    * @see #readDecimal(String)
    */
   public static double readDouble(String question) {
-    return readDecimal(question); 
+    return readDecimal(question);
   }
-  /** 
+  /**
    * @see #readDecimal(String)
    */
   public static double readDouble() {
-    return readDecimal(); 
+    return readDecimal();
   }
-  /** 
+  /**
    * @see #readDecimal(String)
    */
   public static double readFloat(String question) {
-    return readDecimal(question); 
+    return readDecimal(question);
   }
-  /** 
+  /**
    * @see #readDecimal(String)
    */
   public static double readFloat() {
-    return readDecimal(); 
+    return readDecimal();
   }
   /** Lit une valeur booléenne dans une fenêtre présentée à l'utilisateur.
    * @param question Une invite qui décrit la valeur à entrer (optionel).
    * @return La valeur lue.
    */
   public static boolean readBoolean(String question) {
-    if (inputBuffer.isPopable()) return inputBuffer.popBoolean();
+    if(inputBuffer.isPopable())
+      return inputBuffer.popBoolean();
     int r = JOptionPane.showConfirmDialog(
-					  org.javascool.core.Desktop.getInstance().getFrame(),
-					  question,
-					  "Java's cool",
-					  JOptionPane.YES_NO_OPTION);
-    switch (r) {
+      org.javascool.core.Desktop.getInstance().getFrame(),
+      question,
+      "Java's cool",
+      JOptionPane.YES_NO_OPTION);
+    switch(r) {
     case JOptionPane.OK_OPTION:
       return true;
     default:
@@ -294,7 +292,6 @@ public class Macros {
   public static Boolean readBool() {
     return readBoolean();
   }
-
   /** Efface tout ce qui est écrit dans la console. */
   public static void clear() {
     Console.getInstance().clear();
@@ -303,7 +300,7 @@ public class Macros {
    * @param location La localisation (chemin du fichier ou localisation internet) où sauver le texte.
    */
   public static void saveConsoleOutput(String location) {
-    org.javascool.tools.StringFile.save(location,  Console.getInstance().getText());
+    org.javascool.tools.StringFile.save(location, Console.getInstance().getText());
   }
   /** Charge une chaine de caractère pour que son contenu serve d'entrée à la console.
    * @param string La chaine de caractère à ajouter.
@@ -327,48 +324,46 @@ public class Macros {
     public void add(String string) {
       inputs += string.trim() + "\n";
     }
-
     /** Teste si il y une chaîne disponible.
      * @return La valeur true si il y une entrée disponible.
      */
     public boolean isPopable() {
       return inputs.length() > 0;
     }
-    
     /** Récupére une chaîne en substitution d'une lecture au clavier.
      * @return Le texte suivant à considérer. Ou la chaîne vide si le tampon est vide.
      */
     public String popString() {
       org.javascool.widgets.Macros.sleep(500);
       int i = inputs.indexOf("\n");
-      if (i != -1) {
-	String input = inputs.substring(0, i);
-	inputs = inputs.substring(i + 1);
-	return input;
+      if(i != -1) {
+        String input = inputs.substring(0, i);
+        inputs = inputs.substring(i + 1);
+        return input;
       } else
-	return "";
+        return "";
     }
-    /** 
+    /**
      * @see #popString(String)
      */
     public int popInteger() {
       try {
-	return Integer.decode(popString());
+        return Integer.decode(popString());
       } catch(Exception e) {
-	return 0;
+        return 0;
       }
     }
-    /** 
+    /**
      * @see #popString(String)
      */
     public double popDecimal() {
       try {
-	return Double.parseDouble(popString());
+        return Double.parseDouble(popString());
       } catch(Exception e) {
-	return 0;
+        return 0;
       }
     }
-    /** 
+    /**
      * @see #popString(String)
      */
     public boolean popBoolean() {
@@ -379,7 +374,7 @@ public class Macros {
   private static InputBuffer inputBuffer = new InputBuffer();
 
   //
-  //  Macros algorithmiques (maths, etc..)
+  // Macros algorithmiques (maths, etc..)
   //
 
   /** Renvoie un nombre entier aléatoire uniformément distribué entre deux valeurs (maximum inclus).
@@ -415,11 +410,10 @@ public class Macros {
    */
   public static void sleep(int delay) {
     try {
-      if(delay > 0) {
+      if(delay > 0)
         Thread.sleep(delay);
-      } else {
+      else
         Thread.sleep(0, 10000);
-      }
     } catch(Exception e) { throw new RuntimeException("Programme arrêté !");
     }
   }
@@ -435,11 +429,9 @@ public class Macros {
       sleep(500);
     }
   }
-
   //
   // Macros pour faciliter la programmation
-  // 
-
+  //
 
   /** Renvoie une icone stockée dans le JAR de l'application.
    * @param path Emplacement de l'icone, par exemple <tt>"org/javascool/widget/icons/play.png"</tt>
@@ -447,12 +439,11 @@ public class Macros {
    */
   public static ImageIcon getIcon(String path) {
     URL icon = Thread.currentThread().getContextClassLoader().getResource(path);
-    if (icon == null)
-      System.err.println("Warning : getIcon("+path+") not found");
+    if(icon == null)
+      System.err.println("Warning : getIcon(" + path + ") not found");
     return icon == null ? null : new ImageIcon(icon);
   }
-
-  /** Ouvre une URL (Universal Resource Location) dans un navigateur extérieur. 
+  /** Ouvre une URL (Universal Resource Location) dans un navigateur extérieur.
    * @param location L'URL à afficher.
    *
    * @throws IllegalArgumentException Si l'URL est mal formée.
@@ -461,15 +452,13 @@ public class Macros {
   public static void openURL(String location) {
     try {
       java.awt.Desktop.getDesktop().browse(new java.net.URI(location));
-    } catch (Exception e) {
-      throw new RuntimeException(e + " when browwing: " + location);
+    } catch(Exception e) { throw new RuntimeException(e + " when browwing: " + location);
     }
   }
-  
   /** Renvoie une URL (Universal Resource Location) normalisée, dans le cas du système de fichier local ou d'une ressource.
-   * <p>La fonction recherche l'existence du fichier: 
-   * (i) par rapport au répertoire de base qui est donné, 
-   * (ii) par rapport au dossier de travaul "user.dir", 
+   * <p>La fonction recherche l'existence du fichier:
+   * (i) par rapport au répertoire de base qui est donné,
+   * (ii) par rapport au dossier de travaul "user.dir",
    * (iii) par rapport à la racine des fichier "user.home",
    * (iv) dans les ressources du CLASSPATH.</p>
    * @param location L'URL à normaliser.
@@ -481,25 +470,24 @@ public class Macros {
     try {
       if(location.matches("(ftp|http|https|jar|mailto|stdout):.*"))
         return new URL(location).toURI().normalize().toURL();
-      if (location.startsWith("file:"))
-	location = location.substring(5);
-      if (reading) {
-	File file = new File(base, location);
-	if(file.exists())
-	  return new URL("file:" + file.getCanonicalPath());
-	file = new File(System.getProperty("user.dir"), location);
-	if(file.exists())
-	  return new URL("file:" + file.getCanonicalPath());
-	file = new File(System.getProperty("user.home"), location);
-	if(file.exists())
-	  return new URL("file:" + file.getCanonicalPath());
-	URL url = Thread.currentThread().getContextClassLoader().getResource(location);
-	if(url != null)
-	  return url;
+      if(location.startsWith("file:"))
+        location = location.substring(5);
+      if(reading) {
+        File file = new File(base, location);
+        if(file.exists())
+          return new URL("file:" + file.getCanonicalPath());
+        file = new File(System.getProperty("user.dir"), location);
+        if(file.exists())
+          return new URL("file:" + file.getCanonicalPath());
+        file = new File(System.getProperty("user.home"), location);
+        if(file.exists())
+          return new URL("file:" + file.getCanonicalPath());
+        URL url = Thread.currentThread().getContextClassLoader().getResource(location);
+        if(url != null)
+          return url;
       }
       return new URL("file:" + base == null ? location : base + File.separatorChar + location);
-    } catch(Exception e) { 
-      throw new IllegalArgumentException(e + " : " + location + " is a malformed URL");
+    } catch(Exception e) { throw new IllegalArgumentException(e + " : " + location + " is a malformed URL");
     }
   }
   /**

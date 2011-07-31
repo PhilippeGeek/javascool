@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
  */
 public class StartStopButton extends JPanel {
   private static final long serialVersionUID = 1L;
- 
+
   /** Le boutton de start/stop .*/
   private JButton startButton;
   /** L'affichage du temps d'exécution. */
@@ -21,43 +21,42 @@ public class StartStopButton extends JPanel {
   /** L'état du start/stop. */
   private boolean started = false;
 
-  // @bean 
+  // @bean
   public StartStopButton() {
     add(startButton = new JButton());
     add(execTime = new JLabel("  Temps d'éxecution : 0 min 0 sec"));
     doStop();
   }
-  
   private void doStart() {
-    if (started) 
+    if(started)
       doStop();
     started = true;
     startButton.setText("Arrêter");
     startButton.setIcon(org.javascool.widgets.Macros.getIcon("org/javascool/widget/icons/stop.png"));
     new Thread(new Runnable() {
-	
-	@Override
-	  public void run() {
-	  for (int t = 0; started; t++) {
-	    execTime.setText("  Temps d'éxecution : "+t/60+" min "+t%60+" sec");
-	    try { Thread.sleep(1000); } catch (Exception e) { }
-	  }
-	}
-      }).start();
+                 @Override
+                 public void run() {
+                   for(int t = 0; started; t++) {
+                     execTime.setText("  Temps d'éxecution : " + t / 60 + " min " + t % 60 + " sec");
+                     try { Thread.sleep(1000);
+                     } catch(Exception e) {}
+                   }
+                 }
+               }
+               ).start();
     start();
   }
   private void doStop() {
-    if (started) {
+    if(started) {
       stop();
       started = false;
       startButton.setText("Exécuter");
       startButton.setIcon(org.javascool.widgets.Macros.getIcon("org/javascool/widget/icons/play.png"));
     }
   }
-
   /** Cette méthode est appelée au lancement demandé par l'utilisateur. */
   public void start() {}
   /** Cette méthode est appelée à l'arrêt demandé par l'utilisateur. */
   public void stop() {}
 }
-  
+

@@ -1,6 +1,6 @@
 /**************************************************************
- * Philippe VIENNE, Copyright (C) 2011.  All rights reserved. *
- **************************************************************/
+* Philippe VIENNE, Copyright (C) 2011.  All rights reserved. *
+**************************************************************/
 
 package org.javascool.widgets;
 
@@ -32,7 +32,7 @@ public class Console extends JPanel {
   /** Zone d'affichage du statut. */
   private JLabel status;
 
-  // @static-instance 
+  // @static-instance
   private Console() {
     BorderLayout layout = new BorderLayout();
     this.setLayout(layout);
@@ -46,12 +46,12 @@ public class Console extends JPanel {
     // Construit la zone des bouttons
     toolbar = new ToolBar();
     toolbar.addTool("Effacer", "org/javascool/doc-files/icon16/erase.png", new Runnable() {
-	
-	@Override
-	  public void run() {
-	  clear();
-	}
-      });
+                      @Override
+                      public void run() {
+                        clear();
+                      }
+                    }
+                    );
     toolbar.addSeparator();
     toolbar.addTool("status", status = new JLabel("                                         "));
     this.add(toolbar, BorderLayout.NORTH);
@@ -62,56 +62,49 @@ public class Console extends JPanel {
   /** Redirige le System.out vers cet affichage */
   private void redirectSystemStreams() {
     OutputStream out = new OutputStream() {
-	
-	@Override
-	  public void write(int b) throws IOException {
-	  print(String.valueOf((char) b));
-	}
-	
-	@Override
-	  public void write(byte[] b, int off, int len) throws IOException {
-	  print(new String(b, off, len));
-	}
-	
-	@Override
-	  public void write(byte[] b) throws IOException {
-	  write(b, 0, b.length);
-	}
-      };
+      @Override
+      public void write(int b) throws IOException {
+        print(String.valueOf((char) b));
+      }
+      @Override
+      public void write(byte[] b, int off, int len) throws IOException {
+        print(new String(b, off, len));
+      }
+      @Override
+      public void write(byte[] b) throws IOException {
+        write(b, 0, b.length);
+      }
+    };
     System.setOut(new PrintStream(out, true));
   }
-
   /** Efface le contenu de la console. */
   public void clear() {
     outputPane.setText("");
   }
- 
   /** Affiche une information dans la barre de statut.
    * @param text Texte à afficher.
    */
   public void show(String text) {
     status.setText(text);
-  }    
-
+  }
   /** Affiche du texte dans la console.
    * @param text Le texte à afficher.
    */
   public void print(String text) {
     outputPane.append(text);
   }
-
   /** Renvoie le contenu actuel de la console.
    * @return Ce qui affiché dans la console.
    */
   public String getText() {
     return outputPane.getText();
   }
-
   /** Crée et/ou renvoie l'unique instance de console.
    * <p>Une application ne peut définir qu'une seule console.</p>
    */
   public static Console getInstance() {
-    if (console == null) console = new Console();
+    if(console == null)
+      console = new Console();
     return console;
   }
   private static Console console = null;

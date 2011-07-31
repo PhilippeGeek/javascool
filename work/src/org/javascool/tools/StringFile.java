@@ -105,5 +105,4 @@ public class StringFile {
       parent.mkdirs();
     return new OutputStreamWriter(new FileOutputStream(location), "UTF-8");
   }
-
 }

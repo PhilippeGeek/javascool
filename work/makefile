@@ -30,3 +30,13 @@ pub :
 
 bty :
 	for f in `find src -name '*.java' -o -name '*.jvs'` ; do uncrustify -q -c lib/uncrustify.cfg --replace $$f ; done
+
+
+P_HOME=/usr/java/processing-1.2.1
+J_HOME=$(P_HOME)/java
+export PATH:=$(J_HOME)/bin:$(PATH)
+export CLASSPATH=$(shell echo '$(J_HOME)/lib/tools.jar $(J_HOME)/jre/lib/rt.jar $(wildcard $(P_HOME)/lib/*.jar)' | sed 's/ /:/g')
+
+pro : 
+	@rm -rf libraries ../sketchbook/*/applet ../sketchbook/*/Exemple.java
+	@cd $(P_HOME) ; java processing.app.Base

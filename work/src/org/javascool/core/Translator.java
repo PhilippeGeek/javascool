@@ -10,13 +10,17 @@ public class Translator {
    * <p>Note: tous les imports liés aux fonctions de la proglet à l'usage des macros de JavaScool etc.. sont automatiquement prises en charge.</p>
    * @return Renvoie les imports en syntaxe Java (par défaut la chaîne vide).
    */
-  public String getImports() { return ""; }
+  public String getImports() {
+    return "";
+  }
   /** Transforme globalement le code pour passer des constructions spécifiques à Jvs à du java standard.
    * <p>Ce sont souvent des expression régulières appliquées à la chaîne, tout est ici de la responsabilité du concepteur de la proglet.</p>
    * <p>Note: toutes les traductions standard du paassage de Jvs à Java sont automatiquement prises en charges.</p>
    * @param code Le code Jvs en entrée.
    * @return Le code transformé en Java pour ce qui est spécifique de cette proglet (par défaut la chaîne en entrée).</p>
    */
-  public String translate(String code) { return code; }
+  public String translate(String code) {
+    return code;
+  }
 }
 

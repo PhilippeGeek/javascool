@@ -1,8 +1,8 @@
 /*********************************************************************************
- * Philippe.Vienne@sophia.inria.fr, Copyright (C) 2011.  All rights reserved.    *
- * Guillaume.Matheron@sophia.inria.fr, Copyright (C) 2011.  All rights reserved. *
- * Thierry.Vieville@sophia.inria.fr, Copyright (C) 2009.  All rights reserved.   *
- *********************************************************************************/
+* Philippe.Vienne@sophia.inria.fr, Copyright (C) 2011.  All rights reserved.    *
+* Guillaume.Matheron@sophia.inria.fr, Copyright (C) 2011.  All rights reserved. *
+* Thierry.Vieville@sophia.inria.fr, Copyright (C) 2009.  All rights reserved.   *
+*********************************************************************************/
 
 package org.javascool.core;
 
@@ -11,24 +11,23 @@ import java.awt.Container;
 import org.javascool.widgets.HtmlDisplay;
 import org.javascool.widgets.ToolBar;
 
-/** Définit les functions d'interaction avec l'interface graphique de JavaScool. 
+/** Définit les functions d'interaction avec l'interface graphique de JavaScool.
  * @see <a href="Desktop.java.html">code source</a>
  * @serial exclude
  */
 public class Desktop {
-
-  // @static-instance 
+  // @static-instance
   private Desktop() {}
-  
-  /** Renvoie la fenêtre racine de l'interface graphique. */
-  public Frame getFrame() { return null; }
 
+  /** Renvoie la fenêtre racine de l'interface graphique. */
+  public Frame getFrame() {
+    return null;
+  }
   /** Ouvre un fichier dans l'éditeur.
    * @param location L'URL (Universal Resource Location) du fichier.
    * @throws RuntimeException Si une erreur d'entrée-sortie s'est produite lors de l'exécution.
    */
-  public void addFile(String location) {
-    throw new RuntimeException("Non implémenté");
+  public void addFile(String location) { throw new RuntimeException("Non implémenté");
   }
   /** Ouvre un document HTML dans l'interface.
    * @param location L'URL (Universal Resource Location) du fichier.
@@ -44,7 +43,6 @@ public class Desktop {
   public void addTab(String location) {
     addTab(location, true);
   }
-
   /** Ajoute un composant graphique à l'interface.
    * @param label Nom du bouton. Chaque composant doit avoir un nom différent.
    * @param pane  Le composant à ajouter.
@@ -53,8 +51,7 @@ public class Desktop {
    * @param east Affiche dans le panneau de droite si vrai (valeur par défaut), sinon le panneau de gauche.
    * @param show Rend le composant visible si vrai (valeur par défaut), sinon ne modifie pas l'onglet affiché.
    */
-  public void addTab(String label, Container pane, String title, String icon, boolean east, boolean show) {
-    throw new RuntimeException("Non implémenté");
+  public void addTab(String label, Container pane, String title, String icon, boolean east, boolean show) { throw new RuntimeException("Non implémenté");
   }
   /**
    * @see #addTab(String, Container, String, String, boolean, boolean)
@@ -80,26 +77,23 @@ public class Desktop {
   public void addTab(String label, Container pane) {
     addTab(label, pane, "", null, true, true);
   }
-
   /** Renvoie un accès à la barre d'outil de l'interface.
    * @return La barre d;outil.
    */
-  public ToolBar getToolBar() {
-    throw new RuntimeException("Non implémenté");
+  public ToolBar getToolBar() { throw new RuntimeException("Non implémenté");
   }
-
   /** Demande la fermeture du desktop à la fin du programme.
    * @return La valeur true si le desktop peut être fermé sans dommage pour l'utilisateur, sinon la valeur fausse.
    */
   public boolean close() {
     return true;
   }
-
   /** Crée et/ou renvoie l'unique instance du desktop.
    * <p>Une application ne peut définir qu'un seul desktop.</p>
    */
   public static Desktop getInstance() {
-    if (desktop == null) desktop = new Desktop();
+    if(desktop == null)
+      desktop = new Desktop();
     return desktop;
   }
   private static Desktop desktop = null;
