@@ -7,7 +7,8 @@
 package org.javascool.widgets;
 
 import javax.swing.JOptionPane;
-import java.awt.Frame;
+import javax.swing.JEditorPane;
+import javax.swing.JScrollPane;
 
 import java.util.Calendar;
 import javax.swing.ImageIcon;
@@ -122,14 +123,28 @@ public class Macros {
     print("" + o);
   }
   /** Affiche un message dans une fenêtre présentée à l'utilisateur.
+   * <p>Le message s'affiche sous une forme "copiable" pour que l'utilisateur puisse le copier/coller.</p>
    * @param text Le message à afficher.
+   * @param html Mettre à true si le texte est en HTML, false sinon (valeur par défaut)
+   */
+  public static void message(String text, boolean html) {
+    JEditorPane p = new JEditorPane();
+    p.setEditable(false);
+    if (html)
+      p.setContentType("text/html");
+    p.setText(text);
+    p.setSize(800, 600);
+    JOptionPane.showMessageDialog(
+				  org.javascool.core.Desktop.getInstance().getFrame(),
+				  new JScrollPane(p),
+				  "Java's Cool",
+				  JOptionPane.PLAIN_MESSAGE);
+  }
+  /**
+   * @see #message(String, boolean)
    */
   public static void message(String text) {
-    int r = JOptionPane.showConfirmDialog(
-					  org.javascool.core.Desktop.getInstance().getFrame(),
-					  text,
-					  "Java's cool",
-					  JOptionPane.YES_OPTION);
+    message(text, false);
   }
   /** Lit une chaîne de caractère dans une fenêtre présentée à l'utilisateur.
    * @param question Une invite qui décrit la valeur à entrer (optionel).
@@ -428,9 +443,13 @@ public class Macros {
 
   /** Renvoie une icone stockée dans le JAR de l'application.
    * @param path Emplacement de l'icone, par exemple <tt>"org/javascool/widget/icons/play.png"</tt>
+   * @return L'icone chargée ou null si elle n'existe pas.
    */
   public static ImageIcon getIcon(String path) {
-    return new ImageIcon(Thread.currentThread().getContextClassLoader().getResource(path));
+    URL icon = Thread.currentThread().getContextClassLoader().getResource(path);
+    if (icon == null)
+      System.err.println("Warning : getIcon("+path+") not found");
+    return icon == null ? null : new ImageIcon(icon);
   }
 
   /** Ouvre une URL (Universal Resource Location) dans un navigateur extérieur. 

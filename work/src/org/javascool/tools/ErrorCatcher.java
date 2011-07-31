@@ -39,19 +39,17 @@ public class ErrorCatcher {
    * <p> Installe un gestionnaire d'exception non interceptée qui recueille des informations sur: 
    * les versions des composants logiciels, le nom du process, la trace de la pile et 
    * l'affiche dans une fenêtre séparée afin d'être recueillies et communiquées par l'utilisateur.</p>
-   * @param title Le titre de la fenêtre.
-   * @param header Un texte entête expliquant à l'utilisateur quoi faire avec cette sortie d'exception.
+   * @param header Un texte entête en HTML expliquant à l'utilisateur quoi faire avec cette sortie d'exception.
    * @param revision Numéro de révision de l'application pour avoir une trace en cas d'erreur.
    */
-  public static void setUncaughtExceptionAlert(String title, String header, int revision) {
-    uncaughtExceptionAlertTitle = title;
+  public static void setUncaughtExceptionAlert(String header, int revision) {
     uncaughtExceptionAlertHeader = header;
     System.setProperty("application.revision", ""+revision);
     Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
 	public void uncaughtException(Thread t, Throwable e) {
 	  String s = "";
 	  if(uncaughtExceptionAlertOnce <= 1) {
-	    s += uncaughtExceptionAlertHeader + "\n";
+	    s += uncaughtExceptionAlertHeader + "\n<hr><pre>";
 	    for(String p : new String[] { "application.revision", "java.version", "os.name", "os.arch", "os.version" }
 		)
 	      s += "> " + p + " = " + System.getProperty(p) + "\n";
@@ -62,10 +60,10 @@ public class ErrorCatcher {
 	    s += "> count = " + uncaughtExceptionAlertOnce + "\n";
 	  s += "> stack-trace = «\n";
 	  for(int i = 0; i < t.getStackTrace().length; i++)
-	    s += e.getStackTrace()[i] + "\n";
-	  s += "»\n";
+	    s += e.getStackTrace()[i] + (i < t.getStackTrace().length - 1 ? "\n" : "»");
+	  s += "</pre><hr>";
 	  if(uncaughtExceptionAlertOnce == 0) {
-	    show(uncaughtExceptionAlertTitle, s);
+	    org.javascool.widgets.Macros.message(s, true);
 	  } else {
 	    System.err.println(s);
 	  }
@@ -73,17 +71,6 @@ public class ErrorCatcher {
 	}
       });
   }
-  private static String uncaughtExceptionAlertTitle, uncaughtExceptionAlertHeader;
+  private static String uncaughtExceptionAlertHeader;
   private static int uncaughtExceptionAlertOnce = 0;
-  // Affichage d'un texte dans une fenêtre
-  private static void show(String title, String text) {
-    JEditorPane p = new JEditorPane();
-    p.setEditable(false);
-    p.setText(text);
-    JFrame f = new JFrame(title);
-    f.getContentPane().add(new JScrollPane(p, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER), BorderLayout.CENTER);
-    f.pack();
-    f.setSize(800, 600);
-    f.setVisible(true);
-  }
 }

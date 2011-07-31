@@ -6,7 +6,7 @@ JVS = $(realpath ..)
 ant :
 #	Lance ant sur son build.xml
 	ant run
-	ant javadoc #; firefox $(JVS)/tags/build/web/api/index.html 
+#	ant javadoc #; firefox $(JVS)/tags/build/web/api/index.html 
 #	java -cp $(JVS)/tags/javascool.jar:lib/jvs2html.jar:lib/lang3.jar org.javascool.tools.Jvs2Html tools/Jvs2Html.java
 
 #
