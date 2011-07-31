@@ -1,0 +1,10 @@
+This is the procedure to complete a build of javascool from svn
+
+First, checkout the svn root
+Then enter project javascool with netbeans, and hit Maj+F11
+Then follow instructions to build the svn sketchbook
+
+Then enter the sketchbook dir and run 'sh publy.sh' to generate a jar for each
+proglet. These will be copied to web automatically. To publish the web dir
+to the official website, enter web and run publis.sh (you need a valid public
+key and geforge permissions
