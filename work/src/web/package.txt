@@ -2,7 +2,5 @@
 
 Description de la liasse:
 * ''pages''     : contient les pages du sites organisées selon son arborescence;
-* ''documents'' : contient les documents déposés sur le site (rôle de serveur);
-tandis que:
 * ''index.php'' : contient le moteur PHP du site;
 * ''index''     : contient tous les fichiers scripts et images utilisés par index.php;
