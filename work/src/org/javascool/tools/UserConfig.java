@@ -2,6 +2,8 @@
 *           Philippe.Vienne, Copyright (C) 2011.  All rights reserved.         *
 *******************************************************************************/
 
+package org.javascool.tools;
+
 import java.util.Properties;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;

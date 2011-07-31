@@ -1,3 +1,5 @@
+// @deprecated voir org.javascool.Core
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -38,6 +40,7 @@ public class JVSAboutFrame extends JDialog {
                 + "Il est distribué sous les conditions de la licence CeCILL<br/>"
                 + "(ou selon votre choix GNU GPL V3)"
                 +"</html>"
+                
                 ),BorderLayout.CENTER);
         JPanel space=new JPanel();
         space.setSize(20, 10);
