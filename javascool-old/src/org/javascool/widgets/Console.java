@@ -1,3 +1,5 @@
+//@deprecated voir org.javascool.widgets.Console
+
 /**************************************************************
  * Philippe VIENNE, Copyright (C) 2011.  All rights reserved. *
  **************************************************************/

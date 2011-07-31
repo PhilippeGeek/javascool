@@ -1,3 +1,5 @@
+//@deprecated voir org.javascool.tools.StringFile
+
 package org.javascool.jvs;
 
 import java.io.BufferedReader;

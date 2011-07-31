@@ -1,3 +1,5 @@
+//@deprecated voir org.javascool.tools.(Exec|ErrorCatcher|StringFile|Xml2Xml) et dans org.javascool.widgets.Macro
+
 /*******************************************************************************
  * Thierry.Vieville@sophia.inria.fr, Copyright (C) 2010.  All rights reserved. *
  *******************************************************************************/
