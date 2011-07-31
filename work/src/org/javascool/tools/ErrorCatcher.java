@@ -41,16 +41,18 @@ public class ErrorCatcher {
    * l'affiche dans une fenêtre séparée afin d'être recueillies et communiquées par l'utilisateur.</p>
    * @param title Le titre de la fenêtre.
    * @param header Un texte entête expliquant à l'utilisateur quoi faire avec cette sortie d'exception.
+   * @param revision Numéro de révision de l'application pour avoir une trace en cas d'erreur.
    */
-  public static void setUncaughtExceptionAlert(String title, String header) {
+  public static void setUncaughtExceptionAlert(String title, String header, int revision) {
     uncaughtExceptionAlertTitle = title;
     uncaughtExceptionAlertHeader = header;
+    System.setProperty("application.revision", ""+revision);
     Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
 	public void uncaughtException(Thread t, Throwable e) {
 	  String s = "";
 	  if(uncaughtExceptionAlertOnce <= 1) {
 	    s += uncaughtExceptionAlertHeader + "\n";
-	    for(String p : new String[] { "javascool.version", "java.version", "os.name", "os.arch", "os.version" }
+	    for(String p : new String[] { "application.revision", "java.version", "os.name", "os.arch", "os.version" }
 		)
 	      s += "> " + p + " = " + System.getProperty(p) + "\n";
 	  }

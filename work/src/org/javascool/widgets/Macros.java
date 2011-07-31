@@ -433,6 +433,20 @@ public class Macros {
     return new ImageIcon(Thread.currentThread().getContextClassLoader().getResource(path));
   }
 
+  /** Ouvre une URL (Universal Resource Location) dans un navigateur extérieur. 
+   * @param location L'URL à afficher.
+   *
+   * @throws IllegalArgumentException Si l'URL est mal formée.
+   * @throws RuntimeException Si une erreur d'entrée-sortie s'est produite.
+   */
+  public static void openURL(String location) {
+    try {
+      java.awt.Desktop.getDesktop().browse(new java.net.URI(location));
+    } catch (Exception e) {
+      throw new RuntimeException(e + " when browwing: " + location);
+    }
+  }
+  
   /** Renvoie une URL (Universal Resource Location) normalisée, dans le cas du système de fichier local ou d'une ressource.
    * <p>La fonction recherche l'existence du fichier: 
    * (i) par rapport au répertoire de base qui est donné, 
