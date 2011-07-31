@@ -17,16 +17,14 @@ import java.io.File;
 import java.io.IOException;
 
 /** Cette factory contient des functions générales rendues visibles à l'utilisateur de proglets.
- * Elle permet de définir des fonctions statiques qui seront utilisées pour faire des programmes élèves.
+ * <p>Elle permet de définir des fonctions statiques qui seront utilisées pour faire des programmes élèves.</p>
+ * <p>Elle permet aussi avoir quelques fonctions de base lors de la création de nouvelles proglets.</p>
  * @see <a href="Macros.java.html">code source</a>
  * @serial exclude
  */
 public class Macros {
   // @factory
   private Macros() {}
-
-  // @todo
-  private static Frame JVSmainFrame = null;
 
   //
   //  Macros d'entrées / sorties en lien avec la console
@@ -128,7 +126,7 @@ public class Macros {
    */
   public static void message(String text) {
     int r = JOptionPane.showConfirmDialog(
-					  JVSmainFrame,
+					  org.javascool.core.Desktop.getInstance().getFrame(),
 					  text,
 					  "Java's cool",
 					  JOptionPane.YES_OPTION);
@@ -140,7 +138,7 @@ public class Macros {
   public static String readString(String question) {
     if (inputBuffer.isPopable()) return inputBuffer.popString();
     String s = JOptionPane.showInputDialog(
-					   JVSmainFrame,
+					   org.javascool.core.Desktop.getInstance().getFrame(),
 					   question,
 					   "Java's cool",
                 JOptionPane.PLAIN_MESSAGE);
@@ -252,7 +250,7 @@ public class Macros {
   public static boolean readBoolean(String question) {
     if (inputBuffer.isPopable()) return inputBuffer.popBoolean();
     int r = JOptionPane.showConfirmDialog(
-					  JVSmainFrame,
+					  org.javascool.core.Desktop.getInstance().getFrame(),
 					  question,
 					  "Java's cool",
 					  JOptionPane.YES_NO_OPTION);

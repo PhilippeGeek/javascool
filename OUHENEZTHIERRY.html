@@ -27,34 +27,89 @@ compl&egrave;tement document&eacute; en <i><b>fran&ccedil;ais</b></i> <br>
   <ol>
     <li>(notre fa&ccedil;on de coder doit aussi servir d'<b><u>exemple</u></b>
 puisque nos sources sont visibles)</li>
+    <ol>
+      <li>chaque html donne acc&egrave;s au source en lecture: donc il
+faut <span style="font-style: italic;">joliment coder les mecs !!</span><br>
+      </li>
+    </ol>
     <li>les fichiers package.html / package.txt sont des m&eacute;mos
 de description</li>
     <li>le code a &eacute;t&eacute; annot&eacute; (pour l'instant sous
 forme de commentaires) dans la perspective de le pr&eacute;processuer
 avec atp</li>
     <li>Hints: les packages &agrave; une classe, les doublons, les
-classes orphelines, etc... sont vir&eacute;s <br>
-      <br>
-      <div style="text-align: center;"><span style="font-weight: bold;">THIERRY
+classes orphelines, etc... sont vir&eacute;s&nbsp;</li>
+    <li>Tout le traitement des interruptions a &eacute;t&eacute; revu
+car on arrivait pas &agrave; les r&eacute;cup&eacute;rer</li>
+    <ol>
+      <li>Il &eacute;tait g&eacute;r&eacute; &agrave; partir de
+reportApplicationBug ou de java.util.logging.* ou pas, selon les cas,
+des exceptions &eacute;taient masqu&eacute;es, d'utres
+g&eacute;nb&eacute;raient elles m&ecirc;mes des NullPointerException !!<br>
+      </li>
+    </ol>
+    <li>Beaucoup de constructions static ont &eacute;t&eacute;
+remplac&eacute;s par des constructions propres d'objets voir
+Console.java</li>
+    <li>J'ai essay&eacute; de modulariser au maximum les objets
+(&agrave; commencer par ceux issus de Jvs3.3bis!) et <br>
+    </li>
+    <ol>
+      <li>et ai vraiment s&eacute;par&eacute; le gui du <span
+ style="font-style: italic;">moteur </span>de JavaScool&nbsp;</li>
+      <li>arr&ecirc;ter de faire des appels vers des
+variables/fonctions statiques entre toutes les classes qui rend le code
+incontrolable</li>
+      <li>bien s&eacute;parer les m&eacute;canismes algorithmiques des
+m&eacute;thodes de glue avec les obkets graphiques (voir HtmlDisplay
+par exemple)<br>
+        <br>
+        <div style="text-align: center;"><span
+ style="font-weight: bold;">THIERRY
 EST
 EN PLEIN DANS CE MERDIER</span><br>
-      </div>
-    </li>
+        </div>
+      </li>
+    </ol>
   </ol>
 </ol>
 <br>
 <b>Finalisation et avanc&eacute;es:<br>
-</b><br>
-<b>R&eacute;gressions par rapport &agrave; la Alpha-fin de juillet ou
-&agrave; Jvs3.2bis:</b><br>
+</b>
 <ol>
-  <li>javascoolbuilder a perdu (provisoirement) son progress bar<br>
-    <br>
-  </li>
-  <li>La console n'affiche plus de contenu HTML (donc des chaines en
-gras par exemple).<br>
+  <li>vthierry en est &agrave; recr&eacute;er des classes modulaires
+dans le work, rien de marche &agrave; ce stade.<br>
   </li>
 </ol>
+<br>
+<b>R&eacute;gressions ou ruptures par rapport &agrave; la Alpha-fin de
+juillet:</b><br>
+<ol>
+  <li>L'architecture de JavaScool Core est bas&eacute;e sur deux objets</li>
+  <ol>
+    <li>Desktop qui d&eacute;finir les functions d'interaction avec
+l'interface graphique de JavaScool.</li>
+    <li>Engine qui impl&eacute;mente les m&eacute;canismes de
+(compilation, ex&eacute;cution, proglet, ..) JavaScool.<br>
+    </li>
+  </ol>
+  <li>Les &eacute;l&eacute;ments : ToolBar (ex JVSToolBar) HtmlDisplay
+StartStopButton ont &eacute;t&eacute; sorti de javascool.gui car ils
+peuvent &ecirc;tre <span style="font-style: italic;">utilis&eacute;s
+pour faire des proglet</span>s.</li>
+  <li>Les routines Macros.getRessource/Macros.getUserRessource ont
+&eacute;t&eacute; fondue avec lex toURl devenu: Macros.getResourceURL()
+    <br>
+  </li>
+  <li>javascoolbuilder a perdu (provisoirement) son progress bar</li>
+</ol>
+<br>
+<b>R&eacute;gressions par rapport &agrave; la Jvs3.2bis:</b><br>
+<ol>
+  <li>La console n'affiche plus de contenu HTML (donc des chaines en
+gras par exemple).</li>
+</ol>
+<br>
 <b>Travail pour finalisation:</b> (je pense que nous avons chacun une
 semaine de travail d'ici fin ao&ucirc;t si vous le voulez bien)<br>
 <br>

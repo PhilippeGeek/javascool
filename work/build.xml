@@ -26,6 +26,7 @@
   <target name="javadoc">
     <mkdir dir="../build/web/api"/>
     <javadoc
+      verbose="false"
       classpath="${classpath}"
       access="public" 
       destdir="../build/web/api"
