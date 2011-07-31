@@ -30,7 +30,7 @@ import org.javascool.gui.JVSMainPanel;
  * Use JVSEditor to edit jvs files, it can be used as a panel
  * @author Philippe VIENNE
  */
-public class JVSEditor extends JPanel implements Editor{
+public class JVSEditor extends JPanel {
  private static final long serialVersionUID = 1L;
     /** The editor */
     private RSyntaxTextArea TextPane;

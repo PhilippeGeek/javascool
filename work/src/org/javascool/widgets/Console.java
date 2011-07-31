@@ -10,7 +10,7 @@ import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import org.javascool.widgets.ActionBar;
+import org.javascool.widgets.ToolBar;
 
 // redirectSystemStreams
 import java.io.OutputStream;
@@ -28,7 +28,7 @@ public class Console extends JPanel {
   /** Zone d'affichage */
   private JTextArea outputPane;
   /** Barre de menu */
-  private ActionBar toolbar;
+  private ToolBar toolbar;
   /** Zone d'affichage du statut. */
   private JLabel status;
 
@@ -44,7 +44,7 @@ public class Console extends JPanel {
     JScrollPane scrolledOutputPane = new JScrollPane(outputPane);
     this.add(scrolledOutputPane, BorderLayout.CENTER);
     // Construit la zone des bouttons
-    toolbar = new ActionBar();
+    toolbar = new ToolBar();
     toolbar.addTool("Effacer", "org/javascool/doc-files/icon16/erase.png", new Runnable() {
 	
 	@Override
