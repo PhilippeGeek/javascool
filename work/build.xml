@@ -11,7 +11,7 @@
   </target>
   
   <target name="javascool.jar" depends="classes" >
-    <mkdir dir="../build/jar"/>
+    <mkdir dir="../build"/>
     <jar destfile="../build/javascool.jar" basedir="../build/classes">
       <manifest>
         <attribute name="Main-Class" value="org.javascool.Core"/>
@@ -54,7 +54,8 @@
   </target>
   
   <target name="clean">
-    <delete dir="../build/*"/>
+    <delete dir="../build/classes"/>
+    <delete dir="../build/web/api"/>
   </target>
     
 </project>
