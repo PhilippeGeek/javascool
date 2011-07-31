@@ -17,8 +17,8 @@ import org.javascool.widgets.ToolBar;
  */
 public class Desktop {
 
-  // @bean
-  public Desktop() {}
+  // @static-instance 
+  private Desktop() {}
   
   /** Renvoie la fenêtre racine de l'interface graphique. */
   public Frame getFrame() { return null; }
@@ -95,6 +95,6 @@ public class Desktop {
     if (desktop == null) desktop = new Desktop();
     return desktop;
   }
-  private static Desktop desktop;
+  private static Desktop desktop = null;
 }
 
