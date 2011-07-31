@@ -1,4 +1,6 @@
 /*******************************************************************************
+ * Philippe.Vienne@sophia.inria.fr, Copyright (C) 2011.  All rights reserved.    *
+ * Guillaume.Matheron@sophia.inria.fr, Copyright (C) 2011.  All rights reserved. *
  * Thierry.Vieville@sophia.inria.fr, Copyright (C) 2004.  All rights reserved. *
  *******************************************************************************/
 package org.javascool.gui;
@@ -30,12 +32,13 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import org.javascool.tools.Utils;
 
-/** Defines a panel in which a HTML text is shown.
+/** Definit un visualisateur de pages HTML3.
+ * <p><i>Note:</i> 
  *
  * @see <a href="HtmlDisplay.java.html">source code</a>
  * @serial exclude
  */
-public class JVSHtmlDisplay extends JPanel {
+public class HtmlDisplay extends JPanel {
 
     private static final long serialVersionUID = 1L;
     /** The Html Display pane. */
@@ -43,7 +46,7 @@ public class JVSHtmlDisplay extends JPanel {
     /** The navigation buttons. */
     private JButton home, prev, next;
 
-    public JVSHtmlDisplay() {
+    public HtmlDisplay() {
         // Builds the GUI
         setLayout(new BorderLayout());
         JToolBar bar = new JToolBar();
@@ -51,11 +54,11 @@ public class JVSHtmlDisplay extends JPanel {
         bar.setBorderPainted(false);
         bar.setFloatable(false);
         try {
-            bar.add(home = new JButton("Page initiale", Utils.getIcon(Class.forName("org.javascool.JVSMain").getResource("doc-files/icon16/refresh.png").toString())));
-            bar.add(prev = new JButton("Page précédente", Utils.getIcon(Class.forName("org.javascool.JVSMain").getResource("doc-files/icon16/prev.png").toString())));
-            bar.add(next = new JButton("Page suivante", Utils.getIcon(Class.forName("org.javascool.JVSMain").getResource("doc-files/icon16/next.png").toString())));
+            bar.add(home = new JButton("Page initiale", Utils.getIcon(Class.forName("org.javascool.Main").getResource("doc-files/icon16/refresh.png").toString())));
+            bar.add(prev = new JButton("Page précédente", Utils.getIcon(Class.forName("org.javascool.Main").getResource("doc-files/icon16/prev.png").toString())));
+            bar.add(next = new JButton("Page suivante", Utils.getIcon(Class.forName("org.javascool.Main").getResource("doc-files/icon16/next.png").toString())));
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(JVSHtmlDisplay.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(HtmlDisplay.class.getName()).log(Level.SEVERE, null, ex);
         }
         add(bar, BorderLayout.NORTH);
         pane = new JEditorPane();
@@ -81,16 +84,16 @@ public class JVSHtmlDisplay extends JPanel {
                             String[] params = action.split(":");
                             if (params[0].equals("openjvs")) {
                                 if (params.length != 2) {
-                                    JVSMainPanel.reportApplicationBug("Lien jvs mal formé");
+                                    MainPanel.reportApplicationBug("Lien jvs mal formé");
                                 } else {
-                                    JVSMainPanel.openFileFromJar(params[1]);
+                                    MainPanel.openFileFromJar(params[1]);
                                 }
                             } else if (params[0].equals("openhtml")) {
                                 if (params.length != 3) {
-                                    JVSMainPanel.reportApplicationBug("Lien jvs mal formé");
+                                    MainPanel.reportApplicationBug("Lien jvs mal formé");
                                 } else {
-                                    String file2 = "org/javascool/proglets/" + JVSMainPanel.getCurrentProglet().getPackageName() + "/" + params[1];
-                                    JVSMainPanel.getWidgetTabs().openWebTab(file2, params[2]);
+                                    String file2 = "org/javascool/proglets/" + MainPanel.getCurrentProglet().getPackageName() + "/" + params[1];
+                                    MainPanel.getWidgetTabs().openWebTab(file2, params[2]);
                                 }
                             }
                         }
@@ -168,7 +171,7 @@ public class JVSHtmlDisplay extends JPanel {
      * @param text The HTML text location to show.
      * @return This, allowing to use the <tt>new HtmlDisplay().setText(..)</tt> construct.
      */
-    public JVSHtmlDisplay reset(String text) {
+    public HtmlDisplay reset(String text) {
         try {
             load(prefix + URLEncoder.encode(text, "UTF-8"), true);
         } catch (Exception e) {
@@ -182,11 +185,11 @@ public class JVSHtmlDisplay extends JPanel {
      * @param location The HTML text location to show.
      * @return This, allowing to use the <tt>new HtmlDisplay().loads(..)</tt> construct.
      */
-    public JVSHtmlDisplay load(String location) {
+    public HtmlDisplay load(String location) {
         return load(location, true);
     }
 
-    private JVSHtmlDisplay load(String location, boolean stack) {
+    private HtmlDisplay load(String location, boolean stack) {
         if (location.matches("^(http|https|rtsp|mailto):.*$")) {
             try {
                 java.awt.Desktop.getDesktop().browse(new java.net.URI(location));

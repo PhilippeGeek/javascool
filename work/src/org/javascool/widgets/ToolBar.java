@@ -13,13 +13,13 @@ import javax.swing.JMenuItem;
 
 /** Définit une barre d'outils avec intégration de la gestion des actions.
  * @author Philippe Vienne
- * @see <a href="ActionBar.java.html">code source</a>
+ * @see <a href="ToolBar.java.html">code source</a>
  * @serial exclude
  */
-public class ActionBar extends JToolBar {
+public class ToolBar extends JToolBar {
   private static final long serialVersionUID = 1L;
   // @bean 
-  public ActionBar() {}
+  public ToolBar() {}
 
   /** Table des boutons indexés par leurs noms. */
   private HashMap<String, JComponent> buttons = new HashMap<String, JComponent>();
