@@ -88,6 +88,13 @@ public class Desktop {
     throw new RuntimeException("Non implémenté");
   }
 
+  /** Demande la fermeture du desktop à la fin du programme.
+   * @return La valeur true si le desktop peut être fermé sans dommage pour l'utilisateur, sinon la valeur fausse.
+   */
+  public boolean close() {
+    return true;
+  }
+
   /** Crée et/ou renvoie l'unique instance du desktop.
    * <p>Une application ne peut définir qu'un seul desktop.</p>
    */
