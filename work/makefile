@@ -27,3 +27,6 @@ svn :
 
 pub :
 	svn up .. ; cd ../web ; ./start.sh -show #; ./publis.sh
+
+bty :
+	for f in `find src -name '*.java' -o -name '*.jvs'` ; do uncrustify -q -c lib/uncrustify.cfg --replace $$f ; done
