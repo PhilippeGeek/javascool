@@ -114,5 +114,5 @@ public class Console extends JPanel {
     if (console == null) console = new Console();
     return console;
   }
-  private static Console console;
+  private static Console console = null;
 }
