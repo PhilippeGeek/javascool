@@ -6,10 +6,11 @@ package org.javascool;
 
 // Used to define the frame
 import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import javax.swing.ImageIcon;
 
 // Used to set Win look and feel
 import javax.swing.UIManager.LookAndFeelInfo;
@@ -20,13 +21,13 @@ import org.javascool.tools.ErrorCatcher;
 /** Lanceur de l'application "apprenant" qui permet de manipuler des «proglets». */
 public class Core {
   /** Titre de l'application. */
-  public static final String title = "Java's Cool 3.3";  
+  public static final String title = "Java's Cool 4";  
   /** Numéro de révision de l'application. 
    * Il est obtenu par la commande Unix <tt>svn info | grep Revision | sed 's/.*: //'</tt>
    */
   static final int revision = 362;
   /** Logo pour affichage. */
-  public static final String logo = "org/javascool/doc-files/logo.png";
+  public static final String logo = "org/javascool/widgets/icons/logo.png";
 
   /** Définit le look and feel de l'applicatiom. */
   static void setUpSystem() {
@@ -56,14 +57,24 @@ public class Core {
     }
   }
   
+  /** Mets en place le système d'alerte en cas d'erreur non gérée. */
+  static void setUncaughtExceptionAlert() {
+    ErrorCatcher.setUncaughtExceptionAlert("<h1>Détection d'une anomalie liée à Java:</h1>\n"+
+					   "Il y a un problème de compatibilité avec votre système, nous allons vous aider:<ul>\n"+
+					   "  <li>Copier/Coller tous les éléments de cette fenêtre et</li>\n"+
+					   "  <li>Envoyez les par mail à <b>fuscia-accueil@inria.fr</b> avec toute information utile.</li>" +
+					   " </ul>",
+					   revision);
+  }
+
   /** Impose que la version de Java soit au moins 1.6. */
   static void checkJavaVersion() {
-    if (new Integer(System.getProperty("java.version").replaceFirst("..(.).*", "\1")) < 6) {
+    if (new Integer(System.getProperty("java.version").substring(2, 3)) < 6) {
       if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(
 								  new JFrame(),
 								  "<html>Vous n'avez pas une version suffisante de Java<br>"
 								  + title +" requière Java 1.6 ou plus.<br>"
-								  + "Voulez vous être redirigé vers le site de téléchargements ?",
+								  + "Voulez vous être redirigé vers le site de téléchargement ?",
 								  "Confirmation",
 								  JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE)) {
 	org.javascool.widgets.Macros.openURL("http://www.java.com/getjava");
@@ -71,23 +82,15 @@ public class Core {
       }
     }
   } 
-  
-  /** Mets en place le système d'alerte en cas d'erreur non gérée. */
-  static void setUncaughtExceptionAlert() {
-    ErrorCatcher.setUncaughtExceptionAlert("Détection d'une erreur Java au sein du logiciel "+title,
-					  "Il y a un problème de compatibilité avec votre système, nous allons vous aider:\n"+
-					  " - Copier/Coller tous les éléments de cette fenêtre et\n"+
-					   " - Envoyez les nous par mail à fuscia-accueil@inria.fr avec toute information utile",
-					   revision);
-  }
 
   /** Ouvre une fenêtre principale pour lancer l'application. */
-  static void openWindow(String title, String icon, JPanel panel) {
-    JFrame frame =  new JFrame();
+  static void openWindow(String title, String icon, JComponent panel) {
+    JFrame frame = new JFrame();
     frame.setTitle(title);
-    frame.setIconImage(org.javascool.widgets.Macros.getIcon(icon).getImage());
-    if (panel != null)
-      frame.add(panel);
+    ImageIcon image = org.javascool.widgets.Macros.getIcon(icon);
+    if (image != null)
+      frame.setIconImage(image.getImage());
+    frame.add(panel);
     frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
     frame.addWindowListener(new WindowAdapter() {
 	@Override
@@ -99,9 +102,9 @@ public class Core {
 	  }
 	}
       });
+    frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
     frame.pack();
     frame.setVisible(true);
-    frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
   }
 
   /** Lanceur de l'application.
@@ -109,10 +112,9 @@ public class Core {
    */
   public static void main(String[] usage) {
     System.err.println("" + title + " is starting ...");
-    System.exit(0);
-    setUncaughtExceptionAlert();
+    //-setUncaughtExceptionAlert();
     setUpSystem();
     checkJavaVersion();
-    openWindow(title, logo, null);
+    openWindow(title, logo,  new javax.swing.JLabel(title));
   }
 }
