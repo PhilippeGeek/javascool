@@ -29,6 +29,17 @@ public class Core {
   /** Logo pour affichage. */
   public static final String logo = "org/javascool/widgets/icons/logo.png";
 
+  /** Affiche le message de "about". */
+  static void showAboutMessage() {
+    org.javascool.widgets.Macros.message(title + "est un logiciel conçut en colaboration avec : <br/><center>"
+					 + "Philippe VIENNE<br/>"
+					 + "Guillaume MATHERON<br/>"
+					 + " et Inria<br/>"
+					 + "Cécille Picard<br/>"
+					 + "</center><br/>"
+					 + "Il est distribué sous les conditions de la licence CeCILL<br/>", true);
+  }
+
   /** Définit le look and feel de l'applicatiom. */
   static void setUpSystem() {
     try {
