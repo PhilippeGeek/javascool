@@ -55,6 +55,7 @@
   <target name="clean">
     <delete dir="../build/classes"/>
     <delete dir="../build/web/api"/>
+    <delete dir="src/web/.http.root"/>
   </target>
     
 </project>
