@@ -35,7 +35,7 @@ public class Formater {
         JavaSource2HTMLConverter converter = new JavaSource2HTMLConverter();
 
         JavaSourceConversionOptions options = JavaSourceConversionOptions.getDefault();
-        options.getStyleTable().put(JavaSourceType.KEYWORD, new JavaSourceStyleEntry(RGB.ORANGE, true, false));
+        //options.getStyleTable().put(JavaSourceType.KEYWORD, new JavaSourceStyleEntry(RGB.ORANGE, true, false));
 
         StringWriter writer = new StringWriter();
         try {

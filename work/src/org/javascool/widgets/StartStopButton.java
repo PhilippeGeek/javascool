@@ -32,7 +32,7 @@ public class StartStopButton extends JPanel {
       doStop();
     started = true;
     startButton.setText("Arrêter");
-    startButton.setIcon(org.javascool.widgets.Macros.getIcon("org/javascool/widget/icons/stop.png"));
+    startButton.setIcon(org.javascool.tools.Macros.getIcon("org/javascool/widget/icons/stop.png"));
     new Thread(new Runnable() {
                  @Override
                  public void run() {
@@ -51,7 +51,7 @@ public class StartStopButton extends JPanel {
       stop();
       started = false;
       startButton.setText("Exécuter");
-      startButton.setIcon(org.javascool.widgets.Macros.getIcon("org/javascool/widget/icons/play.png"));
+      startButton.setIcon(org.javascool.tools.Macros.getIcon("org/javascool/widget/icons/play.png"));
     }
   }
   /** Cette méthode est appelée au lancement demandé par l'utilisateur. */

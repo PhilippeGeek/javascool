@@ -2,7 +2,7 @@
 * Thierry.Vieville@sophia.inria.fr, Copyright (C) 2010.  All rights reserved. *
 *******************************************************************************/
 
-package org.javascool.tools;
+package org.javascool.builder;
 
 import java.io.IOException;
 import java.io.InputStreamReader;

@@ -33,6 +33,16 @@ public class Console extends JPanel {
   private JLabel status;
 
   // @static-instance
+
+  /** Crée et/ou renvoie l'unique instance de console.
+   * <p>Une application ne peut définir qu'une seule console.</p>
+   */
+  public static Console getInstance() {
+    if(console == null)
+      console = new Console();
+    return console;
+  }
+  private static Console console = null;
   private Console() {
     BorderLayout layout = new BorderLayout();
     this.setLayout(layout);
@@ -45,7 +55,7 @@ public class Console extends JPanel {
     this.add(scrolledOutputPane, BorderLayout.CENTER);
     // Construit la zone des bouttons
     toolbar = new ToolBar();
-    toolbar.addTool("Effacer", "org/javascool/doc-files/icon16/erase.png", new Runnable() {
+    toolbar.addTool("Effacer", "org/javascool/widgets/icons/erase.png", new Runnable() {
                       @Override
                       public void run() {
                         clear();
@@ -99,13 +109,4 @@ public class Console extends JPanel {
   public String getText() {
     return outputPane.getText();
   }
-  /** Crée et/ou renvoie l'unique instance de console.
-   * <p>Une application ne peut définir qu'une seule console.</p>
-   */
-  public static Console getInstance() {
-    if(console == null)
-      console = new Console();
-    return console;
-  }
-  private static Console console = null;
 }

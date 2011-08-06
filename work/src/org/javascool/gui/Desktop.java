@@ -4,12 +4,20 @@
 * Thierry.Vieville@sophia.inria.fr, Copyright (C) 2009.  All rights reserved.   *
 *********************************************************************************/
 
-package org.javascool.core;
+package org.javascool.gui;
 
 import java.awt.Frame;
 import java.awt.Container;
+import org.javascool.Core;
 import org.javascool.widgets.HtmlDisplay;
 import org.javascool.widgets.ToolBar;
+
+// Used to define the frame
+import javax.swing.JFrame;
+import javax.swing.JComponent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import javax.swing.ImageIcon;
 
 /** Définit les functions d'interaction avec l'interface graphique de JavaScool.
  * @see <a href="Desktop.java.html">code source</a>
@@ -17,11 +25,49 @@ import org.javascool.widgets.ToolBar;
  */
 public class Desktop {
   // @static-instance
+
+  /** Crée et/ou renvoie l'unique instance du desktop.
+   * <p>Une application ne peut définir qu'un seul desktop.</p>
+   */
+  public static Desktop getInstance() {
+    if(desktop == null)
+      desktop = new Desktop();
+    return desktop;
+  }
+  private static Desktop desktop = null;
   private Desktop() {}
 
   /** Renvoie la fenêtre racine de l'interface graphique. */
   public Frame getFrame() {
-    return null;
+    if(frame == null)
+      frame = getFrame(Core.title, Core.logo, JVSMainPanel.getInstance());
+    return frame;
+  }
+  private JFrame frame;
+  /** Ouvre une fenêtre principale pour lancer l'application. */
+  static JFrame getFrame(String title, String icon, JComponent panel) {
+    JFrame frame = new JFrame();
+    frame.setTitle(title);
+    ImageIcon image = org.javascool.tools.Macros.getIcon(icon);
+    if(image != null)
+      frame.setIconImage(image.getImage());
+    frame.add(panel);
+    frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+    frame.addWindowListener(new WindowAdapter() {
+                              @Override
+                              public void windowClosing(WindowEvent e) {
+                                if(org.javascool.gui.Desktop.getInstance().close()) {
+                                  e.getWindow().setVisible(false);
+                                  e.getWindow().dispose();
+                                  System.exit(0);
+                                }
+                              }
+                            }
+                            );
+    frame.pack();
+    frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+    frame.setVisible(true);
+    return frame;
   }
   /** Ouvre un fichier dans l'éditeur.
    * @param location L'URL (Universal Resource Location) du fichier.
@@ -88,14 +134,5 @@ public class Desktop {
   public boolean close() {
     return true;
   }
-  /** Crée et/ou renvoie l'unique instance du desktop.
-   * <p>Une application ne peut définir qu'un seul desktop.</p>
-   */
-  public static Desktop getInstance() {
-    if(desktop == null)
-      desktop = new Desktop();
-    return desktop;
-  }
-  private static Desktop desktop = null;
 }
 

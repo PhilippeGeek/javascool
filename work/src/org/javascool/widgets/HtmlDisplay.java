@@ -17,10 +17,12 @@ import javax.swing.JEditorPane;
 // Used to manage links
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
+import java.net.URL;
 import java.net.URLEncoder;
 import java.net.URLDecoder;
 import javax.swing.text.Document;
 import java.io.File;
+import org.javascool.tools.Macros;
 
 // Used to manage keystroke
 import javax.swing.KeyStroke;
@@ -71,9 +73,9 @@ public class HtmlDisplay extends JPanel {
       bar.setOrientation(JToolBar.HORIZONTAL);
       bar.setBorderPainted(false);
       bar.setFloatable(false);
-      bar.add(home = new JButton("Page initiale", org.javascool.widgets.Macros.getIcon("org/javascool/widget/icons/refresh.png")));
-      bar.add(prev = new JButton("Page précédente", org.javascool.widgets.Macros.getIcon("org/javascool/widget/icons/prev.png")));
-      bar.add(next = new JButton("Page suivante", org.javascool.widgets.Macros.getIcon("org/javascool/widget/icons/next.png")));
+      bar.add(home = new JButton("Page initiale", org.javascool.tools.Macros.getIcon("org/javascool/widgets/icons/refresh.png")));
+      bar.add(prev = new JButton("Page précédente", org.javascool.tools.Macros.getIcon("org/javascool/widgets/icons/prev.png")));
+      bar.add(next = new JButton("Page suivante", org.javascool.tools.Macros.getIcon("org/javascool/widgets/icons/next.png")));
       add(bar, BorderLayout.NORTH);
     }
     {
@@ -187,7 +189,7 @@ public class HtmlDisplay extends JPanel {
       return getCurrent();
     }
   }
-  private StringStack urls;
+  private StringStack urls = new StringStack();
 
   /** Affiche une page de texte HTML3 dans le visualisateur.
    * @param location L'URL de la page à afficher.
@@ -197,6 +199,9 @@ public class HtmlDisplay extends JPanel {
     update(location);
     urls.push(location);
     return this;
+  }
+  public HtmlDisplay setPage(URL location) {
+    return setPage(location != null ? location.toString() : "null location");
   }
   /** Affiche un texte HTML3 dans le visualisateur.
    * @param text Le texte à afficher.
@@ -236,9 +241,9 @@ public class HtmlDisplay extends JPanel {
         pane.getDocument().putProperty(Document.StreamDescriptionProperty, null);
         pane.setPage(Macros.getResourceURL(location, new File(location.replaceFirst("^file:", "")).getParent()));
       } else if(location.startsWith(editorPrefix))    // Affichage dand JavaScool
-        org.javascool.core.Desktop.getInstance().addFile(location.substring(editorPrefix.length()));
+        org.javascool.gui.Desktop.getInstance().addFile(location.substring(editorPrefix.length()));
       else if(location.startsWith(browserPrefix))      // Affichage dand JavaScool
-        org.javascool.core.Desktop.getInstance().addTab(location.substring(browserPrefix.length()));
+        org.javascool.gui.Desktop.getInstance().addTab(location.substring(browserPrefix.length()));
       else if(!doBrowse(location))      // Délégation au client
         setText("Le lien : <tt>«" + location + "»</tt> n'a pas pu être affiché");
     } catch(Exception e) {

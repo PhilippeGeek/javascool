@@ -6,10 +6,9 @@ package org.javascool.tools;
 
 // Used for URL formation
 import java.net.URL;
+import static org.javascool.tools.Macros.getResourceURL;
 import java.io.File;
 import java.io.IOException;
-
-import org.javascool.widgets.Macros;
 
 // Used for URL read
 import java.io.InputStreamReader;
@@ -22,6 +21,12 @@ import java.net.URLConnection;
 import java.io.OutputStreamWriter;
 import java.io.FileOutputStream;
 import java.lang.System;
+
+// Used for list/exists
+import java.util.ArrayList;
+import java.util.jar.JarFile;
+import java.util.jar.JarEntry;
+import java.util.Enumeration;
 
 /** Lit/Ecrit un contenu textuel local ou distant en tenant compte de l'encodage UTF-8.
  * @see <a href="StringFile.java.html">code source</a>
@@ -46,7 +51,7 @@ public class StringFile {
    */
   public static String load(String location) {
     try {
-      BufferedReader reader = new BufferedReader(new InputStreamReader(Macros.getResourceURL(location, true).openStream()), 10240);
+      BufferedReader reader = new BufferedReader(new InputStreamReader(getResourceURL(location, true).openStream()), 10240);
       StringBuilder buffer = new StringBuilder();
       char chars[] = new char[10240];
       while(true) {
@@ -78,7 +83,7 @@ public class StringFile {
       System.out.println("\n" + location + " " + string);
       return;
     }
-    location = Macros.getResourceURL(location, false).toString();
+    location = getResourceURL(location, false).toString();
     try {
       OutputStreamWriter writer = location.startsWith("file:") ? getFileWriter(location.substring(5)) : getUrlWriter(location);
       for(int i = 0; i < string.length(); i++)
@@ -104,5 +109,58 @@ public class StringFile {
     if((parent != null) && (!parent.isDirectory()))
       parent.mkdirs();
     return new OutputStreamWriter(new FileOutputStream(location), "UTF-8");
+  }
+  /** Détecte si une URL existe.
+   * @param location Une URL (Universal Resource Location).
+   * @return Renvoie true si l'URL existe et est lisible, false sinon.
+   */
+  public static boolean exists(String location) {
+    if(location.matches("(ftp|http|https|jar):.*")) {
+      try {
+        new URL(location).openStream().close();
+        return true;
+      } catch(IOException e) {
+        return false;
+      }
+    } else {
+      if(location.matches("file:.*"))
+        location = location.substring(5);
+      return new File(location).canRead();
+    }
+  }
+  /** Renvoie les fichiers d'un répertoire ou d'un jar.
+   * @param folder Le nom du répertoire ou du fichier jar (fichier d'extension ".jar").
+   * @param pattern Une regex qui définit le type de fichier (ex : <tt>".*\.java"</tt>). Par défaut tous les fichiers.
+   * @return Une énumération des fichiers listés: le path canonique est renvoyé. Si le répertoire ou le jar ne peut être lu, renvoie une liste vide dans erreur.
+   *
+   * @throws IllegalArgumentException Si l'URL ne peut pas être listée.
+   */
+  public Iterable<String> list(String folder, String pattern) {
+    if(folder.matches("(ftp|http|https|jar):.*")) throw new IllegalArgumentException("Impossible de lister le contenu d'un URL de ce type: " + folder);
+    if(folder.matches("file:.*"))
+      folder = folder.substring(5);
+    ArrayList<String> files = new ArrayList<String>();
+    if(folder.matches(".*\\.jar")) {
+      try {
+        for(Enumeration<JarEntry> e = new JarFile(folder).entries(); e.hasMoreElements();) {
+          String file = e.nextElement().getName();
+          if((pattern == null) || file.matches(pattern))
+            files.add("jar:" + folder + "!" + file);
+        }
+      } catch(IOException e) {}
+    } else {
+      try {
+        for(File file : new File(folder).listFiles())
+          if((pattern == null) || file.getName().matches(pattern))
+            files.add(file.getCanonicalPath());
+      } catch(IOException e) {}
+    }
+    return files;
+  }
+  /**
+   * @see #list(String, String)
+   */
+  public Iterable<String> list(String folder) {
+    return list(folder, null);
   }
 }

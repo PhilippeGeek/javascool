@@ -82,7 +82,7 @@ public class Java2Class {
    * @throws IllegalArgumentException Si la classe n'est pas un Runnable.
    * @throws RuntimeException Si une erreur d'entrée-sortie s'est produite lors du chargement.
    */
-  public static Runnable load(String path) throws Throwable {
+  public static Runnable load(String path) {
     try {
       File javaClass = new File(path);
       URL[] urls = new URL[] { new URL("file:" + javaClass.getParent() + File.separator) };

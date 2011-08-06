@@ -46,7 +46,7 @@ public class Pml {
   private static final long serialVersionUID = 1L;
   public Pml() {}
 
-  private HashMap<String, Pml> data = new HashMap<String, Pml>();
+  private HashMap<String, Object> data = new HashMap<String, Object>();
 
   /** Initialise la PML en la lisant dans une chaîne de caractères.
    * @param value La chaîne de syntaxe <tt>"{tag name = value .. element .. }"</tt>.
@@ -54,7 +54,7 @@ public class Pml {
    */
   public Pml reset(String value) {
     // Initializes the Pml
-    data = new HashMap<String, Pml>();
+    data = new HashMap<String, Object>();
     tag = "";
     parent = null;
     count = -1;
@@ -86,7 +86,7 @@ public class Pml {
    */
   public Pml reset(Pml pml) {
     // Initializes the Pml
-    data = new HashMap<String, Pml>();
+    data = new HashMap<String, Object>();
     tag = "";
     parent = null;
     count = -1;
@@ -118,7 +118,7 @@ public class Pml {
   }
   @Override
   public final String toString() {
-    return toString("pml");
+    return toString("raw");
   }
   /** Initialise la PML en la lisant dans un fichier donné.
    * @param location  L'URL (Universal Resource Location) de chargement de <a href="StringFile.html#load-format">format standard</a>.
@@ -576,10 +576,11 @@ public class Pml {
   }
   /** Renvoie la valeur d'un paramètre de ce PML.
    * @param name Le nom de l'attribut ou l'index de l'élément (sous forme de chaîne ou d'entier).
-   * @return La valeur du paramètre, ou null si indéfini.
+   * @return La valeur du paramètre, ou null si indéfini en tant que paramètre.
    */
   public Pml getChild(String name) {
-    return data.get(name);
+    Object o = data.get(name);
+    return o != null&& o instanceof Pml ? (Pml) o : null;
   }
   /**
    * @see #getChild(String)
@@ -587,7 +588,22 @@ public class Pml {
   public final Pml getChild(int index) {
     return getChild(Integer.toString(index));
   }
-  /** Renvoie la valeur d'un paramètre de ce PML en tant que chaîne.
+  /** Renvoie la d'un paramètre de ce PML en tant qu'objet Java.
+   * @param name Le nom de l'attribut ou l'index de l'élément (sous forme de chaîne ou d'entier).
+   * @return La valeur du paramètre, ou null si indéfini en tant que paramètre.
+   */
+  public Object getObject(String name) {
+    return data.get(name);
+  }
+  /**
+   * @see #getObject(String)
+   */
+  public final Object getObject(int index) {
+    return getObject(Integer.toString(index));
+  }
+  /** Renvoie la d'un paramètre de ce PML en tant qu'objet Java.
+   *
+   *  /** Renvoie la valeur d'un paramètre de ce PML en tant que chaîne.
    * @param name  Le nom de l'attribut ou l'index de l'élément (sous forme de chaîne ou d'entier).
    * @param value La valeur par défaut, sinon "".
    * @return La valeur de ce paramètre, si défini, sinon sa valeur par défaut.
@@ -596,9 +612,9 @@ public class Pml {
     if(data.get(name) == null)
       return "";
     String v = data.get(name).toString();
-    if(v.startsWith("{\""))
+    if(v.matches("[{]\".*\"[}]"))
       v = v.substring(2, v.length() - 2);
-    else
+    if(v.matches("[{].*[}]"))
       v = v.substring(1, v.length() - 1);
     return v != null ? v : value != null ? value : "";
   }
@@ -627,7 +643,7 @@ public class Pml {
    */
   public final double getDecimal(String name, double value) {
     try {
-      return Double.parseDouble(getString(name, "0"));
+      return Double.parseDouble(getString(name));
     } catch(NumberFormatException e) {
       return value;
     }
@@ -657,7 +673,7 @@ public class Pml {
    */
   public final int getInteger(String name, int value) {
     try {
-      return Integer.parseInt(getString(name, "0"));
+      return Integer.parseInt(getString(name));
     } catch(NumberFormatException e) {
       return value;
     }
@@ -680,12 +696,45 @@ public class Pml {
   public final int getInteger(int index) {
     return getInteger(index, 0);
   }
+  /** Renvoie la valeur d'un paramètre de ce PML en tant que boolean.
+   * @param name  Le nom de l'attribut ou l'index de l'élément (sous forme de chaîne ou d'entier).
+   * @param value La valeur par défaut, sinon false.
+   * @return La valeur true ou false si le paramètre est égal à "true" ou "false" indépendamment de la casse, la valeur par défaut sinon.int
+   */
+  public final boolean getBoolean(String name, boolean value) {
+    String v = getString(name);
+    if(v != null) {
+      if("true".equals(v.toLowerCase()))
+        return true;
+      if("false".equals(v.toLowerCase()))
+        return false;
+    }
+    return value;
+  }
+  /**
+   * @see #getBoolean(String, boolean)
+   */
+  public final boolean getBoolean(int index, boolean value) {
+    return getBoolean(Integer.toString(index), value);
+  }
+  /**
+   * @see #getBoolean(String, boolean)
+   */
+  public final boolean getBoolean(String name) {
+    return getBoolean(name, false);
+  }
+  /**
+   * @see #getBoolean(String, boolean)
+   */
+  public final boolean getBoolean(int index) {
+    return getBoolean(index, false);
+  }
   /** Définit la valeur d'un paramètre de ce PML.
    * @param name  Le nom de l'attribut ou l'index de l'élément (sous forme de chaîne ou d'entier).
-   * @param value La valeur du paramètre (en tant que PML, entier, décimal ou entier).
+   * @param value La valeur du paramètre (en tant que PML, object Java, entier, décimal ou entier).
    * @return Cet objet, permettant de définir la construction <tt>Pml pml= new Pml().reset(..)</tt>.
    */
-  public Pml set(String name, Pml value) {
+  public Pml set(String name, Object value) {
     // Deletes the attribute value
     if(value == null) {
       try {
@@ -703,51 +752,52 @@ public class Pml {
       // Adds the parameter value
     } else {
       data.put(name, value);
-      value.setParent(this);
+      if(value instanceof Pml)
+        ((Pml) value).setParent(this);
     }
     count = -1;
     return this;
   }
   /**
-   * @see #set(String, Pml)
+   * @see #set(String, Object)
    */
-  public final Pml set(int index, Pml value) {
+  public final Pml set(int index, Object value) {
     return set(Integer.toString(index), value);
   }
   /**
-   * @see #set(String, Pml)
+   * @see #set(String, Object)
    */
   public final Pml set(String name, String value) {
     Pml v = new Pml();
-    v.reset(value);
+    v.reset("\"" + value.replaceAll("\"", "\\\"") + "\"");
     return set(name, v);
   }
   /**
-   * @see #set(String, Pml)
+   * @see #set(String, Object)
    */
   public final Pml set(int index, String value) {
     return set(Integer.toString(index), value);
   }
   /**
-   * @see #set(String, Pml)
+   * @see #set(String, Object)
    */
   public final Pml set(String name, double value) {
     return set(name, Double.toString(value));
   }
   /**
-   * @see #set(String, Pml)
+   * @see #set(String, Object)
    */
   public final Pml set(int index, double value) {
     return set(Integer.toString(index), value);
   }
   /**
-   * @see #set(String, Pml)
+   * @see #set(String, Object)
    */
   public final Pml set(String name, int value) {
     return set(name, Integer.toString(value));
   }
   /**
-   * @see #set(String, Pml)
+   * @see #set(String, Object)
    */
   public final Pml set(int index, int value) {
     return set(Integer.toString(index), value);

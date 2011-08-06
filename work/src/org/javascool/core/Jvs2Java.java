@@ -11,8 +11,8 @@ import org.javascool.core.Translator;
  * @serial exclude
  */
 public class Jvs2Java extends Translator {
-  // @factory
-  private Jvs2Java() {}
+  // @bean
+  public Jvs2Java() {}
 
   /** Définit un mécanisme spécifique de traduction en plus du mécanisme standard.
    * @param progletTranslator Le mécanisme de traduction spécifique d'une proglet donnée.
@@ -77,7 +77,7 @@ public class Jvs2Java extends Translator {
       // head.append("import org.javascool.*;");
       // head.append("import org.javascool.gui.*;");
       // head.append("import java.util.logging.*;");
-      head.append("import static org.javascool.core.Macros.*;");
+      head.append("import static org.javascool.widgets.Macros.*;");
       if(progletPackageName != null)
         head.append("import static ").append(progletPackageName).append(".Functions.*;");
       if(progletTranslator != null)
@@ -87,7 +87,7 @@ public class Jvs2Java extends Translator {
       head.append("  private static final long serialVersionUID = ").append(uid).append("L;");
       head.append("  public void run() {");
       head.append("   try{ main(); } catch(Throwable e) { ");
-      head.append("     System.out.println(\"-------------------\nErreur lors de l'exécution de la proglet\n\"+e+\"\n-------------------\n\");}");
+      head.append("     System.out.println(\"\\n-------------------\\nErreur lors de l'exécution de la proglet\\n\"+e+\"\\n-------------------\\n\");}");
       head.append("}");
     }
     // Ici il y a le grospatch pour jeux2D
