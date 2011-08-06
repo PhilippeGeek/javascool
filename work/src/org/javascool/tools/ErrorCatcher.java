@@ -63,7 +63,7 @@ public class ErrorCatcher {
                                                     s += e.getStackTrace()[i] + (i < t.getStackTrace().length - 1 ? "\n" : "»");
                                                   s += "</pre><hr>";
                                                   if(uncaughtExceptionAlertOnce == 0)
-                                                    org.javascool.widgets.Macros.message(s, true);
+                                                    org.javascool.tools.Macros.message(s, true);
                                                   else
                                                     System.err.println(s);
                                                   uncaughtExceptionAlertOnce++;

@@ -12,10 +12,14 @@
   
   <target name="javascool.jar" depends="classes" >
     <mkdir dir="../build"/>
-    <jar destfile="../build/javascool.jar" basedir="../build/classes">
+    <delete file="../build/javascool.jar"/>
+    <unzip dest="../build/classes" src="lib/RSyntaxTextArea.jar"/>
+    <jar destfile="../build/javascool.jar">
       <manifest>
         <attribute name="Main-Class" value="org.javascool.Core"/>
       </manifest>
+      <fileset dir="../build/classes"/>
+      <fileset dir="src" includes="org/javascool/widgets/icons/*"/>
     </jar>
     <exec executable="sh">
       <arg value="-c"/>
@@ -49,13 +53,14 @@
   </target>
 
   <target name="run" depends="javascool.jar">
-    <java jar="../build/javascool.jar" fork="true"/>
+    <java jar="../build/javascool.jar" dir="../sketchbook" fork="true"/>
   </target>
   
   <target name="clean">
     <delete dir="../build/classes"/>
     <delete dir="../build/web/api"/>
     <delete dir="src/web/.http.root"/>
+    <delete dir="nbproject/private"/>
   </target>
     
 </project>

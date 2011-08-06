@@ -43,7 +43,7 @@ public class ToolBar extends JToolBar {
    * @return Le bouton ajouté.
    */
   public final JButton addTool(String label, String icon, Runnable action) {
-    JButton button = icon == null ? new JButton(label) : new JButton(label, org.javascool.widgets.Macros.getIcon(icon));
+    JButton button = icon == null ? new JButton(label) : new JButton(label, org.javascool.tools.Macros.getIcon(icon));
     button.addActionListener(new ActionListener() {
                                @Override
                                public void actionPerformed(ActionEvent e) {

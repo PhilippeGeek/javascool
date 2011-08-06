@@ -4,41 +4,35 @@
 
 package org.javascool;
 
-// Used to define the frame
 import javax.swing.JFrame;
-import javax.swing.JComponent;
-import javax.swing.JOptionPane;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import javax.swing.ImageIcon;
 
 // Used to set Win look and feel
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UIManager;
 
+import javax.swing.JOptionPane;
+import org.javascool.gui.Desktop;
 import org.javascool.tools.ErrorCatcher;
 
 /** Lanceur de l'application "apprenant" qui permet de manipuler des «proglets». */
 public class Core {
   /** Titre de l'application. */
   public static final String title = "Java's Cool 4";
-
-  /** Numéro de révision de l'application.
-   * Il est obtenu par la commande Unix <tt>svn info | grep Revision | sed 's/.*: //'</tt>
-   */
-  static final int revision = 362;
-  /** Logo pour affichage. */
+  /** Logode l'application. */
   public static final String logo = "org/javascool/widgets/icons/logo.png";
+  /** Numéro de révision de l'application.*/
+  public static final int revision = 362;
+  // Note: Il est obtenu par la commande Unix <tt>svn info | grep Revision | sed 's/.*: //'</tt>
 
   /** Affiche le message de "about". */
   static void showAboutMessage() {
-    org.javascool.widgets.Macros.message(title + "est un logiciel conçut en colaboration avec : <br/><center>"
-                                         + "Philippe VIENNE<br/>"
-                                         + "Guillaume MATHERON<br/>"
-                                         + " et Inria<br/>"
-                                         + "Cécille Picard<br/>"
-                                         + "</center><br/>"
-                                         + "Il est distribué sous les conditions de la licence CeCILL<br/>", true);
+    org.javascool.tools.Macros.message(title + "est un logiciel conçut en colaboration avec : <br/><center>"
+                                       + "Philippe VIENNE<br/>"
+                                       + "Guillaume MATHERON<br/>"
+                                       + " et Inria<br/>"
+                                       + "Cécille Picard<br/>"
+                                       + "</center><br/>"
+                                       + "Il est distribué sous les conditions de la licence CeCILL<br/>", true);
   }
   /** Définit le look and feel de l'applicatiom. */
   static void setUpSystem() {
@@ -55,9 +49,11 @@ public class Core {
           UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
         } catch(Exception e2) {}
       } else {
-        try {
-          System.setProperty("com.apple.mrj.application.apple.menu.about.name", title);
-        } catch(Exception e2) {}
+        if(System.getProperty("os.name").toUpperCase().contains("MAC")) {
+          try {
+            System.setProperty("com.apple.mrj.application.apple.menu.about.name", title);
+          } catch(Exception e2) {}
+        }
         try {
           UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch(Exception e2) {
@@ -86,33 +82,9 @@ public class Core {
            "Confirmation",
            JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE))
       {
-        org.javascool.widgets.Macros.openURL("http://www.java.com/getjava");
+        org.javascool.tools.Macros.openURL("http://www.java.com/getjava");
         System.exit(-1);
       }
-  }
-  /** Ouvre une fenêtre principale pour lancer l'application. */
-  static void openWindow(String title, String icon, JComponent panel) {
-    JFrame frame = new JFrame();
-    frame.setTitle(title);
-    ImageIcon image = org.javascool.widgets.Macros.getIcon(icon);
-    if(image != null)
-      frame.setIconImage(image.getImage());
-    frame.add(panel);
-    frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-    frame.addWindowListener(new WindowAdapter() {
-                              @Override
-                              public void windowClosing(WindowEvent e) {
-                                if(org.javascool.core.Desktop.getInstance().close()) {
-                                  e.getWindow().setVisible(false);
-                                  e.getWindow().dispose();
-                                  System.exit(0);
-                                }
-                              }
-                            }
-                            );
-    frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-    frame.pack();
-    frame.setVisible(true);
   }
   /** Lanceur de l'application.
    * @param usage <tt>java org.javascool.Core</tt>
@@ -122,6 +94,6 @@ public class Core {
     // -setUncaughtExceptionAlert();
     setUpSystem();
     checkJavaVersion();
-    openWindow(title, logo, new javax.swing.JLabel(title));
+    Desktop.getInstance().getFrame();
   }
 }

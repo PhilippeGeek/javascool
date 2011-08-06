@@ -1,4 +1,4 @@
-package org.javascool.tools;
+package org.javascool.builder;
 
 import de.java2html.converter.JavaSource2HTMLConverter;
 import de.java2html.javasource.JavaSource;
@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 
+import org.javascool.tools.StringFile;
 import org.javascool.tools.StringFile;
 
 /** Convertit une portion de source Java ou Jvs en Html colorisé.

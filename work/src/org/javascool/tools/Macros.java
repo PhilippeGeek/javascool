@@ -4,7 +4,7 @@
 * Thierry.Vieville@sophia.inria.fr, Copyright (C) 2009.  All rights reserved.   *
 *********************************************************************************/
 
-package org.javascool.widgets;
+package org.javascool.tools;
 
 import javax.swing.JOptionPane;
 import javax.swing.JEditorPane;
@@ -16,6 +16,7 @@ import javax.swing.ImageIcon;
 import java.net.URL;
 import java.io.File;
 import java.io.IOException;
+import org.javascool.widgets.Console;
 
 /** Cette factory contient des functions générales rendues visibles à l'utilisateur de proglets.
  * <p>Elle permet de définir des fonctions statiques qui seront utilisées pour faire des programmes élèves.</p>
@@ -135,7 +136,7 @@ public class Macros {
     p.setText(text);
     p.setSize(800, 600);
     JOptionPane.showMessageDialog(
-      org.javascool.core.Desktop.getInstance().getFrame(),
+      org.javascool.gui.Desktop.getInstance().getFrame(),
       new JScrollPane(p),
       "Java's Cool",
       JOptionPane.PLAIN_MESSAGE);
@@ -154,7 +155,7 @@ public class Macros {
     if(inputBuffer.isPopable())
       return inputBuffer.popString();
     String s = JOptionPane.showInputDialog(
-      org.javascool.core.Desktop.getInstance().getFrame(),
+      org.javascool.gui.Desktop.getInstance().getFrame(),
       question,
       "Java's cool",
       JOptionPane.PLAIN_MESSAGE);
@@ -263,7 +264,7 @@ public class Macros {
     if(inputBuffer.isPopable())
       return inputBuffer.popBoolean();
     int r = JOptionPane.showConfirmDialog(
-      org.javascool.core.Desktop.getInstance().getFrame(),
+      org.javascool.gui.Desktop.getInstance().getFrame(),
       question,
       "Java's cool",
       JOptionPane.YES_NO_OPTION);
@@ -334,7 +335,7 @@ public class Macros {
      * @return Le texte suivant à considérer. Ou la chaîne vide si le tampon est vide.
      */
     public String popString() {
-      org.javascool.widgets.Macros.sleep(500);
+      org.javascool.tools.Macros.sleep(500);
       int i = inputs.indexOf("\n");
       if(i != -1) {
         String input = inputs.substring(0, i);
@@ -473,7 +474,7 @@ public class Macros {
       if(location.startsWith("file:"))
         location = location.substring(5);
       if(reading) {
-        File file = new File(base, location);
+        File file = base != null ? new File(base, location) : new File(location);
         if(file.exists())
           return new URL("file:" + file.getCanonicalPath());
         file = new File(System.getProperty("user.dir"), location);
@@ -482,11 +483,13 @@ public class Macros {
         file = new File(System.getProperty("user.home"), location);
         if(file.exists())
           return new URL("file:" + file.getCanonicalPath());
+        System.err.println(">1" + location);
         URL url = Thread.currentThread().getContextClassLoader().getResource(location);
+        System.err.println(">1" + url);
         if(url != null)
           return url;
       }
-      return new URL("file:" + base == null ? location : base + File.separatorChar + location);
+      return new URL("file:" + (base == null ? location : base + File.separatorChar + location));
     } catch(Exception e) { throw new IllegalArgumentException(e + " : " + location + " is a malformed URL");
     }
   }
