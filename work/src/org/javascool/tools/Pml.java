@@ -105,7 +105,8 @@ public class Pml {
    * <li>"TXT" Retourne une chaîne 2D formattée.</li>
    * <li>"XML" Retourne une structure logique XML,
    * en réduisant les tag et attributs à des nom XML valides et en considérant les PML sans attribut ni élément comme des chaînes.<li>
-   * <li>"PHP" Retourne un élément de conde PHP de la forme:<tt>&lt;php $tag = array("_tag" = getTag(), . . "name" => "value", . . , "element");?></tt>.</li>
+   * <li>"PHP" Retourne un élément de code PHP de la forme:<tt>&lt;php $tag = array("_tag" = getTag(), . . "name" => "value", . . , "element");?></tt>.</li>
+   * <li>"JMF" Retourne un format de fichier de manifeste de JAR de la forme: <tt> name : value \n .. </tt> en omettant le tag et les éléments.</li>
    * </ul></div>
    * @return La chaîne qui représente la PML.
    */
@@ -114,6 +115,7 @@ public class Pml {
     return "xml".equals(format) ? new XmlWriter().toString(this)
            : "raw".equals(format) ? new PlainWriter().toString(this, 0)
            : "php".equals(format) ? new PhpWriter().toString(this)
+           : "jmf".equals(format) ? new JmfWriter().toString(this)
            : new PlainWriter().toString(this, 180);
   }
   @Override
@@ -499,11 +501,11 @@ public class Pml {
     }
   }
 
-  /**  Définit le convertisseur de PML en XMl. */
+  /**  Définit le convertisseur de PML en PHP. */
   private static class PhpWriter {
     private StringBuffer string;
 
-    /** Converti la PML en tableau PHP. */
+    /** Convertit la PML en tableau PHP. */
     public String toString(Pml pml) {
       string = new StringBuffer();
       if(pml == null)
@@ -521,6 +523,30 @@ public class Pml {
     /** Prends en compte les \". */
     private static String quote(String string) {
       return "\"" + string.replaceAll("\\\\", "\\\\\\\\").replaceAll("\"", "\\\\\"") + "\"";
+    }
+    private static String quote(Pml pml) {
+      return quote(pml.getSize() == 0 ? pml.getTag() : pml.toString());
+    }
+  }
+
+  /**  Définit le convertisseur de PML en JMF. */
+  private static class JmfWriter {
+    private StringBuffer string;
+
+    /** Convertit la PML en fichier JMF. */
+    public String toString(Pml pml) {
+      string = new StringBuffer();
+      if(pml == null)
+        return "";
+      else {
+        for(String name : pml.attributes())
+          string.append(name + " : " + quote(pml.getChild(name)) + "\n");
+      }
+      return string.toString();
+    }
+    /** Elimine les \n. */
+    private static String quote(String string) {
+      return string.replaceAll("\n", " ");
     }
     private static String quote(Pml pml) {
       return quote(pml.getSize() == 0 ? pml.getTag() : pml.toString());

@@ -11,6 +11,7 @@ import java.lang.reflect.InvocationTargetException;
 import javax.swing.JFrame;
 import java.awt.BorderLayout;
 import javax.swing.JEditorPane;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 
 /** Détecte et rapporte de manière optimisée des erreurs lors de l'exécution.
@@ -73,4 +74,23 @@ public class ErrorCatcher {
   }
   private static String uncaughtExceptionAlertHeader;
   private static int uncaughtExceptionAlertOnce = 0;
+
+  /** Impose une version minimale de Java.
+   * <p>Si la version n'est pas correcte, l'application s'arrête et un téléchargement est proposé.</p>
+   * @param version Version de Java 5 pour 1.5, 6 pour 1.6.
+   */
+  public static void checkJavaVersion(int version) {
+    if(new Integer(System.getProperty("java.version").substring(2, 3)) < version)
+      if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(
+           new JFrame(),
+           "<html>Vous n'avez pas une version suffisante de Java<br>"
+           +"cette application requiert Java 1.6 ou plus.<br>"
+           + "Voulez vous être redirigé vers le site de téléchargement ?",
+           "Confirmation",
+           JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE))
+      {
+        org.javascool.tools.Macros.openURL("http://www.java.com/getjava");
+        System.exit(-1);
+      }
+  }
 }

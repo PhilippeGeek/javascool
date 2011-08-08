@@ -28,12 +28,21 @@ public class Java2Class {
   /** Compile dans le système de fichier local, un code source Java.
    * <p>Les fichiers <tt>.class</tt> sont générés dans sur place.</p>
    * <p>Les erreurs de compilation sont affichées dans la console.</p>
-   * @param javaFile Le nom du fichier jaava à compiler.
+   * @param javaFile Le nom du fichier à compiler. Un tableau de noms de fichiers peut être donné.
    * @return La valeur true en cas de succès, false si il y a des erreurs de compilation.
    *
    * @throws RuntimeException Si une erreur d'entrée-sortie s'est produite lors de la compilation.
    */
   public static boolean compile(String javaFile) {
+    String javaFiles[] = { javaFile };
+    return compile(javaFiles);
+  }
+  /**
+   * @see #compile(String)
+   */
+  public static boolean compile(String javaFiles[]) {
+   if (javaFiles.length == 0)
+            return false;
     try {
       // Initialisation des objets dy compilateur
       JavaCompiler compiler = ToolProvider.getSystemJavaCompiler(); // The compiler tool
@@ -41,7 +50,8 @@ public class Java2Class {
       StandardJavaFileManager fileManager = compiler.getStandardFileManager(null, Locale.FRENCH, null); // The file manager
       // Mise en place des fichiers
       List<File> sourceFileList = new ArrayList<File>();
-      sourceFileList.add(new File(javaFile));
+      for(String javaFile : javaFiles)
+	sourceFileList.add(new File(javaFile));
       Iterable< ? extends JavaFileObject> compilationUnits = fileManager.getJavaFileObjectsFromFiles(sourceFileList);
       // Lancement de la compilation
       JavaCompiler.CompilationTask task = compiler.getTask(null, fileManager, diagnostics, null, null, compilationUnits);
@@ -72,7 +82,7 @@ public class Java2Class {
         }
       }
       return true;
-    } catch(Throwable e) { throw new RuntimeException(e + " when compiling: " + javaFile);
+    } catch(Throwable e) { throw new RuntimeException(e + " when compiling !");
     }
   }
   /** Charge dynamiquement une classe Java qui implémente un Runnable, pour son e×écution au cours d'une session.

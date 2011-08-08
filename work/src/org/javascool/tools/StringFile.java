@@ -135,7 +135,7 @@ public class StringFile {
    *
    * @throws IllegalArgumentException Si l'URL ne peut pas être listée.
    */
-  public Iterable<String> list(String folder, String pattern) {
+  public static String[] list(String folder, String pattern) {
     if(folder.matches("(ftp|http|https|jar):.*")) throw new IllegalArgumentException("Impossible de lister le contenu d'un URL de ce type: " + folder);
     if(folder.matches("file:.*"))
       folder = folder.substring(5);
@@ -147,20 +147,20 @@ public class StringFile {
           if((pattern == null) || file.matches(pattern))
             files.add("jar:" + folder + "!" + file);
         }
-      } catch(IOException e) {}
+      } catch(Exception e) {}
     } else {
       try {
         for(File file : new File(folder).listFiles())
           if((pattern == null) || file.getName().matches(pattern))
             files.add(file.getCanonicalPath());
-      } catch(IOException e) {}
+      } catch(Exception e) {}
     }
-    return files;
+    return files.toArray(new String[files.size()]);
   }
   /**
    * @see #list(String, String)
    */
-  public Iterable<String> list(String folder) {
+  public static String[] list(String folder) {
     return list(folder, null);
   }
 }

@@ -23,7 +23,7 @@ import org.javascool.tools.Pml;
 public class Engine {
   /** Tables des proglets. */
   private ArrayList<Proglet> proglets;
-/** Proglet en fonctionnement. */
+  /** Proglet en fonctionnement. */
   Proglet currentProglet;
 
   // @static-instance
@@ -38,9 +38,16 @@ public class Engine {
   }
   private static Engine engine = null;
   private Engine() {
-    proglets = new ArrayList<Proglet>();
+    // Détection des proglets présentes dans le jar
+    {
+      proglets = new ArrayList<Proglet>();
+      String javascoolJar = Macros.getResourceURL("org/javascool/core/Engine.class").toString().replaceFirst("jar:([^!]*)!.*", "$1");
+      for(String dir : StringFile.list(javascoolJar, "org.javascool.proglets.[^\\.]*"))
+        proglets.add(new Proglet().load(dir));
+      System.err.println("known-proglets in " + javascoolJar + " : " + proglets);
+    }
+    // Définit une proglet "vide" pour lancer l'interface
     if(proglets.size() == 0) {
-      // Définit une proglet "vide" pour lancer l'interface
       Proglet p = new Proglet();
       p.pml.set("name", "Interface");
       p.pml.set("icon-location", "org/javascool/widgets/icons/scripts.png");
@@ -48,33 +55,67 @@ public class Engine {
     }
     currentProglet = proglets.get(0);
   }
+  //
+  // [1] Mécanisme de compilation/exécution
+  //
+
   /** Mécanisme de compilation du fichier Jvs.
    * @param program Non du programme à compiler.
    * @return La valeur true si la compilation est ok, false sinon.
    */
   public boolean doCompile(String program) {
+    doStop();
+    // Traduction Jvs -> Java puis Java -> Class et chargement de la classe si succès
     Jvs2Java jvs2java = new Jvs2Java();
     jvs2java.setProgletTranslator(getProglet().getTranslator());
-    if(getProglet().hasFunctions())
-      jvs2java.setProgletPackageName("org.javascool." + getProglet().getName());
-    String javaFile = System.getProperty("java.io.tmpdir") + File.separator + "JvsToJavaTranslated" + (++uid) + ".java";
-    System.out.println(jvs2java.translate(program) + "\n------------------\n");
-    StringFile.save(javaFile, jvs2java.translate(program));
+    jvs2java.setProgletPackageName(getProglet().hasFunctions() ? "org.javascool.proglets." + getProglet().getName() : null);
+    String javaCode = jvs2java.translate(program);
+    String javaFile = System.getProperty("java.io.tmpdir") + File.separator + jvs2java.getClassName() + ".java";
+    StringFile.save(javaFile, javaCode);
     if(Java2Class.compile(javaFile)) {
-      Java2Class.load(javaFile);
+      runnable = Java2Class.load(javaFile);
       return true;
-    } else
+    } else {
+      runnable = null;
       return false;
+    }
   }
-  private int uid = 0;
   /** Mécanisme de lancement du programme compilé. */
   public void doRun() {
-    Macros.message("doRun");
+    doStop();
+    // Lancement du runnable dans un thread
+    if(runnable != null) {
+      (thread = new Thread(new Runnable() {
+                             public void run() {
+                               try {
+                                 runnable.run();
+                                 thread = null;
+                               } catch(Throwable e) {
+                                 System.out.println("Notice: " + e);
+                               }
+                             }
+                           }
+                           )).start();
+    }
   }
   /** Mécanisme d'arrêt du programme compilé. */
   public void doStop() {
-    Macros.message("doRun");
+    if(thread != null) {
+      thread.interrupt();
+      thread = null;
+    }
   }
+  /** Renvoie true si le programme est en cours. */
+  public boolean isRunning() {
+    return thread != null;
+  }
+  private Thread thread = null;
+  private Runnable runnable = null;
+
+  //
+  // Mécanisme de chargement d'une proglet
+  //
+
   /** Mécanisme de chargement d'une proglet.
    * @param proglet Le nom de la proglet.
    * @return La proglet en fonctionnement.
@@ -104,8 +145,9 @@ public class Engine {
     /** Définit une proglet à partir d'un répertoire donné.
      * @param location L'URL (Universal Resource Location) où se trouve la proglet.
      * @throws IllegalArgumentException Si l'URL est mal formée.
+     * @return Cet objet, permettant de définir la construction <tt>new Proglet().load(..)</tt>.
      */
-    public void load(String location) {
+    public Proglet load(String location) {
       // Définit les méta-données de la proglet.
       pml.load(location + "proglet.pml");
       pml.set("location", location);
@@ -131,6 +173,11 @@ public class Engine {
       try {
         pml.set("jvs-translator", (Translator) Class.forName("org.javascool.proglets." + pml.getString("name") + ".Panel").newInstance());
       } catch(Throwable e) {}
+      return this;
+    }
+    @Override
+    public String toString() {
+      return pml.toString();
     }
     /** Renvoie le nom de la proglet.
      * @return Le nom de la proglet.

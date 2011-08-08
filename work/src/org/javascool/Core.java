@@ -30,12 +30,11 @@ public class Core {
                                        + "Philippe VIENNE<br/>"
                                        + "Guillaume MATHERON<br/>"
                                        + " et Inria<br/>"
-                                       + "Cécille Picard<br/>"
                                        + "</center><br/>"
                                        + "Il est distribué sous les conditions de la licence CeCILL<br/>", true);
   }
-  /** Définit le look and feel de l'applicatiom. */
-  static void setUpSystem() {
+  /** Définit le look and feel de l'application. */
+  static void setUpLookAndFeel() {
     try {
       for(LookAndFeelInfo info : UIManager.getInstalledLookAndFeels())
         if("Nimbus".equals(info.getName())) {
@@ -71,29 +70,19 @@ public class Core {
                                            " </ul>",
                                            revision);
   }
-  /** Impose que la version de Java soit au moins 1.6. */
-  static void checkJavaVersion() {
-    if(new Integer(System.getProperty("java.version").substring(2, 3)) < 6)
-      if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(
-           new JFrame(),
-           "<html>Vous n'avez pas une version suffisante de Java<br>"
-           + title + " requière Java 1.6 ou plus.<br>"
-           + "Voulez vous être redirigé vers le site de téléchargement ?",
-           "Confirmation",
-           JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE))
-      {
-        org.javascool.tools.Macros.openURL("http://www.java.com/getjava");
-        System.exit(-1);
-      }
-  }
   /** Lanceur de l'application.
-   * @param usage <tt>java org.javascool.Core</tt>
+   * @param usage <tt>java -jar javascool.jar</tt>
    */
-  public static void main(String[] usage) {
+  public static void main(String[] usage) {  
+    if (usage.length > 0 && (usage[0].equals("-h") || usage[0].equals("-help") || usage[0].equals("--help"))) {
+      System.out.println("Java's Cool Core - lance l'interface pour travailler avec les proglets");
+      System.out.println("Usage : java -jar javascool.jar");
+      System.exit(0);
+    } 
     System.err.println("" + title + " is starting ...");
+    ErrorCatcher.checkJavaVersion(6);
+    setUpLookAndFeel();
     // -setUncaughtExceptionAlert();
-    setUpSystem();
-    checkJavaVersion();
     Desktop.getInstance().getFrame();
   }
 }

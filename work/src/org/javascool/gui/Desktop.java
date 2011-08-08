@@ -40,12 +40,16 @@ public class Desktop {
   /** Renvoie la fenêtre racine de l'interface graphique. */
   public Frame getFrame() {
     if(frame == null)
-      frame = getFrame(Core.title, Core.logo, JVSMainPanel.getInstance());
+      frame = showFrame(Core.title, Core.logo, JVSMainPanel.getInstance());
     return frame;
   }
   private JFrame frame;
-  /** Ouvre une fenêtre principale pour lancer l'application. */
-  static JFrame getFrame(String title, String icon, JComponent panel) {
+  /** Ouvre une fenêtre principale pour lancer une application. 
+   * @param title Le titre de la fenêtre.
+   * @param icon L'icône de la fenêtre.
+   * @param panel Le composant graphique à afficher.
+   */
+  static JFrame showFrame(String title, String icon, JComponent panel) {
     JFrame frame = new JFrame();
     frame.setTitle(title);
     ImageIcon image = org.javascool.tools.Macros.getIcon(icon);

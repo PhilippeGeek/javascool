@@ -1,0 +1,11 @@
+<!-- Construction de la library javac.jar où le compilateur java est extrait du tools.jar standard -->
+<project name="javac" basedir="." default="../javac.jar">
+  <property name="build.dir" value="../../../build/javac"/>
+  <target name="../javac.jar"> 
+    <delete file="../javac.jar"/>
+    <mkdir dir="${build.dir}"/>
+    <unzip dest="${build.dir}" src="/usr/java/jdk1.6.0_22/lib/tools.jar"/>
+    <jar destfile="../javac.jar" basedir="${build.dir}" includes="com/sun/tools/javac/**,sun/tools/java/**,com/sun/source/tree/**,com/sun/source/util/**"/>
+    <delete dir="${build.dir}"/>
+  </target>
+</project>
