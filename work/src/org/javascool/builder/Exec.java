@@ -18,7 +18,7 @@ public class Exec {
 
   /** Execute la commande et renvoie le résultat.
    * @param command La commande avec ses arguments séparés par des tabulations (caractère "\t") ou, sans cela, des espaces (caractère " ").
-   * @param timeout Temporisation maximale avant la fin de la commande. Si 0, l'attente est indéfinie.
+   * @param timeout Temporisation maximale avant la fin de la commande. Si 0, l'attente est indéfinie. Valeur par défaut 10.
    * @return Le résultat: ce que la commande écrit en sortie.
    * @throws RuntimeException Si une erreur d'entrée-sortie s'est produite lors de l'exécution.
    * @throws IllegalStateException Si le statut de retour de la commande n'est pas 0 (donc a un numéro d'erreur) ou si la temporisation est dépassée.
@@ -65,5 +65,11 @@ public class Exec {
       return output.toString();
     } catch(IOException e) { throw new RuntimeException(e + " when executing: " + command);
     }
+  }
+  /** 
+   * @see #run(String, int)
+   */
+  public static String run(String command) {
+    return run(command, 10);
   }
 }

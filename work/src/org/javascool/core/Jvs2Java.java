@@ -77,12 +77,13 @@ public class Jvs2Java extends Translator {
       // head.append("import org.javascool.*;");
       // head.append("import org.javascool.gui.*;");
       // head.append("import java.util.logging.*;");
-      head.append("import static org.javascool.widgets.Macros.*;");
+      head.append("import static org.javascool.tools.Macros.*;");
       if(progletPackageName != null)
         head.append("import static ").append(progletPackageName).append(".Functions.*;");
       if(progletTranslator != null)
         head.append(progletTranslator.getImports());
       // Declares the proglet's core as a Runnable in the Applet
+      uid++;
       head.append("public class JvsToJavaTranslated").append(uid).append(" implements Runnable{");
       head.append("  private static final long serialVersionUID = ").append(uid).append("L;");
       head.append("  public void run() {");
@@ -100,9 +101,9 @@ public class Jvs2Java extends Translator {
    * @param lineNumber The line numbr to translate.
    * @return The java translated text.
    */
-  private static String translateOnce(String line, int lineNumber) {
+  private String translateOnce(String line, int lineNumber) {
     // Translates the while statement with sleep
-    line = line.replaceAll("(while.*\\{)", "$1 sleep(20);");
+    line = line.replaceAll("(while.*\\{)", "$1 sleep(100);");
     line = line.replaceAll("(.*[^a-zA-Z0-9_])([a-zA-Z0-9_]+[ \t=]*\\.getProperty[ \t=]*\\()[ \t=]*([a-zA-Z0-9_]+)[ \t=]*,([^)]*\\))(.*)", "$1(($3)$2$4)$5");
     line = line.replaceAll("\\(int\\)", "(Integer)");
     line = line.replaceAll("\\(double\\)", "(Double)");
@@ -112,8 +113,12 @@ public class Jvs2Java extends Translator {
                              "proglet.synthesons.SoundDisplay.tone = new org.javascool.SoundBit() { public double get(char c, double t) { return $1; } }; proglet.synthesons.SoundDisplay.syntheSet(\"16 a\");");
     return "    " + line;
   }
+  /** Renvoie le nom de la dernière classe Java générée lors de la traductions. */
+  public String getClassName() {
+    return "JvsToJavaTranslated" + uid;
+  }
   // Counter used to increment the serialVersionUID in order to reload the different versions of the class
-  private static int uid = 1;
+  private static int uid = 0;
 
   /** Lanceur de la conversion Jvs en Java.
    * @param usage <tt>java org.javascool.core.Jvs2Java input-file [output-file]</tt>

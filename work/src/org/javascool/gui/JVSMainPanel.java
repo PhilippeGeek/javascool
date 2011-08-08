@@ -79,7 +79,10 @@ class JVSMainPanel extends JPanel {
   public void compileFile() {
     getEditorTabs().getEditor(JVSFileEditorTabs.getCurrentCompiledFile()).removeLineSignals();
     getEditorTabs().saveCurrentFile();
-    if(getEditorTabs().compileFile(getEditorTabs().getCurrentFileId())) {}
+    if(getEditorTabs().compileFile(getEditorTabs().getCurrentFileId()))
+      toolbar.enableStartStopButton();
+    else
+      toolbar.disableStartStopButton();
   }
   /** Open a file
    * Start a file chooser and open selected file

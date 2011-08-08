@@ -4,12 +4,15 @@
  */
 package org.javascool.gui;
 
+import java.util.ArrayList;
+import java.util.Enumeration;
 import javax.swing.Box;
 import org.javascool.core.Engine;
 
-import  org.javascool.widgets.ToolBar;
+import org.javascool.widgets.ToolBar;
 import javax.swing.JButton;
-import  org.javascool.widgets.StartStopButton;
+import org.javascool.widgets.StartStopButton;
+import org.javascool.builder.Builder;
 
 /** The JVS top tool bar
  * @author Philippe VIENNE
@@ -31,62 +34,78 @@ class JVSToolBar extends ToolBar {
   }
   /** Initialize the toolBar with default button and setUps */
   private void init() {
-    addTool("Nouvel activité", "org/javascool/widgets/icons/new.png", new Runnable() {
-                   @Override
-                   public void run() {
-                     JVSMainPanel.getInstance().closeProglet();
-                   }
-                 }
-                 );
+    addTool("Nouvelle activité", "org/javascool/widgets/icons/new.png", new Runnable() {
+              @Override
+              public void run() {
+                JVSMainPanel.getInstance().closeProglet();
+              }
+            }
+            );
     addTool("Nouveau fichier", "org/javascool/widgets/icons/new.png", new Runnable() {
-                   @Override
-                   public void run() {
-                     JVSMainPanel.getInstance().newFile();
-                   }
-                 }
-                 );
+              @Override
+              public void run() {
+                JVSMainPanel.getInstance().newFile();
+              }
+            }
+            );
     addTool("Ouvrir un fichier", "org/javascool/widgets/icons/open.png", new Runnable() {
-                   @Override
-                   public void run() {
-                     JVSMainPanel.getInstance().openFile();
-                   }
-                 }
-                 );
+              @Override
+              public void run() {
+                JVSMainPanel.getInstance().openFile();
+              }
+            }
+            );
     addTool("Sauver", "org/javascool/widgets/icons/save.png", new Runnable() {
-                   @Override
-                   public void run() {
-                     JVSMainPanel.getInstance().saveFile();
-                   }
-                 }
-                 );
+              @Override
+              public void run() {
+                JVSMainPanel.getInstance().saveFile();
+              }
+            }
+            );
     addTool("Fermer le fichier", "org/javascool/widgets/icons/remove.png", new Runnable() {
-                   @Override
-                   public void run() {
-                     JVSMainPanel.getInstance().closeFile();
-                   }
-                 }
-                 );
+              @Override
+              public void run() {
+                JVSMainPanel.getInstance().closeFile();
+              }
+            }
+            );
 
     compileButton = addTool("Compiler", "org/javascool/widgets/icons/compile.png", new Runnable() {
-                                        @Override
-                                        public void run() {
-                                          JVSMainPanel.getInstance().compileFile();
-                                        }
-                                      }
-                                      );
+                              @Override
+                              public void run() {
+                                JVSMainPanel.getInstance().compileFile();
+                              }
+                            }
+                            );
 
     addTool("Executer", runButton = new StartStopButton() {
-	@Override
-	  public void start() { Engine.getInstance().doRun(); }
-	@Override
-	  public void stop() { Engine.getInstance().doStop(); }
-      });
+              @Override
+              public void start() {
+                Engine.getInstance().doRun();
+              }
+              @Override
+              public void stop() {
+                Engine.getInstance().doStop();
+              }
+              @Override
+              public boolean isRunning() {
+                return Engine.getInstance().isRunning();
+              }
+            }
+            );
 
     runButton.setVisible(false);
 
-
-    add(Box.createHorizontalGlue());
+    // Crée le menu de construction de proglets si pertinent
+    if(Builder.hasProglets())
+      pbutton = addRightTool("Proglet Builder", new Runnable() {
+	  @Override
+	    public void run() {
+	    org.javascool.builder.DialogFrame.startProgletMenu(pbutton);
+	  }});
   }
+  //@ inner-class-variable
+  private JButton pbutton;
   public void enableCompileButton() {
     compileButton.setVisible(true);
     revalidate();
@@ -99,7 +118,7 @@ class JVSToolBar extends ToolBar {
     runButton.setVisible(true);
     revalidate();
   }
-  public void desactivateStartStopButton() {
+  public void disableStartStopButton() {
     runButton.setVisible(false);
     revalidate();
   }

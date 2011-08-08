@@ -18,7 +18,7 @@ import java.io.File;
 import java.io.IOException;
 import org.javascool.widgets.Console;
 
-/** Cette factory contient des functions générales rendues visibles à l'utilisateur de proglets.
+/** Cette factory contient des fonctions générales rendues visibles à l'utilisateur de proglets.
  * <p>Elle permet de définir des fonctions statiques qui seront utilisées pour faire des programmes élèves.</p>
  * <p>Elle permet aussi avoir quelques fonctions de base lors de la création de nouvelles proglets.</p>
  * @see <a href="Macros.java.html">code source</a>
@@ -483,9 +483,7 @@ public class Macros {
         file = new File(System.getProperty("user.home"), location);
         if(file.exists())
           return new URL("file:" + file.getCanonicalPath());
-        System.err.println(">1" + location);
         URL url = Thread.currentThread().getContextClassLoader().getResource(location);
-        System.err.println(">1" + url);
         if(url != null)
           return url;
       }

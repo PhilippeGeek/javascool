@@ -14,6 +14,7 @@
     <mkdir dir="../build"/>
     <delete file="../build/javascool.jar"/>
     <unzip dest="../build/classes" src="lib/RSyntaxTextArea.jar"/>
+    <unzip dest="../build/classes" src="lib/javac.jar"/>
     <jar destfile="../build/javascool.jar">
       <manifest>
         <attribute name="Main-Class" value="org.javascool.Core"/>
@@ -24,6 +25,25 @@
     <exec executable="sh">
       <arg value="-c"/>
       <arg value="ls -l ../build/javascool.jar"/>
+    </exec>
+  </target>
+
+  <target name="javascool-builder.jar" depends="classes" >
+    <mkdir dir="../build"/>
+    <delete file="../build/javascool-builder.jar"/>
+    <unzip dest="../build/classes" src="lib/javac.jar"/>
+    <unzip dest="../build/classes" src="lib/jvs2html.jar"/>
+    <unzip dest="../build/classes" src="lib/saxon.jar"/>
+    <jar destfile="../build/javascool-builder.jar">
+      <manifest>
+        <attribute name="Main-Class" value="org.javascool.Build"/>
+      </manifest>
+      <fileset dir="../build/classes"/>
+      <fileset dir="src" includes="org/javascool/widgets/icons/*"/>
+    </jar>
+    <exec executable="sh">
+      <arg value="-c"/>
+      <arg value="ls -l ../build/javascool-builder.jar"/>
     </exec>
   </target>
 
@@ -50,10 +70,29 @@
         <include name="**/*.java"/>
       </fileset>
     </javadoc>
+    <copy todir="../build/web/api">        
+      <fileset dir="src">
+        <include name="**/*.java"/>
+      </fileset>
+      <mapper type="glob" from="*" to="*.java"/>
+    </copy>
+    <java jar="lib/java2html.jar" fork="true">
+      <arg value="-srcdir"/>
+      <!--arg value="src"/>
+      <arg value="-targetdir"/-->
+        <arg value="../build/web/api"/>
+      <!-- [-filemask *.java] [-converter html | xhtml11 | xhtml | tex | rtf | xml] [-tabs 4] [-copytotargetunprocessedfiles] -style [ Eclipse | Kawa | Monochrome ] -->
+    </java>
   </target>
 
   <target name="run" depends="javascool.jar">
     <java jar="../build/javascool.jar" dir="../sketchbook" fork="true"/>
+  </target>
+  
+  <target name="brun" depends="javascool-builder.jar">
+    <java jar="../build/javascool-builder.jar" dir="../sketchbook" fork="true">
+      <arg value="-q"/>
+    </java>
   </target>
   
   <target name="clean">

@@ -109,4 +109,10 @@ public class Console extends JPanel {
   public String getText() {
     return outputPane.getText();
   }
+  /** Renvoie la barre de menu de la console pour ajouter des éléments.
+   * @return La barre de menu de la console.
+   */
+  public ToolBar getToolBar() {
+    return toolbar;
+  }
 }

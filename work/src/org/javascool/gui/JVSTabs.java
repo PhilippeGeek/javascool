@@ -17,9 +17,6 @@ class JVSTabs extends JTabbedPane {
   /** Contain JPanels opened */
   protected HashMap<String, JPanel> tabs = new HashMap<String, JPanel>();
 
-  public JVSTabs() {
-    super();
-  }
   /** Add a tab with a JPanel
    * @param name The tab name
    * @param icon The link to the icon, can be an empty String

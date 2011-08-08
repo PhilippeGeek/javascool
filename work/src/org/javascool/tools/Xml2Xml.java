@@ -28,7 +28,7 @@ public class Xml2Xml {
 
   /** Convertit une chaîne XML en une autre chaîne XML selon des règles XSL.
    * @param xml La chaîne XML en entrée.
-   * @param xsl La chaîne avec les règles de transformation XSL.
+   * @param xsl Le nom de fichier ou la chaîne avec les règles de transformation XSL.
    * @return La chaîne en sortie.
    *
    * @throws IllegalArgumentException Si une erreur de syntaxe est détecté.
@@ -38,7 +38,7 @@ public class Xml2Xml {
     // Compile the XSL tranformation
     try {
       if(!tranformers.containsKey(xsl))
-        tranformers.put(xsl, tfactory.newTemplates(new StreamSource(new StringReader(xsl))).newTransformer());
+        tranformers.put(xsl, tfactory.newTemplates(xsl.trim().startsWith("<") ? new StreamSource(new StringReader(xsl)) : new StreamSource(xsl)).newTransformer());
     } catch(TransformerConfigurationException e) { throw new RuntimeException(e + " when compiling: " + xsl);
     }
     // Apply the transformation

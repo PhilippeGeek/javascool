@@ -5,7 +5,7 @@ JVS = $(realpath ..)
 
 ant :
 #	Lance ant sur son build.xml
-	ant run
+	ant brun
 #	ant javadoc ; firefox $(JVS)/build/web/api/index.html 
 
 #
