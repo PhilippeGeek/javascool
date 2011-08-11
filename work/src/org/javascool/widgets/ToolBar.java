@@ -10,6 +10,7 @@ import javax.swing.AbstractButton;
 import javax.swing.JButton;
 
 /** Définit une barre d'outils avec intégration de la gestion des actions.
+ *
  * @author Philippe Vienne
  * @see <a href="ToolBar.java.html">code source</a>
  * @serial exclude
@@ -50,11 +51,11 @@ public class ToolBar extends JToolBar {
   private final JButton addTool(String label, String icon, Runnable action, int where) {
     JButton button = icon == null ? new JButton(label) : new JButton(label, org.javascool.tools.Macros.getIcon(icon));
     button.addActionListener(new ActionListener() {
-	@Override
-	  public void actionPerformed(ActionEvent e) {
-	  actions.get((AbstractButton) e.getSource()).run();
-	}
-      }
+                               @Override
+                               public void actionPerformed(ActionEvent e) {
+                                 actions.get((AbstractButton) e.getSource()).run();
+                               }
+                             }
                              );
     add(button, where);
     if(buttons.containsKey(label)) throw new IllegalArgumentException("Chaque bouton/item/étiquette doit avoir un nom différent, mais le bouton «" + label + "» est en doublon");
@@ -92,7 +93,7 @@ public class ToolBar extends JToolBar {
    * @return Le bouton ajouté.
    */
   public JButton addRightTool(String title, Runnable action) {
-    if (right == 0)
+    if(right == 0)
       add(Box.createHorizontalGlue());
     return addTool(title, null, action, left + (++right));
   }

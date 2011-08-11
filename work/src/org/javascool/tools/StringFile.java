@@ -29,6 +29,7 @@ import java.util.jar.JarEntry;
 import java.util.Enumeration;
 
 /** Lit/Ecrit un contenu textuel local ou distant en tenant compte de l'encodage UTF-8.
+ *
  * @see <a href="StringFile.java.html">code source</a>
  * @serial exclude
  */

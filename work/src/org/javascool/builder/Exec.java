@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 
 /** Exécute une commande du système d'exploitation.
  * <p>Attend jusqu'à sa complétion et renvoie ce que la commande écrit en sortie.</p>
+ *
  * @see <a href="Exec.java.html">code source</a>
  * @serial exclude
  */
@@ -66,7 +67,7 @@ public class Exec {
     } catch(IOException e) { throw new RuntimeException(e + " when executing: " + command);
     }
   }
-  /** 
+  /**
    * @see #run(String, int)
    */
   public static String run(String command) {

@@ -12,6 +12,7 @@ import org.javascool.core.Engine;
 /** The main panel for Java's cool
  * This class wich is very static contain all that we need to run Java's cool like save and open file command.
  * This class can only be called by JVSMain on instance otherwise it can throw very big errors
+ *
  * @author Philippe Vienne
  */
 class JVSMainPanel extends JPanel {

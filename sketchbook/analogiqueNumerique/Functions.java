@@ -8,11 +8,12 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JApplet;
 
+import org.javascool.tools.Macros;
+
 public class Functions {
-	public static ProgletPanel panel;
-	
-	
-  /**/public static void test() {
+  public static ProgletPanel panel;
+
+  /**/ public static void test() {
     /* Méthode brute
      *  {
      *  int v = 1023; while(v >= 0) {

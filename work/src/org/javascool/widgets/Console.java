@@ -18,6 +18,7 @@ import java.io.PrintStream;
 import java.io.IOException;
 
 /** Définit une zone d'affichage qui permet de recevoir les messages de la console.
+ *
  * @author Philippe Vienne
  * @see <a href="Console.java.html">code source</a>
  * @serial exclude

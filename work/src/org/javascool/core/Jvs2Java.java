@@ -7,6 +7,7 @@ import org.javascool.core.Translator;
 
 /** Implémente le mécanisme de base de traduction d'un code Jvs en code Java standard.
  * <p>Les erreurs de traduction sont affichées dans la console.</p>
+ *
  * @see <a href="Jvs2Java.java.html">source code</a>
  * @serial exclude
  */
@@ -127,6 +128,5 @@ public class Jvs2Java extends Translator {
     // @main
     if(usage.length > 0)
       org.javascool.tools.StringFile.save(usage.length > 1 ? usage[1] : "stdout:", new Jvs2Java().translate(org.javascool.tools.StringFile.load(usage[0])));
-    // @todo faire avec spec proglet.
   }
 }

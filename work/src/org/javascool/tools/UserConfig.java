@@ -9,8 +9,9 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
 /** Permet de stocker des informations dans un fichier de configuration de l'utilisateur.
- * @see <a href="UserConfig.java.html">code source</a>
+ *
  * @author Philippe Vienne
+ * @see <a href="UserConfig.java.html">code source</a>
  * @serial exclude
  */
 public class UserConfig {

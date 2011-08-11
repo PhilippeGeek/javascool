@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 
 /** Détecte et rapporte de manière optimisée des erreurs lors de l'exécution.
+ *
  * @see <a href="ErrorCatcher.java.html">code source</a>
  * @serial exclude
  */
@@ -84,7 +85,7 @@ public class ErrorCatcher {
       if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(
            new JFrame(),
            "<html>Vous n'avez pas une version suffisante de Java<br>"
-           +"cette application requiert Java 1.6 ou plus.<br>"
+           + "cette application requiert Java 1.6 ou plus.<br>"
            + "Voulez vous être redirigé vers le site de téléchargement ?",
            "Confirmation",
            JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE))

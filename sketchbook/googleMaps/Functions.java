@@ -31,7 +31,7 @@ import java.util.Queue;
 import java.util.LinkedList;
 
 public class Functions {
-	private static int distance(GogleMapPanel g, String ville1, String ville2) {
+  private static int distance(GogleMapPanel g, String ville1, String ville2) {
     if(g.arcs.get(ville1).contains(ville2)) {
       Macros.assertion(g.latitudes.containsKey(ville1), ville1 + " n'est pas une ville connue");
       Macros.assertion(g.latitudes.containsKey(ville2), ville2 + " n'est pas une ville connue");
@@ -95,11 +95,10 @@ public class Functions {
     chemin.add(0, depart);
     return chemin;
   }
-  
   //
   // This defines the javascool interface
   //
-  public enum IntensiteRoute { 
+  public enum IntensiteRoute {
     LEGER(1), MOYEN(2), FORT(3);
     private int value;
     IntensiteRoute(int i) {
@@ -132,7 +131,7 @@ public class Functions {
   }
   public static Map<String, Double> latitudes;
   public static Map<String, Double> longitudes;
-  public static Map < String, List < String >> voisins;
+  public static Map<String, List<String> > voisins;
 
   public static List<String> plusCourtCheminGogleMap(String depart, String arrivee) {
     return plusCourtChemin(panel.main, depart, arrivee);
@@ -151,12 +150,12 @@ public class Functions {
   // This defines the tests on the panel
   //
   public static void test() {
-  /*  Console.clear();
-    Console.println("Pour la démo . . utiliser les boutons \"Parcours en profondeur\" +  \"Parcours en largeur\" !");*/
+    /*  Console.clear();
+     *  Console.println("Pour la démo . . utiliser les boutons \"Parcours en profondeur\" +  \"Parcours en largeur\" !");*/
   }
   /** Définition de l'interface graphique de la proglet. */
   public static final Panel panel = new Panel();
-  
+
   private static int numVisite;
 
   private static void afficheVille(GogleMapPanel g, String s) {

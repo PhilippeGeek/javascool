@@ -15,9 +15,10 @@ import org.javascool.tools.StringFile;
 import org.javascool.tools.StringFile;
 
 /** Convertit une portion de source Java ou Jvs en Html colorisé.
+ * <p>Note: utilise une version patchée de <a href="http://www.java2html.de">java2html</a>, disponible dans <a href="http://code.google.com/p/javascool/source/browse/work/lib/jvs2html.jar">jvs2html.jar</a>, qui doit être dans le CLASSPATH.</p></p>
+ *
  * @see <a href="Jvs2Html.java.html">code source</a>
  * @serial exclude
- * <p>Note: utilise une version patchée de <a href="http://www.java2html.de">java2html</a>, disponible dans <a href="http://code.google.com/p/javascool/source/browse/work/lib/jvs2html.jar">jvs2html.jar</a>, qui doit être dans le CLASSPATH.</p></p>
  */
 public class Jvs2Html {
   // @factory

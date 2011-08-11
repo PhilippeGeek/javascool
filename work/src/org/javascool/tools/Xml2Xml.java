@@ -18,9 +18,10 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.transform.stream.StreamResult;
 
 /** Transforme une structure XML en une autre structure XML avec un XSLT.
+ *
+ * <p>Note: utilise <tt>saxon.jar</tt> qui doit être dans le CLASSPATH.</p>
  * @see <a href="Xml2Xml.java.html">code source</a>
  * @serial exclude
- * <p>Note: utilise <tt>saxon.jar</tt> qui doit être dans le CLASSPATH.</p>
  */
 public class Xml2Xml {
   // @factory
@@ -37,8 +38,16 @@ public class Xml2Xml {
   public static String run(String xml, String xsl) {
     // Compile the XSL tranformation
     try {
-      if(!tranformers.containsKey(xsl))
-        tranformers.put(xsl, tfactory.newTemplates(xsl.trim().startsWith("<") ? new StreamSource(new StringReader(xsl)) : new StreamSource(xsl)).newTransformer());
+      if(!tranformers.containsKey(xsl)) {
+        StreamSource xslSource = null;
+        if(xsl.trim().startsWith("<"))
+          xslSource = new StreamSource(new StringReader(xsl));
+        else {
+          xslSource = new StreamSource(xsl);
+          xslSource.setSystemId(xsl);
+        }
+        tranformers.put(xsl, tfactory.newTemplates(xslSource).newTransformer());
+      }
     } catch(TransformerConfigurationException e) { throw new RuntimeException(e + " when compiling: " + xsl);
     }
     // Apply the transformation
@@ -56,10 +65,10 @@ public class Xml2Xml {
   private static HashMap<String, Transformer> tranformers = new HashMap<String, Transformer>();
   static {
     try {
-      tfactory = TransformerFactory.newInstance();
       System.setProperty("javax.xml.parsers.SAXParserFactory", "com.icl.saxon.aelfred.SAXParserFactoryImpl");
       System.setProperty("javax.xml.transform.TransformerFactory", "com.icl.saxon.TransformerFactoryImpl");
       System.setProperty("javax.xml.parsers.DocumentBuilderFactory", "com.icl.saxon.om.DocumentBuilderFactoryImpl");
+      tfactory = TransformerFactory.newInstance();
     } catch(Throwable e) {
       System.err.println("Configuration error: " + e);
     }
@@ -71,9 +80,9 @@ public class Xml2Xml {
    * ferme les balises pur avoir une syntaxe bien formée.</p>
    * <p>C'est une commande "fragile" au sens où un text HTML mal formé ne sera pas correctement traduit.</p>
    * @param htm La chaîne HTML en entrée.
-   * @return La cahîne XML en sortie.
+   * @return La chaîne XML en sortie.
    */
-  public static String htm2xml(String htm) {
+  public static String html2xhtml(String htm) {
     return htm. // Elimine les accentuation HTML
            replaceAll("&agrave;", "à").
            replaceAll("&acirc;", "â").
