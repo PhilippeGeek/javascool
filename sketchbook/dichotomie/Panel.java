@@ -23,8 +23,8 @@ import javax.swing.JApplet;
 public class Panel extends JApplet {
   /** Définition de l'interface graphique de la proglet. */
   public static final ProgletPanel panel = new ProgletPanel();
-  
+
   public void init() {
-  	setContentPane(panel);
- 	}
+    setContentPane(panel);
+  }
 }

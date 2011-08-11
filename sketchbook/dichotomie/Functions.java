@@ -19,7 +19,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Functions {
-	/** Gets the index of a given page.
+  /** Gets the index of a given page.
    * <div><tt>- DO NOT USE !!! This is the solution of the exercice !!!</tt></div>
    * @param pays The name to compare with.
    * @return The page index or -1 if the name is not on some page.

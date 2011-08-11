@@ -6,8 +6,9 @@
   <property name="classpath" value="lib/RSyntaxTextArea.jar:lib/jvs2html.jar"/>
 
   <target name="classes">
+    <!--delete dir="../build/classes"/-->
     <mkdir dir="../build/classes"/>
-    <javac deprecation="true" classpath="${classpath}" srcdir="src" destdir="../build/classes"/>
+    <javac deprecation="true" debug="true" debuglevel="lines,vars,source" classpath="${classpath}" srcdir="src" destdir="../build/classes"/>
   </target>
   
   <target name="javascool.jar" depends="classes" >
@@ -31,6 +32,7 @@
   <target name="javascool-builder.jar" depends="classes" >
     <mkdir dir="../build"/>
     <delete file="../build/javascool-builder.jar"/>
+    <unzip dest="../build/classes" src="lib/RSyntaxTextArea.jar"/>
     <unzip dest="../build/classes" src="lib/javac.jar"/>
     <unzip dest="../build/classes" src="lib/jvs2html.jar"/>
     <unzip dest="../build/classes" src="lib/saxon.jar"/>
@@ -40,6 +42,7 @@
       </manifest>
       <fileset dir="../build/classes"/>
       <fileset dir="src" includes="org/javascool/widgets/icons/*"/>
+      <fileset dir="src" includes="org/javascool/builder/*.xslt"/>
     </jar>
     <exec executable="sh">
       <arg value="-c"/>
@@ -78,9 +81,7 @@
     </copy>
     <java jar="lib/java2html.jar" fork="true">
       <arg value="-srcdir"/>
-      <!--arg value="src"/>
-      <arg value="-targetdir"/-->
-        <arg value="../build/web/api"/>
+      <arg value="../build/web/api"/>
       <!-- [-filemask *.java] [-converter html | xhtml11 | xhtml | tex | rtf | xml] [-tabs 4] [-copytotargetunprocessedfiles] -style [ Eclipse | Kawa | Monochrome ] -->
     </java>
   </target>

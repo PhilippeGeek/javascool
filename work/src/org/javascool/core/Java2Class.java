@@ -17,8 +17,9 @@ import javax.tools.StandardJavaFileManager;
 import javax.tools.ToolProvider;
 
 /** Définit le mécanisme de compilation en ligne d'un code Java et du chargement de la classe obtenue.
- * @see <a href="Java2Class.java.html">code source</a>
  * <p>Note: utilise un sous ensemble du <tt>tools.jar</tt> de la JDK appelé ici <tt>javac.jar</tt> qui doit être dans le CLASSPATH.</p>
+ *
+ * @see <a href="Java2Class.java.html">code source</a>
  * @serial exclude
  */
 public class Java2Class {
@@ -29,20 +30,33 @@ public class Java2Class {
    * <p>Les fichiers <tt>.class</tt> sont générés dans sur place.</p>
    * <p>Les erreurs de compilation sont affichées dans la console.</p>
    * @param javaFile Le nom du fichier à compiler. Un tableau de noms de fichiers peut être donné.
+   * @param allErrors Renvoie toutes les erreur si true, sinon uniquement la première erreur (par défaut).
    * @return La valeur true en cas de succès, false si il y a des erreurs de compilation.
    *
    * @throws RuntimeException Si une erreur d'entrée-sortie s'est produite lors de la compilation.
    */
-  public static boolean compile(String javaFile) {
+  public static boolean compile(String javaFile, boolean allErrors) {
     String javaFiles[] = { javaFile };
     return compile(javaFiles);
   }
   /**
-   * @see #compile(String)
+   * @see #compile(String, boolean)
+   */
+  public static boolean compile(String javaFile) {
+    return compile(javaFile, false);
+  }
+  /**
+   * @see #compile(String, boolean)
    */
   public static boolean compile(String javaFiles[]) {
-   if (javaFiles.length == 0)
-            return false;
+    return compile(javaFiles, false);
+  }
+  /**
+   * @see #compile(String, boolean)
+   */
+  public static boolean compile(String javaFiles[], boolean allErrors) {
+    if(javaFiles.length == 0)
+      return false;
     try {
       // Initialisation des objets dy compilateur
       JavaCompiler compiler = ToolProvider.getSystemJavaCompiler(); // The compiler tool
@@ -51,7 +65,7 @@ public class Java2Class {
       // Mise en place des fichiers
       List<File> sourceFileList = new ArrayList<File>();
       for(String javaFile : javaFiles)
-	sourceFileList.add(new File(javaFile));
+        sourceFileList.add(new File(javaFile));
       Iterable< ? extends JavaFileObject> compilationUnits = fileManager.getJavaFileObjectsFromFiles(sourceFileList);
       // Lancement de la compilation
       JavaCompiler.CompilationTask task = compiler.getTask(null, fileManager, diagnostics, null, null, compilationUnits);
@@ -74,12 +88,10 @@ public class Java2Class {
         else
           jvsDiagnostic = "Erreur Java : \n" + jvsDiagnostic;
         int line = (int) diagnostic.getLineNumber();
-        System.out.println("-------------------\nErreur lors de la compilation à la ligne " + line + ".\n" + jvsDiagnostic + "\n-------------------\n");
+        System.out.println("-------------------\nErreur lors de la compilation à la ligne " + line + ".\n" + jvsDiagnostic + "\n-------------------");
         // En fait ici on choisit d'arrêter à la 1ère erreur pour pas embrouiller l'apprennant
-        if(diagnostic.getKind().equals(Diagnostic.Kind.ERROR)) {
-          System.out.println("-------------------\nErreur fatale lors de la compilation, arrêt de la compilation\n-------------------\n");
+        if(diagnostic.getKind().equals(Diagnostic.Kind.ERROR))
           return false;
-        }
       }
       return true;
     } catch(Throwable e) { throw new RuntimeException(e + " when compiling !");

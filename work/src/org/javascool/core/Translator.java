@@ -2,6 +2,9 @@ package org.javascool.core;
 
 /** Définit une traduction d'un code Jvs en code Java standard.
  * <p>Cette classe permet de définir des variantes de langage pour une proglet donnée.</p>
+ *
+ * @see <a href="Translator.java.html">code source</a>
+ * @serial exclude
  */
 public class Translator {
   /** Renvoie les déclarations d'import spécifiques à cette proglet.

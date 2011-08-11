@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:sx="http://icl.com/saxon" extension-element-prefixes="sx">
 
   <!-- This XSLT translates the proglet's HML documentation to HTML3.2 http://www.w3.org/TR/REC-html32-19970114) -->
 
   <xsl:import href="./hml2htm.xslt"/>
 
-  <sx:function name="sx:jvs2htm" xmlns:transform="java:org.javascool.builder.Jvs2Html"></sx:function>
+  <sx:function name="sx:jvs2htm" xmlns:jvs2htm="java:org.javascool.builder.Jvs2Html">
     <xsl:param name="string"/>
     <sx:return select="jvs2htm:run($string)"/>
   </sx:function>

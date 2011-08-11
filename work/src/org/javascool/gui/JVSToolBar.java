@@ -95,16 +95,17 @@ class JVSToolBar extends ToolBar {
             );
 
     runButton.setVisible(false);
-
     // Crée le menu de construction de proglets si pertinent
     if(Builder.hasProglets())
       pbutton = addRightTool("Proglet Builder", new Runnable() {
-	  @Override
-	    public void run() {
-	    org.javascool.builder.DialogFrame.startProgletMenu(pbutton);
-	  }});
+                               @Override
+                               public void run() {
+                                 org.javascool.builder.DialogFrame.startProgletMenu(pbutton);
+                               }
+                             }
+                             );
   }
-  //@ inner-class-variable
+  // @ inner-class-variable
   private JButton pbutton;
   public void enableCompileButton() {
     compileButton.setVisible(true);

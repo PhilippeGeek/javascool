@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /** Définit un bouton de start/stop avec affichage du temps de calcul.
+ *
  * @author Philippe Vienne
  * @see <a href="StartStopButton.java.html">code source</a>
  * @serial exclude
@@ -58,8 +59,8 @@ public abstract class StartStopButton extends JPanel {
                        Thread.sleep(1000);
                      } catch(Exception e) {}
                    }
-		   started = false;
-		   doStop();
+                   started = false;
+                   doStop();
                  }
                }
                ).start();

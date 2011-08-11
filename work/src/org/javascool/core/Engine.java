@@ -16,7 +16,8 @@ import java.io.File;
 import org.javascool.tools.StringFile;
 import org.javascool.tools.Pml;
 
-/** Définit les mécanismes de compilation, exécution, gestion de proglet JavaScool.
+/** Définit les mécanismes de compilation, exécution, gestion de proglet.
+ *
  * @see <a href="Engine.java.html">code source</a>
  * @serial exclude
  */
@@ -124,7 +125,8 @@ public class Engine {
   public Proglet setProglet(String proglet) {
     for(Proglet p : getProglets())
       if(p.getName().equals(proglet))
-        return p; throw new IllegalArgumentException("Proglet inconnue : " + proglet);
+        return p;
+    throw new IllegalArgumentException("Proglet inconnue : " + proglet);
   }
   /** Renvoie la proglet en cours de fonction.
    * @return La proglet en fonctionnement.

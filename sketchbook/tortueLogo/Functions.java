@@ -15,7 +15,7 @@ public class Functions {
   // This defines the tests on the panel
   //
 
-  /**/public static void test() {
+  /**/ public static void test() {
     clear_all();
     pen_up();
     int t = 0;
@@ -127,7 +127,7 @@ public class Functions {
   }
   private static Color colors[] = { Color.BLACK, new Color(150, 75, 0), Color.RED, Color.ORANGE, Color.YELLOW, Color.GREEN, Color.BLUE, Color.MAGENTA, Color.GRAY, Color.WHITE };
 
-  private static Panel getTortueLogo(){
-      return (Panel)Macros.getProgletPanel();
+  private static Panel getTortueLogo() {
+    return (Panel) Macros.getProgletPanel();
   }
 }

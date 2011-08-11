@@ -21,6 +21,7 @@ import org.javascool.widgets.Console;
 /** Cette factory contient des fonctions générales rendues visibles à l'utilisateur de proglets.
  * <p>Elle permet de définir des fonctions statiques qui seront utilisées pour faire des programmes élèves.</p>
  * <p>Elle permet aussi avoir quelques fonctions de base lors de la création de nouvelles proglets.</p>
+ *
  * @see <a href="Macros.java.html">code source</a>
  * @serial exclude
  */
@@ -426,7 +427,7 @@ public class Macros {
     System.err.println("#" + condition + " : " + message);
     if(!condition) {
       System.out.println(message);
-      // @todo Jvs2Java.run(false);
+      org.javascool.core.Engine.getInstance().doStop();
       sleep(500);
     }
   }
@@ -470,7 +471,7 @@ public class Macros {
   public static URL getResourceURL(String location, String base, boolean reading) {
     try {
       if(location.matches("(ftp|http|https|jar|mailto|stdout):.*"))
-        return new URL(location).toURI().normalize().toURL();
+        return (base != null ? new URL(new URL(base + "/null"), location) : new URL(location)).toURI().normalize().toURL();
       if(location.startsWith("file:"))
         location = location.substring(5);
       if(reading) {

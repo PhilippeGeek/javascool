@@ -18,7 +18,6 @@ public class FleurEnRythme extends org.javascool.ProgletApplet implements Runnab
                                                                                      public void run() {
                                                                                        main();
                                                                                      }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     // Implément l'idée originale de Thomas Giraudon <ptiroccodu06@hotmail.fr> et Victor Granet <victor.granet@hotmail.com>
-
 // package proglet.javaprog;
 
 // import javax.swing.*;

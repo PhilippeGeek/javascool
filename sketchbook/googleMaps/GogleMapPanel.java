@@ -44,7 +44,7 @@ import org.javascool.tools.Utils;
 class GogleMapPanel extends JPanel implements ActionListener {
   private static final long serialVersionUID = 1L;
 
-  Map < String, List < String >> arcs;
+  Map<String, List<String> > arcs;
   Map<String, Double> latitudes;
   Map<String, Double> longitudes;
   private Image ici_bleu;
@@ -155,7 +155,6 @@ class GogleMapPanel extends JPanel implements ActionListener {
   static double square(double x) {
     return x * x;
   }
-
   int distanceEuclidienne(double longitude1, double latitude1, double longitude2, double latitude2) {
     double longitude = (longitude1 - longitude2) * Math.PI / 180;
     double aux = Math.cos(latitude1 * Math.PI / 180) * Math.cos(latitude2 * Math.PI / 180) * Math.cos(longitude);
@@ -280,7 +279,7 @@ class GogleMapPanel extends JPanel implements ActionListener {
     ajoute(51, "La Rochelle", 46.238448, -1.157089);
     ajoute(52, "Poitiers", 46.627314, 0.315269);
 
-    arcs = new HashMap < String, List < String >> ();
+    arcs = new HashMap<String, List<String> >();
     for(String ville : latitudes.keySet())
       arcs.put(ville, new ArrayList<String>());
     ajouteArc("Brest", "Lorient");

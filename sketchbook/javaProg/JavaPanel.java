@@ -39,7 +39,6 @@ public class JavaPanel implements org.javascool.Proglet {
       pane = new JLayeredPane();
       add(pane, BorderLayout.CENTER);
     }
-
     JLayeredPane pane;
   }
 
@@ -47,7 +46,7 @@ public class JavaPanel implements org.javascool.Proglet {
   // This defines the tests on the panel
   //
 
-  /**/public static void test() {
+  /**/ public static void test() {
     new FleurEnRythme().run();
   }
   //
@@ -58,12 +57,10 @@ public class JavaPanel implements org.javascool.Proglet {
   public static void resetSwingPane() {
     panel.reset();
   }
-
   /** Renvoie le panneau d'affichage de la proglet. */
   public static JLayeredPane getSwingPane() {
     return panel.pane;
   }
-
   /** Crée et montre une icone sur le display en (x,y) de taille (w, h) à la profondeur p. */
   public static JLabel showIcon(String image, int x, int y, int w, int h, int p) {
     JLabel icon = new JLabel();
@@ -73,7 +70,6 @@ public class JavaPanel implements org.javascool.Proglet {
     panel.pane.add(icon, new Integer(p), 0);
     return icon;
   }
-
   /** Définition de l'interface graphique de la proglet. */
   public static final Panel panel = new Panel();
 }

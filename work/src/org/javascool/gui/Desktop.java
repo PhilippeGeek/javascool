@@ -20,6 +20,7 @@ import java.awt.event.WindowEvent;
 import javax.swing.ImageIcon;
 
 /** Définit les functions d'interaction avec l'interface graphique de JavaScool.
+ *
  * @see <a href="Desktop.java.html">code source</a>
  * @serial exclude
  */
@@ -44,7 +45,8 @@ public class Desktop {
     return frame;
   }
   private JFrame frame;
-  /** Ouvre une fenêtre principale pour lancer une application. 
+
+  /** Ouvre une fenêtre principale pour lancer une application.
    * @param title Le titre de la fenêtre.
    * @param icon L'icône de la fenêtre.
    * @param panel Le composant graphique à afficher.

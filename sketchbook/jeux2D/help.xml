@@ -4,92 +4,92 @@
     <p title="Index">
         <table>
             <tr>
-                <td colspan="2"><l link="#I" text="I.&nbsp; La proglet 'game'" /></td>
+                <td colspan="2"><l link="#I" text="I.&#160; La proglet 'game'" /></td>
             </tr>
             <tr>
-                <td colspan="2"><l link="#II" text="II.&nbsp; Coder un jeu : structure de votre programme" /></td>
+                <td colspan="2"><l link="#II" text="II.&#160; Coder un jeu : structure de votre programme" /></td>
             </tr>
             <tr>
-                <td style="width: 150px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </td>
-                <td><l link="#II.A" text="II.A.&nbsp; La boucle principale" /></td>
+                <td style="width: 150px;">&#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; </td>
+                <td><l link="#II.A" text="II.A.&#160; La boucle principale" /></td>
             </tr>
             <tr>
-                <td style="width: 150px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </td>
-                <td><l link="#II.B" text="II.B.&nbsp; Programmation procédurale ou évènementielle ?" /></td>
+                <td style="width: 150px;">&#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; </td>
+                <td><l link="#II.B" text="II.B.&#160; Programmation procédurale ou évènementielle ?" /></td>
             </tr>
             <tr>
-                <td colspan="2"><l link="#III" text="III.&nbsp; Les nouveaux objets" /></td>
+                <td colspan="2"><l link="#III" text="III.&#160; Les nouveaux objets" /></td>
             </tr>
             <tr>
-                <td style="width: 150px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </td>
-                <td><l link="#III.A" text="III.A.&nbsp; L'objet 'Sprite'" /></td>
+                <td style="width: 150px;">&#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; </td>
+                <td><l link="#III.A" text="III.A.&#160; L'objet 'Sprite'" /></td>
             </tr>
             <tr>
-                <td style="width: 150px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </td>
-                <td><l link="#III.B" text="III.B.&nbsp; L'objet 'Oval'" /></td>
+                <td style="width: 150px;">&#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; </td>
+                <td><l link="#III.B" text="III.B.&#160; L'objet 'Oval'" /></td>
             </tr>
             <tr>
-                <td style="width: 150px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </td>
-                <td><l link="#III.C" text="III.C.&nbsp; L'objet 'Rect'" /></td>
+                <td style="width: 150px;">&#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; </td>
+                <td><l link="#III.C" text="III.C.&#160; L'objet 'Rect'" /></td>
             </tr>
             <tr>
-                <td colspan="2"><l link="#IV" text="IV.&nbsp; Gestion intelligente des évènements" /></td>
+                <td colspan="2"><l link="#IV" text="IV.&#160; Gestion intelligente des évènements" /></td>
             </tr>
             <tr>
-                <td style="width: 150px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </td>
-                <td><l link="#IV.A" text="IV.A.&nbsp; Les types d'évènements" /></td>
+                <td style="width: 150px;">&#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; </td>
+                <td><l link="#IV.A" text="IV.A.&#160; Les types d'évènements" /></td>
             </tr>
             <tr>
-                <td style="width: 150px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </td>
-                <td><l link="#IV.B" text="IV.B.&nbsp; La fonction de callback" /></td>
+                <td style="width: 150px;">&#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; </td>
+                <td><l link="#IV.B" text="IV.B.&#160; La fonction de callback" /></td>
             </tr>
             <tr>
-                <td style="width: 150px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </td>
-                <td><l link="#IV.C" text="IV.C.&nbsp; Liste des évènements disponibles" /></td>
+                <td style="width: 150px;">&#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; </td>
+                <td><l link="#IV.C" text="IV.C.&#160; Liste des évènements disponibles" /></td>
             </tr>
             <tr>
-                <td style="width: 150px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </td>
-                <td><l link="#IV.D" text="IV.D.&nbsp; Les évènements clavier" /></td>
+                <td style="width: 150px;">&#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; </td>
+                <td><l link="#IV.D" text="IV.D.&#160; Les évènements clavier" /></td>
             </tr>
             <tr>
-                <td style="width: 150px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </td>
-                <td><l link="#IV.E" text="IV.E.&nbsp; En règle générale" /></td>
+                <td style="width: 150px;">&#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; </td>
+                <td><l link="#IV.E" text="IV.E.&#160; En règle générale" /></td>
             </tr>
             <tr>
-                <td colspan="2"><l link="#V" text="V.&nbsp; Gestion des groupes" /></td>
+                <td colspan="2"><l link="#V" text="V.&#160; Gestion des groupes" /></td>
             </tr>
             <tr>
-                <td style="width: 150px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </td>
-                <td><l link="#V.A" text="V.A.&nbsp; Pouvoir stocker des éléments" /></td>
+                <td style="width: 150px;">&#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; </td>
+                <td><l link="#V.A" text="V.A.&#160; Pouvoir stocker des éléments" /></td>
             </tr>
             <tr>
-                <td colspan="2"><l link="#VI" text="VI.&nbsp; Les évènements de groupe" /></td>
+                <td colspan="2"><l link="#VI" text="VI.&#160; Les évènements de groupe" /></td>
             </tr>
             <tr>
-                <td colspan="2"><l link="#VII" text="VII.&nbsp; Propriétés" /></td>
+                <td colspan="2"><l link="#VII" text="VII.&#160; Propriétés" /></td>
             </tr>
             <tr>
-                <td style="width: 150px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </td>
-                <td><l link="#VII.A" text="VII.A.&nbsp; addProperty" /></td>
+                <td style="width: 150px;">&#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; </td>
+                <td><l link="#VII.A" text="VII.A.&#160; addProperty" /></td>
             </tr>
             <tr>
-                <td style="width: 150px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </td>
-                <td><l link="#VII.B" text="VII.B.&nbsp; getProperty" /></td>
+                <td style="width: 150px;">&#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; </td>
+                <td><l link="#VII.B" text="VII.B.&#160; getProperty" /></td>
             </tr>
             <tr>
-                <td style="width: 150px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </td>
-                <td><l link="#VII.C" text="VII.C.&nbsp; setProperty" /></td>
+                <td style="width: 150px;">&#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; </td>
+                <td><l link="#VII.C" text="VII.C.&#160; setProperty" /></td>
             </tr>
             <tr>
-                <td colspan="2"><l link="#VIII" text="VIII.&nbsp; Collisions" /></td>
+                <td colspan="2"><l link="#VIII" text="VIII.&#160; Collisions" /></td>
             </tr>
             <tr>
-                <td style="width: 150px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </td>
-                <td><l link="#VIII" text="VIII.A.&nbsp; Détection de collisions" /></td>
+                <td style="width: 150px;">&#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; </td>
+                <td><l link="#VIII" text="VIII.A.&#160; Détection de collisions" /></td>
             </tr>
             <tr>
-                <td style="width: 150px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </td>
-                <td><l link="#VIII" text="VIII.B.&nbsp; Réaction aux collisions" /></td>
+                <td style="width: 150px;">&#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; </td>
+                <td><l link="#VIII" text="VIII.B.&#160; Réaction aux collisions" /></td>
             </tr>
         </table>
     </p>

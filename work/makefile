@@ -1,3 +1,7 @@
+# Used to use sun sun-jdk instead of open-jdk because of processing and windows platforms
+export PATH:=/usr/java/jdk1.6.0_22/bin:$(PATH)
+
+
 #
 # Makefile de développement de jvs4.alpha.2 à vthierry (à terme seul ant sera utilisé)
 #
@@ -5,7 +9,8 @@ JVS = $(realpath ..)
 
 ant :
 #	Lance ant sur son build.xml
-	ant brun
+#	ant run
+	ant brun ; java -jar ../sketchbook/javascool-proglets.jar 
 #	ant javadoc ; firefox $(JVS)/build/web/api/index.html 
 
 #
@@ -16,6 +21,10 @@ JVS = $(realpath ..)
 
 pwd :
 	nautilus $(JVS)
+
+zip :
+	svn export . ~/Desktop/work
+	svn export ../sketchbook ~/Desktop/sketchbook
 
 ssh :
 	@gnome-terminal -e "ssh scm.gforge.inria.fr 'cd /home/groups/javascool/htdocs ; bash -i'" 
@@ -29,6 +38,7 @@ pub :
 
 bty :
 	for f in `find src -name '*.java' -o -name '*.jvs'` ; do uncrustify -q -c lib/uncrustify.cfg --replace $$f ; done
+	for f in `find ../sketchbook -name '*.java' -o -name '*.jvs'` ; do uncrustify -q -c lib/uncrustify.cfg --replace $$f ; done
 
 
 P_HOME=/usr/java/processing-1.2.1

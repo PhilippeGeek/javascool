@@ -76,7 +76,7 @@ public class Pml {
     if("xml".equals(format))
       return reset(Xml2Xml.run(value, xml2pml), "pml");
     else if("htm".equals(format) || "html".equals(format))
-      return reset(Xml2Xml.run(Xml2Xml.htm2xml(value), xml2pml), "pml");
+      return reset(Xml2Xml.run(Xml2Xml.html2xhtml(value), xml2pml), "pml");
     else
       reset(value);
     return this;
@@ -538,10 +538,9 @@ public class Pml {
       string = new StringBuffer();
       if(pml == null)
         return "";
-      else {
+      else
         for(String name : pml.attributes())
-          string.append(name + " : " + quote(pml.getChild(name)) + "\n");
-      }
+          string.append(name + ": " + quote(pml.getChild(name)) + "\n");
       return string.toString();
     }
     /** Elimine les \n. */

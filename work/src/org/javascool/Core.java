@@ -14,7 +14,11 @@ import javax.swing.JOptionPane;
 import org.javascool.gui.Desktop;
 import org.javascool.tools.ErrorCatcher;
 
-/** Lanceur de l'application "apprenant" qui permet de manipuler des «proglets». */
+/** Lanceur de l'application "apprenant" qui permet de manipuler des «proglets».  *
+ *
+ * @see <a href="Core.java.html">source code</a>
+ * @serial exclude
+ */
 public class Core {
   /** Titre de l'application. */
   public static final String title = "Java's Cool 4";
@@ -73,12 +77,12 @@ public class Core {
   /** Lanceur de l'application.
    * @param usage <tt>java -jar javascool.jar</tt>
    */
-  public static void main(String[] usage) {  
-    if (usage.length > 0 && (usage[0].equals("-h") || usage[0].equals("-help") || usage[0].equals("--help"))) {
+  public static void main(String[] usage) {
+    if((usage.length > 0) && (usage[0].equals("-h") || usage[0].equals("-help") || usage[0].equals("--help"))) {
       System.out.println("Java's Cool Core - lance l'interface pour travailler avec les proglets");
       System.out.println("Usage : java -jar javascool.jar");
       System.exit(0);
-    } 
+    }
     System.err.println("" + title + " is starting ...");
     ErrorCatcher.checkJavaVersion(6);
     setUpLookAndFeel();

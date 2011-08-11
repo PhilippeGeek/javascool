@@ -9,11 +9,11 @@ import java.awt.BorderLayout;
 import javax.swing.JApplet;
 
 public class Panel extends JApplet {
-	ProgletPanel panel;
-	
-	public void init() {
-		this.panel=new ProgletPanel();
-		Functions.panel=new ProgletPanel();
-		setContentPane();
-	}
+  ProgletPanel panel;
+
+  public void init() {
+    this.panel = new ProgletPanel();
+    Functions.panel = new ProgletPanel();
+    setContentPane();
+  }
 }
