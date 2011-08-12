@@ -11,11 +11,19 @@ import org.javascool.tools.Macros;
 import org.javascool.tools.Xml2Xml;
 import org.javascool.tools.Pml;
 import org.javascool.core.Java2Class;
+
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.InputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.IOException;
+
+import java.util.jar.JarFile;
+import java.util.jar.JarEntry;
+
 import java.util.ArrayList;
 import java.util.Enumeration;
 
@@ -115,23 +123,49 @@ public class Builder {
   }
   /** Extrait une arborescence d'un jar. */
   private static void jarExtract(String jarFile, String destDir, String jarEntry) {
+    /* @todo A valider
+    JarFile j = new JarFile(jarFile);
+    for(Enumeration<JarEntry> e: j.entries(); e.hasMoreElements()) {
+      JarEntry f = e.nextElement();
+      String n = f.getName();
+      System.out.println(n);
+      if (n.startsWith(jarEntry)) {
+	String d = dstDir+File.separator+n;
+	if (!new File(d).isDirectory()) {
+	  new File(d).getParent().mkdirs();
+	  copyFile(j.getInputStream(f), new FileOutputStream(d));
+	}
+      }
+    }
+    */
     Exec.run("unzip -q " + jarFile + " -d " + destDir + " " + jarEntry + "/**");
   }
   /** Crée un jar à partir d'une arborescence. */
   private static void jarCreate(String jarFile, String mfFile, String dir) {
-    new File(jarFile).delete();
-    if(mfFile != null)
-      System.out.println(Exec.run("jar cfm " + jarFile + " " + mfFile + " -C " + dir + " ."));
-    else
-      System.out.println(Exec.run("jar cfM " + jarFile + " -C " + dir + " ."));
+    new File(jarFile).delete(); 
+    /* @todo Remplacer l'appel systeme par une api
+     */
+    System.out.println(Exec.run("jar cfm " + jarFile + " " + mfFile + " -C " + dir + " ."));
   }
-  /** Copie un répertoire dans un autre. */
+  /** Copie un répertoire dans un autre en oubliant les svn. */
   private static void copyFiles(String srcDir, String dstDir) throws IOException {
-    File tmpZip = File.createTempFile("copy", ".jar");
-    tmpZip.delete();
-    Exec.run("jar cfM " + tmpZip + " -C " + srcDir + " .");
-    Exec.run("unzip -q " + tmpZip + " -d " + dstDir + " -x .svn/**");
-    tmpZip.delete();
+    for (String s : StringFile.list(srcDir)) {
+      String d = dstDir+File.separator+new File(s).getName();
+      if (!new File(s).isDirectory())
+	copyFile(new FileInputStream(s), new FileOutputStream(d));
+      else if (!new File(s).getName().equals(".svn"))
+	copyFiles(s, d);
+    }
+  }
+  /** Copy un stream dans un autre. */
+  private static void copyFile(InputStream in, OutputStream out) throws IOException {
+    BufferedInputStream i = new BufferedInputStream(in, 2048);
+    BufferedOutputStream o = new BufferedOutputStream(out, 2048); 
+    byte data[] = new byte[2048];
+    for (int c; (c = i.read(data, 0, 2048)) != -1;) 
+      o.write(data, 0, c);
+    o.close();
+    i.close();
   }
   /** Lance la compilation java sur un groupe de fichiers. */
   private static void javac(String[] javaFiles) {

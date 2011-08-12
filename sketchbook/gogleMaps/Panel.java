@@ -2,6 +2,8 @@
 * David.Pichardie@inria.fr, Copyright (C) 2011.           All rights reserved. *
 *******************************************************************************/
 
+package org.javascool.proglets.gogleMaps;
+
 // Used to define the gui
 import java.util.Map;
 import java.util.List;

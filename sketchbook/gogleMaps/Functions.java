@@ -1,5 +1,7 @@
-import org.javascool.tools.Macros;
-import org.javascool.tools.Utils;
+
+package org.javascool.proglets.gogleMaps;
+
+import javax.swing.SwingUtilities;
 
 // Used to define the gui
 import javax.swing.JPanel;
@@ -29,6 +31,8 @@ import java.util.Set;
 import java.util.HashSet;
 import java.util.Queue;
 import java.util.LinkedList;
+
+import org.javascool.tools.Macros;
 
 public class Functions {
   private static int distance(GogleMapPanel g, String ville1, String ville2) {
