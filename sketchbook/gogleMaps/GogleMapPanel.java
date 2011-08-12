@@ -1,7 +1,7 @@
 /*******************************************************************************
 * David.Pichardie@inria.fr, Copyright (C) 2011.           All rights reserved. *
 *******************************************************************************/
-package org.javascool.proglets.googleMaps;
+package org.javascool.proglets.gogleMaps;
 
 import java.util.*;
 import java.awt.BorderLayout;
@@ -168,8 +168,8 @@ class GogleMapPanel extends JPanel implements ActionListener {
   private class ParcoursEnLargeur extends SwingWorker<Void, Void>{
     protected Void doInBackground() {
       me.clearMap();
-      afficheToutesRoutesDirectes(me);
-      parcoursLargeur(me, "Paris");
+      Functions.afficheToutesRoutesDirectes(me);
+      Functions.parcoursLargeur(me, "Paris");
       me.buttonBFS.setEnabled(true);
       me.buttonDFS.setEnabled(true);
       return null;
@@ -179,8 +179,8 @@ class GogleMapPanel extends JPanel implements ActionListener {
   private class ParcoursEnProfondeur extends SwingWorker<Void, Void>{
     protected Void doInBackground() {
       me.clearMap();
-      afficheToutesRoutesDirectes(me);
-      parcoursProfondeur(me, "Paris");
+      Functions.afficheToutesRoutesDirectes(me);
+      Functions.parcoursProfondeur(me, "Paris");
       me.buttonBFS.setEnabled(true);
       me.buttonDFS.setEnabled(true);
       return null;
