@@ -18,7 +18,7 @@
     );
 ?>
 
-<h2><span class="editsection">[<a href="/wikis/sciencinfolycee/index.php?title=JavaScool:TPE-Interventions&amp;action=edit&amp;section=1" title="Modifier la section&nbsp;: « Science culture au lycée&nbsp;»&nbsp;: les chercheurs viennent partager des pépites de science">modifier</a>]</span> <span class="mw-headline" id=".C2.AB.C2.A0Science_culture_au_lyc.C3.A9e_.C2.BB_:_les_chercheurs_viennent_partager_des_p.C3.A9pites_de_science"> « Science culture au lycée&nbsp;»&nbsp;: les chercheurs viennent partager des pépites de science </span></h2>
+<h2>  « Science culture au lycée&nbsp;»&nbsp;: les chercheurs viennent partager des pépites de science</h2>
 <p>Partout en France, les chercheurs des laboratoires de recherche en Sciences Informatiques, dans les Universités ou dans les organismes de recherche comme l'<a href="http://www.inria.fr" class="external text" rel="nofollow">INRIA</a> ou le <a href="http://www.cnrs.fr" class="external text" rel="nofollow">CNRS</a> peuvent être invités à donner une conférence-dialogue de culture scientifique et technique. Pour favoriser le contact direct entre les lycéens et le monde des sciences, des technologies et de la recherche dans sa diversité ont pour objectif, éveiller la curiosité des lycéens et apprentis à la culture scientifique, présenter les enjeux et les métiers en lien avec la recherche et l'innovation.
 
 </p>
@@ -74,5 +74,3 @@
 </li></ul>
 <p><b>Informatique et sciences numériques</b>: Cette liste n'est pas exhaustive, plusieurs autres thèmes peuvent être proposés:  n'hésitez pas à nous contacter&nbsp;! Voici par exemple d'autres sujets possibles:
 </p>
-
-<?php //TODO raaahh !! plein de liens [modifier] ... ?>

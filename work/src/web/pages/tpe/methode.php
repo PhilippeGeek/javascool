@@ -18,7 +18,7 @@
     );
 ?>
 
-<h2><span class="editsection">[<a href="/wikis/sciencinfolycee/index.php?title=JavaScool:TPE-Methode&amp;action=edit&amp;section=1" title="Modifier la section&nbsp;: Aide des scientifiques lors des TPE: description de la méthode">modifier</a>]</span> <span class="mw-headline" id="Aide_des_scientifiques_lors_des_TPE:_description_de_la_m.C3.A9thode"> Aide des scientifiques lors des TPE: description de la méthode </span></h2>
+<h2> Aide des scientifiques lors des TPE: description de la méthode.</h2>
 <p><b>La méthode:</b>
 </p><p>Les lycéen(ne)s de 1ère scientifiques et littéraires ont à l'épreuve du baccalauréat une épreuve dite de <a href="http://eduscol.education.fr/cid47789/tpe.html" class="external text" rel="nofollow">TPE</a>&nbsp;: des travaux personnels encadrés, à faire eux-mêmes en petit groupe guidé par les enseignants d'au moins deux disciplines.  Dans le cadre de l'initiative de <a href="http://www.persan.asso.fr/science-participatives" class="external text" rel="nofollow">sciences participatives</a> et au delà, nous aidons les collègues enseignants en deux temps:
 
@@ -26,7 +26,7 @@
 <ol><li> Nous proposons dans le domaine des Sciences de l'Information de la Communication des <a href="/sciencinfolycee/JavaScool:TPE-Sujets" title="JavaScool:TPE-Sujets">idées de sujets</a> et des <a href="/sciencinfolycee/JavaScool:TPE-Quizz" title="JavaScool:TPE-Quizz">idées en vidéo</a> et sous <a href="/sciencinfolycee/JavaScool:TPE-Demos" title="JavaScool:TPE-Demos">forme de démos</a> , 
 <ul><li> donnés aux élèves à-priori (ils doivent alors s'approprier, modifier, améliorer le sujet initial) ou après leur 1er choix pour leur permettre de construire leur problématique.
 </li></ul>
-</li><li> Chaque groupe d'élève peut ensuite à leur propre initiative contacter notre <a href="http://fuscia.info/fr/accueil.php?form_mode=tpe" class="external text" rel="nofollow">bureau d'accueil</a> (en mettant l'enseignant tuteur en copie) pour ses recherches:
+</li><li> Chaque groupe d'élève peut ensuite à leur propre initiative contacter notre <a href="http://fuscia.info/fr/accueil.php?form_mode=tpe" rel="nofollow">bureau d'accueil</a> (en mettant l'enseignant tuteur en copie) pour ses recherches:
 
 <ul><li> ressources documentaires ou multi-média liées au sujet, conseil, dialogue etc..
 </li><li> rencontres (en présenciel ou via les outils de visio-conférence) avec un collègue chercheur du domaine
@@ -57,5 +57,3 @@
 </li><li> <i>La soutenance se fait-elle en présence des chercheurs&nbsp;?</i> Normallement non. Il faut bien séparer l'évaluation scolaire qui doit être rigoureuse, elle compte pour le bac, et la rencontre culturelle proposée ici. Il faut bien séparer la soutenance scolaire de la présentation culturelle qui peut suivre et permettre au travail de TPE de se distinguer.
 </li><li> <i>Quel est l'utilité d'un suivi au niveau d'un "bureau virtuel"&nbsp;?</i> En enregistrant le groupe avec leur sujet et le contact avec le tuteur référent qui s'occupe du suivi (un autre tuteur s'assurant de la multi-disciplinarité),  on donne les moyens au triangle élèves-enseignants-chercheurs de bien s'assurer des éléments échangés: cet enregistrement est des plus léger. Il permet aussi d'inviter des collègues éloignés à aider. Ou de permettre à des groupes d'autres lycées de s'associer.
 </li></ul>
-
-<?php //TODO c'est quoi ces horribles liens [modifier] et Aller à  ? ?>

@@ -21,9 +21,10 @@ import javax.swing.ImageIcon;
 import java.net.URL;
 
 // Used to store labels
-import java.util.Vector;
+import java.util.ArrayList;
 
-/** This widget defines a multi-curve output.
+/** Panneau pour le tracé de courbes 2D.
+ *
  * @see <a href="CurveOutput.java.html">source code</a>
  * @serial exclude
  */
@@ -33,23 +34,23 @@ public class CurveOutput extends JPanel {
   private static class point {
     double x, y;
   };
-  private Vector<Vector<point> > curves = new Vector<Vector<point> >();
+  private ArrayList<ArrayList<point> > curves = new ArrayList<ArrayList<point> >();
   private static class line {
     double x1, y1, x2, y2;
     Color c;
   }
-  private Vector<line> lines = new Vector<line>();
+  private ArrayList<line> lines = new ArrayList<line>();
   private static class oval {
     double x, y, w, h;
     Color c;
   }
-  private Vector<oval> ovals = new Vector<oval>();
+  private ArrayList<oval> ovals = new ArrayList<oval>();
   private static class label {
     double x, y;
     String s;
     Color c;
   }
-  private Vector<label> labels = new Vector<label>();
+  private ArrayList<label> labels = new ArrayList<label>();
   {
     ReticuleMouseListener l = new ReticuleMouseListener();
     addMouseMotionListener(l);
@@ -57,9 +58,10 @@ public class CurveOutput extends JPanel {
     reset(0, 0, 1, 1);
   }
 
-  /** Internal routine: do not use.
+  /** Routine interne de tracé, ne pas utiliser.
    *
-   */public void paint(Graphics g) {
+   */
+public void paint(Graphics g) {
     width = getWidth();
     height = getHeight();
     i0 = width / 2;
@@ -70,7 +72,7 @@ public class CurveOutput extends JPanel {
     paintBackground(g);
     g.setPaintMode();
     for(int c = 0; c < 10; c++) {
-      Vector<point> curve = curves.get(c);
+      ArrayList<point> curve = curves.get(c);
       g.setColor(colors[c]);
       for(int i = 1; i < curve.size(); i++) {
         point p0 = curve.get(i - 1), p1 = curve.get(i);
@@ -144,8 +146,8 @@ public class CurveOutput extends JPanel {
     }
     public void mouseReleased(MouseEvent e) {
       mouseDragged(e);
-      if(run != null)
-        run.run();
+      if(runnable != null)
+        runnable.run();
     }
     public void mouseMoved(MouseEvent e) {}
     public void mousePressed(MouseEvent e) {}
@@ -154,31 +156,52 @@ public class CurveOutput extends JPanel {
     public void mouseExited(MouseEvent e) {}
   }
 
-  /** Resets the display.
-   * @param Xoffset Horizontal offset.
-   * @param Yoffset Vertical offset.
-   * @param Xscale Horizontal scale.
-   * @param Yscale Vertical scale.
+  /** Efface et initialize le tracé.
+   * @param Xoffset Abscisse du point central. 0 par défaut.
+   * @param Yoffset Ordonnée du point central. 0 par défaut.
+   * @param Xscale Echelle horizontale, le tracé se fait dans [-Xscale+Xoffset..Xscale+Xoffset].
+   * @param Yscale Echelle verticale, le tracé se fait dans  [-Yscale+Yoffset..Yscale+Yoffset].
+   * @return Cet objet, permettant de définir la construction <tt>new CurveOutput().reset(..)</tt>.
    */
-  public void reset(double Xoffset, double Yoffset, double Xscale, double Yscale) {
+  public CurveOutput reset(double Xoffset, double Yoffset, double Xscale, double Yscale) {
     this.Xoffset = Xoffset;
     this.Yoffset = Yoffset;
     this.Xscale = Xscale;
     this.Yscale = Yscale;
-    curves = new Vector<Vector<point> >();
+    curves = new ArrayList<ArrayList<point> >();
     for(int c = 0; c < 10; c++)
-      curves.add(new Vector<point>());
-    lines = new Vector<line>();
-    ovals = new Vector<oval>();
-    labels = new Vector<label>();
+      curves.add(new ArrayList<point>());
+    lines = new ArrayList<line>();
+    ovals = new ArrayList<oval>();
+    labels = new ArrayList<label>();
     repaint(0, 0, getWidth(), getHeight());
+    return this;
+  }
+  /** Efface et initialize le tracé.
+   * @param Xscale Echelle horizontale.
+   * @param Yscale Echelle verticale.
+   * @return Cet objet, permettant de définir la construction <tt>new CurveOutput().reset(..)</tt>.
+   * @see #reset(double, double, double, double)
+   */
+  public CurveOutput reset(double Xscale, double Yscale) {
+    return reset(0, 0, Xscale, Yscale);
+  }
+  /**
+   * @see #reset(double, double, double, double)
+   */
+  public CurveOutput reset() {
+    return reset(0, 0, 1, 1);
   }
   private double Xoffset = 0, Yoffset = 0, Xscale = 1, Yscale = 1;
 
-  /** Adds a curve value.
-   * @param x Point abscissa, in [-Xscale+Xoffset..Xscale+Xoffset].
-   * @param y Point Ordinate, in [-Yscale+Yoffset..Yscale+Yoffset].
-   * @param c Channel, in {0, 9}.
+  /** Ajoute un point à une courbe.
+   * @param x Abscisse du point dans [-Xscale+Xoffset..Xscale+Xoffset].
+   * @param y Ordonnée du point dans [-Yscale+Yoffset..Yscale+Yoffset].
+   * @param c Couleur de la courbe, dans {0, 9}. Le code des couleurs est le suivant:
+   * <div id="colors"><b>Code des couleurs</b><table>
+   * <tr><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td></tr>
+   * <tr><td>noir</td><td>marron</td><td>rouge</td><td>orange</td><td>jaune</td><td>vert</td><td>bleu</td><td>violet</td><td>gris</td><td>blanc</td></td>
+   * </table></div>
    */
   public void add(double x, double y, int c) {
     point p = new point();
@@ -188,12 +211,12 @@ public class CurveOutput extends JPanel {
       curves.get(c).add(p);
     repaint(0, 0, getWidth(), getHeight());
   }
-  /** Adds a line.
-   * @param x1 Point abscissa, in [-Xscale+Xoffset..Xscale+Xoffset].
-   * @param y1 Point Ordinate, in [-Yscale+Yoffset..Yscale+Yoffset].
-   * @param x2 Point abscissa, in [-Xscale+Xoffset..Xscale+Xoffset].
-   * @param y2 Point Ordinate, in [-Yscale+Yoffset..Yscale+Yoffset].
-   * @param c Channel, in {0, 9}.
+  /** Trace une ligne.
+   * @param x1 Abscisse du point, dans [-Xscale+Xoffset..Xscale+Xoffset].
+   * @param y1 Ordonnée du point, dans [-Yscale+Yoffset..Yscale+Yoffset].
+   * @param x2 Abscisse du point, dans [-Xscale+Xoffset..Xscale+Xoffset].
+   * @param y2 Ordonnée du point, dans [-Yscale+Yoffset..Yscale+Yoffset].
+   * @param c Couleur du tracé, <a href="#colors">dans {0, 9}</a>.
    */
   public void add(double x1, double y1, double x2, double y2, int c) {
     line l = new line();
@@ -204,11 +227,11 @@ public class CurveOutput extends JPanel {
     l.c = 0 <= c && c < 10 ? colors[c] : Color.BLACK;
     lines.add(l);
   }
-  /** Adds a circle.
-   * @param x Center abscissa, in [-Xscale+Xoffset..Xscale+Xoffset].
-   * @param y Center Ordinate, in [-Yscale+Yoffset..Yscale+Yoffset].
-   * @param r Center radius.
-   * @param c Channel, in {0, 9}.
+  /** Trace un cercle.
+   * @param x Abscisse du centre, dans [-Xscale+Xoffset..Xscale+Xoffset].
+   * @param y Ordonnée du point, dans [-Yscale+Yoffset..Yscale+Yoffset].
+   * @param r Rayon du cercle.
+   * @param c Couleur du tracé, <a href="#colors">dans {0, 9}</a>.
    */
   public void add(double x, double y, double r, int c) {
     oval l = new oval();
@@ -219,11 +242,11 @@ public class CurveOutput extends JPanel {
     l.c = 0 <= c && c < 10 ? colors[c] : Color.BLACK;
     ovals.add(l);
   }
-  /** Adds a label.
-   * @param x Label left-bottom abscissa, in [-Xscale+Xoffset..Xscale+Xoffset].
-   * @param y Label left-bottom ordinate, in [-Yscale+Yoffset..Yscale+Yoffset].
-   * @param s Label value.
-   * @param c Channel, in {0, 9}.
+  /** Trace une chaîne de caractères.
+   * @param x Abscisse du coin en haut à gauche du texte, dans [-Xscale+Xoffset..Xscale+Xoffset].
+   * @param y Ordonnée du coin en haut à gauche du texte, dans [-Yscale+Yoffset..Yscale+Yoffset].
+   * @param s Texte à tracer.
+   * @param c Couleur du tracé, <a href="#colors">dans {0, 9}</a>.
    */
   public void add(double x, double y, String s, int c) {
     label l = new label();
@@ -233,17 +256,17 @@ public class CurveOutput extends JPanel {
     l.c = 0 <= c && c < 10 ? colors[c] : Color.BLACK;
     labels.add(l);
   }
-  /** Gets the horizontal reticule position. */
+  /** Renvoie la position horizontale du réticule. */
   public double getReticuleX() {
     return Xoffset + Xscale * reticuleX;
   }
-  /** Gets the vertical reticule position. */
+  /** Renvoie la position verticale du réticule. */
   public double getReticuleY() {
     return Yoffset + Yscale * reticuleY;
   }
-  /** Sets the reticule position.
-   * @param x Reticule abscissa, in [-Xscale+Xoffset..Xscale+Xoffset].
-   * @param y Reticule ordinate, in [-Yscale+Yoffset..Yscale+Yoffset].
+  /** Définit la position du réticule.
+   * @param x Abscisse du réticule, dans [-Xscale+Xoffset..Xscale+Xoffset].
+   * @param y Reticule ordinate, dans [-Yscale+Yoffset..Yscale+Yoffset].
    */
   public void setReticule(double x, double y) {
     x -= Xoffset;
@@ -258,11 +281,13 @@ public class CurveOutput extends JPanel {
 
   private static Color colors[] = { Color.BLACK, new Color(150, 75, 0), Color.RED, Color.ORANGE, Color.YELLOW, Color.GREEN, Color.BLUE, Color.MAGENTA, Color.GRAY, Color.WHITE };
 
-  /** Sets the runnable called when the input is changed.
-   * @param run The runnable to call, set to null if no runnable.
+  /** Définit une portion de code appellée à chaque modification du réticule.
+   * @param runnable La portion de code à appeler, ou null si il n'y en a pas.
+   * @return Cet objet, permettant de définir la construction <tt>new CurveOutput().setRunnable(..)</tt>.
    */
-  public void setRunnable(Runnable run) {
-    this.run = run;
+  public CurveOutput setRunnable(Runnable runnable) {
+    this.runnable = runnable;
+    return this;
   }
-  private Runnable run = null;
+  private Runnable runnable = null;
 }

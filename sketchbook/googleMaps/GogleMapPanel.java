@@ -1,6 +1,7 @@
 /*******************************************************************************
 * David.Pichardie@inria.fr, Copyright (C) 2011.           All rights reserved. *
 *******************************************************************************/
+package org.javascool.proglets.googleMaps;
 
 import java.util.*;
 import java.awt.BorderLayout;
@@ -39,7 +40,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import org.javascool.tools.Macros;
-import org.javascool.tools.Utils;
 
 class GogleMapPanel extends JPanel implements ActionListener {
   private static final long serialVersionUID = 1L;
@@ -216,9 +216,9 @@ class GogleMapPanel extends JPanel implements ActionListener {
     add(groupBoutons, BorderLayout.SOUTH);
 
     try {
-      ici_bleu = Utils.getIcon("proglet/goglemap/doc-files/ici_bleu.png").getImage();
-      ici_rouge = Utils.getIcon("proglet/goglemap/doc-files/ici_rouge.png").getImage();
-      france = Utils.getIcon("proglet/goglemap/doc-files/carteDeFrance.png").getImage();
+      ici_bleu = Macros.getIcon("org/javascool/proglets/gogleMapsdoc-files/ici_bleu.png").getImage();
+      ici_rouge = Macros.getIcon("org/javascool/proglets/gogleMapsdoc-files/ici_rouge.png").getImage();
+      france = Macros.getIcon("org/javascool/proglets/gogleMapsdoc-files/carteDeFrance.png").getImage();
     } catch(Exception e) {
       System.out.println("Erreur au read : " + e);
     }
