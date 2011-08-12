@@ -1,4 +1,5 @@
 package org.javascool.proglets.analogiqueNumerique;
+
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import java.awt.Dimension;
@@ -32,8 +33,8 @@ public class ProgletPanel extends JPanel {
     pane.add(cmp, new Integer(2), 1);
     add(pane, BorderLayout.NORTH);
     // Adds the input
-    add(value = new NumberInput("tension inconnue"), BorderLayout.CENTER);
-    value.setScale(0, 1023, 1);
+    add(value = new NumberInput(), BorderLayout.CENTER);
+    value.setScale("tension inconnue", 0, 1023, 1);
     value.setValue(300);
     JPanel border = new JPanel();
     border.setPreferredSize(new Dimension(560, 190));

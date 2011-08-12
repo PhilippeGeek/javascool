@@ -18,7 +18,8 @@ import javax.imageio.ImageIO;
 import java.net.URL;
 import java.io.IOException;
 
-/** This widget defines a pixelic color icon panel.
+/** Panneau pour le tracé d'images pixeliques.
+ *
  * @see <a href="IconOutput.java.html">source code</a>
  * @serial exclude
  */
@@ -29,7 +30,10 @@ public class IconOutput extends JPanel {
     setPreferredSize(new Dimension(550, 550));
     reset(550, 550);
   }
-  /** Internal routine: do not use. */
+  
+  /** Routine interne de tracé, ne pas utiliser.
+   *
+   */
   public void paint(Graphics g) {
     super.paint(g);
     setBounds();
@@ -46,11 +50,12 @@ public class IconOutput extends JPanel {
     i0 = (getWidth() - width * dij) / 2;
     j0 = (getHeight() - height * dij) / 2;
   }
-  /** Resets the image.
-   * @param width Image width.
-   * @param height Image height.
+  /**  Efface et initialize l'image.
+   * @param width Taille horizontale de l'image.
+   * @param height Taille verticale de l'image.
+   * @return Cet objet, permettant de définir la construction <tt>new IconOutput().reset(..)</tt>.
    */
-  public void reset(int width, int height) {
+  public IconOutput reset(int width, int height) {
     if(width * height > 550 * 550) throw new IllegalArgumentException("Image size too big !");
     if(width % 2 == 0)
       width--;
@@ -61,35 +66,41 @@ public class IconOutput extends JPanel {
       image[ij] = Color.WHITE;
     ;
     repaint(0, 0, getWidth(), getHeight());
+    return this;
   }
-  /** Resets the image.
-   * @param location The image location.
-   * @return The image dimension.
+  /** Initialize l'image à partir d'un fichier.
+   * @param location L'URL (Universal Resource Location) de l'image.
+   * @return Les dimensions de l'image.
+   * @return Cet objet, permettant de définir la construction <tt>new IconOutput().reset(..)</tt>.
    */
-  public Dimension reset(String location) throws IOException {
+  public IconOutput reset(String location) throws IOException {
     BufferedImage img = ImageIO.read(new URL(location));
     if(img != null) {
       reset(img.getWidth(), img.getHeight());
       for(int j = 0, ij = 0; j < height; j++)
         for(int i = 0; i < width; i++, ij++)
           image[ij] = new Color(img.getRGB(i, j));
-      return new Dimension(width, height);
+      return this;
     } else throw new IOException("Unable to load the image " + location);
   }
-  /** Sets a pixel value.
-   * @param x Pixel abscissa, in {0, width{.
-   * @param y Pixel Ordinate, in {0, height{.
-   * @param  c Color: "black" (default), "blue", "cyan", "gray", "green", "magenta", "orange", "pink", "red", "white", "yellow".
-   * @return True if the pixel location is in the image bounds.
+  /** Renvoie les dimensions de l'image. */
+  public Dimension getDimension() {
+    return new Dimension(width, height);
+  }
+  /** Définit la valeur d'un pixel.
+   * @param x Abscisse du pixel, dans {0, width{.
+   * @param y Ordonnée du pixel, dans {0, height{.
+   * @param  c Couleur: "black" (default), "blue", "cyan", "gray", "green", "magenta", "orange", "pink", "red", "white", "yellow".
+   * @return La valeur true si le pixel est dans les limites de l'image, false sinon.
    */
   public boolean set(int x, int y, String c) {
     return set(x, y, getColor(c));
   }
-  /** Sets a pixel value.
-   * @param x Pixel abscissa, in {0, width{.
-   * @param y Pixel Ordinate, in {0, height{.
-   * @param v Monochrome intensity between 0 and 255.
-   * @return True if the pixel location is in the image bounds.
+  /** Définit la valeur d'un pixel.
+   * @param x Abscisse du pixel, dans {0, width{.
+   * @param y Ordonnée du pixel, dans {0, height{.
+   * @param v L'intensité en niveau de gris du pixel de 0 (noir) à 255 (blanc).
+   * @return La valeur true si le pixel est dans les limites de l'image, false sinon.
    */
   public boolean set(int x, int y, int v) {
     v = v < 0 ? 0 : v > 255 ? 255 : v;
@@ -105,10 +116,10 @@ public class IconOutput extends JPanel {
     } else
       return false;
   }
-  /** Gets a pixel value.
-   * @param x Pixel abscissa, in {0, width{.
-   * @param y Pixel Ordinate, in {0, height{.
-   * @return The pixel intensity, or -1 if out of bounds.
+  /** Renvoie la valeur d'un pixel.
+   * @param x Abscisse du pixel, dans {0, width{.
+   * @param y Ordonnée du pixel, dans {0, height{.
+   * @return L'intensite du pixel entre 0 et 255 ou -1 si le pixel n'est pas dans l'image.
    */
   public int getIntensity(int x, int y) {
     if((0 <= x) && (x < width) && (0 <= y) && (y < height)) {
@@ -117,10 +128,10 @@ public class IconOutput extends JPanel {
     } else
       return -1;
   }
-  /** Gets a pixel value.
-   * @param x Pixel abscissa, in {0, width{.
-   * @param y Pixel Ordinate, in {0, height{.
-   * @return The pixel color, if the pixel location is in the image bounds, else "undefined".
+  /**  Renvoie la valeur d'un pixel.
+   * @param x Abscisse du pixel, dans {0, width{.
+   * @param y Ordonnée du pixel, dans {0, height{.
+   * @return La couleur du pixel ou "undefined" si le pixel n'est pas dans l'image.
    */
   public String getColor(int x, int y) {
     if((0 <= x) && (x < width) && (0 <= y) && (y < height)) {
