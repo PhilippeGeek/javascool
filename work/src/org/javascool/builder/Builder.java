@@ -95,6 +95,7 @@ public class Builder {
         DialogFrame.setUpdate("Construction de " + name + " 2/4", 40);
         // Traduction Hml -> Htm des docs
         for(String doc : StringFile.list(progletDir, ".*\\.xml"))
+	  // @todo ici il faut remplacer le xslt par un fichier du tmp !!
           StringFile.save(doc.replaceFirst("\\.xml", "\\.htm"), Xml2Xml.run(StringFile.load(doc), "../work/src/org/javascool/builder/hdoc2htm.xslt"));
         // jarDir+ "/org/javascool/builder/hdoc2htm.xslt"));
         DialogFrame.setUpdate("Construction de " + name + " 3/4", 50);

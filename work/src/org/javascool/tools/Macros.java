@@ -470,6 +470,7 @@ public class Macros {
    */
   public static URL getResourceURL(String location, String base, boolean reading) {
     try {
+      // @todo ici il y a un bug suyyr l url et un JarConnection !!
       if(location.matches("(ftp|http|https|jar|mailto|stdout):.*"))
         return (base != null ? new URL(new URL(base + "/null"), location) : new URL(location)).toURI().normalize().toURL();
       if(location.startsWith("file:"))
