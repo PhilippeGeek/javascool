@@ -1,14 +1,17 @@
 package org.javascool.proglets.tortueLogo;
-import javax.swing.JPanel;
+import static org.javascool.tools.Macros.*;
+import static Functions.*;
+import javax.swing.JApplet;
+
 import javax.swing.JLabel;
 import java.awt.Dimension;
 import java.awt.Color;
 import java.awt.Graphics;
-import org.javascool.tools.Utils;
 
-public class Panel extends JPanel {
+public class Panel extends JApplet {
   private static final long serialVersionUID = 1L;
 
+  // @panel
   public Panel() {
     setPreferredSize(new Dimension(width, height));
     setBackground(new Color(10, 100, 10));
@@ -16,11 +19,14 @@ public class Panel extends JPanel {
     clear();
     // Adds the turtle
     turtle = new JLabel();
-    turtle.setIcon(Utils.getIcon("org/javascool/proglets/tortueLogo/turtle.gif"));
+    turtle.setIcon(Macros.getIcon("org/javascool/proglets/tortueLogo/turtle.gif"));
     turtle.setBounds(width / 2, height / 2, 42, 35);
     add(turtle);
   }
-  /** Internal routine: do not use. */
+
+  /** Routine interne de tracé, ne pas utiliser.
+   *
+   */
   @Override
   public void paint(Graphics g) {
     super.paint(g);
@@ -58,5 +64,18 @@ public class Panel extends JPanel {
    */
   public void add(int x, int y, Color c) {
     garden[x + y * width] = c;
+  }
+
+  @Override
+  public static void start() {
+    clear_all();
+    pen_up();
+    int t = 0;
+    while(t < 9000) {
+      set_color((t / 1000) % 10);
+      set_position(256 + 250 * Math.cos(0.0015 * t), 256 + 250 * Math.sin(0.0045 * t));
+      pen_down();
+      t = t + 1;
+    }
   }
 }

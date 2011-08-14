@@ -31,6 +31,10 @@ import java.util.ArrayList;
 public class CurveOutput extends JPanel {
   private static final long serialVersionUID = 1L;
 
+  // @bean
+  public CurveOutput() {
+  }
+  
   private static class point {
     double x, y;
   };
@@ -61,6 +65,7 @@ public class CurveOutput extends JPanel {
   /** Routine interne de tracé, ne pas utiliser.
    *
    */
+  @Override
 public void paint(Graphics g) {
     width = getWidth();
     height = getHeight();
@@ -138,21 +143,28 @@ public void paint(Graphics g) {
 
   private class ReticuleMouseListener implements MouseMotionListener, MouseListener {
     private static final long serialVersionUID = 1L;
+  @Override
     public void mouseDragged(MouseEvent e) {
       paintReticule(getGraphics());
       reticuleX = i2x(e.getX());
       reticuleY = j2y(e.getY());
       paintReticule(getGraphics());
     }
+  @Override
     public void mouseReleased(MouseEvent e) {
       mouseDragged(e);
       if(runnable != null)
         runnable.run();
     }
+  @Override
     public void mouseMoved(MouseEvent e) {}
+  @Override
     public void mousePressed(MouseEvent e) {}
+  @Override
     public void mouseClicked(MouseEvent e) {}
+  @Override
     public void mouseEntered(MouseEvent e) {}
+  @Override
     public void mouseExited(MouseEvent e) {}
   }
 

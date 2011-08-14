@@ -32,6 +32,7 @@ public class NumberInput extends JPanel {
     setPreferredSize(new Dimension(400, 62));
     field = new JTextField(12);
     field.addActionListener(new ActionListener() {
+  @Override
                               public void actionPerformed(ActionEvent evt) {
                                 try { set(new Double(field.getText()).doubleValue(), 'T');
                                 } catch(NumberFormatException e) {}
@@ -42,10 +43,15 @@ public class NumberInput extends JPanel {
     slider = new JSlider();
     slider.setFont(new Font("Dialog", Font.PLAIN, 0));
     slider.addMouseListener(new MouseListener() {
+  @Override
                               public void mouseClicked(MouseEvent e) {}
+  @Override
                               public void mouseEntered(MouseEvent e) {}
+  @Override
                               public void mouseExited(MouseEvent e) {}
+  @Override
                               public void mousePressed(MouseEvent e) {}
+  @Override
                               public void mouseReleased(MouseEvent e) {
                                 set((NumberInput.this.max - NumberInput.this.min) / 100.0 * slider.getValue() + NumberInput.this.min, 'S');
                               }
