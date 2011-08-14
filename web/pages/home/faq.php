@@ -40,7 +40,8 @@ Vous nous avez posé des questions à propos de <em><?php showLink('?','Java\'s 
 <h3> <span class="mw-headline" id="Quels_sont_les_liens_avec_les_cours_de_G.C3.A9rard_Berry_sur_le_monde_num.C3.A9rique_.3F."> Quels sont les liens avec les cours de Gérard Berry sur le monde numérique&nbsp;?. </span></h3>
 <p>Ils sont multiples: <?php showLink('http://fr.wikipedia.org/wiki/Gérard_Berry','Gérard Berry','external');?> avec <?php showLink('http://www.lix.polytechnique.fr/%7Edowek','Gilles Dowek','external');?> sont des initiateurs (et de bienveillants conseillers) des contenus disponibles sur <em><?php showLink('?','Java\'s Cool','internal');?></em>, tout particulièrement sur ce qu'est l'<?php showLink('http://interstices.info/reflet-numerique','information','external');?> et sur les ingrédients des <?php showLink('http://interstices.info/ingredients-algorithmes','algorithmes','external');?>. 
 </p><p>Une très intéressante [rtsp://stream-serv.inrialpes.fr/Roc/SeminaireInformatiqueObjetsNumeriques/G_Berry.rm présentation vidéo] de <?php showLink('http://fr.wikipedia.org/wiki/Gérard_Berry','Gérard Berry','external');?> est disponible, ainsi que son cours au <?php showLink('http://www.college-de-france.fr/default/EN/all/inn_tec2007','Collège de France','external'); ?> ( <?php showLink('http://www.college-de-france.fr/default/EN/all/inn_tec2007/lecon_inaugurale_.htm','vidéo','external');?>, <?php showLink('http://www.college-de-france.fr/audio/berry/berry-20080117.mp3','audio','external');?>, <?php showLink('http://www.college-de-france.fr/media/inn_tec2007/UPL13472_Le_on_inaugurale_G_rard_Berry.pdf','support visuel','external');?>). 
-</p><p>De même <?php showLink('http://www.lix.polytechnique.fr/%7Edowek','Gilles Dowek','external');?> fait une [rtsp://stream-serv.inrialpes.fr/Roc/SeminaireInformatiqueObjetsNumeriques/G_Dowek.rm présentation vidéo] accompagnée de ses <?php showLink('http://javascool.gforge.inria.fr/proglet/doc/more/slides-dowek.pdf','supports','external');//TODO?> pour mettre en perspective les cours sur l'algorithmique.
+</p><p>De même <?php showLink('http://www.lix.polytechnique.fr/%7Edowek','Gilles Dowek','external');?> fait une 
+<?php showLink('http://www.canal-u.tv/producteurs/fuscia/dossier_programmes/science_info_lycee_profs_conferences_de_formation_des_professeurs_du_secondaire_en_science_informatique/premiers_principes_des_langages_de_programmation','présentation vidéo','external');?> accompagnée de ses slides pour mettre en perspective les cours sur l'algorithmique.
 </p>
 <h3> <span class="mw-headline" id="Y_a_t.27il_un_manuel_avec_toutes_les_constructions_et_instructions_.3F."> Y a t'il un manuel avec toutes les constructions et instructions&nbsp;?. </span></h3>
 <p>Bien entenu ce ``manuel´´ existe à la fois:
@@ -58,8 +59,7 @@ Vous nous avez posé des questions à propos de <em><?php showLink('?','Java\'s 
 <h3> <span class="mw-headline" id="Peut-on_consulter_un_.60.60vrai.C2.B4.C2.B4_cours_d.27algorithmique_.3F."> Peut-on consulter un ``vrai´´ cours d'algorithmique&nbsp;?. </span></h3>
 <p>Oui et non.
 </p>
-<ul><li> Non: il n'y a pas <i>un</i> cours d'algorithmique ``en général´´ mais des chapitres selon les grands domaines de l'informatique: calcul numérique, manipulation de graphes, optimisation et recherche opérationnelle, automatique et contrôle de système, mesures et statistiques, etc.. Ce sont les <i>fondements de la programmation</i> (voir la [rtsp://stream-serv.inrialpes.fr/Roc/SeminaireInformatiqueObjetsNumeriques/G_Dowek.rm présentation vidéo], accompagnée de ses <?php showLink('http://javascool.gforge.inria.fr/proglet/doc/more/slides-dowek.pdf','supports','external');//TODO?>, sur le sujet) qui forment le socle communs de ces domaines.
-</li><li> Oui&nbsp;! De très bons cours existent en ligne, nous pensons pour se limiter à aux documents francophones:
+<ul><li> Oui&nbsp;! De très bons cours existent en ligne, nous pensons pour se limiter à aux documents francophones:
 <ul><li> les documents d')i(nterstices sur <?php showLink('http://interstices.info/jcms/c_5389/algorithmes','les algorithmes','external');?> avec une bonne <?php showLink('http://interstices.info/algo','introduction','external');?> et une <?php showLink('http://interstices.info/algo-mode-emploi','discussion','external');?> sur la théorie, ainsi qu'une description des <?php showLink('http://interstices.info/ingredients-algorithmes','ingrédients des algorithmes','external');?>.
 </li><li> Le <?php showLink('http://www.pise.info/algo/codage.htm','cours','external');?> de l'université Paris VII, orienté ``programmation´´.
 </li><li> Et de nombreuses <?php showLink('http://fuscia.info/fr/index.php','ressources en ligne','external');?>.
@@ -111,14 +111,5 @@ Toutes les informations et éléments sont [[JavaScool:Licence librement utilisa
 </li><li> Il reste limité à des interactions de type console (lire/écrire une valeur) et l'affichage de courbe et ne permet pas de manipuler des objets numériques (ex: image de pixels) plus riches que des valeurs numériques.
 </li><li> Ici, algobox «réinvente» un nouveau langage, et une interaction spécifique avec le système, ce qui va nécessiter de la part de l'élève un apprentissage provisoire supplémentaire qui ne sera pas directement pérennisable, contrairement aux outils qui adhèrent à une syntaxe existante.
 </li></ul>
-<p>Plus généralement, pour certains enseignants, la plus value de ces outils, tels que JavaScool ou Algobox par rapport aux calculettes programmables n'est pas certain. Si l'enseignant veut se limiter aux exercices proposés au niveau du <?php showLink('http://javascool.gforge.inria.fr/v3/documents/Algo_Doc_Ress.pdf','programme de seconde','external');//TODO?>, ils peuvent tout aussi bien être réalisés sur une calculette. Mais en acceptant cette fois ci de voir les structures algorithmiques fondamentales implémentées sous forme bien moins visible. Mais l'investissement pour apprendre à manipuler le langage de la calculette sera réutilisable ensuite, de même que JavaScool ouvre sur les langages impératifs usuels (C, PHP, Java, ..).
+<p>Plus généralement, pour certains enseignants, la plus value de ces outils, tels que JavaScool ou Algobox par rapport aux calculettes programmables n'est pas certain. Si l'enseignant veut se limiter aux exercices proposés au niveau du <?php showLink('http://javascool.gforge.inria.fr/documents/Algo_Doc_Ress.pdf','programme de seconde','external');?>, ils peuvent tout aussi bien être réalisés sur une calculette. Mais en acceptant cette fois ci de voir les structures algorithmiques fondamentales implémentées sous forme bien moins visible. Mais l'investissement pour apprendre à manipuler le langage de la calculette sera réutilisable ensuite, de même que JavaScool ouvre sur les langages impératifs usuels (C, PHP, Java, ..).
 </p>
-<!-- 
-NewPP limit report
-Preprocessor node count: 43/1000000
-Post-expand include size: 0/2097152 bytes
-Template argument size: 0/2097152 bytes
-Expensive parser function count: 0/100
--->
-
-<!-- Saved in parser cache with key wiki_sciencinfolycee:pcache:idhash:92-1!1!0!!fr!2!edit=0!printable=1 and timestamp 20110721112848 -->
