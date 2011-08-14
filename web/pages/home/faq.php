@@ -113,3 +113,4 @@ Toutes les informations et éléments sont [[JavaScool:Licence librement utilisa
 </li></ul>
 <p>Plus généralement, pour certains enseignants, la plus value de ces outils, tels que JavaScool ou Algobox par rapport aux calculettes programmables n'est pas certain. Si l'enseignant veut se limiter aux exercices proposés au niveau du <?php showLink('http://javascool.gforge.inria.fr/documents/Algo_Doc_Ress.pdf','programme de seconde','external');?>, ils peuvent tout aussi bien être réalisés sur une calculette. Mais en acceptant cette fois ci de voir les structures algorithmiques fondamentales implémentées sous forme bien moins visible. Mais l'investissement pour apprendre à manipuler le langage de la calculette sera réutilisable ensuite, de même que JavaScool ouvre sur les langages impératifs usuels (C, PHP, Java, ..).
 </p>
+			     

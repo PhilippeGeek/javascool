@@ -34,7 +34,8 @@ svn :
 	cd $(JVS) ; svn cleanup ; svn up ; svn ci -m 'modif mineure vthierry' ; svn status
 
 pub :
-	svn up ; cd src/web ; ./index/start.sh -show #; ./publis.sh
+	svn up ; cd ../web ; ./index/start.sh #; ./publis.sh
+	firefox http://127.0.0.1:1234
 
 bty :
 	for f in `find src -name '*.java' -o -name '*.jvs'` ; do uncrustify -q -c lib/uncrustify.cfg --replace $$f ; done
