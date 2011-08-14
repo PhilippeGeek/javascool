@@ -2,9 +2,9 @@ package org.javascool.proglets.tortueLogo;
 import java.awt.Color;
 import org.javascool.tools.Macros;
 
-/** ÃƒÆ’Ã‚Â©finit une proglet javascool qui permet de simuler la tortue logo.
- * @see <a href="doc-files/about-proglet.htm">Description</a>
- * @see <a href="doc-files/the-proglet.htm">La proglet</a>
+/** Définit une proglet javascool qui permet de simuler la tortue logo.
+ * @see <a href="about-proglet.htm">Description</a>
+ * @see <a href="the-proglet.htm">La proglet</a>
  * @see <a href="http://fr.wikipedia.org/wiki/Logo_(langage)#Primitives_graphiques">La rÃƒÆ’Ã‚Â©fÃƒÆ’Ã‚Â©rence du langage logo</a>
  * @see <a href="TortueLogo.java.html">code source</a>
  * @serial exclude
@@ -109,7 +109,7 @@ public class Functions {
   public static void pen_up() {
     pen = false;
   }
-  /** La tortue laisse sa trace (par dÃƒÆ’Ã‚Â©faut). */
+  /** La tortue laisse sa trace (par défaut). */
   public static void pen_down() {
     pen = true;
   }
