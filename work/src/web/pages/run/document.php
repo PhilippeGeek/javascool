@@ -33,12 +33,3 @@
 <hr />
 <p>Accès aux sources: <?php//TODO?><a href="http://javascool.gforge.inria.fr/v3/sources.zip" class="external text" rel="nofollow">ici</a>.
 </p>
-<!-- 
-NewPP limit report
-Preprocessor node count: 13/1000000
-Post-expand include size: 0/2097152 bytes
-Template argument size: 0/2097152 bytes
-Expensive parser function count: 0/100
--->
-
-<!-- Saved in parser cache with key wiki_sciencinfolycee:pcache:idhash:97-1!1!0!!fr!2!edit=0!printable=1 and timestamp 20110721112938 -->
