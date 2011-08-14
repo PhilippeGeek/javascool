@@ -25,7 +25,8 @@ import java.io.IOException;
  */
 public class IconOutput extends JPanel {
   private static final long serialVersionUID = 1L;
-  {
+  // @bean
+  public IconOutput() {
     setBackground(Color.GRAY);
     setPreferredSize(new Dimension(550, 550));
     reset(550, 550);
@@ -34,6 +35,7 @@ public class IconOutput extends JPanel {
   /** Routine interne de tracé, ne pas utiliser.
    *
    */
+  @Override
   public void paint(Graphics g) {
     super.paint(g);
     setBounds();
