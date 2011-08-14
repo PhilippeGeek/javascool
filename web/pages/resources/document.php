@@ -38,13 +38,3 @@
 </li></ul>
 <ul><li> Voir aussi <?php showLink('?page=other&action=ailleurs','autres outils pédagogiques pour apprendre l\'Informatique','internal');?>.
 </li></ul>
-
-<!-- 
-NewPP limit report
-Preprocessor node count: 56/1000000
-Post-expand include size: 0/2097152 bytes
-Template argument size: 0/2097152 bytes
-Expensive parser function count: 0/100
--->
-
-<!-- Saved in parser cache with key wiki_sciencinfolycee:pcache:idhash:96-1!1!0!!fr!2!edit=0!printable=1 and timestamp 20110721112930 -->

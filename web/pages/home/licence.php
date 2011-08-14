@@ -11,14 +11,13 @@
 <p><br />
 </p>
 <h1> <span class="mw-headline" id="Licences_appliqu.C3.A9es_.C3.A0_JavaScool"> Licences appliquées à JavaScool </span></h1>
-<div align="right"><tt><?php showLink('http://javascool.gforge.inria.fr/v3/api/js-manifest.txt','Attestion de JavaScool','external');//TODO?></tt></div>
 <table class="wikitable" border="20" cellspacing="20" cellpadding="10" align="center" width="90%">
 <tr>
 <td>
 <p>Tout le code source de <?php showLink('?','Java\'s Cool','internal');?> et de ses variantes logicielles est distribué sous la licence <?php showLink('http://www.cecill.info/licences/Licence_CeCILL_V2-fr.html','CeCILL V2','external');?> (Compatible GNU GPL)
 </p>
 </td><td align="center">
-<p><?php showLink('http://www.cecill.info/licences/Licence_CeCILL_V2-fr.html','<img width="100" src="http://javascool.gforge.inria.fr/v3/images/logo_cecill.png" class="imagelink" alt="Logo CeCILL"/>','external');//TODO+404?>
+<p><?php showLink('http://www.cecill.info/licences/Licence_CeCILL_V2-fr.html','<img width="100" src="http://javascool.gforge.inria.fr/v3/index/images/logo_cecill.png" class="imagelink" alt="Logo CeCILL"/>','external');?>
 </p>
 </td></tr>
 <tr>
@@ -43,6 +42,4 @@
 </li><li>Partage des Conditions Initiales à l'Identique — Si vous modifiez, transformez ou adaptez cette création, vous n'avez le droit de distribuer la création qui en résulte que sous un contrat identique à celui-ci. 
 </li></ul>
 <p>La licence CeCILL est une licence de logiciel libre, conforme au droit français et à la législation européenne, élaborée par le CEA, le CNRS et l'INRIA, qui affirme ici une vision pragmatique du logiciel libre et ouvert, comme le .  Cette licence définit les principes d'utilisation et de diffusion de logiciels libres comme <a href="http://javascool.gforge.inria.fr" class="external text" rel="nofollow">JavaScool</a>, elle est proche de la <a href="http://fr.wikipedia.org/wiki/Licence_publique_générale_GNU" class="external text" rel="nofollow">GNU-GPL</a>. Cette licence permet de diffuser nos éléments et tous les eléments issus de nos éléments sous licence de logiciel libre.
-</p><p>Accès aux sources: <?php showLink('http://javascool.gforge.inria.fr/v3/sources.zip','ici','file');//TODO?>.
-</p><p><?php//TODO?>Ce logiciel a été créé avec la collaboration d'un membre de <?php showLink('http://www.linux-azur.org','Linux-Azur','external');?>.
 </p>

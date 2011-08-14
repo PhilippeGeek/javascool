@@ -24,7 +24,7 @@
 </p>
 <center><b>Mais comment cela marche t'il&nbsp;? Comment maîtriser tout cela&nbsp;?</b> </center>
 <p><br />
-Nous aidons à découvrir deux volets de cet indispensable savoir <?php//TODO!??><a href="http://javascool.gforge.inria.fr" class="external text" rel="nofollow">ici</a>: algorithmes + objets numériques.
+Nous aidons ici à découvrir deux volets de cet indispensable savoir : algorithmes + objets numériques.
 </p>
 <h2> <span class="mw-headline" id="Subir_ou_ma.C3.AEtriser_le_monde_num.C3.A9rique"> Subir ou maîtriser le monde numérique </span></h2>
 <h3> <span class="mw-headline" id="Du_savoir_compter_au_savoir_calculer"> Du savoir compter au savoir calculer </span></h3>
