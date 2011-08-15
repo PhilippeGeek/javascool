@@ -7,7 +7,7 @@
 
   <target name="classes">
     <mkdir dir="../build/classes"/>
-    <javac deprecation="true" debug="true" debuglevel="lines,vars,source" classpath="${classpath}" srcdir="src" destdir="../build/classes"/>
+    <javac debug="true" debuglevel="lines,vars,source" deprecation="on" classpath="${classpath}" srcdir="src" destdir="../build/classes"/>
   </target>
   
   <target name="javascool.jar" depends="classes" >

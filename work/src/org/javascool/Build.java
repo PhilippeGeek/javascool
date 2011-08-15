@@ -19,7 +19,7 @@ public class Build {
     ErrorCatcher.checkJavaVersion(6);
     Core.setUpLookAndFeel();
     if((args.length > 0) && args[0].equals("-q"))
-      org.javascool.builder.Builder.build();
+      System.exit(org.javascool.builder.Builder.build() ? 0 : -1);
     else
       org.javascool.builder.DialogFrame.startFrame();
   }

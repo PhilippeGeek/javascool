@@ -6,6 +6,8 @@
 
 package org.javascool.tools;
 
+import java.awt.Component;
+import java.net.URISyntaxException;
 import javax.swing.JOptionPane;
 import javax.swing.JEditorPane;
 import javax.swing.JScrollPane;
@@ -15,7 +17,7 @@ import javax.swing.ImageIcon;
 
 import java.net.URL;
 import java.io.File;
-import java.net.URI;
+import java.io.IOException;
 import org.javascool.core.Engine;
 import org.javascool.widgets.Console;
 
@@ -469,16 +471,17 @@ public class Macros {
    * @param reading  Précise si nous sommes en lecture (true) ou écriture (false). Par défaut en lecture.
    * @throws IllegalArgumentException Si l'URL est mal formée.
    */
-  public static URL getResourceURL(String location, String base, boolean reading) {
+  public static URL getResourceURL(String location, String base, boolean reading)  {
     if(base != null)
       location = base + "/" + location;
     try {
       // @patch : ceci blinde un bug sur les URL jar
       if(location.matches("jar:[^!]*!.*")) {
-        URL url = Thread.currentThread().getContextClassLoader().getResource(location.replaceFirst("[^!]*!", ""));
+          String res = location.replaceFirst("[^!]*!/", "");
+        URL url = Thread.currentThread().getContextClassLoader().getResource(res);
         if(url != null)
           return url;
-        else throw new IllegalArgumentException("Unable to find " + location + " as a classpath resource");
+        else throw new IllegalArgumentException("Unable to find " + res + " from " + location + " as a classpath resource");
       }
       if(location.matches("(ftp|http|https|jar|mailto|stdout):.*"))
         return new URL(location).toURI().normalize().toURL();
@@ -499,7 +502,8 @@ public class Macros {
           return url;
       }
       return new URL("file:" + location);
-    } catch(Exception e) { throw new IllegalArgumentException(e + " : " + location + " is a malformed URL");
+    } catch(IOException e) { throw new IllegalArgumentException(e + " : " + location + " is a malformed URL");
+    } catch(URISyntaxException e) { throw new IllegalArgumentException(e + " : " + location + " is a malformed URL");
     }
   }
   /**
@@ -524,6 +528,7 @@ public class Macros {
    * @return Le panneau graphique de la proglet courante ou null si il n'est pas défini.
    */
   public static < T > T getProgletPane() {
-    return (T) Engine.getInstance().getProglet().getPane();
+    Component c = Engine.getInstance().getProglet().getPane();
+    return (T) c;
   }
 }

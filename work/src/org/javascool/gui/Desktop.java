@@ -6,18 +6,13 @@
 
 package org.javascool.gui;
 
-import java.awt.Frame;
-import java.awt.Container;
+import java.awt.Component;
+import javax.swing.JFrame;
 import org.javascool.Core;
 import org.javascool.widgets.HtmlDisplay;
-import org.javascool.widgets.ToolBar;
+import org.javascool.widgets.PanelApplet;
 
 // Used to define the frame
-import javax.swing.JFrame;
-import javax.swing.JComponent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import javax.swing.ImageIcon;
 
 /** Définit les functions d'interaction avec l'interface graphique de JavaScool.
  *
@@ -39,47 +34,25 @@ public class Desktop {
   private Desktop() {}
 
   /** Renvoie la fenêtre racine de l'interface graphique. */
-  public Frame getFrame() {
+  public JFrame getFrame() {
     if(frame == null)
-      frame = showFrame(Core.title, Core.logo, JVSMainPanel.getInstance());
+      frame = new PanelApplet.Frame(Core.title, Core.logo, JVSMainPanel.getInstance()) {
+          @Override
+             public boolean isClosable() {
+        return org.javascool.gui.Desktop.getInstance().isClosable();
+          } 
+      };
     return frame;
   }
-  private JFrame frame;
+  private PanelApplet.Frame frame;
 
-  /** Ouvre une fenêtre principale pour lancer une application.
-   * @param title Le titre de la fenêtre.
-   * @param icon L'icône de la fenêtre.
-   * @param panel Le composant graphique à afficher.
-   */
-  static JFrame showFrame(String title, String icon, JComponent panel) {
-    JFrame frame = new JFrame();
-    frame.setTitle(title);
-    ImageIcon image = org.javascool.tools.Macros.getIcon(icon);
-    if(image != null)
-      frame.setIconImage(image.getImage());
-    frame.add(panel);
-    frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-    frame.addWindowListener(new WindowAdapter() {
-                              @Override
-                              public void windowClosing(WindowEvent e) {
-                                if(org.javascool.gui.Desktop.getInstance().close()) {
-                                  e.getWindow().setVisible(false);
-                                  e.getWindow().dispose();
-                                  System.exit(0);
-                                }
-                              }
-                            }
-                            );
-    frame.pack();
-    frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-    frame.setVisible(true);
-    return frame;
-  }
   /** Ouvre un fichier dans l'éditeur.
    * @param location L'URL (Universal Resource Location) du fichier.
    * @throws RuntimeException Si une erreur d'entrée-sortie s'est produite lors de l'exécution.
    */
-  public void addFile(String location) { throw new RuntimeException("Non implémenté");
+  public void addFile(String location) { 
+      // @todo a implementer
+      throw new RuntimeException("Non implémenté");
   }
   /** Ouvre un document HTML dans l'interface.
    * @param location L'URL (Universal Resource Location) du fichier.
@@ -103,41 +76,38 @@ public class Desktop {
    * @param east Affiche dans le panneau de droite si vrai (valeur par défaut), sinon le panneau de gauche.
    * @param show Rend le composant visible si vrai (valeur par défaut), sinon ne modifie pas l'onglet affiché.
    */
-  public void addTab(String label, Container pane, String title, String icon, boolean east, boolean show) { throw new RuntimeException("Non implémenté");
+  public void addTab(String label, Component pane, String title, String icon, boolean east, boolean show) { 
+      // @todo a implementer
+      throw new RuntimeException("Non implémenté");
   }
   /**
-   * @see #addTab(String, Container, String, String, boolean, boolean)
+   * @see #addTab(String, Component, String, String, boolean, boolean)
    */
-  public void addTab(String label, Container pane, String title, String icon, boolean east) {
+  public void addTab(String label, Component pane, String title, String icon, boolean east) {
     addTab(label, pane, title, icon, east, true);
   }
   /**
-   * @see #addTab(String, Container, String, String, boolean, boolean)
+   * @see #addTab(String, Component, String, String, boolean, boolean)
    */
-  public void addTab(String label, Container pane, String title, String icon) {
+  public void addTab(String label, Component pane, String title, String icon) {
     addTab(label, pane, title, icon, true, true);
   }
   /**
-   * @see #addTab(String, Container, String, String, boolean, boolean)
+   * @see #addTab(String, Component, String, String, boolean, boolean)
    */
-  public void addTab(String label, Container pane, String title) {
+  public void addTab(String label, Component pane, String title) {
     addTab(label, pane, title, null, true, true);
   }
   /**
-   * @see #addTab(String, Container, String, String, boolean, boolean)
+   * @see #addTab(String, Component, String, String, boolean, boolean)
    */
-  public void addTab(String label, Container pane) {
+  public void addTab(String label, Component pane) {
     addTab(label, pane, "", null, true, true);
-  }
-  /** Renvoie un accès à la barre d'outil de l'interface.
-   * @return La barre d;outil.
-   */
-  public ToolBar getToolBar() { throw new RuntimeException("Non implémenté");
   }
   /** Demande la fermeture du desktop à la fin du programme.
    * @return La valeur true si le desktop peut être fermé sans dommage pour l'utilisateur, sinon la valeur fausse.
    */
-  public boolean close() {
+  public boolean isClosable() {
     return true;
   }
 }

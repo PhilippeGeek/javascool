@@ -79,6 +79,7 @@ class JVSToolBar extends ToolBar {
                             );
 
     addTool("Executer", runButton = new StartStopButton() {
+  private static final long serialVersionUID = 1L;
               @Override
               public void start() {
                 Engine.getInstance().doRun();

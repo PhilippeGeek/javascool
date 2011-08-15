@@ -236,7 +236,7 @@ public class HtmlDisplay extends JPanel {
         browse(location);
       else if(location.matches(".*\\.htm$")) {    // Gestion des URLs en HTML3
         pane.getDocument().putProperty(Document.StreamDescriptionProperty, null);
-        pane.setPage(Macros.getResourceURL(location, new File(location.replaceFirst("^file:", "")).getParent()));
+        pane.setPage(Macros.getResourceURL(location));
       } else if(location.startsWith(editorPrefix))    // Affichage dand JavaScool
         org.javascool.gui.Desktop.getInstance().addFile(location.substring(editorPrefix.length()));
       else if(location.startsWith(browserPrefix))      // Affichage dand JavaScool

@@ -37,7 +37,7 @@ public class Jvs2Java extends Translator {
 
   @Override
   public String translate(String jvsCode) {
-    String text = jvsCode;
+    String text = jvsCode.replace((char) 160, ' ');
     // Ici on ajoute
     if(!text.replaceAll("[ \n\r\t]+", " ").matches(".*void[ ]+main[ ]*\\([ ]*\\).*")) {
       if(text.replaceAll("[ \n\r\t]+", " ").matches(".*main[ ]*\\([ ]*\\).*")) {
@@ -102,7 +102,7 @@ public class Jvs2Java extends Translator {
    */
   private String translateOnce(String line, int lineNumber) {
     // Translates the while statement with sleep
-    line = line.replaceAll("(while.*\\{)", "$1 sleep(100);");
+    line = line.replaceAll("(while.*\\{)", "$1 sleep(1);");
     line = line.replaceAll("(.*[^a-zA-Z0-9_])([a-zA-Z0-9_]+[ \t=]*\\.getProperty[ \t=]*\\()[ \t=]*([a-zA-Z0-9_]+)[ \t=]*,([^)]*\\))(.*)", "$1(($3)$2$4)$5");
     line = line.replaceAll("\\(int\\)", "(Integer)");
     line = line.replaceAll("\\(double\\)", "(Double)");
