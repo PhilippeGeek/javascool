@@ -1,4 +1,3 @@
-
 package org.javascool.proglets.gogleMaps;
 
 import javax.swing.SwingUtilities;

@@ -1,5 +1,6 @@
 package org.javascool.gui;
 
+import java.applet.Applet;
 import java.awt.BorderLayout;
 import java.io.Console;
 import java.io.InputStream;
@@ -101,18 +102,6 @@ class JVSMainPanel extends JPanel {
       String fileId = getEditorTabs().open(path);
       haveToSave.put(fileId, false);
     } else {}
-  }
-  /** Open a specified file
-   * Start a file chooser and open selected file
-   * @see JFileChooser
-   * @see JVSFileEditorTabs
-   */
-  public void openFileFromJar(String fileName) {
-    String file2 = "org/javascool/proglets/" + Engine.getInstance().getProglet().getName() + "/" + fileName;
-    InputStream file = ClassLoader.getSystemClassLoader().getResourceAsStream(file2);
-    System.out.println("load:" + file2);
-    getEditorTabs().open(file);
-    // TOTO error management
   }
   /** Save the current file
    * @see JVSFileEditorTabs
@@ -307,9 +296,6 @@ class JVSMainPanel extends JPanel {
   }
   public void loadProglet(String name) {
     System.gc();
-    Engine.getInstance().setProglet(name);
-    if(getWidgetTabs().getProgletPanel() != null)
-      getWidgetTabs().getProgletPanel().destroy();
     removeAll();
     revalidate();
     add(getToolBar(), BorderLayout.NORTH);
@@ -320,9 +306,7 @@ class JVSMainPanel extends JPanel {
     getMainPane().revalidate();
     ((JVSTabs) getMainPane().getRightComponent()).removeAll();
     ((JVSTabs) getMainPane().getRightComponent()).add("Console", "", org.javascool.widgets.Console.getInstance());
-    getWidgetTabs().setProglet();
-    if(getWidgetTabs().getProgletPanel() != null)
-      getWidgetTabs().getProgletPanel().init();
+    getWidgetTabs().setProglet(name);
     newFile();
   }
   public void reportRuntimeBug(String ex) {

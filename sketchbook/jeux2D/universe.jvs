@@ -82,9 +82,9 @@ void seRegrouper(Oval mol) {
       sommeX = sommeX + vecX;
       sommeY = sommeY + vecY;
     }
-   /*
-    * On déplace la molécule de la somme des vecteurs force
-    */
+  /*
+   * On déplace la molécule de la somme des vecteurs force
+   */
   mol.position(mol.getX() + sommeX, mol.getY() + sommeY);
   /*
    * On va à présent parcourir toutes les autres molécules à nouveau pour vérifier

@@ -15,6 +15,7 @@ import javax.swing.ImageIcon;
 
 import java.net.URL;
 import java.io.File;
+import java.net.URI;
 import org.javascool.core.Engine;
 import org.javascool.widgets.Console;
 
@@ -469,14 +470,22 @@ public class Macros {
    * @throws IllegalArgumentException Si l'URL est mal formée.
    */
   public static URL getResourceURL(String location, String base, boolean reading) {
+    if(base != null)
+      location = base + "/" + location;
     try {
-      // @todo ici il y a un bug suyyr l url et un JarConnection !!
+      // @patch : ceci blinde un bug sur les URL jar
+      if(location.matches("jar:[^!]*!.*")) {
+        URL url = Thread.currentThread().getContextClassLoader().getResource(location.replaceFirst("[^!]*!", ""));
+        if(url != null)
+          return url;
+        else throw new IllegalArgumentException("Unable to find " + location + " as a classpath resource");
+      }
       if(location.matches("(ftp|http|https|jar|mailto|stdout):.*"))
-        return (base != null ? new URL(new URL(base + "/null"), location) : new URL(location)).toURI().normalize().toURL();
+        return new URL(location).toURI().normalize().toURL();
       if(location.startsWith("file:"))
         location = location.substring(5);
       if(reading) {
-        File file = base != null ? new File(base, location) : new File(location);
+        File file = new File(location);
         if(file.exists())
           return new URL("file:" + file.getCanonicalPath());
         file = new File(System.getProperty("user.dir"), location);
@@ -489,7 +498,7 @@ public class Macros {
         if(url != null)
           return url;
       }
-      return new URL("file:" + (base == null ? location : base + File.separatorChar + location));
+      return new URL("file:" + location);
     } catch(Exception e) { throw new IllegalArgumentException(e + " : " + location + " is a malformed URL");
     }
   }
@@ -511,11 +520,10 @@ public class Macros {
   public static URL getResourceURL(String location) {
     return getResourceURL(location, null, true);
   }
-  
   /** Renvoie le panneau graphique de la proglet courante.
    * @return Le panneau graphique de la proglet courante ou null si il n'est pas défini.
    */
-  public static <T> T getProgletPane() {
-   return (T) Engine.getInstance().getProglet().getPane();
+  public static < T > T getProgletPane() {
+    return (T) Engine.getInstance().getProglet().getPane();
   }
 }

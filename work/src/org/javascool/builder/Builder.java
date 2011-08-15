@@ -91,7 +91,7 @@ public class Builder {
         DialogFrame.setUpdate("Construction de " + name + " 2/4", 40);
         // Traduction Hml -> Htm des docs
         for(String doc : StringFile.list(progletDir, ".*\\.xml"))
-	  // @todo ici il faut remplacer le xslt par un fichier du tmp !!
+          // @todo ici il faut remplacer le xslt par un fichier du tmp !!
           StringFile.save(doc.replaceFirst("\\.xml", "\\.htm"), Xml2Xml.run(StringFile.load(doc), "../work/src/org/javascool/builder/hdoc2htm.xslt"));
         // jarDir+ "/org/javascool/builder/hdoc2htm.xslt"));
         DialogFrame.setUpdate("Construction de " + name + " 3/4", 50);
@@ -121,53 +121,53 @@ public class Builder {
   /** Extrait une arborescence d'un jar. */
   private static void jarExtract(String jarFile, String destDir, String jarEntry) {
     /* @todo A valider
-    JarFile j = new JarFile(jarFile);
-    for(Enumeration<JarEntry> e: j.entries(); e.hasMoreElements()) {
-      JarEntry f = e.nextElement();
-      String n = f.getName();
-      System.out.println(n);
-      if (n.startsWith(jarEntry)) {
-	String d = dstDir+File.separator+n;
-	if (!new File(d).isDirectory()) {
-	  new File(d).getParent().mkdirs();
-	  copyFile(j.getInputStream(f), new FileOutputStream(d));
-	}
-      }
-    }
-    */
+     *  JarFile j = new JarFile(jarFile);
+     *  for(Enumeration<JarEntry> e: j.entries(); e.hasMoreElements()) {
+     *  JarEntry f = e.nextElement();
+     *  String n = f.getName();
+     *  System.out.println(n);
+     *  if (n.startsWith(jarEntry)) {
+     *  String d = dstDir+File.separator+n;
+     *  if (!new File(d).isDirectory()) {
+     *  new File(d).getParent().mkdirs();
+     *  copyFile(j.getInputStream(f), new FileOutputStream(d));
+     *  }
+     *  }
+     *  }
+     */
     Exec.run("unzip -q " + jarFile + " -d " + destDir + " " + jarEntry + "/**");
   }
   /** Crée un jar à partir d'une arborescence. */
   private static void jarCreate(String jarFile, String mfFile, String dir) {
-    new File(jarFile).delete(); 
+    new File(jarFile).delete();
+
     /* @todo Remplacer l'appel systeme par une api
      */
     System.out.println(Exec.run("jar cfm " + jarFile + " " + mfFile + " -C " + dir + " ."));
   }
   /** Copie un répertoire dans un autre en oubliant les svn. */
   private static void copyFiles(String srcDir, String dstDir) throws IOException {
-    for (String s : StringFile.list(srcDir)) {
-      String d = dstDir+File.separator+new File(s).getName();
-      if (!new File(s).isDirectory())
-	copyFile(new FileInputStream(s), new FileOutputStream(d));
-      else if (!new File(s).getName().equals(".svn"))
-	copyFiles(s, d);
+    for(String s : StringFile.list(srcDir)) {
+      String d = dstDir + File.separator + new File(s).getName();
+      if(!new File(s).isDirectory())
+        copyFile(new FileInputStream(s), new FileOutputStream(d));
+      else if(!new File(s).getName().equals(".svn"))
+        copyFiles(s, d);
     }
   }
   /** Copy un stream dans un autre. */
   private static void copyFile(InputStream in, OutputStream out) throws IOException {
     BufferedInputStream i = new BufferedInputStream(in, 2048);
-    BufferedOutputStream o = new BufferedOutputStream(out, 2048); 
+    BufferedOutputStream o = new BufferedOutputStream(out, 2048);
     byte data[] = new byte[2048];
-    for (int c; (c = i.read(data, 0, 2048)) != -1;) 
+    for(int c; (c = i.read(data, 0, 2048)) != -1;)
       o.write(data, 0, c);
     o.close();
     i.close();
   }
   /** Lance la compilation java sur un groupe de fichiers. */
   private static void javac(String[] javaFiles) {
-    if(!Java2Class.compile(javaFiles, true)) 
-      throw new IllegalArgumentException("Erreur de compilation java");
+    if(!Java2Class.compile(javaFiles, true)) throw new IllegalArgumentException("Erreur de compilation java");
   }
   /** Détruit récursivement un fichier ou répertoire.
    * @param dir Le nom du répertoire.

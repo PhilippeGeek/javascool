@@ -4,7 +4,6 @@
 
 package org.javascool;
 
-
 // Used to set Win look and feel
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UIManager;

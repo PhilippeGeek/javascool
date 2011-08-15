@@ -30,7 +30,6 @@ public class IconOutput extends JPanel {
     setPreferredSize(new Dimension(550, 550));
     reset(550, 550);
   }
-  
   /** Routine interne de tracé, ne pas utiliser.
    *
    */

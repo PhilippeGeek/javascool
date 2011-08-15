@@ -6,13 +6,15 @@ import java.awt.Color;
 /** Définit une proglet javascool qui permet de simuler la tortue logo.
  * @see <a href="about-proglet.htm">Description</a>
  * @see <a href="the-proglet.htm">La proglet</a>
- * @see <a href="http://fr.wikipedia.org/wiki/Logo_(langage)#Primitives_graphiques">La rÃƒÆ’Ã‚Â©fÃƒÆ’Ã‚Â©rence du langage logo</a>
+ * @see <a href="http://fr.wikipedia.org/wiki/Logo_(langage)#Primitives_graphiques">La référence du langage logo</a>
  * @see <a href="TortueLogo.java.html">code source</a>
  * @serial exclude
  */
 public class Functions {
   private static final long serialVersionUID = 1L;
-
+  private static Panel getPane() {
+    return getProgletPane();
+  }
   // Updates the turtle position and draw if required
   private static void update(int x, int y) {
     if(x < 0)
@@ -28,7 +30,7 @@ public class Functions {
     Functions.x = x;
     Functions.y = y;
     getPane().show(x, y);
-    Macros.sleep(3);
+    sleep(3);
   }
   private static void draw(int x1, int x2, int y1, int y2) {
     if(Math.abs(x1 - x2) > Math.abs(y1 - y2)) {
@@ -109,5 +111,4 @@ public class Functions {
     pen_color = colors[n < 0 || n > 9 ? 0 : n];
   }
   private static Color colors[] = { Color.BLACK, new Color(150, 75, 0), Color.RED, Color.ORANGE, Color.YELLOW, Color.GREEN, Color.BLUE, Color.MAGENTA, Color.GRAY, Color.WHITE };
-
 }

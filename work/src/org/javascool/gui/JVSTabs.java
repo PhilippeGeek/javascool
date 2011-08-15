@@ -1,6 +1,6 @@
 package org.javascool.gui;
 
-import java.applet.Applet;
+import java.awt.Component;
 import java.util.HashMap;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -32,7 +32,7 @@ class JVSTabs extends JTabbedPane {
    * @param panel The Applet to show into the tab
    * @return The new id of your tab
    */
-  public String add(String name, String icon, Applet panel) {
+  public String add(String name, String icon, Component panel) {
     tabs.put(name, new JPanel());
     if(!icon.equalsIgnoreCase("")) {
       ImageIcon logo = Macros.getIcon(icon);
