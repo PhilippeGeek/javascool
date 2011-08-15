@@ -48,7 +48,7 @@ public class ToolBar extends JToolBar {
   /** Ajoute un bouton à une position précise de la barre d'outil
    * @see #addTool(String, String, Runnable)
    */
-  private final JButton addTool(String label, String icon, Runnable action, int where) {
+  private JButton addTool(String label, String icon, Runnable action, int where) {
     JButton button = icon == null ? new JButton(label) : new JButton(label, org.javascool.tools.Macros.getIcon(icon));
     button.addActionListener(new ActionListener() {
                                @Override
@@ -77,10 +77,11 @@ public class ToolBar extends JToolBar {
   /** Efface un composant de la barre d'outils. */
   public void delTool(String label) {
     if(buttons.containsKey(label)) {
-      remove(buttons.get(label));
+        JComponent c = buttons.get(label);
+      remove(c);
       buttons.remove(label);
-      if(actions.containsKey(buttons.get(label)))
-        actions.remove(buttons.get(label));
+      if(c instanceof AbstractButton && actions.containsKey((AbstractButton) c))
+        actions.remove((AbstractButton) c);
       setVisible(false);
       revalidate();
       setVisible(true);

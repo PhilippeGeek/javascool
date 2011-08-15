@@ -48,7 +48,7 @@ public class Engine {
       System.err.println("known-proglets in " + javascoolJar + " : " + proglets);
     }
     // Définit une proglet "vide" pour lancer l'interface
-    if(proglets.size() == 0) {
+    if(proglets.isEmpty()) {
       Proglet p = new Proglet();
       p.pml.set("name", "Interface");
       p.pml.set("icon-location", "org/javascool/widgets/icons/scripts.png");
@@ -87,6 +87,7 @@ public class Engine {
     // Lancement du runnable dans un thread
     if(runnable != null) {
       (thread = new Thread(new Runnable() {
+                @Override
                              public void run() {
                                try {
                                  runnable.run();

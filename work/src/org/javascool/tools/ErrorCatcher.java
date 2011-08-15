@@ -9,10 +9,7 @@ import java.lang.reflect.InvocationTargetException;
 
 // Used to frame a message
 import javax.swing.JFrame;
-import java.awt.BorderLayout;
-import javax.swing.JEditorPane;
 import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
 
 /** Détecte et rapporte de manière optimisée des erreurs lors de l'exécution.
  *
