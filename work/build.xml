@@ -84,7 +84,8 @@
   <target name="brun" depends="javascool-builder.jar">
     <java jar="../build/javascool-builder.jar" dir="../sketchbook" fork="true">
       <arg value="-q"/>
-    </java>
+    </java>    
+    <java jar="../sketchbook/javascool-proglets.jar" fork="true"/>
   </target>
   
   <target name="clean">

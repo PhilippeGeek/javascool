@@ -11,7 +11,7 @@ import java.awt.Graphics;
 public class Panel extends JPanel {
   private static final long serialVersionUID = 1L;
 
-  // @panel
+  // @bean
   public Panel() {
     setPreferredSize(new Dimension(width, height));
     setBackground(new Color(10, 100, 10));
@@ -54,14 +54,13 @@ public class Panel extends JPanel {
       turtle.setVisible(false);
       hidden = true;
     } else {
-      turtle.setPosition(x, y);
+      turtle.setLocation(x, y);
       if (hidden) {
 	hidden = false;
 	turtle.setVisible(true);
       }
     }
-    revalidate();
-  }
+ }
   /** Adds a trace value.
    * @param x Pixel abscissa, in [-1..1].
    * @param y Pixel Ordinate, in [-1..1].
@@ -70,6 +69,7 @@ public class Panel extends JPanel {
   public void add(int x, int y, Color c) {
     garden[x + y * width] = c;
   }
+  /** Démo de la proglet. */
   public static void start() {
     clear_all();
     pen_up();

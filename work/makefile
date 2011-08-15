@@ -10,7 +10,7 @@ JVS = $(realpath ..)
 ant :
 #	Lance ant sur son build.xml
 #	ant run
-	ant brun ; java -jar ../sketchbook/javascool-proglets.jar 
+	ant brun
 #	ant javadoc ; firefox $(JVS)/build/web/api/index.html 
 
 #
