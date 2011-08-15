@@ -240,6 +240,7 @@ public class PrivateFunctions implements EventCatcher {
   @SuppressWarnings({ "AccessingNonPublicFieldOfAnotherObject", "CollectionWithoutInitialCapacity" }
                     )
   public static void start() {}
+
   /**
    * Calls each function of the specified array if the EventCatcher accepts it or is set to always
    * @param functions The functions to call
@@ -282,6 +283,7 @@ public class PrivateFunctions implements EventCatcher {
      * Default constructor, does nothing : see run()
      */
     Clock() {}
+
     /**
      * The clock is intended to be run as a thread, so it implements Runnable.
      * When ran, the clock will tick regularly. Be sure to call the setFps(double)

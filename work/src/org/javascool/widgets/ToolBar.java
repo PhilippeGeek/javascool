@@ -77,7 +77,7 @@ public class ToolBar extends JToolBar {
   /** Efface un composant de la barre d'outils. */
   public void delTool(String label) {
     if(buttons.containsKey(label)) {
-        JComponent c = buttons.get(label);
+      JComponent c = buttons.get(label);
       remove(c);
       buttons.remove(label);
       if(c instanceof AbstractButton && actions.containsKey((AbstractButton) c))

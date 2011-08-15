@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import org.javascool.core.Engine;
+import org.javascool.tools.Macros;
 
 /**
  *
@@ -37,19 +38,22 @@ class JVSStartPanel extends JPanel {
     JPanel shortcuts = new JPanel();
     // shortcuts.setLayout(new BorderLayout(10,10));
     shortcuts.add(Box.createHorizontalGlue());
-    for(Engine.Proglet proglet : Engine.getInstance().getProglets()) {
-      shortcuts.add(this.createShortcut(org.javascool.tools.Macros.getIcon(proglet.getIcon()), proglet.getName(), new Runnable() {
-                                          @Override
-                                          public void run() {
-                                            JVSMainPanel.getInstance().loadProglet(Engine.getInstance().getProglet().getName());
-                                          }
-                                        }
-                                        ));
-    }
+    for(Engine.Proglet proglet : Engine.getInstance().getProglets())
+      shortcuts.add(this.createShortcut(Macros.getIcon(proglet.getIcon()), proglet.getName(), new ProgletLoader(proglet.getName())));
     shortcuts.add(Box.createHorizontalGlue());
     vertical.add(shortcuts);
     vertical.add(Box.createVerticalGlue());
     return vertical;
+  }
+  private class ProgletLoader implements Runnable {
+    private String proglet;
+    ProgletLoader(String proglet) {
+      this.proglet = proglet;
+    }
+    @Override
+    public void run() {
+      JVSMainPanel.getInstance().loadProglet(proglet);
+    }
   }
   private JPanel createShortcut(ImageIcon icon, String title, final Runnable start) {
     JPanel panel = new JPanel();

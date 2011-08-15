@@ -43,6 +43,6 @@ public class Panel extends JApplet {
       Functions.convaOut(min);
       Functions.convaCompare();
       Macros.echo("La valeur vaut " + min);
-  }
+    }
   }
 }

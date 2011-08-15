@@ -9,7 +9,6 @@ import java.util.regex.Pattern;
 
 import java.util.ArrayList;
 
-
 /** Définit la syntaxe PML (Programmatic Markup Language) et son DOM (Data Object Model) Java.
  *
  * <p> Un contenu PML (pour «Programmatic Métadata Logicalstructure») et une structure-logique minimale (Parametric Minimal Logical-structure)
@@ -470,7 +469,7 @@ public class Pml {
   private static class XmlWriter {
     private StringBuffer string;
 
-    /** Convertit la PML en cha^ine XML 1D. */
+    /** Convertit la PML en chaîne XML 1D. */
     public String toString(Pml pml) {
       string = new StringBuffer();
       if(pml == null)
@@ -507,11 +506,11 @@ public class Pml {
       if(pml == null)
         return "<?php $pml = array(); ?>";
       else {
-                string.append("<?php $").append(toName(pml.getTag())).append(" = array(\"_tag\" => ").append(quote(pml.getTag()));
+        string.append("<?php $").append(toName(pml.getTag())).append(" = array(\"_tag\" => ").append(quote(pml.getTag()));
         for(String name : pml.attributes())
-                string.append(", ").append(quote(name)).append(" => ").append(quote(pml.getChild(name)));
+          string.append(", ").append(quote(name)).append(" => ").append(quote(pml.getChild(name)));
         for(int n = 0; n < pml.getCount(); n++)
-                string.append(", ").append(quote(pml.getChild(n)));
+          string.append(", ").append(quote(pml.getChild(n)));
         string.append("); ?>");
       }
       return string.toString();
@@ -536,7 +535,7 @@ public class Pml {
         return "";
       else
         for(String name : pml.attributes())
-            string.append(name).append(": ").append(quote(pml.getChild(name))).append("\n");
+          string.append(name).append(": ").append(quote(pml.getChild(name))).append("\n");
       return string.toString();
     }
     /** Elimine les \n. */
@@ -597,11 +596,11 @@ public class Pml {
   }
   /** Renvoie la valeur d'un paramètre de ce PML.
    * @param name Le nom de l'attribut ou l'index de l'élément (sous forme de chaîne ou d'entier).
-   * @return La valeur du paramètre, ou null si indéfini en tant que paramètre.
+   * @return La valeur du paramètre, ou null si indéfini.
    */
   public Pml getChild(String name) {
     Object o = data.get(name);
-    return o != null&& o instanceof Pml ? (Pml) o : null;
+    return o == null ? null : o instanceof Pml ? (Pml) o : new Pml().reset("{\"" + o.toString() + "\"}");
   }
   /**
    * @see #getChild(String)
@@ -821,6 +820,18 @@ public class Pml {
    * @see #set(String, Object)
    */
   public final Pml set(int index, int value) {
+    return set(Integer.toString(index), value);
+  }
+  /**
+   * @see #set(String, Object)
+   */
+  public final Pml set(String name, boolean value) {
+    return set(name, value ? "true" : "false");
+  }
+  /**
+   * @see #set(String, Object)
+   */
+  public final Pml set(int index, boolean value) {
     return set(Integer.toString(index), value);
   }
   /** Elimine la valeur d'un paramètre de ce PML.

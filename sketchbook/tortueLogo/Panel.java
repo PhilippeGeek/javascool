@@ -1,14 +1,14 @@
 package org.javascool.proglets.tortueLogo;
 import static org.javascool.tools.Macros.*;
-import static Functions.*;
-import javax.swing.JApplet;
+import static org.javascool.proglets.tortueLogo.Functions.*;
 
+import javax.swing.JPanel;
 import javax.swing.JLabel;
 import java.awt.Dimension;
 import java.awt.Color;
 import java.awt.Graphics;
 
-public class Panel extends JApplet {
+public class Panel extends JPanel {
   private static final long serialVersionUID = 1L;
 
   // @panel
@@ -19,11 +19,10 @@ public class Panel extends JApplet {
     clear();
     // Adds the turtle
     turtle = new JLabel();
-    turtle.setIcon(Macros.getIcon("org/javascool/proglets/tortueLogo/turtle.gif"));
+    turtle.setIcon(getIcon("org/javascool/proglets/tortueLogo/turtle.gif"));
     turtle.setBounds(width / 2, height / 2, 42, 35);
     add(turtle);
   }
-
   /** Routine interne de tracé, ne pas utiliser.
    *
    */
@@ -65,8 +64,6 @@ public class Panel extends JApplet {
   public void add(int x, int y, Color c) {
     garden[x + y * width] = c;
   }
-
-  @Override
   public static void start() {
     clear_all();
     pen_up();

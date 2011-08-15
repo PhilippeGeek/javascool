@@ -118,8 +118,7 @@ public class StringFile {
   public static boolean exists(String location) {
     if(location.matches("(ftp|http|https|jar):.*")) {
       try {
-        new URL(location).openStream().close();
-        return true;
+        return exists(new URL(location));
       } catch(IOException e) {
         return false;
       }
@@ -127,6 +126,17 @@ public class StringFile {
       if(location.matches("file:.*"))
         location = location.substring(5);
       return new File(location).canRead();
+    }
+  }
+  /**
+   * @see exists(String)
+   */
+  public static boolean exists(URL location) {
+    try {
+      location.openStream().close();
+      return true;
+    } catch(IOException e) {
+      return false;
     }
   }
   /** Renvoie les fichiers d'un répertoire ou d'un jar.

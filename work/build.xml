@@ -6,7 +6,6 @@
   <property name="classpath" value="lib/RSyntaxTextArea.jar:lib/jvs2html.jar"/>
 
   <target name="classes">
-    <!--delete dir="../build/classes"/-->
     <mkdir dir="../build/classes"/>
     <javac deprecation="true" debug="true" debuglevel="lines,vars,source" classpath="${classpath}" srcdir="src" destdir="../build/classes"/>
   </target>
@@ -23,10 +22,6 @@
       <fileset dir="../build/classes"/>
       <fileset dir="src" includes="org/javascool/widgets/icons/*"/>
     </jar>
-    <exec executable="sh">
-      <arg value="-c"/>
-      <arg value="ls -l ../build/javascool.jar"/>
-    </exec>
   </target>
 
   <target name="javascool-builder.jar" depends="classes" >
@@ -44,10 +39,6 @@
       <fileset dir="src" includes="org/javascool/widgets/icons/*"/>
       <fileset dir="src" includes="org/javascool/builder/*.xslt"/>
     </jar>
-    <exec executable="sh">
-      <arg value="-c"/>
-      <arg value="ls -l ../build/javascool-builder.jar"/>
-    </exec>
   </target>
 
   <target name="javadoc">

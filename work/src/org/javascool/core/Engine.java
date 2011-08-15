@@ -7,6 +7,7 @@
 package org.javascool.core;
 
 import java.applet.Applet;
+import java.awt.Component;
 import java.net.URL;
 
 import java.util.ArrayList;
@@ -24,8 +25,6 @@ import org.javascool.tools.Pml;
 public class Engine {
   /** Tables des proglets. */
   private ArrayList<Proglet> proglets;
-  /** Proglet en fonctionnement. */
-  Proglet currentProglet;
 
   // @static-instance
 
@@ -43,9 +42,8 @@ public class Engine {
     {
       proglets = new ArrayList<Proglet>();
       String javascoolJar = Macros.getResourceURL("org/javascool/core/Engine.class").toString().replaceFirst("jar:([^!]*)!.*", "$1");
-      for(String dir : StringFile.list(javascoolJar, "org.javascool.proglets.[^\\.]*"))
-        proglets.add(new Proglet().load(dir));
-      System.err.println("known-proglets in " + javascoolJar + " : " + proglets);
+      for(String dir : StringFile.list(javascoolJar, "org.javascool.proglets.[^\\.]+"))
+        proglets.add(new Proglet().load(dir.replaceFirst("jar:[^!]*!", "")));
     }
     // Définit une proglet "vide" pour lancer l'interface
     if(proglets.isEmpty()) {
@@ -54,7 +52,6 @@ public class Engine {
       p.pml.set("icon-location", "org/javascool/widgets/icons/scripts.png");
       proglets.add(p);
     }
-    currentProglet = proglets.get(0);
   }
   //
   // [1] Mécanisme de compilation/exécution
@@ -68,8 +65,10 @@ public class Engine {
     doStop();
     // Traduction Jvs -> Java puis Java -> Class et chargement de la classe si succès
     Jvs2Java jvs2java = new Jvs2Java();
-    jvs2java.setProgletTranslator(getProglet().getTranslator());
-    jvs2java.setProgletPackageName(getProglet().hasFunctions() ? "org.javascool.proglets." + getProglet().getName() : null);
+    if(getProglet() != null) {
+      jvs2java.setProgletTranslator(getProglet().getTranslator());
+      jvs2java.setProgletPackageName(getProglet().hasFunctions() ? "org.javascool.proglets." + getProglet().getName() : null);
+    }
     String javaCode = jvs2java.translate(program);
     String javaFile = System.getProperty("java.io.tmpdir") + File.separator + jvs2java.getClassName() + ".java";
     StringFile.save(javaFile, javaCode);
@@ -87,7 +86,7 @@ public class Engine {
     // Lancement du runnable dans un thread
     if(runnable != null) {
       (thread = new Thread(new Runnable() {
-                @Override
+                             @Override
                              public void run() {
                                try {
                                  runnable.run();
@@ -120,21 +119,27 @@ public class Engine {
 
   /** Mécanisme de chargement d'une proglet.
    * @param proglet Le nom de la proglet.
-   * @return La proglet en fonctionnement.
-   * @throws IllegalArgumentException Si la proglet n'existe pas.
+   * @return La proglet en fonctionnement ou null si la proglet n'existe pas.
    */
   public Proglet setProglet(String proglet) {
+    if(currentProglet != null&& currentProglet.getPane() instanceof Applet)
+      ((Applet) currentProglet.getPane()).destroy();
     for(Proglet p : getProglets())
       if(p.getName().equals(proglet))
-        return p;
-    throw new IllegalArgumentException("Proglet inconnue : " + proglet);
+        currentProglet = p;
+    if(currentProglet != null&& currentProglet.getPane() instanceof Applet)
+      ((Applet) currentProglet.getPane()).init();
+    System.err.println("\nnotice set proglet" + currentProglet);
+    return currentProglet;
   }
-  /** Renvoie la proglet en cours de fonction.
-   * @return La proglet en fonctionnement.
+  /** Renvoie la proglet courante.
+   * * @return la proglet courante ou null sinon.
    */
   public Proglet getProglet() {
     return currentProglet;
   }
+  private Proglet currentProglet = null;
+
   /** Renvoie toutes les proglets actuellement disponibles.
    * @return Un objet utilisable à travers la construction <tt>for(Proglet proglet: getProglets()) { .. / .. }</tt>.
    */
@@ -155,12 +160,13 @@ public class Engine {
       pml.load(location + "proglet.pml");
       pml.set("location", location);
       try {
-        pml.set("name", new File(new URL(location).getPath()).getName());
+        pml.set("name", new File(location).getName());
       } catch(Exception e) { throw new IllegalArgumentException(e + " : " + location + " is a malformed URL");
       }
-      if(pml.isDefined("icon"))
-        pml.set("icon-location", Macros.getResourceURL(pml.getString("icon"), location));
-      if(!StringFile.exists(pml.getString("icon-location")))
+      if(pml.isDefined("icon") &&
+         StringFile.exists(Macros.getResourceURL(location + pml.getString("icon"))))
+        pml.set("icon-location", location + pml.getString("icon"));
+      else
         pml.set("icon-location", "org/javascool/widgets/icons/scripts.png");
       try {
         Class.forName("org.javascool.proglets." + pml.getString("name") + ".Functions");
@@ -168,14 +174,14 @@ public class Engine {
       } catch(Throwable e) {
         pml.set("has-functions", false);
       }
+      pml.set("help-location", pml.getString("location") + "help.htm");
       try {
-        pml.set("java-pane", (Applet) Class.forName("org.javascool.proglets." + pml.getString("name") + ".Panel").newInstance());
-      } catch(Throwable e) {
-        System.err.println("Notice " + pml.getString("name") + " has no pane (" + e + ")");
-      }
-      try {
-        pml.set("jvs-translator", (Translator) Class.forName("org.javascool.proglets." + pml.getString("name") + ".Panel").newInstance());
+        pml.set("java-pane", (Component) Class.forName("org.javascool.proglets." + pml.getString("name") + ".Panel").newInstance());
       } catch(Throwable e) {}
+      try {
+        pml.set("jvs-translator", (Translator) Class.forName("org.javascool.proglets." + pml.getString("name") + ".Translator").newInstance());
+      } catch(Throwable e) {}
+      System.err.println("\nnotice: loading proglet>" + pml);
       return this;
     }
     @Override
@@ -198,7 +204,7 @@ public class Engine {
      * @return L'URL de la documentation de la proglet.
      */
     public String getHelp() {
-      return pml.getString("location") + "help.htm";
+      return pml.getString("help-location");
     }
     /** Indique si la proglet définit des fonctions statiques pour l'utilisateur.
      */
@@ -208,8 +214,8 @@ public class Engine {
     /** Renvoie, si il existe, le panneau graphique de la proglet.
      * @return Le panneau graphique de la proglet si il existe, sinon null.
      */
-    public Applet getPane() {
-      return (Applet) pml.getObject("java-pane");
+    public Component getPane() {
+      return (Component) pml.getObject("java-pane");
     }
     /** Renvoie, si il existe, le translateur de code de la proglet.
      * @return Le translateur de code de la proglet si il existe, sinon null.

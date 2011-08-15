@@ -27,12 +27,12 @@ import java.awt.event.MouseListener;
  */
 public class NumberInput extends JPanel {
   private static final long serialVersionUID = 1L;
-  //@bean
+  // @bean
   public NumberInput() {
     setPreferredSize(new Dimension(400, 62));
     field = new JTextField(12);
     field.addActionListener(new ActionListener() {
-  @Override
+                              @Override
                               public void actionPerformed(ActionEvent evt) {
                                 try { set(new Double(field.getText()).doubleValue(), 'T');
                                 } catch(NumberFormatException e) {}
@@ -43,15 +43,15 @@ public class NumberInput extends JPanel {
     slider = new JSlider();
     slider.setFont(new Font("Dialog", Font.PLAIN, 0));
     slider.addMouseListener(new MouseListener() {
-  @Override
+                              @Override
                               public void mouseClicked(MouseEvent e) {}
-  @Override
+                              @Override
                               public void mouseEntered(MouseEvent e) {}
-  @Override
+                              @Override
                               public void mouseExited(MouseEvent e) {}
-  @Override
+                              @Override
                               public void mousePressed(MouseEvent e) {}
-  @Override
+                              @Override
                               public void mouseReleased(MouseEvent e) {
                                 set((NumberInput.this.max - NumberInput.this.min) / 100.0 * slider.getValue() + NumberInput.this.min, 'S');
                               }
@@ -97,7 +97,6 @@ public class NumberInput extends JPanel {
   public void setValue(double value) {
     set(value, ' ');
   }
-
   /** Définit une portion de code appellée à chaque modification de la valeur.
    * @param runnable La portion de code à appeler, ou null si il n'y en a pas.
    * @return Cet objet, permettant de définir la construction <tt>new NumberInput().setRunnable(..)</tt>.
