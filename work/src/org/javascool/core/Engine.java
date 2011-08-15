@@ -8,7 +8,6 @@ package org.javascool.core;
 
 import java.applet.Applet;
 import java.awt.Component;
-import java.net.URL;
 
 import java.util.ArrayList;
 import org.javascool.tools.Macros;
@@ -16,6 +15,9 @@ import org.javascool.tools.Macros;
 import java.io.File;
 import org.javascool.tools.StringFile;
 import org.javascool.tools.Pml;
+
+import java.lang.reflect.InvocationTargetException;
+
 
 /** Définit les mécanismes de compilation, exécution, gestion de proglet.
  *
@@ -122,13 +124,19 @@ public class Engine {
    * @return La proglet en fonctionnement ou null si la proglet n'existe pas.
    */
   public Proglet setProglet(String proglet) {
+      if(currentProglet != null) {
+          currentProglet.invoke("stop");
+          currentProglet.invoke("destroy");
+      }
     if(currentProglet != null&& currentProglet.getPane() instanceof Applet)
       ((Applet) currentProglet.getPane()).destroy();
     for(Proglet p : getProglets())
       if(p.getName().equals(proglet))
         currentProglet = p;
-    if(currentProglet != null&& currentProglet.getPane() instanceof Applet)
-      ((Applet) currentProglet.getPane()).init();
+     if(currentProglet != null) {
+          currentProglet.invoke("init");
+          currentProglet.invoke("start");
+      }
     System.err.println("\nnotice set proglet" + currentProglet);
     return currentProglet;
   }
@@ -222,6 +230,14 @@ public class Engine {
      */
     public Translator getTranslator() {
       return (Translator) pml.getObject("jvs-translator");
+    }
+    /** Invoke une des méthodes de la proglet.
+     * @param La méthode sans argument à invoquer : <tt>init</tt>, <tt>destroy</tt>, <tt>start</tt>, <tt>stop</tt>.
+     * @return La valeur true si la méthode est invocable, false sinon.
+     * @throws RuntimeException si la méthode génère une exception lors de son appel.
+     */
+    public boolean invoke(String method) {
+      return org.javascool.widgets.PanelApplet.invoke(getPane(), method);
     }
   }
 }

@@ -65,7 +65,7 @@ showBrowser(
 <div class="spec"><tt>Functions.java</tt> est une classe publique sans parent, qui contient uniquement les fonctions et constantes statiques et publiques, destinées à l'utilisateur. Elle est documentée soit en anglais, soit en français, à destination de l'élève. Tous les identificateurs utilisés dans cette classes deviennent des mots réservés. Il ne faut rien mettre d'autre dans cette classe.
 </div>
 
-<div class="spec"><tt>Panel.java</tt> est une classe publique qui implémente <tt>org.javascool.core.Proglet</tt>. <ul>
+<div class="spec"><tt>Panel.java</tt> est une classe publique doit être une instance de <tt>java.awt.Component</tt> (donc un <tt>JPanel</tt>, une <tt>Applet</tt>, etc..) et peut implémenter des méthodes de <tt>org.javascool.core.Proglet</tt>. <ul>
         <li>La méthode <tt>init()</tt>, définie dans cette classe, permet de construire l'applet, initialiser les objets graphiques, gestionnaires d'événements, etc..</li>
         <li>La méthode <tt>destroy()</tt>, appelée à la fermeture de la proglet, doit détruire ce que <tt>init()</tt> et l'élève ont fait.</li>
         <li>La méthode <tt>start()</tt>, optionelle, n'est appelée que pour lancer une <em>démonstration</em> du fonctionnement de la proglet. La méthode <tt>stop()</tt> est appelée à l'arrêt de la démonstration.</li>

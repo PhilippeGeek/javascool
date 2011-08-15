@@ -941,4 +941,13 @@ public class Pml {
     return index.matcher(name).matches();
   }
   static Pattern index = Pattern.compile("[0-9]+");
+
+  /** Lanceur du mécanisme de vérification/conversion d'une PML.
+   * @param usage <tt>java org.javascool.tools.Pml input-file [output-file.(pml|xml|php|jmf)]</tt>
+   */
+  public static void main(String[] usage) {
+    if (usage.length > 0) {
+      new Pml().load(usage[0]).save(usage.length > 1 ? usage[1] : "stdout:", (usage.length > 1 && usage[1].matches(".*\\.(pml|php|xml|jmf)")) ? usage[1].replaceFirst(".*\\.", "") : "pml");
+    }
+  }
 }

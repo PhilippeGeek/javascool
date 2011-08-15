@@ -30,7 +30,7 @@ public class Functions {
     Functions.x = x;
     Functions.y = y;
     getPane().show(x, y);
-    sleep(3);
+    sleep(1);
   }
   private static void draw(int x1, int x2, int y1, int y2) {
     if(Math.abs(x1 - x2) > Math.abs(y1 - y2)) {

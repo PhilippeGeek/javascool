@@ -51,8 +51,9 @@ public class Builder {
   }
   /** Construit une nouvelle archive avec les proglets proposées.
    * @param proglets Les proglets sélectionnées. Par défaut toutes les proglets disponibles.
+   * @return La valeur true si la construction est sans erreur, false sinon.
    */
-  public static void build(String[] proglets) {
+  public static boolean build(String[] proglets) {
     if(!hasProglets()) throw new IllegalArgumentException("Mauvaise configuration du builder, il faut utiliser le bon jar !");
     try {
       System.out.println("Scan des proglets à partir du répertoire: " + System.getProperty("user.dir"));
@@ -108,15 +109,16 @@ public class Builder {
                      save(tmpDir + "/manifest.jmf");
       jarCreate(System.getProperty("user.dir") + File.separator + "javascool-proglets.jar", tmpDir + "/manifest.jmf", jarDir);
       DialogFrame.setUpdate("Finalisation 2/2", 100);
+      return true;
     } catch(Exception e) {
       System.out.println("Erreur inopinée lors de la construction (" + e.getMessage() + "): corriger l'erreur et relancer la construction");
-      return;
+      return false;
     }
   }
   /**   * @see #build(String[])
    */
-  public static void build() {
-    build(getProglets());
+  public static boolean build() {
+    return build(getProglets());
   }
   /** Extrait une arborescence d'un jar. */
   private static void jarExtract(String jarFile, String destDir, String jarEntry) {

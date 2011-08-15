@@ -39,6 +39,7 @@ public class Panel extends JPanel {
   private Color garden[];
   public JLabel turtle;
   static final int width = 512, height = 512;
+  private boolean hidden = false;
 
   /** Clears the garden. */
   public final void clear() {
@@ -49,12 +50,17 @@ public class Panel extends JPanel {
    * @param y Turtle vertical position, not shown if &lt; 0.
    */
   public void show(int x, int y) {
-    if((x < 0) || (y < 0))
+    if((x < 0) || (y < 0)) {
       turtle.setVisible(false);
-    else {
-      turtle.setBounds(x, y, 42, 35);
-      turtle.setVisible(true);
+      hidden = true;
+    } else {
+      turtle.setPosition(x, y);
+      if (hidden) {
+	hidden = false;
+	turtle.setVisible(true);
+      }
     }
+    revalidate();
   }
   /** Adds a trace value.
    * @param x Pixel abscissa, in [-1..1].

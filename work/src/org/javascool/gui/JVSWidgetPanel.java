@@ -6,6 +6,7 @@ package org.javascool.gui;
 
 import java.awt.Component;
 import org.javascool.core.Engine;
+import org.javascool.tools.Macros;
 import org.javascool.widgets.HtmlDisplay;
 
 /**
@@ -25,7 +26,7 @@ class JVSWidgetPanel extends JVSTabs {
     if(proglet.getPane() != null)
       this.progletTabId = this.add("Proglet " + name, "", proglet.getPane());
     if(proglet.getHelp() != null)
-      this.add("Aide de la proglet", "", new HtmlDisplay().setPage(proglet.getHelp()));
+      this.add("Aide de la proglet", "", new HtmlDisplay().setPage(Macros.getResourceURL(proglet.getHelp())));
   }
   public void focusOnProgletPanel() {
     if(progletTabId != null)
