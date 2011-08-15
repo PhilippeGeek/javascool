@@ -161,9 +161,6 @@ public class HtmlDisplay extends JPanel {
     public String getCurrent() {
       return current < 0 ? null : get(current);
     }
-    public boolean isEmpty() {
-      return size() == 0;
-    }
     public boolean hasHome() {
       return current >= 0;
     }

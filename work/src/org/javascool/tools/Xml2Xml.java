@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.io.StringReader;
 import java.io.StringWriter;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.Templates;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerConfigurationException;

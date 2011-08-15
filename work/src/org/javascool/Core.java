@@ -4,13 +4,11 @@
 
 package org.javascool;
 
-import javax.swing.JFrame;
 
 // Used to set Win look and feel
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UIManager;
 
-import javax.swing.JOptionPane;
 import org.javascool.gui.Desktop;
 import org.javascool.tools.ErrorCatcher;
 

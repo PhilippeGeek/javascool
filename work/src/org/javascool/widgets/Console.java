@@ -10,7 +10,6 @@ import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import org.javascool.widgets.ToolBar;
 
 // redirectSystemStreams
 import java.io.OutputStream;

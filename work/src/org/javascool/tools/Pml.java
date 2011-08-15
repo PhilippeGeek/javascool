@@ -3,16 +3,12 @@
 *******************************************************************************/
 package org.javascool.tools;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.regex.Pattern;
 
-import java.util.Vector;
-import javax.xml.transform.TransformerException;
+import java.util.ArrayList;
 
-import org.javascool.tools.Xml2Xml;
-import org.javascool.tools.StringFile;
 
 /** Définit la syntaxe PML (Programmatic Markup Language) et son DOM (Data Object Model) Java.
  *
@@ -167,13 +163,13 @@ public class Pml {
         return "#" + line + " \"" + string + "\" ";
       }
     }
-    Vector<token> tokens;
+    ArrayList<token> tokens;
     int itoken;
 
     /** Initialise le lecteur. */
     public TokenReader reset(String string) {
       // Initializes the buffer
-      tokens = new Vector<token>();
+      tokens = new ArrayList<token>();
       itoken = 0;
       // Split the string into tokens
       {
@@ -511,11 +507,11 @@ public class Pml {
       if(pml == null)
         return "<?php $pml = array(); ?>";
       else {
-        string.append("<?php $" + toName(pml.getTag()) + " = array(\"_tag\" => " + quote(pml.getTag()));
+                string.append("<?php $").append(toName(pml.getTag())).append(" = array(\"_tag\" => ").append(quote(pml.getTag()));
         for(String name : pml.attributes())
-          string.append(", " + quote(name) + " => " + quote(pml.getChild(name)));
+                string.append(", ").append(quote(name)).append(" => ").append(quote(pml.getChild(name)));
         for(int n = 0; n < pml.getCount(); n++)
-          string.append(", " + quote(pml.getChild(n)));
+                string.append(", ").append(quote(pml.getChild(n)));
         string.append("); ?>");
       }
       return string.toString();
@@ -540,7 +536,7 @@ public class Pml {
         return "";
       else
         for(String name : pml.attributes())
-          string.append(name + ": " + quote(pml.getChild(name)) + "\n");
+            string.append(name).append(": ").append(quote(pml.getChild(name))).append("\n");
       return string.toString();
     }
     /** Elimine les \n. */

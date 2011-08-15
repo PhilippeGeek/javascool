@@ -21,11 +21,7 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 
-import java.util.jar.JarFile;
-import java.util.jar.JarEntry;
-
 import java.util.ArrayList;
-import java.util.Enumeration;
 
 /** Cette factory contient les mécanismes de construction d'un application Java's Cool avec des proglets.
  *

@@ -3,7 +3,6 @@
 **************************************************************/
 package org.javascool.core;
 
-import org.javascool.core.Translator;
 
 /** Implémente le mécanisme de base de traduction d'un code Jvs en code Java standard.
  * <p>Les erreurs de traduction sont affichées dans la console.</p>

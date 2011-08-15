@@ -7,7 +7,6 @@ package org.javascool.widgets;
 // Used to define the gui
 import javax.swing.JPanel;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 
 // Used to define a click
@@ -16,9 +15,6 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseEvent;
 
 // Used to define an icon/label
-import javax.swing.JLabel;
-import javax.swing.ImageIcon;
-import java.net.URL;
 
 // Used to store labels
 import java.util.ArrayList;

@@ -7,7 +7,6 @@ package org.javascool.widgets;
 // Used to define the gui
 import javax.swing.JPanel;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.util.HashMap;
 
@@ -57,7 +56,7 @@ public class IconOutput extends JPanel {
    * @param height Taille verticale de l'image.
    * @return Cet objet, permettant de définir la construction <tt>new IconOutput().reset(..)</tt>.
    */
-  public IconOutput reset(int width, int height) {
+  public final IconOutput reset(int width, int height) {
     if(width * height > 550 * 550) throw new IllegalArgumentException("Image size too big !");
     if(width % 2 == 0)
       width--;
@@ -66,7 +65,6 @@ public class IconOutput extends JPanel {
     image = new Color[(this.width = (width > 0 ? width : 1)) * (this.height = (height > 0 ? height : 1))];
     for(int ij = 0; ij < this.width * this.height; ij++)
       image[ij] = Color.WHITE;
-    ;
     repaint(0, 0, getWidth(), getHeight());
     return this;
   }

@@ -6,7 +6,6 @@
 
 package org.javascool.tools;
 
-import java.applet.Applet;
 import javax.swing.JOptionPane;
 import javax.swing.JEditorPane;
 import javax.swing.JScrollPane;
@@ -16,7 +15,6 @@ import javax.swing.ImageIcon;
 
 import java.net.URL;
 import java.io.File;
-import java.io.IOException;
 import org.javascool.core.Engine;
 import org.javascool.widgets.Console;
 
@@ -517,7 +515,7 @@ public class Macros {
   /** Renvoie le panneau graphique de la proglet courante.
    * @return Le panneau graphique de la proglet courante ou null si il n'est pas défini.
    */
-  public static Applet getPane() {
-   return Engine.getInstance().getProglet().getPane();
+  public static <T> T getProgletPane() {
+   return (T) Engine.getInstance().getProglet().getPane();
   }
 }
