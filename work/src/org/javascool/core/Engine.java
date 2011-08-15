@@ -18,7 +18,6 @@ import org.javascool.tools.Pml;
 
 import java.lang.reflect.InvocationTargetException;
 
-
 /** Définit les mécanismes de compilation, exécution, gestion de proglet.
  *
  * @see <a href="Engine.java.html">code source</a>
@@ -124,15 +123,15 @@ public class Engine {
    * @return La proglet en fonctionnement ou null si la proglet n'existe pas.
    */
   public Proglet setProglet(String proglet) {
-      if(currentProglet != null) 
-          currentProglet.invoke("destroy");
+    if(currentProglet != null)
+      currentProglet.invoke("destroy");
     if(currentProglet != null&& currentProglet.getPane() instanceof Applet)
       ((Applet) currentProglet.getPane()).destroy();
     for(Proglet p : getProglets())
       if(p.getName().equals(proglet))
         currentProglet = p;
-     if(currentProglet != null)
-          currentProglet.invoke("init");
+    if(currentProglet != null)
+      currentProglet.invoke("init");
     return currentProglet;
   }
   /** Renvoie la proglet courante.

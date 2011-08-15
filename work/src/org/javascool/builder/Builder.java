@@ -64,31 +64,31 @@ public class Builder {
       String tmpDir, jarDir, progletsDir;
       // Création d'un répertoire temporaire.
       {
-	buildDir = File.createTempFile("build", "");
-	buildDir.deleteOnExit();
-	buildDir.delete();
-	buildDir.mkdirs();
+        buildDir = File.createTempFile("build", "");
+        buildDir.deleteOnExit();
+        buildDir.delete();
+        buildDir.mkdirs();
       }
       // Création du répertoire de travail.
       {
-	tmpDir = buildDir + File.separator + "tmp";
-	new File(tmpDir).mkdirs();
+        tmpDir = buildDir + File.separator + "tmp";
+        new File(tmpDir).mkdirs();
       }
       // Création du répertoire cible
       {
-	jarDir = buildDir + File.separator + "jar";
-	progletsDir = jarDir + File.separator + "org" + File.separator + "javascool" + File.separator + "proglets";
-	new File(progletsDir).mkdirs();
+        jarDir = buildDir + File.separator + "jar";
+        progletsDir = jarDir + File.separator + "org" + File.separator + "javascool" + File.separator + "proglets";
+        new File(progletsDir).mkdirs();
       }
       DialogFrame.setUpdate("Installation 1/2", 10);
       // Expansion des classes javascool et des proglets existantes dans les jars
       {
-	String javascoolJar = Macros.getResourceURL("org/javascool/builder/Builder.class").toString().replaceFirst("jar:file:([^!]*)!.*", "$1");
-	jarExtract(javascoolJar, jarDir, "org/javascool");
-	jarExtract(javascoolJar, jarDir, "org/fife");
-	for(String jar : StringFile.list(System.getProperty("user.dir"), ".*\\.jar"))
-	  if(!jar.matches(".*/javascool-proglets.jar"))
-	    jarExtract(jar, jarDir, "org/javascool/proglets");
+        String javascoolJar = Macros.getResourceURL("org/javascool/builder/Builder.class").toString().replaceFirst("jar:file:([^!]*)!.*", "$1");
+        jarExtract(javascoolJar, jarDir, "org/javascool");
+        jarExtract(javascoolJar, jarDir, "org/fife");
+        for(String jar : StringFile.list(System.getProperty("user.dir"), ".*\\.jar"))
+          if(!jar.matches(".*/javascool-proglets.jar"))
+            jarExtract(jar, jarDir, "org/javascool/proglets");
       }
       DialogFrame.setUpdate("Installation 2/2", 20);
       // Construction des proglets
@@ -97,61 +97,60 @@ public class Builder {
         System.out.println("Compilation de " + name + " ...");
         DialogFrame.setUpdate("Construction de " + name + " 1/4", 30);
         // Copie de tous les fichiers
-	{
-	  new File(progletDir).mkdirs();
-	  copyFiles(proglet, progletDir);
-	}
+        {
+          new File(progletDir).mkdirs();
+          copyFiles(proglet, progletDir);
+        }
         DialogFrame.setUpdate("Construction de " + name + " 2/4", 40);
-	// Vérification des spécifications
-	{
-	  boolean error = false;
-	  Pml pml = new Pml().load(progletDir + File.separator + "proglet.pml");
-	  if (!StringFile.exists(progletDir + File.separator + "help.xml")) {
-	    System.out.println("Pas de fichier d'aide pour " + name + ", la proglet ne sera pas construite.");
-	    error = true;
-	  }
-	  if (!pml.isDefined("author")) {
-	    System.out.println("Le champ «author» n'est pas défini dans " + name + "/proglet.pml, la proglet ne sera pas construite.");
-	    error = true;
-	  }
-	  if (!pml.isDefined("title")) {
-	    System.out.println("Le champ «title» n'est pas défini dans " + name + "/proglet.pml, la proglet ne sera pas construite.");
-	    error = true;
-	  }	
-	  pml.save(progletDir + File.separator + "proglet.php");
-	  if (error)
-	    throw new IllegalArgumentException("La proglet ne respecte pas les spécifications");
-	}
+        // Vérification des spécifications
+        {
+          boolean error = false;
+          Pml pml = new Pml().load(progletDir + File.separator + "proglet.pml");
+          if(!StringFile.exists(progletDir + File.separator + "help.xml")) {
+            System.out.println("Pas de fichier d'aide pour " + name + ", la proglet ne sera pas construite.");
+            error = true;
+          }
+          if(!pml.isDefined("author")) {
+            System.out.println("Le champ «author» n'est pas défini dans " + name + "/proglet.pml, la proglet ne sera pas construite.");
+            error = true;
+          }
+          if(!pml.isDefined("title")) {
+            System.out.println("Le champ «title» n'est pas défini dans " + name + "/proglet.pml, la proglet ne sera pas construite.");
+            error = true;
+          }
+          pml.save(progletDir + File.separator + "proglet.php");
+          if(error) throw new IllegalArgumentException("La proglet ne respecte pas les spécifications");
+        }
         // Traduction Hml -> Htm des docs
-	{
-	  for(String doc : StringFile.list(progletDir, ".*\\.xml"))
-	    // @todo ici il faut remplacer le xslt par un fichier du tmp !!
-	    StringFile.save(doc.replaceFirst("\\.xml", "\\.htm"), Xml2Xml.run(StringFile.load(doc), "../work/src/org/javascool/builder/hdoc2htm.xslt"));
-	  // jarDir+ "/org/javascool/builder/hdoc2htm.xslt"));
-	}
+        {
+          for(String doc : StringFile.list(progletDir, ".*\\.xml"))
+            // @todo ici il faut remplacer le xslt par un fichier du tmp !!
+            StringFile.save(doc.replaceFirst("\\.xml", "\\.htm"), Xml2Xml.run(StringFile.load(doc), "../work/src/org/javascool/builder/hdoc2htm.xslt"));
+          // jarDir+ "/org/javascool/builder/hdoc2htm.xslt"));
+        }
         DialogFrame.setUpdate("Construction de " + name + " 3/4", 50);
         // Lancement de la compilation dans le répertoire
-	{
-	  String[] javaFiles = StringFile.list(progletDir, ".*\\.java");
-	  if(javaFiles.length > 0)
-	    javac(javaFiles);
-	}
+        {
+          String[] javaFiles = StringFile.list(progletDir, ".*\\.java");
+          if(javaFiles.length > 0)
+            javac(javaFiles);
+        }
         DialogFrame.setUpdate("Construction de " + name + " 4/4", 60);
       }
       DialogFrame.setUpdate("Finalisation 1/2", 90);
       // Création de l'archive et du manifest
       {
-	String version = "Java'sCool v4 on \""+new Date()+"\" Revision #"+Core.revision;
-	Pml manifest = new Pml().
-	  set("Main-Class", "org.javascool.Core").
-	  set("Manifest-version", version).
-	  set("Created-By", "inria.fr (javascool.gforge.inria.fr) ©INRIA: CeCILL V2 + CreativeCommons BY-NC-ND V2").
-	  set("Implementation-URL", "http://javascool.gforge.inria.fr").
-	  set("Implementation-Vendor", "fuscia-accueil@inria.fr, ou=javascool.gforge.inria.fr, o=inria.fr, c=fr").
-	  set("Implementation-Version", version).
-	save(tmpDir + "/manifest.jmf"); 
-	jarCreate(System.getProperty("user.dir") + File.separator + "javascool-proglets.jar", tmpDir + "/manifest.jmf", jarDir);
-	DialogFrame.setUpdate("Finalisation 2/2", 100);
+        String version = "Java'sCool v4 on \"" + new Date() + "\" Revision #" + Core.revision;
+        Pml manifest = new Pml().
+                       set("Main-Class", "org.javascool.Core").
+                       set("Manifest-version", version).
+                       set("Created-By", "inria.fr (javascool.gforge.inria.fr) ©INRIA: CeCILL V2 + CreativeCommons BY-NC-ND V2").
+                       set("Implementation-URL", "http://javascool.gforge.inria.fr").
+                       set("Implementation-Vendor", "fuscia-accueil@inria.fr, ou=javascool.gforge.inria.fr, o=inria.fr, c=fr").
+                       set("Implementation-Version", version).
+                       save(tmpDir + "/manifest.jmf");
+        jarCreate(System.getProperty("user.dir") + File.separator + "javascool-proglets.jar", tmpDir + "/manifest.jmf", jarDir);
+        DialogFrame.setUpdate("Finalisation 2/2", 100);
       }
       return true;
     } catch(Exception e) {

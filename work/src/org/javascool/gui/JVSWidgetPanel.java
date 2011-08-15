@@ -4,7 +4,6 @@
  */
 package org.javascool.gui;
 
-import java.awt.Component;
 import org.javascool.core.Engine;
 import org.javascool.tools.Macros;
 import org.javascool.widgets.HtmlDisplay;

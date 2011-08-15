@@ -13,14 +13,11 @@ import java.io.IOException;
 // Used for URL read
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
-import java.lang.StringBuilder;
-import java.net.URLEncoder;
 
 // Used for URL write
 import java.net.URLConnection;
 import java.io.OutputStreamWriter;
 import java.io.FileOutputStream;
-import java.lang.System;
 
 // Used for list/exists
 import java.util.ArrayList;

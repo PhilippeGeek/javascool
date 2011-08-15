@@ -471,13 +471,13 @@ public class Macros {
    * @param reading  Précise si nous sommes en lecture (true) ou écriture (false). Par défaut en lecture.
    * @throws IllegalArgumentException Si l'URL est mal formée.
    */
-  public static URL getResourceURL(String location, String base, boolean reading)  {
+  public static URL getResourceURL(String location, String base, boolean reading) {
     if(base != null)
       location = base + "/" + location;
     try {
       // @patch : ceci blinde un bug sur les URL jar
       if(location.matches("jar:[^!]*!.*")) {
-          String res = location.replaceFirst("[^!]*!/", "");
+        String res = location.replaceFirst("[^!]*!/", "");
         URL url = Thread.currentThread().getContextClassLoader().getResource(res);
         if(url != null)
           return url;

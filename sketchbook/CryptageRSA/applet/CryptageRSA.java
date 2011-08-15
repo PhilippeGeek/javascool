@@ -70,13 +70,13 @@ public class CryptageRSA extends PApplet {
                       "Transmet ton message encrypt\u00e9 \u00e0 Alice qui essayera de le d\u00e9crypter! " };
 
   /*"Tu es Alice. Nous te proposons d'exp\u00e9rimenter le CODAGE et le DECODAGE de messages.\n" +
-  *   "Tout d'abord, tu dois g\u00e9n\u00e9rer une 'cl\u00e9 publique' et 'une cl\u00e9 priv\u00e9e'.\n" +
-  *   "Tu divulgueras ensuite la cl\u00e9 publique \u00e0 Bob, et tu garderas la cl\u00e9 priv\u00e9e pr\u00e9cieusement. \n" +
-  *   "Bob encryptera son message secret \u00e0 l'aide de la cl\u00e9 publique.\n" +
-  *   "Seul toi pourras d\u00e9crypter le message au moyen de la cl\u00e9 priv\u00e9e!",
-  *   "Tu es Bob. Nous te proposons d'exp\u00e9rimenter le CODAGE et le DECODAGE de messages.\n" +
-  *   "Tu vas recevoir une 'cl\u00e9', dite 'publique', qui te permettra d'encrypter un message secret.\n" +
-  *   "Apres encryptage du message, transmet-le \u00e0 Alice qui essayera de le d\u00e9crypter! " };*/
+   *   "Tout d'abord, tu dois g\u00e9n\u00e9rer une 'cl\u00e9 publique' et 'une cl\u00e9 priv\u00e9e'.\n" +
+   *   "Tu divulgueras ensuite la cl\u00e9 publique \u00e0 Bob, et tu garderas la cl\u00e9 priv\u00e9e pr\u00e9cieusement. \n" +
+   *   "Bob encryptera son message secret \u00e0 l'aide de la cl\u00e9 publique.\n" +
+   *   "Seul toi pourras d\u00e9crypter le message au moyen de la cl\u00e9 priv\u00e9e!",
+   *   "Tu es Bob. Nous te proposons d'exp\u00e9rimenter le CODAGE et le DECODAGE de messages.\n" +
+   *   "Tu vas recevoir une 'cl\u00e9', dite 'publique', qui te permettra d'encrypter un message secret.\n" +
+   *   "Apres encryptage du message, transmet-le \u00e0 Alice qui essayera de le d\u00e9crypter! " };*/
   String lastInput = new String();
 
 // Ce qui est lanc\u00e9 une fois, au d\u00e9part
