@@ -144,12 +144,11 @@ public class PanelApplet extends JApplet {
 	    }
 	  }
 	});
-      if (width > 0 && height > 0) {
-	setSize(width, height);
-      } else {
-	setExtendedState(JFrame.MAXIMIZED_BOTH);
-      }
       pack();
+      if (width > 0 && height > 0)
+	setSize(width, height);
+      else
+	setExtendedState(JFrame.MAXIMIZED_BOTH);
       setVisible(true);
     }
     /**

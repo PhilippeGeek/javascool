@@ -1,8 +1,9 @@
 package org.javascool.core;
 
-/** Classe parente de toutes les proglets.
- * <p>Cette classe doit être une Applet: cela permet son fonctionnement en démonstration ou son interopérabilité avec <a href="http://processing.org"processing</a>.</p>
- * <p>Les méthodes définies permettent son intégration dans JavaScool.</p>
+/** Modèle d'interface pour les proglets.
+ * <p>Cette interface montre les méthodes prises en compte pour des proglets, 
+ * mais il est  <i>inutile</i> d'implémenter cet interface donnée ici pour information uniquement: 
+ * les méthodes sont identifiées à l'exécution.</p>
  *
  * @see <a href="Proglet.java.html">code source</a>
  * @serial exclude

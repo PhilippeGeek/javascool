@@ -124,20 +124,15 @@ public class Engine {
    * @return La proglet en fonctionnement ou null si la proglet n'existe pas.
    */
   public Proglet setProglet(String proglet) {
-      if(currentProglet != null) {
-          currentProglet.invoke("stop");
+      if(currentProglet != null) 
           currentProglet.invoke("destroy");
-      }
     if(currentProglet != null&& currentProglet.getPane() instanceof Applet)
       ((Applet) currentProglet.getPane()).destroy();
     for(Proglet p : getProglets())
       if(p.getName().equals(proglet))
         currentProglet = p;
-     if(currentProglet != null) {
+     if(currentProglet != null)
           currentProglet.invoke("init");
-          currentProglet.invoke("start");
-      }
-    System.err.println("\nnotice set proglet" + currentProglet);
     return currentProglet;
   }
   /** Renvoie la proglet courante.

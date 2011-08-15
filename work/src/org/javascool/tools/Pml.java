@@ -548,13 +548,16 @@ public class Pml {
   }
 
   private static String toName(String string) {
+    if(string.length() > 0) { 
     String c_0 = string.substring(0, 1);
-    String name = c_0.matches("_-") || Character.isLetter(c_0.charAt(0)) ? "" : "_";
+    String name = c_0.matches("[_-]") || Character.isLetter(c_0.charAt(0)) ? "" : "_";
     for(int i = 0; i < string.length(); i++) {
       String c_i = string.substring(i, i + 1);
       name += c_i.matches("_-") || Character.isLetterOrDigit(c_i.charAt(0)) ? c_i : "_";
     }
     return name;
+    } else 
+        return string;
   }
   /** Renvoie le type de ce PML.
    * @return The tag définit lors de l'initialisation, sinon le nom de la classe du PML.

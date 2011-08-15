@@ -9,7 +9,6 @@ package org.javascool.widgets;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import javax.swing.JToolBar;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JEditorPane;
@@ -21,14 +20,9 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.net.URLDecoder;
 import javax.swing.text.Document;
-import java.io.File;
 import org.javascool.tools.Macros;
 
 // Used to manage keystroke
-import javax.swing.KeyStroke;
-import javax.swing.AbstractAction;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 /** Definit un visualisateur de pages HTML3.
@@ -69,14 +63,26 @@ public class HtmlDisplay extends JPanel {
   public HtmlDisplay() {
     setLayout(new BorderLayout());
     {
-      JToolBar bar = new JToolBar();
-      bar.setOrientation(JToolBar.HORIZONTAL);
-      bar.setBorderPainted(false);
-      bar.setFloatable(false);
-      bar.add(home = new JButton("Page initiale", org.javascool.tools.Macros.getIcon("org/javascool/widgets/icons/refresh.png")));
-      bar.add(prev = new JButton("Page précédente", org.javascool.tools.Macros.getIcon("org/javascool/widgets/icons/prev.png")));
-      bar.add(next = new JButton("Page suivante", org.javascool.tools.Macros.getIcon("org/javascool/widgets/icons/next.png")));
-      add(bar, BorderLayout.NORTH);
+      ToolBar bar = new ToolBar();
+      home = bar.addTool("Page initiale", "org/javascool/widgets/icons/refresh.png", new Runnable() {
+	  public void run() {
+	    if(urls.hasHome())
+	      update(urls.getHome(), false);
+	    updateButtons();
+	  }});
+      prev = bar.addTool("Page précédente", "org/javascool/widgets/icons/prev.png", new Runnable() {
+	  public void run() {
+          if(urls.hasPrev())
+            update(urls.getPrev(), false);
+          updateButtons();
+	  }});
+       next = bar.addTool("Page suivante", "org/javascool/widgets/icons/next.png", new Runnable() {
+	  public void run() {
+          if(urls.hasNext())
+            update(urls.getNext(), false);
+          updateButtons();
+	  }});
+       add(bar, BorderLayout.NORTH);
     }
     {
       pane = new JEditorPane();
@@ -87,55 +93,13 @@ public class HtmlDisplay extends JPanel {
                                   @Override
                                   public void hyperlinkUpdate(HyperlinkEvent e) {
                                     if(e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
-                                      update(e.getDescription());
-                                      urls.push(e.getDescription());
+                                      update(e.getDescription(), true);
                                     }
                                   }
                                 }
                                 );
       JScrollPane spane = new JScrollPane(pane, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
       add(spane, BorderLayout.CENTER);
-    }
-    {
-      pane.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_HOME, KeyEvent.CTRL_MASK), "home");
-      AbstractAction doHome = new AbstractAction("home") {
-        private static final long serialVersionUID = 1L;
-        @Override
-        public void actionPerformed(ActionEvent e) {
-          if(urls.hasHome())
-            update(urls.getHome());
-          updateButtons();
-        }
-      };
-      pane.getActionMap().put("home", doHome);
-      home.addActionListener(doHome);
-      home.setEnabled(false);
-      pane.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, KeyEvent.CTRL_MASK), "backward");
-      AbstractAction doPrev = new AbstractAction("backward") {
-        private static final long serialVersionUID = 1L;
-        @Override
-        public void actionPerformed(ActionEvent e) {
-          if(urls.hasPrev())
-            update(urls.getHome());
-          updateButtons();
-        }
-      };
-      pane.getActionMap().put("backward", doPrev);
-      prev.addActionListener(doPrev);
-      prev.setEnabled(false);
-      pane.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, KeyEvent.CTRL_MASK), "forward");
-      AbstractAction doNext = new AbstractAction("forward") {
-        private static final long serialVersionUID = 1L;
-        @Override
-        public void actionPerformed(ActionEvent e) {
-          if(urls.hasNext())
-            update(urls.getNext());
-          updateButtons();
-        }
-      };
-      pane.getActionMap().put("forward", doNext);
-      next.addActionListener(doNext);
-      next.setEnabled(false);
     }
   }
   /** Mets à jour les boutons selon l'état de la pile. */
@@ -145,26 +109,26 @@ public class HtmlDisplay extends JPanel {
     next.setEnabled(urls.hasNext());
   }
   /** Définit une pile d'URL avec le mécanisme de home/prev/next. */
-  private class StringStack extends ArrayList<String>{
+  private class URLStack extends ArrayList<URL>{
     private static final long serialVersionUID = 1L;
     /** Index courant dans la pile. */
     private int current = -1;
 
     /** Ajoute un élément dans la pile. */
-    public void push(String url) {
+    public void push(URL url) {
       if(this.size() > 0)
         this.current = this.size();
       else
         this.current = 0;
       add(url);
     }
-    public String getCurrent() {
+    public URL getCurrent() {
       return current < 0 ? null : get(current);
     }
     public boolean hasHome() {
       return current >= 0;
     }
-    public String getHome() {
+    public URL getHome() {
       if(hasHome())
         current = 0;
       return getCurrent();
@@ -172,7 +136,7 @@ public class HtmlDisplay extends JPanel {
     public boolean hasPrev() {
       return current > 0;
     }
-    public String getPrev() {
+    public URL getPrev() {
       if(hasPrev())
         current--;
       return getCurrent();
@@ -180,21 +144,20 @@ public class HtmlDisplay extends JPanel {
     public boolean hasNext() {
       return current < size() - 1;
     }
-    public String getNext() {
+    public URL getNext() {
       if(hasNext())
         current++;
       return getCurrent();
     }
   }
-  private StringStack urls = new StringStack();
+  private URLStack urls = new URLStack();
 
   /** Affiche une page de texte HTML3 dans le visualisateur.
    * @param location L'URL de la page à afficher.
    * @return Cet objet, permettant de définir la construction <tt>new HtmlDisplay().setPage(..)</tt>.
    */
   public HtmlDisplay setPage(String location) {
-    update(location);
-    urls.push(location);
+    update(location, true);
     return this;
   }
   public HtmlDisplay setPage(URL location) {
@@ -227,25 +190,30 @@ public class HtmlDisplay extends JPanel {
     }
   }
   /** Mécanisme de gestion des URL. */
-  private void update(String location) {
-    try {
-      // Gestion des contenus textuels
-      if(location.startsWith(stringPrefix))    // Affichage de texte
+  private void update(String location, boolean push) {
+    try {     
+      URL url = urls.isEmpty() ? Macros.getResourceURL(location) : new URL(urls.getCurrent(), location);
+       // Gestion des contenus textuels
+      if(location.startsWith(stringPrefix)) { // Affichage de texte
         pane.setText(URLDecoder.decode(location.substring(stringPrefix.length()), "UTF-8"));
-      else if(location.matches("^(http|https|rtsp|mailto):.*$"))      // Gestion des URL externes
+      } else if(location.matches("^(http|https|rtsp|mailto):.*$")) {    // Gestion des URL externes
         browse(location);
-      else if(location.matches(".*\\.htm$")) {    // Gestion des URLs en HTML3
+      } else if(location.matches(".*\\.htm$")) { // Gestion des URLs en HTML3
         pane.getDocument().putProperty(Document.StreamDescriptionProperty, null);
-        pane.setPage(Macros.getResourceURL(location));
-      } else if(location.startsWith(editorPrefix))    // Affichage dand JavaScool
+        pane.setPage(new URL(urls.getCurrent(), location));
+      } else if(location.startsWith(editorPrefix)) { // Affichage dand JavaScool
         org.javascool.gui.Desktop.getInstance().addFile(location.substring(editorPrefix.length()));
-      else if(location.startsWith(browserPrefix))      // Affichage dand JavaScool
+      } else if(location.startsWith(browserPrefix)) { // Affichage dand JavaScool
         org.javascool.gui.Desktop.getInstance().addTab(location.substring(browserPrefix.length()));
-      else if(!doBrowse(location))      // Délégation au client
+      } else if(!doBrowse(location)) { // Délégation au client
         setText("Le lien : <tt>«" + location + "»</tt> n'a pas pu être affiché");
+      }
     } catch(Exception e) {
       setText("Le lien : <tt>«" + location + "»</tt> génère une erreur \"" + e.toString() + "\"");
     }
+  }
+  private void update(URL location, boolean push) {
+    update(location.toString(), push);
   }
 }
 
