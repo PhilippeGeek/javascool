@@ -31,7 +31,7 @@ public class ExplorationSonore extends PApplet {
  * Utilisation de Minim pour le son -
  *
  * Inspired from a tutorial of Andy Best http://andybest.net/
- **/                                                                                                                                                                                                                                                                                                                                                                  // /////////////////////////////////////////////////////////////////////////////////
+ **/                                                                                                                                                                                                                                                                                                                                                              // /////////////////////////////////////////////////////////////////////////////////
 
   Minim minim;
   AudioInput in;

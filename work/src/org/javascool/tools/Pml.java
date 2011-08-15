@@ -548,16 +548,16 @@ public class Pml {
   }
 
   private static String toName(String string) {
-    if(string.length() > 0) { 
-    String c_0 = string.substring(0, 1);
-    String name = c_0.matches("[_-]") || Character.isLetter(c_0.charAt(0)) ? "" : "_";
-    for(int i = 0; i < string.length(); i++) {
-      String c_i = string.substring(i, i + 1);
-      name += c_i.matches("_-") || Character.isLetterOrDigit(c_i.charAt(0)) ? c_i : "_";
-    }
-    return name;
-    } else 
-        return string;
+    if(string.length() > 0) {
+      String c_0 = string.substring(0, 1);
+      String name = c_0.matches("[_-]") || Character.isLetter(c_0.charAt(0)) ? "" : "_";
+      for(int i = 0; i < string.length(); i++) {
+        String c_i = string.substring(i, i + 1);
+        name += c_i.matches("_-") || Character.isLetterOrDigit(c_i.charAt(0)) ? c_i : "_";
+      }
+      return name;
+    } else
+      return string;
   }
   /** Renvoie le type de ce PML.
    * @return The tag définit lors de l'initialisation, sinon le nom de la classe du PML.
@@ -949,8 +949,7 @@ public class Pml {
    * @param usage <tt>java org.javascool.tools.Pml input-file [output-file.(pml|xml|php|jmf)]</tt>
    */
   public static void main(String[] usage) {
-    if (usage.length > 0) {
+    if(usage.length > 0)
       new Pml().load(usage[0]).save(usage.length > 1 ? usage[1] : "stdout:", (usage.length > 1 && usage[1].matches(".*\\.(pml|php|xml|jmf)")) ? usage[1].replaceFirst(".*\\.", "") : "pml");
-    }
   }
 }

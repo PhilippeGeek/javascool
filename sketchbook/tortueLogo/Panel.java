@@ -55,12 +55,12 @@ public class Panel extends JPanel {
       hidden = true;
     } else {
       turtle.setLocation(x, y);
-      if (hidden) {
-	hidden = false;
-	turtle.setVisible(true);
+      if(hidden) {
+        hidden = false;
+        turtle.setVisible(true);
       }
     }
- }
+  }
   /** Adds a trace value.
    * @param x Pixel abscissa, in [-1..1].
    * @param y Pixel Ordinate, in [-1..1].

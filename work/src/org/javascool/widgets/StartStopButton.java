@@ -78,9 +78,12 @@ public abstract class StartStopButton extends JPanel {
   abstract public void start();
   /** Cette méthode est appelée à l'arrêt demandé par l'utilisateur. */
   abstract public void stop();
-  /** Cette méthode est appellée par le compteur pour déterminer si le programme est terminé. 
+
+  /** Cette méthode est appellée par le compteur pour déterminer si le programme est terminé.
    * <p>Par défaut l'indicateur est celui de l'appel à la méthode <tt>stop</tt>.</p>
    */
-  public boolean isRunning() { return started; } 
+  public boolean isRunning() {
+    return started;
+  }
 }
 

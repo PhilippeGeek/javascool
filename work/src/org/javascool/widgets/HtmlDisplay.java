@@ -6,9 +6,11 @@
 package org.javascool.widgets;
 
 // Used to build the gui
+import java.net.MalformedURLException;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.io.IOException;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JEditorPane;
@@ -65,24 +67,30 @@ public class HtmlDisplay extends JPanel {
     {
       ToolBar bar = new ToolBar();
       home = bar.addTool("Page initiale", "org/javascool/widgets/icons/refresh.png", new Runnable() {
-	  public void run() {
-	    if(urls.hasHome())
-	      update(urls.getHome(), false);
-	    updateButtons();
-	  }});
+                           @Override
+                           public void run() {
+                             if(urls.hasHome())
+                               update(urls.getHome(), false);
+                           }
+                         }
+                         );
       prev = bar.addTool("Page précédente", "org/javascool/widgets/icons/prev.png", new Runnable() {
-	  public void run() {
-          if(urls.hasPrev())
-            update(urls.getPrev(), false);
-          updateButtons();
-	  }});
-       next = bar.addTool("Page suivante", "org/javascool/widgets/icons/next.png", new Runnable() {
-	  public void run() {
-          if(urls.hasNext())
-            update(urls.getNext(), false);
-          updateButtons();
-	  }});
-       add(bar, BorderLayout.NORTH);
+                           @Override
+                           public void run() {
+                             if(urls.hasPrev())
+                               update(urls.getPrev(), false);
+                           }
+                         }
+                         );
+      next = bar.addTool("Page suivante", "org/javascool/widgets/icons/next.png", new Runnable() {
+                           @Override
+                           public void run() {
+                             if(urls.hasNext())
+                               update(urls.getNext(), false);
+                           }
+                         }
+                         );
+      add(bar, BorderLayout.NORTH);
     }
     {
       pane = new JEditorPane();
@@ -92,9 +100,8 @@ public class HtmlDisplay extends JPanel {
       pane.addHyperlinkListener(new HyperlinkListener() {
                                   @Override
                                   public void hyperlinkUpdate(HyperlinkEvent e) {
-                                    if(e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
+                                    if(e.getEventType() == HyperlinkEvent.EventType.ACTIVATED)
                                       update(e.getDescription(), true);
-                                    }
                                   }
                                 }
                                 );
@@ -102,56 +109,6 @@ public class HtmlDisplay extends JPanel {
       add(spane, BorderLayout.CENTER);
     }
   }
-  /** Mets à jour les boutons selon l'état de la pile. */
-  private void updateButtons() {
-    home.setEnabled(urls.hasHome());
-    prev.setEnabled(urls.hasPrev());
-    next.setEnabled(urls.hasNext());
-  }
-  /** Définit une pile d'URL avec le mécanisme de home/prev/next. */
-  private class URLStack extends ArrayList<URL>{
-    private static final long serialVersionUID = 1L;
-    /** Index courant dans la pile. */
-    private int current = -1;
-
-    /** Ajoute un élément dans la pile. */
-    public void push(URL url) {
-      if(this.size() > 0)
-        this.current = this.size();
-      else
-        this.current = 0;
-      add(url);
-    }
-    public URL getCurrent() {
-      return current < 0 ? null : get(current);
-    }
-    public boolean hasHome() {
-      return current >= 0;
-    }
-    public URL getHome() {
-      if(hasHome())
-        current = 0;
-      return getCurrent();
-    }
-    public boolean hasPrev() {
-      return current > 0;
-    }
-    public URL getPrev() {
-      if(hasPrev())
-        current--;
-      return getCurrent();
-    }
-    public boolean hasNext() {
-      return current < size() - 1;
-    }
-    public URL getNext() {
-      if(hasNext())
-        current++;
-      return getCurrent();
-    }
-  }
-  private URLStack urls = new URLStack();
-
   /** Affiche une page de texte HTML3 dans le visualisateur.
    * @param location L'URL de la page à afficher.
    * @return Cet objet, permettant de définir la construction <tt>new HtmlDisplay().setPage(..)</tt>.
@@ -161,7 +118,8 @@ public class HtmlDisplay extends JPanel {
     return this;
   }
   public HtmlDisplay setPage(URL location) {
-    return setPage(location != null ? location.toString() : "null location");
+    update(location, true);
+    return this;
   }
   /** Affiche un texte HTML3 dans le visualisateur.
    * @param text Le texte à afficher.
@@ -173,6 +131,61 @@ public class HtmlDisplay extends JPanel {
     } catch(java.io.UnsupportedEncodingException e) { throw new IllegalStateException("UTF-8 n'est pas reconnu comme encodage: (" + e + ") c'est un bug Java !");
     }
   }
+  /** Met à jour les boutons selon l'état de la pile. */
+  private void updateButtons() {
+    home.setEnabled(urls.hasHome());
+    prev.setEnabled(urls.hasPrev());
+    next.setEnabled(urls.hasNext());
+  }
+  /** Définit une pile d'URL avec le mécanisme de home/prev/next. */
+  private class URLStack extends ArrayList<Object>{
+    private static final long serialVersionUID = 1L;
+    /** Index courant dans la pile. */
+    private int current = -1;
+    /** Ajoute un élément dans la pile. */
+    public void push(Object url) {
+      current++;
+      while(current < size())
+        remove(current);
+      add(url);
+    }
+    public Object getCurrent() {
+      return current >= 0 ? get(current) : null;
+    }
+    public boolean hasHome() {
+      return current >= 0;
+    }
+    public Object getHome() {
+      if(hasHome())
+        current = 0;
+      return getCurrent();
+    }
+    public boolean hasPrev() {
+      return current > 0;
+    }
+    public Object getPrev() {
+      if(hasPrev())
+        current--;
+      return getCurrent();
+    }
+    public boolean hasNext() {
+      return current < size() - 1;
+    }
+    public Object getNext() {
+      if(hasNext())
+        current++;
+      return getCurrent();
+    }
+    @Override
+    public String toString() {
+      String s = "";
+      for(int i = size() - 1; i >= 0; i--)
+        s += (i == current ? " * " : "   ") + get(i) + "\n";
+      return s;
+    }
+  }
+  private URLStack urls = new URLStack();
+
   /** Implémentation du mécanisme de gestion des URL spécifiques.
    * <p>Cette routine est appelée pour gérer des URL specifiques d'une application donnée.</p>
    * @param location L'URL à traiter.
@@ -181,7 +194,7 @@ public class HtmlDisplay extends JPanel {
   public boolean doBrowse(String location) {
     return false;
   }
-  /** Gestion des URLs extenes par le navigateur du système. */
+  /** Gestion des URLs externes par le navigateur du système. */
   private void browse(String location) {
     try {
       java.awt.Desktop.getDesktop().browse(new java.net.URI(location));
@@ -191,29 +204,48 @@ public class HtmlDisplay extends JPanel {
   }
   /** Mécanisme de gestion des URL. */
   private void update(String location, boolean push) {
-    try {     
-      URL url = urls.isEmpty() ? Macros.getResourceURL(location) : new URL(urls.getCurrent(), location);
-       // Gestion des contenus textuels
-      if(location.startsWith(stringPrefix)) { // Affichage de texte
+    // Gestion des contenus textuels
+    if(location.startsWith(stringPrefix)) { // Affichage de texte
+      try {
+        if(push)
+          urls.push(location);
         pane.setText(URLDecoder.decode(location.substring(stringPrefix.length()), "UTF-8"));
-      } else if(location.matches("^(http|https|rtsp|mailto):.*$")) {    // Gestion des URL externes
-        browse(location);
-      } else if(location.matches(".*\\.htm$")) { // Gestion des URLs en HTML3
-        pane.getDocument().putProperty(Document.StreamDescriptionProperty, null);
-        pane.setPage(new URL(urls.getCurrent(), location));
-      } else if(location.startsWith(editorPrefix)) { // Affichage dand JavaScool
-        org.javascool.gui.Desktop.getInstance().addFile(location.substring(editorPrefix.length()));
-      } else if(location.startsWith(browserPrefix)) { // Affichage dand JavaScool
-        org.javascool.gui.Desktop.getInstance().addTab(location.substring(browserPrefix.length()));
-      } else if(!doBrowse(location)) { // Délégation au client
-        setText("Le lien : <tt>«" + location + "»</tt> n'a pas pu être affiché");
+      } catch(java.io.UnsupportedEncodingException e) { throw new IllegalStateException("UTF-8 n'est pas reconnu comme encodage: (" + e + ") c'est un bug Java !");
       }
-    } catch(Exception e) {
-      setText("Le lien : <tt>«" + location + "»</tt> génère une erreur \"" + e.toString() + "\"");
-    }
+    } else if(location.matches("^(http|https|rtsp|mailto):.*$"))      // Gestion des URL externes
+      browse(location);
+    else if(location.matches(".*\\.htm$") || location.matches("^#.*")) {   // Gestion des URLs en HTML3 et des ancres
+      try {
+        URL url = urls.isEmpty() ? Macros.getResourceURL(location) :
+                  urls.getCurrent() instanceof URL ? new URL((URL) urls.getCurrent(), location) :
+                  new URL(location);
+        update(url, push);
+      } catch(MalformedURLException e) {
+        setText("Le lien : <tt>«" + location + "»</tt> est mal formé");
+      }
+    } else if(location.startsWith(editorPrefix))   // Affichage dand JavaScool
+      org.javascool.gui.Desktop.getInstance().addFile(location.substring(editorPrefix.length()));
+    else if(location.startsWith(browserPrefix))     // Affichage dand JavaScool
+      org.javascool.gui.Desktop.getInstance().addTab(location.substring(browserPrefix.length()));
+    else if(!doBrowse(location))     // Délégation au client
+      setText("Le lien : <tt>«" + location + "»</tt> n'a pas pu être affiché");
   }
-  private void update(URL location, boolean push) {
-    update(location.toString(), push);
+  private void update(URL url, boolean push) {
+    if(push)
+      urls.push(url);
+    pane.getDocument().putProperty(Document.StreamDescriptionProperty, null);
+    try {
+      pane.setPage(url);
+    } catch(IOException e) {
+      setText("Le lien : <tt>«" + url + "»</tt> génère une erreur \"" + e.toString() + "\"");
+    }
+    updateButtons();
+  }
+  private void update(Object link, boolean push) {
+    if(link instanceof URL)
+      update((URL) link, push);
+    else
+      update(link.toString(), push);
   }
 }
 

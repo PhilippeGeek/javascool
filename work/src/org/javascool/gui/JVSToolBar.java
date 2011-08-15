@@ -4,9 +4,6 @@
  */
 package org.javascool.gui;
 
-import java.util.ArrayList;
-import java.util.Enumeration;
-import javax.swing.Box;
 import org.javascool.core.Engine;
 
 import org.javascool.widgets.ToolBar;
@@ -79,7 +76,7 @@ class JVSToolBar extends ToolBar {
                             );
 
     addTool("Executer", runButton = new StartStopButton() {
-  private static final long serialVersionUID = 1L;
+              private static final long serialVersionUID = 1L;
               @Override
               public void start() {
                 Engine.getInstance().doRun();

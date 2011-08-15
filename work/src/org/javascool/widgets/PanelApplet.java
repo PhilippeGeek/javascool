@@ -16,7 +16,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-/** Définit une applet qui encapsule un objet graphique. 
+/** Définit une applet qui encapsule un objet graphique.
  * <p>Permet de wrapper un objet graphique dans une page HTML avec une construction de la forme
  * <div><tt>&lt;applet code="org.javascool.widgets.PanelApplet" archive="les-classes-java.jar" width="560" height="720"></tt></div>
  * <div><tt>&lt;param name="panel" value="nom-complet-qualifé-de-l-objet-graphique"/></tt></div>
@@ -36,7 +36,7 @@ public class PanelApplet extends JApplet {
 
   /** Definition programmatique des paramètres de l'applet.
    * @param panel Le nom de la classe Java de l'objet graphique à afficher.
-   * @param manualStart Invocations manuelles si true des méthodes <tt>start/stop</tt> (par défaut), sinon elles sont invoquées au lancement. 
+   * @param manualStart Invocations manuelles si true des méthodes <tt>start/stop</tt> (par défaut), sinon elles sont invoquées au lancement.
    * @return Cet objet, permettant de définir la construction <tt>new PanelApllet().reset(..)</tt>.
    */
   public PanelApplet reset(String panel, boolean manualStart) {
@@ -57,25 +57,25 @@ public class PanelApplet extends JApplet {
   @Override
   public void init() {
     try {
-      if (panel == null) {
-	panel = getParameter("panel");
-	manualStart = getParameter("manualStart") != null && getParameter("manualStart").toLowerCase().equals("true");
+      if(panel == null) {
+        panel = getParameter("panel");
+        manualStart = getParameter("manualStart") != null&& getParameter("manualStart").toLowerCase().equals("true");
       }
     } catch(Exception e) {}
     try {
       getContentPane().add(pane = (Component) Class.forName(panel).newInstance(), BorderLayout.CENTER);
     } catch(Exception e) {
-      getContentPane().add(new JLabel("Impossible d'instancier : "+ panel + "erreur: "+e));
+      getContentPane().add(new JLabel("Impossible d'instancier : " + panel + "erreur: " + e));
     }
-    if (manualStart) {
+    if(manualStart) {
       getContentPane().add(new StartStopButton() {
-	  public void start() {
-	    invoke(pane, "start");
-	  }
-	  public void stop() {
-	    invoke(pane, "stop");
-	  }
-	}, BorderLayout.NORTH);
+                             public void start() {
+                               invoke(pane, "start");
+                             }
+                             public void stop() {
+                               invoke(pane, "stop");
+                             }
+                           }, BorderLayout.NORTH);
     }
     invoke(pane, "init");
   }
@@ -85,15 +85,14 @@ public class PanelApplet extends JApplet {
   }
   @Override
   public void start() {
-    if (!manualStart)
-    invoke(pane, "start");
+    if(!manualStart)
+      invoke(pane, "start");
   }
   @Override
   public void stop() {
-    if (!manualStart)
-    invoke(pane, "stop");
+    if(!manualStart)
+      invoke(pane, "stop");
   }
-
   /** Invoke une méthode sans argument sur un objet.
    * @param object L'objet sur lequel on invoque la méthode.
    * @param La méthode sans argument à invoquer, souvent : <tt>init</tt>, <tt>destroy</tt>, <tt>start</tt>, <tt>stop</tt> ou <tt>run</tt>.
@@ -103,9 +102,8 @@ public class PanelApplet extends JApplet {
   public static boolean invoke(Object object, String method) {
     try {
       object.getClass().getDeclaredMethod(method).invoke(object);
-    } catch(InvocationTargetException e) {
-      throw new RuntimeException(e.getCause());
-    }  catch(Throwable e) {
+    } catch(InvocationTargetException e) { throw new RuntimeException(e.getCause());
+    } catch(Throwable e) {
       return false;
     }
     return true;
@@ -113,6 +111,7 @@ public class PanelApplet extends JApplet {
   /** Définit une fenêtre principale pour lancer une application. */
   public static class Frame extends JFrame {
     private Component pane;
+
     /** Construit et ouvre une fenêtre principale pour lancer une application.
      * @param title Le titre de la fenêtre.
      * @param icon L'icône de la fenêtre.
@@ -124,31 +123,32 @@ public class PanelApplet extends JApplet {
       setTitle(title);
       ImageIcon image = org.javascool.tools.Macros.getIcon(icon);
       if(image != null)
-	setIconImage(image.getImage());
+        setIconImage(image.getImage());
       add(this.pane = pane);
-      if (pane instanceof Applet) {
-	((Applet) pane).init();
-	((Applet) pane).start();
+      if(pane instanceof Applet) {
+        ((Applet) pane).init();
+        ((Applet) pane).start();
       }
       setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
       addWindowListener(new WindowAdapter() {
-	  @Override
-	    public void windowClosing(WindowEvent e) {
-	    if (isClosable()) {
-	      if (Frame.this.pane instanceof Applet) {
-		((Applet) Frame.this.pane).stop();
-		((Applet) Frame.this.pane).destroy();
-	      }
-	      e.getWindow().setVisible(false);
-	      e.getWindow().dispose();
-	    }
-	  }
-	});
+                          @Override
+                          public void windowClosing(WindowEvent e) {
+                            if(isClosable()) {
+                              if(Frame.this.pane instanceof Applet) {
+                                ((Applet) Frame.this.pane).stop();
+                                ((Applet) Frame.this.pane).destroy();
+                              }
+                              e.getWindow().setVisible(false);
+                              e.getWindow().dispose();
+                            }
+                          }
+                        }
+                        );
       pack();
-      if (width > 0 && height > 0)
-	setSize(width, height);
+      if((width > 0) && (height > 0))
+        setSize(width, height);
       else
-	setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
       setVisible(true);
     }
     /**
@@ -174,13 +174,13 @@ public class PanelApplet extends JApplet {
      */
     public Frame(int width, int height, Component pane) {
       this(pane.getClass().toString(), null, width, height, pane);
-     }
+    }
     /**
      * @see Frame(String, String, int, int, Component)
      */
     public Frame(Component pane) {
       this(pane.getClass().toString(), null, 0, 0, pane);
-     }
+    }
     /** Détermine si la fenêtre principale peut-être fermée.
      * @return La valeur true si la fenêtre principale peut-être fermée, sinon false.
      */

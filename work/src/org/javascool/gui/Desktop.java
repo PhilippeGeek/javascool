@@ -37,10 +37,10 @@ public class Desktop {
   public JFrame getFrame() {
     if(frame == null)
       frame = new PanelApplet.Frame(Core.title, Core.logo, JVSMainPanel.getInstance()) {
-          @Override
-             public boolean isClosable() {
-        return org.javascool.gui.Desktop.getInstance().isClosable();
-          } 
+        @Override
+        public boolean isClosable() {
+          return org.javascool.gui.Desktop.getInstance().isClosable();
+        }
       };
     return frame;
   }
@@ -50,9 +50,9 @@ public class Desktop {
    * @param location L'URL (Universal Resource Location) du fichier.
    * @throws RuntimeException Si une erreur d'entrée-sortie s'est produite lors de l'exécution.
    */
-  public void addFile(String location) { 
-      // @todo a implementer
-      throw new RuntimeException("Non implémenté");
+  public void addFile(String location) {
+    // @todo a implementer
+    throw new RuntimeException("Non implémenté");
   }
   /** Ouvre un document HTML dans l'interface.
    * @param location L'URL (Universal Resource Location) du fichier.
@@ -76,9 +76,9 @@ public class Desktop {
    * @param east Affiche dans le panneau de droite si vrai (valeur par défaut), sinon le panneau de gauche.
    * @param show Rend le composant visible si vrai (valeur par défaut), sinon ne modifie pas l'onglet affiché.
    */
-  public void addTab(String label, Component pane, String title, String icon, boolean east, boolean show) { 
-      // @todo a implementer
-      throw new RuntimeException("Non implémenté");
+  public void addTab(String label, Component pane, String title, String icon, boolean east, boolean show) {
+    // @todo a implementer
+    throw new RuntimeException("Non implémenté");
   }
   /**
    * @see #addTab(String, Component, String, String, boolean, boolean)

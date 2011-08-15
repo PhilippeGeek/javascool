@@ -1,8 +1,8 @@
 package org.javascool.core;
 
 /** Modèle d'interface pour les proglets.
- * <p>Cette interface montre les méthodes prises en compte pour des proglets, 
- * mais il est  <i>inutile</i> d'implémenter cet interface donnée ici pour information uniquement: 
+ * <p>Cette interface montre les méthodes prises en compte pour des proglets,
+ * mais il est  <i>inutile</i> d'implémenter cet interface donnée ici pour information uniquement:
  * les méthodes sont identifiées à l'exécution.</p>
  *
  * @see <a href="Proglet.java.html">code source</a>
