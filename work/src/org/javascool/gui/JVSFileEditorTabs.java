@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import org.javascool.widgets.Console;
-import org.javascool.core.Engine;
+import org.javascool.core.ProgletEngine;
 
 /** The JVSFileEditorTabs
  * A powerful JVSTabs to manage a multi-file editing. It only support JVSFile.
@@ -211,7 +211,7 @@ class JVSFileEditorTabs extends JVSTabs implements FileEditorTabs {
     if(!JVSFileEditorTabs.fileIds.containsValue(fileId))        // Check if id is opened
       return true;       // Return true because file is not opened
     JVSFileEditorTabs.currentCompiledFile = fileId;
-    if(Engine.getInstance().doCompile(JVSFileEditorTabs.editors.get(fileId).getText())) {
+    if(ProgletEngine.getInstance().doCompile(JVSFileEditorTabs.editors.get(fileId).getText())) {
       Console.getInstance().clear();
       System.out.println("Compilation réussie !");
       return true;

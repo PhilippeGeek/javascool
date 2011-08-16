@@ -67,9 +67,9 @@ public class DialogFrame {
   public static void startProgletMenu(Component parent, boolean reload) {
     if((jPopupMenu == null) || reload) {
       jPopupMenu = new JPopupMenu();
-      if(Builder.getProglets().length > 0) {
+      if(ProgletsBuilder.getProglets().length > 0) {
         jPopupMenu.add(new JLabel("Sélectionner les proglets à construire:"));
-        for(String proglet : Builder.getProglets()) {
+        for(String proglet : ProgletsBuilder.getProglets()) {
           JCheckBox check = new JCheckBox(proglet);
           check.setSelected(true);
           jPopupMenu.add(check);
@@ -85,7 +85,7 @@ public class DialogFrame {
                                                       for(Component c: jPopupMenu.getComponents())
                                                         if(c instanceof JCheckBox && ((JCheckBox) c).isSelected())
                                                           proglets.add(((JCheckBox) c).getText());
-                                                      Builder.build(proglets.toArray(new String[proglets.size()]));
+                                                      ProgletsBuilder.build(proglets.toArray(new String[proglets.size()]));
                                                     }
                                                   }
                                                   ).start();

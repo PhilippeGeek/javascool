@@ -1,19 +1,46 @@
 package org.javascool.proglets.analogiqueNumerique;
-import javax.swing.JPanel;
+
 import javax.swing.JLabel;
 import java.awt.Dimension;
-import java.awt.BorderLayout;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
-import javax.swing.JApplet;
 
+import org.javascool.widgets.NumberInput;
 import org.javascool.tools.Macros;
 
-public class Panel extends JApplet {
-  public void init() {
-    setContentPane(Functions.panel = new ProgletPanel());
+public class Panel extends JPanel {
+    //@bean
+  public Panel() {
+    super(new BorderLayout());
+    setPreferredSize(new Dimension(560, 450));
+    // Adds the figure
+    JLayeredPane pane = new JLayeredPane();
+    pane.setPreferredSize(new Dimension(540, 300));
+    JLabel fig = new JLabel();
+    fig.setIcon(Macros.getIcon("org/javascool/proglets/convanalogique/doc-files/conv.png"));
+    fig.setBounds(3, 0, 540, 300);
+    pane.add(fig, new Integer(1), 0);
+    out = new JLabel("????");
+    out.setBounds(270, 78, 100, 50);
+    pane.add(out, new Integer(2), 0);
+    cmp = new JLabel("?");
+    cmp.setBounds(190, 178, 100, 50);
+    pane.add(cmp, new Integer(2), 1);
+    add(pane, BorderLayout.NORTH);
+    // Adds the input
+    add(value = new NumberInput(), BorderLayout.CENTER);
+    value.setText("tension inconnue").setScale(0, 1023, 1);
+    value.setValue(300);
+    JPanel border = new JPanel();
+    border.setPreferredSize(new Dimension(560, 190));
+    add(border, BorderLayout.SOUTH);
   }
+    /** Tension inconnue d'entrée. */
+  public NumberInput value;
+  /** Etiquette du comparateur et de la sortie. */
+  public JLabel out, cmp;
+  /** Démo de la proglet. */
   public void start() {
     /* Méthode brute
      *  {

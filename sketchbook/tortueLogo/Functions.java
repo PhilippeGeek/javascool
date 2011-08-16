@@ -3,15 +3,16 @@ import static org.javascool.tools.Macros.*;
 
 import java.awt.Color;
 
-/** Définit une proglet javascool qui permet de simuler la tortue logo.
- * @see <a href="about-proglet.htm">Description</a>
- * @see <a href="the-proglet.htm">La proglet</a>
+/** Définit les fonctions de la proglet qui permet de simuler la tortue logo.
  * @see <a href="http://fr.wikipedia.org/wiki/Logo_(langage)#Primitives_graphiques">La référence du langage logo</a>
- * @see <a href="TortueLogo.java.html">code source</a>
+ * @see <a href="Functions.java.html">code source</a>
  * @serial exclude
  */
 public class Functions {
   private static final long serialVersionUID = 1L;
+  // @factory 
+  private Functions() {}
+  /** Renvoie l'instance de la proglet pour accéder à ses éléments. */
   private static Panel getPane() {
     return getProgletPane();
   }

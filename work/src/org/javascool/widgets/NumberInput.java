@@ -58,7 +58,8 @@ public class NumberInput extends JPanel {
                             }
                             );
     add(slider);
-    setScale("", 0, 100, 1);
+    setText("");
+    setScale(0, 100, 1);
     setValue(0);
   }
   private JTextField field;
@@ -75,20 +76,32 @@ public class NumberInput extends JPanel {
     if((from != ' ') && (runnable != null))
       runnable.run();
   }
-  /** Définit le nom et les paramètres de la valeur numérique.
+  /** Définit le nom de la valeur numérique.
    * @param name Nom du paramètre.
-   * @param min Valeur minimale à entrer.
-   * @param max Valeur maximale à entrer.
-   * @param step Précision de la valeur à entrer.
    * @return Cet objet, permettant de définir la construction <tt>new NumberInput().setScale(..)</tt>.
    */
-  public NumberInput setScale(String name, double min, double max, double step) {
+  public final NumberInput setText(String name) {
     setBorder(BorderFactory.createTitledBorder(name));
+    return this;
+  } 
+  /** Définit le nom et les paramètres de la valeur numérique.
+   * @param min Valeur minimale à entrer. 0 par défaut.
+   * @param max Valeur maximale à entrer. 100 par défaut.
+   * @param step Précision de la valeur à entrer. 1 par défaut.
+   * @return Cet objet, permettant de définir la construction <tt>new NumberInput().setScale(..)</tt>.
+   */
+  public final NumberInput setScale(double min, double max, double step) {
     this.min = min;
     this.max = max;
     this.step = step;
     return this;
   }
+  /**
+   * @see #resetScale(double, double, double)
+   */
+  public final NumberInput setScale() {
+      return setScale(0, 100, 1);
+  }  
   /** Renvoie la valeur numérique. */
   public double getValue() {
     return value;

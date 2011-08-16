@@ -18,7 +18,7 @@ import javax.swing.ImageIcon;
 import java.net.URL;
 import java.io.File;
 import java.io.IOException;
-import org.javascool.core.Engine;
+import org.javascool.core.ProgletEngine;
 import org.javascool.widgets.Console;
 
 /** Cette factory contient des fonctions générales rendues visibles à l'utilisateur de proglets.
@@ -430,7 +430,7 @@ public class Macros {
     System.err.println("#" + condition + " : " + message);
     if(!condition) {
       System.out.println(message);
-      org.javascool.core.Engine.getInstance().doStop();
+      org.javascool.core.ProgletEngine.getInstance().doStop();
       sleep(500);
     }
   }
@@ -528,7 +528,7 @@ public class Macros {
    * @return Le panneau graphique de la proglet courante ou null si il n'est pas défini.
    */
   public static < T > T getProgletPane() {
-    Component c = Engine.getInstance().getProglet().getPane();
+    Component c = ProgletEngine.getInstance().getProglet().getPane();
     return (T) c;
   }
 }

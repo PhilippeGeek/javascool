@@ -2,7 +2,7 @@
 * Thierry.Vieville@sophia.inria.fr, Copyright (C) 2009.  All rights reserved. *
 *******************************************************************************/
 
-package proglet.synthesons;
+package org.javascool.proglets.syntheSons;
 
 import org.javascool.SoundBit;
 

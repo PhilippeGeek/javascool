@@ -30,9 +30,9 @@ import org.javascool.Core;
  * @see <a href="Builder.java.html">code source</a>
  * @serial exclude
  */
-public class Builder {
+public class ProgletsBuilder {
   // @factory
-  private Builder() {}
+  private ProgletsBuilder() {}
 
   /** Teste si cette version de Java'sCool a la capacité de créer des jar.  */
   public static boolean hasProglets() {
@@ -53,20 +53,24 @@ public class Builder {
   }
   /** Construit une nouvelle archive avec les proglets proposées.
    * @param proglets Les proglets sélectionnées. Par défaut toutes les proglets disponibles.
+   * @param targetDir Le répertoire cible dans lequel la construction se fait. Si null utilise un répertoire temporaire.
    * @return La valeur true si la construction est sans erreur, false sinon.
    */
-  public static boolean build(String[] proglets) {
+  public static boolean build(String[] proglets, String targetDir) {
     if(!hasProglets()) throw new IllegalArgumentException("Mauvaise configuration du builder, il faut utiliser le bon jar !");
     try {
       System.out.println("Scan des proglets à partir du répertoire: " + System.getProperty("user.dir"));
       // Installation du répertoire de travail.
       File buildDir;
       String tmpDir, jarDir, progletsDir;
-      // Création d'un répertoire temporaire.
-      {
+      // Création d'un répertoire cible.
+      if (targetDir == null) {
         buildDir = File.createTempFile("build", "");
         buildDir.deleteOnExit();
         buildDir.delete();
+        buildDir.mkdirs();
+      } else {
+        buildDir = new File(targetDir);  
         buildDir.mkdirs();
       }
       // Création du répertoire de travail.
@@ -106,6 +110,10 @@ public class Builder {
         {
           boolean error = false;
           Pml pml = new Pml().load(progletDir + File.separator + "proglet.pml");
+    if (!name.matches("[a-z][a-zA-Z][a-zA-Z][a-zA-Z]+")) {
+      System.out.println("Le nom de la proglet «"+name+"» est bizarre il ne doit contenir que des lettres faire au moins quatre caractères et démarrer par une minuscule");
+            error = true;
+          }
           if(!StringFile.exists(progletDir + File.separator + "help.xml")) {
             System.out.println("Pas de fichier d'aide pour " + name + ", la proglet ne sera pas construite.");
             error = true;
@@ -152,17 +160,31 @@ public class Builder {
         jarCreate(System.getProperty("user.dir") + File.separator + "javascool-proglets.jar", tmpDir + "/manifest.jmf", jarDir);
         DialogFrame.setUpdate("Finalisation 2/2", 100);
       }
+      rmDir(new File(tmpDir));
       return true;
     } catch(Exception e) {
       System.out.println("Erreur inopinée lors de la construction (" + e.getMessage() + "): corriger l'erreur et relancer la construction");
       return false;
     }
   }
-  /**   * @see #build(String[])
+  /**  
+   * @see #build(String[], String)
+   */
+  public static boolean build(String[] proglets) {
+    return build(proglets, null);
+  }
+  /**  
+   * @see #build(String[], String)
+   */
+  public static boolean build(String targetDir) {
+    return build(getProglets(), targetDir);
+  }
+  /** 
+   * @see #build(String[], String)
    */
   public static boolean build() {
-    return build(getProglets());
-  }
+    return build(getProglets(), null);
+  }  
   /** Extrait une arborescence d'un jar. */
   private static void jarExtract(String jarFile, String destDir, String jarEntry) {
     /* @todo A valider
@@ -216,14 +238,14 @@ public class Builder {
   }
   /** Détruit récursivement un fichier ou répertoire.
    * @param dir Le nom du répertoire.
-   * /
-   *  private static void rmDir(File dir) {
-   *  for (File f : dir.listFiles())
-   *   if (f.isDirectory())
-   *  rmDir(f);
-   *  dir.delete();
-   *  }
-   *  /* A discuter par rapport à l'ancienne implémentation.
+   * */
+    private static void rmDir(File dir) {
+  for (File f : dir.listFiles())
+   if (f.isDirectory())
+ rmDir(f);
+ dir.delete();
+    }
+ /* A discuter par rapport à l'ancienne implémentation.
    *  public static Boolean suppr(File r) {
    *     File[] fileList = r.listFiles();
    *     Boolean s = true;

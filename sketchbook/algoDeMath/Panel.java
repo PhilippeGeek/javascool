@@ -1,6 +1,4 @@
 package org.javascool.proglets.algoDeMath;
-import static org.javascool.tools.Macros.*;
-import static org.javascool.proglets.algoDeMath.Functions.*;
 
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
@@ -11,19 +9,21 @@ public class Panel extends JPanel {
   private static final long serialVersionUID = 1L;
 
   // @bean
-  public ProgletPanel() {
+  public Panel() {
     super(new BorderLayout());
-    add(scope = new CurveOutput(), BorderLayout.CENTER);
+    add(scope = new CurveOutput().reset(0, 0, 1, 1), BorderLayout.CENTER);
     JPanel input = new JPanel(new BorderLayout());
-    input.add(inputX = new NumberInput("X"), BorderLayout.NORTH);
-    input.add(inputY = new NumberInput("Y"), BorderLayout.SOUTH);
+    input.add(inputX = new NumberInput().setText("X").setScale(-1, 1, 0.001), BorderLayout.NORTH);
+    input.add(inputY = new NumberInput().setText("Y").setScale(-1, 1, 0.001), BorderLayout.SOUTH);
     Runnable run1 = new Runnable() {
+            @Override
       public void run() {
         inputX.setValue(scope.getReticuleX());
         inputY.setValue(scope.getReticuleY());
       }
     };
     Runnable run2 = new Runnable() {
+            @Override
       public void run() {
         scope.setReticule(inputX.getValue(), inputY.getValue());
       }
@@ -32,7 +32,6 @@ public class Panel extends JPanel {
     inputX.setRunnable(run2);
     inputY.setRunnable(run2);
     add(input, BorderLayout.SOUTH);
-    reset(1, 1);
   }
   /** Tracé de courbes. */
   public CurveOutput scope;

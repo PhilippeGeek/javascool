@@ -4,7 +4,7 @@
  */
 package org.javascool.gui;
 
-import org.javascool.core.Engine;
+import org.javascool.core.ProgletEngine;
 import org.javascool.tools.Macros;
 import org.javascool.widgets.HtmlDisplay;
 
@@ -21,7 +21,7 @@ class JVSWidgetPanel extends JVSTabs {
     super();
   }
   public void setProglet(String name) {
-    Engine.Proglet proglet = Engine.getInstance().setProglet(name);
+    ProgletEngine.Proglet proglet = ProgletEngine.getInstance().setProglet(name);
     if(proglet.getPane() != null)
       this.progletTabId = this.add("Proglet " + name, "", proglet.getPane());
     if(proglet.getHelp() != null)
