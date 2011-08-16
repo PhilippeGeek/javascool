@@ -1,7 +1,6 @@
 # Used to use sun sun-jdk instead of open-jdk because of processing and windows platforms
 export PATH:=/usr/java/jdk1.6.0_22/bin:$(PATH)
 
-
 #
 # Makefile de développement de jvs4.alpha.2 à vthierry (à terme seul ant sera utilisé)
 #

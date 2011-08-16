@@ -18,8 +18,7 @@ netbean unique dans svn:javascool/work <br>
 g&eacute;n&egrave;re tous les jars.</li>
     <li>thierry a pas encore int&eacute;gr&eacute; ce qui concerne le
 site web (voir ci dessous)<b><br>
-      </b>
-    </li>
+      </b> </li>
     <li>Javas'Cool Core /Builder est r&eacute;ptut&eacute;e ok et les
 m&eacute;canismes sont bas&eacute;s
 sur trois objets</li>
@@ -82,6 +81,9 @@ Console.java</li>
 
 
 
+
+
+
         </span>de JavaScool&nbsp;</li>
     </ol>
     <li>arr&ecirc;ter de faire des appels vers des
@@ -129,11 +131,16 @@ specs, <br>
     <ol>
       <li>ce serait plus coherent que ce soit un script ant&nbsp;</li>
       <li>on devrait oser avoir un emplacement "fixe" pour les proglets
-compilees et pas les refaire ex: javascool/build/web/....<br>
+compilees et pas les refaire ex: javascool/build/web/....</li>
+      <li>on doit aussi g&eacute;n&eacute;rer les doc javascool des
+proglets avec les java2html<br>
       </li>
     </ol>
     <li>La g&eacute;n&eacute;ration des javadocs doit tenir compte de
-l'insertion des sources via java2html<br>
+l'insertion des sources via java2html</li>
+    <li>Les liens jvs ne sont que des affichages avec d'autres "target"
+je propose de les d&eacute;finir comme des &lt;l class="" et de les
+produire diff&eacute;remment dans javascool et dans le site web externe<br>
     </li>
   </ol>
   <li><span style="font-weight: bold;">[le travail autour du builder]</span></li>
@@ -164,7 +171,9 @@ juin</b>
   <li>L'&eacute;diteur n'ouvre pas les fichiers dans le user.dir mais
 dans le home.dir</li>
   <li>Les icones du Starter s'affichent pas de la meme taille : que
-faire ?<br>
+faire ?</li>
+  <li>On a pas l'affichage autiomatique de la console quand ca compile
+et de la proglet quand ca execute<br>
   </li>
 </ol>
 <br>
