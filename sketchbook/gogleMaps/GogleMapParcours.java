@@ -4,8 +4,8 @@
 
 package org.javascool.proglets.gogleMaps;
 
-import static org.javascool.proglets.gogleMaps.GogleMap.latitudes;
-import static org.javascool.proglets.gogleMaps.GogleMap.longitudes;
+import static org.javascool.proglets.gogleMaps.Functions.latitudes;
+import static org.javascool.proglets.gogleMaps.Functions.longitudes;
 
 import java.util.Set;
 import java.util.HashSet;
