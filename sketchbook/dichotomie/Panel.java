@@ -30,7 +30,6 @@ public class Panel extends JPanel {
     JLabel icon = new JLabel();
     icon.setBounds(10, 0, 540, 350);
     icon.setIcon(getIcon("org/javascool/proglets/dichotomie/dicho_background.png"));
-    System.err.println("icon");
     book.add(icon, new Integer(1), 0);
     // Adds the label and flag
     name = new JLabel();

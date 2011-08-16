@@ -70,11 +70,11 @@ public class PanelApplet extends JApplet {
     }
     if(manualStart) {
       getContentPane().add(new StartStopButton() {
-                @Override
+                             @Override
                              public void start() {
                                invoke(pane, "start");
                              }
-                @Override
+                             @Override
                              public void stop() {
                                invoke(pane, "stop");
                              }
@@ -106,8 +106,8 @@ public class PanelApplet extends JApplet {
   public static boolean invoke(Object object, String method, boolean run) {
     try {
       Method m = object.getClass().getDeclaredMethod(method);
-      if (run) 
-         m.invoke(object);
+      if(run)
+        m.invoke(object);
     } catch(InvocationTargetException e) { throw new RuntimeException(e.getCause());
     } catch(Throwable e) {
       return false;
@@ -118,7 +118,7 @@ public class PanelApplet extends JApplet {
    * @see #invoke(Object, String, boolean)
    */
   public static boolean invoke(Object object, String method) {
-      return invoke(object, method, true);
+    return invoke(object, method, true);
   }
   /** Définit une fenêtre principale pour lancer une application. */
   public static class Frame extends JFrame {

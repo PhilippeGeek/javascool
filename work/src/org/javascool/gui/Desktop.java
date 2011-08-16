@@ -37,11 +37,12 @@ public class Desktop {
   public JFrame getFrame() {
     if(frame == null)
       frame = (new PanelApplet.Frame() {
-        @Override
-        public boolean isClosable() {
-          return org.javascool.gui.Desktop.getInstance().isClosable();
-        }
-      }).reset(Core.title, Core.logo, JVSMainPanel.getInstance());
+                 @Override
+                 public boolean isClosable() {
+                   return org.javascool.gui.Desktop.getInstance().isClosable();
+                 }
+               }
+               ).reset(Core.title, Core.logo, JVSMainPanel.getInstance());
     return frame;
   }
   private PanelApplet.Frame frame;
