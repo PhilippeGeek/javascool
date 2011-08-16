@@ -2,7 +2,7 @@
 * David.Pichardie@inria.fr, Copyright (C) 2011.           All rights reserved. *
 *******************************************************************************/
 
-package proglet.paintbrush;
+package org.javascool.proglets.paintBrush;
 
 public interface PaintBrushManipImage {
   // Affiche un point de coordonnées (x,y)
@@ -26,30 +26,38 @@ public interface PaintBrushManipImage {
 
 class ManipImageVide implements PaintBrushManipImage {
   // Affiche un point de coordonnées (x,y)
+    @Override
   public void affichePoint(int x, int y, int couleur) {}
 
   // Supprime les points sur une zone carr de largeur 3 pixels et centrée en (x,y)
+    @Override
   public void supprimePoint(int x, int y) {}
 
   // Trace une ligne de diagonale (x0,y0) -- (x1,y1)
+    @Override
   public void afficheLigne(int x0, int y0, int x1, int y1, int couleur) {}
 
   // Trace un rectangle de diagonale (x1,y1) -- (x2,y2)
+    @Override
   public void afficheRectangle(int x1, int y1, int x2, int y2, int couleur) {}
 
   // Pot de peinture : remplir tous les pixels voisins de (x,y) et ayant la même couleur avec la couleur spécifiée
+    @Override
   public void remplir(int x, int y, int nouvelle_couleur) {}
   
+    @Override
   public void rotationGauche() {}
 }
 
 class ManipImageFinal implements PaintBrushManipImage {
   // affiche un point de coordonnes  (x,y)
+    @Override
   public void affichePoint(int x, int y, int couleur) {
     // System.out.println("affichePoint(image,"+x+","+y+")");
     PaintBrush.setPixel(x, y, couleur);
   }
   // supprime les points sur une zone carre de largeur 3 pixels et centre en (x,y)
+    @Override
   public void supprimePoint(int x, int y) {
     // System.out.println("supprimePoint(image,"+x+","+y+")");
     for(int i = x - 1; i <= x + 1 && i < PaintBrushImage.maxX(); i++)
@@ -58,6 +66,7 @@ class ManipImageFinal implements PaintBrushManipImage {
           PaintBrush.setPixel(i, j, 15);
   }
   // trace une ligne de diagonale (x0,y0) -- (x1,y1)
+    @Override
   public void afficheLigne(int x0, int y0, int x1, int y1, int couleur) {
     int dx = Math.abs(x1 - x0);
     int dy = Math.abs(y1 - y0);
@@ -80,6 +89,7 @@ class ManipImageFinal implements PaintBrushManipImage {
     }
   }
   // trace un rectangle de diagonale (x1,y1) -- (x2,y2)
+    @Override
   public void afficheRectangle(int x1, int y1, int x2, int y2, int couleur) {
     // System.out.println("afficheRectangle(image,"+x1+","+y1+","+x2+","+y2+")");
     int xmin = Math.min(x1, x2);
@@ -109,6 +119,7 @@ class ManipImageFinal implements PaintBrushManipImage {
     }
   }
   // pot de peinture : remplir tous les pixels voisins de (x,y) et ayant la mme couleur avec la couleur 128
+    @Override
   public void remplir(int x, int y, int nouvelle_couleur) {
     // System.out.println("remplir(image,"+x+","+y+")");
     int ancienne_couleur = PaintBrush.getPixel(x, y);
@@ -116,6 +127,7 @@ class ManipImageFinal implements PaintBrushManipImage {
       remplir_aux(x, y, ancienne_couleur, nouvelle_couleur);
   }
   
+    @Override
   public void rotationGauche() {
 	  for (int i=0; i<16; i++)
 		  for (int j=0; j<16; j++) {

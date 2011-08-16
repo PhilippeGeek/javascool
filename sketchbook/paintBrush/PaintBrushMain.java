@@ -2,35 +2,27 @@
 * David.Pichardie@inria.fr, Copyright (C) 2011.           All rights reserved. *
 *******************************************************************************/
 
-package proglet.paintbrush;
+package org.javascool.proglets.paintBrush;
 
 import javax.swing.*;
 import java.awt.Cursor;
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Dimension;
-import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
-import java.awt.GridBagConstraints;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.MouseAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.KeyAdapter;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseMotionListener;
-import java.awt.event.MouseMotionAdapter;
-import java.util.*;
+import org.javascool.tools.Macros;
 
 public class PaintBrushMain {
   public static void main(String[] args) {
     SwingUtilities.invokeLater(new Runnable() {
+            @Override
                                  public void run() {
                                    createAndShowGUI();
                                  }
@@ -53,6 +45,7 @@ class Point implements Comparable {
     x = _x;
     y = _y;
   }
+    @Override
   public int compareTo(Object o) {
     Point p = (Point) o;
     int cmp1 = p.x - x;
@@ -168,6 +161,7 @@ class MainPanel extends JPanel implements ActionListener {
     showCodeBox.addActionListener(this);
     buttonClear.addActionListener(this);
   }
+    @Override
   public void actionPerformed(ActionEvent e) {
     String action = e.getActionCommand();
     if(action.equals(button1String))
@@ -258,6 +252,7 @@ class ColorPanel extends JPanel implements MouseMotionListener {
     setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     addMouseMotionListener(this);
     addMouseListener(new MouseAdapter() {
+            @Override
                        public void mousePressed(MouseEvent e) {
                          int x = e.getX();
                          int y = e.getY();
@@ -271,6 +266,7 @@ class ColorPanel extends JPanel implements MouseMotionListener {
                      }
                      );
   }
+    @Override
   protected void paintComponent(Graphics g) {
     super.paintComponent(g);
     g.setColor(current.getColor());
@@ -287,11 +283,14 @@ class ColorPanel extends JPanel implements MouseMotionListener {
       }
     }
   }
+    @Override
   public Dimension getPreferredSize() {
     return new Dimension(2 + (square + 2) * 2, 2 + (square + 2) * 10);
   }
+    @Override
   public void mouseDragged(MouseEvent e) {}
 
+    @Override
   public void mouseMoved(MouseEvent e) {
     if(e.getX() <= 1 + (square + 2) * 2)
       setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
@@ -357,6 +356,7 @@ class MyPanel extends JPanel implements MouseMotionListener {
     }
     setCursor(c);
   }
+    @Override
   public void mouseDragged(MouseEvent e) {
     int x = e.getX();
     int y = inverseY(e.getY());
@@ -377,6 +377,7 @@ class MyPanel extends JPanel implements MouseMotionListener {
       break;
     }
   }
+    @Override
   public void mouseMoved(MouseEvent evt) {}
 
   public static void warning(String msg) {
@@ -388,10 +389,10 @@ class MyPanel extends JPanel implements MouseMotionListener {
   public MyPanel(ColorPanel _cPanel, PaintBrushImage _image) {
     Toolkit toolkit = Toolkit.getDefaultToolkit();
     // java.awt.Image image1 = toolkit.getImage(getClass().getResource("img/cursor_paint.png"));
-    java.awt.Image image1 = org.javascool.Utils.getIcon("proglet/paintbrush/doc-files/cursor_paint.png").getImage();
+    java.awt.Image image1 = Macros.getIcon("proglet/paintbrush/doc-files/cursor_paint.png").getImage();
     paint_cursor = toolkit.createCustomCursor(image1, new java.awt.Point(3, 24), "Fill");
     // java.awt.Image image2 = toolkit.getImage(getClass().getResource("img/cursor_eraser.png"));
-    java.awt.Image image2 = org.javascool.Utils.getIcon("proglet/paintbrush/doc-files/cursor_eraser.png").getImage();
+    java.awt.Image image2 = Macros.getIcon("proglet/paintbrush/doc-files/cursor_eraser.png").getImage();
     eraser_cursor = toolkit.createCustomCursor(image2, new java.awt.Point(2, 14), "Erase");
 
     cPanel = _cPanel;
@@ -399,6 +400,7 @@ class MyPanel extends JPanel implements MouseMotionListener {
     setBackground(Color.WHITE);
 
     addMouseListener(new MouseAdapter() {
+            @Override
                        public void mousePressed(MouseEvent e) {
                          int x = e.getX();
                          int y = inverseY(e.getY());
@@ -424,6 +426,7 @@ class MyPanel extends JPanel implements MouseMotionListener {
                      );
 
     addMouseListener(new MouseAdapter() {
+            @Override
                        public void mouseReleased(MouseEvent e) {
                          int x = e.getX();
                          int y = inverseY(e.getY());
@@ -580,6 +583,7 @@ class MyPanel extends JPanel implements MouseMotionListener {
     line_end = line_start = null;
     repaint();
   }
+    @Override
   public Dimension getPreferredSize() {
     return new Dimension(width * square, height * square);
   }
@@ -656,6 +660,7 @@ class MyPanel extends JPanel implements MouseMotionListener {
     } else
       lighterSquare(g, p.x, p.y);
   }
+    @Override
   protected void paintComponent(Graphics g) {
     super.paintComponent(g);
     // g.drawString("text",10,20);
