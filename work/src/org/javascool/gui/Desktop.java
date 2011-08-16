@@ -36,12 +36,12 @@ public class Desktop {
   /** Renvoie la fenêtre racine de l'interface graphique. */
   public JFrame getFrame() {
     if(frame == null)
-      frame = new PanelApplet.Frame(Core.title, Core.logo, JVSMainPanel.getInstance()) {
+      frame = (new PanelApplet.Frame() {
         @Override
         public boolean isClosable() {
           return org.javascool.gui.Desktop.getInstance().isClosable();
         }
-      };
+      }).reset(Core.title, Core.logo, JVSMainPanel.getInstance());
     return frame;
   }
   private PanelApplet.Frame frame;

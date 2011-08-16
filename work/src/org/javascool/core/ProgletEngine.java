@@ -91,7 +91,7 @@ public class ProgletEngine {
                                  runnable.run();
                                  thread = null;
                                } catch(Throwable e) {
-                                 System.out.println("Notice: " + e);
+                                 System.out.println("Erreur à l'exécution: " + e);
                                }
                              }
                            }
@@ -181,7 +181,6 @@ public class ProgletEngine {
       try {
         pml.set("jvs-translator", (Translator) Class.forName("org.javascool.proglets." + pml.getString("name") + ".Translator").newInstance());
       } catch(Throwable e) {}
-      System.err.println("\nnotice: loading proglet>" + pml);
       return this;
     }
     @Override
@@ -224,8 +223,8 @@ public class ProgletEngine {
       return (Translator) pml.getObject("jvs-translator");
     }
     /** Invoke une des méthodes de la proglet.
-     * @param La méthode sans argument à invoquer : <tt>init</tt>, <tt>destroy</tt>, <tt>start</tt>, <tt>stop</tt>.
-     * @paran run Si true appelle la méthode, si false teste simplement son existence.
+     * @param method La méthode sans argument à invoquer : <tt>init</tt>, <tt>destroy</tt>, <tt>start</tt>, <tt>stop</tt>.
+     * @param run Si true appelle la méthode, si false teste simplement son existence.
      * @return La valeur true si la méthode est invocable, false sinon.
      * @throws RuntimeException si la méthode génère une exception lors de son appel.
      */

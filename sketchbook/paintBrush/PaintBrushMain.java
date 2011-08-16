@@ -388,11 +388,9 @@ class MyPanel extends JPanel implements MouseMotionListener {
   }
   public MyPanel(ColorPanel _cPanel, PaintBrushImage _image) {
     Toolkit toolkit = Toolkit.getDefaultToolkit();
-    // java.awt.Image image1 = toolkit.getImage(getClass().getResource("img/cursor_paint.png"));
-    java.awt.Image image1 = Macros.getIcon("proglet/paintbrush/doc-files/cursor_paint.png").getImage();
+    java.awt.Image image1 = Macros.getIcon("org/javascool/proglets/paintBrush/cursor_paint.png").getImage();
     paint_cursor = toolkit.createCustomCursor(image1, new java.awt.Point(3, 24), "Fill");
-    // java.awt.Image image2 = toolkit.getImage(getClass().getResource("img/cursor_eraser.png"));
-    java.awt.Image image2 = Macros.getIcon("proglet/paintbrush/doc-files/cursor_eraser.png").getImage();
+    java.awt.Image image2 = Macros.getIcon("org/javascool/proglets/paintBrush/cursor_eraser.png").getImage();
     eraser_cursor = toolkit.createCustomCursor(image2, new java.awt.Point(2, 14), "Erase");
 
     cPanel = _cPanel;
