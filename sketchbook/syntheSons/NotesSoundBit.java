@@ -4,13 +4,11 @@
 
 package org.javascool.proglets.syntheSons;
 
-import org.javascool.SoundBit;
-
 // Used to define an audio stream
 import javax.sound.sampled.AudioInputStream;
 
 // Used to build a notes'frequencies
-import java.util.Vector;
+import java.util.ArrayList;
 
 /** Creates a monophonic ``piccolo´´ sound-bit from a note sequence (still in development).
  * <div>The sound-bit can be changed using the <tt><a href="#reset(java.lang.String)">reset</a>(notes)</tt> method.</div>
@@ -44,6 +42,7 @@ public class NotesSoundBit extends SoundBit {
    * @param notes The note sequence.
    * @return This, allowing to use the <tt>SoundBit pml= new SoundBit().reset(..)</tt> construct.
    */
+    @Override
   public SoundBit reset(String notes) {
     freqs = getNotes(notes);
     tempo = getTempo(notes);
@@ -52,11 +51,13 @@ public class NotesSoundBit extends SoundBit {
     return this;
   }
   // Default sound is a piccolo
+    @Override
   public double get(char channel, double time) {
     return Math.sin(2 * Math.PI * time);
   }
   // Internal sound used to sample the notes
   private SoundBit sound = new SoundBit() {
+        @Override
     public double get(char channel, double time) {
       int i = (int) (time / tempo);
       if(i < freqs.length) {
@@ -69,10 +70,12 @@ public class NotesSoundBit extends SoundBit {
   };
   private note freqs[] = new note[0];
   private double tempo = 0.25;
+    @Override
   public AudioInputStream getStream() {
     return sound.getStream();
   }
-  /**/ public void setLength(double length) { throw new IllegalStateException("Cannot adjust length of buffered sound-bit of name " + getName());
+  /**/@Override
+ public void setLength(double length) { throw new IllegalStateException("Cannot adjust length of buffered sound-bit of name " + getName());
   }
   // Gets the low-level tempo of a given note sequence.
   private static double getTempo(String notes) {
@@ -80,7 +83,7 @@ public class NotesSoundBit extends SoundBit {
   }
   // Gets the low-level array of a given note sequence.
   private static note[] getNotes(String notes) {
-    Vector<note> freqs = new Vector<note>();
+    ArrayList<note> freqs = new ArrayList<note>();
     String n[] = notes.trim().toLowerCase().split("[ \t\n]");
     int d = 1;
     double a = 0.999;

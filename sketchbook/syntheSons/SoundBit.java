@@ -18,14 +18,14 @@ import javax.sound.sampled.LineUnavailableException;
 
 // Used to play/save an audio file
 import java.io.File;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.sound.sampled.AudioFileFormat;
+import org.javascool.tools.Macros;
 
 /** This widget defines a sound bit and allows to use sampled sound resources.
  * @see <a href="SoundBit.java.html">source code</a>
  * @serial exclude
  */
-public class SoundBit implements Widget {
+public class SoundBit {
   private static final long serialVersionUID = 1L;
 
   /** Defines the sound function.
@@ -114,6 +114,7 @@ public class SoundBit implements Widget {
     /**  Reads up to byteLength from the stream into the data array of bytes, starting from offset.
      * @return The total number of bytes read into the buffer, or -1 is there is no more to read because the end of the stream has been reached.
      */
+        @Override
     public int read(byte[] data, int offset, int byteLength) {
       // Adjust the read size
       byteLength = offset + byteLength > data.length ? data.length - offset : byteLength;
@@ -143,24 +144,29 @@ public class SoundBit implements Widget {
       return byteLength <= 0 ? -1 : byteLength;
     }
     /**  Reads bytes from the audio input stream and stores them into the buffer array. */
+        @Override
     public int read(byte[] data) {
       return read(data, 0, data.length);
     }
     /**  Returns the number of bytes that can be read (or skipped over) from this stream. */
+        @Override
     public int available() {
       return (int) (frameSize * (frameLength - framePos));
     }
     /**  Repositions this stream to the initial position or the position at the time the mark method was last called on this stream. */
+        @Override
     public void reset() {
       if(framePos > frameLimit) throw new IllegalStateException("Mark limit exceeded");
       framePos = frameMark;
     }
     /** Marks the current position in this input stream, byteLimit, if positive, being the maximum limit of bytes that can be read before the mark becomes invalid. */
+        @Override
     public void mark(int byteLimit) {
       frameMark = framePos;
       frameLimit = byteLimit > 0 ? framePos + byteLimit / frameSize : frameLength;
     }
     /** Returns true because the mark and reset methods are supported. */
+        @Override
     public boolean markSupported() {
       return true;
     }
@@ -171,18 +177,22 @@ public class SoundBit implements Widget {
         framePos = frameLength;
     }
     /** Forbidden method: do not use (since frames have not one byte size). */
+        @Override
     public int read() { throw new IllegalStateException("SoundBit has no one byte frame size, operation forbidden");
     }
     /** Returns a string representation of this stream, for debugging purpose. */
+        @Override
     public String toString() {
       return "[" + super.toString() + " length = " + (frameLength / SAMPLING) + "s pos = " + framePos + " < " + frameLength + " mark = " + frameMark + " < " + frameLimit + "]";
     }
     /** Closes this audio input stream. */
+        @Override
     public void close() {}
     private long frameMark = 0, frameLimit = Long.MAX_VALUE / FRAME_SIZE;
   }
 
   /** Returns a string representation of this stream, for debugging purpose. */
+    @Override
   public String toString() {
     return "SoundBit \"" + getName() + "\" : " + getStream();
   }
@@ -243,17 +253,19 @@ public class SoundBit implements Widget {
     public DataSoundBit(String name, double[] left, double[] right) {
       if(left == null) throw new IllegalArgumentException("Undefined left channel data");
       if((right != null) && (left.length != right.length))
-        new IllegalArgumentException("Left and right channel length differs: " + left.length + " != " + right.length);
+        throw new IllegalArgumentException("Left and right channel length differs: " + left.length + " != " + right.length);
       this.left = left;
       this.right = right == null ? left : right;
       this.name = name;
       length = left.length / SAMPLING;
     }
+        @Override
     public double get(char channel, long index) {
       return (index < 0 || index >= left.length) ? 0 : channel == 'r' ? right[(int) index] : left[(int) index];
     }
     private double left[], right[];
-    /**/public void setLength(double length) { throw new IllegalStateException("Cannot adjust length of buffered sound-bit of name " + getName());
+    /**/@Override
+public void setLength(double length) { throw new IllegalStateException("Cannot adjust length of buffered sound-bit of name " + getName());
     }
   }
 

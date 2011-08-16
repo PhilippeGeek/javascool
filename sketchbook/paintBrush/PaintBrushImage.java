@@ -54,6 +54,7 @@ public class PaintBrushImage {
   static public int maxY() {
     return height;
   }
+
   public void clear() {
     for(int i = 0; i < width; i++)
       Arrays.fill(image[i], 15);

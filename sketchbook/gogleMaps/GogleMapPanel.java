@@ -1,8 +1,8 @@
 /*******************************************************************************
 * David.Pichardie@inria.fr, Copyright (C) 2011.           All rights reserved. *
 *******************************************************************************/
-package org.javascool.proglets.gogleMaps;
 
+package proglet.goglemap;
 import java.util.*;
 import java.awt.BorderLayout;
 import java.awt.Graphics;
@@ -39,12 +39,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import org.javascool.tools.Macros;
+import org.javascool.Macros;
+import org.javascool.Utils;
 
 class GogleMapPanel extends JPanel implements ActionListener {
   private static final long serialVersionUID = 1L;
 
-  Map<String, List<String> > arcs;
+  Map < String, List < String >> arcs;
   Map<String, Double> latitudes;
   Map<String, Double> longitudes;
   private Image ici_bleu;
@@ -155,6 +156,7 @@ class GogleMapPanel extends JPanel implements ActionListener {
   static double square(double x) {
     return x * x;
   }
+
   int distanceEuclidienne(double longitude1, double latitude1, double longitude2, double latitude2) {
     double longitude = (longitude1 - longitude2) * Math.PI / 180;
     double aux = Math.cos(latitude1 * Math.PI / 180) * Math.cos(latitude2 * Math.PI / 180) * Math.cos(longitude);
@@ -168,8 +170,8 @@ class GogleMapPanel extends JPanel implements ActionListener {
   private class ParcoursEnLargeur extends SwingWorker<Void, Void>{
     protected Void doInBackground() {
       me.clearMap();
-      Functions.afficheToutesRoutesDirectes(me);
-      Functions.parcoursLargeur(me, "Paris");
+      GogleMapParcours.afficheToutesRoutesDirectes(me);
+      GogleMapParcours.parcoursLargeur(me, "Paris");
       me.buttonBFS.setEnabled(true);
       me.buttonDFS.setEnabled(true);
       return null;
@@ -179,8 +181,8 @@ class GogleMapPanel extends JPanel implements ActionListener {
   private class ParcoursEnProfondeur extends SwingWorker<Void, Void>{
     protected Void doInBackground() {
       me.clearMap();
-      Functions.afficheToutesRoutesDirectes(me);
-      Functions.parcoursProfondeur(me, "Paris");
+      GogleMapParcours.afficheToutesRoutesDirectes(me);
+      GogleMapParcours.parcoursProfondeur(me, "Paris");
       me.buttonBFS.setEnabled(true);
       me.buttonDFS.setEnabled(true);
       return null;
@@ -216,9 +218,9 @@ class GogleMapPanel extends JPanel implements ActionListener {
     add(groupBoutons, BorderLayout.SOUTH);
 
     try {
-      ici_bleu = Macros.getIcon("org/javascool/proglets/gogleMapsdoc-files/ici_bleu.png").getImage();
-      ici_rouge = Macros.getIcon("org/javascool/proglets/gogleMapsdoc-files/ici_rouge.png").getImage();
-      france = Macros.getIcon("org/javascool/proglets/gogleMapsdoc-files/carteDeFrance.png").getImage();
+      ici_bleu = Utils.getIcon("proglet/goglemap/doc-files/ici_bleu.png").getImage();
+      ici_rouge = Utils.getIcon("proglet/goglemap/doc-files/ici_rouge.png").getImage();
+      france = Utils.getIcon("proglet/goglemap/doc-files/carteDeFrance.png").getImage();
     } catch(Exception e) {
       System.out.println("Erreur au read : " + e);
     }
@@ -279,7 +281,7 @@ class GogleMapPanel extends JPanel implements ActionListener {
     ajoute(51, "La Rochelle", 46.238448, -1.157089);
     ajoute(52, "Poitiers", 46.627314, 0.315269);
 
-    arcs = new HashMap<String, List<String> >();
+    arcs = new HashMap < String, List < String >> ();
     for(String ville : latitudes.keySet())
       arcs.put(ville, new ArrayList<String>());
     ajouteArc("Brest", "Lorient");
