@@ -7,9 +7,8 @@ export PATH:=/usr/java/jdk1.6.0_22/bin:$(PATH)
 JVS = $(realpath ..)
 
 ant :
-#	ant run
-	ant brun
-#	ant javadoc ; firefox $(JVS)/build/web/api/index.html 
+#	ant brun
+	ant javadoc ; firefox $(JVS)/build/web/api/index.html 
 
 #
 # Commandes de service pour gerer le site javascool
