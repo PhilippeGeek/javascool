@@ -2,20 +2,16 @@
 * David.Pichardie@inria.fr, Copyright (C) 2011.           All rights reserved. *
 *******************************************************************************/
 
-package proglet.goglemap;
+package org.javascool.proglets.gogleMaps;
 
-import static org.javascool.Macros.assertion;
-import static proglet.goglemap.GogleMap.affichePointSurCarte;
-import static proglet.goglemap.GogleMap.latitudes;
-import static proglet.goglemap.GogleMap.longitudes;
+import static org.javascool.proglets.gogleMaps.GogleMap.latitudes;
+import static org.javascool.proglets.gogleMaps.GogleMap.longitudes;
 
-import java.util.Map;
-import java.util.HashMap;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.Queue;
 import java.util.LinkedList;
-import org.javascool.Macros;
+import org.javascool.tools.Macros;
 
 public class GogleMapParcours {
   private static int numVisite;
@@ -65,11 +61,11 @@ public class GogleMapParcours {
     Set<String> vu = new HashSet<String>();
     Queue<String> aVoir = new LinkedList<String>();
     aVoir.offer(depart);
-    int numVisite = 1;
+    int countVisite = 1;
     while(!aVoir.isEmpty()) {
       String ville1 = aVoir.remove();
       vu.add(ville1);
-      afficheVilleAvecNumero(g, ville1, numVisite++);
+      afficheVilleAvecNumero(g, ville1, countVisite++);
       Macros.sleep(500);
       for(String ville2 : g.arcs.get(ville1))
         if(!vu.contains(ville2)) {

@@ -2,13 +2,13 @@
 * David.Pichardie@inria.fr, Copyright (C) 2011.           All rights reserved. *
 *******************************************************************************/
 
-package proglet.goglemap;
+package org.javascool.proglets.gogleMaps;
 
 import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
-import org.javascool.Macros;
+import org.javascool.tools.Macros;
 
 public class GogleMapCalculChemins {
   private static int distance(GogleMapPanel g, String ville1, String ville2) {

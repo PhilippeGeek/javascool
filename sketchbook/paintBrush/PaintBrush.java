@@ -2,11 +2,10 @@
 * David.Pichardie@inria.fr, Copyright (C) 2011.           All rights reserved. *
 *******************************************************************************/
 
-package proglet.paintbrush;
+package org.javascool.proglets.paintBrush;
 
 // Used to define the gui
 import javax.swing.JPanel;
-import proglet.ingredients.Console;
 
 /** Définit une proglet javascool qui permet de faire des tracés dans une image.
  * @see <a href="doc-files/about-proglet.htm">Description</a>
@@ -15,7 +14,7 @@ import proglet.ingredients.Console;
  * @see <a href="PaintBrushMain.java.html">PaintBrushMain.java</a>, <a href="PaintBrushImage.java.html">PaintBrushImage.java</a>,  <a href="PaintBrushManipImage.java.html">PaintBrushManipImage.java</a>
  * @serial exclude
  */
-public class PaintBrush implements org.javascool.Proglet {
+public class PaintBrush  {
   private PaintBrush() {}
   private static final long serialVersionUID = 1L;
   // This defines the panel to display
@@ -56,8 +55,7 @@ public class PaintBrush implements org.javascool.Proglet {
   // This defines the tests on the panel
   //
   /**/public static void test() {
-    Console.clear();
-    Console.println("Pour la démo . . à vous de manipuler l'interface\n .. en \"mode démo\", tout simplement !");
+    //   Console.println("Pour la démo . . à vous de manipuler l'interface\n .. en \"mode démo\", tout simplement !");
   }
   /** Définition de l'interface graphique de la proglet. */
   public static final Panel panel = new Panel();

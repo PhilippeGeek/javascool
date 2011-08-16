@@ -2,28 +2,18 @@
 * David.Pichardie@inria.fr, Copyright (C) 2011.           All rights reserved. *
 *******************************************************************************/
 
-package proglet.goglemap;
+package org.javascool.proglets.gogleMaps;
 import java.util.*;
 import java.awt.BorderLayout;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Dimension;
 import java.awt.Color;
 import java.awt.Image;
 
-import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.ImageIcon;
-import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 
-import java.awt.image.BufferedImage;
 import java.awt.GridLayout;
-import java.awt.RenderingHints;
 import java.awt.BasicStroke;
 import java.awt.Toolkit;
 import java.awt.Graphics;
@@ -31,16 +21,10 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.Font;
 import java.awt.geom.Line2D;
-import javax.imageio.ImageIO;
-import java.io.File;
-import java.io.IOException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
-import org.javascool.Macros;
-import org.javascool.Utils;
+import org.javascool.tools.Macros;
 
 class GogleMapPanel extends JPanel implements ActionListener {
   private static final long serialVersionUID = 1L;
@@ -163,11 +147,12 @@ class GogleMapPanel extends JPanel implements ActionListener {
     aux = aux + Math.sin(latitude1 * Math.PI / 180) * Math.sin(latitude2 * Math.PI / 180);
     return (int) Math.round(6378 * Math.acos(aux));
   }
-  void ajoute(int i, String ville, double _latitude, double _longitude) {
+  final void ajoute(int i, String ville, double _latitude, double _longitude) {
     latitudes.put(ville, _latitude);
     longitudes.put(ville, _longitude);
   }
   private class ParcoursEnLargeur extends SwingWorker<Void, Void>{
+        @Override
     protected Void doInBackground() {
       me.clearMap();
       GogleMapParcours.afficheToutesRoutesDirectes(me);
@@ -179,6 +164,7 @@ class GogleMapPanel extends JPanel implements ActionListener {
   }
 
   private class ParcoursEnProfondeur extends SwingWorker<Void, Void>{
+        @Override
     protected Void doInBackground() {
       me.clearMap();
       GogleMapParcours.afficheToutesRoutesDirectes(me);
@@ -189,9 +175,9 @@ class GogleMapPanel extends JPanel implements ActionListener {
     }
   }
 
+    @Override
   public void actionPerformed(ActionEvent e) {
     String action = e.getActionCommand();
-    final GogleMapPanel me = this;
     if(action.equals(buttonBFSString)) {
       buttonBFS.setEnabled(false);
       buttonDFS.setEnabled(false);
@@ -218,9 +204,9 @@ class GogleMapPanel extends JPanel implements ActionListener {
     add(groupBoutons, BorderLayout.SOUTH);
 
     try {
-      ici_bleu = Utils.getIcon("proglet/goglemap/doc-files/ici_bleu.png").getImage();
-      ici_rouge = Utils.getIcon("proglet/goglemap/doc-files/ici_rouge.png").getImage();
-      france = Utils.getIcon("proglet/goglemap/doc-files/carteDeFrance.png").getImage();
+      ici_bleu = Macros.getIcon("org/javascool/proglets/gogleMaps/ici_bleu.png").getImage();
+      ici_rouge = Macros.getIcon("org/javascool/proglets/gogleMaps/ici_rouge.png").getImage();
+      france = Macros.getIcon("org/javascool/proglets/gogleMaps/carteDeFrance.png").getImage();
     } catch(Exception e) {
       System.out.println("Erreur au read : " + e);
     }
@@ -366,7 +352,7 @@ class GogleMapPanel extends JPanel implements ActionListener {
   // return -1;
   // }
 
-  void ajouteArc(String depart, String arrivee) {
+  final void ajouteArc(String depart, String arrivee) {
     ajouteArcAux(depart, arrivee);
     ajouteArcAux(arrivee, depart);
   }
@@ -378,6 +364,7 @@ class GogleMapPanel extends JPanel implements ActionListener {
     CartePanel() {
       setPreferredSize(new Dimension(640, 640));
     }
+        @Override
     protected void paintComponent(Graphics g) {
       super.paintComponent(g);
       g.drawImage(france, 0, 0, null);
@@ -409,6 +396,7 @@ class PointAAfficher implements Comparable {
     y = _y;
     idx = _idx;
   }
+    @Override
   public int compareTo(Object o) {
     PointAAfficher p = (PointAAfficher) o;
     int cmp1 = (int) Math.round(1000 * (p.x - x));

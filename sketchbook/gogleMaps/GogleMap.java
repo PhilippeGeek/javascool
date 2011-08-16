@@ -2,7 +2,7 @@
 * David.Pichardie@inria.fr, Copyright (C) 2011.           All rights reserved. *
 *******************************************************************************/
 
-package proglet.goglemap;
+package org.javascool.proglets.gogleMaps;
 
 // Used to define the gui
 import java.util.Map;
@@ -11,17 +11,13 @@ import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import org.javascool.Jvs2Java;
-
-import proglet.ingredients.Console;
 
 /** Définit une proglet javascool qui permet de tracer des chemins sur une carte de France.
- * @see <a href="doc-files/about-proglet.htm">Description</a>
- * @see <a href="doc-files/the-proglet.htm">La proglet</a>
+ *
  * @see <a href="GogleMap.java.html">code source</a>
  * @serial exclude
  */
-public class GogleMap implements org.javascool.Proglet {
+public class GogleMap extends JPanel {
   private GogleMap() {}
   private static final long serialVersionUID = 1L;
   // This defines the panel to display
@@ -79,6 +75,7 @@ public class GogleMap implements org.javascool.Proglet {
   }
   public static void parcoursEnLargeur(final String depart) {
     SwingUtilities.invokeLater(new Runnable() {
+            @Override
                                  public void run() {
                                    panel.main.clearMap();
                                    GogleMapParcours.afficheToutesRoutesDirectes(panel.main);
@@ -91,8 +88,7 @@ public class GogleMap implements org.javascool.Proglet {
   // This defines the tests on the panel
   //
   public static void test() {
-    Console.clear();
-    Console.println("Pour la démo . . utiliser les boutons \"Parcours en profondeur\" +  \"Parcours en largeur\" !");
+    //    Console.println("Pour la démo . . utiliser les boutons \"Parcours en profondeur\" +  \"Parcours en largeur\" !");
   }
   /** Définition de l'interface graphique de la proglet. */
   public static final Panel panel = new Panel();
