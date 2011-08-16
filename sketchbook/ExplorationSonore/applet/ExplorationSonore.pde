@@ -6,7 +6,7 @@
  * Utilisation de Minim pour le son -
  *
  * Inspired from a tutorial of Andy Best http://andybest.net/
- **/                                                                                                                                                                                                                                                                                                                                                          // /////////////////////////////////////////////////////////////////////////////////
+ **/                                                                                                                                                                                                                                                                                                                                                      // /////////////////////////////////////////////////////////////////////////////////
 
 import processing.opengl.*;
 import javax.media.opengl.*;

@@ -59,6 +59,9 @@ public class ProgletsBuilder {
   public static boolean build(String[] proglets, String targetDir) {
     if(!hasProglets()) throw new IllegalArgumentException("Mauvaise configuration du builder, il faut utiliser le bon jar !");
     try {
+      // Définition de la jarre cible.
+      String targetJar = System.getProperty("user.dir") + File.separator + "javascool-proglets.jar";
+      new File(targetJar).delete();
       System.out.println("Scan des proglets à partir du répertoire: " + System.getProperty("user.dir"));
       // Installation du répertoire de travail.
       File buildDir;
@@ -106,10 +109,10 @@ public class ProgletsBuilder {
           copyFiles(proglet, progletDir);
         }
         DialogFrame.setUpdate("Construction de " + name + " 2/4", 40);
+        Pml pml = new Pml().load(progletDir + File.separator + "proglet.pml");
         // Vérification des spécifications
         {
           boolean error = false;
-          Pml pml = new Pml().load(progletDir + File.separator + "proglet.pml");
           if(!name.matches("[a-z][a-zA-Z][a-zA-Z][a-zA-Z]+")) {
             System.out.println("Le nom de la proglet «" + name + "» est bizarre il ne doit contenir que des lettres faire au moins quatre caractères et démarrer par une minuscule");
             error = true;
@@ -137,11 +140,22 @@ public class ProgletsBuilder {
           // jarDir+ "/org/javascool/builder/hdoc2htm.xslt"));
         }
         DialogFrame.setUpdate("Construction de " + name + " 3/4", 50);
-        // Lancement de la compilation dans le répertoire
-        {
-          String[] javaFiles = StringFile.list(progletDir, ".*\\.java");
-          if(javaFiles.length > 0)
-            javac(javaFiles);
+        if(pml.getBoolean("processing")) throw new IllegalStateException("Upps le builder est pas encore implémenté pour le processing");
+          // @todo Tester que nous avons les tailles explicites
+          // @todo Ne pas compiler mais deployer les jars dans la cible
+        else {
+          // Création d'une page de lancement de l'applet // @todo à valider avec Guillaume
+          StringFile.save(progletDir + File.separator + "index.html",
+                          "<html><head><title>" + name + "</title><meta http-equiv='Content-Type' content='text/html; charset=utf-8'/></head><body>\n" +
+                          "  <center><h4>" + name + " (<a target='_blank' href='help.htm'>documentation</a>)</h4></center>\n" +
+                          "  <applet width='560' height='720' code='org.javascool.widgets.PanelApplet' archive='../javasccool-progets><param name='pane' value='org.javascool.proglets." + name + "'/><pre>Impossible de lancer " + name + ": Java n'est pas installé ou mal configuré</pre></applet>\n" +
+                          "</body></html>\n");
+          // Lancement de la compilation dans le répertoire
+          {
+            String[] javaFiles = StringFile.list(progletDir, ".*\\.java");
+            if(javaFiles.length > 0)
+              javac(javaFiles);
+          }
         }
         DialogFrame.setUpdate("Construction de " + name + " 4/4", 60);
       }
@@ -157,7 +171,7 @@ public class ProgletsBuilder {
                        set("Implementation-Vendor", "fuscia-accueil@inria.fr, ou=javascool.gforge.inria.fr, o=inria.fr, c=fr").
                        set("Implementation-Version", version).
                        save(tmpDir + "/manifest.jmf");
-        jarCreate(System.getProperty("user.dir") + File.separator + "javascool-proglets.jar", tmpDir + "/manifest.jmf", jarDir);
+        jarCreate(targetJar, tmpDir + "/manifest.jmf", jarDir);
         DialogFrame.setUpdate("Finalisation 2/2", 100);
       }
       rmDir(new File(tmpDir));

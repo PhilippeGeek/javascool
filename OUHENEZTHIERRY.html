@@ -5,7 +5,7 @@
  content="text/html; charset=ISO-8859-1">
 </head>
 <body>
-<big><big><big><b><br>
+<big><big><big><b>ODJ:<br>
 </b></big></big></big>
 <ul>
   <li><big><big><big>Pr&eacute;sentation de la restructuration de
@@ -23,7 +23,9 @@ Java'sCool</big></big></big></li>
   </li>
 </ul>
 <b><br>
-Modifications structurelles:<br>
+</b>
+<hr style="width: 100%; height: 2px;"><br>
+<b>Modifications structurelles:<br>
 </b>
 <ol>
   <li><b>[d&eacute;veloppement de jvs4] L</b>es sources de
@@ -60,7 +62,8 @@ compl&egrave;tement document&eacute; en <i><b>fran&ccedil;ais</b></i> <br>
 puisque nos sources sont visibles)</li>
     <ol>
       <li>chaque html donne acc&egrave;s au source en lecture.</li>
-      <li>les classes "en anglais philien" de org.javascool.gui sont
+      <li>les classes "en anglais et en philien" de org.javascool.gui
+sont
 des classes non
 publiques pour ne pas appara&icirc;tre dans la documentation: elles
 restent &agrave; lisser.<br>
@@ -106,6 +109,9 @@ Console.java</li>
 
 
 
+
+
+
         </span>de JavaScool&nbsp;</li>
     </ol>
     <li>arr&ecirc;ter de faire des appels vers des
@@ -122,7 +128,9 @@ pour faire des proglet</span>s.</li>
     <li>Les routines Macros.getRessource/Macros.getUserRessource ont
 &eacute;t&eacute; fondue avec lex toURl devenu: Macros.getResourceURL()
     </li>
-    <li>Le builder n'utilise plus ant<span style="font-weight: bold;"><br>
+    <li>Le builder n'utilise plus ant</li>
+    <li>Le Jvs2Html est appel&eacute; directement pas saxon sur le
+texte &agrave; traduire.<span style="font-weight: bold;"><br>
       </span></li>
   </ol>
   <li><span style="font-weight: bold;">[la mise au point du site web]</span></li>
@@ -173,12 +181,14 @@ produire diff&eacute;remment dans javascool et dans le site web externe<br>
 laisser &agrave; Guillaume (dont le travail pr&eacute;liminaire m'a
 bien aid&eacute;) compilent et se chargent</li>
       <li>Les icones sont inexistantes ou &agrave; chier</li>
+      <li>Mais ne doit on pas renommer les routines SANS utiliser des
+noms bizarres puisque chaque proglet est independante ?<br>
+      </li>
     </ol>
     <li>Au niveau du builder:</li>
     <ol>
-      <li>implementer StringFile.getModificationTime() pour ne pas
-recompiler des proglets existantes, avec un fichier "target"</li>
-      <li>generer automatiquement la page du ProgletApplet avec un lien
+      <li>voir si ok de generer automatiquement la page du
+ProgletApplet avec un lien
 vers help.htm</li>
       <li>tenir comptre du cas des proglets processing <br>
       </li>
@@ -207,6 +217,9 @@ org.javascool.proglets.xxx.Functions.*; le signe de ralliement ?</li>
   </ol>
   <li>Sur le panneau Satrter des proglets il manque ou thierry a
 p&ecirc;t&eacute; le tooltip poru avoir plus d'infos sur une proglet</li>
+  <li>Au niveau du build.xml y a les bons scripts mais je sais pas
+comment le faire utiliser par netbean qui a son nbbuild.xml<br>
+  </li>
 </ol>
 <br>
 <b>R&eacute;gressions par rapport &agrave; la Jvs3.2bis:</b><br>
@@ -224,5 +237,22 @@ gras par exemple).</li>
   <li>Si il y a une erreur de syntaxe sur la ligne 1 . . la sortie est
 catastrophique, il faut ajouter une ligne blanche.</li>
 </ol>
+<br>
+<hr style="width: 100%; height: 2px;"><br>
+<span style="font-weight: bold;">Ebauche de tri-TODO (PV + GM + TV)
+liste:<br>
+</span>
+<ul>
+  <li>TV : Repasser sur les docs XML et JAVA de chaque proglet et
+rendre accessible un programme de test/validation</li>
+  <li>TV : Finaliser l'int&eacute;gration des proglets processing</li>
+  <li>GM+TV : Remodeler le build.xml qui genere les pages webs des
+proglets &agrave; partir de ce que donne le builder</li>
+  <li>[?] : Finir de programmer les fonctions de
+org.javascool.builder.ProgletsBuilder qui sont actuellement des appels
+syst&egrave;me.<br>
+  </li>
+</ul>
+<br>
 </body>
 </html>
