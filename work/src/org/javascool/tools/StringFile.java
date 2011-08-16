@@ -141,7 +141,7 @@ public class StringFile {
     }
   }
   /**
-   * @see exists(String)
+   * @see #exists(String)
    */
   public static boolean exists(URL location) {
     try {

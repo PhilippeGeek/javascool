@@ -18,7 +18,7 @@ public class Panel extends JPanel {
     JLayeredPane pane = new JLayeredPane();
     pane.setPreferredSize(new Dimension(540, 300));
     JLabel fig = new JLabel();
-    fig.setIcon(Macros.getIcon("org/javascool/proglets/convanalogique/doc-files/conv.png"));
+    fig.setIcon(Macros.getIcon("org/javascool/proglets/analogiqueNumerique/conv.png"));
     fig.setBounds(3, 0, 540, 300);
     pane.add(fig, new Integer(1), 0);
     out = new JLabel("????");

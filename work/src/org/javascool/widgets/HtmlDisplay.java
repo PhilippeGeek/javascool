@@ -29,7 +29,7 @@ import java.util.ArrayList;
 
 /** Definit un visualisateur de pages HTML3.
  * <p><i>Note:</i> L'implémentation disponible ne rend utilisable que le "vieux" HTML-3.</p>
- * <p><i>Conseil:</i> Ecrire les pages en <a href="ttp://javascool.gforge.inria.fr/v4/index.php?page=developers&action=doc-xml>HML</a> (en XHTML simplifié),
+ * <p><i>Conseil:</i> Ecrire les pages en <a href="http://javascool.gforge.inria.fr/v4/index.php?page=developers&action=doc-xml">HML</a> (en XHTML simplifié),
  * la maintenance et polyvalence des pages en sera renforcée.</p>
  * <div id="URLs"><p><b>Mécanismes d'affichage des contenus:</b><ul>
  * <li>Les pages locales d'extension <tt>*.htm</tt> sont réputées être du HTML3 et sont affichées ici.</li>

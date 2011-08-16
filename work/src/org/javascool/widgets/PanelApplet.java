@@ -98,8 +98,8 @@ public class PanelApplet extends JApplet {
   }
   /** Invoke une méthode sans argument sur un objet.
    * @param object L'objet sur lequel on invoque la méthode.
-   * @param La méthode sans argument à invoquer, souvent : <tt>init</tt>, <tt>destroy</tt>, <tt>start</tt>, <tt>stop</tt> ou <tt>run</tt>.
-   * @paran run Si true (par défaut) appelle la méthode, si false teste simplement son existence.
+   * @param method La méthode sans argument à invoquer, souvent : <tt>init</tt>, <tt>destroy</tt>, <tt>start</tt>, <tt>stop</tt> ou <tt>run</tt>.
+   * @param run Si true (par défaut) appelle la méthode, si false teste simplement son existence.
    * @return La valeur true si la méthode est invocable, false sinon.
    * @throws RuntimeException si la méthode génère une exception lors de son appel.
    */
@@ -123,15 +123,18 @@ public class PanelApplet extends JApplet {
   /** Définit une fenêtre principale pour lancer une application. */
   public static class Frame extends JFrame {
     private Component pane;
+    // @bean
+    public Frame() {}
 
     /** Construit et ouvre une fenêtre principale pour lancer une application.
      * @param title Le titre de la fenêtre.
      * @param icon L'icône de la fenêtre.
      * @param width Largeur de la fenêtre. Si 0 on prend tout l'écran.
-     * @param hauteur Hauteur de la fenêtre. Si 0 on prend tout l'écran.
+     * @param height Hauteur de la fenêtre. Si 0 on prend tout l'écran.
      * @param pane Le composant graphique à afficher.
+     * @return Cet objet, permettant de définir la construction <tt>new Frame().reset(..)</tt>.
      */
-    public Frame(String title, String icon, int width, int height, Component pane) {
+    public Frame reset(String title, String icon, int width, int height, Component pane) {
       setTitle(title);
       ImageIcon image = org.javascool.tools.Macros.getIcon(icon);
       if(image != null)
@@ -162,36 +165,37 @@ public class PanelApplet extends JApplet {
       else
         setExtendedState(JFrame.MAXIMIZED_BOTH);
       setVisible(true);
+      return this;
     }
     /**
-     * @see Frame(String, String, int, int, Component)
+     * @see #reset(String, String, int, int, Component)
      */
-    public Frame(String title, int width, int height, Component pane) {
-      this(title, null, width, height, pane);
+    public Frame reset(String title, int width, int height, Component pane) {
+      return reset(title, null, width, height, pane);
     }
     /**
-     * @see Frame(String, String, int, int, Component)
+     * @see #reset(String, String, int, int, Component)
      */
-    public Frame(String title, String icon, Component pane) {
-      this(title, icon, 0, 0, pane);
+    public Frame reset(String title, String icon, Component pane) {
+      return reset(title, icon, 0, 0, pane);
     }
     /**
-     * @see Frame(String, String, int, int, Component)
+     * @see #reset(String, String, int, int, Component)
      */
-    public Frame(String title, Component pane) {
-      this(title, null, 0, 0, pane);
+    public Frame reset(String title, Component pane) {
+      return reset(title, null, 0, 0, pane);
     }
     /**
-     * @see Frame(String, String, int, int, Component)
+     * @see #reset(String, String, int, int, Component)
      */
-    public Frame(int width, int height, Component pane) {
-      this(pane.getClass().toString(), null, width, height, pane);
+    public Frame reset(int width, int height, Component pane) {
+      return reset(pane.getClass().toString(), null, width, height, pane);
     }
     /**
-     * @see Frame(String, String, int, int, Component)
+     * @see #reset(String, String, int, int, Component)
      */
-    public Frame(Component pane) {
-      this(pane.getClass().toString(), null, 0, 0, pane);
+    public Frame reset(Component pane) {
+      return reset(pane.getClass().toString(), null, 0, 0, pane);
     }
     /** Détermine si la fenêtre principale peut-être fermée.
      * @return La valeur true si la fenêtre principale peut-être fermée, sinon false.
@@ -207,6 +211,6 @@ public class PanelApplet extends JApplet {
   public static void main(String[] usage) {
     // @main
     if(usage.length > 0)
-      new Frame(new PanelApplet().reset(usage[0]));
+      new Frame().reset(new PanelApplet().reset(usage[0]));
   }
 }

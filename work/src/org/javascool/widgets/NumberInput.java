@@ -7,7 +7,6 @@ package org.javascool.widgets;
 // Used to define the gui
 import javax.swing.JPanel;
 import java.awt.Dimension;
-import java.awt.BorderLayout;
 import javax.swing.BorderFactory;
 
 // Used for the text field
@@ -21,7 +20,7 @@ import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-/** This widget defines a numeric input.
+/** Panneau pour l'entrée de valeurs numériques.
  * @see <a href="NumberInput.java.html">source code</a>
  * @serial exclude
  */
@@ -97,7 +96,7 @@ public class NumberInput extends JPanel {
     return this;
   }
   /**
-   * @see #resetScale(double, double, double)
+   * @see #setScale(double, double, double)
    */
   public final NumberInput setScale() {
     return setScale(0, 100, 1);

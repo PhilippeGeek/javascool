@@ -98,7 +98,7 @@ public class ProgletsBuilder {
       // Construction des proglets
       for(String proglet : proglets) {
         String name = proglet.replaceFirst(".*/", ""), progletDir = progletsDir + File.separator + name;
-        System.out.println("Compilation de " + name + " ...");
+        System.out.println("\tCompilation de " + name + " ...");
         DialogFrame.setUpdate("Construction de " + name + " 1/4", 30);
         // Copie de tous les fichiers
         {
@@ -161,6 +161,7 @@ public class ProgletsBuilder {
         DialogFrame.setUpdate("Finalisation 2/2", 100);
       }
       rmDir(new File(tmpDir));
+      System.out.println("Construction achevée avec succès");
       return true;
     } catch(Exception e) {
       System.out.println("Erreur inopinée lors de la construction (" + e.getMessage() + "): corriger l'erreur et relancer la construction");
@@ -210,7 +211,7 @@ public class ProgletsBuilder {
 
     /* @todo Remplacer l'appel systeme par une api
      */
-    System.out.println(Exec.run("jar cfm " + jarFile + " " + mfFile + " -C " + dir + " ."));
+    Exec.run("jar cfm " + jarFile + " " + mfFile + " -C " + dir + " .");
   }
   /** Copie un répertoire dans un autre en oubliant les svn. */
   private static void copyFiles(String srcDir, String dstDir) throws IOException {
