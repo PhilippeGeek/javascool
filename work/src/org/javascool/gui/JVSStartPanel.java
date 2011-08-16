@@ -13,7 +13,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import org.javascool.core.Engine;
+import org.javascool.core.ProgletEngine;
 import org.javascool.tools.Macros;
 
 /**
@@ -38,7 +38,7 @@ class JVSStartPanel extends JPanel {
     JPanel shortcuts = new JPanel();
     // shortcuts.setLayout(new BorderLayout(10,10));
     shortcuts.add(Box.createHorizontalGlue());
-    for(Engine.Proglet proglet : Engine.getInstance().getProglets())
+    for(ProgletEngine.Proglet proglet : ProgletEngine.getInstance().getProglets())
       shortcuts.add(this.createShortcut(Macros.getIcon(proglet.getIcon()), proglet.getName(), new ProgletLoader(proglet.getName())));
     shortcuts.add(Box.createHorizontalGlue());
     vertical.add(shortcuts);

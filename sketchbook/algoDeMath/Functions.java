@@ -36,36 +36,39 @@ public class Functions {
   /** Change la valeur d'un point du tracé.
    * @param x Abcisse de la courbe, dans [-X, X], par défaut [-1, 1].
    * @param y Ordonnée de la courbe, dans [-Y, Y], par défaut [-1, 1].
-   * @param c Numéro de la courbe: 0 (noir), 1 (brun), 2 (rouge), 3 (orange), 4 (jaune), 5 (vert), 6 (bleu), 7 (violet), 8 (gris), 9 (blanc).
+   * @param c Numéro de la courbe: 0 (noir, défaut), 1 (brun), 2 (rouge), 3 (orange), 4 (jaune), 5 (vert), 6 (bleu), 7 (violet), 8 (gris), 9 (blanc).
    */
   public static void scopeSet(double x, double y, int c) {
     getPane().scope.add(x, y, c);
+  }
+  /*
+   * @see #scopeSet(double, double, int)
+   */
+  public static void scopeSet(double x, double y) {
+    scopeSet(x, y, 0);
   }
   /** Ajoute un chaîne de caratère au tracé.
    * <p><tt>scopeAdd</tt> est une abréviation pour <tt>scopeAddString</tt>.</p>
    * @param x Abcisse du coin inférieur gauche de la chaîne, dans [-X, X], par défaut [-1, 1].
    * @param y Ordonnée du coin inférieur gauche de la chaîne, dans [-Y, Y], par défaut [-1, 1].
-   * @param s Valeur de la chaîne de caratère.
-   * @param c Couleur de la chaîne de caratère: 0 (noir), 1 (brun), 2 (rouge), 3 (orange), 4 (jaune), 5 (vert), 6 (bleu), 7 (violet), 8 (gris), 9 (blanc).
+   * @param s Valeur de la chaîne de caractères.
+   * @param c Couleur de la chaîne de caractères: 0 (noir, défaut), 1 (brun), 2 (rouge), 3 (orange), 4 (jaune), 5 (vert), 6 (bleu), 7 (violet), 8 (gris), 9 (blanc).
    */
   public static void scopeAddString(double x, double y, String s, int c) {
     getPane().scope.add(x, y, s, c);
   }
-  /**/public static void scopeAddString(double x, double y, String s) {
+  /*
+   * @see #scopeAddString(double, double, double, String, int)
+   */
+  public static void scopeAddString(double x, double y, String s) {
     scopeAddString(x, y, s, 0);
-  }
-  /**/public static void scopeAdd(double x, double y, String s, int c) {
-    scopeAddString(x, y, s, c);
-  }
-  /**/public static void scopeAdd(double x, double y, String s) {
-    scopeAddString(x, y, s);
   }
   /** Trace un rectangle.
    * @param xmin Abcisse inférieure gauche, dans [-X, X], par défaut [-1, 1].
    * @param ymin Ordonnée inférieure gauche, dans [-Y, Y], par défaut [-1, 1].
    * @param xmax Abcisse supérieure droite, dans [-X, X], par défaut [-1, 1].
    * @param ymax Ordonnée supérieure droite, dans [-Y, Y], par défaut [-1, 1].
-   * @param c Numéro de la courbe: 0 (noir), 1 (brun), 2 (rouge), 3 (orange), 4 (jaune), 5 (vert), 6 (bleu), 7 (violet), 8 (gris), 9 (blanc).
+   * @param c Numéro de la courbe: 0 (noir, défaut), 1 (brun), 2 (rouge), 3 (orange), 4 (jaune), 5 (vert), 6 (bleu), 7 (violet), 8 (gris), 9 (blanc).
    */
   public static void scopeAddRectangle(double xmin, double ymin, double xmax, double ymax, int c) {
     scopeAddLine(xmin, ymin, xmax, ymin, c);
@@ -76,7 +79,7 @@ public class Functions {
   /*
    * @see #scopeAddRectangle(double, double, double, double, int)
    */
- public static void scopeAddRectangle(double xmin, double ymin, double xmax, double ymax) {
+  public static void scopeAddRectangle(double xmin, double ymin, double xmax, double ymax) {
     scopeAddRectangle(xmin, ymin, xmax, ymax, 0);
   }
   /** Trace une ligne.
@@ -84,7 +87,7 @@ public class Functions {
    * @param y1 Ordonnée du 1er point, dans [-Y, Y], par défaut [-1, 1].
    * @param x2 Abcisse du 2eme point, dans [-X, X], par défaut [-1, 1].
    * @param y2 Ordonnée du 2eme point, dans [-Y, Y], par défaut [-1, 1].
-   * @param c Numéro de la courbe: 0 (noir), 1 (brun), 2 (rouge), 3 (orange), 4 (jaune), 5 (vert), 6 (bleu), 7 (violet), 8 (gris), 9 (blanc).
+   * @param c Numéro de la courbe: 0 (noir, défaut), 1 (brun), 2 (rouge), 3 (orange), 4 (jaune), 5 (vert), 6 (bleu), 7 (violet), 8 (gris), 9 (blanc).
    */
   public static void scopeAddLine(double x1, double y1, double x2, double y2, int c) {
     getPane().scope.add(x1, y1, x2, y2, c);
@@ -99,7 +102,7 @@ public class Functions {
    * @param x Abcisse du centre, dans [-X, X], par défaut [-1, 1].
    * @param y Ordonnée du centre, dans [-Y, Y], par défaut [-1, 1].
    * @param r Rayon du cercle.
-   * @param c Numéro de la courbe: 0 (noir), 1 (brun), 2 (rouge), 3 (orange), 4 (jaune), 5 (vert), 6 (bleu), 7 (violet), 8 (gris), 9 (blanc).
+   * @param c Numéro de la courbe: 0 (noir, défaut), 1 (brun), 2 (rouge), 3 (orange), 4 (jaune), 5 (vert), 6 (bleu), 7 (violet), 8 (gris), 9 (blanc).
    */
   public static void scopeAddCircle(double x, double y, double r, int c) {
     getPane().scope.add(x, y, r, c);

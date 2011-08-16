@@ -26,10 +26,11 @@ sur trois objets</li>
       <li>org.javascool.gui.Desktop qui d&eacute;finir les functions
 d'interaction avec
 l'interface graphique de JavaScool.</li>
-      <li>org.javascool.core.Engine qui impl&eacute;mente les
+      <li>org.javascool.core.ProgletEngine qui impl&eacute;mente les
 m&eacute;canismes de
 (compilation, ex&eacute;cution, proglet, ..) JavaScool.</li>
-      <li> org.javascool.builder.Builder qui int&egrave;gre tous les
+      <li> org.javascool.builder.ProgletsBuilder qui int&egrave;gre
+tous les
 m&eacute;canismes de compilation de proglets<br>
       </li>
     </ol>
@@ -78,6 +79,8 @@ Console.java</li>
     </li>
     <ol>
       <li>s&eacute;paration le gui du <span style="font-style: italic;">moteur
+
+
 
 
 
@@ -173,13 +176,21 @@ dans le home.dir</li>
   <li>Les icones du Starter s'affichent pas de la meme taille : que
 faire ?</li>
   <li>On a pas l'affichage autiomatique de la console quand ca compile
-et de la proglet quand ca execute<br>
-  </li>
+et de la proglet quand ca execute</li>
+  <li>Qu en est il de "l'&eacute;tiquettage des jvs comme "dependant d
+une proglet" ?</li>
+  <ol>
+    <li>&nbsp;pourquoi c'est pas import static
+org.javascool.proglets.xxx.Functions.*; le signe de ralliement ?<br>
+    </li>
+  </ol>
 </ol>
 <br>
 <b>R&eacute;gressions par rapport &agrave; la Jvs3.2bis:</b><br>
 <ol>
   <li>Il n'y a plus de logo dans la toolBar</li>
+  <li>Y a pas de bourton demo selon les proglets.<br>
+  </li>
   <li>On a perdu la fonction de formattage de code</li>
   <li>On a perdu la fonction d'insertion d'&eacute;l&eacute;ments</li>
   <li>Comment sait on quel fichier Jvs compiler qd on en ouvre plusieurs<br>

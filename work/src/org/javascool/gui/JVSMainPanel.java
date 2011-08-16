@@ -8,7 +8,7 @@ import java.util.HashMap;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import org.javascool.core.Engine;
+import org.javascool.core.ProgletEngine;
 
 /** The main panel for Java's cool
  * This class wich is very static contain all that we need to run Java's cool like save and open file command.
@@ -320,7 +320,7 @@ class JVSMainPanel extends JPanel {
     }
     if(getEditorTabs().getEditor(JVSFileEditorTabs.getCurrentCompiledFile()) != null)
       getEditorTabs().getEditor(JVSFileEditorTabs.getCurrentCompiledFile()).signalLine(line);
-    Engine.getInstance().doStop();
+    ProgletEngine.getInstance().doStop();
     Dialog.error("Erreur du logiciel à la ligne " + line, ex);
   }
   public void reportApplicationBug(String ex) {

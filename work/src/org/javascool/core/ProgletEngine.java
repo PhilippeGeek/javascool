@@ -20,10 +20,10 @@ import java.lang.reflect.InvocationTargetException;
 
 /** Définit les mécanismes de compilation, exécution, gestion de proglet.
  *
- * @see <a href="Engine.java.html">code source</a>
+ * @see <a href="ProgletEngine.java.html">code source</a>
  * @serial exclude
  */
-public class Engine {
+public class ProgletEngine {
   /** Tables des proglets. */
   private ArrayList<Proglet> proglets;
 
@@ -32,13 +32,13 @@ public class Engine {
   /** Crée et/ou renvoie l'unique instance de l'engine.
    * <p>Une application ne peut définir qu'un seul engine.</p>
    */
-  public static Engine getInstance() {
+  public static ProgletEngine getInstance() {
     if(engine == null)
-      engine = new Engine();
+      engine = new ProgletEngine();
     return engine;
   }
-  private static Engine engine = null;
-  private Engine() {
+  private static ProgletEngine engine = null;
+  private ProgletEngine() {
     // Détection des proglets présentes dans le jar
     {
       proglets = new ArrayList<Proglet>();

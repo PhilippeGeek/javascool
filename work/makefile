@@ -26,7 +26,7 @@ zip :
 	svn export ../sketchbook ~/Desktop/sketchbook
 
 ssh :
-	@gnome-terminal -e "ssh scm.gforge.inria.fr 'cd /home/groups/javascool/htdocs ; bash -i'" 
+	@gnome-terminal -e "ssh scm.gforge.inria.fr 'cd /home/groups/javascool/htdocs ; bash -i'" &
 
 svn : 
 	ant clean > /dev/null
@@ -40,6 +40,9 @@ bty :
 	for f in `find src -name '*.java' -o -name '*.jvs'` ; do uncrustify -q -c lib/uncrustify.cfg --replace $$f ; done
 	for f in `find ../sketchbook -name '*.java' -o -name '*.jvs'` ; do uncrustify -q -c lib/uncrustify.cfg --replace $$f ; done
 
+
+nbe :
+	@gnome-terminal --hide-menubar --geometry 1x1-1-1 -e "/usr/java/netbeans-7.0/bin/netbeans" &
 
 P_HOME=/usr/java/processing-1.2.1
 J_HOME=$(P_HOME)/java

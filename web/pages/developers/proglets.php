@@ -37,7 +37,8 @@ showBrowser(
             Regarder sur <?php showLink("?page=proglets", "la table des proglets", "internal"); ?> les noms existants.
         </div>
         <div class="spec">
-            Le nom doit avoir au plus seize lettres minuscules ou majuscules; pas de chiffre ou de symbole.
+            Le nom doit avoir au plus seize lettres minuscules ou majuscules; pas de chiffre ou de symbole.            
+            Il ne doit contenir que des lettres faire au moins quatre caractères et démarrer par une minuscule.
             Il doit être de la forme «<tt>algoDeMaths</tt>» pour «algo de maths» c'est à dire, sans espace, commencer par une minucule et les autres mots par une majuscule.
         </div>
         On respecte ici la convention de nommage des packages Java. </li>

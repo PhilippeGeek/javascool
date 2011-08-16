@@ -70,26 +70,36 @@ public class StringFile {
    * <tr><td><tt>mailto:<i>address</i>?subject=<i>subject</i></tt></td><td>pour envoyer un courriel avec le texte en contenu.</td></tr>
    * <tr><td><tt>stdout:/</tt></td><td>pour l'imprimer dans la console.</td></tr>
    * </table></div>
-   *
-   * @param string Le texte à sauver.
+   * @param string Le texte à sauvegarder.
+   * @param backup Si true, dans le cas d'un fichier, crée une sauvegarde d'un fichier existant. Par défaut false.
+   * * <p>Le fichier sauvegardé est doté d'un suffixe numérique unique.</p>
    *
    * @throws IllegalArgumentException Si l'URL est mal formée.
    * @throws RuntimeException Si une erreur d'entrée-sortie s'est produite.
    */
-  public static void save(String location, String string) {
+  public static void save(String location, String string, boolean backup) {
     if(location.startsWith("stdout:")) {
       System.out.println("\n" + location + " " + string);
       return;
     }
     location = getResourceURL(location, false).toString();
     try {
-      OutputStreamWriter writer = location.startsWith("file:") ? getFileWriter(location.substring(5)) : getUrlWriter(location);
+        if (backup && location.startsWith("file:"))
+            throw new IllegalArgumentException("Impossible de procéder à un backup pour l'URL «"+location+"»");
+      OutputStreamWriter writer = location.startsWith("file:") ? getFileWriter(location.substring(5), backup) : getUrlWriter(location);
       for(int i = 0; i < string.length(); i++)
         writer.write(string.charAt(i));
       writer.close();
     } catch(IOException e) { throw new RuntimeException(e + " when saving: " + location);
     }
   }
+  /**
+   * @see #save(String, String)
+   */
+  public static void save(String location, String string) {
+   save(location, string, false);
+  }
+  /** Met en place le writer dans le cas d'une URL. */
   private static OutputStreamWriter getUrlWriter(String location) throws IOException {
     URL url = new URL(location);
     URLConnection connection = url.openConnection();
@@ -102,10 +112,16 @@ public class StringFile {
     }
     return writer;
   }
-  private static OutputStreamWriter getFileWriter(String location) throws IOException {
+  /** Met en place le writer dans le cas d'un fichier. */
+  private static OutputStreamWriter getFileWriter(String location, boolean backup) throws IOException {
     File file = new File(location), parent = file.getParentFile();
     if((parent != null) && (!parent.isDirectory()))
       parent.mkdirs();
+    if (backup && file.exists()) {
+        File newFile = File.createTempFile(file.getName(), "", parent);   
+        newFile.delete();
+        file.renameTo(newFile);
+    }
     return new OutputStreamWriter(new FileOutputStream(location), "UTF-8");
   }
   /** Détecte si une URL existe.

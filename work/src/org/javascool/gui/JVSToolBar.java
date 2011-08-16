@@ -4,12 +4,12 @@
  */
 package org.javascool.gui;
 
-import org.javascool.core.Engine;
+import org.javascool.core.ProgletEngine;
 
 import org.javascool.widgets.ToolBar;
 import javax.swing.JButton;
 import org.javascool.widgets.StartStopButton;
-import org.javascool.builder.Builder;
+import org.javascool.builder.ProgletsBuilder;
 
 /** The JVS top tool bar
  * @author Philippe VIENNE
@@ -79,22 +79,22 @@ class JVSToolBar extends ToolBar {
               private static final long serialVersionUID = 1L;
               @Override
               public void start() {
-                Engine.getInstance().doRun();
+                ProgletEngine.getInstance().doRun();
               }
               @Override
               public void stop() {
-                Engine.getInstance().doStop();
+                ProgletEngine.getInstance().doStop();
               }
               @Override
               public boolean isRunning() {
-                return Engine.getInstance().isRunning();
+                return ProgletEngine.getInstance().isRunning();
               }
             }
             );
 
     runButton.setVisible(false);
     // Crée le menu de construction de proglets si pertinent
-    if(Builder.hasProglets())
+    if(ProgletsBuilder.hasProglets())
       pbutton = addRightTool("Proglet Builder", new Runnable() {
                                @Override
                                public void run() {
