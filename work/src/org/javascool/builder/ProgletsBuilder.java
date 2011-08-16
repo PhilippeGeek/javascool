@@ -27,7 +27,7 @@ import org.javascool.Core;
 
 /** Cette factory contient les mécanismes de construction d'un application Java's Cool avec des proglets.
  *
- * @see <a href="Builder.java.html">code source</a>
+ * @see <a href="ProgletsBuilder.java.html">code source</a>
  * @serial exclude
  */
 public class ProgletsBuilder {
@@ -87,7 +87,7 @@ public class ProgletsBuilder {
       DialogFrame.setUpdate("Installation 1/2", 10);
       // Expansion des classes javascool et des proglets existantes dans les jars
       {
-        String javascoolJar = Macros.getResourceURL("org/javascool/builder/Builder.class").toString().replaceFirst("jar:file:([^!]*)!.*", "$1");
+        String javascoolJar = Macros.getResourceURL("org/javascool/builder/ProgletsBuilder.class").toString().replaceFirst("jar:file:([^!]*)!.*", "$1");
         jarExtract(javascoolJar, jarDir, "org/javascool");
         jarExtract(javascoolJar, jarDir, "org/fife");
         for(String jar : StringFile.list(System.getProperty("user.dir"), ".*\\.jar"))
