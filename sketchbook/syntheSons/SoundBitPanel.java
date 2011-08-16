@@ -61,6 +61,7 @@ public class SoundBitPanel extends JPanel {
   }
   int hsize = 16 * 31, vsize = 160, b = 0, m = 20, width = 2 * m + hsize, height = b + 4 * m + 3 * vsize, height2 = b + 2 * m + 2 * vsize;
   double f0 = 440.0 / 16, f1 = 440.0 * 16;
+
   /** Routine interne de tracé, ne pas utiliser.
    *
    */

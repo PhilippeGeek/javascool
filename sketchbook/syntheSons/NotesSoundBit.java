@@ -42,7 +42,7 @@ public class NotesSoundBit extends SoundBit {
    * @param notes The note sequence.
    * @return This, allowing to use the <tt>SoundBit pml= new SoundBit().reset(..)</tt> construct.
    */
-    @Override
+  @Override
   public SoundBit reset(String notes) {
     freqs = getNotes(notes);
     tempo = getTempo(notes);
@@ -51,13 +51,13 @@ public class NotesSoundBit extends SoundBit {
     return this;
   }
   // Default sound is a piccolo
-    @Override
+  @Override
   public double get(char channel, double time) {
     return Math.sin(2 * Math.PI * time);
   }
   // Internal sound used to sample the notes
   private SoundBit sound = new SoundBit() {
-        @Override
+    @Override
     public double get(char channel, double time) {
       int i = (int) (time / tempo);
       if(i < freqs.length) {
@@ -70,12 +70,12 @@ public class NotesSoundBit extends SoundBit {
   };
   private note freqs[] = new note[0];
   private double tempo = 0.25;
-    @Override
+  @Override
   public AudioInputStream getStream() {
     return sound.getStream();
   }
-  /**/@Override
- public void setLength(double length) { throw new IllegalStateException("Cannot adjust length of buffered sound-bit of name " + getName());
+  /**/ @Override
+  public void setLength(double length) { throw new IllegalStateException("Cannot adjust length of buffered sound-bit of name " + getName());
   }
   // Gets the low-level tempo of a given note sequence.
   private static double getTempo(String notes) {

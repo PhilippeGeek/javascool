@@ -6,7 +6,6 @@ public class Functions {
   private static Panel getPane() {
     return getProgletPane();
   }
-
   /** Applique une tension en sortie.
    * @param value La tension en milli-volts entre 0 et 1023.
    */

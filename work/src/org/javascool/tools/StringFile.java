@@ -84,8 +84,7 @@ public class StringFile {
     }
     location = getResourceURL(location, false).toString();
     try {
-        if (backup && location.startsWith("file:"))
-            throw new IllegalArgumentException("Impossible de procéder à un backup pour l'URL «"+location+"»");
+      if(backup && location.startsWith("file:")) throw new IllegalArgumentException("Impossible de procéder à un backup pour l'URL «" + location + "»");
       OutputStreamWriter writer = location.startsWith("file:") ? getFileWriter(location.substring(5), backup) : getUrlWriter(location);
       for(int i = 0; i < string.length(); i++)
         writer.write(string.charAt(i));
@@ -97,7 +96,7 @@ public class StringFile {
    * @see #save(String, String)
    */
   public static void save(String location, String string) {
-   save(location, string, false);
+    save(location, string, false);
   }
   /** Met en place le writer dans le cas d'une URL. */
   private static OutputStreamWriter getUrlWriter(String location) throws IOException {
@@ -117,10 +116,10 @@ public class StringFile {
     File file = new File(location), parent = file.getParentFile();
     if((parent != null) && (!parent.isDirectory()))
       parent.mkdirs();
-    if (backup && file.exists()) {
-        File newFile = File.createTempFile(file.getName(), "", parent);   
-        newFile.delete();
-        file.renameTo(newFile);
+    if(backup && file.exists()) {
+      File newFile = File.createTempFile(file.getName(), "", parent);
+      newFile.delete();
+      file.renameTo(newFile);
     }
     return new OutputStreamWriter(new FileOutputStream(location), "UTF-8");
   }

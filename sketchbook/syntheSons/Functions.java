@@ -11,13 +11,12 @@ import static org.javascool.tools.Macros.*;
  */
 public class Functions {
   private static final long serialVersionUID = 1L;
-  // @factory 
+  // @factory
   private Functions() {}
   /** Renvoie l'instance de la proglet pour accéder à ses éléments. */
   private static Panel getPane() {
     return getProgletPane();
   }
-
   /** Definit le son à utiliser pour jouer les notes du synthétiseur.
    * <div>Utilisé à travers la construction de la forme <tt>TONE: <i>expression de la variable t</i></tt></div>
    */

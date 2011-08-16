@@ -114,7 +114,7 @@ public class SoundBit {
     /**  Reads up to byteLength from the stream into the data array of bytes, starting from offset.
      * @return The total number of bytes read into the buffer, or -1 is there is no more to read because the end of the stream has been reached.
      */
-        @Override
+    @Override
     public int read(byte[] data, int offset, int byteLength) {
       // Adjust the read size
       byteLength = offset + byteLength > data.length ? data.length - offset : byteLength;
@@ -144,29 +144,29 @@ public class SoundBit {
       return byteLength <= 0 ? -1 : byteLength;
     }
     /**  Reads bytes from the audio input stream and stores them into the buffer array. */
-        @Override
+    @Override
     public int read(byte[] data) {
       return read(data, 0, data.length);
     }
     /**  Returns the number of bytes that can be read (or skipped over) from this stream. */
-        @Override
+    @Override
     public int available() {
       return (int) (frameSize * (frameLength - framePos));
     }
     /**  Repositions this stream to the initial position or the position at the time the mark method was last called on this stream. */
-        @Override
+    @Override
     public void reset() {
       if(framePos > frameLimit) throw new IllegalStateException("Mark limit exceeded");
       framePos = frameMark;
     }
     /** Marks the current position in this input stream, byteLimit, if positive, being the maximum limit of bytes that can be read before the mark becomes invalid. */
-        @Override
+    @Override
     public void mark(int byteLimit) {
       frameMark = framePos;
       frameLimit = byteLimit > 0 ? framePos + byteLimit / frameSize : frameLength;
     }
     /** Returns true because the mark and reset methods are supported. */
-        @Override
+    @Override
     public boolean markSupported() {
       return true;
     }
@@ -177,22 +177,22 @@ public class SoundBit {
         framePos = frameLength;
     }
     /** Forbidden method: do not use (since frames have not one byte size). */
-        @Override
+    @Override
     public int read() { throw new IllegalStateException("SoundBit has no one byte frame size, operation forbidden");
     }
     /** Returns a string representation of this stream, for debugging purpose. */
-        @Override
+    @Override
     public String toString() {
       return "[" + super.toString() + " length = " + (frameLength / SAMPLING) + "s pos = " + framePos + " < " + frameLength + " mark = " + frameMark + " < " + frameLimit + "]";
     }
     /** Closes this audio input stream. */
-        @Override
+    @Override
     public void close() {}
     private long frameMark = 0, frameLimit = Long.MAX_VALUE / FRAME_SIZE;
   }
 
   /** Returns a string representation of this stream, for debugging purpose. */
-    @Override
+  @Override
   public String toString() {
     return "SoundBit \"" + getName() + "\" : " + getStream();
   }
@@ -234,7 +234,7 @@ public class SoundBit {
     } catch(LineUnavailableException e) { throw new RuntimeException(e.toString());
     }
   }
-  /**/public void play() {
+  /**/ public void play() {
     play(0);
   }
   /** Called at each sampling during a play.
@@ -252,20 +252,19 @@ public class SoundBit {
      */
     public DataSoundBit(String name, double[] left, double[] right) {
       if(left == null) throw new IllegalArgumentException("Undefined left channel data");
-      if((right != null) && (left.length != right.length))
-        throw new IllegalArgumentException("Left and right channel length differs: " + left.length + " != " + right.length);
+      if((right != null) && (left.length != right.length)) throw new IllegalArgumentException("Left and right channel length differs: " + left.length + " != " + right.length);
       this.left = left;
       this.right = right == null ? left : right;
       this.name = name;
       length = left.length / SAMPLING;
     }
-        @Override
+    @Override
     public double get(char channel, long index) {
       return (index < 0 || index >= left.length) ? 0 : channel == 'r' ? right[(int) index] : left[(int) index];
     }
     private double left[], right[];
-    /**/@Override
-public void setLength(double length) { throw new IllegalStateException("Cannot adjust length of buffered sound-bit of name " + getName());
+    /**/ @Override
+    public void setLength(double length) { throw new IllegalStateException("Cannot adjust length of buffered sound-bit of name " + getName());
     }
   }
 

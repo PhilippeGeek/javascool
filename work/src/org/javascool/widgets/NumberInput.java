@@ -83,7 +83,7 @@ public class NumberInput extends JPanel {
   public final NumberInput setText(String name) {
     setBorder(BorderFactory.createTitledBorder(name));
     return this;
-  } 
+  }
   /** Définit le nom et les paramètres de la valeur numérique.
    * @param min Valeur minimale à entrer. 0 par défaut.
    * @param max Valeur maximale à entrer. 100 par défaut.
@@ -100,8 +100,8 @@ public class NumberInput extends JPanel {
    * @see #resetScale(double, double, double)
    */
   public final NumberInput setScale() {
-      return setScale(0, 100, 1);
-  }  
+    return setScale(0, 100, 1);
+  }
   /** Renvoie la valeur numérique. */
   public double getValue() {
     return value;

@@ -29,7 +29,7 @@ import org.javascool.tools.Macros;
 class GogleMapPanel extends JPanel implements ActionListener {
   private static final long serialVersionUID = 1L;
 
-  Map < String, List < String >> arcs;
+  Map<String, List<String> > arcs;
   Map<String, Double> latitudes;
   Map<String, Double> longitudes;
   private Image ici_bleu;
@@ -140,7 +140,6 @@ class GogleMapPanel extends JPanel implements ActionListener {
   static double square(double x) {
     return x * x;
   }
-
   int distanceEuclidienne(double longitude1, double latitude1, double longitude2, double latitude2) {
     double longitude = (longitude1 - longitude2) * Math.PI / 180;
     double aux = Math.cos(latitude1 * Math.PI / 180) * Math.cos(latitude2 * Math.PI / 180) * Math.cos(longitude);
@@ -152,7 +151,7 @@ class GogleMapPanel extends JPanel implements ActionListener {
     longitudes.put(ville, _longitude);
   }
   private class ParcoursEnLargeur extends SwingWorker<Void, Void>{
-        @Override
+    @Override
     protected Void doInBackground() {
       me.clearMap();
       GogleMapParcours.afficheToutesRoutesDirectes(me);
@@ -164,7 +163,7 @@ class GogleMapPanel extends JPanel implements ActionListener {
   }
 
   private class ParcoursEnProfondeur extends SwingWorker<Void, Void>{
-        @Override
+    @Override
     protected Void doInBackground() {
       me.clearMap();
       GogleMapParcours.afficheToutesRoutesDirectes(me);
@@ -175,7 +174,7 @@ class GogleMapPanel extends JPanel implements ActionListener {
     }
   }
 
-    @Override
+  @Override
   public void actionPerformed(ActionEvent e) {
     String action = e.getActionCommand();
     if(action.equals(buttonBFSString)) {
@@ -267,7 +266,7 @@ class GogleMapPanel extends JPanel implements ActionListener {
     ajoute(51, "La Rochelle", 46.238448, -1.157089);
     ajoute(52, "Poitiers", 46.627314, 0.315269);
 
-    arcs = new HashMap < String, List < String >> ();
+    arcs = new HashMap<String, List<String> >();
     for(String ville : latitudes.keySet())
       arcs.put(ville, new ArrayList<String>());
     ajouteArc("Brest", "Lorient");
@@ -364,7 +363,7 @@ class GogleMapPanel extends JPanel implements ActionListener {
     CartePanel() {
       setPreferredSize(new Dimension(640, 640));
     }
-        @Override
+    @Override
     protected void paintComponent(Graphics g) {
       super.paintComponent(g);
       g.drawImage(france, 0, 0, null);
@@ -396,7 +395,7 @@ class PointAAfficher implements Comparable {
     y = _y;
     idx = _idx;
   }
-    @Override
+  @Override
   public int compareTo(Object o) {
     PointAAfficher p = (PointAAfficher) o;
     int cmp1 = (int) Math.round(1000 * (p.x - x));

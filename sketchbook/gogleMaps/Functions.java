@@ -11,7 +11,6 @@ import java.util.List;
 import javax.swing.SwingUtilities;
 import org.javascool.tools.Macros;
 
-
 /** Définit les fonctions de la proglet d'expérimenter avec des signaux sonores.
  *
  * @see <a href="Functions.java.html">code source</a>
@@ -19,14 +18,13 @@ import org.javascool.tools.Macros;
  */
 public class Functions {
   private static final long serialVersionUID = 1L;
-  // @factory 
+  // @factory
   private Functions() {}
   /** Renvoie l'instance de la proglet pour accéder à ses éléments. */
   private static Panel getPane() {
     return Macros.getProgletPane();
   }
-
-  public enum IntensiteRoute { 
+  public enum IntensiteRoute {
     LEGER(1), MOYEN(2), FORT(3);
     private int value;
     IntensiteRoute(int i) {
@@ -59,14 +57,14 @@ public class Functions {
   }
   public static Map<String, Double> latitudes;
   public static Map<String, Double> longitudes;
-  public static Map < String, List < String >> voisins;
+  public static Map<String, List<String> > voisins;
 
   public static List<String> plusCourtCheminGogleMap(String depart, String arrivee) {
     return GogleMapCalculChemins.plusCourtChemin(getPane().main, depart, arrivee);
   }
   public static void parcoursEnLargeur(final String depart) {
     SwingUtilities.invokeLater(new Runnable() {
-            @Override
+                                 @Override
                                  public void run() {
                                    getPane().main.clearMap();
                                    GogleMapParcours.afficheToutesRoutesDirectes(getPane().main);

@@ -10,7 +10,7 @@ import org.javascool.widgets.NumberInput;
 import org.javascool.tools.Macros;
 
 public class Panel extends JPanel {
-    //@bean
+  // @bean
   public Panel() {
     super(new BorderLayout());
     setPreferredSize(new Dimension(560, 450));
@@ -36,7 +36,7 @@ public class Panel extends JPanel {
     border.setPreferredSize(new Dimension(560, 190));
     add(border, BorderLayout.SOUTH);
   }
-    /** Tension inconnue d'entrée. */
+  /** Tension inconnue d'entrée. */
   public NumberInput value;
   /** Etiquette du comparateur et de la sortie. */
   public JLabel out, cmp;

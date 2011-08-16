@@ -12,42 +12,42 @@ import static org.javascool.proglets.syntheSons.Functions.*;
  */
 public class Panel extends SoundBitPanel {
   private static final long serialVersionUID = 1L;
-    public SoundBit sound = new NotesSoundBit() {
-        @Override
-      public double get(char channel, double time) {
-        return Functions.tone == null ? Math.sin(2 * Math.PI * time) : Functions.tone.get(channel, time);
-      }
-    };  
-  // @bean
-    public Panel() {
-      reset(sound, 'l');
-      sound.reset("16 A");
+  public SoundBit sound = new NotesSoundBit() {
+    @Override
+    public double get(char channel, double time) {
+      return Functions.tone == null ? Math.sin(2 * Math.PI * time) : Functions.tone.get(channel, time);
     }
+  };
+  // @bean
+  public Panel() {
+    reset(sound, 'l');
+    sound.reset("16 A");
+  }
   /** Démo de la proglet. */
   public void start() {
     test(new SoundBit() {
-            @Override
+           @Override
            public double get(char c, double t) {
              return sns(t);
            }
          }
          );
     test(new SoundBit() {
-            @Override
+           @Override
            public double get(char c, double t) {
              return 0.5 * sqr(t);
            }
          }
          );
     test(new SoundBit() {
-            @Override
+           @Override
            public double get(char c, double t) {
              return 0.8 * tri(t) + 0.2 * noi(t);
            }
          }
          );
     test(new SoundBit() {
-            @Override
+           @Override
            public double get(char c, double t) {
              return 0.3 * sqr(t / 2) * sns(t) + 0.3 * sns(2 * t) + 0.3 * tri(3 * t);
            }

@@ -19,45 +19,45 @@ public interface PaintBrushManipImage {
 
   // Pot de peinture : remplir tous les pixels voisins de (x,y) et ayant la même couleur avec la couleur spécifiée
   public void remplir(int x, int y, int nouvelle_couleur);
-  
+
   // Rotation de 90° vers la gauche de l'image
   public void rotationGauche();
 }
 
 class ManipImageVide implements PaintBrushManipImage {
   // Affiche un point de coordonnées (x,y)
-    @Override
+  @Override
   public void affichePoint(int x, int y, int couleur) {}
 
   // Supprime les points sur une zone carr de largeur 3 pixels et centrée en (x,y)
-    @Override
+  @Override
   public void supprimePoint(int x, int y) {}
 
   // Trace une ligne de diagonale (x0,y0) -- (x1,y1)
-    @Override
+  @Override
   public void afficheLigne(int x0, int y0, int x1, int y1, int couleur) {}
 
   // Trace un rectangle de diagonale (x1,y1) -- (x2,y2)
-    @Override
+  @Override
   public void afficheRectangle(int x1, int y1, int x2, int y2, int couleur) {}
 
   // Pot de peinture : remplir tous les pixels voisins de (x,y) et ayant la même couleur avec la couleur spécifiée
-    @Override
+  @Override
   public void remplir(int x, int y, int nouvelle_couleur) {}
-  
-    @Override
+
+  @Override
   public void rotationGauche() {}
 }
 
 class ManipImageFinal implements PaintBrushManipImage {
   // affiche un point de coordonnes  (x,y)
-    @Override
+  @Override
   public void affichePoint(int x, int y, int couleur) {
     // System.out.println("affichePoint(image,"+x+","+y+")");
     Functions.setPixel(x, y, couleur);
   }
   // supprime les points sur une zone carre de largeur 3 pixels et centre en (x,y)
-    @Override
+  @Override
   public void supprimePoint(int x, int y) {
     // System.out.println("supprimePoint(image,"+x+","+y+")");
     for(int i = x - 1; i <= x + 1 && i < PaintBrushImage.maxX(); i++)
@@ -66,7 +66,7 @@ class ManipImageFinal implements PaintBrushManipImage {
           Functions.setPixel(i, j, 15);
   }
   // trace une ligne de diagonale (x0,y0) -- (x1,y1)
-    @Override
+  @Override
   public void afficheLigne(int x0, int y0, int x1, int y1, int couleur) {
     int dx = Math.abs(x1 - x0);
     int dy = Math.abs(y1 - y0);
@@ -89,7 +89,7 @@ class ManipImageFinal implements PaintBrushManipImage {
     }
   }
   // trace un rectangle de diagonale (x1,y1) -- (x2,y2)
-    @Override
+  @Override
   public void afficheRectangle(int x1, int y1, int x2, int y2, int couleur) {
     // System.out.println("afficheRectangle(image,"+x1+","+y1+","+x2+","+y2+")");
     int xmin = Math.min(x1, x2);
@@ -119,34 +119,31 @@ class ManipImageFinal implements PaintBrushManipImage {
     }
   }
   // pot de peinture : remplir tous les pixels voisins de (x,y) et ayant la mme couleur avec la couleur 128
-    @Override
+  @Override
   public void remplir(int x, int y, int nouvelle_couleur) {
     // System.out.println("remplir(image,"+x+","+y+")");
     int ancienne_couleur = Functions.getPixel(x, y);
     if(ancienne_couleur != nouvelle_couleur)
       remplir_aux(x, y, ancienne_couleur, nouvelle_couleur);
   }
-  
-    @Override
+  @Override
   public void rotationGauche() {
-	  for (int i=0; i<16; i++)
-		  for (int j=0; j<16; j++) {
-			  	int temp = Functions.getPixel(i, j);
-			  	Functions.setPixel(i, j, Functions.getPixel(j,31-i));
-			  	Functions.setPixel(j, 31-i, Functions.getPixel(31-i,31-j));
-			  	Functions.setPixel(31-i, 31-j, Functions.getPixel(31-j,i));
-			  	Functions.setPixel(31-j, i, temp);
-		  }	  
+    for(int i = 0; i < 16; i++)
+      for(int j = 0; j < 16; j++) {
+        int temp = Functions.getPixel(i, j);
+        Functions.setPixel(i, j, Functions.getPixel(j, 31 - i));
+        Functions.setPixel(j, 31 - i, Functions.getPixel(31 - i, 31 - j));
+        Functions.setPixel(31 - i, 31 - j, Functions.getPixel(31 - j, i));
+        Functions.setPixel(31 - j, i, temp);
+      }
   }
-
   public void rotationGauche2() {
-	  int[][] temp = new int[32][32];
-	  for (int i=0; i<32; i++)
-		  for (int j=0; j<32; j++)
-			  	temp[i][j] = Functions.getPixel(i, j);
-	  for (int i=0; i<32; i++)
-		  for (int j=0; j<32; j++)
-			  	Functions.setPixel(i, j, temp[j][31-i]);
-	  
+    int[][] temp = new int[32][32];
+    for(int i = 0; i < 32; i++)
+      for(int j = 0; j < 32; j++)
+        temp[i][j] = Functions.getPixel(i, j);
+    for(int i = 0; i < 32; i++)
+      for(int j = 0; j < 32; j++)
+        Functions.setPixel(i, j, temp[j][31 - i]);
   }
 }
