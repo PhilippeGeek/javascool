@@ -16,8 +16,6 @@ import java.io.File;
 import org.javascool.tools.StringFile;
 import org.javascool.tools.Pml;
 
-import java.lang.reflect.InvocationTargetException;
-
 /** Définit les mécanismes de compilation, exécution, gestion de proglet.
  *
  * @see <a href="ProgletEngine.java.html">code source</a>
@@ -42,7 +40,7 @@ public class ProgletEngine {
     // Détection des proglets présentes dans le jar
     {
       proglets = new ArrayList<Proglet>();
-      String javascoolJar = Macros.getResourceURL("org/javascool/core/Engine.class").toString().replaceFirst("jar:([^!]*)!.*", "$1");
+      String javascoolJar = Macros.getResourceURL("org/javascool/core/ProgletEngine.class").toString().replaceFirst("jar:([^!]*)!.*", "$1");
       for(String dir : StringFile.list(javascoolJar, "org.javascool.proglets.[^\\.]+"))
         proglets.add(new Proglet().load(dir.replaceFirst("jar:[^!]*!", "")));
     }
@@ -124,14 +122,14 @@ public class ProgletEngine {
    */
   public Proglet setProglet(String proglet) {
     if(currentProglet != null)
-      currentProglet.invoke("destroy");
+      currentProglet.invoke("destroy", true);
     if(currentProglet != null&& currentProglet.getPane() instanceof Applet)
       ((Applet) currentProglet.getPane()).destroy();
     for(Proglet p : getProglets())
       if(p.getName().equals(proglet))
         currentProglet = p;
     if(currentProglet != null)
-      currentProglet.invoke("init");
+      currentProglet.invoke("init", true);
     return currentProglet;
   }
   /** Renvoie la proglet courante.
@@ -227,11 +225,12 @@ public class ProgletEngine {
     }
     /** Invoke une des méthodes de la proglet.
      * @param La méthode sans argument à invoquer : <tt>init</tt>, <tt>destroy</tt>, <tt>start</tt>, <tt>stop</tt>.
+     * @paran run Si true appelle la méthode, si false teste simplement son existence.
      * @return La valeur true si la méthode est invocable, false sinon.
      * @throws RuntimeException si la méthode génère une exception lors de son appel.
      */
-    public boolean invoke(String method) {
-      return org.javascool.widgets.PanelApplet.invoke(getPane(), method);
+    public boolean invoke(String method, boolean run) {
+      return org.javascool.widgets.PanelApplet.invoke(getPane(), method, run);
     }
   }
 }

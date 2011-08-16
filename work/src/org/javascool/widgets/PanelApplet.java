@@ -12,6 +12,7 @@ import java.awt.Component;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -69,9 +70,11 @@ public class PanelApplet extends JApplet {
     }
     if(manualStart) {
       getContentPane().add(new StartStopButton() {
+                @Override
                              public void start() {
                                invoke(pane, "start");
                              }
+                @Override
                              public void stop() {
                                invoke(pane, "stop");
                              }
@@ -96,17 +99,26 @@ public class PanelApplet extends JApplet {
   /** Invoke une méthode sans argument sur un objet.
    * @param object L'objet sur lequel on invoque la méthode.
    * @param La méthode sans argument à invoquer, souvent : <tt>init</tt>, <tt>destroy</tt>, <tt>start</tt>, <tt>stop</tt> ou <tt>run</tt>.
+   * @paran run Si true (par défaut) appelle la méthode, si false teste simplement son existence.
    * @return La valeur true si la méthode est invocable, false sinon.
    * @throws RuntimeException si la méthode génère une exception lors de son appel.
    */
-  public static boolean invoke(Object object, String method) {
+  public static boolean invoke(Object object, String method, boolean run) {
     try {
-      object.getClass().getDeclaredMethod(method).invoke(object);
+      Method m = object.getClass().getDeclaredMethod(method);
+      if (run) 
+         m.invoke(object);
     } catch(InvocationTargetException e) { throw new RuntimeException(e.getCause());
     } catch(Throwable e) {
       return false;
     }
     return true;
+  }
+  /**
+   * @see #invoke(Object, String, boolean)
+   */
+  public static boolean invoke(Object object, String method) {
+      return invoke(object, method, true);
   }
   /** Définit une fenêtre principale pour lancer une application. */
   public static class Frame extends JFrame {
