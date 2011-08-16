@@ -8,33 +8,24 @@ package org.javascool.proglets.gogleMaps;
 import java.util.Map;
 import java.util.List;
 
-import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import org.javascool.tools.Macros;
 
 
-/** Définit une proglet javascool qui permet de tracer des chemins sur une carte de France.
+/** Définit les fonctions de la proglet d'expérimenter avec des signaux sonores.
  *
- * @see <a href="GogleMap.java.html">code source</a>
+ * @see <a href="Functions.java.html">code source</a>
  * @serial exclude
  */
-public class GogleMap extends JPanel {
-  private GogleMap() {}
+public class Functions {
   private static final long serialVersionUID = 1L;
-  // This defines the panel to display
-  private static class Panel extends JPanel {
-    private static final long serialVersionUID = 1L;
-    public Panel() {
-      add(main = new GogleMapPanel());
-      voisins = main.arcs;
-      latitudes = main.latitudes;
-      longitudes = main.longitudes;
-    }
-    private GogleMapPanel main;
+  // @factory 
+  private Functions() {}
+  /** Renvoie l'instance de la proglet pour accéder à ses éléments. */
+  private static Panel getPane() {
+    return Macros.getProgletPane();
   }
 
-  //
-  // This defines the javascool interface
-  //
   public enum IntensiteRoute { 
     LEGER(1), MOYEN(2), FORT(3);
     private int value;
@@ -48,49 +39,40 @@ public class GogleMap extends JPanel {
   public final static IntensiteRoute FORT = IntensiteRoute.FORT;
 
   public static void affichePointSurCarte(double longitude, double latitude, int idx) {
-    panel.main.affichePoint(longitude, latitude, idx);
+    getPane().main.affichePoint(longitude, latitude, idx);
   };
 
   public static void affichePointSurCarte(double longitude, double latitude) {
-    panel.main.affichePoint(longitude, latitude);
+    getPane().main.affichePoint(longitude, latitude);
   }
   public static void afficheRouteSurCarte(double longitude1, double latitude1, double longitude2, double latitude2, IntensiteRoute intensite) {
-    panel.main.afficheRoute(longitude1, latitude1, longitude2, latitude2, intensite.value);
+    getPane().main.afficheRoute(longitude1, latitude1, longitude2, latitude2, intensite.value);
   }
   public static void afficheRouteSurCarte(double longitude1, double latitude1, double longitude2, double latitude2) {
-    panel.main.afficheRoute(longitude1, latitude1, longitude2, latitude2);
+    getPane().main.afficheRoute(longitude1, latitude1, longitude2, latitude2);
   }
   public static int distanceEuclidienne(double longitude1, double latitude1, double longitude2, double latitude2) {
-    return panel.main.distanceEuclidienne(longitude1, latitude1, longitude2, latitude2);
+    return getPane().main.distanceEuclidienne(longitude1, latitude1, longitude2, latitude2);
   }
   public static void effaceCarte() {
-    panel.main.clearMap();
+    getPane().main.clearMap();
   }
   public static Map<String, Double> latitudes;
   public static Map<String, Double> longitudes;
   public static Map < String, List < String >> voisins;
 
   public static List<String> plusCourtCheminGogleMap(String depart, String arrivee) {
-    return GogleMapCalculChemins.plusCourtChemin(panel.main, depart, arrivee);
+    return GogleMapCalculChemins.plusCourtChemin(getPane().main, depart, arrivee);
   }
   public static void parcoursEnLargeur(final String depart) {
     SwingUtilities.invokeLater(new Runnable() {
             @Override
                                  public void run() {
-                                   panel.main.clearMap();
-                                   GogleMapParcours.afficheToutesRoutesDirectes(panel.main);
-                                   GogleMapParcours.parcoursLargeur(panel.main, depart);
+                                   getPane().main.clearMap();
+                                   GogleMapParcours.afficheToutesRoutesDirectes(getPane().main);
+                                   GogleMapParcours.parcoursLargeur(getPane().main, depart);
                                  }
                                }
                                );
   }
-  //
-  // This defines the tests on the panel
-  //
-  public static void test() {
-    //    Console.println("Pour la démo . . utiliser les boutons \"Parcours en profondeur\" +  \"Parcours en largeur\" !");
-  }
-  /** Définition de l'interface graphique de la proglet. */
-  public static final Panel panel = new Panel();
 }
-

@@ -54,7 +54,7 @@ class ManipImageFinal implements PaintBrushManipImage {
     @Override
   public void affichePoint(int x, int y, int couleur) {
     // System.out.println("affichePoint(image,"+x+","+y+")");
-    PaintBrush.setPixel(x, y, couleur);
+    Functions.setPixel(x, y, couleur);
   }
   // supprime les points sur une zone carre de largeur 3 pixels et centre en (x,y)
     @Override
@@ -63,7 +63,7 @@ class ManipImageFinal implements PaintBrushManipImage {
     for(int i = x - 1; i <= x + 1 && i < PaintBrushImage.maxX(); i++)
       for(int j = y - 1; j <= y + 1 && j < PaintBrushImage.maxY(); j++)
         if((i >= 0) && (j >= 0))
-          PaintBrush.setPixel(i, j, 15);
+          Functions.setPixel(i, j, 15);
   }
   // trace une ligne de diagonale (x0,y0) -- (x1,y1)
     @Override
@@ -74,7 +74,7 @@ class ManipImageFinal implements PaintBrushManipImage {
     int sy = (y0 < y1) ? 1 : -1;
     int err = dx - dy;
     while(true) {
-      PaintBrush.setPixel(x0, y0, couleur);
+      Functions.setPixel(x0, y0, couleur);
       if((x0 == x1) && (y0 == y1))
         return;
       int e2 = 2 * err;
@@ -97,17 +97,17 @@ class ManipImageFinal implements PaintBrushManipImage {
     int ymin = Math.min(y1, y2);
     int ymax = Math.max(y1, y2);
     for(int i = xmin; i <= xmax; i++) {
-      PaintBrush.setPixel(i, ymin, couleur);
-      PaintBrush.setPixel(i, ymax, couleur);
+      Functions.setPixel(i, ymin, couleur);
+      Functions.setPixel(i, ymax, couleur);
     }
     for(int j = ymin + 1; j < ymax; j++) {
-      PaintBrush.setPixel(xmin, j, couleur);
-      PaintBrush.setPixel(xmax, j, couleur);
+      Functions.setPixel(xmin, j, couleur);
+      Functions.setPixel(xmax, j, couleur);
     }
   }
   public void remplir_aux(int x, int y, int ancienne_couleur, int nouvelle_couleur) {
-    if(PaintBrush.getPixel(x, y) == ancienne_couleur) {
-      PaintBrush.setPixel(x, y, nouvelle_couleur);
+    if(Functions.getPixel(x, y) == ancienne_couleur) {
+      Functions.setPixel(x, y, nouvelle_couleur);
       if(x > 0)
         remplir_aux(x - 1, y, ancienne_couleur, nouvelle_couleur);
       if(y > 0)
@@ -122,7 +122,7 @@ class ManipImageFinal implements PaintBrushManipImage {
     @Override
   public void remplir(int x, int y, int nouvelle_couleur) {
     // System.out.println("remplir(image,"+x+","+y+")");
-    int ancienne_couleur = PaintBrush.getPixel(x, y);
+    int ancienne_couleur = Functions.getPixel(x, y);
     if(ancienne_couleur != nouvelle_couleur)
       remplir_aux(x, y, ancienne_couleur, nouvelle_couleur);
   }
@@ -131,11 +131,11 @@ class ManipImageFinal implements PaintBrushManipImage {
   public void rotationGauche() {
 	  for (int i=0; i<16; i++)
 		  for (int j=0; j<16; j++) {
-			  	int temp = PaintBrush.getPixel(i, j);
-			  	PaintBrush.setPixel(i, j, PaintBrush.getPixel(j,31-i));
-			  	PaintBrush.setPixel(j, 31-i, PaintBrush.getPixel(31-i,31-j));
-			  	PaintBrush.setPixel(31-i, 31-j, PaintBrush.getPixel(31-j,i));
-			  	PaintBrush.setPixel(31-j, i, temp);
+			  	int temp = Functions.getPixel(i, j);
+			  	Functions.setPixel(i, j, Functions.getPixel(j,31-i));
+			  	Functions.setPixel(j, 31-i, Functions.getPixel(31-i,31-j));
+			  	Functions.setPixel(31-i, 31-j, Functions.getPixel(31-j,i));
+			  	Functions.setPixel(31-j, i, temp);
 		  }	  
   }
 
@@ -143,10 +143,10 @@ class ManipImageFinal implements PaintBrushManipImage {
 	  int[][] temp = new int[32][32];
 	  for (int i=0; i<32; i++)
 		  for (int j=0; j<32; j++)
-			  	temp[i][j] = PaintBrush.getPixel(i, j);
+			  	temp[i][j] = Functions.getPixel(i, j);
 	  for (int i=0; i<32; i++)
 		  for (int j=0; j<32; j++)
-			  	PaintBrush.setPixel(i, j, temp[j][31-i]);
+			  	Functions.setPixel(i, j, temp[j][31-i]);
 	  
   }
 }
