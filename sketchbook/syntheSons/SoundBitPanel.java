@@ -5,14 +5,11 @@
 package org.javascool.proglets.syntheSons;
 
 // Used to define an audio stream
-import org.javascool.SoundBit;
 import javax.sound.sampled.AudioInputStream;
 import java.io.IOException;
 
 // Used to show a curve
-import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JLabel;
 import java.awt.Graphics;
 import java.awt.Color;
 import java.awt.Font;
@@ -64,7 +61,10 @@ public class SoundBitPanel extends JPanel {
   }
   int hsize = 16 * 31, vsize = 160, b = 0, m = 20, width = 2 * m + hsize, height = b + 4 * m + 3 * vsize, height2 = b + 2 * m + 2 * vsize;
   double f0 = 440.0 / 16, f1 = 440.0 * 16;
-  /** Internal routine: do not use. */
+  /** Routine interne de tracé, ne pas utiliser.
+   *
+   */
+  @Override
   public void paint(Graphics g) {
     super.paint(g);
     // Backgrounds and axis

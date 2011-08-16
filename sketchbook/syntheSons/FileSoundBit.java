@@ -4,17 +4,13 @@
 
 package org.javascool.proglets.syntheSons;
 
-import org.javascool.SoundBit;
-
 // Used to define an audio stream file
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import java.io.IOException;
 
 // Used to read an audio file
-import java.net.URL;
 import javax.sound.sampled.UnsupportedAudioFileException;
-import org.javascool.Utils;
 
 // Used to dump midi sounds
 import javax.sound.midi.MidiSystem;
@@ -23,6 +19,7 @@ import javax.sound.midi.Soundbank;
 import javax.sound.midi.SoundbankResource;
 
 import java.util.HashMap;
+import org.javascool.tools.Macros;
 
 /** Defines a data-file sound-bit wrapper.
  * @see <a href="FileSoundBit.java.html">code source</a>
@@ -36,17 +33,18 @@ public class FileSoundBit extends SoundBit {
    *
    * @return This, allowing to use the <tt>SoundBit pml= new SoundBit().reset(..)</tt> construct.
    */
+    @Override
   public SoundBit reset(String location) {
     AudioInputStream stream;
     if(location.startsWith("midi:")) {
       getMidiNames();
-      String name = location.substring(5);
-      if(midis.containsKey(name))
-        stream = midis.get(name);
-      else throw new RuntimeException("undefined midi sound " + name);
+      String midiName = location.substring(5);
+      if(midis.containsKey(midiName))
+        stream = midis.get(midiName);
+      else throw new RuntimeException("undefined midi sound " + midiName);
     } else {
       try {
-        stream = AudioSystem.getAudioInputStream(Utils.toUrl(location));
+        stream = AudioSystem.getAudioInputStream(Macros.getResourceURL(location));
       } catch(UnsupportedAudioFileException e) { throw new RuntimeException(e);
       } catch(IOException e) { throw new RuntimeException(e);
       }
@@ -56,7 +54,7 @@ public class FileSoundBit extends SoundBit {
     s = stream.getFormat().getFrameSize();
     buffer = new byte[(int) stream.getFrameLength() * stream.getFormat().getFrameSize()];
     try {
-      for(int offset = 0, length; (length = stream.read(buffer, offset, buffer.length - offset)) != -1; offset += length) {}
+      for(int offset = 0, size; (size = stream.read(buffer, offset, buffer.length - offset)) != -1; offset += size) {}
       stream.close();
     } catch(IOException e) { throw new RuntimeException(e);
     }
@@ -64,6 +62,7 @@ public class FileSoundBit extends SoundBit {
     length = stream.getFrameLength() / SAMPLING;
     return this;
   }
+    @Override
   public double get(char channel, long index) {
     int i = (int) index * s + (c == 1 || channel == 'l' ? 0 : 2);
     if((buffer == null) || (i < 0) || (i >= buffer.length))
@@ -71,12 +70,14 @@ public class FileSoundBit extends SoundBit {
     int h = buffer[i + 1], l = buffer[i], v = ((128 + h) << 8) | (128 + l);
     return 1 * (v / 32767.0 - 1);
   }
+    @Override
   public double get(char channel, double time) {
     return get(channel, (long) (SAMPLING * time));
   }
   private int c, s;
   private byte[] buffer;
-  /**/ public void setLength(double length) { throw new IllegalStateException("Cannot adjust length of buffered sound-bit of name " + getName());
+  /**/@Override
+ public void setLength(double length) { throw new IllegalStateException("Cannot adjust length of buffered sound-bit of name " + getName());
   }
   /** Gets available midi sound names.
    * @return Available midi sound name. Usually "bass2", "bass_drum", "bass", "brass_section", "clarinet", "closed_hi-hat", "crash_cymbal", "distorted_guitar", "epiano", "flute", "grand_piano", "guitar_noise", "guitar", "horn", "melodic_toms", "oboe", "och_strings", "open_hi-hat", "organ", "piano_hammer", "reverse_cymbal", "sax", "side_stick", "snare_drum", "strings", "timpani", "tom", "trombone", "trumpet".
@@ -110,6 +111,7 @@ public class FileSoundBit extends SoundBit {
   public static void play(String location) {
     play_location = location;
     new Thread(new Runnable() {
+            @Override
                  public void run() {
                    new FileSoundBit().reset(play_location).play();
                  }

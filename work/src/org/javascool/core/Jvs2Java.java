@@ -67,15 +67,6 @@ public class Jvs2Java extends Translator {
       }
       // Imports proglet's static methods
       head.append("import static java.lang.Math.*;");
-      // head.append("import java.util.List;");
-      // head.append("import java.util.ArrayList;");
-      // head.append("import java.util.Map;");
-      // head.append("import java.io.*;");
-      // head.append("import java.net.*;");
-      // head.append("import java.util.*;");
-      // head.append("import org.javascool.*;");
-      // head.append("import org.javascool.gui.*;");
-      // head.append("import java.util.logging.*;");
       head.append("import static org.javascool.tools.Macros.*;");
       if(progletPackageName != null)
         head.append("import static ").append(progletPackageName).append(".Functions.*;");
@@ -107,9 +98,6 @@ public class Jvs2Java extends Translator {
     line = line.replaceAll("\\(int\\)", "(Integer)");
     line = line.replaceAll("\\(double\\)", "(Double)");
     line = line.replaceAll("([A-Za-z0-9_\\-]+)::([A-Za-z0-9_\\-]+)", "org.javascool.proglets.$1.Functions.$2");
-    // Translates the Synthe proglet @tone macro
-    line = line.replaceFirst("@tone:(.*)\\s*;",
-                             "proglet.synthesons.SoundDisplay.tone = new org.javascool.SoundBit() { public double get(char c, double t) { return $1; } }; proglet.synthesons.SoundDisplay.syntheSet(\"16 a\");");
     return "    " + line;
   }
   /** Renvoie le nom de la dernière classe Java générée lors de la traductions. */

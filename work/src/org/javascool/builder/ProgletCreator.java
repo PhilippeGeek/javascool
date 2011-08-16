@@ -37,6 +37,7 @@ public class ProgletCreator {
     StringFile.save(location + File.separator + "help.xml", helpPattern.replaceAll("@name", name), true);
     StringFile.save(location + File.separator + "Panel.java", panelPattern.replaceAll("@name", name), true);
     StringFile.save(location + File.separator + "Functions.java", functionsPattern.replaceAll("@name", name), true);
+    StringFile.save(location + File.separator + "Translator.java", translatorPattern.replaceAll("@name", name), true);
   }
   private static final String helpPattern = 
     "<div title=\"La «proglet» @name\">\n"+
@@ -65,7 +66,7 @@ public class ProgletCreator {
     "import static org.javascool.proglets.@name.Functions.*;\n"+
     "import javax.swing.JPanel;\n"+
     "\n"+
-    "/** Définit le panneau graphique de la proglet «@name».\n"+
+    "/** Définit le panneau graphique de la proglet «@name» (A DÉTRUIRE SI NON UTILISÉ).\n"+
     " *\n"+
     " * @see <a href=\"Panel.java.html\">code source</a>\n"+
     " * @serial exclude\n"+
@@ -87,7 +88,7 @@ public class ProgletCreator {
     "package org.javascool.proglets.@name;\n"+
     "import static org.javascool.tools.Macros.*;\n"+
     "\n"+
-    "/** Définit les fonctions pour manipuler la proglet «@name».\n"+
+    "/** Définit les fonctions pour manipuler la proglet «@name» (A DÉTRUIRE SI NON UTILISÉ).\n"+
     " *\n"+
     " * @see <a href=\"Functions.java.html\">code source</a>\n"+
     " * @serial exclude\n"+
@@ -105,5 +106,20 @@ public class ProgletCreator {
     "\n"+
     "  //@todo Définir ici les fonctions <tt>public static</tt>\n"+
     "\n"+
+    "}\n";
+
+  private static final String translatorPattern = 
+    "package org.javascool.proglets.@name;\n" + 
+    "\n" + 
+    "/** Définit la traduction d'un code Jvs en code Java  pour manipuler la proglet «@name» (A DÉTRUIRE SI NON UTILISÉ). */\n" + 
+    "public class Translator extends org.javascool.core.Translator {\n" + 
+    "    @Override\n" + 
+    "     public String getImports() {\n" + 
+    "    return \"\";\n" + 
+    "  }\n" + 
+    "    @Override\n" + 
+    "  public String translate(String code) {\n" + 
+    "    return code;\n" + 
+    "  }\n" + 
     "}\n";
 }
