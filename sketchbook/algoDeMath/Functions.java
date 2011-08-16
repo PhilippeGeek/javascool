@@ -6,12 +6,11 @@ public class Functions {
   private static Panel getPane() {
     return getProgletPane();
   }
-
   /** Initialise le tracé.
    * @param Xscale Echelle maximale horizontale, l'abscisse sera tracée dans [-X, X], par défaut [-1, 1].
    * @param Yscale Echelle maximale verticale, l'ordonnée sera tracée dans [-Y, Y], par défaut [-1, 1].
    */
-  public static void scopeReset(double Xscale, double Yscale) {  
+  public static void scopeReset(double Xscale, double Yscale) {
     getPane().inputX.setScale(-Xscale, Xscale, 0.001);
     getPane().inputY.setScale(-Yscale, Yscale, 0.001);
     getPane().scope.reset(0, 0, Xscale, Yscale);

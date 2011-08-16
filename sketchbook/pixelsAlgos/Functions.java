@@ -15,13 +15,12 @@ import java.awt.Dimension;
  */
 public class Functions {
   private static final long serialVersionUID = 1L;
-  // @factory 
+  // @factory
   private Functions() {}
   /** Renvoie l'instance de la proglet pour accéder à ses éléments. */
   private static Panel getPane() {
     return getProgletPane();
   }
-
   /** Initialise l'image.
    * - La taille de l'image ne doit pas être trop importante (pas plus de 500^2).
    * @param width Demi largeur de l'image de taille {-width, width}.
@@ -38,7 +37,7 @@ public class Functions {
    */
   static public void smileyLoad(String image) {
     try {
-        getPane().reset(image);
+      getPane().reset(image);
       Dimension dim = getPane().getDimension();
       width = (dim.width - 1) / 2;
       height = (dim.height - 1) / 2;

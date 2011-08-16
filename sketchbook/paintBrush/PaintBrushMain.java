@@ -22,7 +22,7 @@ import org.javascool.tools.Macros;
 public class PaintBrushMain {
   public static void main(String[] args) {
     SwingUtilities.invokeLater(new Runnable() {
-            @Override
+                                 @Override
                                  public void run() {
                                    createAndShowGUI();
                                  }
@@ -45,7 +45,7 @@ class Point implements Comparable {
     x = _x;
     y = _y;
   }
-    @Override
+  @Override
   public int compareTo(Object o) {
     Point p = (Point) o;
     int cmp1 = p.x - x;
@@ -161,7 +161,7 @@ class MainPanel extends JPanel implements ActionListener {
     showCodeBox.addActionListener(this);
     buttonClear.addActionListener(this);
   }
-    @Override
+  @Override
   public void actionPerformed(ActionEvent e) {
     String action = e.getActionCommand();
     if(action.equals(button1String))
@@ -183,8 +183,8 @@ class MainPanel extends JPanel implements ActionListener {
       myPanel.repaint();
       cPanel.repaint();
     } else if(action.equals(buttonRotateString)) {
-    	myPanel.manipImage.rotationGauche();
-        myPanel.repaint();
+      myPanel.manipImage.rotationGauche();
+      myPanel.repaint();
     } else if(action.equals(buttonClearString))
       myPanel.clear();
   }
@@ -252,7 +252,7 @@ class ColorPanel extends JPanel implements MouseMotionListener {
     setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     addMouseMotionListener(this);
     addMouseListener(new MouseAdapter() {
-            @Override
+                       @Override
                        public void mousePressed(MouseEvent e) {
                          int x = e.getX();
                          int y = e.getY();
@@ -266,7 +266,7 @@ class ColorPanel extends JPanel implements MouseMotionListener {
                      }
                      );
   }
-    @Override
+  @Override
   protected void paintComponent(Graphics g) {
     super.paintComponent(g);
     g.setColor(current.getColor());
@@ -283,14 +283,14 @@ class ColorPanel extends JPanel implements MouseMotionListener {
       }
     }
   }
-    @Override
+  @Override
   public Dimension getPreferredSize() {
     return new Dimension(2 + (square + 2) * 2, 2 + (square + 2) * 10);
   }
-    @Override
+  @Override
   public void mouseDragged(MouseEvent e) {}
 
-    @Override
+  @Override
   public void mouseMoved(MouseEvent e) {
     if(e.getX() <= 1 + (square + 2) * 2)
       setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
@@ -356,7 +356,7 @@ class MyPanel extends JPanel implements MouseMotionListener {
     }
     setCursor(c);
   }
-    @Override
+  @Override
   public void mouseDragged(MouseEvent e) {
     int x = e.getX();
     int y = inverseY(e.getY());
@@ -377,7 +377,7 @@ class MyPanel extends JPanel implements MouseMotionListener {
       break;
     }
   }
-    @Override
+  @Override
   public void mouseMoved(MouseEvent evt) {}
 
   public static void warning(String msg) {
@@ -400,7 +400,7 @@ class MyPanel extends JPanel implements MouseMotionListener {
     setBackground(Color.WHITE);
 
     addMouseListener(new MouseAdapter() {
-            @Override
+                       @Override
                        public void mousePressed(MouseEvent e) {
                          int x = e.getX();
                          int y = inverseY(e.getY());
@@ -426,7 +426,7 @@ class MyPanel extends JPanel implements MouseMotionListener {
                      );
 
     addMouseListener(new MouseAdapter() {
-            @Override
+                       @Override
                        public void mouseReleased(MouseEvent e) {
                          int x = e.getX();
                          int y = inverseY(e.getY());
@@ -583,7 +583,7 @@ class MyPanel extends JPanel implements MouseMotionListener {
     line_end = line_start = null;
     repaint();
   }
-    @Override
+  @Override
   public Dimension getPreferredSize() {
     return new Dimension(width * square, height * square);
   }
@@ -660,7 +660,7 @@ class MyPanel extends JPanel implements MouseMotionListener {
     } else
       lighterSquare(g, p.x, p.y);
   }
-    @Override
+  @Override
   protected void paintComponent(Graphics g) {
     super.paintComponent(g);
     // g.drawString("text",10,20);

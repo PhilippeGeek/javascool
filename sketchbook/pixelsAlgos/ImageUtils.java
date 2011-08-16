@@ -21,7 +21,6 @@ import org.javascool.tools.Macros;
 public class ImageUtils {
   private ImageUtils() {}
 
-  
   /** Charge une image locale ou distante.
    *
    * @param location Une URL (Universal Resource Location) de la forme: <div id="load-format"><table align="center">
@@ -44,7 +43,6 @@ public class ImageUtils {
     if(image == null) throw new RuntimeException("Unable to load: " + location);
     return image;
   }
-  
   /** Ecrit un contenu textuel local ou distant en tenant compte de l'encodage UTF-8.
    *
    * @param location @optional<"stdout:"> Une URL (Universal Resource Location) de la forme: <div id="save-format"><table>

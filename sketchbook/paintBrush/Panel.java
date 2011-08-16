@@ -15,19 +15,19 @@ import org.javascool.tools.Macros;
  * @serial exclude
  */
 public class Panel extends JPanel {
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
   // @bean
-    public Panel() {
-      add(mainPanel = new MainPanel());
-    }
-    /** Registers a new ManipImage implementation. */
-    void setManipImage(PaintBrushManipImage manipImage) {
-      System.out.println("Le mode proglet a été mis à jour pour prendre en compte vos modifications");
-      mainPanel.myPanel.progletManipImage = manipImage;
-      if(mainPanel.myPanel.manipImage != mainPanel.myPanel.demoManipImage)
-        mainPanel.myPanel.manipImage = manipImage;
-    }
-    private MainPanel mainPanel;
+  public Panel() {
+    add(mainPanel = new MainPanel());
+  }
+  /** Registers a new ManipImage implementation. */
+  void setManipImage(PaintBrushManipImage manipImage) {
+    System.out.println("Le mode proglet a été mis à jour pour prendre en compte vos modifications");
+    mainPanel.myPanel.progletManipImage = manipImage;
+    if(mainPanel.myPanel.manipImage != mainPanel.myPanel.demoManipImage)
+      mainPanel.myPanel.manipImage = manipImage;
+  }
+  private MainPanel mainPanel;
   /** Démo de la proglet. */
   public static void start() {
     Macros.message("Pour la démo . . à vous de manipuler l'interface\n .. en \"mode démo\", tout simplement !");

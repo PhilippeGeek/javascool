@@ -16,14 +16,14 @@ public class Panel extends JPanel {
     input.add(inputX = new NumberInput().setText("X").setScale(-1, 1, 0.001), BorderLayout.NORTH);
     input.add(inputY = new NumberInput().setText("Y").setScale(-1, 1, 0.001), BorderLayout.SOUTH);
     Runnable run1 = new Runnable() {
-            @Override
+      @Override
       public void run() {
         inputX.setValue(scope.getReticuleX());
         inputY.setValue(scope.getReticuleY());
       }
     };
     Runnable run2 = new Runnable() {
-            @Override
+      @Override
       public void run() {
         scope.setReticule(inputX.getValue(), inputY.getValue());
       }

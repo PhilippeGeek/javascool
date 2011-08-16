@@ -64,13 +64,13 @@ public class ProgletsBuilder {
       File buildDir;
       String tmpDir, jarDir, progletsDir;
       // Création d'un répertoire cible.
-      if (targetDir == null) {
+      if(targetDir == null) {
         buildDir = File.createTempFile("build", "");
         buildDir.deleteOnExit();
         buildDir.delete();
         buildDir.mkdirs();
       } else {
-        buildDir = new File(targetDir);  
+        buildDir = new File(targetDir);
         buildDir.mkdirs();
       }
       // Création du répertoire de travail.
@@ -110,8 +110,8 @@ public class ProgletsBuilder {
         {
           boolean error = false;
           Pml pml = new Pml().load(progletDir + File.separator + "proglet.pml");
-    if (!name.matches("[a-z][a-zA-Z][a-zA-Z][a-zA-Z]+")) {
-      System.out.println("Le nom de la proglet «"+name+"» est bizarre il ne doit contenir que des lettres faire au moins quatre caractères et démarrer par une minuscule");
+          if(!name.matches("[a-z][a-zA-Z][a-zA-Z][a-zA-Z]+")) {
+            System.out.println("Le nom de la proglet «" + name + "» est bizarre il ne doit contenir que des lettres faire au moins quatre caractères et démarrer par une minuscule");
             error = true;
           }
           if(!StringFile.exists(progletDir + File.separator + "help.xml")) {
@@ -167,24 +167,24 @@ public class ProgletsBuilder {
       return false;
     }
   }
-  /**  
+  /**
    * @see #build(String[], String)
    */
   public static boolean build(String[] proglets) {
     return build(proglets, null);
   }
-  /**  
+  /**
    * @see #build(String[], String)
    */
   public static boolean build(String targetDir) {
     return build(getProglets(), targetDir);
   }
-  /** 
+  /**
    * @see #build(String[], String)
    */
   public static boolean build() {
     return build(getProglets(), null);
-  }  
+  }
   /** Extrait une arborescence d'un jar. */
   private static void jarExtract(String jarFile, String destDir, String jarEntry) {
     /* @todo A valider
@@ -239,13 +239,13 @@ public class ProgletsBuilder {
   /** Détruit récursivement un fichier ou répertoire.
    * @param dir Le nom du répertoire.
    * */
-    private static void rmDir(File dir) {
-  for (File f : dir.listFiles())
-   if (f.isDirectory())
- rmDir(f);
- dir.delete();
-    }
- /* A discuter par rapport à l'ancienne implémentation.
+  private static void rmDir(File dir) {
+    for(File f : dir.listFiles())
+      if(f.isDirectory())
+        rmDir(f);
+    dir.delete();
+  }
+  /* A discuter par rapport à l'ancienne implémentation.
    *  public static Boolean suppr(File r) {
    *     File[] fileList = r.listFiles();
    *     Boolean s = true;

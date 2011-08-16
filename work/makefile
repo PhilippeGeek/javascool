@@ -38,7 +38,7 @@ pub :
 
 bty :
 	for f in `find src -name '*.java' -o -name '*.jvs'` ; do uncrustify -q -c lib/uncrustify.cfg --replace $$f ; done
-	for f in `find ../sketchbook -name '*.java' -o -name '*.jvs'` ; do uncrustify -q -c lib/uncrustify.cfg --replace $$f ; done
+	for f in `find ../sketchbook -name '*.java' -o -name '*.jvs' -o -name '*.pde'` ; do uncrustify -q -c lib/uncrustify.cfg --replace $$f ; done
 
 
 nbe :

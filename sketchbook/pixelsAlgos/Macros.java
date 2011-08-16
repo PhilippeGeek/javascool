@@ -8,6 +8,4 @@ package org.javascool.proglets.pixelsAlgos;
  *
  * @author vthierry
  */
-class Macros {
-    
-}
+class Macros {}

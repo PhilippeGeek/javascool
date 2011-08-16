@@ -24,7 +24,7 @@ public class Functions {
   public static JLayeredPane getPane() {
     return getProgletPane();
   }
-  /** Crée et montre une icône sur le display en (x,y) de taille (w, h) à la profondeur p. 
+  /** Crée et montre une icône sur le display en (x,y) de taille (w, h) à la profondeur p.
    * @param location  L'URL (Universal Resource Location) où se trouve l'icone.
    * @param x Abcisse du coin inférieur gauche de l'image.
    * @param y Ordonnée du coin inférieur gauche de l'image.

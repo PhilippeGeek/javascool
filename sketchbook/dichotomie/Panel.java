@@ -45,7 +45,7 @@ public class Panel extends JPanel {
     JButton prev = new JButton("<-");
     tail.add(prev);
     prev.addActionListener(new ActionListener() {
-            @Override
+                             @Override
                              public void actionPerformed(ActionEvent e) {
                                show(--current);
                              }
@@ -54,7 +54,7 @@ public class Panel extends JPanel {
     JButton next = new JButton("->");
     tail.add(next);
     next.addActionListener(new ActionListener() {
-            @Override
+                             @Override
                              public void actionPerformed(ActionEvent e) {
                                show(++current);
                              }
@@ -86,7 +86,7 @@ public class Panel extends JPanel {
   /** Index du drapeau actuellement affiché. */
   private int current;
 
-  /** Tableau de tous les pays du monde. 
+  /** Tableau de tous les pays du monde.
    * <p><tt>pays[i][0]</tt> donne le nom du pays.</p>
    * <p><tt>pays[i][1]</tt> donne le nom de l'image du drapeau du pays.</p>
    * <p><tt>pays[i][2]</tt> donne le lien http://fr.wikipedia.org à propos du pays.</p>

@@ -10,7 +10,7 @@ import java.awt.Color;
  */
 public class Functions {
   private static final long serialVersionUID = 1L;
-  // @factory 
+  // @factory
   private Functions() {}
   /** Renvoie l'instance de la proglet pour accéder à ses éléments. */
   private static Panel getPane() {
