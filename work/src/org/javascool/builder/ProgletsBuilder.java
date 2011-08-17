@@ -7,7 +7,7 @@
 package org.javascool.builder;
 
 import org.javascool.tools.FileManager;
-import org.javascool.tools.Macros;
+import org.javascool.macros.Macros;
 import org.javascool.tools.Xml2Xml;
 import org.javascool.tools.Pml;
 import org.javascool.core.Java2Class;
@@ -141,8 +141,8 @@ public class ProgletsBuilder {
           }
           DialogFrame.setUpdate("Construction de " + name + " 3/4", 50);
           if(pml.getBoolean("processing")) throw new IllegalStateException("Upps le builder est pas encore implémenté pour le processing");
-            // @todo Tester que nous avons les tailles explicites
-            // @todo Ne pas compiler mais deployer les jars dans la cible
+          // @todo Tester que nous avons les tailles explicites
+          // @todo Ne pas compiler mais deployer les jars dans la cible
           else {
             // Extraction des extensions nécessaires à cette proglet
             for(String jar : FileManager.list(progletDir, ".*\\.jar"))

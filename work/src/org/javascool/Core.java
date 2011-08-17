@@ -5,6 +5,7 @@
 package org.javascool;
 
 import org.javascool.gui.Desktop;
+import org.javascool.macros.Macros;
 import org.javascool.tools.ErrorCatcher;
 
 /** Lanceur de l'application "apprenant" qui permet de manipuler des «proglets».  *
@@ -23,12 +24,12 @@ public class Core {
 
   /** Affiche le message de "about". */
   static void showAboutMessage() {
-    org.javascool.tools.Macros.message(title + "est un logiciel conçut en colaboration avec : <br/><center>"
-                                       + "Philippe VIENNE<br/>"
-                                       + "Guillaume MATHERON<br/>"
-                                       + " et Inria<br/>"
-                                       + "</center><br/>"
-                                       + "Il est distribué sous les conditions de la licence CeCILL<br/>", true);
+    Macros.message(title + "est un logiciel conçut en colaboration avec : <br/><center>"
+                   + "Philippe VIENNE<br/>"
+                   + "Guillaume MATHERON<br/>"
+                   + " et Inria<br/>"
+                   + "</center><br/>"
+                   + "Il est distribué sous les conditions de la licence CeCILL<br/>", true);
   }
   /** Mets en place le système d'alerte en cas d'erreur non gérée. */
   static void setUncaughtExceptionAlert() {

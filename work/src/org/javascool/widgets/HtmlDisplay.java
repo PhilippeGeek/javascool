@@ -22,7 +22,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.net.URLDecoder;
 import javax.swing.text.Document;
-import org.javascool.tools.Macros;
+import org.javascool.macros.Macros;
 
 // Used to manage keystroke
 import java.util.ArrayList;

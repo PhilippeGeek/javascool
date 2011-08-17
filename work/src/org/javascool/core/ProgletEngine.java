@@ -9,7 +9,7 @@ package org.javascool.core;
 import java.awt.Component;
 
 import java.util.ArrayList;
-import org.javascool.tools.Macros;
+import org.javascool.macros.Macros;
 
 import java.io.File;
 import org.javascool.tools.FileManager;

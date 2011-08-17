@@ -1,7 +1,7 @@
 package org.javascool.gui;
 
 import org.javascool.core.ProgletEngine;
-import org.javascool.tools.Macros;
+import org.javascool.macros.Macros;
 import org.javascool.widgets.Console;
 import org.javascool.widgets.HtmlDisplay;
 

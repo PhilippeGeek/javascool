@@ -5,6 +5,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import org.javascool.macros.Macros;
 
 /** Définit un bouton de start/stop avec affichage du temps de calcul.
  *
@@ -44,7 +45,7 @@ public abstract class StartStopButton extends JPanel {
       doStop();
     started = true;
     startButton.setText("Arrêter");
-    startButton.setIcon(org.javascool.tools.Macros.getIcon("org/javascool/widgets/icons/stop.png"));
+    startButton.setIcon(Macros.getIcon("org/javascool/widgets/icons/stop.png"));
     startButton.revalidate();
     execTime.setText("  Temps d'exécution : 0 min 0 sec");
     execTime.revalidate();
@@ -71,7 +72,7 @@ public abstract class StartStopButton extends JPanel {
       stop();
     started = false;
     startButton.setText("Exécuter");
-    startButton.setIcon(org.javascool.tools.Macros.getIcon("org/javascool/widgets/icons/play.png"));
+    startButton.setIcon(Macros.getIcon("org/javascool/widgets/icons/play.png"));
     startButton.revalidate();
   }
   /** Cette méthode est appelée au lancement demandé par l'utilisateur. */
