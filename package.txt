@@ -8,7 +8,6 @@ Description de la liasse:
 * ''web''        : contient les fichiers qui permettent de construire le site web.
 * ''sketchbook'' : contient les sources des proglets
 tandis que 
-* ''*-old''      : sont des répertoires temporaires de travail, à ignorer;
 * ''wiki'        : contient les fichiers du wiki de développement (actuellement inutilisé).
 
 Pour en savoir plus voir la [http://javascool.gforge.inria.fr/v4/index.php?page=api documentation].
