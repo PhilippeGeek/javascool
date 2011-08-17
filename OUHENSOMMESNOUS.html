@@ -7,7 +7,8 @@
 <body>
 <div style="text-align: center;"><big style="font-weight: bold;"><big>Travail
 en
-cours sur Javas'Cool</big></big><br>
+cours
+sur Javas'Cool</big></big><br>
 </div>
 <br>
 <ul>
@@ -22,12 +23,14 @@ core:</span></li>
   <ul>
     <li>[PV1] Redesigner le package gui.</li>
     <ul>
+      <li>Documentation en francais</li>
       <li>Revoir les raccourcis clavier</li>
       <li>Remettre le logo dans la toolbar</li>
       <li>Ajouter un bouton demo pour les proglets quiteste si
-getProglet().hasDemo() est lance getProglet().doDemo() </li>
-      <li>Documentation en francais</li>
-      <li>Voir le pb du bouton run qui s'affiche . . sans la compil ?</li>
+getProglet().hasDemo() est lance getProglet().doDemo()</li>
+      <li>Voir le pb du bouton run qui s'affiche . . sans la compil ?
+et qq bizareries nouvelles a&nbsp; l execution . . <br>
+      </li>
       <li>Regler le probleme de l'ouverture de fichier qui se fait
 pendant le
 start panel</li>
@@ -40,15 +43,25 @@ save des files</li>
       <li>Les icones du starter ne sont pas de la meme taille : a
 rendre fixe<br>
       </li>
-      <li>Il faut ajouter un ToolTiop a partir de
+      <li>Il faut ajouter ds le StartPanel un ToolTip a partir de
 getProglet().getTitle()</li>
-      <li>On a pas l'affichage automatique de la console a la compil et
+      <li>Faire l'affichage automatique de la console a la compil et
 du panneau de la proglet a l'execution</li>
     </ul>
     <li>[PV1] Finir de programmer les fonctions de
 org.javascool.builder.ProgletsBuilder qui sont actuellement des appels
 syst&egrave;me.</li>
-    <li>[PV2] Remettre double stream dans console&nbsp;</li>
+    <li>[PV2] Ajouter un kill aux merdes modales de Macros</li>
+    <li>[PV2] Remettre double stream dans console <br>
+    </li>
+    <li>[PV2] Am&eacute;lioration du GUI</li>
+    <ul>
+      <li>Ouvrir pas les fichiers dans le user.dir sous Linux mais
+dans le home.dir sous Windows et . . sous Mac ?</li>
+      <li>Et <span style="font-style: italic;">indeed</span>: sauver
+le dernier repertoire dans UserConfig !!<br>
+      </li>
+    </ul>
   </ul>
   <ul>
     <li>[PV2] Creer une fonction d'insertion automatique
@@ -60,13 +73,15 @@ d'&eacute;lements dans l'&eacute;diteur</li>
     </ul>
     <li>[PV2] Implementer le fait qu'on ajoute
 @proglet:nom-de-la-proglet en ligne 1 pour specifier la proglet</li>
-    <li>[PV2] Remettre en place l'option de formatage du code `apartir
+    <ul>
+      <li>[PV2] Remettre en place l'option de formatage du code
+&agrave; partir
 de la classe org.javascool.core.JvsBeautifier<br>
-    </li>
+      </li>
+    </ul>
     <li>[PV2] BgCouleur par defaut de message pas en blanc</li>
   </ul>
   <ul>
-    <li>[PV2] Ajouter un kill aux merdes modales de Macros</li>
     <li>[TV2] Compl&eacute;ter les docs javascool</li>
     <ul>
       <li>D&eacute;crire ce que produit le builder</li>
@@ -81,11 +96,12 @@ de la classe org.javascool.core.JvsBeautifier<br>
   <li><span style="font-weight: bold;">Notre chantier sur les proglets
 et Java'sCool builder:</span></li>
   <ul>
-    <li>[TV1] R&eacute;diger <span style="font-style: italic;">enfin</span>
-la doc Hml</li>
-    <li>[PV2] Creer dans sketchbook/* les icones des proglest et metter
-leurs noms dans les proglet.pml<br>
-    </li>
+    <li>[PV2] Creer dans sketchbook/* les icones des proglets et mettre
+leurs noms dans les proglet.pml</li>
+    <ul>
+      <li>y compris pour les proglets processing<br>
+      </li>
+    </ul>
     <li>[GM2] Mettre en conformit&eacute; la proglet jeux2D</li>
     <ul>
       <li>sans ProgletPanel mais avec Functions et Panel</li>
@@ -103,16 +119,16 @@ texte.</li>
       <li>Rendre accessible un programme de test/validation</li>
       <li>Rechercher les Jvs et documents de v3 oubli&eacute;s en v4</li>
     </ul>
-    <li>[TV2] g&eacute;n&eacute;rer &agrave; partir des &lt;l link
+    <li>[TV2] G&eacute;n&eacute;ation du HTTM du XML</li>
+    <ul>
+      <li>g&eacute;n&eacute;rer &agrave; partir des &lt;l link
 class="editor|broswer" les liens href="jvs: pour htm et les liens &lt;a
 href="target" pour le site</li>
+      <li>regler le pb de localisation du fichier xslt<br>
+      </li>
+    </ul>
     <li>[TV2] Int&eacute;gration des proglets processing dans
 ProgletsBuilder et ProgletsEngine</li>
-    <li>[PV2] Am&eacute;lioration du GUI</li>
-    <ul>
-      <li>Ouvrir pas les fichiers dans le user.dir sous Linux mais
-dans le home.dir sous Windows et . . sous Mac ?</li>
-    </ul>
   </ul>
   <li><span style="font-weight: bold;">Notre chantier sur le web:</span><br>
   </li>
@@ -143,8 +159,9 @@ web/index/*.sh <br>
     <ul>
       <li>Liste des pages de l'ancien site avec rebond</li>
       <li>R&eacute;cup&eacute;ration des contenus litt&eacute;raires
-des pages web et remplacement par un @todo:wiki <br>
-      </li>
+des pages web et remplacement par un @todo:wiki&nbsp;</li>
+      <li>&nbsp;R&eacute;diger <span style="font-style: italic;">enfin</span>
+la doc Hml</li>
       <li>Ajout de la routine web/index/get_wiki_page.php</li>
     </ul>
   </ul>

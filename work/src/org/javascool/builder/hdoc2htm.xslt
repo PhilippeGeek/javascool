@@ -50,7 +50,7 @@
 <xsl:template match="code">
   <div class="code"><table width="90%" border="2"><tr><td>
     <xsl:value-of disable-output-escaping="yes" select="sx:jvs2htm(.)"/>
-  </div></td></tr></table>
+  </td></tr></table></div>
 </xsl:template>
 
 <!-- These tags allows to show pieces of code -->

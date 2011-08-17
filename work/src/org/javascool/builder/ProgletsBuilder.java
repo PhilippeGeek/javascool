@@ -67,9 +67,9 @@ public class ProgletsBuilder {
       File buildDir;
       String tmpDir, jarDir, progletsDir;
       // Création d'un répertoire cible.
-      if(targetDir == null) {
+      if(targetDir == null)
         buildDir = FileManager.createTempDir("build");
-      } else {
+      else {
         buildDir = new File(targetDir);
         buildDir.mkdirs();
       }
@@ -98,67 +98,70 @@ public class ProgletsBuilder {
       // Construction des proglets
       for(String proglet : proglets) {
         String name = proglet.replaceFirst(".*/", ""), progletDir = progletsDir + File.separator + name;
+        Pml pml = new Pml().load(proglet + File.separator + "proglet.pml");
         System.out.println("\tCompilation de " + name + " ...");
-        DialogFrame.setUpdate("Construction de " + name + " 1/4", 30);
-        // Copie de tous les fichiers
-        {
-          new File(progletDir).mkdirs();
-          copyFiles(proglet, progletDir);
-        }
-        DialogFrame.setUpdate("Construction de " + name + " 2/4", 40);
-        Pml pml = new Pml().load(progletDir + File.separator + "proglet.pml");
-        // Vérification des spécifications
-        {
-          boolean error = false;
-          if(!name.matches("[a-z][a-zA-Z][a-zA-Z][a-zA-Z]+")) {
-            System.out.println("Le nom de la proglet «" + name + "» est bizarre il ne doit contenir que des lettres faire au moins quatre caractères et démarrer par une minuscule");
-            error = true;
-          }
-          if(!FileManager.exists(progletDir + File.separator + "help.xml")) {
-            System.out.println("Pas de fichier d'aide pour " + name + ", la proglet ne sera pas construite.");
-            error = true;
-          }
-          if(!pml.isDefined("author")) {
-            System.out.println("Le champ «author» n'est pas défini dans " + name + "/proglet.pml, la proglet ne sera pas construite.");
-            error = true;
-          }
-          if(!pml.isDefined("title")) {
-            System.out.println("Le champ «title» n'est pas défini dans " + name + "/proglet.pml, la proglet ne sera pas construite.");
-            error = true;
-          }
-          pml.save(progletDir + File.separator + "proglet.php");
-          if(error) throw new IllegalArgumentException("La proglet ne respecte pas les spécifications");
-        }
-        // Traduction Hml -> Htm des docs
-        {
-          for(String doc : FileManager.list(progletDir, ".*\\.xml"))
-            // @todo ici il faut remplacer le xslt par un fichier du tmp !!
-            FileManager.save(doc.replaceFirst("\\.xml", "\\.htm"), Xml2Xml.run(FileManager.load(doc), "../work/src/org/javascool/builder/hdoc2htm.xslt"));
-          // jarDir+ "/org/javascool/builder/hdoc2htm.xslt"));
-        }
-        DialogFrame.setUpdate("Construction de " + name + " 3/4", 50);
-        if(pml.getBoolean("processing")) {
-	  throw new IllegalStateException("Upps le builder est pas encore implémenté pour le processing");
-          // @todo Tester que nous avons les tailles explicites
-          // @todo Ne pas compiler mais deployer les jars dans la cible
-        } else {
-	  // Extraction des extensions nécessaires à cette proglet
-	  for(String jar : FileManager.list(progletDir, ".*\\.jar"))
-            jarExtract(jar, jarDir);
-          // Création d'une page de lancement de l'applet // @todo à valider avec Guillaume
-          FileManager.save(progletDir + File.separator + "index.html",
-                          "<html><head><title>" + name + "</title><meta http-equiv='Content-Type' content='text/html; charset=utf-8'/></head><body>\n" +
-                          "  <center><h4>" + name + " (<a target='_blank' href='help.htm'>documentation utilisateur</a> <a target='_blank' href='api/index.html'>documentation Java</a>)</h4></center>\n" +
-                          "  <applet width='560' height='720' code='org.javascool.widgets.PanelApplet' archive='../javasccool-progets><param name='pane' value='org.javascool.proglets." + name + "'/><pre>Impossible de lancer " + name + ": Java n'est pas installé ou mal configuré</pre></applet>\n" +
-                          "</body></html>\n");
-          // Lancement de la compilation dans le répertoire
+        if(pml.getBoolean("processing"))
+          System.out.println("\t\t proglet processing (non pris en charge ici: à suivre !)");
+        else {
+          DialogFrame.setUpdate("Construction de " + name + " 1/4", 30);
+          // Copie de tous les fichiers
           {
-            String[] javaFiles = FileManager.list(progletDir, ".*\\.java");
-            if(javaFiles.length > 0)
-              javac(javaFiles);
+            new File(progletDir).mkdirs();
+            copyFiles(proglet, progletDir);
           }
+          DialogFrame.setUpdate("Construction de " + name + " 2/4", 40);
+          // Vérification des spécifications
+          {
+            boolean error = false;
+            if(!name.matches("[a-z][a-zA-Z][a-zA-Z][a-zA-Z]+")) {
+              System.out.println("Le nom de la proglet «" + name + "» est bizarre il ne doit contenir que des lettres faire au moins quatre caractères et démarrer par une minuscule");
+              error = true;
+            }
+            if(!FileManager.exists(progletDir + File.separator + "help.xml")) {
+              System.out.println("Pas de fichier d'aide pour " + name + ", la proglet ne sera pas construite.");
+              error = true;
+            }
+            if(!pml.isDefined("author")) {
+              System.out.println("Le champ «author» n'est pas défini dans " + name + "/proglet.pml, la proglet ne sera pas construite.");
+              error = true;
+            }
+            if(!pml.isDefined("title")) {
+              System.out.println("Le champ «title» n'est pas défini dans " + name + "/proglet.pml, la proglet ne sera pas construite.");
+              error = true;
+            }
+            pml.save(progletDir + File.separator + "proglet.php");
+            if(error) throw new IllegalArgumentException("La proglet ne respecte pas les spécifications");
+          }
+          // Traduction Hml -> Htm des docs
+          {
+            for(String doc : FileManager.list(progletDir, ".*\\.xml"))
+              // @todo ici il faut remplacer le xslt par un fichier du tmp !!
+              FileManager.save(doc.replaceFirst("\\.xml", "\\.htm"), Xml2Xml.run(FileManager.load(doc), "../work/src/org/javascool/builder/hdoc2htm.xslt"));
+            // jarDir+ "/org/javascool/builder/hdoc2htm.xslt"));
+          }
+          DialogFrame.setUpdate("Construction de " + name + " 3/4", 50);
+          if(pml.getBoolean("processing")) throw new IllegalStateException("Upps le builder est pas encore implémenté pour le processing");
+            // @todo Tester que nous avons les tailles explicites
+            // @todo Ne pas compiler mais deployer les jars dans la cible
+          else {
+            // Extraction des extensions nécessaires à cette proglet
+            for(String jar : FileManager.list(progletDir, ".*\\.jar"))
+              jarExtract(jar, jarDir);
+            // Création d'une page de lancement de l'applet // @todo à valider avec Guillaume
+            FileManager.save(progletDir + File.separator + "index.html",
+                             "<html><head><title>" + name + "</title><meta http-equiv='Content-Type' content='text/html; charset=utf-8'/></head><body>\n" +
+                             "  <center><h4>" + name + " (<a target='_blank' href='help.htm'>documentation utilisateur</a> <a target='_blank' href='api/index.html'>documentation Java</a>)</h4></center>\n" +
+                             "  <applet width='560' height='720' code='org.javascool.widgets.PanelApplet' archive='../javasccool-progets><param name='pane' value='org.javascool.proglets." + name + "'/><pre>Impossible de lancer " + name + ": Java n'est pas installé ou mal configuré</pre></applet>\n" +
+                             "</body></html>\n");
+            // Lancement de la compilation dans le répertoire
+            {
+              String[] javaFiles = FileManager.list(progletDir, ".*\\.java");
+              if(javaFiles.length > 0)
+                javac(javaFiles);
+            }
+          }
+          DialogFrame.setUpdate("Construction de " + name + " 4/4", 60);
         }
-        DialogFrame.setUpdate("Construction de " + name + " 4/4", 60);
       }
       DialogFrame.setUpdate("Finalisation 1/2", 90);
       // Création de l'archive et du manifest
@@ -201,7 +204,7 @@ public class ProgletsBuilder {
   public static boolean build() {
     return build(getProglets(), null);
   }
-  /** Extrait une arborescence d'un jar. 
+  /** Extrait une arborescence d'un jar.
    * @param jarFile Jarre dont on extrait les fichiers.
    * @param destDir Dossier où on déploie les fichiers.
    * @param jarEntry Racine des sous-dossiers à extraire. Si null extrait tout les fichiers.
@@ -230,7 +233,7 @@ public class ProgletsBuilder {
   private static void jarExtract(String jarFile, String destDir) {
     jarExtract(jarFile, destDir, null);
   }
-  /** Crée un jar à partir d'une arborescence. 
+  /** Crée un jar à partir d'une arborescence.
    * @param jarFile Jar à construire. Elle est détruite avant d'être crée.
    * @param mfFile Fichier de manifeste (obligatoire).
    * @param srcDir Dossier source avec les fichiers à mettre en jarre.
@@ -242,7 +245,7 @@ public class ProgletsBuilder {
      */
     Exec.run("jar cfm " + jarFile + " " + mfFile + " -C " + srcDir + " .");
   }
-  /** Copie un répertoire dans un autre en oubliant les svn. 
+  /** Copie un répertoire dans un autre en oubliant les svn.
    * @param srcDir Dossier source.
    * @param dstDir Dossier cible.
    */

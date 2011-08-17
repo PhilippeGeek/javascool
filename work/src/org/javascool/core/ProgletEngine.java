@@ -6,14 +6,12 @@
 
 package org.javascool.core;
 
-import java.applet.Applet;
 import java.awt.Component;
 
 import java.util.ArrayList;
 import org.javascool.tools.Macros;
 
 import java.io.File;
-import java.io.IOException;
 import org.javascool.tools.FileManager;
 import org.javascool.tools.Pml;
 import org.javascool.tools.Invoke;
@@ -43,8 +41,11 @@ public class ProgletEngine {
     {
       proglets = new ArrayList<Proglet>();
       String javascoolJar = Macros.getResourceURL("org/javascool/core/ProgletEngine.class").toString().replaceFirst("jar:([^!]*)!.*", "$1");
-      for(String dir : FileManager.list(javascoolJar, "org.javascool.proglets.[^\\.]+"))
-        proglets.add(new Proglet().load(dir.replaceFirst("jar:[^!]*!", "")));
+      for(String dir : FileManager.list(javascoolJar, "org.javascool.proglets.[^\\.]+")) {
+        Proglet proglet = new Proglet().load(dir.replaceFirst("jar:[^!]*!", ""));
+        if(!proglet.isProcessing())
+          proglets.add(proglet);
+      }
     }
     // Définit une proglet "vide" pour lancer l'interface
     if(proglets.isEmpty()) {
@@ -125,13 +126,13 @@ public class ProgletEngine {
    * @return La proglet en fonctionnement ou null si la proglet n'existe pas.
    */
   public Proglet setProglet(String proglet) {
-    if(currentProglet != null && currentProglet.getPane() != null)
-            Invoke.run(currentProglet.getPane(), "destroy");
+    if(currentProglet != null&& currentProglet.getPane() != null)
+      Invoke.run(currentProglet.getPane(), "destroy");
     for(Proglet p : getProglets())
       if(p.getName().equals(proglet))
         currentProglet = p;
-    if(currentProglet != null && currentProglet.getPane() != null)
-            Invoke.run(currentProglet.getPane(), "init");
+    if(currentProglet != null&& currentProglet.getPane() != null)
+      Invoke.run(currentProglet.getPane(), "init");
     return currentProglet;
   }
   /** Renvoie la proglet courante.
@@ -229,18 +230,23 @@ public class ProgletEngine {
      */
     public Translator getTranslator() {
       return (Translator) pml.getObject("jvs-translator");
-    }    
+    }
     /** Indique si la proglet a une démo pour l'utilisateur.
      */
     public boolean hasDemo() {
-      return getPane() != null && Invoke.run(getPane(), "start", false);
+      return getPane() != null&& Invoke.run(getPane(), "start", false);
     }
     /** Lance la démo de la proglet.
      * @return La valeur true si la méthode est invocable, false sinon.
      * @throws RuntimeException si la méthode génère une exception lors de son appel.
      */
     public boolean doDemo() {
-        return getPane() != null && Invoke.run(getPane(), "start");
+      return getPane() != null&& Invoke.run(getPane(), "start");
     }
-}
+    /**  Indique si la proglet est une proglet processing.
+     */
+    public boolean isProcessing() {
+      return pml.getBoolean("processing");
+    }
+  }
 }

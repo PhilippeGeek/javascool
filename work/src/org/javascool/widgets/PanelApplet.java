@@ -90,7 +90,6 @@ public class PanelApplet extends JApplet {
     if(!manualStart)
       Invoke.run(pane, "stop");
   }
- 
   /** Lanceur dans une fenêtre principale d'une objet graphique.
    * @param usage <tt>java org.javascool.widgets.PanelApplet nom-complet-qualifé-de-l-objet-graphique</tt>.
    */

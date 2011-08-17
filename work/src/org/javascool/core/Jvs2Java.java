@@ -61,7 +61,8 @@ public class Jvs2Java extends Translator {
           body.append("//").append(line).append("\n");
           if(line.matches("^\\s*package[^;]*;\\s*$"))
             System.out.println("Attention: on ne peut normalement pas définir de package Java en JavaScool\n le programme risque de ne pas s'exécuter correctement");
-        }
+        } else
+          body.append(line).append("\n");
         i++;
       }
       // Imports proglet's static methods
@@ -80,16 +81,17 @@ public class Jvs2Java extends Translator {
       head.append("     System.out.println(\"\\n-------------------\\nErreur lors de l'exécution de la proglet\\n\"+e+\"\\n-------------------\\n\");}");
       head.append("}");
     }
- 
+
     String finalBody = body.toString().
-          replaceAll("(while.*\\{)", "$1 sleep(1);");
-       // Ici il y a le grospatch pour jeux2D
-      /* @todo code à basculer dans org.....proglets.jeux2D.Translator
-         line = line.replaceAll("(.*[^a-zA-Z0-9_])([a-zA-Z0-9_]+[ \t=]*\\.getProperty[ \t=]*\\()[ \t=]*([a-zA-Z0-9_]+)[ \t=]*,([^)]*\\))(.*)", "$1(($3)$2$4)$5");
-    line = line.replaceAll("\\(int\\)", "(Integer)");
-    line = line.replaceAll("\\(double\\)", "(Double)");    
-          replaceAll("((^|\n)([ \t]*)(?!((public|private|protected)([ \t]+)))([A-Za-z0-9_]+)([ ]+)([A-Za-z0-9_]+)\\(([^()]*)\\)([ ]*)\\{([ \t]*)(\n|$))", "public $1").
-                  replaceAll("(^|[\n\t ])for[\n\t ]*\\(([A-Za-z0-9_.]+)[\n\t ]+([A-Za-z0-9_.]+)[\n\t ]+in[\n\t ]+([A-Za-z0-9_.]+)[\n\t ]*\\)[\n\t ]*\\{", "for (int tmpsystemi=0; tmpsystemi<$4.size(); tmpsystemi++) {$2 $3=($2)($4.get(tmpsystemi));");
+                       replaceAll("(while.*\\{)", "$1 sleep(1);");
+    // Ici il y a le grospatch pour jeux2D
+
+    /* @todo code à basculer dans org.....proglets.jeux2D.Translator
+     *  replaceAll("(.*[^a-zA-Z0-9_])([a-zA-Z0-9_]+[ \t=]*\\.getProperty[ \t=]*\\()[ \t=]*([a-zA-Z0-9_]+)[ \t=]*,([^)]*\\))(.*)", "$1(($3)$2$4)$5");
+     *  replaceAll("\\(int\\)", "(Integer)");
+     *  replaceAll("\\(double\\)", "(Double)");
+     *  replaceAll("((^|\n)([ \t]*)(?!((public|private|protected)([ \t]+)))([A-Za-z0-9_]+)([ ]+)([A-Za-z0-9_]+)\\(([^()]*)\\)([ ]*)\\{([ \t]*)(\n|$))", "public $1").
+     *  replaceAll("(^|[\n\t ])for[\n\t ]*\\(([A-Za-z0-9_.]+)[\n\t ]+([A-Za-z0-9_.]+)[\n\t ]+in[\n\t ]+([A-Za-z0-9_.]+)[\n\t ]*\\)[\n\t ]*\\{", "for (int tmpsystemi=0; tmpsystemi<$4.size(); tmpsystemi++) {$2 $3=($2)($4.get(tmpsystemi));");
      */
     return head.toString() + finalBody + "}";
   }

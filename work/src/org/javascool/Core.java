@@ -30,7 +30,6 @@ public class Core {
                                        + "</center><br/>"
                                        + "Il est distribué sous les conditions de la licence CeCILL<br/>", true);
   }
-
   /** Mets en place le système d'alerte en cas d'erreur non gérée. */
   static void setUncaughtExceptionAlert() {
     ErrorCatcher.setUncaughtExceptionAlert("<h1>Détection d'une anomalie liée à Java:</h1>\n" +
