@@ -6,7 +6,7 @@
 
 package org.javascool.builder;
 
-import org.javascool.tools.StringFile;
+import org.javascool.tools.FileManager;
 import org.javascool.tools.Macros;
 import org.javascool.tools.Xml2Xml;
 import org.javascool.tools.Pml;
@@ -35,7 +35,7 @@ public class ProgletsBuilder {
   private ProgletsBuilder() {}
 
   /** Teste si cette version de Java'sCool a la capacité de créer des jar.  */
-  public static boolean hasProglets() {
+  public static boolean canBuildProglets() {
     try {
       Class.forName("com.icl.saxon.TransformerFactoryImpl");
       return true;
@@ -46,8 +46,8 @@ public class ProgletsBuilder {
   /** Renvoie les proglets à construire. */
   public static String[] getProglets() {
     ArrayList<String> proglets = new ArrayList<String>();
-    for(String dir : StringFile.list(System.getProperty("user.dir")))
-      if(StringFile.exists(dir + File.separator + "proglet.pml"))
+    for(String dir : FileManager.list(System.getProperty("user.dir")))
+      if(FileManager.exists(dir + File.separator + "proglet.pml"))
         proglets.add(dir);
     return proglets.toArray(new String[proglets.size()]);
   }
@@ -57,7 +57,7 @@ public class ProgletsBuilder {
    * @return La valeur true si la construction est sans erreur, false sinon.
    */
   public static boolean build(String[] proglets, String targetDir) {
-    if(!hasProglets()) throw new IllegalArgumentException("Mauvaise configuration du builder, il faut utiliser le bon jar !");
+    if(!canBuildProglets()) throw new IllegalArgumentException("Mauvaise configuration du builder, il faut utiliser le bon jar !");
     try {
       // Définition de la jarre cible.
       String targetJar = System.getProperty("user.dir") + File.separator + "javascool-proglets.jar";
@@ -68,10 +68,7 @@ public class ProgletsBuilder {
       String tmpDir, jarDir, progletsDir;
       // Création d'un répertoire cible.
       if(targetDir == null) {
-        buildDir = File.createTempFile("build", "");
-        buildDir.deleteOnExit();
-        buildDir.delete();
-        buildDir.mkdirs();
+        buildDir = FileManager.createTempDir("build");
       } else {
         buildDir = new File(targetDir);
         buildDir.mkdirs();
@@ -93,7 +90,7 @@ public class ProgletsBuilder {
         String javascoolJar = Macros.getResourceURL("org/javascool/builder/ProgletsBuilder.class").toString().replaceFirst("jar:file:([^!]*)!.*", "$1");
         jarExtract(javascoolJar, jarDir, "org/javascool");
         jarExtract(javascoolJar, jarDir, "org/fife");
-        for(String jar : StringFile.list(System.getProperty("user.dir"), ".*\\.jar"))
+        for(String jar : FileManager.list(System.getProperty("user.dir"), ".*\\.jar"))
           if(!jar.matches(".*/javascool-proglets.jar"))
             jarExtract(jar, jarDir, "org/javascool/proglets");
       }
@@ -117,7 +114,7 @@ public class ProgletsBuilder {
             System.out.println("Le nom de la proglet «" + name + "» est bizarre il ne doit contenir que des lettres faire au moins quatre caractères et démarrer par une minuscule");
             error = true;
           }
-          if(!StringFile.exists(progletDir + File.separator + "help.xml")) {
+          if(!FileManager.exists(progletDir + File.separator + "help.xml")) {
             System.out.println("Pas de fichier d'aide pour " + name + ", la proglet ne sera pas construite.");
             error = true;
           }
@@ -134,9 +131,9 @@ public class ProgletsBuilder {
         }
         // Traduction Hml -> Htm des docs
         {
-          for(String doc : StringFile.list(progletDir, ".*\\.xml"))
+          for(String doc : FileManager.list(progletDir, ".*\\.xml"))
             // @todo ici il faut remplacer le xslt par un fichier du tmp !!
-            StringFile.save(doc.replaceFirst("\\.xml", "\\.htm"), Xml2Xml.run(StringFile.load(doc), "../work/src/org/javascool/builder/hdoc2htm.xslt"));
+            FileManager.save(doc.replaceFirst("\\.xml", "\\.htm"), Xml2Xml.run(FileManager.load(doc), "../work/src/org/javascool/builder/hdoc2htm.xslt"));
           // jarDir+ "/org/javascool/builder/hdoc2htm.xslt"));
         }
         DialogFrame.setUpdate("Construction de " + name + " 3/4", 50);
@@ -146,17 +143,17 @@ public class ProgletsBuilder {
           // @todo Ne pas compiler mais deployer les jars dans la cible
         } else {
 	  // Extraction des extensions nécessaires à cette proglet
-	  for(String jar : StringFile.list(progletDir, ".*\\.jar"))
+	  for(String jar : FileManager.list(progletDir, ".*\\.jar"))
             jarExtract(jar, jarDir);
           // Création d'une page de lancement de l'applet // @todo à valider avec Guillaume
-          StringFile.save(progletDir + File.separator + "index.html",
+          FileManager.save(progletDir + File.separator + "index.html",
                           "<html><head><title>" + name + "</title><meta http-equiv='Content-Type' content='text/html; charset=utf-8'/></head><body>\n" +
                           "  <center><h4>" + name + " (<a target='_blank' href='help.htm'>documentation</a>)</h4></center>\n" +
                           "  <applet width='560' height='720' code='org.javascool.widgets.PanelApplet' archive='../javasccool-progets><param name='pane' value='org.javascool.proglets." + name + "'/><pre>Impossible de lancer " + name + ": Java n'est pas installé ou mal configuré</pre></applet>\n" +
                           "</body></html>\n");
           // Lancement de la compilation dans le répertoire
           {
-            String[] javaFiles = StringFile.list(progletDir, ".*\\.java");
+            String[] javaFiles = FileManager.list(progletDir, ".*\\.java");
             if(javaFiles.length > 0)
               javac(javaFiles);
           }
@@ -250,7 +247,7 @@ public class ProgletsBuilder {
    * @param dstDir Dossier cible.
    */
   private static void copyFiles(String srcDir, String dstDir) throws IOException {
-    for(String s : StringFile.list(srcDir)) {
+    for(String s : FileManager.list(srcDir)) {
       String d = dstDir + File.separator + new File(s).getName();
       if(!new File(s).isDirectory())
         copyFile(new FileInputStream(s), new FileOutputStream(d));
@@ -281,17 +278,4 @@ public class ProgletsBuilder {
         rmDir(f);
     dir.delete();
   }
-  /* A discuter par rapport à l'ancienne implémentation.
-   *  public static Boolean suppr(File r) {
-   *     File[] fileList = r.listFiles();
-   *     Boolean s = true;
-   *     for (int i = 0; i < fileList.length; i++) {
-   *         if (fileList[i].isDirectory()) {
-   *             s = s && suppr(fileList[i]);
-   *         }
-   *         s = s && fileList[i].delete();
-   *     }
-   *     return s;
-   *  }
-   */
 }

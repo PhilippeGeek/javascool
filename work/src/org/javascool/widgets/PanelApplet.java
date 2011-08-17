@@ -5,17 +5,11 @@
 package org.javascool.widgets;
 
 // Used to encapsulate a proglet
-import java.applet.Applet;
 import javax.swing.JApplet;
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
+import org.javascool.tools.Invoke;
 
 /** Définit une applet qui encapsule un objet graphique.
  * <p>Permet de wrapper un objet graphique dans une page HTML avec une construction de la forme
@@ -72,145 +66,37 @@ public class PanelApplet extends JApplet {
       getContentPane().add(new StartStopButton() {
                              @Override
                              public void start() {
-                               invoke(pane, "start");
+                               Invoke.run(pane, "start");
                              }
                              @Override
                              public void stop() {
-                               invoke(pane, "stop");
+                               Invoke.run(pane, "stop");
                              }
                            }, BorderLayout.NORTH);
     }
-    invoke(pane, "init");
+    Invoke.run(pane, "init");
   }
   @Override
   public void destroy() {
-    invoke(pane, "init");
+    Invoke.run(pane, "init");
   }
   @Override
   public void start() {
     if(!manualStart)
-      invoke(pane, "start");
+      Invoke.run(pane, "start");
   }
   @Override
   public void stop() {
     if(!manualStart)
-      invoke(pane, "stop");
+      Invoke.run(pane, "stop");
   }
-  /** Invoke une méthode sans argument sur un objet.
-   * @param object L'objet sur lequel on invoque la méthode.
-   * @param method La méthode sans argument à invoquer, souvent : <tt>init</tt>, <tt>destroy</tt>, <tt>start</tt>, <tt>stop</tt> ou <tt>run</tt>.
-   * @param run Si true (par défaut) appelle la méthode, si false teste simplement son existence.
-   * @return La valeur true si la méthode est invocable, false sinon.
-   * @throws RuntimeException si la méthode génère une exception lors de son appel.
-   */
-  public static boolean invoke(Object object, String method, boolean run) {
-    try {
-      Method m = object.getClass().getDeclaredMethod(method);
-      if(run)
-        m.invoke(object);
-    } catch(InvocationTargetException e) { throw new RuntimeException(e.getCause());
-    } catch(Throwable e) {
-      return false;
-    }
-    return true;
-  }
-  /**
-   * @see #invoke(Object, String, boolean)
-   */
-  public static boolean invoke(Object object, String method) {
-    return invoke(object, method, true);
-  }
-  /** Définit une fenêtre principale pour lancer une application. */
-  public static class Frame extends JFrame {
-    private Component pane;
-    // @bean
-    public Frame() {}
-
-    /** Construit et ouvre une fenêtre principale pour lancer une application.
-     * @param title Le titre de la fenêtre.
-     * @param icon L'icône de la fenêtre.
-     * @param width Largeur de la fenêtre. Si 0 on prend tout l'écran.
-     * @param height Hauteur de la fenêtre. Si 0 on prend tout l'écran.
-     * @param pane Le composant graphique à afficher.
-     * @return Cet objet, permettant de définir la construction <tt>new Frame().reset(..)</tt>.
-     */
-    public Frame reset(String title, String icon, int width, int height, Component pane) {
-      setTitle(title);
-      ImageIcon image = org.javascool.tools.Macros.getIcon(icon);
-      if(image != null)
-        setIconImage(image.getImage());
-      add(this.pane = pane);
-      if(pane instanceof Applet) {
-        ((Applet) pane).init();
-        ((Applet) pane).start();
-      }
-      setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-      addWindowListener(new WindowAdapter() {
-                          @Override
-                          public void windowClosing(WindowEvent e) {
-                            if(isClosable()) {
-                              if(Frame.this.pane instanceof Applet) {
-                                ((Applet) Frame.this.pane).stop();
-                                ((Applet) Frame.this.pane).destroy();
-                              }
-                              e.getWindow().setVisible(false);
-                              e.getWindow().dispose();
-                            }
-                          }
-                        }
-                        );
-      pack();
-      if((width > 0) && (height > 0))
-        setSize(width, height);
-      else
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
-      setVisible(true);
-      return this;
-    }
-    /**
-     * @see #reset(String, String, int, int, Component)
-     */
-    public Frame reset(String title, int width, int height, Component pane) {
-      return reset(title, null, width, height, pane);
-    }
-    /**
-     * @see #reset(String, String, int, int, Component)
-     */
-    public Frame reset(String title, String icon, Component pane) {
-      return reset(title, icon, 0, 0, pane);
-    }
-    /**
-     * @see #reset(String, String, int, int, Component)
-     */
-    public Frame reset(String title, Component pane) {
-      return reset(title, null, 0, 0, pane);
-    }
-    /**
-     * @see #reset(String, String, int, int, Component)
-     */
-    public Frame reset(int width, int height, Component pane) {
-      return reset(pane.getClass().toString(), null, width, height, pane);
-    }
-    /**
-     * @see #reset(String, String, int, int, Component)
-     */
-    public Frame reset(Component pane) {
-      return reset(pane.getClass().toString(), null, 0, 0, pane);
-    }
-    /** Détermine si la fenêtre principale peut-être fermée.
-     * @return La valeur true si la fenêtre principale peut-être fermée, sinon false.
-     */
-    public boolean isClosable() {
-      return true;
-    }
-  }
-
+ 
   /** Lanceur dans une fenêtre principale d'une objet graphique.
    * @param usage <tt>java org.javascool.widgets.PanelApplet nom-complet-qualifé-de-l-objet-graphique</tt>.
    */
   public static void main(String[] usage) {
     // @main
     if(usage.length > 0)
-      new Frame().reset(new PanelApplet().reset(usage[0]));
+      new MainFrame().reset(new PanelApplet().reset(usage[0]));
   }
 }

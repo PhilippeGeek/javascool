@@ -61,8 +61,7 @@ public class Jvs2Java extends Translator {
           body.append("//").append(line).append("\n");
           if(line.matches("^\\s*package[^;]*;\\s*$"))
             System.out.println("Attention: on ne peut normalement pas définir de package Java en JavaScool\n le programme risque de ne pas s'exécuter correctement");
-        } else
-          body.append(translateOnce(line, i)).append("\n");
+        }
         i++;
       }
       // Imports proglet's static methods
@@ -81,26 +80,20 @@ public class Jvs2Java extends Translator {
       head.append("     System.out.println(\"\\n-------------------\\nErreur lors de l'exécution de la proglet\\n\"+e+\"\\n-------------------\\n\");}");
       head.append("}");
     }
-    // Ici il y a le grospatch pour jeux2D
-    String finalBody = body.toString().replaceAll("((^|\n)([ \t]*)(?!((public|private|protected)([ \t]+)))([A-Za-z0-9_]+)([ ]+)([A-Za-z0-9_]+)\\(([^()]*)\\)([ ]*)\\{([ \t]*)(\n|$))", "public $1").replaceAll("(^|[\n\t ])for[\n\t ]*\\(([A-Za-z0-9_.]+)[\n\t ]+([A-Za-z0-9_.]+)[\n\t ]+in[\n\t ]+([A-Za-z0-9_.]+)[\n\t ]*\\)[\n\t ]*\\{", "for (int tmpsystemi=0; tmpsystemi<$4.size(); tmpsystemi++) {$2 $3=($2)($4.get(tmpsystemi));");
+ 
+    String finalBody = body.toString().
+          replaceAll("(while.*\\{)", "$1 sleep(1);");
+       // Ici il y a le grospatch pour jeux2D
+      /* @todo code à basculer dans org.....proglets.jeux2D.Translator
+         line = line.replaceAll("(.*[^a-zA-Z0-9_])([a-zA-Z0-9_]+[ \t=]*\\.getProperty[ \t=]*\\()[ \t=]*([a-zA-Z0-9_]+)[ \t=]*,([^)]*\\))(.*)", "$1(($3)$2$4)$5");
+    line = line.replaceAll("\\(int\\)", "(Integer)");
+    line = line.replaceAll("\\(double\\)", "(Double)");    
+          replaceAll("((^|\n)([ \t]*)(?!((public|private|protected)([ \t]+)))([A-Za-z0-9_]+)([ ]+)([A-Za-z0-9_]+)\\(([^()]*)\\)([ ]*)\\{([ \t]*)(\n|$))", "public $1").
+                  replaceAll("(^|[\n\t ])for[\n\t ]*\\(([A-Za-z0-9_.]+)[\n\t ]+([A-Za-z0-9_.]+)[\n\t ]+in[\n\t ]+([A-Za-z0-9_.]+)[\n\t ]*\\)[\n\t ]*\\{", "for (int tmpsystemi=0; tmpsystemi<$4.size(); tmpsystemi++) {$2 $3=($2)($4.get(tmpsystemi));");
+     */
     return head.toString() + finalBody + "}";
   }
-  /** Translate a jvs line to a java line.
-   * Translate with replace
-   * @param line The text line to translate.
-   * @param lineNumber The line numbr to translate.
-   * @return The java translated text.
-   */
-  private String translateOnce(String line, int lineNumber) {
-    // Translates the while statement with sleep
-    line = line.replaceAll("(while.*\\{)", "$1 sleep(1);");
-    line = line.replaceAll("(.*[^a-zA-Z0-9_])([a-zA-Z0-9_]+[ \t=]*\\.getProperty[ \t=]*\\()[ \t=]*([a-zA-Z0-9_]+)[ \t=]*,([^)]*\\))(.*)", "$1(($3)$2$4)$5");
-    line = line.replaceAll("\\(int\\)", "(Integer)");
-    line = line.replaceAll("\\(double\\)", "(Double)");
-    line = line.replaceAll("([A-Za-z0-9_\\-]+)::([A-Za-z0-9_\\-]+)", "org.javascool.proglets.$1.Functions.$2");
-    return "    " + line;
-  }
-  /** Renvoie le nom de la dernière classe Java générée lors de la traductions. */
+  /** Renvoie le nom de la dernière classe Java générée lors de la traduction. */
   public String getClassName() {
     return "JvsToJavaTranslated" + uid;
   }
@@ -113,6 +106,6 @@ public class Jvs2Java extends Translator {
   public static void main(String[] usage) {
     // @main
     if(usage.length > 0)
-      org.javascool.tools.StringFile.save(usage.length > 1 ? usage[1] : "stdout:", new Jvs2Java().translate(org.javascool.tools.StringFile.load(usage[0])));
+      org.javascool.tools.FileManager.save(usage.length > 1 ? usage[1] : "stdout:", new Jvs2Java().translate(org.javascool.tools.FileManager.load(usage[0])));
   }
 }

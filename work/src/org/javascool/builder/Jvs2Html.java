@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 
-import org.javascool.tools.StringFile;
+import org.javascool.tools.FileManager;
 
 /** Convertit une portion de source Java ou Jvs en Html colorisé.
  * <p>Note: utilise une version patchée de <a href="http://www.java2html.de">java2html</a>, disponible dans <a href="http://code.google.com/p/javascool/source/browse/work/lib/jvs2html.jar">jvs2html.jar</a>, qui doit être dans le CLASSPATH.</p></p>
@@ -47,6 +47,6 @@ public class Jvs2Html {
   public static void main(String[] usage) {
     // @main
     if(usage.length > 0)
-      StringFile.save(usage.length > 1 ? usage[1] : "stdout:", run(StringFile.load(usage[0])));
+      FileManager.save(usage.length > 1 ? usage[1] : "stdout:", run(FileManager.load(usage[0])));
   }
 }

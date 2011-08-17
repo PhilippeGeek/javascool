@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import org.javascool.core.ProgletEngine;
 import org.javascool.widgets.Console;
+import org.javascool.widgets.MainFrame;
 
 /** Cette factory contient des fonctions générales rendues visibles à l'utilisateur de proglets.
  * <p>Elle permet de définir des fonctions statiques qui seront utilisées pour faire des programmes élèves.</p>
@@ -140,7 +141,7 @@ public class Macros {
     p.setText(text);
     p.setSize(800, 600);
     JOptionPane.showMessageDialog(
-      org.javascool.gui.Desktop.getInstance().getFrame(),
+      MainFrame.getFrame(),
       new JScrollPane(p),
       "Java's Cool",
       JOptionPane.PLAIN_MESSAGE);
@@ -305,7 +306,7 @@ public class Macros {
    * @param location La localisation (chemin du fichier ou localisation internet) où sauver le texte.
    */
   public static void saveConsoleOutput(String location) {
-    org.javascool.tools.StringFile.save(location, Console.getInstance().getText());
+    org.javascool.tools.FileManager.save(location, Console.getInstance().getText());
   }
   /** Charge une chaine de caractère pour que son contenu serve d'entrée à la console.
    * @param string La chaine de caractère à ajouter.
@@ -317,7 +318,7 @@ public class Macros {
    * @param location La localisation (chemin du fichier ou localisation internet) d'où charger le texte.
    */
   public static void loadConsoleInput(String location) {
-    addConsoleInput(org.javascool.tools.StringFile.load(location));
+    addConsoleInput(org.javascool.tools.FileManager.load(location));
   }
   /** Définit une zone tampon qui permet de substituer un fichier aux lectures au clavier. */
   private static class InputBuffer {
@@ -394,7 +395,6 @@ public class Macros {
   public static boolean equal(String string1, String string2) {
     return string1.equals(string2);
   }
-  public final static int maxInteger = Integer.MAX_VALUE;
 
   /** Renvoie le temps actuel en milli-secondes.
    * @return Renvoie la différence, en millisecondes, entre le temps actuel et celui du 1 Janvier 2000, minuit, en utilisant le temps universel coordonné.
@@ -527,7 +527,7 @@ public class Macros {
   /** Renvoie le panneau graphique de la proglet courante.
    * @return Le panneau graphique de la proglet courante ou null si il n'est pas défini.
    */
-  public static < T > T getProgletPane() {
+  public static < T extends Component> T getProgletPane() {
     Component c = ProgletEngine.getInstance().getProglet().getPane();
     return (T) c;
   }

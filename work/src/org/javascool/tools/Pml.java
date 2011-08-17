@@ -118,12 +118,12 @@ public class Pml {
     return toString("raw");
   }
   /** Initialise la PML en la lisant dans un fichier donné.
-   * @param location  L'URL (Universal Resource Location) de chargement de <a href="StringFile.html#load-format">format standard</a>.
+   * @param location  L'URL (Universal Resource Location) de chargement de <a href="FileManager.html#load-format">format standard</a>.
    * @param format Le format de lecture parmi les <a href="#input-format">formats supportés</a>, par défaut donné par l'extension du fichier.
    * @return Cet objet, permettant de définir la construction <tt>Pml pml= new Pml().load(..)</tt>.
    */
   public final Pml load(String location, String format) {
-    return reset(StringFile.load(location), format);
+    return reset(FileManager.load(location), format);
   }
   /**
    * @see #load(String, String)
@@ -132,12 +132,12 @@ public class Pml {
     return load(location, location.replaceAll("^.*\\.([A-Za-z]+)$", "$1"));
   }
   /** Sauve la PML dans un fichier donné.
-   * @param location  L'URL (Universal Resource Location) d'écriture de <a href="StringFile.html#save-format">format standard</a>.
+   * @param location  L'URL (Universal Resource Location) d'écriture de <a href="FileManager.html#save-format">format standard</a>.
    * @param format Le format d'écriture parmi les <a href="#output-format">formats supportés</a>, par défaut donné par l'extension du fichier.
    * @return Cet objet, permettant de définir la construction <tt>Pml pml= new Pml().save(..)</tt>.
    */
   public final Pml save(String location, String format) {
-    StringFile.save(location, toString(format) + "\n");
+    FileManager.save(location, toString(format) + "\n");
     return this;
   }
   /**

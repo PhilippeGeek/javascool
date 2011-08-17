@@ -10,7 +10,7 @@ import java.awt.Component;
 import javax.swing.JFrame;
 import org.javascool.Core;
 import org.javascool.widgets.HtmlDisplay;
-import org.javascool.widgets.PanelApplet;
+import org.javascool.widgets.MainFrame;
 
 // Used to define the frame
 
@@ -36,7 +36,7 @@ public class Desktop {
   /** Renvoie la fenêtre racine de l'interface graphique. */
   public JFrame getFrame() {
     if(frame == null)
-      frame = (new PanelApplet.Frame() {
+      frame = (new MainFrame() {
                  @Override
                  public boolean isClosable() {
                    return org.javascool.gui.Desktop.getInstance().isClosable();
@@ -45,7 +45,7 @@ public class Desktop {
                ).reset(Core.title, Core.logo, JVSPanel.getInstance());
     return frame;
   }
-  private PanelApplet.Frame frame;
+  private MainFrame frame;
 
   /** Ouvre un fichier dans l'éditeur.
    * @param location L'URL (Universal Resource Location) du fichier.

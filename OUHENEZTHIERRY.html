@@ -5,200 +5,76 @@
  content="text/html; charset=ISO-8859-1">
 </head>
 <body>
-<big><big><big><b>ODJ:<br>
-</b></big></big></big>
+<div style="text-align: center;"><big style="font-weight: bold;"><big>Travail
+en cours sur Javas'Cool</big></big><br>
+</div>
+<br>
 <ul>
-  <li><big><big><big>Pr&eacute;sentation de la restructuration de
-Java'sCool</big></big></big></li>
-  <li><big><big><big>Validation des choix propos&eacute;s</big></big></big></li>
-  <li><big><big><big>Actions &agrave; faire pour passer &agrave; la beta</big></big></big>
-1<br>
-    <blockquote class="gmail_quote"
- style="border-left: 1px solid rgb(204, 204, 204); margin: 0pt 0pt 0pt 0.8ex; padding-left: 1ex;"><br>
-    </blockquote>
-    <div>23 ao&ucirc;t : JVS4 Beta 1</div>
-    <div>30 ao&ucirc;t : JVS4 Beta 2</div>
-    <div>31 ao&ucirc;t : JVS4 RC1</div>
-    <div>32 ao&ucirc;t : JVS4 RC2</div>
+  <li><span style="font-weight: bold;">Notre planning</span>:<br>
+    <div>Me 24 ao&ucirc;t : JVS4 Beta 1</div>
+    <div>Me 31 ao&ucirc;t : JVS4 Beta 2</div>
+    <div>Me 7 Sept : JVS4 RC1</div>
+    <div>Me 21 Sept : JVS4 RC2</div>
   </li>
+  <li><span style="font-weight: bold;">Nos actions en cours, Javas'cool:</span></li>
+  <ul>
+    <li>[TV2] g&eacute;n&eacute;rer &agrave; partir des &lt;l link
+class="editor|broswer" les liens href="jvs: pour htm et les liens &lt;a
+href="target" pour le site</li>
+    <li>[TV2] R&eacute;diger <span style="font-style: italic;">enfin</span>
+la donc Hml</li>
+    <li>[GM2] Mettre en conformit&eacute; la proglet jeux2D</li>
+    <ul>
+      <li>sans ProgletPanel mais avec Functions et Panel</li>
+      <li>en recup&eacute;rant les regex de Jvs2Java dans un translator</li>
+    </ul>
+    <li>[TV3] Documentation des proglets</li>
+    <ul>
+      <li>renommer les noms des routines SANS prefixe li&eacute;es
+&agrave; la proglet</li>
+      <li>mettre &agrave; jour les docs XML : liens, nom des routines,
+texte.</li>
+      <li>Repasser sur les docs XML et JAVA de chaque proglet</li>
+      <li>Rendre accessible un programme de test/validation</li>
+      <li>Rechercher les Jvs et documents de v3 oubli&eacute;s en v4</li>
+    </ul>
+    <li>[TV2] Compl&eacute;ter les docs javascool</li>
+    <ul>
+      <li>D&eacute;crire ce que produit le builder</li>
+      <li>Faire un sch&eacute;ma de &eacute;dition -&gt; Jvs -&gt; Java
+-&gt; Class -&gt; rub/stop dans core<br>
+      </li>
+    </ul>
+    <li>[TV2] Int&eacute;gration des proglets processing dans
+ProgletsBuilder et ProgletsEngine</li>
+    <li>[PV2] Am&eacute;lioration du GUI</li>
+    <ul>
+      <li>Ouvrir pas les fichiers dans le user.dir sous Linux mais
+dans le home.dir sous Windows et . . sous Mac ?<br>
+      </li>
+    </ul>
+    <li>[PV3] faire un build.xml &agrave; la racine qui int&egrave;gre
+tous les build.xml</li>
+    <li>[PV1] Finir de programmer les fonctions de
+org.javascool.builder.ProgletsBuilder qui sont actuellement des appels
+syst&egrave;me.</li>
+    <li>[PV1] Redesigner le package gui.</li>
+    <ul>
+      <li>Revoir les raccourcis clavier</li>
+    </ul>
+    <li>[PV2] Remettre double stream dans console&nbsp;</li>
+    <li>[PV2] BgCouleur par defaut de message pas en blanc</li>
+    <li>[TV2] Eclater la claasse Macros en un package</li>
+    <ul>
+      <li>voi si le *.* est possible<br>
+      </li>
+    </ul>
+  </ul>
 </ul>
 <b><br>
 </b>
-<hr style="width: 100%; height: 2px;"><br>
-<b>Modifications structurelles:<br>
-</b>
+<hr style="width: 100%; height: 2px;">
 <ol>
-  <li><b>[d&eacute;veloppement de jvs4] L</b>es sources de
-javascool core &amp; builder sont regroup&eacute;s dans un projet
-netbean unique dans svn:javascool/work <br>
-  </li>
-  <ol>
-    <li>avec un build.xml unique qui
-g&eacute;n&egrave;re tous les jars.</li>
-    <li>thierry a pas encore int&eacute;gr&eacute; ce qui concerne le
-site web (voir ci dessous)<b><br>
-      </b> </li>
-    <li>Javas'Cool Core /Builder est r&eacute;ptut&eacute;e ok et les
-m&eacute;canismes sont bas&eacute;s
-sur trois objets</li>
-    <ol>
-      <li>org.javascool.gui.Desktop qui d&eacute;finir les functions
-d'interaction avec
-l'interface graphique de JavaScool.</li>
-      <li>org.javascool.core.ProgletEngine qui impl&eacute;mente les
-m&eacute;canismes de
-(compilation, ex&eacute;cution, proglet, ..) JavaScool.</li>
-      <li> org.javascool.builder.ProgletsBuilder qui int&egrave;gre
-tous les
-m&eacute;canismes de compilation de proglets<br>
-      </li>
-    </ol>
-  </ol>
-  <li><b>[organisation du code]</b> Le code java est
-compl&egrave;tement document&eacute; en <i><b>fran&ccedil;ais</b></i> <br>
-  </li>
-  <ol>
-    <li>(notre fa&ccedil;on de coder doit aussi servir d'<b><u>exemple</u></b>
-puisque nos sources sont visibles)</li>
-    <ol>
-      <li>chaque html donne acc&egrave;s au source en lecture.</li>
-      <li>les classes "en anglais et en philien" de org.javascool.gui
-sont
-des classes non
-publiques pour ne pas appara&icirc;tre dans la documentation: elles
-restent &agrave; lisser.<br>
-      </li>
-    </ol>
-    <li>les fichiers package.html / package.txt sont des m&eacute;mos
-de description.</li>
-    <li>Note: le code a &eacute;t&eacute; annot&eacute; (pour l'instant
-sous
-forme de commentaires) dans la perspective de le pr&eacute;processuer
-avec atp</li>
-    <li>Note: les packages &agrave; une classe, les doublons, les
-classes orphelines, etc... sont vir&eacute;s&nbsp;</li>
-  </ol>
-  <li><span style="font-weight: bold;">[les principales "corrections"]</span></li>
-  <ol>
-    <li><span style="font-weight: bold;"></span>Tout le traitement des
-interruptions a &eacute;t&eacute; revu
-car on arrivait pas &agrave; les r&eacute;cup&eacute;rer</li>
-    <ol>
-      <li>Il &eacute;tait g&eacute;r&eacute; &agrave; partir de
-reportApplicationBug ou de java.util.logging.* ou pas, selon les cas,
-des exceptions &eacute;taient masqu&eacute;es, d'utres
-g&eacute;nb&eacute;raient elles m&ecirc;mes des NullPointerException !!<br>
-      </li>
-    </ol>
-    <li>Beaucoup de constructions static ont &eacute;t&eacute;
-remplac&eacute;s par des constructions propres d'objets avec un
-getInstance() voir
-Console.java</li>
-    <li>Modularisation au maximum des objets
-(&agrave; commencer par ceux issus de Jvs3.3bis!) et <br>
-    </li>
-    <ol>
-      <li>s&eacute;paration le gui du <span style="font-style: italic;">moteur
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        </span>de JavaScool&nbsp;</li>
-    </ol>
-    <li>arr&ecirc;ter de faire des appels vers des
-variables/fonctions statiques entre toutes les classes qui rend le code
-incontrolable</li>
-    <li>bien s&eacute;parer les m&eacute;canismes algorithmiques des
-m&eacute;thodes de glue avec les obkets graphiques (voir HtmlDisplay
-par exemple)</li>
-    <li>Les &eacute;l&eacute;ments : ToolBar (ex JVSToolBar)
-HtmlDisplay
-StartStopButton ont &eacute;t&eacute; sorti de javascool.gui car ils
-peuvent &ecirc;tre <span style="font-style: italic;">utilis&eacute;s
-pour faire des proglet</span>s.</li>
-    <li>Les routines Macros.getRessource/Macros.getUserRessource ont
-&eacute;t&eacute; fondue avec lex toURl devenu: Macros.getResourceURL()
-    </li>
-    <li>Le builder n'utilise plus ant</li>
-    <li>Le Jvs2Html est appel&eacute; directement pas saxon sur le
-texte &agrave; traduire.</li>
-    <li>Ah oui mais le :: on l emet ou &gt;&gt;???<span
- style="font-weight: bold;"><br>
-      </span></li>
-  </ol>
-  <li><span style="font-weight: bold;">[la mise au point du site web]</span></li>
-  <ol>
-    <li>thierry a pu liquider 50% des TODO</li>
-    <li>Il y a un probl&egrave;me bloquant: les pages sont
-&laquo;in&eacute;ditables par un non-hacker&raquo; : les recups des
-copies coles du wiki sont pas lisibles, l'insertion de code PHP reste
-pas intuitive etc..</li>
-    <ol>
-      <li>Il faut<span style="font-weight: bold; font-style: italic;">
-s&eacute;parer les contenus des pages des m&eacute;canismes PHP du site</span>
-en utilisant des regex pour les liens plut&ocirc;t que du PHP</li>
-      <ol>
-        <li>Solution A: on revient au pages wiki et on regex les liens
-et on l'inclut du PHP avec des regex </li>
-        <li>Solution B: on cr&eacute;e les contenus en XML et on
-g&eacute;n&egrave;re les PHP qui <br>
-        </li>
-        <li>Solution C: on cr&eacute;e les contenus en HTML et on
-l'inclut du PHP avec des regex </li>
-      </ol>
-    </ol>
-    <li>La m&eacute;canique sketchbook/publy.sh doit &ecirc;tre
-re-factoris&eacute;e avec le builder &agrave; redefinir en terme de
-specs, <br>
-    </li>
-    <ol>
-      <li>ce serait plus coherent que ce soit un script ant&nbsp;</li>
-      <li>on devrait oser avoir un emplacement "fixe" pour les proglets
-compilees et pas les refaire ex: javascool/build/web/....</li>
-      <li>on doit aussi g&eacute;n&eacute;rer les doc javascool des
-proglets avec les java2html<br>
-      </li>
-    </ol>
-    <li>La g&eacute;n&eacute;ration des javadocs doit tenir compte de
-l'insertion des sources via java2html</li>
-    <li>Les liens jvs ne sont que des affichages avec d'autres "target"
-je propose de les d&eacute;finir comme des &lt;l class="" et de les
-produire diff&eacute;remment dans javascool et dans le site web externe<br>
-    </li>
-  </ol>
-  <li><span style="font-weight: bold;">[le travail autour du builder]</span></li>
-  <ol>
-    <li>Finir l'integration des proglets</li>
-    <ol>
-      <li>Toutes les proglets sauf jeux2D que je me suis permis de
-laisser &agrave; Guillaume (dont le travail pr&eacute;liminaire m'a
-bien aid&eacute;) compilent et se chargent</li>
-      <li>Les icones sont inexistantes ou &agrave; chier</li>
-      <li>Mais ne doit on pas renommer les routines SANS utiliser des
-noms bizarres puisque chaque proglet est independante ?<br>
-      </li>
-    </ol>
-    <li>Au niveau du builder:</li>
-    <ol>
-      <li>voir si ok de generer automatiquement la page du
-ProgletApplet avec un lien
-vers help.htm</li>
-      <li>tenir comptre du cas des proglets processing <br>
-      </li>
-    </ol>
-  </ol>
   <li><span style="font-weight: bold;">[les autres points] <a
  href="http://code.google.com/p/javascool/issues/list">http://code.google.com/p/javascool/issues/list</a></span><br>
   </li>
@@ -208,8 +84,8 @@ juin</b>
 <ol>
   <li>Thierry a perdu le close securise<br>
   </li>
-  <li>L'&eacute;diteur n'ouvre pas les fichiers dans le user.dir mais
-dans le home.dir</li>
+  <li>L'&eacute;diteur <br>
+  </li>
   <li>Les icones du Starter s'affichent pas de la meme taille : que
 faire ?</li>
   <li>On a pas l'affichage autiomatique de la console quand ca compile
@@ -248,7 +124,8 @@ catastrophique, il faut ajouter une ligne blanche.</li>
 <br>
 <hr style="width: 100%; height: 2px;">Le<span style="font-weight: bold;">s
 points
-&eacute;voqu&eacute;s pendant la r&eacute;union.</span><br>
+&eacute;voqu&eacute;s
+pendant la r&eacute;union.</span><br>
 <ul>
   <li>&nbsp;Interface JvsCore?build il faut que le bouton passe
 calirement d'une application a l'autre</li>
@@ -290,31 +167,9 @@ comment ou .*.* ; ; . .//...</li>
   </li>
 </ul>
 <br>
-<hr style="width: 100%; height: 2px;"><br>
-<span style="font-weight: bold;">Ebauche de tri-TODO (PV + GM + TV)
-liste:<br>
-</span>
+<hr style="width: 100%; height: 2px;">
 <ul>
-  <li>TV: verifier la compil avec le repertoire temporaire<br>
-  </li>
-  <li>TV : Repasser sur les docs XML et JAVA de chaque proglet et
-rendre accessible un programme de test/validation</li>
-  <ul>
-    <li>rechercher les Jvs et documents de v3 oubli&eacute;s en v4<br>
-    </li>
-  </ul>
-  <li>TV : Finaliser l'int&eacute;gration des proglets processing</li>
-  <ul>
-    <li>ajouter le complement a PorgletEngine</li>
-    <li>ajouter a la spec la possibilite d'ajouter des jars extensions
-pour l applet<br>
-    </li>
-  </ul>
-  <li>GM+TV : Remodeler le build.xml qui genere les pages webs des
-proglets &agrave; partir de ce que donne le builder</li>
-  <li>[?] : Finir de programmer les fonctions de
-org.javascool.builder.ProgletsBuilder qui sont actuellement des appels
-syst&egrave;me.<br>
+  <li>[?] : <br>
   </li>
 </ul>
 <br>

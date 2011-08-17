@@ -26,11 +26,11 @@ public class ToolBar extends JToolBar {
   private HashMap<AbstractButton, Runnable> actions = new HashMap<AbstractButton, Runnable>();
 
   /** Initialize la barre de boutons et efface tous les élements. */
-  public void reset() {
+  public void removeAll() {
     left = right = 0;
     setVisible(false);
     revalidate();
-    removeAll();
+    super.removeAll();
     buttons.clear();
     actions.clear();
     setVisible(true);
@@ -65,17 +65,17 @@ public class ToolBar extends JToolBar {
     return button;
   }
   /** Ajoute un composant à la bare d'outils.
-   * @param id Nom du composant (ce nom restera invisible). Chaque bouton/item/étiquette doit avoir un nom différent.
+   * @param label Nom du composant (ce nom restera invisible). Chaque bouton/item/étiquette doit avoir un nom différent.
    * @param component Le composant à ajouter.
    */
-  public void addTool(String id, JComponent component) {
+  public void addTool(String label, JComponent component) {
     add(component, left++);
-    if(buttons.containsKey(id)) throw new IllegalArgumentException("Chaque bouton/item/étiquette doit avoir un nom différent, mais le bouton «" + id + "» est en doublon");
-    buttons.put(id, component);
+    if(buttons.containsKey(label)) throw new IllegalArgumentException("Chaque bouton/item/étiquette doit avoir un nom différent, mais le bouton «" + label + "» est en doublon");
+    buttons.put(label, component);
     revalidate();
   }
   /** Efface un composant de la barre d'outils. */
-  public void delTool(String label) {
+  public void removeTool(String label) {
     if(buttons.containsKey(label)) {
       JComponent c = buttons.get(label);
       remove(c);
@@ -89,14 +89,14 @@ public class ToolBar extends JToolBar {
     }
   }
   /** Ajoute un composant à la droite de la barre d'outil.
-   * @param title Nom du composant (ce nom restera invisible). Chaque bouton/item/étiquette doit avoir un nom différent.
+   * @param label Nom du composant (ce nom restera invisible). Chaque bouton/item/étiquette doit avoir un nom différent.
    * @param action Action associée au bouton.
    * @return Le bouton ajouté.
    */
-  public JButton addRightTool(String title, Runnable action) {
+  public JButton addRightTool(String label, Runnable action) {
     if(right == 0)
       add(Box.createHorizontalGlue());
-    return addTool(title, null, action, left + (++right));
+    return addTool(label, null, action, left + (++right));
   }
   private int left = 0, right = 0;
 }
