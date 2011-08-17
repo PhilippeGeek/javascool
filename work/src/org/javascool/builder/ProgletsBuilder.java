@@ -140,10 +140,14 @@ public class ProgletsBuilder {
           // jarDir+ "/org/javascool/builder/hdoc2htm.xslt"));
         }
         DialogFrame.setUpdate("Construction de " + name + " 3/4", 50);
-        if(pml.getBoolean("processing")) throw new IllegalStateException("Upps le builder est pas encore implémenté pour le processing");
+        if(pml.getBoolean("processing")) {
+	  throw new IllegalStateException("Upps le builder est pas encore implémenté pour le processing");
           // @todo Tester que nous avons les tailles explicites
           // @todo Ne pas compiler mais deployer les jars dans la cible
-        else {
+        } else {
+	  // Extraction des extensions nécessaires à cette proglet
+	  for(String jar : StringFile.list(progletDir, ".*\\.jar"))
+            jarExtract(jar, jarDir);
           // Création d'une page de lancement de l'applet // @todo à valider avec Guillaume
           StringFile.save(progletDir + File.separator + "index.html",
                           "<html><head><title>" + name + "</title><meta http-equiv='Content-Type' content='text/html; charset=utf-8'/></head><body>\n" +
@@ -200,7 +204,11 @@ public class ProgletsBuilder {
   public static boolean build() {
     return build(getProglets(), null);
   }
-  /** Extrait une arborescence d'un jar. */
+  /** Extrait une arborescence d'un jar. 
+   * @param jarFile Jarre dont on extrait les fichiers.
+   * @param destDir Dossier où on déploie les fichiers.
+   * @param jarEntry Racine des sous-dossiers à extraire. Si null extrait tout les fichiers.
+   */
   private static void jarExtract(String jarFile, String destDir, String jarEntry) {
     /* @todo A valider
      *  JarFile j = new JarFile(jarFile);
@@ -208,7 +216,7 @@ public class ProgletsBuilder {
      *  JarEntry f = e.nextElement();
      *  String n = f.getName();
      *  System.out.println(n);
-     *  if (n.startsWith(jarEntry)) {
+     *  if (jarEntry == null || n.startsWith(jarEntry)) {
      *  String d = dstDir+File.separator+n;
      *  if (!new File(d).isDirectory()) {
      *  new File(d).getParent().mkdirs();
@@ -217,17 +225,30 @@ public class ProgletsBuilder {
      *  }
      *  }
      */
-    Exec.run("unzip -q " + jarFile + " -d " + destDir + " " + jarEntry + "/**");
+    Exec.run("unzip -q " + jarFile + " -d " + destDir + (jarEntry != null ? " " + jarEntry + "/**" : ""));
   }
-  /** Crée un jar à partir d'une arborescence. */
-  private static void jarCreate(String jarFile, String mfFile, String dir) {
+  /**
+   * @see #jarExtract(String, String, String)
+   */
+  private static void jarExtract(String jarFile, String destDir) {
+    jarExtract(jarFile, destDir, null);
+  }
+  /** Crée un jar à partir d'une arborescence. 
+   * @param jarFile Jar à construire. Elle est détruite avant d'être crée.
+   * @param mfFile Fichier de manifeste (obligatoire).
+   * @param srcDir Dossier source avec les fichiers à mettre en jarre.
+   */
+  private static void jarCreate(String jarFile, String mfFile, String srcDir) {
     new File(jarFile).delete();
 
     /* @todo Remplacer l'appel systeme par une api
      */
-    Exec.run("jar cfm " + jarFile + " " + mfFile + " -C " + dir + " .");
+    Exec.run("jar cfm " + jarFile + " " + mfFile + " -C " + srcDir + " .");
   }
-  /** Copie un répertoire dans un autre en oubliant les svn. */
+  /** Copie un répertoire dans un autre en oubliant les svn. 
+   * @param srcDir Dossier source.
+   * @param dstDir Dossier cible.
+   */
   private static void copyFiles(String srcDir, String dstDir) throws IOException {
     for(String s : StringFile.list(srcDir)) {
       String d = dstDir + File.separator + new File(s).getName();
@@ -237,7 +258,7 @@ public class ProgletsBuilder {
         copyFiles(s, d);
     }
   }
-  /** Copy un stream dans un autre. */
+  // Copy un stream dans un autre.
   private static void copyFile(InputStream in, OutputStream out) throws IOException {
     BufferedInputStream i = new BufferedInputStream(in, 2048);
     BufferedOutputStream o = new BufferedOutputStream(out, 2048);
