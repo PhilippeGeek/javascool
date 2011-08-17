@@ -2,7 +2,7 @@
 * Thierry.Vieville@sophia.inria.fr, Copyright (C) 2009.  All rights reserved. *
 *******************************************************************************/
 package org.javascool.proglets.syntheSons;
-import static org.javascool.tools.Macros.*;
+import static org.javascool.macros.Macros.*;
 
 /** Définit les fonctions de la proglet d'expérimenter avec des signaux sonores.
  *
@@ -49,7 +49,7 @@ public class Functions {
   static public void synthePlay() {
     try { getPane().sound.play();
     } catch(Exception e) {
-      echo(e.toString());
+      System.out.println(e.toString());
     }
   }
 }

@@ -19,7 +19,7 @@ import javax.sound.midi.Soundbank;
 import javax.sound.midi.SoundbankResource;
 
 import java.util.HashMap;
-import org.javascool.tools.Macros;
+import org.javascool.macros.Macros;
 
 /** Defines a data-file sound-bit wrapper.
  * @see <a href="FileSoundBit.java.html">code source</a>

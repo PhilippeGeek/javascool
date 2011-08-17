@@ -24,7 +24,7 @@ import java.awt.geom.Line2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import org.javascool.tools.Macros;
+import org.javascool.macros.Macros;
 
 class GogleMapPanel extends JPanel implements ActionListener {
   private static final long serialVersionUID = 1L;

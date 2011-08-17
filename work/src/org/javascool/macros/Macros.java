@@ -6,7 +6,10 @@
 
 package org.javascool.macros;
 
+import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.net.URISyntaxException;
 
 import java.util.Calendar;
@@ -15,9 +18,9 @@ import javax.swing.ImageIcon;
 import java.net.URL;
 import java.io.File;
 import java.io.IOException;
+import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JEditorPane;
-import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
 import org.javascool.core.ProgletEngine;
 import org.javascool.widgets.MainFrame;
 
@@ -94,12 +97,30 @@ public class Macros {
       p.setContentType("text/html");
     p.setText(text);
     p.setSize(800, 600);
-    JOptionPane.showMessageDialog(
-      MainFrame.getFrame(),
-      new JScrollPane(p),
-      "Java's Cool",
-      JOptionPane.PLAIN_MESSAGE);
+    messageDialog = new JDialog(MainFrame.getFrame(), "Java's Cool message");
+    messageDialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+    messageDialog.getContentPane().add(p);
+    messageDialog.getContentPane().add(new JButton("OK") {
+                                         {
+                                           addActionListener(new ActionListener() {
+                                                               @Override
+                                                               public void actionPerformed(ActionEvent e) {
+                                                                 messageDialog.dispose();
+                                                                 messagePending = false;
+                                                               }
+                                                             }
+                                                             );
+                                         }
+                                       }, BorderLayout.SOUTH);
+    messageDialog.pack();
+    messageDialog.setVisible(true);
+    messagePending = true;
+    while(messagePending)
+      Macros.sleep(100);
   }
+  private static JDialog messageDialog;
+  private static boolean messagePending;
+
   /**
    * @see #message(String, boolean)
    */

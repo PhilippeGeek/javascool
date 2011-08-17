@@ -12,7 +12,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.io.OutputStream;
 import java.io.File;
-import org.javascool.tools.Macros;
+import org.javascool.macros.Macros;
 
 /** Définit comment lire/ecire une imaage.
  * @see <a href="ImageUtils.java.html">code source</a>

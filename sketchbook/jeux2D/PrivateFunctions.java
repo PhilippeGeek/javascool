@@ -15,7 +15,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.javascool.widgets.Console;
-import org.javascool.tools.Macros;
+import org.javascool.macros.Macros;
 
 /* To use these event listeners, use this syntax :
  * void toto(MouseState s) {

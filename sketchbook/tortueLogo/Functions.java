@@ -1,5 +1,5 @@
 package org.javascool.proglets.tortueLogo;
-import static org.javascool.tools.Macros.*;
+import static org.javascool.macros.Macros.*;
 
 import java.awt.Color;
 

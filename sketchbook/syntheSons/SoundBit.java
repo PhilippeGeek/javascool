@@ -19,7 +19,7 @@ import javax.sound.sampled.LineUnavailableException;
 // Used to play/save an audio file
 import java.io.File;
 import javax.sound.sampled.AudioFileFormat;
-import org.javascool.tools.Macros;
+import org.javascool.macros.Macros;
 
 /** This widget defines a sound bit and allows to use sampled sound resources.
  * @see <a href="SoundBit.java.html">source code</a>

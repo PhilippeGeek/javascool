@@ -1,5 +1,5 @@
 package org.javascool.proglets.analogiqueNumerique;
-import static org.javascool.tools.Macros.*;
+import static org.javascool.macros.Macros.*;
 
 public class Functions {
   private static final long serialVersionUID = 1L;

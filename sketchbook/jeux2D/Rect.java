@@ -6,7 +6,7 @@ package org.javascool.proglets.jeux2D;
  */
 import java.awt.Graphics;
 import java.util.logging.Logger;
-import org.javascool.tools.Macros;
+import org.javascool.macros.Macros;
 
 /**
  * This class allows the end-user to draw and manipulate an rect

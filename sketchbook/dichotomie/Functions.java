@@ -1,5 +1,5 @@
 package org.javascool.proglets.dichotomie;
-import static org.javascool.tools.Macros.*;
+import static org.javascool.macros.Macros.*;
 
 /** Définit une proglet javascool qui permet de simuler la tortue logo.
  * @see <a href="about-proglet.htm">Description</a>

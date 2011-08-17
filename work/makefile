@@ -7,7 +7,7 @@ export PATH:=/usr/java/jdk1.6.0_22/bin:$(PATH)
 JVS = $(realpath ..)
 
 ant :
-	ant brun
+	ant run
 #	ant javadoc ; firefox $(JVS)/build/web/api/index.html 
 
 #

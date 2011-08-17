@@ -21,7 +21,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import org.javascool.gui.JVSMainPanel;
-import org.javascool.tools.Macros;
+import org.javascool.macros.Macros;
 
 /**
  * This class defines a sprite that can be drawn in the render area and addressed events

@@ -5,7 +5,7 @@
 package org.javascool.proglets.pixelsAlgos;
 
 import static org.javascool.proglets.pixelsAlgos.Functions.*;
-import org.javascool.tools.Macros;
+import org.javascool.macros.Macros;
 import org.javascool.widgets.IconOutput;
 
 /** Définit une proglet qui permet de manipuler les pixels d'une image.
