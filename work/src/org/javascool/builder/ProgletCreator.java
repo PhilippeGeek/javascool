@@ -7,7 +7,7 @@
 package org.javascool.builder;
 
 import java.io.File;
-import org.javascool.tools.StringFile;
+import org.javascool.tools.FileManager;
 
 /** Cette factory contient les mécanismes de construction d'une nouvelle proglet.
  * <h1>Ebauche non finalisée: ce mécanisme est au stade d'ébauche.</h1>
@@ -30,10 +30,10 @@ public class ProgletCreator {
     if((!new File(location).isDirectory()) && !new File(location).mkdirs()) {
       String tail = new File(location).exists() ? "un fichier existe à cet emplacement" : "il doit être interdit de créer le répertoire ici"; throw new RuntimeException("Impossible de créer le répertoire «" + location + "»de la proglet, " + tail);
     }
-    StringFile.save(location + File.separator + "help.xml", helpPattern.replaceAll("@name", name), true);
-    StringFile.save(location + File.separator + "Panel.java", panelPattern.replaceAll("@name", name), true);
-    StringFile.save(location + File.separator + "Functions.java", functionsPattern.replaceAll("@name", name), true);
-    StringFile.save(location + File.separator + "Translator.java", translatorPattern.replaceAll("@name", name), true);
+    FileManager.save(location + File.separator + "help.xml", helpPattern.replaceAll("@name", name), true);
+    FileManager.save(location + File.separator + "Panel.java", panelPattern.replaceAll("@name", name), true);
+    FileManager.save(location + File.separator + "Functions.java", functionsPattern.replaceAll("@name", name), true);
+    FileManager.save(location + File.separator + "Translator.java", translatorPattern.replaceAll("@name", name), true);
   }
   private static final String helpPattern =
     "<div title=\"La «proglet» @name\">\n" +
@@ -67,7 +67,7 @@ public class ProgletCreator {
     " * @see <a href=\"Panel.java.html\">code source</a>\n" +
     " * @serial exclude\n" +
     " */\n" +
-    "public class Panel implements JPanel /* ou tout autre Component pertinent. */ {\n" +
+    "public class Panel extends JPanel /* ou tout autre Component pertinent. */ {\n" +
     "\n" +
     "  // @bean\n" +
     " public Panel() {" +

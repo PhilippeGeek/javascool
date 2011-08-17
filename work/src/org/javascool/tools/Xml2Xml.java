@@ -29,6 +29,9 @@ public class Xml2Xml {
   /** Convertit une chaîne XML en une autre chaîne XML selon des règles XSL.
    * @param xml La chaîne XML en entrée.
    * @param xsl Le nom de fichier ou la chaîne avec les règles de transformation XSL.
+   * <p> - Si la chaîne commence par un <tt>&lt;</tt> elle est reconnue comme un texte XSLT.</p>
+   * <p> - Sinon elle est reconnue comme un non de fichier.</p>
+   * 
    * @return La chaîne en sortie.
    *
    * @throws IllegalArgumentException Si une erreur de syntaxe est détecté.
@@ -111,6 +114,6 @@ public class Xml2Xml {
   public static void main(String[] usage) {
     // @main
     if(usage.length > 1)
-      StringFile.save(usage.length > 2 ? usage[2] : "stdout:", run(StringFile.load(usage[0]), StringFile.load(usage[1])));
+      FileManager.save(usage.length > 2 ? usage[2] : "stdout:", run(FileManager.load(usage[0]), FileManager.load(usage[1])));
   }
 }

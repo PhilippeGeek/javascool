@@ -14,8 +14,9 @@ import org.javascool.tools.Macros;
 
 import java.io.File;
 import java.io.IOException;
-import org.javascool.tools.StringFile;
+import org.javascool.tools.FileManager;
 import org.javascool.tools.Pml;
+import org.javascool.tools.Invoke;
 
 /** Définit les mécanismes de compilation, exécution, gestion de proglet.
  *
@@ -42,7 +43,7 @@ public class ProgletEngine {
     {
       proglets = new ArrayList<Proglet>();
       String javascoolJar = Macros.getResourceURL("org/javascool/core/ProgletEngine.class").toString().replaceFirst("jar:([^!]*)!.*", "$1");
-      for(String dir : StringFile.list(javascoolJar, "org.javascool.proglets.[^\\.]+"))
+      for(String dir : FileManager.list(javascoolJar, "org.javascool.proglets.[^\\.]+"))
         proglets.add(new Proglet().load(dir.replaceFirst("jar:[^!]*!", "")));
     }
     // Définit une proglet "vide" pour lancer l'interface
@@ -71,17 +72,9 @@ public class ProgletEngine {
     }
     String javaCode = jvs2java.translate(program);
     // Creation d'un répertoire temporaire
-    File buildDir;
-    try {
-        buildDir = File.createTempFile("build", "");
-        buildDir.deleteOnExit();
-        buildDir.delete();
-        buildDir.mkdirs();
-    } catch(IOException e) {
-        throw new IllegalStateException("Impossible de créer de répertoire temporaire: c'estun bug !!!");
-    }
+    File buildDir = FileManager.createTempDir("javac");
     String javaFile = buildDir + File.separator + jvs2java.getClassName() + ".java";
-    StringFile.save(javaFile, javaCode);
+    FileManager.save(javaFile, javaCode);
     if(Java2Class.compile(javaFile)) {
       runnable = Java2Class.load(javaFile);
       return true;
@@ -132,15 +125,13 @@ public class ProgletEngine {
    * @return La proglet en fonctionnement ou null si la proglet n'existe pas.
    */
   public Proglet setProglet(String proglet) {
-    if(currentProglet != null)
-      currentProglet.invoke("destroy", true);
-    if(currentProglet != null&& currentProglet.getPane() instanceof Applet)
-      ((Applet) currentProglet.getPane()).destroy();
+    if(currentProglet != null && currentProglet.getPane() != null)
+            Invoke.run(currentProglet.getPane(), "destroy");
     for(Proglet p : getProglets())
       if(p.getName().equals(proglet))
         currentProglet = p;
-    if(currentProglet != null)
-      currentProglet.invoke("init", true);
+    if(currentProglet != null && currentProglet.getPane() != null)
+            Invoke.run(currentProglet.getPane(), "init");
     return currentProglet;
   }
   /** Renvoie la proglet courante.
@@ -159,7 +150,7 @@ public class ProgletEngine {
   }
   public class Proglet {
     /** Méta-données de la proglet. */
-    Pml pml = new Pml();
+    public Pml pml = new Pml();
 
     /** Définit une proglet à partir d'un répertoire donné.
      * @param location L'URL (Universal Resource Location) où se trouve la proglet.
@@ -175,7 +166,7 @@ public class ProgletEngine {
       } catch(Exception e) { throw new IllegalArgumentException(e + " : " + location + " is a malformed URL");
       }
       if(pml.isDefined("icon") &&
-         StringFile.exists(Macros.getResourceURL(location + pml.getString("icon"))))
+         FileManager.exists(Macros.getResourceURL(location + pml.getString("icon"))))
         pml.set("icon-location", location + pml.getString("icon"));
       else
         pml.set("icon-location", "org/javascool/widgets/icons/scripts.png");
@@ -203,6 +194,12 @@ public class ProgletEngine {
      */
     public String getName() {
       return pml.getString("name");
+    }
+    /** Renvoie le titre de la proglet.
+     * @return Le titre de la proglet.
+     */
+    public String getTitle() {
+      return pml.getString("title");
     }
     /** Renvoie l'icone de la proglet.
      * @return Le nom de l'URL de l'icone de la proglet, ou l'icone par defaut sinon.
@@ -232,15 +229,18 @@ public class ProgletEngine {
      */
     public Translator getTranslator() {
       return (Translator) pml.getObject("jvs-translator");
+    }    
+    /** Indique si la proglet a une démo pour l'utilisateur.
+     */
+    public boolean hasDemo() {
+      return getPane() != null && Invoke.run(getPane(), "start", false);
     }
-    /** Invoke une des méthodes de la proglet.
-     * @param method La méthode sans argument à invoquer : <tt>init</tt>, <tt>destroy</tt>, <tt>start</tt>, <tt>stop</tt>.
-     * @param run Si true appelle la méthode, si false teste simplement son existence.
+    /** Lance la démo de la proglet.
      * @return La valeur true si la méthode est invocable, false sinon.
      * @throws RuntimeException si la méthode génère une exception lors de son appel.
      */
-    public boolean invoke(String method, boolean run) {
-      return org.javascool.widgets.PanelApplet.invoke(getPane(), method, run);
+    public boolean doDemo() {
+        return getPane() != null && Invoke.run(getPane(), "start");
     }
-  }
+}
 }

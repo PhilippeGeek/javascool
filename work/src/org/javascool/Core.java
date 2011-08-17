@@ -4,10 +4,6 @@
 
 package org.javascool;
 
-// Used to set Win look and feel
-import javax.swing.UIManager.LookAndFeelInfo;
-import javax.swing.UIManager;
-
 import org.javascool.gui.Desktop;
 import org.javascool.tools.ErrorCatcher;
 
@@ -34,34 +30,7 @@ public class Core {
                                        + "</center><br/>"
                                        + "Il est distribué sous les conditions de la licence CeCILL<br/>", true);
   }
-  /** Définit le look and feel de l'application. */
-  static void setUpLookAndFeel() {
-    try {
-      for(LookAndFeelInfo info : UIManager.getInstalledLookAndFeels())
-        if("Nimbus".equals(info.getName())) {
-          UIManager.setLookAndFeel(info.getClassName());
-          break;
-        }
-    } catch(Exception e1) {
-      String os = System.getProperty("os.name");
-      if(os.startsWith("Windows")) {
-        try {
-          UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-        } catch(Exception e2) {}
-      } else {
-        if(System.getProperty("os.name").toUpperCase().contains("MAC")) {
-          try {
-            System.setProperty("com.apple.mrj.application.apple.menu.about.name", title);
-          } catch(Exception e2) {}
-        }
-        try {
-          UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch(Exception e2) {
-          System.err.println("Note: Utilisaton du thème Java (et non du système)");
-        }
-      }
-    }
-  }
+
   /** Mets en place le système d'alerte en cas d'erreur non gérée. */
   static void setUncaughtExceptionAlert() {
     ErrorCatcher.setUncaughtExceptionAlert("<h1>Détection d'une anomalie liée à Java:</h1>\n" +
@@ -82,7 +51,6 @@ public class Core {
     }
     System.err.println("" + title + " is starting ...");
     ErrorCatcher.checkJavaVersion(6);
-    setUpLookAndFeel();
     // -setUncaughtExceptionAlert();
     Desktop.getInstance().getFrame();
   }

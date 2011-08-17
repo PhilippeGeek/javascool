@@ -27,12 +27,12 @@ import java.util.Enumeration;
 
 /** Lit/Ecrit un contenu textuel local ou distant en tenant compte de l'encodage UTF-8.
  *
- * @see <a href="StringFile.java.html">code source</a>
+ * @see <a href="FileManager.java.html">code source</a>
  * @serial exclude
  */
-public class StringFile {
+public class FileManager {
   // @factory
-  private StringFile() {}
+  private FileManager() {}
 
   /** Lit un contenu textuel local ou distant en tenant compte de l'encodage UTF-8.
    *
@@ -185,5 +185,20 @@ public class StringFile {
    */
   public static String[] list(String folder) {
     return list(folder, null);
+  }
+  
+  /** Crée un répertoire temporaire dans le répertoire temporaire de la machine.
+   * @param prefix Prefix du répertoire.
+   * @throws RuntimeException Si une erreur d'entrée-sortie s'est produite.
+   */
+  public static File createTempDir(String prefix)  {
+      try {
+     File d=     File.createTempFile(prefix, "");
+        d.deleteOnExit();
+        d.delete();
+        d.mkdirs();
+        return d;
+      }  catch(IOException e) { throw new RuntimeException(e + " when creating temporary directory");
+      }
   }
 }
