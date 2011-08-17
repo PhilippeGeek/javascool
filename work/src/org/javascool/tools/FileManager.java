@@ -186,19 +186,18 @@ public class FileManager {
   public static String[] list(String folder) {
     return list(folder, null);
   }
-  
   /** Crée un répertoire temporaire dans le répertoire temporaire de la machine.
    * @param prefix Prefix du répertoire.
    * @throws RuntimeException Si une erreur d'entrée-sortie s'est produite.
    */
-  public static File createTempDir(String prefix)  {
-      try {
-     File d=     File.createTempFile(prefix, "");
-        d.deleteOnExit();
-        d.delete();
-        d.mkdirs();
-        return d;
-      }  catch(IOException e) { throw new RuntimeException(e + " when creating temporary directory");
-      }
+  public static File createTempDir(String prefix) {
+    try {
+      File d = File.createTempFile(prefix, "");
+      d.deleteOnExit();
+      d.delete();
+      d.mkdirs();
+      return d;
+    } catch(IOException e) { throw new RuntimeException(e + " when creating temporary directory");
+    }
   }
 }

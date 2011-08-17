@@ -1,4 +1,3 @@
-
 package org.javascool.tools;
 
 import java.lang.reflect.InvocationTargetException;
@@ -7,7 +6,6 @@ import java.lang.reflect.Method;
 /** Invoque une méthode sur un objet Java.
  */
 public class Invoke {
-   
   /** Invoke une méthode sans argument sur un objet.
    * @param object L'objet sur lequel on invoque la méthode.
    * @param method La méthode sans argument à invoquer, souvent : <tt>init</tt>, <tt>destroy</tt>, <tt>start</tt>, <tt>stop</tt> ou <tt>run</tt>.
@@ -31,5 +29,5 @@ public class Invoke {
    */
   public static boolean run(Object object, String method) {
     return run(object, method, true);
-  } 
+  }
 }

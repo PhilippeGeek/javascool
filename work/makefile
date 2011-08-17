@@ -8,7 +8,7 @@ JVS = $(realpath ..)
 
 ant :
 	ant brun
-	ant javadoc ; firefox $(JVS)/build/web/api/index.html 
+#	ant javadoc ; firefox $(JVS)/build/web/api/index.html 
 
 #
 # Commandes de service pour gerer le site javascool

@@ -31,7 +31,7 @@ public class Xml2Xml {
    * @param xsl Le nom de fichier ou la chaîne avec les règles de transformation XSL.
    * <p> - Si la chaîne commence par un <tt>&lt;</tt> elle est reconnue comme un texte XSLT.</p>
    * <p> - Sinon elle est reconnue comme un non de fichier.</p>
-   * 
+   *
    * @return La chaîne en sortie.
    *
    * @throws IllegalArgumentException Si une erreur de syntaxe est détecté.

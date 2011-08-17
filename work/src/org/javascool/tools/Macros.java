@@ -395,7 +395,6 @@ public class Macros {
   public static boolean equal(String string1, String string2) {
     return string1.equals(string2);
   }
-
   /** Renvoie le temps actuel en milli-secondes.
    * @return Renvoie la différence, en millisecondes, entre le temps actuel et celui du 1 Janvier 2000, minuit, en utilisant le temps universel coordonné.
    */
@@ -527,7 +526,7 @@ public class Macros {
   /** Renvoie le panneau graphique de la proglet courante.
    * @return Le panneau graphique de la proglet courante ou null si il n'est pas défini.
    */
-  public static < T extends Component> T getProgletPane() {
+  public static < T extends Component > T getProgletPane() {
     Component c = ProgletEngine.getInstance().getProglet().getPane();
     return (T) c;
   }

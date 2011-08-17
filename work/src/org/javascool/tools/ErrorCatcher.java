@@ -20,20 +20,6 @@ public class ErrorCatcher {
   // @factory
   private ErrorCatcher() {}
 
-  /** Rapporte une erreur avvec son contexte en tant qu'erreur d'exécution.
-   * <p>Permet de fournir une solution acceptable dans une construction de la forme <tt>try { } catch(Thowable e) { ErrorCatcher.report(e); }</tt>.</p>
-   * @param error L'erreur ou exception à rapporter.
-   * @return Une RuntimeException qui encapsule cette erreur, après avoir imprimé un alerte dans la consol et du diagnostic dans la console d'erreur.
-   */
-  public static RuntimeException report(Throwable error) {
-    if(error instanceof InvocationTargetException)
-      report(error.getCause());
-    System.out.println(error.toString());
-    System.err.println(error.toString());
-    for(int i = 0; i < 4 && i < error.getStackTrace().length; i++)
-      System.err.println(error.getStackTrace()[i]);
-    return error instanceof RuntimeException ? (RuntimeException) error : new RuntimeException(error);
-  }
   /** Ouvre une fenêtre d'alerte en cas d'exception intempestive et non prise en compte.
    * <p> Installe un gestionnaire d'exception non interceptée qui recueille des informations sur:
    * les versions des composants logiciels, le nom du process, la trace de la pile et
@@ -45,6 +31,7 @@ public class ErrorCatcher {
     uncaughtExceptionAlertHeader = header;
     System.setProperty("application.revision", "" + revision);
     Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+                                                @Override
                                                 public void uncaughtException(Thread t, Throwable e) {
                                                   String s = "";
                                                   if(uncaughtExceptionAlertOnce <= 1) {

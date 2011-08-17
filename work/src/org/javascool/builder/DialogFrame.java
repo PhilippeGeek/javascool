@@ -60,7 +60,7 @@ public class DialogFrame {
    * @param parent Le bouton ou panneau qui lance ce menu.
    * @param reload Indique si les proglets existantes doivent être rechargées. Par défaut false.
    */
- private static void startProgletMenu(Component parent, boolean reload) {
+  private static void startProgletMenu(Component parent, boolean reload) {
     if((jPopupMenu == null) || reload) {
       jPopupMenu = new JPopupMenu();
       if(ProgletsBuilder.getProglets().length > 0) {
@@ -76,7 +76,7 @@ public class DialogFrame {
                                      @Override
                                      public void actionPerformed(ActionEvent e) {
                                        new Thread(new Runnable() {
-                            @Override
+                                                    @Override
                                                     public void run() {
                                                       ArrayList<String> proglets = new ArrayList<String>();
                                                       for(Component c: jPopupMenu.getComponents())

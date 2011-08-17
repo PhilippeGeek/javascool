@@ -6,7 +6,6 @@ package org.javascool.core;
 
 /** Normalise la mise en page d'un source Jvs. */
 public class JvsBeautifier {
-    
   /** Reformate un morceau de code Jvs.
    * <p>- C'est un mécanisme restritif un peu fragile destiné au sous-langage Jvs de Java.</p>
    * @param text Le source à reformate.

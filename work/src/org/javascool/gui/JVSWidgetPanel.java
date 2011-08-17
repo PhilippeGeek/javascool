@@ -18,19 +18,16 @@ class JVSWidgetPanel extends JVSTabs {
   private String progletTabId;
   /** Instance du JVSWidgetPanel */
   private static JVSWidgetPanel jwp;
-  
-  public static JVSWidgetPanel getInstance(){
-      if(jwp==null){
-          jwp=new JVSWidgetPanel();
-      }
-      return jwp;
-  }
 
+  public static JVSWidgetPanel getInstance() {
+    if(jwp == null)
+      jwp = new JVSWidgetPanel();
+    return jwp;
+  }
   private JVSWidgetPanel() {
     super();
-    this.add("Console","",Console.getInstance());
+    this.add("Console", "", Console.getInstance());
   }
-  
   /** Charge les tabs de la proglet
    * Charge le tab de la proglet (Panel) et l'HTMLDisplay avec le fichier d'aide.
    * @param name Le nom du package de la proglet
@@ -52,7 +49,7 @@ class JVSWidgetPanel extends JVSTabs {
     this.setSelectedIndex(this.indexOfTab("Console"));
   }
   /** Ouvre un nouvel onglet web
-   * Ouvre un nouveau HTMLDisplay dans un onglet. Cet onglet peut être fermer à 
+   * Ouvre un nouveau HTMLDisplay dans un onglet. Cet onglet peut être fermer à
    * l'aide de la croix qui se situe à droite du titre de l'onglet.
    * @param url L'url de la page à charger
    * @param tabName Le titre du tab à ouvrir

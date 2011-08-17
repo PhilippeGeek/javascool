@@ -9,25 +9,22 @@ import javax.swing.JSplitPane;
  * @see org.javascool.gui.JVSWidgetPanel
  */
 class JVSCenterPanel extends JSplitPane {
+  private static final long serialVersionUID = 1L;
+  /** L'instance en cour de cette classe */
+  private static JVSCenterPanel jvssplitpane;
 
-    private static final long serialVersionUID = 1L;
-    /** L'instance en cour de cette classe */
-    private static JVSCenterPanel jvssplitpane;
-
-    /** Retourne l'instance actuelle de la classe */
-    public static JVSCenterPanel getInstance() {
-        if (jvssplitpane == null) {
-            jvssplitpane = new JVSCenterPanel();
-        }
-        return jvssplitpane;
-    }
-
-    /** Constructeur de la classe */
-    private JVSCenterPanel() {
-        super(JSplitPane.HORIZONTAL_SPLIT);
-        this.setLeftComponent(JVSFileTabs.getInstance());
-        this.setRightComponent(JVSWidgetPanel.getInstance());
-        this.setVisible(true);
-        this.validate();
-    }
+  /** Retourne l'instance actuelle de la classe */
+  public static JVSCenterPanel getInstance() {
+    if(jvssplitpane == null)
+      jvssplitpane = new JVSCenterPanel();
+    return jvssplitpane;
+  }
+  /** Constructeur de la classe */
+  private JVSCenterPanel() {
+    super(JSplitPane.HORIZONTAL_SPLIT);
+    this.setLeftComponent(JVSFileTabs.getInstance());
+    this.setRightComponent(JVSWidgetPanel.getInstance());
+    this.setVisible(true);
+    this.validate();
+  }
 }
