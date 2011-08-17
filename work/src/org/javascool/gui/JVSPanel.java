@@ -1,9 +1,7 @@
 package org.javascool.gui;
 
-import java.applet.Applet;
 import java.awt.BorderLayout;
 import java.io.Console;
-import java.io.InputStream;
 import java.util.HashMap;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -12,76 +10,57 @@ import org.javascool.core.ProgletEngine;
 
 /** The main panel for Java's cool
  * This class wich is very static contain all that we need to run Java's cool like save and open file command.
- * This class can only be called by JVSMain on instance otherwise it can throw very big errors
+ * This class can only be called by JVSPanel on instance otherwise it can throw very big errors
  *
  * @author Philippe Vienne
  */
-class JVSMainPanel extends JPanel {
+class JVSPanel extends JPanel {
   private static final long serialVersionUID = 1L;
 
   /** The java's cool top tool bar. */
-  private JVSToolBar toolbar = new JVSToolBar();
+  private JVSToolBar toolbar;
   /** The java's cool split pane. */
-  private JVSSplitPane mainPane = new JVSSplitPane();
+  private JVSCenterPanel mainPane;
   /** This HashMap say if a file has to be saved */
   private HashMap<String, Boolean> haveToSave = new HashMap<String, Boolean>();
   private Boolean noFileEdited = true;
 
-  /** Access to the unique instance of the JVSMainPanel object. */
-  public static JVSMainPanel getInstance() {
+  /** Access to the unique instance of the JVSPanel object. */
+  public static JVSPanel getInstance() {
     if(desktop == null)
-      desktop = new JVSMainPanel();
+      desktop = new JVSPanel();
     return desktop;
   }
-  private static JVSMainPanel desktop = null;
-  private JVSMainPanel() {
+  private static JVSPanel desktop = null;
+  private JVSPanel() {
     setVisible(true);
-    setupViewLayout();
-    setupToolBar();
-    setupMainPanel();
-  }
-  /** Setup the Border Layout for the JPanel */
-  private void setupViewLayout() {
-    BorderLayout layout = new BorderLayout();
-    setLayout(layout);
-  }
-  /** Setup the ToolBar */
-  private void setupToolBar() {
-    // Add Buttons here
-    add(toolbar, BorderLayout.NORTH);
-  }
-  /** Setup Main Panel */
-  private void setupMainPanel() {
-    add(new JVSStartPanel());
+    setLayout(new BorderLayout());
+    add(JVSToolBar.getInstance(), BorderLayout.NORTH);
+    add(JVSStartPanel.getInstance());
+    this.revalidate();
   }
   public void closeProglet() {
     if(closeAllFiles()) {
       removeAll();
-      add(toolbar);
-      add(new JVSStartPanel());
+      add(JVSToolBar.getInstance(), BorderLayout.NORTH);
+      add(JVSStartPanel.getInstance());
       revalidate();
     } else {}
   }
-  /** Get the toolbar
-   * @return The toolbar
-   */
-  public JVSToolBar getToolBar() {
-    return toolbar;
-  }
   /** Open a new file in the editor
-   * @see JVSFileEditorTabs
+   * @see JVSFileTabs
    */
   public void newFile() {
-    String fileId = getEditorTabs().openNewFile();
+    String fileId = JVSFileTabs.getInstance().openNewFile();
     haveToSave.put(fileId, false);
   }
   /** Compile file in the editor
-   * @see JVSFileEditorTabs
+   * @see JVSFileTabs
    */
   public void compileFile() {
-    getEditorTabs().getEditor(JVSFileEditorTabs.getCurrentCompiledFile()).removeLineSignals();
-    getEditorTabs().saveCurrentFile();
-    if(getEditorTabs().compileFile(getEditorTabs().getCurrentFileId()))
+    JVSFileTabs.getInstance().getEditor(JVSFileTabs.getCurrentCompiledFile()).removeLineSignals();
+    JVSFileTabs.getInstance().saveCurrentFile();
+    if(JVSFileTabs.getInstance().compileFile(JVSFileTabs.getInstance().getCurrentFileId()))
       toolbar.enableStartStopButton();
     else
       toolbar.disableStartStopButton();
@@ -89,7 +68,7 @@ class JVSMainPanel extends JPanel {
   /** Open a file
    * Start a file chooser and open selected file
    * @see JFileChooser
-   * @see JVSFileEditorTabs
+   * @see JVSFileTabs
    */
   public void openFile() {
     final JFileChooser fc = new JFileChooser();
@@ -99,28 +78,28 @@ class JVSMainPanel extends JPanel {
       if(noFileEdited)
         // closeFile();
         noFileEdited = false;
-      String fileId = getEditorTabs().open(path);
+      String fileId = JVSFileTabs.getInstance().open(path);
       haveToSave.put(fileId, false);
     } else {}
   }
   /** Save the current file
-   * @see JVSFileEditorTabs
+   * @see JVSFileTabs
    * @see JVSFile
    */
   public void saveFile() {
-    if(getEditorTabs().saveCurrentFile())
-      haveToSave.put(getEditorTabs().getCurrentFileId(), false);
+    if(JVSFileTabs.getInstance().saveCurrentFile())
+      haveToSave.put(JVSFileTabs.getInstance().getCurrentFileId(), false);
   }
   /** Close the current file
-   * @see JVSFileEditorTabs
+   * @see JVSFileTabs
    */
   public void closeFile() {
-    if(haveToSave.get(getEditorTabs().getCurrentFileId())) {
-      if(saveFileIdBeforeClose(getEditorTabs().getCurrentFileId()) == 1)
-        getEditorTabs().closeFile(getEditorTabs().getCurrentFileId());
+    if(haveToSave.get(JVSFileTabs.getInstance().getCurrentFileId())) {
+      if(saveFileIdBeforeClose(JVSFileTabs.getInstance().getCurrentFileId()) == 1)
+        JVSFileTabs.getInstance().closeFile(JVSFileTabs.getInstance().getCurrentFileId());
     } else
-      getEditorTabs().closeFile(getEditorTabs().getCurrentFileId());
-    if(getEditorTabs().getOppenedFileCount() == 0)
+      JVSFileTabs.getInstance().closeFile(JVSFileTabs.getInstance().getCurrentFileId());
+    if(JVSFileTabs.getInstance().getOppenedFileCount() == 0)
       newFile();
   }
   /** Update haveToSave for a file
@@ -149,9 +128,9 @@ class JVSMainPanel extends JPanel {
    */
   public void reportCompileError(int line, String explication) {
     org.javascool.widgets.Console.getInstance().clear();
-    getWidgetTabs().showConsole();
-    if(getEditorTabs().getEditor(JVSFileEditorTabs.getCurrentCompiledFile()) != null)
-      getEditorTabs().getEditor(JVSFileEditorTabs.getCurrentCompiledFile()).signalLine(line);
+    JVSWidgetPanel.getInstance().showConsole();
+    if(JVSFileTabs.getInstance().getEditor(JVSFileTabs.getCurrentCompiledFile()) != null)
+      JVSFileTabs.getInstance().getEditor(JVSFileTabs.getCurrentCompiledFile()).signalLine(line);
   }
   /** Handle the close application task
    * Check if all files are saved and if the user want to close the application
@@ -200,7 +179,7 @@ class JVSMainPanel extends JPanel {
         can_close[i] = true;
       if(can_close[i])
         // If we can close this file, we close the tab
-        getEditorTabs().closeFile(id);
+        JVSFileTabs.getInstance().closeFile(id);
       i++;
     }
     // Check if a file is not save, if yes we can not close the application
@@ -224,7 +203,7 @@ class JVSMainPanel extends JPanel {
       if(haveToSave.get((String) fileId))
         j++;
       else
-        getEditorTabs().closeFile((String) fileId);
+        JVSFileTabs.getInstance().closeFile((String) fileId);
     }
     // If user no have dialog to stop close, we create one
     if(j == 0) {
@@ -261,7 +240,7 @@ class JVSMainPanel extends JPanel {
         can_close[i] = true;
       if(can_close[i])
         // If we can close this file, we close the tab
-        getEditorTabs().closeFile(id);
+        JVSFileTabs.getInstance().closeFile(id);
       i++;
     }
     // Check if a file is not save, if yes we can not close the application
@@ -277,12 +256,12 @@ class JVSMainPanel extends JPanel {
    * @return 1 meen that file is saved or that user not want to save the file. 0 meen that there was an error during the save of file. -1 meen that user want to stop all that happend (Cancel option).
    */
   public int saveFileIdBeforeClose(String fileId) {
-    JVSFile file = getEditorTabs().getFile(fileId);
+    JVSFile file = JVSFileTabs.getInstance().getFile(fileId);
     int result = JOptionPane.showConfirmDialog(
       Desktop.getInstance().getFrame(),
       "Voulez vous enregistrer " + file.getName() + " avant de continuer ?");
     if(result == JOptionPane.YES_OPTION) {
-      if(getEditorTabs().saveFile(fileId)) {
+      if(JVSFileTabs.getInstance().saveFile(fileId)) {
         haveToSave.put(fileId, false);
         return 1;
       } else
@@ -296,18 +275,18 @@ class JVSMainPanel extends JPanel {
   }
   public void loadProglet(String name) {
     System.gc();
-    removeAll();
-    revalidate();
-    add(getToolBar(), BorderLayout.NORTH);
-    add(getMainPane(), BorderLayout.CENTER);
-    revalidate();
-    getMainPane().revalidate();
-    getMainPane().setDividerLocation(getWidth() / 2);
-    getMainPane().revalidate();
-    ((JVSTabs) getMainPane().getRightComponent()).removeAll();
-    ((JVSTabs) getMainPane().getRightComponent()).add("Console", "", org.javascool.widgets.Console.getInstance());
-    getWidgetTabs().setProglet(name);
-    newFile();
+    this.removeAll();
+    this.revalidate();
+    this.add(JVSToolBar.getInstance(), BorderLayout.NORTH);
+    this.add(JVSCenterPanel.getInstance(), BorderLayout.CENTER);
+    this.revalidate();
+    JVSCenterPanel.getInstance().revalidate();
+    JVSCenterPanel.getInstance().setDividerLocation(getWidth() / 2);
+    JVSCenterPanel.getInstance().revalidate();
+    JVSWidgetPanel.getInstance().removeAll();
+    JVSWidgetPanel.getInstance().add("Console", "", org.javascool.widgets.Console.getInstance());
+    JVSWidgetPanel.getInstance().setProglet(name);
+    this.newFile();
   }
   public void reportRuntimeBug(String ex) {
     StackTraceElement[] stack = Thread.currentThread().getStackTrace();
@@ -318,26 +297,13 @@ class JVSMainPanel extends JPanel {
       else
         System.err.println(elem.getClassName());
     }
-    if(getEditorTabs().getEditor(JVSFileEditorTabs.getCurrentCompiledFile()) != null)
-      getEditorTabs().getEditor(JVSFileEditorTabs.getCurrentCompiledFile()).signalLine(line);
+    if(JVSFileTabs.getInstance().getEditor(JVSFileTabs.getCurrentCompiledFile()) != null)
+      JVSFileTabs.getInstance().getEditor(JVSFileTabs.getCurrentCompiledFile()).signalLine(line);
     ProgletEngine.getInstance().doStop();
     Dialog.error("Erreur du logiciel à la ligne " + line, ex);
   }
   public void reportApplicationBug(String ex) {
     Dialog.error("Erreur dans Java's Cool", ex);
-  }
-  /** Get the current istance of Editor Tabs
-   * @see JVSFileEditorTabs
-   * @return The JVSFileEditorTabs instance
-   */
-  public FileEditorTabs getEditorTabs() {
-    return (FileEditorTabs) mainPane.getLeftComponent();
-  }
-  public JVSWidgetPanel getWidgetTabs() {
-    return (JVSWidgetPanel) mainPane.getRightComponent();
-  }
-  public JVSSplitPane getMainPane() {
-    return mainPane;
   }
   public static class Dialog {
     /** Show a success dialog */

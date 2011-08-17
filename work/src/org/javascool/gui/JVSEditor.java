@@ -28,111 +28,125 @@ import org.fife.ui.rtextarea.RTextScrollPane;
  * @author Philippe VIENNE
  */
 class JVSEditor extends JPanel {
-  private static final long serialVersionUID = 1L;
-  /** The editor */
-  private RSyntaxTextArea TextPane;
-  /** The scroll pane */
-  private RTextScrollPane scrollPane;
 
-  /** Create a new JVSEditor
-   * Common setup
-   */
-  public JVSEditor() {
-    this.setLayout(new BorderLayout());
-    TextPane = this.createTextArea();
-    TextPane.setSyntaxEditingStyle(org.fife.ui.rsyntaxtextarea.SyntaxConstants.SYNTAX_STYLE_JAVA);
-    scrollPane = new RTextScrollPane(TextPane, true);
-    Gutter gutter = scrollPane.getGutter();
-    gutter.setBorderColor(Color.BLUE);
+    private static final long serialVersionUID = 1L;
+    /** The editor */
+    private RSyntaxTextArea TextPane;
+    /** The scroll pane */
+    private RTextScrollPane scrollPane;
 
-    this.add(scrollPane, BorderLayout.CENTER);
-    this.setVisible(true);
-  }
-  /** TextArea initialization
-   * Creates the text area for this application.
-   * @return The text area.
-   */
-  private RSyntaxTextArea createTextArea() {
-    RSyntaxTextArea textArea = new RSyntaxTextArea(25, 70);
-    textArea.setCaretPosition(0);
-    // textArea.addHyperlinkListener(this);
-    textArea.requestFocusInWindow();
-    textArea.setMarkOccurrences(true);
-    textArea.setTextAntiAliasHint("VALUE_TEXT_ANTIALIAS_ON");
-    textArea.setText("");
+    /** Create a new JVSEditor
+     * Common setup
+     */
+    public JVSEditor() {
+        this.setLayout(new BorderLayout());
+        TextPane = this.createTextArea();
+        TextPane.setSyntaxEditingStyle(org.fife.ui.rsyntaxtextarea.SyntaxConstants.SYNTAX_STYLE_JAVA);
+        scrollPane = new RTextScrollPane(TextPane, true);
+        Gutter gutter = scrollPane.getGutter();
+        gutter.setBorderColor(Color.BLUE);
 
-    KeyStroke key = KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.CTRL_MASK);
-    if(isMac())
-      key = KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.META_MASK);
-    KeyStroke copy_key = KeyStroke.getKeyStroke(KeyEvent.VK_C, Event.CTRL_MASK);
-    if(isMac())
-      copy_key = KeyStroke.getKeyStroke(KeyEvent.VK_C, Event.META_MASK);
-    textArea.getInputMap().put(key,
-                               "save");
-    textArea.getActionMap().put("save",
-                                new AbstractAction() {
-                                  private static final long serialVersionUID = 1L;
-                                  @Override
-                                  public void actionPerformed(ActionEvent e) {
-                                    JVSMainPanel.getInstance().saveFile();
-                                  }
-                                }
-                                );
-
-    textArea.getInputMap().put(copy_key,
-                               "copy");
-    textArea.getActionMap().put("copy",
-                                new AbstractAction() {
-                                  private static final long serialVersionUID = 1L;
-                                  @Override
-                                  public void actionPerformed(ActionEvent e) {
-                                    getRTextArea().copyAsRtf();
-                                  }
-                                }
-                                );
-
-    return textArea;
-  }
-  /** Tests if on mac. */
-  private static boolean isMac() {
-    return System.getProperty("os.name").toUpperCase().contains("MAC");
-  }
-  /** Get text into the TextArea
-   * @return The code
-   */
-  public String getText() {
-    return TextPane.getText();
-  }
-  /** Set the text
-   * @param text The text to write on screen
-   */
-  public void setText(String text) {
-    TextPane.setText(text);
-  }
-  /** Get the RSyntaxTextArea */
-  public RSyntaxTextArea getRTextArea() {
-    return TextPane;
-  }
-  public RTextScrollPane getScrollPane() {
-    return scrollPane;
-  }
-  public void removeLineSignals() {
-    getScrollPane().getGutter().removeAllTrackingIcons();
-  }
-  public void signalLine(int line) {
-    Gutter gutter = getScrollPane().getGutter();
-    gutter.setBookmarkingEnabled(true);
-    ImageIcon icon = null;
-    BufferedImage img;
-    try {
-      img = ImageIO.read(ClassLoader.getSystemResourceAsStream("org/javascool/widgets/iconsx/error.png"));
-      icon = new ImageIcon(img);
-    } catch(IOException ex1) {}
-    try {
-      getRTextArea().setCaretPosition(getRTextArea().getLineStartOffset(line - 1));
-      getScrollPane().getGutter().addLineTrackingIcon(line - 1, icon);
-    } catch(BadLocationException ex) {
-      Logger.getLogger(JVSEditor.class.getName()).log(Level.SEVERE, null, ex);
+        this.add(scrollPane, BorderLayout.CENTER);
+        this.setVisible(true);
     }
-  }
+
+    /** TextArea initialization
+     * Creates the text area for this application.
+     * @return The text area.
+     */
+    private RSyntaxTextArea createTextArea() {
+        RSyntaxTextArea textArea = new RSyntaxTextArea(25, 70);
+        textArea.setCaretPosition(0);
+        // textArea.addHyperlinkListener(this);
+        textArea.requestFocusInWindow();
+        textArea.setMarkOccurrences(true);
+        textArea.setTextAntiAliasHint("VALUE_TEXT_ANTIALIAS_ON");
+        textArea.setText("");
+
+        KeyStroke key = KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.CTRL_MASK);
+        if (isMac()) {
+            key = KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.META_MASK);
+        }
+        KeyStroke copy_key = KeyStroke.getKeyStroke(KeyEvent.VK_C, Event.CTRL_MASK);
+        if (isMac()) {
+            copy_key = KeyStroke.getKeyStroke(KeyEvent.VK_C, Event.META_MASK);
+        }
+        textArea.getInputMap().put(key,
+                "save");
+        textArea.getActionMap().put("save",
+                new AbstractAction() {
+
+                    private static final long serialVersionUID = 1L;
+
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        JVSPanel.getInstance().saveFile();
+                    }
+                });
+
+        textArea.getInputMap().put(copy_key,
+                "copy");
+        textArea.getActionMap().put("copy",
+                new AbstractAction() {
+
+                    private static final long serialVersionUID = 1L;
+
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        getRTextArea().copyAsRtf();
+                    }
+                });
+
+        return textArea;
+    }
+
+    /** Tests if on mac. */
+    private static boolean isMac() {
+        return System.getProperty("os.name").toUpperCase().contains("MAC");
+    }
+
+    /** Get text into the TextArea
+     * @return The code
+     */
+    public String getText() {
+        return TextPane.getText();
+    }
+
+    /** Set the text
+     * @param text The text to write on screen
+     */
+    public void setText(String text) {
+        TextPane.setText(text);
+    }
+
+    /** Get the RSyntaxTextArea */
+    public RSyntaxTextArea getRTextArea() {
+        return TextPane;
+    }
+
+    public RTextScrollPane getScrollPane() {
+        return scrollPane;
+    }
+
+    public void removeLineSignals() {
+        getScrollPane().getGutter().removeAllTrackingIcons();
+    }
+
+    public void signalLine(int line) {
+        Gutter gutter = getScrollPane().getGutter();
+        gutter.setBookmarkingEnabled(true);
+        ImageIcon icon = null;
+        BufferedImage img;
+        try {
+            img = ImageIO.read(ClassLoader.getSystemResourceAsStream("org/javascool/widgets/iconsx/error.png"));
+            icon = new ImageIcon(img);
+        } catch (IOException ex1) {
+        }
+        try {
+            getRTextArea().setCaretPosition(getRTextArea().getLineStartOffset(line - 1));
+            getScrollPane().getGutter().addLineTrackingIcon(line - 1, icon);
+        } catch (BadLocationException ex) {
+            Logger.getLogger(JVSEditor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
