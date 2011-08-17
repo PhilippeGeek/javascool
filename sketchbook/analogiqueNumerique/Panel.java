@@ -7,7 +7,7 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 
 import org.javascool.widgets.NumberInput;
-import org.javascool.tools.Macros;
+import org.javascool.macros.Macros;
 
 public class Panel extends JPanel {
   // @bean
@@ -69,7 +69,7 @@ public class Panel extends JPanel {
       }
       Functions.convaOut(min);
       Functions.convaCompare();
-      Macros.echo("La valeur vaut " + min);
+      System.out.println("La valeur vaut " + min);
     }
   }
 }

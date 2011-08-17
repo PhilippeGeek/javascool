@@ -5,7 +5,6 @@
 package org.javascool.tools;
 
 // Used to report a throwable
-import java.lang.reflect.InvocationTargetException;
 
 // Used to frame a message
 import javax.swing.JFrame;
@@ -66,17 +65,16 @@ public class ErrorCatcher {
    * @param version Version de Java 5 pour 1.5, 6 pour 1.6.
    */
   public static void checkJavaVersion(int version) {
-    if(new Integer(System.getProperty("java.version").substring(2, 3)) < version)
+    if(new Integer(System.getProperty("java.version").substring(2, 3)) < version) {
       if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(
            new JFrame(),
            "<html>Vous n'avez pas une version suffisante de Java<br>"
-           + "cette application requiert Java 1.6 ou plus.<br>"
+           + "cette application requiert Java 1." + version + " ou plus.<br>"
            + "Voulez vous être redirigé vers le site de téléchargement ?",
            "Confirmation",
            JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE))
-      {
         Macros.openURL("http://www.java.com/getjava");
-        System.exit(-1);
-      }
+      System.exit(-1);
+    }
   }
 }

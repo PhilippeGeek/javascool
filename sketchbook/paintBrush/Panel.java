@@ -6,7 +6,7 @@ package org.javascool.proglets.paintBrush;
 
 // Used to define the gui
 import javax.swing.JPanel;
-import org.javascool.tools.Macros;
+import org.javascool.macros.Macros;
 
 /** Définit le panneau graphique de la proglet qui permet de faire des tracés dans une image.
  *

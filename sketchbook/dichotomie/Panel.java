@@ -1,5 +1,5 @@
 package org.javascool.proglets.dichotomie;
-import static org.javascool.tools.Macros.*;
+import static org.javascool.macros.Macros.*;
 
 // Used to define the gui
 import javax.swing.JPanel;

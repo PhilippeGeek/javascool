@@ -19,14 +19,16 @@ import org.javascool.macros.Macros;
 public class ToolBar extends JToolBar {
   private static final long serialVersionUID = 1L;
   // @bean
-  public ToolBar() {}
-
+  public ToolBar() {
+    setFloatable(false);
+  }
   /** Table des boutons indexés par leurs noms. */
   private HashMap<String, JComponent> buttons = new HashMap<String, JComponent>();
   /** Table des actions associées au bouton. */
   private HashMap<AbstractButton, Runnable> actions = new HashMap<AbstractButton, Runnable>();
 
   /** Initialize la barre de boutons et efface tous les élements. */
+  @Override
   public void removeAll() {
     left = right = 0;
     setVisible(false);
@@ -45,6 +47,12 @@ public class ToolBar extends JToolBar {
    */
   public final JButton addTool(String label, String icon, Runnable action) {
     return addTool(label, icon, action, left++);
+  }
+  /**
+   * @see #addTool(String, String, Runnable)
+   */
+  public final JButton addTool(String label, Runnable action) {
+    return addTool(label, null, action);
   }
   /** Ajoute un bouton à une position précise de la barre d'outil
    * @see #addTool(String, String, Runnable)

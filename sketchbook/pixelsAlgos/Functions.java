@@ -3,7 +3,7 @@
 *******************************************************************************/
 
 package org.javascool.proglets.pixelsAlgos;
-import static org.javascool.tools.Macros.*;
+import static org.javascool.macros.Macros.*;
 
 // Used to define the gui
 import java.awt.Dimension;

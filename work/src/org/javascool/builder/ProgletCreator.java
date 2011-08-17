@@ -58,7 +58,7 @@ public class ProgletCreator {
     "</div>\n";
   private static final String panelPattern =
     "package org.javascool.proglets.@name;\n" +
-    "import static org.javascool.tools.Macros.*;\n" +
+    "import static org.javascool.macros.Macros.*;\n" +
     "import static org.javascool.proglets.@name.Functions.*;\n" +
     "import javax.swing.JPanel;\n" +
     "\n" +
@@ -82,7 +82,7 @@ public class ProgletCreator {
     "}\n";
   private static final String functionsPattern =
     "package org.javascool.proglets.@name;\n" +
-    "import static org.javascool.tools.Macros.*;\n" +
+    "import static org.javascool.macros.Macros.*;\n" +
     "\n" +
     "/** Définit les fonctions pour manipuler la proglet «@name» (A DÉTRUIRE SI NON UTILISÉ).\n" +
     " *\n" +

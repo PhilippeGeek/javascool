@@ -10,7 +10,7 @@ import java.util.List;
 
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import org.javascool.tools.Macros;
+import org.javascool.macros.Macros;
 
 /** Définit une proglet javascool qui permet de tracer des chemins sur une carte de France.
  *

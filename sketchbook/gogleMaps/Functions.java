@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.List;
 
 import javax.swing.SwingUtilities;
-import org.javascool.tools.Macros;
+import org.javascool.macros.Macros;
 
 /** Définit les fonctions de la proglet d'expérimenter avec des signaux sonores.
  *

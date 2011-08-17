@@ -11,7 +11,7 @@ import java.util.Set;
 import java.util.HashSet;
 import java.util.Queue;
 import java.util.LinkedList;
-import org.javascool.tools.Macros;
+import org.javascool.macros.Macros;
 
 public class GogleMapParcours {
   private static int numVisite;

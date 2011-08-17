@@ -4,7 +4,7 @@
 
 package org.javascool.proglets.javaProg;
 
-import static org.javascool.tools.Macros.*;
+import static org.javascool.macros.Macros.*;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 

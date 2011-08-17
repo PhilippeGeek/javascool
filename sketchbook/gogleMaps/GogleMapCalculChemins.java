@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
-import org.javascool.tools.Macros;
+import org.javascool.macros.Macros;
 
 public class GogleMapCalculChemins {
   private static int distance(GogleMapPanel g, String ville1, String ville2) {

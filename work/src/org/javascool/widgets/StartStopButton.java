@@ -56,7 +56,7 @@ public abstract class StartStopButton extends JPanel {
                      execTime.setText("  Temps d'exécution : " + t / 60 + " min " + t % 60 + " sec");
                      execTime.revalidate();
                      try {
-                       Thread.sleep(1000);
+                       Macros.sleep(1000);
                      } catch(Exception e) {}
                    }
                    started = false;
