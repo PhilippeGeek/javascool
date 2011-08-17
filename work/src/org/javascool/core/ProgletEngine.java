@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import org.javascool.tools.Macros;
 
 import java.io.File;
+import java.io.IOException;
 import org.javascool.tools.StringFile;
 import org.javascool.tools.Pml;
 
@@ -57,7 +58,7 @@ public class ProgletEngine {
   //
 
   /** Mécanisme de compilation du fichier Jvs.
-   * @param program Non du programme à compiler.
+   * @param program Nom du programme à compiler.
    * @return La valeur true si la compilation est ok, false sinon.
    */
   public boolean doCompile(String program) {
@@ -69,7 +70,17 @@ public class ProgletEngine {
       jvs2java.setProgletPackageName(getProglet().hasFunctions() ? "org.javascool.proglets." + getProglet().getName() : null);
     }
     String javaCode = jvs2java.translate(program);
-    String javaFile = System.getProperty("java.io.tmpdir") + File.separator + jvs2java.getClassName() + ".java";
+    // Creation d'un répertoire temporaire
+    File buildDir;
+    try {
+        buildDir = File.createTempFile("build", "");
+        buildDir.deleteOnExit();
+        buildDir.delete();
+        buildDir.mkdirs();
+    } catch(IOException e) {
+        throw new IllegalStateException("Impossible de créer de répertoire temporaire: c'estun bug !!!");
+    }
+    String javaFile = buildDir + File.separator + jvs2java.getClassName() + ".java";
     StringFile.save(javaFile, javaCode);
     if(Java2Class.compile(javaFile)) {
       runnable = Java2Class.load(javaFile);

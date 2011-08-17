@@ -112,6 +112,8 @@ Console.java</li>
 
 
 
+
+
         </span>de JavaScool&nbsp;</li>
     </ol>
     <li>arr&ecirc;ter de faire des appels vers des
@@ -130,7 +132,9 @@ pour faire des proglet</span>s.</li>
     </li>
     <li>Le builder n'utilise plus ant</li>
     <li>Le Jvs2Html est appel&eacute; directement pas saxon sur le
-texte &agrave; traduire.<span style="font-weight: bold;"><br>
+texte &agrave; traduire.</li>
+    <li>Ah oui mais le :: on l emet ou &gt;&gt;???<span
+ style="font-weight: bold;"><br>
       </span></li>
   </ol>
   <li><span style="font-weight: bold;">[la mise au point du site web]</span></li>
@@ -218,7 +222,9 @@ org.javascool.proglets.xxx.Functions.*; le signe de ralliement ?</li>
   <li>Sur le panneau Satrter des proglets il manque ou thierry a
 p&ecirc;t&eacute; le tooltip poru avoir plus d'infos sur une proglet</li>
   <li>Au niveau du build.xml y a les bons scripts mais je sais pas
-comment le faire utiliser par netbean qui a son nbbuild.xml<br>
+comment le faire utiliser par netbean qui a son nbbuild.xml</li>
+  <li>Y a un pb de principe dans le Jvs2Java -&gt; il y a des patterns
+sur une ligne mais qui peuvent en fait etre a cheval sur plusieurs . . <br>
   </li>
 </ol>
 <br>
@@ -231,21 +237,74 @@ comment le faire utiliser par netbean qui a son nbbuild.xml<br>
   <li>On a perdu la fonction d'insertion d'&eacute;l&eacute;ments</li>
   <li>Comment sait on quel fichier Jvs compiler qd on en ouvre plusieurs<br>
   </li>
-  <li>La console n'affiche plus de contenu HTML (donc des chaines en
+  <li style="text-decoration: line-through;">La console n'affiche plus
+de contenu HTML (donc des chaines en
 gras par exemple).</li>
   <li>Les racourcis claviers ne semblent pas pr&eacute;sents.</li>
   <li>Si il y a une erreur de syntaxe sur la ligne 1 . . la sortie est
 catastrophique, il faut ajouter une ligne blanche.</li>
 </ol>
 <br>
+<hr style="width: 100%; height: 2px;">Le<span style="font-weight: bold;">s
+points &eacute;voqu&eacute;s pendant la r&eacute;union.</span><br>
+<ul>
+  <li>&nbsp;Interface JvsCore?build il faut que le bouton passe
+calirement d'une application a l'autre</li>
+  <li>Ajouter une figure et doc avec les jars.--&gt; cliquer sur le
+jaexterieur et fermer l apllit</li>
+  <li>hasProglets -&gt; canBuildProglets</li>
+  <li>virer code kk rmDir</li>
+  <li>Creer routine avec mkdir tmpdir</li>
+  <li>REmettre double stream dans console</li>
+  <li>ToolBar: reset -&gt;removeAll ; delTool l-&gt; removeTool ;
+id/title -&gt; label,</li>
+  <li>Jvs est "couvert" par le xslt avec un generatin differente pour
+les pages webs</li>
+  <li>Revoir le Frame . . / . .&nbsp;</li>
+  <li>Code source dans Frame .. !</li>
+  <li>Look and feel dans frame poru tout le monde</li>
+  <li>Couleur par defaut dans message pas en blanc</li>
+  <li>Le parent a un truc moche . . . dans message . . .il faut trouver
+le parent dans Frame&nbsp;</li>
+  <li>Detailler comment le XSLT est du &lt; ou u URL</li>
+  <li>STrungFIle -&gt; FileManager</li>
+  <li>Macros :: maxInteger // addConsoleInput private ; openURL
+/HTmlDisplay browse</li>
+  <li>Ajouter un kill aux merdes modales de Macros</li>
+  <li>saveConsole a pas HTML et a mettre aussi dans Console</li>
+  <li>package macros avec eclatement des macros de macros et voir
+comment ou .*.* ; ; . .//...</li>
+  <li>Manque le tranaltor dans les specs</li>
+  <li>Figures du workflow javascool</li>
+  <li>Factoriser repertoire temporaire&nbsp;</li>
+  <li>virer le code applet destroy</li>
+  <li>virer la classe proglet inuule et remplacer par de la doc</li>
+  <li>tools.invoke</li>
+  <li>Voir T extends Component</li>
+  <li>pas implement mais exetends<br>
+  </li>
+</ul>
+<br>
 <hr style="width: 100%; height: 2px;"><br>
 <span style="font-weight: bold;">Ebauche de tri-TODO (PV + GM + TV)
 liste:<br>
 </span>
 <ul>
+  <li>TV: verifier la compil avec le repertoire temporaire<br>
+  </li>
   <li>TV : Repasser sur les docs XML et JAVA de chaque proglet et
 rendre accessible un programme de test/validation</li>
+  <ul>
+    <li>rechercher les Jvs et documents de v3 oubli&eacute;s en v4<br>
+    </li>
+  </ul>
   <li>TV : Finaliser l'int&eacute;gration des proglets processing</li>
+  <ul>
+    <li>ajouter le complement a PorgletEngine</li>
+    <li>ajouter a la spec la possibilite d'ajouter des jars extensions
+pour l applet<br>
+    </li>
+  </ul>
   <li>GM+TV : Remodeler le build.xml qui genere les pages webs des
 proglets &agrave; partir de ce que donne le builder</li>
   <li>[?] : Finir de programmer les fonctions de
