@@ -302,11 +302,11 @@ public class Macros {
   public static void clear() {
     Console.getInstance().clear();
   }
-  /** Sauve ce qui est présentement écrit dans la console dans un fichier au format HTML.
+  /** Sauve ce qui est présentement écrit dans la console dans un fichier.
    * @param location La localisation (chemin du fichier ou localisation internet) où sauver le texte.
    */
   public static void saveConsoleOutput(String location) {
-    org.javascool.tools.FileManager.save(location, Console.getInstance().getText());
+    Console.getInstance().saveConsoleOutput(location);
   }
   /** Charge une chaine de caractère pour que son contenu serve d'entrée à la console.
    * @param string La chaine de caractère à ajouter.

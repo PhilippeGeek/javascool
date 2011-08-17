@@ -148,7 +148,7 @@ public class ProgletsBuilder {
           // Création d'une page de lancement de l'applet // @todo à valider avec Guillaume
           FileManager.save(progletDir + File.separator + "index.html",
                           "<html><head><title>" + name + "</title><meta http-equiv='Content-Type' content='text/html; charset=utf-8'/></head><body>\n" +
-                          "  <center><h4>" + name + " (<a target='_blank' href='help.htm'>documentation</a>)</h4></center>\n" +
+                          "  <center><h4>" + name + " (<a target='_blank' href='help.htm'>documentation utilisateur</a> <a target='_blank' href='api/index.html'>documentation Java</a>)</h4></center>\n" +
                           "  <applet width='560' height='720' code='org.javascool.widgets.PanelApplet' archive='../javasccool-progets><param name='pane' value='org.javascool.proglets." + name + "'/><pre>Impossible de lancer " + name + ": Java n'est pas installé ou mal configuré</pre></applet>\n" +
                           "</body></html>\n");
           // Lancement de la compilation dans le répertoire

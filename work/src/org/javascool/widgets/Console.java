@@ -15,6 +15,7 @@ import javax.swing.JTextArea;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.IOException;
+import org.javascool.tools.FileManager;
 
 /** Définit une zone d'affichage qui permet de recevoir les messages de la console.
  *
@@ -114,5 +115,11 @@ public class Console extends JPanel {
    */
   public ToolBar getToolBar() {
     return toolbar;
+  }
+  /** Sauve ce qui est présentement écrit dans la console dans un fichierL.
+   * @param location La localisation (chemin du fichier ou localisation internet) où sauver le texte.
+   */
+  public void saveConsoleOutput(String location) {
+    FileManager.save(location, getText());
   }
 }
