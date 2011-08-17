@@ -67,7 +67,9 @@ public class Jvs2Java extends Translator {
       }
       // Imports proglet's static methods
       head.append("import static java.lang.Math.*;");
-      head.append("import static org.javascool.tools.Macros.*;");
+      head.append("import static org.javascool.macros.Macros.*;");
+      head.append("import static org.javascool.macros.Stdin.*;");
+      head.append("import static org.javascool.macros.Stdout.*;");
       if(progletPackageName != null)
         head.append("import static ").append(progletPackageName).append(".Functions.*;");
       if(progletTranslator != null)

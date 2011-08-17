@@ -10,6 +10,7 @@ import java.lang.reflect.InvocationTargetException;
 // Used to frame a message
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import org.javascool.macros.Macros;
 
 /** Détecte et rapporte de manière optimisée des erreurs lors de l'exécution.
  *
@@ -49,7 +50,7 @@ public class ErrorCatcher {
                                                     s += e.getStackTrace()[i] + (i < t.getStackTrace().length - 1 ? "\n" : "»");
                                                   s += "</pre><hr>";
                                                   if(uncaughtExceptionAlertOnce == 0)
-                                                    org.javascool.tools.Macros.message(s, true);
+                                                    Macros.message(s, true);
                                                   else
                                                     System.err.println(s);
                                                   uncaughtExceptionAlertOnce++;
@@ -74,7 +75,7 @@ public class ErrorCatcher {
            "Confirmation",
            JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE))
       {
-        org.javascool.tools.Macros.openURL("http://www.java.com/getjava");
+        Macros.openURL("http://www.java.com/getjava");
         System.exit(-1);
       }
   }

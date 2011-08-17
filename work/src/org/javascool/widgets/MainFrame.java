@@ -10,6 +10,7 @@ import java.awt.Component;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.ImageIcon;
+import org.javascool.macros.Macros;
 
 /** Définit une fenêtre principale pour lancer une application. */
 public class MainFrame extends JFrame {
@@ -59,7 +60,7 @@ public class MainFrame extends JFrame {
         System.setProperty("com.apple.mrj.application.apple.menu.about.name", title);
       } catch(Exception e2) {}
     }
-    ImageIcon image = org.javascool.tools.Macros.getIcon(icon);
+    ImageIcon image = Macros.getIcon(icon);
     if(image != null)
       setIconImage(image.getImage());
     add(this.pane = pane);

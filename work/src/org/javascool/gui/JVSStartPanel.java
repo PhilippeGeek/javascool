@@ -14,7 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import org.javascool.core.ProgletEngine;
-import org.javascool.tools.Macros;
+import org.javascool.macros.Macros;
 
 /** Ecran d'accueil de Java's cool
  * Il présente toutes les activités présentes dans le jar sous la forme d'un

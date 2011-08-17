@@ -8,6 +8,7 @@ import javax.swing.Box;
 import javax.swing.JComponent;
 import javax.swing.AbstractButton;
 import javax.swing.JButton;
+import org.javascool.macros.Macros;
 
 /** Définit une barre d'outils avec intégration de la gestion des actions.
  *
@@ -49,7 +50,7 @@ public class ToolBar extends JToolBar {
    * @see #addTool(String, String, Runnable)
    */
   private JButton addTool(String label, String icon, Runnable action, int where) {
-    JButton button = icon == null ? new JButton(label) : new JButton(label, org.javascool.tools.Macros.getIcon(icon));
+    JButton button = icon == null ? new JButton(label) : new JButton(label, Macros.getIcon(icon));
     button.addActionListener(new ActionListener() {
                                @Override
                                public void actionPerformed(ActionEvent e) {

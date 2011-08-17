@@ -6,7 +6,7 @@ package org.javascool.tools;
 
 // Used for URL formation
 import java.net.URL;
-import static org.javascool.tools.Macros.getResourceURL;
+import org.javascool.macros.Macros;
 import java.io.File;
 import java.io.IOException;
 
@@ -49,7 +49,7 @@ public class FileManager {
    */
   public static String load(String location) {
     try {
-      BufferedReader reader = new BufferedReader(new InputStreamReader(getResourceURL(location, true).openStream()), 10240);
+      BufferedReader reader = new BufferedReader(new InputStreamReader(Macros.getResourceURL(location, true).openStream()), 10240);
       StringBuilder buffer = new StringBuilder();
       char chars[] = new char[10240];
       while(true) {
@@ -82,7 +82,7 @@ public class FileManager {
       System.out.println("\n" + location + " " + string);
       return;
     }
-    location = getResourceURL(location, false).toString();
+    location = Macros.getResourceURL(location, false).toString();
     try {
       if(backup && location.startsWith("file:")) throw new IllegalArgumentException("Impossible de procéder à un backup pour l'URL «" + location + "»");
       OutputStreamWriter writer = location.startsWith("file:") ? getFileWriter(location.substring(5), backup) : getUrlWriter(location);
