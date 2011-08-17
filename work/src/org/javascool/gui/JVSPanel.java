@@ -16,11 +16,6 @@ import org.javascool.core.ProgletEngine;
  */
 class JVSPanel extends JPanel {
   private static final long serialVersionUID = 1L;
-
-  /** The java's cool top tool bar. */
-  private JVSToolBar toolbar;
-  /** The java's cool split pane. */
-  private JVSCenterPanel mainPane;
   /** This HashMap say if a file has to be saved */
   private HashMap<String, Boolean> haveToSave = new HashMap<String, Boolean>();
   private Boolean noFileEdited = true;
@@ -61,9 +56,9 @@ class JVSPanel extends JPanel {
     JVSFileTabs.getInstance().getEditor(JVSFileTabs.getCurrentCompiledFile()).removeLineSignals();
     JVSFileTabs.getInstance().saveCurrentFile();
     if(JVSFileTabs.getInstance().compileFile(JVSFileTabs.getInstance().getCurrentFileId()))
-      toolbar.enableStartStopButton();
+      JVSToolBar.getInstance().enableStartStopButton();
     else
-      toolbar.disableStartStopButton();
+      JVSToolBar.getInstance().disableStartStopButton();
   }
   /** Open a file
    * Start a file chooser and open selected file
