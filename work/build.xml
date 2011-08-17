@@ -1,8 +1,5 @@
 <!-- Construction des éléments de javascool (core), javascoolbuilder, et des proglets -->
 <project>
-  <!-- On utilise http://ant-contrib.sourceforge.net/tasks/tasks/index.html pour un meilleur interface -->
-  <taskdef resource="net/sf/antcontrib/antlib.xml"/>
-
   <property name="classpath" value="lib/RSyntaxTextArea.jar:lib/jvs2html.jar"/>
 
   <target name="classes">
