@@ -42,7 +42,7 @@ public class Desktop {
                    return org.javascool.gui.Desktop.getInstance().isClosable();
                  }
                }
-               ).reset(Core.title, Core.logo, JVSMainPanel.getInstance());
+               ).reset(Core.title, Core.logo, JVSPanel.getInstance());
     return frame;
   }
   private PanelApplet.Frame frame;

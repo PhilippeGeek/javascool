@@ -1,25 +1,40 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.javascool.gui;
 
 import org.javascool.core.ProgletEngine;
 import org.javascool.tools.Macros;
+import org.javascool.widgets.Console;
 import org.javascool.widgets.HtmlDisplay;
 
-/**
- *
- * @author Philippe Vienne
+/** Le panneau contenant les widgets
+ * Les widgets de Java's cool sont disposés dans des onglets. Certain onglets de
+ * navigation web peuvent être fermés par une croix.
+ * @see org.javascool.widgets.Console
+ * @see org.javascool.widgets.HtmlDisplay
+ * @see org.javascool.widgets
  */
 class JVSWidgetPanel extends JVSTabs {
   private static final long serialVersionUID = 1L;
 
   private String progletTabId;
-
-  public JVSWidgetPanel() {
-    super();
+  /** Instance du JVSWidgetPanel */
+  private static JVSWidgetPanel jwp;
+  
+  public static JVSWidgetPanel getInstance(){
+      if(jwp==null){
+          jwp=new JVSWidgetPanel();
+      }
+      return jwp;
   }
+
+  private JVSWidgetPanel() {
+    super();
+    this.add("Console","",Console.getInstance());
+  }
+  
+  /** Charge les tabs de la proglet
+   * Charge le tab de la proglet (Panel) et l'HTMLDisplay avec le fichier d'aide.
+   * @param name Le nom du package de la proglet
+   */
   public void setProglet(String name) {
     ProgletEngine.Proglet proglet = ProgletEngine.getInstance().setProglet(name);
     if(proglet.getPane() != null)
@@ -27,13 +42,23 @@ class JVSWidgetPanel extends JVSTabs {
     if(proglet.getHelp() != null)
       this.add("Aide de la proglet", "", new HtmlDisplay().setPage(Macros.getResourceURL(proglet.getHelp())));
   }
+  /** Affiche l'onglet de la Proglet si il existe */
   public void focusOnProgletPanel() {
     if(progletTabId != null)
       this.switchToTab(progletTabId);
   }
+  /** Affiche la console */
   public void showConsole() {
     this.setSelectedIndex(this.indexOfTab("Console"));
   }
+  /** Ouvre un nouvel onglet web
+   * Ouvre un nouveau HTMLDisplay dans un onglet. Cet onglet peut être fermer à 
+   * l'aide de la croix qui se situe à droite du titre de l'onglet.
+   * @param url L'url de la page à charger
+   * @param tabName Le titre du tab à ouvrir
+   * @see org.javascool.widgets.HtmlDisplay
+   * @see String
+   */
   public void openWebTab(String url, String tabName) {
     HtmlDisplay memo = new HtmlDisplay();
     memo.setPage(url);
