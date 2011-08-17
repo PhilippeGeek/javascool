@@ -48,9 +48,9 @@
 <!-- These tags performs the Jvs2Htm conversion -->
 
 <xsl:template match="code">
-  <div class="code">
+  <div class="code"><table width="90%" border="2"><tr><td>
     <xsl:value-of disable-output-escaping="yes" select="sx:jvs2htm(.)"/>
-  </div>
+  </div></td></tr></table>
 </xsl:template>
 
 <!-- These tags allows to show pieces of code -->
