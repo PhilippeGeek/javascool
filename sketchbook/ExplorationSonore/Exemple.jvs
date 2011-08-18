@@ -19,7 +19,7 @@ void main() {
   sleep(3000);
   // Et on joue un sone prédéfini en étouffant le son
   // - Attention à ce que le chemin vers le fichier soit bien accessible.
-  ExplorationSonore.playRecord("../sketchbook/ExplorationSonore/data/music/Ahmed_Ex1.wav", 400);
+  ExplorationSonore.playRecord("ExplorationSonore/Ahmed_Ex2.wav", 400);
   // deux secondes d'attente
   sleep(4000);
   // et on arrete tout
