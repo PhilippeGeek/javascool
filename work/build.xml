@@ -120,7 +120,6 @@
     <delete dir="../build/classes"/>
     <delete dir="../build/web/api"/>
     <delete dir="nbproject/private"/> 
-    <delete dir="../web/nbproject/private"/> 
   </target>
 
   <target name="jrun" depends="javascool.jar">
