@@ -134,7 +134,7 @@ public class MainFrame extends JFrame {
     return true;
   }
   /** Renvoie la frame principale ouverte.
-   * @param La frame principale ouverte comme parent des dialogues modaux.
+   * @return La frame principale ouverte comme parent des dialogues modaux.
    */
   public static JFrame getFrame() {
     return firstFrame;

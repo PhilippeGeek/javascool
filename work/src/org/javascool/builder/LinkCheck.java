@@ -2,7 +2,7 @@
 * Thierry.Vieville@sophia.inria.fr, Copyright (C) 2005.  All rights reserved. *
 *******************************************************************************/
 
-package org.javascool.tools;
+package org.javascool.builder;
 
 // Used in check the link
 import java.net.URI;
@@ -15,6 +15,7 @@ import java.util.HashMap;
 // Used to patch href
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
+import org.javascool.tools.FileManager;
 
 /** Permet de vérifier les liens cassés sur un site.
  * @see <a href="LinkCheck.java.html">source code</a>

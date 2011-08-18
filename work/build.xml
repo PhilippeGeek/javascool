@@ -8,39 +8,41 @@
     ant classes                 teste la compilation des classes
     ant javadoc			construit dans ../build/web/api la javadoc des classes (avec java2html)
     ant beautify                reformate tous les sources avec la commande uncrustify
+    ant processing              lance (si l'installation est ok) la plateforme processing
     ant clean                   nettoie les cibles non retenues dans le svn
     ant prun			lance Javas'Cool Core "apprenant" avec les proglets
     ant jrun			lance Javas'Cool Core "apprenant" sans les proglets
+    ant drun			lance l'affichage de la javadoc
   </echo></target>
 
   <target name="javascool.jar" depends="classes" >
     <mkdir dir="../build"/>
     <delete file="../build/javascool.jar"/>
-    <unzip dest="../build/classes" src="lib/RSyntaxTextArea.jar"/>
-    <unzip dest="../build/classes" src="lib/javac.jar"/>
+    <unzip dest="../build/classes" src="./lib/RSyntaxTextArea.jar"/>
+    <unzip dest="../build/classes" src="./lib/javac.jar"/>
     <jar destfile="../build/javascool.jar">
       <manifest>
         <attribute name="Main-Class" value="org.javascool.Core"/>
       </manifest>
       <fileset dir="../build/classes"/>
-      <fileset dir="src" includes="org/javascool/widgets/icons/*"/>
+      <fileset dir="./src" includes="org/javascool/widgets/icons/*"/>
     </jar>
   </target>
 
   <target name="javascool-builder.jar" depends="classes" >
     <mkdir dir="../build"/>
     <delete file="../build/javascool-builder.jar"/>
-    <unzip dest="../build/classes" src="lib/RSyntaxTextArea.jar"/>
-    <unzip dest="../build/classes" src="lib/javac.jar"/>
-    <unzip dest="../build/classes" src="lib/jvs2html.jar"/>
-    <unzip dest="../build/classes" src="lib/saxon.jar"/>
+    <unzip dest="../build/classes" src="./lib/RSyntaxTextArea.jar"/>
+    <unzip dest="../build/classes" src="./lib/javac.jar"/>
+    <unzip dest="../build/classes" src="./lib/jvs2html.jar"/>
+    <unzip dest="../build/classes" src="./lib/saxon.jar"/>
     <jar destfile="../build/javascool-builder.jar">
       <manifest>
         <attribute name="Main-Class" value="org.javascool.Build"/>
       </manifest>
       <fileset dir="../build/classes"/>
-      <fileset dir="src" includes="org/javascool/widgets/icons/*"/>
-      <fileset dir="src" includes="org/javascool/builder/*.xslt"/>
+      <fileset dir="./src" includes="org/javascool/widgets/icons/*"/>
+      <fileset dir="./src" includes="org/javascool/builder/*.xslt"/>
     </jar>
   </target>
 
@@ -50,11 +52,11 @@
     </java>    
   </target>
   
-  <property name="classpath" value="lib/RSyntaxTextArea.jar:lib/jvs2html.jar"/>
+  <property name="classpath" value="./lib/RSyntaxTextArea.jar:lib/jvs2html.jar"/>
 
   <target name="classes">
     <mkdir dir="../build/classes"/>
-    <javac debug="true" debuglevel="lines,vars,source" deprecation="on" classpath="${classpath}" srcdir="src" destdir="../build/classes"/>
+    <javac debug="true" debuglevel="lines,vars,source" deprecation="on" classpath="${classpath}" srcdir="./src" destdir="../build/classes"/>
   </target>
 
   <target name="javadoc">
@@ -76,17 +78,17 @@
        >
       <link href="http://download.oracle.com/javase/6/docs/api"/>
       <link href="http://javadoc.fifesoft.com/rsyntaxtextarea"/>
-      <fileset dir="src">
+      <fileset dir="./src">
         <include name="**/*.java"/>
       </fileset>
     </javadoc>
     <copy todir="../build/web/api">        
-      <fileset dir="src">
+      <fileset dir="./src">
         <include name="**/*.java"/>
       </fileset>
       <mapper type="glob" from="*" to="*.java"/>
     </copy>
-    <java jar="lib/java2html.jar" fork="true">
+    <java jar="./lib/java2html.jar" fork="true">
       <arg value="-srcdir"/>
       <arg value="../build/web/api"/>
       <!-- [-filemask *.java] [-converter html | xhtml11 | xhtml | tex | rtf | xml] [-tabs 4] [-copytotargetunprocessedfiles] -style [ Eclipse | Kawa | Monochrome ] -->
@@ -103,7 +105,7 @@
           <include name="**/*.jvs"/>
           <include name="**/*.pde"/>
         </fileset>
-        <fileset dir="src">
+        <fileset dir="./src">
           <include name="**/*.java"/>
         </fileset>
       </path>
@@ -116,10 +118,23 @@
     </for>
   </target>
   
+  <target name="processing">
+    <property name="pHome" value="/usr/java/processing-1.2.1"/>
+    <java dir="${pHome}" jvm="${pHome}/java/bin/java" classname="processing.app.Base" fork="true">
+      <classpath>
+        <pathelement location="${pHome}/java/lib/tools.jar"/>
+        <pathelement location="${pHome}/jre/lib/rt.jar"/>
+        <fileset dir="${pHome}/lib">
+          <include name="**/*.jar"/>
+        </fileset>
+      </classpath>
+    </java>
+  </target>
+
   <target name="clean">
     <delete dir="../build/classes"/>
     <delete dir="../build/web/api"/>
-    <delete dir="nbproject/private"/> 
+    <delete dir="./nbproject/private"/> 
   </target>
 
   <target name="jrun" depends="javascool.jar">
@@ -128,6 +143,12 @@
   
   <target name="prun" depends="javascool-proglets.jar">
     <java jar="../sketchbook/javascool-proglets.jar" fork="true"/>
+  </target>
+    
+  <target name="drun" depends="javadoc">
+    <exec executable="firefox">
+      <arg value="../build/web/api/index.html"/>
+    </exec>
   </target>
     
 </project>

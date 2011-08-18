@@ -1,0 +1,31 @@
+<!-- Construction des éléments de site web -->
+<project default="usage">
+
+  <target name="usage"><echo level="info">
+    ant local			affiche une version locale du site (lance apache et ouvre firefox)
+    ant xterm			ouvre une fenêtre pour aller gérer manuellement les fichiers sur le site
+    ant lcheck			teste et liste les liens cassés sur le site
+  </echo></target>
+
+  <target name="local">
+    <exec executable="./index/start.sh" os="Linux"/>
+    <exec executable="firefox">
+      <arg value="http://127.0.0.1:1234"/>
+    </exec>
+  </target>
+
+  <target name="xterm">
+    <exec executable="gnome-terminal" os="Linux">
+      <arg value="-e"/>
+      <arg value="ssh scm.gforge.inria.fr 'cd /home/groups/javascool/htdocs ; bash -i'"/>
+    </exec>
+  </target>
+
+  <target name ="lcheck">
+    <ant dir="../work" target="javascool.jar"/>
+    <java classpath="../build/javascool.jar" classname="org.javascool.builder.LinkCheck">
+      <arg line="-recursive http://javascool.gforge.inria.fr/v4/"/>
+    </java>
+  </target>
+
+</project>
