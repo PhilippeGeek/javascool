@@ -7,8 +7,11 @@ export PATH:=/usr/java/jdk1.6.0_22/bin:$(PATH)
 JVS = $(realpath ..)
 
 ant :
-	ant run
+	ant brun
 #	ant javadoc ; firefox $(JVS)/build/web/api/index.html 
+
+clean :
+	ant clean > /dev/null
 
 #
 # Commandes de service pour gerer le site javascool
@@ -26,8 +29,7 @@ zip :
 ssh :
 	@gnome-terminal -e "ssh scm.gforge.inria.fr 'cd /home/groups/javascool/htdocs ; bash -i'" &
 
-svn : 
-	ant clean > /dev/null
+svn : clean
 	cd $(JVS) ; svn cleanup ; svn up ; svn ci -m 'modif mineure vthierry' ; svn status
 
 pub :

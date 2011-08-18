@@ -20,20 +20,30 @@ public class ProgletCreator {
 
   /** Crée un répertoire et les fichiers de base de la proglet.
    * @param location Emplacement de la proglet, le nom du répertoire correspond à celui de la proglet.
+   * @return La valeur true si la construction a pu se faire, false sinon.
    *
    * @throws IllegalArgumentException Si le nom de la proglet n'est pas un nom Java standard.
    * @throws RuntimeException Si il y a eu une erreur d'entrée sortie lors de la création.
    */
-  public static void mkdirProglet(String location) {
+  public static boolean mkdirProglet(String location) {
     String name = new File(location).getName();
-    if(!name.matches("[a-z][a-zA-Z][a-zA-Z][a-zA-Z]+")) throw new IllegalArgumentException("Le nom de la proglet «" + name + "» est bizarre il ne doit contenir que des lettres faire au moins quatre caractères et démarrer par une minuscule");
+    if(!name.matches("[a-z][a-zA-Z][a-zA-Z][a-zA-Z]+")) {
+      System.out.println("Le nom de la proglet «" + name + "» est bizarre: \n il ne doit contenir que des lettres, faire au moins quatre caractères, et démarrer par une minuscule.");
+      System.out.println("Impossible de créer une telle proglet");
+      return false;
+    }
+    if(new File(location).isDirectory())
+      System.out.println("Le répertoire «" + location + "» existe déjà, les fichiers existants seront renommés");
     if((!new File(location).isDirectory()) && !new File(location).mkdirs()) {
-      String tail = new File(location).exists() ? "un fichier existe à cet emplacement" : "il doit être interdit de créer le répertoire ici"; throw new RuntimeException("Impossible de créer le répertoire «" + location + "»de la proglet, " + tail);
+      String tail = new File(location).exists() ? "un fichier existe à cet emplacement" : "il doit être interdit de créer le répertoire ici";
+      System.out.println("Impossible de créer le répertoire «" + location + "» de la proglet, " + tail);
     }
     FileManager.save(location + File.separator + "help.xml", helpPattern.replaceAll("@name", name), true);
     FileManager.save(location + File.separator + "Panel.java", panelPattern.replaceAll("@name", name), true);
     FileManager.save(location + File.separator + "Functions.java", functionsPattern.replaceAll("@name", name), true);
     FileManager.save(location + File.separator + "Translator.java", translatorPattern.replaceAll("@name", name), true);
+    System.out.println("La proglet «" + name + "» est crée dans " + location);
+    return true;
   }
   private static final String helpPattern =
     "<div title=\"La «proglet» @name\">\n" +
