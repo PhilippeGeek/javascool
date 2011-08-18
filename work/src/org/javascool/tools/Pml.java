@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.regex.Pattern;
 
 import java.util.ArrayList;
+import java.util.Properties;
 
 /** Définit la syntaxe PML (Programmatic Markup Language) et son DOM (Data Object Model) Java.
  *
@@ -755,7 +756,7 @@ public class Pml {
   /** Définit la valeur d'un paramètre de ce PML.
    * @param name  Le nom de l'attribut ou l'index de l'élément (sous forme de chaîne ou d'entier).
    * @param value La valeur du paramètre (en tant que PML, object Java, entier, décimal ou entier).
-   * @return Cet objet, permettant de définir la construction <tt>Pml pml= new Pml().reset(..)</tt>.
+   * @return Cet objet, permettant de définir la construction <tt>Pml pml= new Pml().set(..)</tt>.
    */
   public Pml set(String name, Object value) {
     // Deletes the attribute value
@@ -840,7 +841,7 @@ public class Pml {
   /** Elimine la valeur d'un paramètre de ce PML.
    * <p>Cet appel est formellement équivalent à <tt>set(name, null);</tt></p>
    * @param name  Le nom de l'attribut ou l'index de l'élément (sous forme de chaîne ou d'entier).
-   * @return Cet objet, permettant de définir la construction <tt>Pml pml= new Pml().reset(..)</tt>.
+   * @return Cet objet, permettant de définir la construction <tt>Pml pml= new Pml().del(..)</tt>.
    */
   public Pml del(String name) {
     return set(name, (Pml) null);
@@ -854,7 +855,7 @@ public class Pml {
   /** Ajoute un élément à ce PML.
    * <p>Cet appel est formellement équivalent à <tt>set(getCount(), value);</tt></p>
    * @param value La valeur du paramètre (en tant que PML, entier, décimal ou entier).
-   * @return Cet objet, permettant de définir la construction <tt>Pml pml= new Pml().reset(..)</tt>.
+   * @return Cet objet, permettant de définir la construction <tt>Pml pml= new Pml().add(..)</tt>.
    */
   public final Pml add(Pml value) {
     int c = getCount();
@@ -881,6 +882,25 @@ public class Pml {
    */
   public final Pml add(int value) {
     return add(Integer.toString(value));
+  }
+  /**  Définit la valeur de paramètres de ce PML.
+   * @param La structure dont on copie les paramètres
+   * @return Cet objet, permettant de définir la construction <tt>Pml pml= new Pml().set(..)</tt>.
+   */
+  public final Pml set(Pml pml) { 
+      for(String name : pml.attributes())
+          set(name, pml.getObject(name));
+      for(int n = 0; n < pml.getCount(); n++) 
+          set(n, pml.getObject(n));
+      return this;
+  }
+  /**
+   * @see #set(Pml)
+   */ 
+  public final Pml set(Properties pml) { 
+          for(String name : pml.stringPropertyNames()) 
+             set(name, pml.getProperty(name));
+          return this;
   }
   /** Renvoie le nombre d'éléments de ce PML.
    * @return Le nombre d'éléments (indépendamment des attributs), les éléments null étant éliminés
@@ -939,12 +959,21 @@ public class Pml {
     };
   }
   // @return true if the name is an index
-
   private static boolean isIndex(String name) {
     return index.matcher(name).matches();
   }
   static Pattern index = Pattern.compile("[0-9]+");
-
+  /** Renvoie les paramètres de cette PML sous forme de Properties.
+   * @return Une structure Properties contenant attributs et éléments sous forme de chaîne de caractère.
+   */
+  public final Properties toProperties() {
+      Properties properties = new Properties();
+      for(String name : attributes())
+          properties.setProperty(name, getObject(name).toString());
+      for(int n = 0; n < getCount(); n++) 
+          properties.setProperty(""+n, getObject(n).toString());
+      return properties;      
+  }
   /** Lanceur du mécanisme de vérification/conversion d'une PML.
    * @param usage <tt>java org.javascool.tools.Pml input-file [output-file.(pml|xml|php|jmf)]</tt>
    */

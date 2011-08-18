@@ -35,8 +35,10 @@ import java.util.ArrayList;
  * <li>Les pages locales d'extension <tt>*.htm</tt> sont réputées être du HTML3 et sont affichées ici.</li>
  * <li>Les autres pages <tt>http://</tt>, <tt>file://</tt>, etc.. sont visualiées dans le navigateur du système, extérieur à javascool.</li>
  * <li>Il est possible d'ouvrir des pages dans une cible autre que ce visualisateur: <ul>
- *   <li>Les liens de la forme <tt>jvs://?editor:<i>location</i></tt> ouvrent le document dans l'éditeur de JavaScool. </li>
- *   <li>Les liens de la forme <tt>jvs://?browser:<i>location</i></tt> ouvrent le document dans un autre onglet de JavaScool. </li>
+ *   <li>Les liens de la forme <tt>jvs://?editor:<i>location</i></tt> ouvrent le document dans l'éditeur de JavaScool. <br>
+ *     Il sont générés par un tag de la form <tt>&lt;l class="editor" ..</tt></li>
+ *   <li>Les liens de la forme <tt>jvs://?browser:<i>location</i></tt> ouvrent le document dans un autre onglet de JavaScool.<br>
+ *     Il sont générés par un tag de la form <tt>&lt;l class="browser" ..</tt></li> </li>
  * </ul> Il sont produits par les tags <tt>&lt;a target="editor" . . </tt> du XML.
  * En cas d'échec les contenus sont dirigés vers le navigateur du système, extérieur à javascool.</li>
  * <li>Les liens de la forme <tt>string://?value="text"</tt> permettent d'afficher directement du texte HTML3.</li>

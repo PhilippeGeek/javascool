@@ -9,6 +9,7 @@ import java.util.HashMap;
 // Used for the sax interface
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.Properties;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.TransformerException;
@@ -31,14 +32,15 @@ public class Xml2Xml {
    * @param xsl Le nom de fichier ou la chaîne avec les règles de transformation XSL.
    * <p> - Si la chaîne commence par un <tt>&lt;</tt> elle est reconnue comme un texte XSLT.</p>
    * <p> - Sinon elle est reconnue comme un non de fichier.</p>
+   * @param params Paramètres de la transformation. La valeur null indique qu'il n'y a pas de paramètres.
    *
    * @return La chaîne en sortie.
    *
    * @throws IllegalArgumentException Si une erreur de syntaxe est détecté.
    * @throws RuntimeException  Si une erreur d'entrée-sortie s'est produite.
    */
-  public static String run(String xml, String xsl) {
-    // Compile the XSL tranformation
+  public static String run(String xml, String xsl, Properties params) {
+    // Compile la tranformation XSLT dans le cache des XSLT
     try {
       if(!tranformers.containsKey(xsl)) {
         StreamSource xslSource = null;
@@ -52,16 +54,38 @@ public class Xml2Xml {
       }
     } catch(TransformerConfigurationException e) { throw new RuntimeException(e + " when compiling: " + xsl);
     }
-    // Apply the transformation
+    // Applique la transformation
     try {
       if(xml == null)
         xml = "<null/>";
       StringWriter writer = new StringWriter();
-      tranformers.get(xsl).transform(new StreamSource(new StringReader(xml)), new StreamResult(writer));
+      Transformer transformer = tranformers.get(xsl);
+      // Ajoute les paramètres de la transformation, si définis
+      {
+      transformer.clearParameters();
+      if (params != null)
+          for(String name : params.stringPropertyNames()) 
+             transformer.setParameter(name, params.getProperty(name));
+    }
+      transformer.transform(new StreamSource(new StringReader(xml)), new StreamResult(writer));
       return writer.toString();
     } catch(TransformerException e) { throw new IllegalArgumentException(e.getMessageAndLocation());
     }
+  } 
+  /** 
+   * @see #run(String, String, Properties)
+   */
+  public static String run(String xml, String xsl) {
+   return run(xml, xsl, null);
   }
+  /** 
+   * @see #run(String, String, Properties)
+   */ 
+   public static String run(String xml, String xsl, String paramName, String paramValue) {
+       Properties params = new Properties();
+       params.setProperty(paramName, paramValue);
+       return run(xml, xsl, params);
+   }
   // Cash mechanism
   private static TransformerFactory tfactory;
   private static HashMap<String, Transformer> tranformers = new HashMap<String, Transformer>();
@@ -109,11 +133,13 @@ public class Xml2Xml {
            replaceAll("(<(meta|img|hr|br|link)[^>/]*)/?>", "$1/>");
   }
   /** Lanceur de la transformation XML -XSLT-> XML.
-   * @param usage <tt>java org.javascool.tools.Xml2Xml input-file XSL-file [output-file]</tt>
+   * @param usage <tt>java org.javascool.tools.Xml2Xml input-file XSL-file [output-file] [paramName paramValue]</tt>
    */
   public static void main(String[] usage) {
     // @main
-    if(usage.length > 1)
-      FileManager.save(usage.length > 2 ? usage[2] : "stdout:", run(FileManager.load(usage[0]), FileManager.load(usage[1])));
+      if (usage.length == 5)
+           FileManager.save(usage[2], run(FileManager.load(usage[0]), usage[1], usage[3], usage[4]));
+      else if(usage.length > 1)
+          FileManager.save(usage.length > 2 ? usage[2] : "stdout:", run(FileManager.load(usage[0]), usage[1]));
   }
 }

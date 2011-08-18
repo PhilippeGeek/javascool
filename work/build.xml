@@ -75,6 +75,7 @@
       nonavbar="true"
       notree="true"
       charset="UTF-8"
+      docencoding="UTF-8"
        >
       <link href="http://download.oracle.com/javase/6/docs/api"/>
       <link href="http://javadoc.fifesoft.com/rsyntaxtextarea"/>
@@ -91,7 +92,6 @@
     <java jar="./lib/java2html.jar" fork="true">
       <arg value="-srcdir"/>
       <arg value="../build/web/api"/>
-      <!-- [-filemask *.java] [-converter html | xhtml11 | xhtml | tex | rtf | xml] [-tabs 4] [-copytotargetunprocessedfiles] -style [ Eclipse | Kawa | Monochrome ] -->
     </java>
   </target>
 
