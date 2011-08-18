@@ -84,7 +84,7 @@ public class FileManager {
     }
     location = Macros.getResourceURL(location, false).toString();
     try {
-      if(backup && location.startsWith("file:")) throw new IllegalArgumentException("Impossible de procéder à un backup pour l'URL «" + location + "»");
+      if(backup && !location.startsWith("file:")) throw new IllegalArgumentException("Impossible de procéder à un backup pour l'URL «" + location + "»");
       OutputStreamWriter writer = location.startsWith("file:") ? getFileWriter(location.substring(5), backup) : getUrlWriter(location);
       for(int i = 0; i < string.length(); i++)
         writer.write(string.charAt(i));

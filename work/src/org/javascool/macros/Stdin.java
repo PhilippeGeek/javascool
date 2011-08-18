@@ -9,11 +9,9 @@ package org.javascool.macros;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import org.javascool.widgets.MainFrame;
 
 /** Cette factory contient des fonctions générales rendues visibles à l'utilisateur de proglets.
  * <p>Elle permet de définir des fonctions statiques qui seront utilisées pour faire des programmes élèves.</p>
@@ -34,35 +32,32 @@ public class Stdin {
     if(inputBuffer.isPopable())
       return inputBuffer.popString();
     inputQuestion = question;
-    inputDialog = new JDialog(MainFrame.getFrame(), "Java's Cool read");
-    inputDialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-    inputDialog.getContentPane().add(new JPanel() {
-                                       {
-                                         add(new JLabel(inputQuestion + " "));
-                                         add(new JTextField(40) {
-                                               {
-                                                 addActionListener(new ActionListener() {
-                                                                     @Override
-                                                                     public void actionPerformed(ActionEvent e) {
-                                                                       inputString = ((JTextField) e.getSource()).getText();
-                                                                       inputDialog.dispose();
-                                                                     }
-                                                                   }
-                                                                   );
-                                               }
-                                             }
-                                             );
-                                       }
-                                     }
-                                     );
-    inputDialog.pack();
-    inputDialog.setVisible(true);
     inputString = null;
-    while(inputString == null)
-      Macros.sleep(100);
-    return inputString;
+    inputDialog = new Macros.NonModalDialog();
+    inputDialog.setTitle("Java's Cool read");
+    inputDialog.add(new JPanel() {
+                      {
+                        add(new JLabel(inputQuestion + " "));
+                        add(new JTextField(40) {
+                              {
+                                addActionListener(new ActionListener() {
+                                                    @Override
+                                                    public void actionPerformed(ActionEvent e) {
+                                                      inputString = ((JTextField) e.getSource()).getText();
+                                                      inputDialog.close();
+                                                    }
+                                                  }
+                                                  );
+                              }
+                            }
+                            );
+                      }
+                    }
+                    );
+    inputDialog.open();
+    return inputString == null ? "" : inputString;
   }
-  private static JDialog inputDialog;
+  private static Macros.NonModalDialog inputDialog;
   private static String inputQuestion, inputString;
 
   /**
@@ -163,46 +158,43 @@ public class Stdin {
     if(inputBuffer.isPopable())
       return inputBuffer.popBoolean();
     inputQuestion = question;
-    inputDialog = new JDialog(MainFrame.getFrame(), "Java's Cool read");
-    inputDialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-    inputDialog.getContentPane().add(new JPanel() {
-                                       {
-                                         add(new JLabel(inputQuestion + " "));
-                                         add(new JButton("OUI") {
-                                               {
-                                                 addActionListener(new ActionListener() {
-                                                                     @Override
-                                                                     public void actionPerformed(ActionEvent e) {
-                                                                       inputString = "OUI";
-                                                                       inputDialog.dispose();
-                                                                     }
-                                                                   }
-                                                                   );
-                                               }
-                                             }
-                                             );
-                                         add(new JButton("NON") {
-                                               {
-                                                 addActionListener(new ActionListener() {
-                                                                     @Override
-                                                                     public void actionPerformed(ActionEvent e) {
-                                                                       inputString = "NON";
-                                                                       inputDialog.dispose();
-                                                                     }
-                                                                   }
-                                                                   );
-                                               }
-                                             }
-                                             );
-                                       }
-                                     }
-                                     );
-    inputDialog.pack();
-    inputDialog.setVisible(true);
     inputString = null;
-    while(inputString == null)
-      Macros.sleep(100);
-    return inputString.equals("OUI");
+    inputDialog = new Macros.NonModalDialog();
+    inputDialog.setTitle("Java's Cool read");
+    inputDialog.add(new JPanel() {
+                      {
+                        add(new JLabel(inputQuestion + " "));
+                        add(new JButton("OUI") {
+                              {
+                                addActionListener(new ActionListener() {
+                                                    @Override
+                                                    public void actionPerformed(ActionEvent e) {
+                                                      inputString = "OUI";
+                                                      inputDialog.close();
+                                                    }
+                                                  }
+                                                  );
+                              }
+                            }
+                            );
+                        add(new JButton("NON") {
+                              {
+                                addActionListener(new ActionListener() {
+                                                    @Override
+                                                    public void actionPerformed(ActionEvent e) {
+                                                      inputString = "NON";
+                                                      inputDialog.close();
+                                                    }
+                                                  }
+                                                  );
+                              }
+                            }
+                            );
+                      }
+                    }
+                    );
+    inputDialog.open();
+    return "OUI".equals(inputString);
   }
   /**
    * @see #readBoolean(String)

@@ -15,9 +15,12 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import org.javascool.widgets.Console;
 import javax.swing.JProgressBar;
 import java.util.ArrayList;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import org.javascool.Core;
 
 /** Définit l'interface graphique pour la construction de proglets.
@@ -28,16 +31,26 @@ import org.javascool.Core;
 public class DialogFrame {
   /** Ouvre une console indépendante pour lancer la construction de proglets. */
   public static void startFrame() {
-    Console.getInstance().getToolBar().addTool("Sélection et Lancement", "org/javascool/widgets/icons/compile.png", new Runnable() {
+    Console.getInstance().getToolBar().addTool("Créer une nouvelle proglet", "org/javascool/widgets/icons/new.png",
+                                               new Runnable() {
                                                  @Override
                                                  public void run() {
-                                                   org.javascool.builder.DialogFrame.startProgletMenu(Console.getInstance().getToolBar(), false);
+                                                   startProgletCreatorMenu();
                                                  }
                                                }
-                                               ).setPreferredSize(new Dimension(200, 25));
+                                               );
+    Console.getInstance().getToolBar().addTool("Lancement du builder", "org/javascool/widgets/icons/compile.png",
+                                               new Runnable() {
+                                                 @Override
+                                                 public void run() {
+                                                   startProgletBuilderMenu();
+                                                 }
+                                               }
+                                               );
     Console.getInstance().getToolBar().addTool("Progress Bar", jProgressBar = new JProgressBar());
-    jProgressBar.setPreferredSize(new Dimension(400, 25));
+    jProgressBar.setSize(new Dimension(100, 25));
     Console.getInstance().getToolBar().addTool("Status Bar", jLabel = new JLabel());
+    Console.getInstance().getToolBar().addSeparator();
     setUpdate("", 0);
     new MainFrame().reset("Java's Cool 4 Proglet Buidler", Core.logo, Console.getInstance());
   }
@@ -55,22 +68,54 @@ public class DialogFrame {
   }
   private static JLabel jLabel = null;
   private static JProgressBar jProgressBar = null;
-
-  /** Ouvre un menu de sélection des proglets et de lancement de la construction du Jar.
-   * @param parent Le bouton ou panneau qui lance ce menu.
-   * @param reload Indique si les proglets existantes doivent être rechargées. Par défaut false.
-   */
-  private static void startProgletMenu(Component parent, boolean reload) {
-    if((jPopupMenu == null) || reload) {
-      jPopupMenu = new JPopupMenu();
+  // Ouvre un menu de sélection des proglets et de lancement de la construction du Jar.
+  private static void startProgletCreatorMenu() {
+    JPopupMenu jCreatorMenu = new JPopupMenu();
+    jCreatorMenu.add(new JLabel("Entrer le nom de la proglet à construire:", JLabel.LEFT));
+    jCreatorMenuDir = new JTextField();
+    jCreatorMenuDir.setText(System.getProperty("user.dir") + File.separator);
+    jCreatorMenuDir.setEditable(false);
+    jCreatorMenu.add(new JPanel() {
+                       {
+                         add(jCreatorMenuDir);
+                         add(jCreatorMenuName = new JTextField(20));
+                       }
+                     }
+                     );
+    JMenuItem menuitem = new JMenuItem("Créer le répertoire et les fichiers exemples");
+    jCreatorMenu.add(menuitem);
+    menuitem.addActionListener(new ActionListener() {
+                                 @Override
+                                 public void actionPerformed(ActionEvent e) {
+                                   new Thread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                  String name = jCreatorMenuName.getText();
+                                                  if(name != null&& name.length() > 0)
+                                                    ProgletCreator.mkdirProglet(jCreatorMenuDir.getText() + name);
+                                                }
+                                              }
+                                              ).start();
+                                 }
+                               }
+                               );
+    Component parent = Console.getInstance().getToolBar();
+    jCreatorMenu.show(parent, 200, parent.getHeight());
+  }
+  private static JTextField jCreatorMenuDir, jCreatorMenuName;
+  // Ouvre un menu de sélection des proglets et de lancement de la construction du Jar.
+  private static void startProgletBuilderMenu() {
+    boolean reload = false;
+    if((jBuilderMenu == null) || reload) {
+      jBuilderMenu = new JPopupMenu();
       if(ProgletsBuilder.getProglets().length > 0) {
-        jPopupMenu.add(new JLabel("Sélectionner les proglets à construire:"));
+        jBuilderMenu.add(new JLabel("Sélectionner les proglets à construire:"));
         for(String proglet : ProgletsBuilder.getProglets()) {
           JCheckBox check = new JCheckBox(proglet);
           check.setSelected(true);
-          jPopupMenu.add(check);
+          jBuilderMenu.add(check);
         }
-        jPopupMenu.addSeparator();
+        jBuilderMenu.addSeparator();
         JMenuItem menuitem = new JMenuItem("Construire le jar");
         menuitem.addActionListener(new ActionListener() {
                                      @Override
@@ -79,7 +124,7 @@ public class DialogFrame {
                                                     @Override
                                                     public void run() {
                                                       ArrayList<String> proglets = new ArrayList<String>();
-                                                      for(Component c: jPopupMenu.getComponents())
+                                                      for(Component c: jBuilderMenu.getComponents())
                                                         if(c instanceof JCheckBox && ((JCheckBox) c).isSelected())
                                                           proglets.add(((JCheckBox) c).getText());
                                                       ProgletsBuilder.build(proglets.toArray(new String[proglets.size()]));
@@ -89,12 +134,13 @@ public class DialogFrame {
                                      }
                                    }
                                    );
-        jPopupMenu.add(menuitem);
+        jBuilderMenu.add(menuitem);
       } else
-        jPopupMenu.add(new JLabel("Aucune proglet à construire dans ce répertoire"));
+        jBuilderMenu.add(new JLabel("Aucune proglet à construire dans ce répertoire"));
     }
-    jPopupMenu.show(parent, 0, parent.getHeight());
+    Component parent = Console.getInstance().getToolBar();
+    jBuilderMenu.show(parent, 200, parent.getHeight());
   }
   // @ inner-class-variable
-  private static JPopupMenu jPopupMenu = null;
+  private static JPopupMenu jBuilderMenu = null;
 }

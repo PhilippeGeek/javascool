@@ -10,6 +10,8 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.net.URISyntaxException;
 
 import java.util.Calendar;
@@ -82,7 +84,7 @@ public class Macros {
     if(!condition) {
       System.out.println(message);
       org.javascool.core.ProgletEngine.getInstance().doStop();
-      sleep(500);
+      Macros.sleep(500);
     }
   }
   /** Affiche un message dans une fenêtre présentée à l'utilisateur.
@@ -97,29 +99,64 @@ public class Macros {
       p.setContentType("text/html");
     p.setText(text);
     p.setSize(800, 600);
-    messageDialog = new JDialog(MainFrame.getFrame(), "Java's Cool message");
-    messageDialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-    messageDialog.getContentPane().add(p);
-    messageDialog.getContentPane().add(new JButton("OK") {
-                                         {
-                                           addActionListener(new ActionListener() {
-                                                               @Override
-                                                               public void actionPerformed(ActionEvent e) {
-                                                                 messageDialog.dispose();
-                                                                 messagePending = false;
-                                                               }
-                                                             }
-                                                             );
-                                         }
-                                       }, BorderLayout.SOUTH);
-    messageDialog.pack();
-    messageDialog.setVisible(true);
-    messagePending = true;
-    while(messagePending)
-      Macros.sleep(100);
+    messageDialog = new NonModalDialog();
+    messageDialog.setTitle("Java's Cool message");
+    messageDialog.add(p);
+    messageDialog.add(new JButton("OK") {
+                        {
+                          addActionListener(new ActionListener() {
+                                              @Override
+                                              public void actionPerformed(ActionEvent e) {
+                                                messageDialog.close();
+                                              }
+                                            }
+                                            );
+                        }
+                      }, BorderLayout.SOUTH);
+    messageDialog.open();
   }
-  private static JDialog messageDialog;
-  private static boolean messagePending;
+  private static NonModalDialog messageDialog;
+
+  /** Définit un JDialog non modal.
+   * <p>Son utilisation typique se fait à travers une construction de la forme:<pre>
+   * dialog = new NonModalDialog();
+   * dialog.add(.. le composant du dialogue ..);
+   * dialog.open();</pre></p>
+   * <p>Lorsque le composant du dialogue reçoit la réponse il ferme le dialogue, par exemple:<pre>
+   *  public void actionPerformed(ActionEvent e) {
+   *    ... report de la valeur fournie par l'utilisateur ...
+   *    messageDialog.close();
+   * }</pre></p>
+   */
+  static class NonModalDialog extends JDialog {
+    // @bean
+    public NonModalDialog() {
+      super(MainFrame.getFrame());
+      addWindowListener(new WindowAdapter() {
+                          @Override
+                          public void windowClosing(WindowEvent e) {
+                            pending = false;
+                          }
+                        }
+                        );
+    }
+    /** Ouvre le dialogue et entre en attente d'un retour de l'utilisateur. */
+    public void open() {
+      setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+      pack();
+      setLocation((MainFrame.getFrame().getWidth() - getWidth()) / 2, (MainFrame.getFrame().getHeight() - getHeight()) / 2);
+      setVisible(true);
+      pending = true;
+      while(pending)
+        Macros.sleep(100);
+    }
+    /** Routine à appeler quand le dialogue à été achevé pour continuer le programme. */
+    public void close() {
+      dispose();
+      pending = false;
+    }
+    private boolean pending;
+  }
 
   /**
    * @see #message(String, boolean)

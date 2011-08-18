@@ -20,19 +20,22 @@ public abstract class StartStopButton extends JPanel {
   private JButton startButton;
   /** L'affichage du temps d'exécution. */
   private JLabel execTime;
-  /** L'état du start/stop. */
-  private boolean started = false;
 
   // @bean
   public StartStopButton() {
-    add(startButton = new JButton());
+    add(startButton = new JButton("Arrêter"));
     startButton.addActionListener(new ActionListener() {
                                     @Override
                                     public void actionPerformed(ActionEvent e) {
-                                      if(started)
-                                        doStop();
-                                      else
-                                        doStart();
+                                      new Thread(new Runnable() {
+                                                   public void run() {
+                                                     if(isStarting())
+                                                       doStop();
+                                                     else
+                                                       doStart();
+                                                   }
+                                                 }
+                                                 ).start();
                                     }
                                   }
                                   );
@@ -41,39 +44,37 @@ public abstract class StartStopButton extends JPanel {
   }
   /** Lancement du programme et du compteur. */
   private void doStart() {
-    if(started)
-      doStop();
-    started = true;
+    if(isRunning())
+      stop();
+    execTime.setText("  Temps d'exécution : 0 min 0 sec");
     startButton.setText("Arrêter");
     startButton.setIcon(Macros.getIcon("org/javascool/widgets/icons/stop.png"));
-    startButton.revalidate();
-    execTime.setText("  Temps d'exécution : 0 min 0 sec");
-    execTime.revalidate();
+    revalidate();
     new Thread(new Runnable() {
                  @Override
                  public void run() {
                    for(int t = 0; isRunning(); t++) {
                      execTime.setText("  Temps d'exécution : " + t / 60 + " min " + t % 60 + " sec");
                      execTime.revalidate();
-                     try {
-                       Macros.sleep(1000);
-                     } catch(Exception e) {}
+                     Macros.sleep(1000);
                    }
-                   started = false;
                    doStop();
                  }
                }
                ).start();
     start();
   }
+  /** Indique que l'interface à affiché le lancement. */
+  private boolean isStarting() {
+    return "Arrêter".equals(startButton.getText());
+  }
   /** Arrêt du programme et du compteur. */
   private void doStop() {
-    if(started)
+    if(isRunning())
       stop();
-    started = false;
     startButton.setText("Exécuter");
     startButton.setIcon(Macros.getIcon("org/javascool/widgets/icons/play.png"));
-    startButton.revalidate();
+    revalidate();
   }
   /** Cette méthode est appelée au lancement demandé par l'utilisateur. */
   abstract public void start();
@@ -84,7 +85,7 @@ public abstract class StartStopButton extends JPanel {
    * <p>Par défaut l'indicateur est celui de l'appel à la méthode <tt>stop</tt>.</p>
    */
   public boolean isRunning() {
-    return started;
+    return isStarting();
   }
 }
 
