@@ -2,12 +2,13 @@
 
 Description de la liasse:
 * ''work''       : contient le projet logiciel avec tous les fichiers sources;
+* ''sketchbook'' : contient les sources des proglets
+* ''web''        : contient les fichiers qui permettent de construire le site web.
+* ''documents''  : contient les documents en dépot sur le site à partir de http://javascool.gforge.inria.fr/v4/documents
+tandis que 
+* ''build.xml''  : contient les commandes de gestion/maintenance du projet
 * ''branches''   : contient les copies archivées de la liasse des fichiers sources pour y revenir si besoin;
 * ''build''      : contient les sauvegardes des versions livrées aux utilisateurs;
-* ''documents''  : contient les documents en dépot sur le site à partir de http://javascool.gforge.inria.fr/v4/documents
-* ''web''        : contient les fichiers qui permettent de construire le site web.
-* ''sketchbook'' : contient les sources des proglets
-tandis que 
 * ''wiki'        : contient les fichiers du wiki de développement (actuellement inutilisé).
 
 Pour en savoir plus voir la [http://javascool.gforge.inria.fr/v4/index.php?page=api documentation].
