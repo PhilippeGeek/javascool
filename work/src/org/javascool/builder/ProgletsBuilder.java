@@ -210,7 +210,6 @@ public class ProgletsBuilder {
   public static boolean build() {
     return build(getProglets(), null);
   }
-  
   /** Extrait une arborescence d'un jar.
    * @param jarFile Jarre dont on extrait les fichiers.
    * @param destDir Dossier où on déploie les fichiers.
@@ -221,27 +220,24 @@ public class ProgletsBuilder {
       System.out.println("Extract files from " + jarFile + " to " + destDir + ((!jarEntry.isEmpty()) ? " which start with " + jarEntry : ""));
       JarFile jf = new JarFile(jarFile);
       Enumeration<JarEntry> entries = jf.entries();
-      while (entries.hasMoreElements()) {
-	JarEntry je = entries.nextElement();
-	if (je.getName().startsWith(jarEntry) && !je.isDirectory()) {
-	  System.out.println("Extracting " + je.getName() + " ...");
-	  File dest = new File(destDir + File.separator + je.getName());
-	  dest.getParentFile().mkdirs();
-	  ProgletsBuilder.copyFile(ClassLoader.getSystemResourceAsStream(je.getName()), new FileOutputStream(dest));
-	}
+      while(entries.hasMoreElements()) {
+        JarEntry je = entries.nextElement();
+        if(je.getName().startsWith(jarEntry) && !je.isDirectory()) {
+          System.out.println("Extracting " + je.getName() + " ...");
+          File dest = new File(destDir + File.separator + je.getName());
+          dest.getParentFile().mkdirs();
+          ProgletsBuilder.copyFile(ClassLoader.getSystemResourceAsStream(je.getName()), new FileOutputStream(dest));
+        }
       }
-    } catch (Exception ex) {
-      throw new IllegalStateException(ex);
+    } catch(Exception ex) { throw new IllegalStateException(ex);
     }
   }
-
   /**
    * @see #jarExtract(String, String, String)
    */
   private static void jarExtract(String jarFile, String destDir) {
     jarExtract(jarFile, destDir, "");
   }
-
   /** Crée un jar à partir d'une arborescence.
    * @param jarFile Jar à construire. Elle est détruite avant d'être crée.
    * @param mfFile Fichier de manifeste (obligatoire).
@@ -255,23 +251,20 @@ public class ProgletsBuilder {
       JarOutputStream target = new JarOutputStream(new FileOutputStream(jarFile), manifest);
       copyFileToJar(new File(srcDir), target, new File(srcDir));
       target.close();
-    } catch (Exception ex) {
-      throw new RuntimeException(ex);
+    } catch(Exception ex) { throw new RuntimeException(ex);
     }
   }
-
   /** Copie un répertoire dans un autre en oubliant les svn.
    * @param srcDir Dossier source.
    * @param dstDir Dossier cible.
    */
   private static void copyFiles(String srcDir, String dstDir) throws IOException {
-    for (String s : FileManager.list(srcDir)) {
+    for(String s : FileManager.list(srcDir)) {
       String d = dstDir + File.separator + new File(s).getName();
-      if (!new File(s).isDirectory()) {
-	copyFile(new FileInputStream(s), new FileOutputStream(d));
-      } else if (!new File(s).getName().equals(".svn")) {
-	copyFiles(s, d);
-      }
+      if(!new File(s).isDirectory())
+        copyFile(new FileInputStream(s), new FileOutputStream(d));
+      else if(!new File(s).getName().equals(".svn"))
+        copyFiles(s, d);
     }
   }
   // Copy un stream dans un autre.
@@ -280,70 +273,58 @@ public class ProgletsBuilder {
     BufferedInputStream i = new BufferedInputStream(in, 2048);
     BufferedOutputStream o = new BufferedOutputStream(out, 2048);
     byte data[] = new byte[2048];
-    for (int c; (c = i.read(data, 0, 2048)) != -1;) {
+    for(int c; (c = i.read(data, 0, 2048)) != -1;)
       o.write(data, 0, c);
-    }
     o.close();
     i.close();
   }
-
   private static void copyFileToJar(File source, JarOutputStream target, File root) throws IOException {
     BufferedInputStream in = null;
     try {
-      if (source.isDirectory()) {
-	String name = source.getPath().replace(root.getAbsolutePath(), "").replace(File.separator, "/");
-	if (!name.isEmpty() && source != root) {
-	  if (!name.endsWith("/")) {
-	    name += "/";
-	  }
-	  JarEntry entry = new JarEntry(name);
-	  entry.setTime(source.lastModified());
-	  target.putNextEntry(entry);
-	  target.closeEntry();
-	}
-	for (File nestedFile : source.listFiles()) {
-	  copyFileToJar(nestedFile, target, root);
-	}
-	return;
+      if(source.isDirectory()) {
+        String name = source.getPath().replace(root.getAbsolutePath(), "").replace(File.separator, "/");
+        if(!name.isEmpty() && (source != root)) {
+          if(!name.endsWith("/"))
+            name += "/";
+          JarEntry entry = new JarEntry(name);
+          entry.setTime(source.lastModified());
+          target.putNextEntry(entry);
+          target.closeEntry();
+        }
+        for(File nestedFile : source.listFiles())
+          copyFileToJar(nestedFile, target, root);
+        return;
       }
-
       JarEntry entry = new JarEntry(source.getPath().replace("\\", "/"));
       entry.setTime(source.lastModified());
       target.putNextEntry(entry);
       in = new BufferedInputStream(new FileInputStream(source));
 
       byte[] buffer = new byte[1024];
-      while (true) {
-	int count = in.read(buffer);
-	if (count == -1) {
-	  break;
-	}
-	target.write(buffer, 0, count);
+      while(true) {
+        int count = in.read(buffer);
+        if(count == -1)
+          break;
+        target.write(buffer, 0, count);
       }
       target.closeEntry();
-    } finally {
-      if (in != null) {
-	in.close();
-      }
+    }
+    finally {
+      if(in != null)
+        in.close();
     }
   }
-
   /** Lance la compilation java sur un groupe de fichiers. */
   private static void javac(String[] javaFiles) {
-    if (!Java2Class.compile(javaFiles, true)) {
-      throw new IllegalArgumentException("Erreur de compilation java");
-    }
+    if(!Java2Class.compile(javaFiles, true)) throw new IllegalArgumentException("Erreur de compilation java");
   }
-
   /** Détruit récursivement un fichier ou répertoire.
    * @param dir Le nom du répertoire.
    * */
   private static void rmDir(File dir) {
-    for (File f : dir.listFiles()) {
-      if (f.isDirectory()) {
-	rmDir(f);
-      }
-    }
+    for(File f : dir.listFiles())
+      if(f.isDirectory())
+        rmDir(f);
     dir.delete();
   }
 }
