@@ -1,12 +1,19 @@
 <!-- Construction des éléments de javascool (core), javascoolbuilder, et des proglets -->
-<project>
+<project default="usage">
   <property name="classpath" value="lib/RSyntaxTextArea.jar:lib/jvs2html.jar"/>
 
-  <target name="classes">
-    <mkdir dir="../build/classes"/>
-    <javac debug="true" debuglevel="lines,vars,source" deprecation="on" classpath="${classpath}" srcdir="src" destdir="../build/classes"/>
-  </target>
-  
+  <target name="usage"><echo level="info">
+    ant javacool.jar		construit dans ../build la jarre Javas'Cool Core "apprenant" sans proglet
+    ant javacool-builder.jar	construit dans ../build la jarre Javas'Cool Builder "formateur" pour genérer les progetss
+    ant javascool-proglets.jar	construit dans ../sketchbook la jarre Javas'Cool Core "apprenant" avec toutes les proglets disponibles
+    ant javadoc			construit dans ../build/web/api la javadoc des classes (avec java2html)
+    ant classes                 teste la compilation des classes
+    ant beautify                reformate tous les sources avec la commande uncrustify
+    ant clean                   nettoie les cibles non retenues dans le svn
+    ant prun			lance Javas'Cool Core "apprenant" avec les proglets
+    ant jrun			lance Javas'Cool Core "apprenant" sans les proglets
+  </echo></target>
+
   <target name="javascool.jar" depends="classes" >
     <mkdir dir="../build"/>
     <delete file="../build/javascool.jar"/>
@@ -38,6 +45,12 @@
     </jar>
   </target>
 
+  <target name="javascool-proglets.jar" depends="javascool-builder.jar">
+    <java jar="../build/javascool-builder.jar" dir="../sketchbook" fork="true">
+      <arg value="-q"/>
+    </java>    
+  </target>
+  
   <target name="javadoc">
     <mkdir dir="../build/web/api"/>
     <javadoc
@@ -57,7 +70,7 @@
        >
       <link href="http://download.oracle.com/javase/6/docs/api"/>
       <link href="http://javadoc.fifesoft.com/rsyntaxtextarea"/>
-      <fileset dir="src" defaultexcludes="yes">
+      <fileset dir="src">
         <include name="**/*.java"/>
       </fileset>
     </javadoc>
@@ -74,22 +87,47 @@
     </java>
   </target>
 
-  <target name="run" depends="javascool.jar">
-    <java jar="../build/javascool.jar" dir="../sketchbook" fork="true"/>
+  <target name="classes">
+    <mkdir dir="../build/classes"/>
+    <javac debug="true" debuglevel="lines,vars,source" deprecation="on" classpath="${classpath}" srcdir="src" destdir="../build/classes"/>
   </target>
-  
-  <target name="brun" depends="javascool-builder.jar">
-    <java jar="../build/javascool-builder.jar" dir="../sketchbook" fork="true">
-      <arg value="-q"/>
-    </java>    
-    <java jar="../sketchbook/javascool-proglets.jar" fork="true"/>
+
+  <taskdef resource="net/sf/antcontrib/antlib.xml"/>
+
+  <target name="beautify">
+    <for param="file">
+      <path>
+        <fileset dir="../sketchbook">
+          <include name="**/*.java"/>
+          <include name="**/*.jvs"/>
+          <include name="**/*.pde"/>
+        </fileset>
+        <fileset dir="src">
+          <include name="**/*.java"/>
+        </fileset>
+      </path>
+      <sequential>
+        <exec executable="uncrustify" os="Linux">
+          <arg line="-q -c lib/uncrustify.cfg --replace"/>
+          <arg value="@{file}"/>
+        </exec>
+      </sequential>
+    </for>
   </target>
   
   <target name="clean">
     <delete dir="../build/classes"/>
     <delete dir="../build/web/api"/>
-    <delete dir="src/web/.http.root"/>
-    <delete dir="nbproject/private"/>
+    <delete dir="nbproject/private"/> 
+    <delete dir="../web/nbproject/private"/> 
+  </target>
+
+  <target name="jrun" depends="javascool.jar">
+    <java jar="../build/javascool.jar" dir="../sketchbook" fork="true"/>
+  </target>
+  
+  <target name="prun" depends="javascool-proglets.jar">
+    <java jar="../sketchbook/javascool-proglets.jar" fork="true"/>
   </target>
     
 </project>

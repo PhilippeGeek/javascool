@@ -7,45 +7,44 @@ export PATH:=/usr/java/jdk1.6.0_22/bin:$(PATH)
 JVS = $(realpath ..)
 
 ant :
-	ant brun
+	ant beautify
+#	ant jrun
 #	ant javadoc ; firefox $(JVS)/build/web/api/index.html 
+
+nbe :
+	@gnome-terminal --hide-menubar --geometry 1x1-1-1 -e "/usr/java/netbeans-7.0/bin/netbeans" &
 
 clean :
 	ant clean > /dev/null
 
 #
-# Commandes de service pour gerer le site javascool
+# ./build
 #
-
-JVS = $(realpath ..)
-
-pwd :
-	nautilus $(JVS)
-
-zip :
-	svn export . ~/Desktop/work
-	svn export ../sketchbook ~/Desktop/sketchbook
-
-ssh :
-	@gnome-terminal -e "ssh scm.gforge.inria.fr 'cd /home/groups/javascool/htdocs ; bash -i'" &
 
 svn : clean
 	cd $(JVS) ; svn cleanup ; svn up ; svn ci -m 'modif mineure vthierry' ; svn status
 
+#
+# web/build
+#
+
+ssh :
+	@gnome-terminal -e "ssh scm.gforge.inria.fr 'cd /home/groups/javascool/htdocs ; bash -i'" &
+
 lcheck :
-	#org.javascool.LinkCheck -recursive http://javascool.gforge.inria.fr/v3/
+	ant javascool.jar
+	java -cp ../build/javascool.jar org.javascool.tools.LinkCheck -recursive http://javascool.gforge.inria.fr/v4/
 
 pub :
 	svn up ; cd ../web ; ./index/start.sh #; ./publis.sh
 	firefox http://127.0.0.1:1234
 
+#
+# work/build
+#
+
 bty :
-	for f in `find src -name '*.java' -o -name '*.jvs'` ; do uncrustify -q -c lib/uncrustify.cfg --replace $$f ; done
-	for f in `find ../sketchbook -name '*.java' -o -name '*.jvs' -o -name '*.pde'` ; do uncrustify -q -c lib/uncrustify.cfg --replace $$f ; done
-
-
-nbe :
-	@gnome-terminal --hide-menubar --geometry 1x1-1-1 -e "/usr/java/netbeans-7.0/bin/netbeans" &
+	for f in `find .. -name '*.java' -o -name '*.jvs' -o -name '*.pde'` ; do uncrustify -q -c lib/uncrustify.cfg --replace $$f ; done
 
 P_HOME=/usr/java/processing-1.2.1
 J_HOME=$(P_HOME)/java
@@ -53,5 +52,4 @@ export PATH:=$(J_HOME)/bin:$(PATH)
 export CLASSPATH=$(shell echo '$(J_HOME)/lib/tools.jar $(J_HOME)/jre/lib/rt.jar $(wildcard $(P_HOME)/lib/*.jar)' | sed 's/ /:/g')
 
 pro : 
-#	@rm -rf libraries ../sketchbook/*/applet ../sketchbook/*/Exemple.java
 	@cd $(P_HOME) ; java processing.app.Base
