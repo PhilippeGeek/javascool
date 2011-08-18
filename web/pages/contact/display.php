@@ -3,22 +3,12 @@
         array(
             array("Java's Cool","index.php"),
             array("Contact","")
+        ),
+        array(
+            array("Crédits", "?page=contact&action=credits")
         )
     );
 ?>
-
-<p>Java's Cool est d&eacute;velopp&eacute; par des partenaires et collègues d'Inria (Institut National de Recherche en Informatique et Automatique).</p>
-
-<div class="label2">L'&eacute;quipe de d&eacute;veloppement de JavaS'Cool 4</div>
-<ul class="developpers">
- <li>Philippe Vienne &lt;philippe@vienne.fr></li>
- <li>Guillaume Matheron &lt;guillaumematheron06@gmail.com></li>
-</ul> <p>avec l'aide David Pichardie &lt;david.pichardie@inria.fr>, Thierry Vi&eacute;ville &lt;thierry@vieville.fr> et les précieux conseils de Robert Cabane.</p>
-
-<div class="label2">Soumettre un bug ou proposer une fonctionnalit&eacute;</div>
-<p>Vous pouvez trouver notre syst&egrave;me de gestion des t&acirc;ches &agrave; l'adresse suivante : <a href="http://code.google.com/p/javascool/issues/list">http://code.google.com/p/javascool/issues/list</a></p>
-<p>Merci de vos suggestions !</p>
-</div>
 
 <div class="label2">Nous contacter directement</div>
 <p><br /> 
@@ -47,7 +37,7 @@ Nous sommes à votre écoute&nbsp;! Pour nous contacter:
 <ul><li> Si le logiciel ne marche pas chez vous, pour mieux vous aider, il est utile de nous préciser&nbsp;: 
 
 </li></ul>
-<p><form action="mailto:Thierry.Vieville@sophia.inria.fr,Philoumailabo@gmail.com?subject=A propos de JavaScool : pb logiciel !" method="post" enctype="text/plain"><table align="center">
+<p><form action="mailto:Thierry.Vieville@inria.fr,guillaume.quest@gmail.com,philoumailabo@gmail.com?subject=A propos de JavaScool : pb logiciel !" method="post" enctype="text/plain"><table align="center">
     <tr><td>Le système utilisé :</td><td><select name="systeme">
       <option>------------------------------------------------------</option>
       <option>Linux</option>
@@ -71,6 +61,19 @@ Nous sommes à votre écoute&nbsp;! Pour nous contacter:
   </table></form>
 </p>
 
+<p>Java's Cool est d&eacute;velopp&eacute; par des partenaires et collègues d'Inria (Institut National de Recherche en Informatique et Automatique).</p>
+
+<div class="label2">L'&eacute;quipe de d&eacute;veloppement de JavaS'Cool 4</div>
+<ul class="developpers">
+ <li>Philippe Vienne &lt;philippe@vienne.fr></li>
+ <li>Guillaume Matheron &lt;guillaumematheron06@gmail.com></li>
+</ul> <p>avec l'aide David Pichardie &lt;david.pichardie@inria.fr>, Thierry Vi&eacute;ville &lt;thierry@vieville.fr> et les précieux conseils de Robert Cabane.</p>
+
+
+<div class="label2">Soumettre un bug ou proposer une fonctionnalit&eacute;</div>
+<p>Vous pouvez accéder directement à notre syst&egrave;me de gestion des t&acirc;ches &agrave; l'adresse suivante : <a href="http://code.google.com/p/javascool/issues/list">http://code.google.com/p/javascool/issues/list</a></p>
+<p>Merci de vos suggestions !</p>
+</div>
 
 <br /><br /><hr />
 

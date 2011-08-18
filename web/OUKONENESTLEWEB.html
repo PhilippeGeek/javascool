@@ -1,0 +1,29 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="CONTENT-TYPE" content="text/html; charset=UTF-8">
+  <title></title>
+  <meta name="GENERATOR" content="OpenOffice.org 3.3  (Linux)">
+  <meta name="CREATED" content="0;0">
+  <meta name="CHANGED" content="0;0">
+  <style type="text/css">
+	<!--
+		@page { margin: 0.79in }
+		P { margin-bottom: 0.08in }
+		PRE.cjk { font-family: "WenQuanYi Zen Hei Mono", monospace }
+	-->
+	</style>
+</head>
+<body dir="LTR" lang="en-US">
+<pre class="western"><span style="font-weight: bold;">Travail en cours de vthierry (attention rien n'est vrai ce sont des notes provisoires)</span><br><br>* Les contenus littéraires repassent sur le wiki et sont syndiqués (sans cache pour les tests) avec wiki_get_contents()<br><a
+ href="http://wiki.inria.fr/sciencinfolycee/Cat%C3%A9gorie:JavaScool">http://wiki.inria.fr/sciencinfolycee/Cat%C3%A9gorie:JavaScool</a><br><a
+ href="http://127.0.0.1:1234/index.php">http://127.0.0.1:1234/index.php</a><br><a
+ href="http://javascool.gforge.inria.fr/v3">http://javascool.gforge.inria.fr/v3</a><br><br>* La page d'accueil se scinde en deux blocs Accueil et Actualité (bandeau de gauche)<br><br>! La page du site est très (trop) grunge <br>    array("../web/pages/sitemap/display.php", <br><br>* Structure du site vue par vthierry:<br>array(<br> array("Java's Cool","index.php"),<br> array("Accueil",<br>  &nbsp;array("Accueil","index.php"), <br> )<br> array("Contact", <br>   array("Contact", "?page=contact"),<br>   array("Crédits". "?page=contact&amp;action=credits")<br> )<br>);<br><br>* Rebonds de l'ancien site<br><br>&lt;?php<br>  // array("ancien-lien" =&gt; "page-php", .)<br>$rebond = array(<br>"api/(.*)" =&gt; "?page=api", // puisque toutes les classes ont changé<br>"Accueil" =&gt; "",<br>"Contacts" =&gt; "?page=contact",<br>"Contact" =&gt; "?page=contact",<br>"contact" =&gt; "?page=contact",<br>"Crédits" =&gt; "?page=contact&amp;action=credits",<br><br></pre>
+<hr style="width: 100%; height: 2px;">
+<pre class="western"><br>array("../web/pages/developers/processinglinux.php", <br>array("../web/pages/resources/ailleurs.php", <br>array("../web/pages/resources/autresdeveloppements.php", <br>array("../web/pages/resources/autresinitiatives.php", <br>array("../web/pages/resources/display.php", <br>array("../web/pages/resources/document.php", <br>array("../web/pages/api/display.php", <br>array("../web/pages/tpe/idees.php", <br>array("../web/pages/tpe/revues.php", <br>array("../web/pages/tpe/methode.php", <br>array("../web/pages/tpe/display.php", <br>array("../web/pages/tpe/pepites.php", <br>array("../web/pages/tpe/interventions.php", <br>array("../web/pages/tpe/quizz.php", <br>array("../web/pages/tpe/exemples.php", <br>array("../web/pages/tpe/demos.php", <br>array("../web/pages/proglets/demo.php", <br>array("../web/pages/proglets/display.php", <br>array("../web/pages/proglets/show.php", <br>array("../web/pages/developers/doc-jvs.php", <br>array("../web/pages/developers/display.php", <br>array("../web/pages/developers/sampleCode.php", <br>array("../web/pages/developers/document.php", <br>array("../web/pages/developers/proglets.php", <br>array("../web/pages/developers/doc-javascoolbuilder.php", <br>array("../web/pages/developers/doc-xml.php", <br>array("../web/pages/developers/faq.php", <br>array("../web/pages/developers/specs-javascoolbuilder.php", <br>array("../web/pages/home/licence.php", <br>array("../web/pages/home/display.php", <br>array("../web/pages/home/document.php", <br>array("../web/pages/home/faq.php", <br>array("../web/pages/home/jsinfo.php", <br>array("../web/pages/home/cadrage.php", <br>array("../web/pages/home/manifest.php", <br>array("../web/pages/run/display.php", <br>array("../web/pages/run/document.php", <br>array("../web/pages/run/lancement.php", <br>array("../web/pages/run/javascoolbuilder.php", <br><br></pre>
+<hr style="width: 100%; height: 2px;">
+<pre class="western"><br>Activites<br>Ailleurs<br>AutresInitiatives<br>Cadrage<br>Developpement<br>Faq<br>Lancement<br>Licence<br>Manifeste<br>Menu<br>Pepites<br>Perpites<br>Ressources<br>Revues<br>Telechargement<br>TPE-Accueil<br>TPE-Demos<br>TPE-Exemples<br>TPE-Interventions<br>TPE-Methode<br>TPE-Quizz<br>TPE-Sujets<br>doc%3A%2Fdocuments%2Fnos-ressources%2Fpepites.html<br>doc%3A%2Fdocuments%2Fnos-ressources%2Frevues.html<br>doc%3A%2Fdocuments%2Fquelques-t-p-e%2Findex.html<br>doc%3A%2Fdocuments%2Fspeed-dating-09%2Findex.html<br>doc%3A%2Fsketchbook%2FExplorationSonore%2Fabout-proglet.htm<br>doc%3Adocuments%2Fquelques-t-p-e%2Faffiche_finale_inria.pdf<br>doc%3Adocuments%2Fquelques-t-p-e%2Fquelques-t-p-e.pdf<br>doc%3Asketchbook%2Findex.html<br><br></pre>
+<hr style="width: 100%; height: 2px;">
+<pre class="western"><br></pre>
+</body>
+</html>

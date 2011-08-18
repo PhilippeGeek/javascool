@@ -7,7 +7,8 @@
 export PATH:=/usr/java/jdk1.6.0_22/bin:$(PATH)
 
 default :
-	ant prun
+#	ant prun
+	cd ../web ; ant local
 
 clean :
 	ant clean > /dev/null
@@ -21,3 +22,6 @@ nbe :
 pro :
 	ant processing
 
+#############################################################################################
+
+# Travail sur les pages du site
