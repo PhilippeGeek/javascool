@@ -17,9 +17,7 @@
     <table class="home"><tr><td class="news">
                 <div class="news">
                     <table class="news"><tr class="news-top"><td colspan="5" class="news-top"></td></tr><tr class="news-center"><td class="news-left"></td><td class="news-leftborder"></td><td class="news-center">
-                                    <p>Une version améliorée de la 3.2 avec <i><?php showLink('index.php?page=proglets','«proglets»','internal'); ?></i> est <b><?php showLink('javascool.jar','disponible','file'); ?></b> !</p>
-                                    <hr />
-                                    <p><a href="?page=sitemap">Plan du site</a></p>
+                                    <?php echo wiki_get_contents('JavaScool:Actualité'); ?>
                                 </td><td class="news-rightborder"></td><td class="news-right"></td></tr><tr class="news-bottom"><td colspan="5" class="news-bottom"></td></tr></table>
                 </div>
             </td><td class="main">
@@ -38,7 +36,7 @@
                             <td class="main-leftborder"></td>
                             <td class="main-center">
                                 
-<?php include('pages/home/document.php') ?>
+<?php echo wiki_get_contents('JavaScool:Accueil');  ?>
                             </td>
                             <td class="main-rightborder"></td>
                             <td class="main-right"></td>
