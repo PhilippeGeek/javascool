@@ -32,6 +32,9 @@ ssh :
 svn : clean
 	cd $(JVS) ; svn cleanup ; svn up ; svn ci -m 'modif mineure vthierry' ; svn status
 
+lcheck :
+	#org.javascool.LinkCheck -recursive http://javascool.gforge.inria.fr/v3/
+
 pub :
 	svn up ; cd ../web ; ./index/start.sh #; ./publis.sh
 	firefox http://127.0.0.1:1234
