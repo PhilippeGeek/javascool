@@ -9,6 +9,8 @@
     <xsl:param name="string"/>
     <sx:return select="jvs2htm:run($string)"/>
   </sx:function>
+  
+  <xsl:param name="output" select="'jvs'"/>
 
 <!-- These tags produce javasccool's doc specific constructs -->
 
@@ -40,10 +42,18 @@
   <xsl:choose>
     <xsl:when test="@class = 'javascool'"><tt><a href="http://javascool.gforge.inria.fr" style="padding:0;margin:0;text-decoration:none">Java'sCool</a></tt></xsl:when>
     <xsl:when test="@class = 'note'"><sup><a href="{concat('#', @link)}"><xsl:value-of select="@link"/></a></sup></xsl:when>
-    <xsl:otherwise><xsl:call-template name="l"/></xsl:otherwise>
+    <xsl:when test="(@class = 'editor' or @class = 'browser') and $output = 'jvs'"> 
+      <a href="{concat('jvs://?',@class,':', @link)}"><xsl:value-of select="@text"/></a>
+   </xsl:when>
+   <xsl:when test="@class = 'browser'">
+      <a class="{@class}" target="_blank" href="{@link}"><xsl:value-of select="@text"/></a>
+   </xsl:when>  
+   <xsl:when test="@class = 'editor'"> 
+      <a class="{@class}" href="{concat(@link,'.html')}"><xsl:value-of select="@text"/></a>
+   </xsl:when>  
+   <xsl:otherwise><xsl:call-template name="l"/></xsl:otherwise>
   </xsl:choose>
 </xsl:template>
-
 
 <!-- These tags performs the Jvs2Htm conversion -->
 
