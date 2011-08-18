@@ -226,7 +226,7 @@ public class ProgletsBuilder {
           System.out.println("Extracting " + je.getName() + " ...");
           File dest = new File(destDir + File.separator + je.getName());
           dest.getParentFile().mkdirs();
-          ProgletsBuilder.copyFile(ClassLoader.getSystemResourceAsStream(je.getName()), new FileOutputStream(dest));
+          ProgletsBuilder.copyStream(ClassLoader.getSystemResourceAsStream(je.getName()), new FileOutputStream(dest));
         }
       }
     } catch(Exception ex) { throw new IllegalStateException(ex);
@@ -262,14 +262,13 @@ public class ProgletsBuilder {
     for(String s : FileManager.list(srcDir)) {
       String d = dstDir + File.separator + new File(s).getName();
       if(!new File(s).isDirectory())
-        copyFile(new FileInputStream(s), new FileOutputStream(d));
+        copyStream(new FileInputStream(s), new FileOutputStream(d));
       else if(!new File(s).getName().equals(".svn"))
         copyFiles(s, d);
     }
   }
-  // Copy un stream dans un autre.
-
-  private static void copyFile(InputStream in, OutputStream out) throws IOException {
+  // Copy un stream dans un autre
+  private static void copyStream(InputStream in, OutputStream out) throws IOException {
     BufferedInputStream i = new BufferedInputStream(in, 2048);
     BufferedOutputStream o = new BufferedOutputStream(out, 2048);
     byte data[] = new byte[2048];
@@ -277,7 +276,8 @@ public class ProgletsBuilder {
       o.write(data, 0, c);
     o.close();
     i.close();
-  }
+  }  
+  // Ajoute un stream a un jar
   private static void copyFileToJar(File source, JarOutputStream target, File root) throws IOException {
     BufferedInputStream in = null;
     try {
@@ -298,8 +298,8 @@ public class ProgletsBuilder {
       JarEntry entry = new JarEntry(source.getPath().replace("\\", "/"));
       entry.setTime(source.lastModified());
       target.putNextEntry(entry);
+      // @todo a factoriser avec ccopyFile !!!
       in = new BufferedInputStream(new FileInputStream(source));
-
       byte[] buffer = new byte[1024];
       while(true) {
         int count = in.read(buffer);
