@@ -7,8 +7,7 @@ export PATH:=/usr/java/jdk1.6.0_22/bin:$(PATH)
 JVS = $(realpath ..)
 
 ant :
-	ant beautify
-#	ant jrun
+	ant jrun
 #	ant javadoc ; firefox $(JVS)/build/web/api/index.html 
 
 nbe :
@@ -42,9 +41,6 @@ pub :
 #
 # work/build
 #
-
-bty :
-	for f in `find .. -name '*.java' -o -name '*.jvs' -o -name '*.pde'` ; do uncrustify -q -c lib/uncrustify.cfg --replace $$f ; done
 
 P_HOME=/usr/java/processing-1.2.1
 J_HOME=$(P_HOME)/java

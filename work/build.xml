@@ -1,13 +1,12 @@
 <!-- Construction des éléments de javascool (core), javascoolbuilder, et des proglets -->
 <project default="usage">
-  <property name="classpath" value="lib/RSyntaxTextArea.jar:lib/jvs2html.jar"/>
 
   <target name="usage"><echo level="info">
     ant javacool.jar		construit dans ../build la jarre Javas'Cool Core "apprenant" sans proglet
     ant javacool-builder.jar	construit dans ../build la jarre Javas'Cool Builder "formateur" pour genérer les progetss
     ant javascool-proglets.jar	construit dans ../sketchbook la jarre Javas'Cool Core "apprenant" avec toutes les proglets disponibles
-    ant javadoc			construit dans ../build/web/api la javadoc des classes (avec java2html)
     ant classes                 teste la compilation des classes
+    ant javadoc			construit dans ../build/web/api la javadoc des classes (avec java2html)
     ant beautify                reformate tous les sources avec la commande uncrustify
     ant clean                   nettoie les cibles non retenues dans le svn
     ant prun			lance Javas'Cool Core "apprenant" avec les proglets
@@ -51,6 +50,13 @@
     </java>    
   </target>
   
+  <property name="classpath" value="lib/RSyntaxTextArea.jar:lib/jvs2html.jar"/>
+
+  <target name="classes">
+    <mkdir dir="../build/classes"/>
+    <javac debug="true" debuglevel="lines,vars,source" deprecation="on" classpath="${classpath}" srcdir="src" destdir="../build/classes"/>
+  </target>
+
   <target name="javadoc">
     <mkdir dir="../build/web/api"/>
     <javadoc
@@ -85,11 +91,6 @@
       <arg value="../build/web/api"/>
       <!-- [-filemask *.java] [-converter html | xhtml11 | xhtml | tex | rtf | xml] [-tabs 4] [-copytotargetunprocessedfiles] -style [ Eclipse | Kawa | Monochrome ] -->
     </java>
-  </target>
-
-  <target name="classes">
-    <mkdir dir="../build/classes"/>
-    <javac debug="true" debuglevel="lines,vars,source" deprecation="on" classpath="${classpath}" srcdir="src" destdir="../build/classes"/>
   </target>
 
   <taskdef resource="net/sf/antcontrib/antlib.xml"/>
