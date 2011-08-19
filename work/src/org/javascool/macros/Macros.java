@@ -103,7 +103,7 @@ public class Macros {
         p.setEditable(false);
         p.setOpaque(false);
         if(html){
-            p.setContentType("text/html");
+            p.setContentType("text/html; charset=utf-8");
         }
         p.setText(text);
         p.setBackground(new java.awt.Color(200, 200, 200, 0));

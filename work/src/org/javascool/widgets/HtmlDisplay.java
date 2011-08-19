@@ -98,7 +98,7 @@ public class HtmlDisplay extends JPanel {
       pane = new JEditorPane();
       pane.setBackground(Color.WHITE);
       pane.setEditable(false);
-      pane.setContentType("text/html");
+      pane.setContentType("text/html; charset=utf-8");
       pane.addHyperlinkListener(new HyperlinkListener() {
                                   @Override
                                   public void hyperlinkUpdate(HyperlinkEvent e) {
