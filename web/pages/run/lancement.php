@@ -27,13 +27,3 @@
 </li></ul>
 </li><li> Sous Linux ou MacOS on peut utiliser n'importe quelle distribution de Java pour les «proglets», mais il faut utiliser la <?php showLink('http://www.java.com/fr/download','distribution de Sun','external'); ?> pour les  «<a href="http://javascool.gforge.inria.fr/v3/?page=doc:sketchbook/index.html" class="external text" rel="nofollow">educlets</a>», ceci à cause de <?php showLink('http://www.processing.org/','processing','external'); ?>.
 </li></ol>
-
-<!-- 
-NewPP limit report
-Preprocessor node count: 15/1000000
-Post-expand include size: 0/2097152 bytes
-Template argument size: 0/2097152 bytes
-Expensive parser function count: 0/100
--->
-
-<!-- Saved in parser cache with key wiki_sciencinfolycee:pcache:idhash:316-1!1!0!!fr!2!edit=0!printable=1 and timestamp 20110721112854 -->
