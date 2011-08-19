@@ -53,7 +53,7 @@ class JVSStartPanel extends JPanel {
     JPanel shortcuts = new JPanel();
     shortcuts.add(Box.createHorizontalGlue());
     for(ProgletEngine.Proglet proglet : ProgletEngine.getInstance().getProglets())
-      shortcuts.add(this.createShortcut(Macros.getIcon(proglet.getIcon()), proglet.getName(), new ProgletLoader(proglet.getName())));
+      shortcuts.add(this.createShortcut(Macros.getIcon(proglet.getIcon()), proglet.getName(), proglet.getTitle(), new ProgletLoader(proglet.getName())));
     shortcuts.add(Box.createHorizontalGlue());
     vertical.add(shortcuts);
     vertical.add(Box.createVerticalGlue());
@@ -73,9 +73,10 @@ class JVSStartPanel extends JPanel {
   }
 
   /** Créer un pannel avec un bouton capâble de lançer la Proglet */
-  private JPanel createShortcut(ImageIcon icon, String title, final Runnable start) {
+  private JPanel createShortcut(ImageIcon icon, String name, String title, final Runnable start) {
     JPanel panel = new JPanel();
-    JButton label = new JButton(title, icon);
+    panel.setToolTipText(title);
+    JButton label = new JButton(name, icon);
     label.setPreferredSize(new Dimension(150,150));
     label.setVerticalTextPosition(JLabel.BOTTOM);
     label.setHorizontalTextPosition(JLabel.CENTER);
