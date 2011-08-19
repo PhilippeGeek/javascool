@@ -2,7 +2,7 @@
     showBrowser(
         array(
             array("Java's Cool","?"),
-            array("Cr&eacute;dits","")
+            array("Crédits","")
         ),
         array(
             array("Contacts","?page=contact")
