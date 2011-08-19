@@ -7,10 +7,7 @@ include('index/wiki_get_contents.php');
     <head>
         <meta charset="UTF-8" />
         <title>Java's Cool</title>
-        <!--FIXME <link rel="stylesheet" type="text/css" href="pages/style.css" /> -->
-        <?php
-        ?>
-        <style type="text/css"><?php include('index/style.css'); //FIXME      ?></style>
+        <style type="text/css"><?php include('pages/style.css');?></style>
 
         <script type="text/javascript">
             function getElementsByClass( searchClass, domNode, tagName) { 
@@ -297,7 +294,7 @@ include('index/wiki_get_contents.php');
 
 
     <!-- //TODO comment -->
-    <body onload="loaded()" onunload="unloaded()">
+    <body onload="loaded()" onunload="unloaded()"><a name=""/>
         <?php
 
         function showLink($link, $text, $type) {

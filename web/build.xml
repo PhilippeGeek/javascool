@@ -2,10 +2,36 @@
 <project default="usage">
 
   <target name="usage"><echo level="info">
+    ant publi			publi les fichiers du site sur http://javascool.gforge.inria.fr
+    ant lcheck			teste et liste les liens cassés sur le site
     ant local			affiche une version locale du site (lance apache et ouvre firefox)
     ant xterm			ouvre une fenêtre pour aller gérer manuellement les fichiers sur le site
-    ant lcheck			teste et liste les liens cassés sur le site
   </echo></target>
+
+  <target name="publi">
+    <!-- @todo: rsync des fichiers php du site SANS index.php -->
+    <!-- @todo: rsync des proglets buildés -->
+    <!-- @todo: rsync de l'api javadoc -->
+    <exec executable="rsync">
+      <arg line="--rsh='ssh -C' --archive --delete-excluded --exclude .svn/ ../documents scm.gforge.inria.fr:/home/groups/javascool/htdocs/v4"/>
+    </exec>
+    <!-- rsync de l'index en deux temps pour patcher un problème de droit sur le site -->
+    <exec executable="rsync">
+      <arg line="--rsh='ssh -C' index.php scm.gforge.inria.fr:/home/groups/javascool/htdocs/v4/.htindex.php"/>
+    </exec>
+    <exec executable="ssh">
+      <arg value="scm.gforge.inria.fr"/>
+      <arg value="sh -c 'cd /home/groups/javascool/htdocs/v4 ; cat .htindex.php &gt; index.php ; rm .htindex.php'"/>
+    </exec>
+  </target>
+
+  <target name ="lcheck">
+    <ant dir="../work" target="javascool.jar"/>
+    <java classpath="../build/javascool.jar" classname="org.javascool.builder.LinkCheck">
+      <arg line="-recursive http://127.0.0.1:1234"/>
+      <!-- @todo: arg line="-recursive http://javascool.gforge.inria.fr/v4/"/-->
+    </java>
+  </target>
 
   <target name="local">
     <exec executable="./index/start.sh" os="Linux"/>
@@ -19,13 +45,6 @@
       <arg value="-e"/>
       <arg value="ssh scm.gforge.inria.fr 'cd /home/groups/javascool/htdocs ; bash -i'"/>
     </exec>
-  </target>
-
-  <target name ="lcheck">
-    <ant dir="../work" target="javascool.jar"/>
-    <java classpath="../build/javascool.jar" classname="org.javascool.builder.LinkCheck">
-      <arg line="-recursive http://javascool.gforge.inria.fr/v4/"/>
-    </java>
   </target>
 
 </project>
