@@ -1,3 +1,3 @@
 title="Utilisée pour, comprendre le principe algorithmique de la dichotomie."
 author="Collectif d'auteurs <fuscia-accueil@inria.fr>"
-logo="logo.png"
+icon="logo.png"

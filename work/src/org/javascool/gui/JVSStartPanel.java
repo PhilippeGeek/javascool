@@ -5,6 +5,7 @@
 package org.javascool.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.Box;
@@ -75,6 +76,7 @@ class JVSStartPanel extends JPanel {
   private JPanel createShortcut(ImageIcon icon, String title, final Runnable start) {
     JPanel panel = new JPanel();
     JButton label = new JButton(title, icon);
+    label.setPreferredSize(new Dimension(150,150));
     label.setVerticalTextPosition(JLabel.BOTTOM);
     label.setHorizontalTextPosition(JLabel.CENTER);
     panel.add(label);
