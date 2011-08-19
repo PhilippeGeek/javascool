@@ -887,20 +887,20 @@ public class Pml {
    * @param La structure dont on copie les paramètres
    * @return Cet objet, permettant de définir la construction <tt>Pml pml= new Pml().set(..)</tt>.
    */
-  public final Pml set(Pml pml) { 
-      for(String name : pml.attributes())
-          set(name, pml.getObject(name));
-      for(int n = 0; n < pml.getCount(); n++) 
-          set(n, pml.getObject(n));
-      return this;
+  public final Pml set(Pml pml) {
+    for(String name : pml.attributes())
+      set(name, pml.getObject(name));
+    for(int n = 0; n < pml.getCount(); n++)
+      set(n, pml.getObject(n));
+    return this;
   }
   /**
    * @see #set(Pml)
-   */ 
-  public final Pml set(Properties pml) { 
-          for(String name : pml.stringPropertyNames()) 
-             set(name, pml.getProperty(name));
-          return this;
+   */
+  public final Pml set(Properties pml) {
+    for(String name : pml.stringPropertyNames())
+      set(name, pml.getProperty(name));
+    return this;
   }
   /** Renvoie le nombre d'éléments de ce PML.
    * @return Le nombre d'éléments (indépendamment des attributs), les éléments null étant éliminés
@@ -963,16 +963,17 @@ public class Pml {
     return index.matcher(name).matches();
   }
   static Pattern index = Pattern.compile("[0-9]+");
+
   /** Renvoie les paramètres de cette PML sous forme de Properties.
    * @return Une structure Properties contenant attributs et éléments sous forme de chaîne de caractère.
    */
   public final Properties toProperties() {
-      Properties properties = new Properties();
-      for(String name : attributes())
-          properties.setProperty(name, getObject(name).toString());
-      for(int n = 0; n < getCount(); n++) 
-          properties.setProperty(""+n, getObject(n).toString());
-      return properties;      
+    Properties properties = new Properties();
+    for(String name : attributes())
+      properties.setProperty(name, getObject(name).toString());
+    for(int n = 0; n < getCount(); n++)
+      properties.setProperty("" + n, getObject(n).toString());
+    return properties;
   }
   /** Lanceur du mécanisme de vérification/conversion d'une PML.
    * @param usage <tt>java org.javascool.tools.Pml input-file [output-file.(pml|xml|php|jmf)]</tt>

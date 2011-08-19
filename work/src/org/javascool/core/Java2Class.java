@@ -36,7 +36,7 @@ public class Java2Class {
    * @throws RuntimeException Si une erreur d'entrée-sortie s'est produite lors de la compilation.
    */
   public static boolean compile(String javaFile, boolean allErrors) {
-      System.out.println("Compile : "+javaFile);
+    System.out.println("Compile : " + javaFile);
     String javaFiles[] = { javaFile };
     return compile(javaFiles);
   }

@@ -21,151 +21,138 @@ import org.javascool.macros.Macros;
  * @see org.javascool.gui.JVSPanel
  */
 class JVSToolBar extends ToolBar {
+  private static final long serialVersionUID = 1L;
+  /** Boutons de l'interface. */
+  private JButton compileButton;
+  private StartStopButton runButton;
+  /** Instance de la classe */
+  private static JVSToolBar jvstb;
 
-    private static final long serialVersionUID = 1L;
-    /** Boutons de l'interface. */
-    private JButton compileButton;
-    private StartStopButton runButton;
-    /** Instance de la classe */
-    private static JVSToolBar jvstb;
-
-    public static JVSToolBar getInstance() {
-        if (jvstb == null) {
-            jvstb = new JVSToolBar();
-        }
-        return jvstb;
-    }
-
-    private JVSToolBar() {
-        setName("Java's cool ToolBar");
-        init();
-
-    }
-
-    /** Initialize la barre d'outils en créant les bouttons */
-    private void init() {
-
-        addTool("Nouvelle activité", "org/javascool/widgets/icons/new.png", new Runnable() {
-
-            @Override
-            public void run() {
+  public static JVSToolBar getInstance() {
+    if(jvstb == null)
+      jvstb = new JVSToolBar();
+    return jvstb;
+  }
+  private JVSToolBar() {
+    setName("Java's cool ToolBar");
+    init();
+  }
+  /** Initialize la barre d'outils en créant les bouttons */
+  private void init() {
+    addTool("Nouvelle activité", "org/javascool/widgets/icons/new.png", new Runnable() {
+              @Override
+              public void run() {
                 JVSPanel.getInstance().closeProglet();
+              }
             }
-        });
-        addTool("Nouveau fichier", "org/javascool/widgets/icons/new.png", new Runnable() {
-
-            @Override
-            public void run() {
+            );
+    addTool("Nouveau fichier", "org/javascool/widgets/icons/new.png", new Runnable() {
+              @Override
+              public void run() {
                 JVSPanel.getInstance().newFile();
+              }
             }
-        });
-        addTool("Ouvrir un fichier", "org/javascool/widgets/icons/open.png", new Runnable() {
-
-            @Override
-            public void run() {
+            );
+    addTool("Ouvrir un fichier", "org/javascool/widgets/icons/open.png", new Runnable() {
+              @Override
+              public void run() {
                 JVSPanel.getInstance().openFile();
+              }
             }
-        });
-        addTool("Sauver", "org/javascool/widgets/icons/save.png", new Runnable() {
-
-            @Override
-            public void run() {
+            );
+    addTool("Sauver", "org/javascool/widgets/icons/save.png", new Runnable() {
+              @Override
+              public void run() {
                 JVSPanel.getInstance().saveFile();
+              }
             }
-        });
-        addTool("Fermer le fichier", "org/javascool/widgets/icons/remove.png", new Runnable() {
-
-            @Override
-            public void run() {
+            );
+    addTool("Fermer le fichier", "org/javascool/widgets/icons/remove.png", new Runnable() {
+              @Override
+              public void run() {
                 JVSPanel.getInstance().closeFile();
+              }
             }
-        });
+            );
 
-        compileButton = addTool("Compiler", "org/javascool/widgets/icons/compile.png", new Runnable() {
+    compileButton = addTool("Compiler", "org/javascool/widgets/icons/compile.png", new Runnable() {
+                              @Override
+                              public void run() {
+                                JVSPanel.getInstance().compileFile();
+                              }
+                            }
+                            );
 
-            @Override
-            public void run() {
-                JVSPanel.getInstance().compileFile();
-            }
-        });
+    addTool("Executer", runButton = new StartStopButton() {
+              private static final long serialVersionUID = 1L;
 
-        addTool("Executer", runButton = new StartStopButton() {
-
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void start() {
+              @Override
+              public void start() {
                 ProgletEngine.getInstance().doRun();
-            }
+              }
 
-            @Override
-            public void stop() {
+              @Override
+              public void stop() {
                 ProgletEngine.getInstance().doStop();
-            }
+              }
 
-            @Override
-            public boolean isRunning() {
+              @Override
+              public boolean isRunning() {
                 return ProgletEngine.getInstance().isRunning();
+              }
             }
-        });
+            );
 
-        runButton.setVisible(false);
-        // Crée le menu de construction de proglets si pertinent
-        if (ProgletsBuilder.canBuildProglets()) {
-            pbutton = addRightTool("Proglet Builder", new Runnable() {
-
-                @Override
-                public void run() {
-                    DialogFrame.startFrame();
-                }
-            });
-        }
-        JLabel logoLabel = new JLabel(Macros.getIcon("org/javascool/widgets/icons/logo32.png"));
-        logoLabel.addMouseListener(new MouseListener() {
-
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                Core.showAboutMessage();
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-            }
-        });
-        this.add(logoLabel, 0);
+    runButton.setVisible(false);
+    // Crée le menu de construction de proglets si pertinent
+    if(ProgletsBuilder.canBuildProglets()) {
+      pbutton = addRightTool("Proglet Builder", new Runnable() {
+                               @Override
+                               public void run() {
+                                 DialogFrame.startFrame();
+                               }
+                             }
+                             );
     }
-    // @ inner-class-variable
-    private JButton pbutton;
+    JLabel logoLabel = new JLabel(Macros.getIcon("org/javascool/widgets/icons/logo32.png"));
+    logoLabel.addMouseListener(new MouseListener() {
+                                 @Override
+                                 public void mouseClicked(MouseEvent e) {
+                                   Core.showAboutMessage();
+                                 }
 
-    public void enableCompileButton() {
-        compileButton.setVisible(true);
-        revalidate();
-    }
+                                 @Override
+                                 public void mousePressed(MouseEvent e) {}
 
-    public void disableCompileButton() {
-        compileButton.setVisible(false);
-        revalidate();
-    }
+                                 @Override
+                                 public void mouseReleased(MouseEvent e) {}
 
-    public void enableStartStopButton() {
-        runButton.setVisible(true);
-        revalidate();
-    }
+                                 @Override
+                                 public void mouseEntered(MouseEvent e) {}
 
-    public void disableStartStopButton() {
-        runButton.setVisible(false);
-        revalidate();
-    }
+                                 @Override
+                                 public void mouseExited(MouseEvent e) {}
+                               }
+                               );
+    this.add(logoLabel, 0);
+  }
+  // @ inner-class-variable
+  private JButton pbutton;
+
+  public void enableCompileButton() {
+    compileButton.setVisible(true);
+    revalidate();
+  }
+  public void disableCompileButton() {
+    compileButton.setVisible(false);
+    revalidate();
+  }
+  public void enableStartStopButton() {
+    runButton.setVisible(true);
+    revalidate();
+  }
+  public void disableStartStopButton() {
+    runButton.setVisible(false);
+    revalidate();
+  }
 }

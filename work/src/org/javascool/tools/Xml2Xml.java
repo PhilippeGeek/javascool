@@ -62,30 +62,30 @@ public class Xml2Xml {
       Transformer transformer = tranformers.get(xsl);
       // Ajoute les paramètres de la transformation, si définis
       {
-      transformer.clearParameters();
-      if (params != null)
-          for(String name : params.stringPropertyNames()) 
-             transformer.setParameter(name, params.getProperty(name));
-    }
+        transformer.clearParameters();
+        if(params != null)
+          for(String name : params.stringPropertyNames())
+            transformer.setParameter(name, params.getProperty(name));
+      }
       transformer.transform(new StreamSource(new StringReader(xml)), new StreamResult(writer));
       return writer.toString();
     } catch(TransformerException e) { throw new IllegalArgumentException(e.getMessageAndLocation());
     }
-  } 
-  /** 
+  }
+  /**
    * @see #run(String, String, Properties)
    */
   public static String run(String xml, String xsl) {
-   return run(xml, xsl, null);
+    return run(xml, xsl, null);
   }
-  /** 
+  /**
    * @see #run(String, String, Properties)
-   */ 
-   public static String run(String xml, String xsl, String paramName, String paramValue) {
-       Properties params = new Properties();
-       params.setProperty(paramName, paramValue);
-       return run(xml, xsl, params);
-   }
+   */
+  public static String run(String xml, String xsl, String paramName, String paramValue) {
+    Properties params = new Properties();
+    params.setProperty(paramName, paramValue);
+    return run(xml, xsl, params);
+  }
   // Cash mechanism
   private static TransformerFactory tfactory;
   private static HashMap<String, Transformer> tranformers = new HashMap<String, Transformer>();
@@ -137,9 +137,9 @@ public class Xml2Xml {
    */
   public static void main(String[] usage) {
     // @main
-      if (usage.length == 5)
-           FileManager.save(usage[2], run(FileManager.load(usage[0]), usage[1], usage[3], usage[4]));
-      else if(usage.length > 1)
-          FileManager.save(usage.length > 2 ? usage[2] : "stdout:", run(FileManager.load(usage[0]), usage[1]));
+    if(usage.length == 5)
+      FileManager.save(usage[2], run(FileManager.load(usage[0]), usage[1], usage[3], usage[4]));
+    else if(usage.length > 1)
+      FileManager.save(usage.length > 2 ? usage[2] : "stdout:", run(FileManager.load(usage[0]), usage[1]));
   }
 }

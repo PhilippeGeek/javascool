@@ -77,7 +77,7 @@ class JVSStartPanel extends JPanel {
     JPanel panel = new JPanel();
     panel.setToolTipText(title);
     JButton label = new JButton(name, icon);
-    label.setPreferredSize(new Dimension(150,150));
+    label.setPreferredSize(new Dimension(150, 150));
     label.setVerticalTextPosition(JLabel.BOTTOM);
     label.setHorizontalTextPosition(JLabel.CENTER);
     panel.add(label);

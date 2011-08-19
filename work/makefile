@@ -7,8 +7,7 @@
 export PATH:=/usr/java/jdk1.6.0_22/bin:$(PATH)
 
 default :
-#	ant prun
-	cd ../web ; ant local
+	ant prun
 
 clean :
 	ant clean > /dev/null
@@ -17,7 +16,7 @@ svn :
 	cd .. ; ant svn
 
 nbe :
-	@gnome-terminal --hide-menubar --geometry 1x1-1-1 -e "/usr/java/netbeans-7.0/bin/netbeans" &
+	netbeans &
 
 pro :
 	ant processing
