@@ -87,6 +87,7 @@ public class Console extends JPanel {
       }
     };
     System.setOut(new PrintStream(out, true));
+    System.setErr(new PrintStream(out, true));
   }
   /** Efface le contenu de la console. */
   public void clear() {

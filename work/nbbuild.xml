@@ -9,7 +9,16 @@
 <!-- in the project's Project Properties dialog box.-->
 <project name="Java's_Cool_v4" default="default" basedir=".">
     <description>Builds, tests, and runs the project Java's Cool v4.</description>
-    <import file="nbproject/build-impl.xml"/>
+    <!--<import file="nbproject/build-impl.xml"/>-->
+	<target name="build"></target>
+	<target name="clean">
+		<ant antfile="build.xml" target="clean"/>
+	</target>
+	<target name="jar">
+		<ant antfile="build.xml" target="jrun"/>
+	</target>
+	<target name="run"></target>
+	
     <!--
 
     There exist several targets which are by default empty and which can be 

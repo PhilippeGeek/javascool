@@ -193,9 +193,9 @@ public class FileManager {
   public static File createTempDir(String prefix) {
     try {
       File d = File.createTempFile(prefix, "");
-      d.deleteOnExit();
       d.delete();
       d.mkdirs();
+      d.deleteOnExit();
       return d;
     } catch(IOException e) { throw new RuntimeException(e + " when creating temporary directory");
     }

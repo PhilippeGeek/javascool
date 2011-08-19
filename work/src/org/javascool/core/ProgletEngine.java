@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import org.javascool.macros.Macros;
 
 import java.io.File;
+import org.javascool.Core;
 import org.javascool.tools.FileManager;
 import org.javascool.tools.Pml;
 import org.javascool.tools.Invoke;
@@ -40,7 +41,7 @@ public class ProgletEngine {
     // Détection des proglets présentes dans le jar
     {
       proglets = new ArrayList<Proglet>();
-      String javascoolJar = Macros.getResourceURL("org/javascool/core/ProgletEngine.class").toString().replaceFirst("jar:([^!]*)!.*", "$1");
+      String javascoolJar = Core.javascoolJar();
       for(String dir : FileManager.list(javascoolJar, "org.javascool.proglets.[^\\.]+")) {
         Proglet proglet = new Proglet().load(dir.replaceFirst("jar:[^!]*!", ""));
         if(!proglet.isProcessing())
