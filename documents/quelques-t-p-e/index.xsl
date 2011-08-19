@@ -12,10 +12,10 @@
 
   <xsl:template match="name|mail|when|where|need"/>
 
-  <xsl:template match="tpes"><big><big><xsl:value-of select="@title"/></big></big><ol><xsl:apply-templates/></ol></xsl:template>
+  <xsl:template match="tpes"><big><big><xsl:value-of select="@title"/></big></big><xsl:apply-templates/></xsl:template>
 
-  <xsl:template match="tpe"><li><br/><table align="left" width="100%"><tr><td><xsl:value-of select="@id"/></td>
-  <td valign="top" rowspan="4"><img src="{@icon}" alt="{@icon}" width="120" height="120"/></td><td><b>Problématique:</b></td><td><b><i><u><xsl:value-of select="@title"/></u></i></b></td></tr>
+  <xsl:template match="tpe"><table width="100%">
+  <tr><td valign="top" width="120" rowspan="4"><img src="{@icon}" width="120" height="120"/></td><td><b>Problématique:</b></td><td><b><i><u><xsl:value-of select="@title"/></u></i></b></td></tr>
   <tr><td><b>Thème</b>:</td><td><i><xsl:choose>
       <xsl:when test="@theme = 'A'">-A- : Modélisation des phénomènes physiques</xsl:when>
       <xsl:when test="@theme = 'B'">-B- : Sciences, informatique et société</xsl:when>
@@ -29,7 +29,7 @@
     <xsl:if test="count(link) > 0">
       <tr><td><b>Ressources:</b></td><td><ul><xsl:for-each select="link"><li><xsl:apply-templates select="."/></li></xsl:for-each></ul></td></tr>
     </xsl:if>
-  </table></div></li></xsl:template>
+  </table><hr/></xsl:template>
 
   <xsl:template match="autres-tpes"><br/><br/><big><big>Autres idées de sujets</big> (elles seront développées sur <a href="mailto:science-participative@sophia.inria.fr?subject=A_propos_de_TPEs">simple demande</a>)</big><br/><br/></xsl:template>
 
