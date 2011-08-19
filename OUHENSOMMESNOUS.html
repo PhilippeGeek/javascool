@@ -22,6 +22,10 @@ Javas'Cool</big></big><br>
   <li><span style="font-weight: bold;">Notre chantier sur Javas'Cool
 core:</span></li>
   <ul>
+    <li>[PV0] On a de grandes sueurs froides avec les probl&egrave;mes
+d'UTF-8 en windows . . voir si c'est mieux apr&egrave;s modif ds
+HtmlDisplay<br>
+    </li>
     <li>[PV1] <span style="text-decoration: line-through;">Redesigner
 le package gui.</span></li>
     <ul>
@@ -53,8 +57,16 @@ rendre fixe</span><br>
       </li>
       <li>Il faut ajouter ds le StartPanel un ToolTip a partir de
 getProglet().getTitle()</li>
+      <ul>
+        <li>Thierry pense avoir corrig&eacute; le pb dans JVS*Panel.java<br>
+        </li>
+      </ul>
       <li>Faire l'affichage automatique de la console a la compil et
 du panneau de la proglet a l'execution</li>
+      <ul>
+        <li>Done dit Philou &agrave; v&eacute;rifier<br>
+        </li>
+      </ul>
     </ul>
     <li>[PV1] Finir de programmer les fonctions de
 org.javascool.builder.ProgletsBuilder qui sont actuellement des appels
@@ -143,7 +155,8 @@ texte.</li>
     </ul>
     <li>[TV2] G&eacute;n&eacute;ration du HTML</li>
     <ul>
-      <li>g&eacute;n&eacute;rer &agrave; partir des &lt;l link
+      <li style="text-decoration: line-through;">g&eacute;n&eacute;rer
+&agrave; partir des &lt;l link
 class="editor|broswer" les liens href="jvs: pour htm et les liens &lt;a
 href="target" pour le site</li>
       <li>regler le pb de localisation du fichier xslt<br>
@@ -152,9 +165,12 @@ href="target" pour le site</li>
     <li>[TV2] Int&eacute;gration des proglets processing dans
 ProgletsBuilder et ProgletsEngine</li>
     <ul>
-      <li>S&eacute;parer le ProgletsBuilder en rassemblant dans
-JarManager les fonctions de Philou ?</li>
-      <li>Nettoyer le build SI il est temporaire apres la construction<br>
+      <li style="text-decoration: line-through;">S&eacute;parer le
+ProgletsBuilder en rassemblant dans
+JarManager les fonctions de Philou<br>
+      </li>
+      <li><span style="text-decoration: line-through;">Nettoyer le
+build SI il est temporaire apres la construction</span><br>
       </li>
     </ul>
     <li><span style="text-decoration: line-through;">[TV2] Integrer
@@ -172,22 +188,39 @@ iter d'&ecirc;tre une verrue de javascool</span></span><span
   <li><span style="font-weight: bold;">Notre chantier sur le web:</span><br>
   </li>
   <ul>
+    <li>[PM0] Thierry a vir&eacute; les fichiers de projet netbeans de
+web car il y avait de dr&ocirc;les de choses bizarre</li>
+    <ul>
+      <li>&agrave; reconstruire proprement</li>
+    </ul>
     <li>[PV2] Images lancement windows et max os sur
 web/pages/run/display.php<br>
     </li>
     <li>[GM2] Remettre en place le m&eacute;canisme du site web</li>
     <ul>
-      <li>En utilisant work/build.sml -&gt; javadoc pour la doc</li>
       <li>En regenerant [avec aide Thierry] les proglets a partir de la
-version amelioree du javascoolbuilder<br>
-      </li>
-      <li>En validant les @todo:wiki de Thierry</li>
+version amelioree du javascoolbuilder</li>
+      <ul>
+        <li>En utilisant work/build.xml -&gt; javadoc pour la doc</li>
+        <ul>
+        </ul>
+      </ul>
+      <li>En impl&eacute;mennat les rebonds pour l'ancien site</li>
+      <ul>
+        <li>avec un m&eacute;canisme d'alerte mail si page inconnue
+(voir web/index/mailto.php)<br>
+        </li>
+        <ul>
+        </ul>
+      </ul>
       <li>En creant ces cles ssh sur javascool pour pouvoir faire le
 publis</li>
       <ul>
         <li>en generant les docs java des proglets a partir de javadoc
 + java2html<br>
         </li>
+        <ul>
+        </ul>
       </ul>
       <li>En virant tous les sh (sauf le web/index/start.sh) et en le
 remplacant par un build.xml</li>
@@ -195,6 +228,8 @@ remplacant par un build.xml</li>
         <li>En notant que thierry a pousse tous les sh dans
 web/index/*.sh <br style="text-decoration: line-through;">
         </li>
+        <ul>
+        </ul>
       </ul>
       <li style="text-decoration: line-through;">[TV1] Gerer le pb de
 la redondances des sketchbook entre
@@ -206,15 +241,21 @@ documents</li>
         <li>Voir d&eacute;tails dans: <a
  href="./web/OUKONENESTLEWEB.html">OUKONENESTLEWEB.html</a><br>
         </li>
+        <ul>
+        </ul>
       </ul>
       <li><span style="text-decoration: line-through;">R&eacute;cup&eacute;ration
 des
 contenus
 litt&eacute;raires
-des pages web</span></li>
+des
+pages
+web</span></li>
       <li>Liste des pages de l'ancien site avec rebond<span
  style="text-decoration: line-through;"><br>
         </span></li>
+    </ul>
+    <ul>
       <li>Thierry aime bien <a
  href="http://javascool.gforge.inria.fr/index/images/logo_lycees.jpg">http://javascool.gforge.inria.fr/index/images/logo_lycees.jpg</a>
 et <a href="http://javascool.gforge.inria.fr/index/images/logo.gif">http://javascool.gforge.inria.fr/index/images/logo.gif</a>
@@ -222,6 +263,13 @@ si ca
 peut decorer une page qq part . . <br>
       </li>
       <li>&nbsp;<span style="text-decoration: line-through;">R&eacute;diger
+
+
+
+
+
+
+
 
         </span><span
  style="font-style: italic; text-decoration: line-through;">enfin</span><span
@@ -232,11 +280,15 @@ la doc Hml</span></li>
 javascool" (autre page) + dire XSLT de traduction<span
  style="text-decoration: line-through;"><br>
           </span></li>
+        <ul>
+        </ul>
       </ul>
       <li style="text-decoration: line-through;">Mettre en place la
 mecanique de linkcheck</li>
       <li style="text-decoration: line-through;">Ajout de la routine
 web/index/get_wiki_page.php</li>
+      <ul>
+      </ul>
     </ul>
     <li>[TV2] Compl&eacute;ter les docs javascool</li>
     <ul>
@@ -244,6 +296,8 @@ web/index/get_wiki_page.php</li>
       <li>Faire un sch&eacute;ma de &eacute;dition -&gt; Jvs -&gt; Java
 -&gt; Class -&gt; rub/stop dans core</li>
       <li>truffer la javaDoc de liens vers les docs externes</li>
+      <ul>
+      </ul>
     </ul>
     <li>[TV3] Finir le travail d'&eacute;dition extermne sur le wiki : <a
  href="http://wiki.inria.fr/sciencinfolycee/Cat%C3%A9gorie:TPE"
@@ -258,19 +312,17 @@ les ressources</li>
       <ul>
         <li>basculer les pages activites et exodematsh index en page
 ressource</li>
+        <ul>
+        </ul>
       </ul>
-      <li><br>
-      </li>
     </ul>
   </ul>
 </ul>
 <ul>
-  <ul>
-  </ul>
+</ul>
+<ul>
   <li><span style="font-weight: bold;">Notre chantier sur le
-fonctionnement du projet et points &agrave; discuter</span><br
- style="text-decoration: line-through;">
-  </li>
+fonctionnement du projet et points &agrave; discuter</span></li>
   <ul>
     <li><span style="text-decoration: line-through;">[TV1] Basculer les
 commandes du makefile dans web/build.xml et
@@ -279,6 +331,22 @@ commandes du makefile dans web/build.xml et
     <li>[PV3] compl&eacute;ter le build.xml &agrave; la racine qui
 int&egrave;gre
 tous les build.xml</li>
+    <li>[GM/PV0] Thierry a un peu foutu le merdier dans netbeans ET
+dans les
+r&eacute;pertoires build et cie<br>
+    </li>
+    <ul>
+      <li>il utilise net/sf/antcontrib/antlib.xml a &eacute;t&eacute;
+install&eacute; mais&nbsp;</li>
+      <li>il a du rajouter /usr/java/jdk1.6.0_22/jre/lib/javaws.jar
+&agrave; la main</li>
+      <li>il a ajout&eacute; les jar au svn ce qui est vilain</li>
+      <li>il sait pas bien si on doit utiliser ./build ou work/build et
+pour quoi</li>
+      <li>il est "repass&eacute;" en netbeans 6.9 pour des raisons
+d'install standard et se demande si c'est kk<br>
+      </li>
+    </ul>
     <li>[PV2] Il faut pouvoir afficher le m&eacute;mos des instructions
 de mani&egrave;re &eacute;vidente<br>
     </li>
@@ -291,8 +359,41 @@ de mani&egrave;re &eacute;vidente<br>
 </ol>
 <ul>
   <li><span style="font-weight: bold;">[les autres points] <a
- href="http://code.google.com/p/javascool/issues/list">http://code.google.com/p/javascool/issues/list</a></span><br>
-  </li>
+ href="http://code.google.com/p/javascool/issues/list">http://code.google.com/p/javascool/issues/list</a></span></li>
+  <ul>
+    <li><a href="http://code.google.com/p/javascool/issues/detail?id=29">Html
+help
+goes
+off-bounds
+of
+the
+HtmlDisplay
+      </a></li>
+    <ul>
+      <li>r&eacute;put&eacute; r&ecirc;gl&eacute; . . &agrave;
+v&eacute;rifier<br>
+      </li>
+    </ul>
+    <li><a href="http://code.google.com/p/javascool/issues/detail?id=33">Th&egrave;me
+dans
+les
+balises
+&lt;code&gt;
+
+
+      </a></li>
+    <ul>
+      <li>euh PV et GM ils se sont mis d'accord ou pas<br>
+      </li>
+    </ul>
+    <li> <a
+ href="http://code.google.com/p/javascool/issues/detail?id=34">Escaping
+&lt; and &gt; in &lt;code&gt; tags </a></li>
+    <ul>
+      <li>pas pig&eacute; . . le &amp;lt; doit suffire non ?<br>
+      </li>
+    </ul>
+  </ul>
 </ul>
 <br>
 </body>

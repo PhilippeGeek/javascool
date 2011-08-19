@@ -1,5 +1,5 @@
 <!-- Construction des éléments de javascool (core), javascoolbuilder, et des proglets -->
-<project name="Java's_Cool_v4_BUILDER" default="usage">
+<project name="Java's Cool v4" default="usage">
 
   <target name="usage"><echo level="info">
     ant javacool.jar		construit dans ../build la jarre Javas'Cool Core "apprenant" sans proglet
@@ -18,13 +18,13 @@
   <target name="javascool.jar" depends="classes" >
     <mkdir dir="../build"/>
     <delete file="../build/javascool.jar"/>
-    <unzip dest="../build/classes" src="./lib/RSyntaxTextArea.jar"/>
-    <unzip dest="../build/classes" src="./lib/javac.jar"/>
+    <unzip dest="./build/classes" src="./lib/RSyntaxTextArea.jar"/>
+    <unzip dest="./build/classes" src="./lib/javac.jar"/>
     <jar destfile="../build/javascool.jar">
       <manifest>
         <attribute name="Main-Class" value="org.javascool.Core"/>
       </manifest>
-      <fileset dir="../build/classes"/>
+      <fileset dir="./build/classes"/>
       <fileset dir="./src" includes="org/javascool/widgets/icons/*"/>
     </jar>
   </target>
@@ -32,15 +32,15 @@
   <target name="javascool-builder.jar" depends="classes" >
     <mkdir dir="../build"/>
     <delete file="../build/javascool-builder.jar"/>
-    <unzip dest="../build/classes" src="./lib/RSyntaxTextArea.jar"/>
-    <unzip dest="../build/classes" src="./lib/javac.jar"/>
-    <unzip dest="../build/classes" src="./lib/jvs2html.jar"/>
-    <unzip dest="../build/classes" src="./lib/saxon.jar"/>
+    <unzip dest="./build/classes" src="./lib/RSyntaxTextArea.jar"/>
+    <unzip dest="./build/classes" src="./lib/javac.jar"/>
+    <unzip dest="./build/classes" src="./lib/jvs2html.jar"/>
+    <unzip dest="./build/classes" src="./lib/saxon.jar"/>
     <jar destfile="../build/javascool-builder.jar">
       <manifest>
         <attribute name="Main-Class" value="org.javascool.Build"/>
       </manifest>
-      <fileset dir="../build/classes"/>
+      <fileset dir="./build/classes"/>
       <fileset dir="./src" includes="org/javascool/widgets/icons/*"/>
       <fileset dir="./src" includes="org/javascool/builder/*.xslt"/>
     </jar>
@@ -55,8 +55,8 @@
   <property name="classpath" value="./lib/RSyntaxTextArea.jar:lib/jvs2html.jar"/>
 
   <target name="classes">
-    <mkdir dir="../build/classes"/>
-    <javac debug="true" debuglevel="lines,vars,source" deprecation="on" classpath="${classpath}" srcdir="./src" destdir="../build/classes"/>
+    <mkdir dir="./build/classes"/>
+    <javac debug="true" debuglevel="lines,vars,source" deprecation="on" classpath="${classpath}" srcdir="./src" destdir="./build/classes"/>
   </target>
 
   <target name="javadoc">
@@ -132,7 +132,6 @@
   </target>
 
   <target name="clean">
-    <delete dir="../build/classes"/>
     <delete dir="../build/web/api"/>
     <delete dir="./nbproject/private"/> 
   </target>
