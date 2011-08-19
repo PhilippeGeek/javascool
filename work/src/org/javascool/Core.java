@@ -19,17 +19,17 @@ public class Core {
   /** Logode l'application. */
   public static final String logo = "org/javascool/widgets/icons/logo.png";
   /** Numéro de révision de l'application.*/
-  public static final int revision = 362;
+  public static final int revision = 438;
   // Note: Il est obtenu par la commande Unix <tt>svn info | grep Revision | sed 's/.*: //'</tt>
 
   /** Affiche le message de "about". */
-  static void showAboutMessage() {
+  public static void showAboutMessage() {
     Macros.message(title + "est un logiciel conçut en colaboration avec : <br/><center>"
                    + "Philippe VIENNE<br/>"
                    + "Guillaume MATHERON<br/>"
                    + " et Inria<br/>"
                    + "</center><br/>"
-                   + "Il est distribué sous les conditions de la licence CeCILL<br/>", true);
+                   + "Il est distribué sous les conditions de la licence CeCILL et GNU GPL V3<br/>", true);
   }
   /** Mets en place le système d'alerte en cas d'erreur non gérée. */
   static void setUncaughtExceptionAlert() {
@@ -39,6 +39,19 @@ public class Core {
                                            "  <li>Envoyez les par mail à <b>fuscia-accueil@inria.fr</b> avec toute information utile.</li>" +
                                            " </ul>",
                                            revision);
+  }
+  /** Retrouve le chemin du jar courant
+   * @return Le chemin du jar
+   * @throws RuntimeException lorsque le builder n'a pas été demmaré depuis un jar
+   */
+  public static String javascoolJar(){
+      String jar="";
+      jar = Macros.getResourceURL("org/javascool/Core.class").toString().replace("%20"," ").replaceFirst("jar:file:([^!]*)!.*", "$1");
+      if(jar.endsWith(".jar")){
+          return jar;
+      } else {
+          throw new RuntimeException("Java's cool n'a pas été démarrer depuis un Jar");
+      }
   }
   /** Lanceur de l'application.
    * @param usage <tt>java -jar javascool.jar</tt>
