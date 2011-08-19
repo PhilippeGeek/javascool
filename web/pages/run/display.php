@@ -5,7 +5,7 @@
             array("Lancement","")
         ),
         array(
-            array("Licence","?page=home&action=licence")
+            array("Licence","?page=run&action=licence")
         )
     );
 ?>
@@ -15,6 +15,8 @@
 <!-- //TODO -->
 <div class="display">
     <div class="label2">Windows</div>&nbsp;<br />
+    <?php//TODO windaube screenshots?>
+    <div class="label2">Mac OS</div>&nbsp;<br />
     <?php//TODO windaube screenshots?>
     <div class="label2">Linux</div>
 	<p>Pour lancer Java's Cool sans installation, cliquez sur le lien ci-dessus. Si le lancement échoue, vous devrez probablement installer Java.

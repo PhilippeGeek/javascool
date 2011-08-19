@@ -5,7 +5,6 @@
             array("Accueil","")
         ),
         array(
-            array("Cadrage","?page=home&action=cadrage"),
             array("FAQ","?page=home&action=faq"),
             array("Manifeste","?page=home&action=manifest")
         )

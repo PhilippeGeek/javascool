@@ -6,7 +6,6 @@
             array("FAQ","")
         ),
         array(
-            array("Cadrage","?page=home&action=cadrage"),
             array("Manifeste","?page=home&action=manifest")
         )
     );
