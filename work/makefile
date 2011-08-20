@@ -16,7 +16,7 @@ svn :
 	cd .. ; ant svn
 
 nbe :
-	netbeans &
+	netbeans --jdkhome /usr/java/jdk1.6.0_22 &
 
 pro :
 	ant processing

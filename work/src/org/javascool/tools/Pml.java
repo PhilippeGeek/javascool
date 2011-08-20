@@ -884,7 +884,7 @@ public class Pml {
     return add(Integer.toString(value));
   }
   /**  Définit la valeur de paramètres de ce PML.
-   * @param La structure dont on copie les paramètres
+   * @param pml La structure dont on copie les paramètres
    * @return Cet objet, permettant de définir la construction <tt>Pml pml= new Pml().set(..)</tt>.
    */
   public final Pml set(Pml pml) {

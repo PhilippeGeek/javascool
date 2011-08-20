@@ -113,7 +113,7 @@
     <xsl:when test="@class = 'include'"><xsl:apply-templates select="document(@link)"/></xsl:when>
     <xsl:when test="count(@link) = 1"><a href="{@link}"> 
       <xsl:if test="count(@class)=1"><xsl:choose>
-        <xsl:when test="@class = 'new'"><xsl:attribute name="target">_blank</xsl:attribute></xsl:when>
+        <xsl:when test="@class = 'newtab'"><xsl:attribute name="target">_blank</xsl:attribute></xsl:when>
         <xsl:otherwise><xsl:attribute name="class"><xsl:value-of select="@class"/></xsl:attribute></xsl:otherwise>
       </xsl:choose></xsl:if>
       <xsl:if test="count(@icon) = 1"><img src="{@icon}" alt="{@text}"/></xsl:if>
