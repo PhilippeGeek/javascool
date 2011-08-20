@@ -1,8 +1,10 @@
 <?php
+
 // Renvoie le texte sur http://wiki.inria.fr/sciencinfolycee
 function wiki_get_contents($name) {
    return wiki_get_contents_load($name);
 }
+
 // Lecture du wiki`a travers un cache local
 function wiki_get_contents_cache_load($name) {
   $name = rawurlencode($name);
@@ -17,31 +19,32 @@ function wiki_get_contents_cache_load($name) {
   return file_get_contents($cache.'/'.$name);
 }
 
+// Redirections des pages du wiki
+$wiki_get_contents_redirections = array(
+					"JavaScool:Accueil" => "?page=home",
+					"JavaScool:Actualité" => "?page=home",
+					"JavaScool:Manifeste" => "?page=home&action=manifest",
+					"JavaScool:Faq" => "?page=home&action=faq",
+					"JavaScool:Lancement" => "?page=run",
+					"JavaScool:Licence" => "?page=run&action=licence",
+					"JavaScool:Cr%C3%A9dits" => "?page=contact&action=credits",
+					"JavaScool:Développement" => "?page=developers", 
+					"JavaScool:DocCreationProglet" => "?page=developers&action=spec-proglets",
+					"JavaScool:DocCreationProgletExemple" => "?page=developers&action=doc-proglets",
+					"JavaScool:DocFormatHml" => "?page=developers&action=doc-hml",
+					"JavaScool:DocumentsHml" => "?page=developers&action=spec-hml",
+					"JavaScool:DocJavaScoolBuilder" => "?page=developers&action=doc-javascoolbuilder",
+					"JavaScool:SpecJavaScoolBuilder" => "?page=developers&action=spec-javascoolbuilder",
+					"JavaScool:FaqD%C3%A9veloppement" => "?page=developers&action=faq-developers",
+					"JavaScool:Ressources" => "?page=resources");
+
 // Lecture du wiki et mise en forme des liens
 function wiki_get_contents_load($name) {
+  global $wiki_get_contents_redirections;
   // Recuperation de la page sur le wiki
   $text = file_get_contents('http://wiki.inria.fr/sciencinfolycee/'.$name.'?printable=yes&action=render');  
   // Remplace tous les liens entre pages par des pages vues du site
-  $redirections = array(
-		 "JavaScool:Accueil" => "?page=home",
-		 "JavaScool:Actualité" => "?page=home",
-		 "JavaScool:Manifeste" => "?page=home&action=manifest",
-		 "JavaScool:Faq" => "?page=home&action=faq",
-		 "JavaScool:Lancement" => "?page=run",
-		 "JavaScool:Ressources" => "?page=resources", 
-		 "JavaScool:Développement" => "?page=developers", 
-		 "JavaScool:JavaScool:Cr%C3%A9dits" => "?page=run&action=licence",
-		 /* A ajouter ensuite:
-		  ./pages/developers/documents/doc-jvs.php:'JavaScool:DocLiensJvs'
-		  ./pages/developers/documents/sampleCode.php:'JavaScool:DocCreationProgletExemple'
-		  ./pages/developers/documents/proglets.php:'JavaScool:DocCreationProglet'
-		  ./pages/developers/documents/doc-javascoolbuilder.php:'JavaScool:DocJavaScoolBuilder'
-		  ./pages/developers/documents/faq.php:'JavaScool:FaqDéveloppement'
-		  ./pages/developers/documents/doc-hml.php:    'JavaScool:DocFormatHml'
-		  ./pages/developers/documents/specs-javascoolbuilder.php:'JavaScool:SpecJavaScoolBuilder'
-		 */
-		 );
-  foreach($redirections as $wiki => $php) 
+  foreach($wiki_get_contents_redirections as $wiki => $php) 
     $text = ereg_replace("href=\"http://wiki.inria.fr/sciencinfolycee/$wiki\"", "class=\"internal\" href=\"$php\"", $text);
   // Remplace tous les liens wikis locaux pas des liens distants
   $text = ereg_replace('src="/wikis/sciencinfolycee', 'src="http://wiki.inria.fr/wikis/sciencinfolycee', $text);

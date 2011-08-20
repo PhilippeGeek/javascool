@@ -1,6 +1,6 @@
 package org.javascool.proglets.sampleCode;
-import org.javascool.macros.Macros.*;
-import org.javascool.proglets.sampleCode.Functions.*;
+import static org.javascool.macros.Macros.*;
+import static org.javascool.proglets.sampleCode.Functions.*;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 

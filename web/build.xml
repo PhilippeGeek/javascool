@@ -2,20 +2,20 @@
 <project default="usage">
 
   <target name="usage"><echo level="info">
-    ant publi			publi les fichiers du site sur http://javascool.gforge.inria.fr
+    ant publish			publi les fichiers du site sur http://javascool.gforge.inria.fr
     ant lcheck			teste et liste les liens cassés sur le site
     ant local			affiche une version locale du site (lance apache et ouvre firefox)
     ant xterm			ouvre une fenêtre pour aller gérer manuellement les fichiers sur le site
   </echo></target>
 
-  <target name="publi">
+  <target name="publish">
     <!-- @todo: rsync des fichiers php du site SANS index.php -->
     <!-- @todo: rsync des proglets buildés -->
     <!-- @todo: rsync de l'api javadoc -->
     <exec executable="rsync">
-      <arg line="--rsh='ssh -C' --archive --delete-excluded --exclude .svn/ ../documents scm.gforge.inria.fr:/home/groups/javascool/htdocs/v4"/>
+      <arg line="--rsh='ssh -C' -rl --delete-excluded --exclude .svn/ ../documents scm.gforge.inria.fr:/home/groups/javascool/htdocs/v4"/>
     </exec>
-    <!-- rsync de l'index en deux temps pour patcher un problème de droit sur le site -->
+    <!-- rsync de index.php en deux temps pour patcher un problème de droit sur le site -->
     <exec executable="rsync">
       <arg line="--rsh='ssh -C' index.php scm.gforge.inria.fr:/home/groups/javascool/htdocs/v4/.htindex.php"/>
     </exec>

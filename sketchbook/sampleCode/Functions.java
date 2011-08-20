@@ -1,5 +1,5 @@
 package org.javascool.proglets.sampleCode;
-import org.javascool.macros.Macros.*;
+import static org.javascool.macros.Macros.*;
 
 /** Définit les fonctions de la proglet. */
 public class Functions {
