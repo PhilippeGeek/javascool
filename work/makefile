@@ -1,4 +1,9 @@
 
+- finir la section dvelopers
+- ajouter l acces à ant via show.sh
+- ajouter image cycle sur documents/javadoc pour ajout a javadoc et virer de core
+- 
+
 #
 # Makefile interface avec le ant
 #
@@ -20,7 +25,3 @@ nbe :
 
 pro :
 	ant processing
-
-#############################################################################################
-
-# Travail sur les pages du site
