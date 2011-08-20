@@ -179,7 +179,8 @@ public class ProgletsBuilder {
         JarManager.rmDir(buildDir);
       else
         JarManager.rmDir(new File(tmpDir));
-      System.out.println("Construction achevée avec succès");
+      System.out.println("Construction achevée avec succès: «"+targetJar+"» a été créé");
+      System.out.println("\tIl faut lancer «"+targetJar+"» pour tester/utiliser les proglets.");
       return true;
     } catch(Exception e) {
       System.out.println("Erreur inopinée lors de la construction (" + e.getMessage() + "): corriger l'erreur et relancer la construction");
