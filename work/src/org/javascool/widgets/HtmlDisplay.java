@@ -37,8 +37,8 @@ import java.util.ArrayList;
  * <li>Il est possible d'ouvrir des pages dans une cible autre que ce visualisateur: <ul>
  *   <li>Les liens de la forme <tt>jvs://?editor:<i>location</i></tt> ouvrent le document dans l'éditeur de JavaScool. <br>
  *     Il sont générés par un tag de la form <tt>&lt;l class="editor" ..</tt></li>
- *   <li>Les liens de la forme <tt>jvs://?browser:<i>location</i></tt> ouvrent le document dans un autre onglet de JavaScool.<br>
- *     Il sont générés par un tag de la form <tt>&lt;l class="browser" ..</tt></li> </li>
+ *   <li>Les liens de la forme <tt>jvs://?newtab:<i>location</i></tt> ouvrent le document dans un autre onglet de JavaScool.<br>
+ *     Il sont générés par un tag de la form <tt>&lt;l class="newtab" ..</tt></li> </li>
  * </ul> Il sont produits par les tags <tt>&lt;a target="editor" . . </tt> du XML.
  * En cas d'échec les contenus sont dirigés vers le navigateur du système, extérieur à javascool.</li>
  * <li>Les liens de la forme <tt>string://?value="text"</tt> permettent d'afficher directement du texte HTML3.</li>
@@ -61,7 +61,7 @@ public class HtmlDisplay extends JPanel {
   /** Définit le préfix pour une ouverture dans l'éditeur. */
   static private final String editorPrefix = "vs://?editor:";
   /** Définit le préfix pour une ouverture dans un onglet. */
-  static private final String browserPrefix = "jvs://?browser:";
+  static private final String newtabPrefix = "jvs://?newtab:";
 
   // @bean
   public HtmlDisplay() {
@@ -227,8 +227,8 @@ public class HtmlDisplay extends JPanel {
       }
     } else if(location.startsWith(editorPrefix))   // Affichage dand JavaScool
       org.javascool.gui.Desktop.getInstance().addFile(location.substring(editorPrefix.length()));
-    else if(location.startsWith(browserPrefix))     // Affichage dand JavaScool
-      org.javascool.gui.Desktop.getInstance().addTab(location.substring(browserPrefix.length()));
+    else if(location.startsWith(newtabPrefix))     // Affichage dand JavaScool
+      org.javascool.gui.Desktop.getInstance().addTab(location.substring(newtabPrefix.length()));
     else if(!doBrowse(location))     // Délégation au client
       setText("Le lien : <tt>«" + location + "»</tt> n'a pas pu être affiché");
   }
