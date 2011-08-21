@@ -42,8 +42,8 @@ public class ProgletEngine {
     {
       proglets = new ArrayList<Proglet>();
       String javascoolJar = Core.javascoolJar();
-      for(String dir : FileManager.list(javascoolJar, "org.javascool.proglets.[^\\.]+")) {
-        Proglet proglet = new Proglet().load(dir.replaceFirst("jar:[^!]*!", ""));
+      for(String dir : FileManager.list(javascoolJar, "org.javascool.proglets.[^\\.]+.proglet.pml")) {
+        Proglet proglet = new Proglet().load(dir.replaceFirst("jar:[^!]*!(.*)proglet.pml", "$1"));
         if(!proglet.isProcessing())
           proglets.add(proglet);
       }

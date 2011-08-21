@@ -1,7 +1,10 @@
 package org.javascool.proglets.sampleCode;
 import static org.javascool.macros.Macros.*;
 
-/** Définit les fonctions de la proglet. */
+/** Définit les fonctions de la proglet.
+ * @see <a href="Functions.java.html">source code</a>
+ * @serial exclude
+ */
 public class Functions {
   /** Renvoie l'instance de la proglet. */
   private static Panel getPane() {

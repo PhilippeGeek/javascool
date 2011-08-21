@@ -127,7 +127,7 @@ public class DialogFrame {
                                                       for(Component c: jBuilderMenu.getComponents())
                                                         if(c instanceof JCheckBox && ((JCheckBox) c).isSelected())
                                                           proglets.add(((JCheckBox) c).getText());
-						      Console.getInstance().clear();
+                                                      Console.getInstance().clear();
                                                       ProgletsBuilder.build(proglets.toArray(new String[proglets.size()]));
                                                     }
                                                   }

@@ -145,7 +145,7 @@ class JVSPanel extends JPanel {
     for(Object fileId : haveToSave.keySet().toArray())
       if(haveToSave.get((String) fileId))
         j++;
-             // If user no have dialog to stop close, we create one
+    // If user no have dialog to stop close, we create one
     if(j == 0) {
       final int n = JOptionPane.showConfirmDialog(
         Desktop.getInstance().getFrame(),
@@ -187,7 +187,7 @@ class JVSPanel extends JPanel {
     for(Boolean can_close_r : can_close)
       if(can_close_r == false)
         return false;
-             // We return true if all is good
+    // We return true if all is good
     return true;
   }
   /** Handle the close file task
@@ -247,7 +247,7 @@ class JVSPanel extends JPanel {
     for(Boolean can_close_r : can_close)
       if(can_close_r == false)
         return false;
-             // We return true if all is good
+    // We return true if all is good
     return true;
   }
   /** Ask to user to save a file before it close

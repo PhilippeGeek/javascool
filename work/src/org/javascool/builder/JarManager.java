@@ -77,15 +77,14 @@ public class JarManager {
    * @param dstDir Dossier cible.
    */
   public static void copyFiles(String srcDir, String dstDir) throws IOException {
-    if (new File(srcDir).isDirectory()) {
+    if(new File(srcDir).isDirectory()) {
       if(!new File(srcDir).getName().equals(".svn"))
-	for(String s : FileManager.list(srcDir)) {
-	  String d = dstDir + File.separator + new File(s).getName();
-	  copyFiles(s, d);
-	}
-    } else {
+        for(String s : FileManager.list(srcDir)) {
+          String d = dstDir + File.separator + new File(s).getName();
+          copyFiles(s, d);
+        }
+    } else
       copyStream(new FileInputStream(srcDir), new FileOutputStream(dstDir));
-    }
   }
   // Ajoute un stream a un jar
   public static void copyFileToJar(File source, JarOutputStream target, File root) throws IOException {
@@ -120,7 +119,7 @@ public class JarManager {
     byte data[] = new byte[2048];
     for(int c; (c = i.read(data, 0, 2048)) != -1;)
       o.write(data, 0, c);
-    if (o instanceof JarOutputStream)
+    if(o instanceof JarOutputStream)
       ((JarOutputStream) o).closeEntry();
     else
       o.close();

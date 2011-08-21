@@ -21,6 +21,7 @@ public class Build {
       System.exit(0);
     }
     ErrorCatcher.checkJavaVersion(6);
+    Core.setUncaughtExceptionAlert();
     if((usage.length > 0) && usage[0].equals("-q"))
       System.exit((usage.length > 1 ? org.javascool.builder.ProgletsBuilder.build(usage[1]) : org.javascool.builder.ProgletsBuilder.build()) ? 0 : -1);
     else

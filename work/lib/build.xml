@@ -17,7 +17,7 @@
     <delete file="javadoc.jar"/>
     <mkdir dir="${build.dir}"/>
     <unzip dest="${build.dir}" src="${jdk.dir}/lib/tools.jar"/>
-    <jar destfile="./javadoc.jar" basedir="${build.dir}" includes="com/sun/tools/javadoc/**,com/sun/javadoc/**"/>
+    <jar destfile="./javadoc.jar" basedir="${build.dir}" includes="com/sun/tools/javadoc/**,com/sun/javadoc/**,com/sun/tools/doclets/**"/>
     <delete dir="${build.dir}"/>
   </target>
   <!-- Construction de la library java2html patchée par  Philippe Vienne <philoumailabo@gmail.com> et renommée ici java2html -->
