@@ -5,6 +5,10 @@ import java.awt.BorderLayout;
 import org.javascool.widgets.CurveOutput;
 import org.javascool.widgets.NumberInput;
 
+/** Définit le panneau graphique de la proglet.
+ * @see <a href="Panel.java.html">source code</a>
+ * @serial exclude
+ */
 public class Panel extends JPanel {
   private static final long serialVersionUID = 1L;
 

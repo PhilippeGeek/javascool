@@ -117,7 +117,11 @@ public class ProgletCreator {
   private static final String translatorPattern =
     "package org.javascool.proglets.@name;\n" +
     "\n" +
-    "/** Définit la traduction d'un code Jvs en code Java  pour manipuler la proglet «@name» (A DÉTRUIRE SI NON UTILISÉ). */\n" +
+    "/** Définit la traduction d'un code Jvs en code Java  pour manipuler la proglet «@name» (A DÉTRUIRE SI NON UTILISÉ).\n" +
+    " *\n" +
+    " * @see <a href=\"Translator.java.html\">code source</a>\n" +
+    " * @serial exclude\n" +
+    " */\n" +
     "public class Translator extends org.javascool.core.Translator {\n" +
     "    @Override\n" +
     "     public String getImports() {\n" +

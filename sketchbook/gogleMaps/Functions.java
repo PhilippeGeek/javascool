@@ -11,7 +11,7 @@ import java.util.List;
 import javax.swing.SwingUtilities;
 import org.javascool.macros.Macros;
 
-/** Définit les fonctions de la proglet d'expérimenter avec des signaux sonores.
+/** Définit les fonctions de la proglet qui permettent de tracer des chemins sur une carte de France.
  *
  * @see <a href="Functions.java.html">code source</a>
  * @serial exclude

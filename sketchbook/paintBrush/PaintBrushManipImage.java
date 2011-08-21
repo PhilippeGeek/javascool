@@ -4,6 +4,7 @@
 
 package org.javascool.proglets.paintBrush;
 
+/** Définit l'interface qui implémente les fonctions de dessin dans l'image. */
 public interface PaintBrushManipImage {
   // Affiche un point de coordonnées (x,y)
   public void affichePoint(int x, int y, int couleur);

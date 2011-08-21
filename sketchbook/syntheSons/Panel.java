@@ -5,7 +5,7 @@
 package org.javascool.proglets.syntheSons;
 import static org.javascool.proglets.syntheSons.Functions.*;
 
-/** Définit le panneau graphique de la proglet qui d'expérimenter avec des signaux sonores.
+/** Defines the GUI of this proglet.
  *
  * @see <a href="Panel.java.html">code source</a>
  * @serial exclude

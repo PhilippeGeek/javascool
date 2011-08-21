@@ -16,6 +16,11 @@ import javax.swing.JButton;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/** Définit une proglet javascool qui permet d'implémenter un algorithme de dichotomie.
+ *
+ * @see <a href="Panel.java.html">code source</a>
+ * @serial exclude
+ */
 public class Panel extends JPanel {
   private static final long serialVersionUID = 1L;
 

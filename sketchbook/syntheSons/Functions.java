@@ -4,7 +4,7 @@
 package org.javascool.proglets.syntheSons;
 import static org.javascool.macros.Macros.*;
 
-/** Définit les fonctions de la proglet d'expérimenter avec des signaux sonores.
+/** Défines the JavaScool user functions for this proglet.
  *
  * @see <a href="Functions.java.html">code source</a>
  * @serial exclude

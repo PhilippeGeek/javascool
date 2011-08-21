@@ -8,7 +8,7 @@ import static org.javascool.macros.Macros.*;
 // Used to define the gui
 import java.awt.Dimension;
 
-/** Définit les fonctions de la proglet qui de manipuler les pixels d'une image.
+/** Définit les fonctions de la proglet qui permettent de manipuler les pixels d'une image.
  *
  * @see <a href="Functions.java.html">code source</a>
  * @serial exclude
