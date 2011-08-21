@@ -1,6 +1,11 @@
 package org.javascool.proglets.analogiqueNumerique;
 import static org.javascool.macros.Macros.*;
 
+/**  Définit les fonctions de la proglet qui permet un algorithme dichotomiqiue de conversion analogique-numérique.
+ *
+ * @see <a href="Functions.java.html">code source</a>
+ * @serial exclude
+ */
 public class Functions {
   private static final long serialVersionUID = 1L;
   private static Panel getPane() {

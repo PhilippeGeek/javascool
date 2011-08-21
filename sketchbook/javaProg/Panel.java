@@ -7,6 +7,7 @@ package org.javascool.proglets.javaProg;
 import javax.swing.JLayeredPane;
 
 /** Définit une proglet javascool qui permet d'utiliser toute les classes des swings.
+ *
  * @see <a href="Panel.java.html">code source</a>
  * @serial exclude
  */

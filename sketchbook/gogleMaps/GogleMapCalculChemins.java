@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.ArrayList;
 import org.javascool.macros.Macros;
 
-public class GogleMapCalculChemins {
+class GogleMapCalculChemins {
   private static int distance(GogleMapPanel g, String ville1, String ville2) {
     if(g.arcs.get(ville1).contains(ville2)) {
       Macros.assertion(g.latitudes.containsKey(ville1), ville1 + " n'est pas une ville connue");

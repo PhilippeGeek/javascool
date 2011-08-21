@@ -15,6 +15,7 @@ import java.io.File;
 import org.javascool.macros.Macros;
 
 /** Définit comment lire/ecire une imaage.
+ *
  * @see <a href="ImageUtils.java.html">code source</a>
  * @serial exclude
  */

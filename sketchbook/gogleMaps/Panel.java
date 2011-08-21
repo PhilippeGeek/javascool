@@ -14,7 +14,8 @@ import org.javascool.macros.Macros;
 
 /** Définit une proglet javascool qui permet de tracer des chemins sur une carte de France.
  *
- * @see <a href="GogleMap.java.html">code source</a>
+ * @see <a href="Panel.java.html">code source</a>
+ * @see <a href="GogleMapPanel.java.html">GogleMapPanel.java</a>, <a href="GogleMapCalculChemins.java.html">GogleMapCalculChemins.java</a>, <a href="GogleMapParcours.java.html">GogleMapParcours.java</a>
  * @serial exclude
  */
 public class Panel extends JPanel {

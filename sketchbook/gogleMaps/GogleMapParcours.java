@@ -13,7 +13,7 @@ import java.util.Queue;
 import java.util.LinkedList;
 import org.javascool.macros.Macros;
 
-public class GogleMapParcours {
+class GogleMapParcours {
   private static int numVisite;
 
   private static void afficheVille(GogleMapPanel g, String s) {

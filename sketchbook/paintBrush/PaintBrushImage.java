@@ -12,7 +12,7 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.Font;
 
-public class PaintBrushImage {
+class PaintBrushImage {
   private static int[][] image;
   public static Set<Point> points = new TreeSet<Point>();
   private static int height;

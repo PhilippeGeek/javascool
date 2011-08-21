@@ -1,15 +1,14 @@
 package org.javascool.proglets.dichotomie;
 import static org.javascool.macros.Macros.*;
 
-/** Définit une proglet javascool qui permet de simuler la tortue logo.
- * @see <a href="about-proglet.htm">Description</a>
- * @see <a href="the-proglet.htm">La proglet</a>
- * @see <a href="http://fr.wikipedia.org/wiki/Logo_(langage)#Primitives_graphiques">La référence du langage logo</a>
- * @see <a href="TortueLogo.java.html">code source</a>
+/** Définit les fonctions de la proglet qui permet d'implémenter un algorithme de dichotomie.
+ *
+ * @see <a href="Functions.java.html">code source</a>
  * @serial exclude
  */
 public class Functions {
   private static final long serialVersionUID = 1L;
+  /** Renvoie l'instance de la proglet pour accéder à ses éléments. */
   private static Panel getPane() {
     return getProgletPane();
   }

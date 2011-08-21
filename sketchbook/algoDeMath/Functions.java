@@ -1,6 +1,10 @@
 package org.javascool.proglets.algoDeMath;
 import static org.javascool.macros.Macros.*;
 
+/** Définit les fonctions de la proglet.
+ * @see <a href="Functions.java.html">source code</a>
+ * @serial exclude
+ */
 public class Functions {
   private static final long serialVersionUID = 1L;
   private static Panel getPane() {

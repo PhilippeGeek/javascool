@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 
 /** Définit les fonctions de la proglet qui permet d'utiliser toute les classes des swings.
+ *
  * @see <a href="http://java.sun.com/docs/books/tutorial/uiswing">Java Swing tutorial</a>
  * @see <a href="http://java.sun.com/javase/6/docs/api/javax/swing/package-summary.html">Java Swing API</a>
  * @see <a href="Functions.java.html">code source</a>

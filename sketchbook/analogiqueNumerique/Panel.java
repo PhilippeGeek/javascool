@@ -9,6 +9,11 @@ import java.awt.BorderLayout;
 import org.javascool.widgets.NumberInput;
 import org.javascool.macros.Macros;
 
+/** Définit une proglet javascool qui permet d'implémenter un algorithme dichotomiqiue de conversion analogique-numérique.
+ *
+ * @see <a href="Panel.java.html">code source</a>
+ * @serial exclude
+ */
 public class Panel extends JPanel {
   // @bean
   public Panel() {

@@ -22,6 +22,7 @@ import java.util.HashMap;
 import org.javascool.macros.Macros;
 
 /** Defines a data-file sound-bit wrapper.
+ *
  * @see <a href="FileSoundBit.java.html">code source</a>
  * @serial exclude
  */

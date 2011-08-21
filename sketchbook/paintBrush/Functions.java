@@ -8,7 +8,7 @@ package org.javascool.proglets.paintBrush;
 import javax.swing.JPanel;
 import org.javascool.macros.Macros;
 
-/** Définit  les fonctions de la proglet qui permet de  faire des tracés dans une image.
+/** Définit les fonctions de la proglet qui permettent de faire des tracés dans une image.
  *
  * @see <a href="PaintBrush.java.html">code source</a>
  * @see <a href="PaintBrushMain.java.html">PaintBrushMain.java</a>, <a href="PaintBrushImage.java.html">PaintBrushImage.java</a>,  <a href="PaintBrushManipImage.java.html">PaintBrushManipImage.java</a>

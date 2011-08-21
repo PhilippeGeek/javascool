@@ -4,6 +4,7 @@ import static org.javascool.macros.Macros.*;
 import java.awt.Color;
 
 /** Définit les fonctions de la proglet qui permet de simuler la tortue logo.
+ *
  * @see <a href="http://fr.wikipedia.org/wiki/Logo_(langage)#Primitives_graphiques">La référence du langage logo</a>
  * @see <a href="Functions.java.html">code source</a>
  * @serial exclude

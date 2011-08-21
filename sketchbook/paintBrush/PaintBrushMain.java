@@ -19,7 +19,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseMotionListener;
 import org.javascool.macros.Macros;
 
-public class PaintBrushMain {
+class PaintBrushMain {
   public static void main(String[] args) {
     SwingUtilities.invokeLater(new Runnable() {
                                  @Override
