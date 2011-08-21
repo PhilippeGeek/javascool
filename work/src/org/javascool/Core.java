@@ -20,7 +20,7 @@ public class Core {
   public static final String logo = "org/javascool/widgets/icons/logo.png";
   /** Numéro de révision de l'application.*/
   public static final int revision = 438;
-  // Note: Il est obtenu par la commande Unix <tt>svn info | grep Revision | sed 's/.*: //'</tt>
+  // @ todo : Il est obtenu par la commande Unix <tt>svn info | grep Revision | sed 's/.*: //'</tt>
 
   /** Affiche le message de "about". */
   public static void showAboutMessage() {
