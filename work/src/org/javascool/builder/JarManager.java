@@ -72,32 +72,22 @@ public class JarManager {
     } catch(Exception ex) { throw new RuntimeException(ex);
     }
   }
-  /** Copie un répertoire dans un autre en oubliant les svn.
+  /** Copie un répertoire/fichier dans un autre en oubliant les svn.
    * @param srcDir Dossier source.
    * @param dstDir Dossier cible.
    */
   public static void copyFiles(String srcDir, String dstDir) throws IOException {
-    for(String s : FileManager.list(srcDir)) {
-      String d = dstDir + File.separator + new File(s).getName();
-      if(!new File(s).isDirectory())
-        copyStream(new FileInputStream(s), new FileOutputStream(d));
-      else if(!new File(s).getName().equals(".svn"))
-        copyFiles(s, d);
+    if (new File(srcDir).isDirectory()) {
+      if(!new File(srcDir).getName().equals(".svn"))
+	for(String s : FileManager.list(srcDir)) {
+	  String d = dstDir + File.separator + new File(s).getName();
+	  copyFiles(s, d);
+	}
+    } else {
+      copyStream(new FileInputStream(srcDir), new FileOutputStream(dstDir));
     }
   }
-  // Copy un stream dans un autre
-
-  private static void copyStream(InputStream in, OutputStream out) throws IOException {
-    BufferedInputStream i = new BufferedInputStream(in, 2048);
-    BufferedOutputStream o = new BufferedOutputStream(out, 2048);
-    byte data[] = new byte[2048];
-    for(int c; (c = i.read(data, 0, 2048)) != -1;)
-      o.write(data, 0, c);
-    o.close();
-    i.close();
-  }
   // Ajoute un stream a un jar
-
   public static void copyFileToJar(File source, JarOutputStream target, File root) throws IOException {
     BufferedInputStream in = null;
     try {
@@ -118,20 +108,23 @@ public class JarManager {
       JarEntry entry = new JarEntry(source.getPath().replace(root.getAbsolutePath() + File.separator, "").replace(File.separator, "/"));
       entry.setTime(source.lastModified());
       target.putNextEntry(entry);
-      // ProgletsBuilder.copyStream(new BufferedInputStream(new FileInputStream(source)), target);
-      // @todo a factoriser avec ccopyFile !!!
-      in = new BufferedInputStream(new FileInputStream(source));
-      byte[] buffer = new byte[1024];
-      while(true) {
-        int count = in.read(buffer);
-        if(count == -1)
-          break;
-        target.write(buffer, 0, count);
-      }
-      target.closeEntry();
+      copyStream(new BufferedInputStream(new FileInputStream(source)), target);
     } catch(Throwable e) {
       e.printStackTrace(System.out); throw new IllegalStateException(e);
     }
+  }
+  // Copy un stream dans un autre
+  private static void copyStream(InputStream in, OutputStream out) throws IOException {
+    InputStream i = new BufferedInputStream(in, 2048);
+    OutputStream o = out instanceof JarOutputStream ? out : new BufferedOutputStream(out, 2048);
+    byte data[] = new byte[2048];
+    for(int c; (c = i.read(data, 0, 2048)) != -1;)
+      o.write(data, 0, c);
+    if (o instanceof JarOutputStream)
+      ((JarOutputStream) o).closeEntry();
+    else
+      o.close();
+    i.close();
   }
   /** Détruit récursivement un fichier ou répertoire.
    * * <p>Irréversible: à utiliser avec la plus grande prudence.</p>

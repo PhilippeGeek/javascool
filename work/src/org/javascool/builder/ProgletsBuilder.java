@@ -209,4 +209,42 @@ public class ProgletsBuilder {
   private static void javac(String[] javaFiles) {
     if(!Java2Class.compile(javaFiles, true)) throw new IllegalArgumentException("Erreur de compilation java");
   }
+  /** Construction de javadoc avec sources en java2html. */
+  private static void javadoc(String srcDir, String dstDir) {
+
+    /*
+    <javadoc
+      verbose="false"
+      classpath="${classpath}"
+      access="public" 
+      destdir="../build/web/api"
+      windowtitle="Java's Cool v4"
+      doctitle="Java's Cool v4"
+      author="true"
+      version="true"
+      nodeprecated="true"
+      nohelp="true"
+      nonavbar="true"
+      notree="true"
+      charset="UTF-8"
+      docencoding="UTF-8"
+       >
+      <link href="http://download.oracle.com/javase/6/docs/api"/>
+      <link href="http://javadoc.fifesoft.com/rsyntaxtextarea"/>
+      <fileset dir="./src">
+        <include name="** /*.java"/>
+      </fileset>
+    </javadoc>
+    <copy todir="../build/web/api">        
+      <fileset dir="./src">
+        <include name="** /*.java"/>
+      </fileset>
+      <mapper type="glob" from="*" to="*.java"/>
+    </copy>
+    <java jar="./lib/java2html.jar" fork="true">
+      <arg value="-srcdir"/>
+      <arg value="../build/web/api"/>
+    </java>
+   */
+  }
 }
