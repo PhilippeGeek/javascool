@@ -1,2 +1,9 @@
-<l link="exercice.htm" text="Exercice" />
+<div title="Proglet exemple">
+ Voici l eprogramme minimal qui permet de tester cette proglet:
+  <code>
+    void main() {
+      setMessage("Hello World!");
+    }
+  </code>
+</div>
 
