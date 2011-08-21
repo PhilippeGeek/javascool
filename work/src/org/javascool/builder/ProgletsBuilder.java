@@ -95,18 +95,15 @@ public class ProgletsBuilder {
         Pml pml = new Pml().load(proglet + File.separator + "proglet.pml");
         System.out.println("Compilation de " + name + " ...");
         if(pml.getBoolean("processing")) {
-          level = level + (30 / proglets.length == 0 ? 1 : 30 / proglets.length);
           System.out.println("==>proglet processing (non pris en charge ici: à suivre !)");
         } else {
-          level = level + (10 / proglets.length == 0 ? 1 : 10 / proglets.length);
-          DialogFrame.setUpdate("Construction de " + name + " 1/4", level);
+          DialogFrame.setUpdate("Construction de " + name + " 1/4", level += (10 / proglets.length == 0 ? 1 : 10 / proglets.length));
           // Copie de tous les fichiers
           {
             new File(progletDir).mkdirs();
             JarManager.copyFiles(proglet, progletDir);
           }
-          level = level + (10 / proglets.length == 0 ? 1 : 10 / proglets.length);
-          DialogFrame.setUpdate("Construction de " + name + " 2/4", level);
+          DialogFrame.setUpdate("Construction de " + name + " 2/4", level += (10 / proglets.length == 0 ? 1 : 10 / proglets.length));
           // Vérification des spécifications
           {
             boolean error = false;
@@ -136,8 +133,7 @@ public class ProgletsBuilder {
               FileManager.save(doc.replaceFirst("\\.xml", "\\.htm"), Xml2Xml.run(FileManager.load(doc), "../work/src/org/javascool/builder/hdoc2htm.xslt"));
             // jarDir+ "/org/javascool/builder/hdoc2htm.xslt"));
           }
-          level = level + (10 / proglets.length == 0 ? 1 : 10 / proglets.length);
-          DialogFrame.setUpdate("Construction de " + name + " 3/4", level);
+          DialogFrame.setUpdate("Construction de " + name + " 3/4", level += (10 / proglets.length == 0 ? 1 : 10 / proglets.length));
           if(pml.getBoolean("processing")) throw new IllegalStateException("Upps le builder est pas encore implémenté pour le processing");
           // @todo Tester que nous avons les tailles explicites
           // @todo Ne pas compiler mais deployer les jars dans la cible
@@ -157,17 +153,20 @@ public class ProgletsBuilder {
               if(javaFiles.length > 0)
                 javac(javaFiles);
             }
-            // Creation de la javadoc
-            {
+            // Creation de la javadoc si on est dans le svn
+            if (new File(".svn").exists()) { // @ todo à consolider
               String apiDir = buildDir + File.separator + "jar" + File.separator + name;
               javadoc(progletDir, apiDir);
             }
           }
-          level = level + (10 / proglets.length);
-          DialogFrame.setUpdate("Construction de " + name + " 4/4", level);
+          DialogFrame.setUpdate("Construction de " + name + " 4/4", level += (10 / proglets.length));
         }
       }
       DialogFrame.setUpdate("Finalisation 1/2", 90);
+      // Elimination de la proglet sampleCode 
+      {
+	JarManager.rmDir(new File(progletsDir + File.separator + "sampleCode"));
+      }
       // Création de l'archive et du manifest
       {
         String version = "Java'sCool v4 on \"" + new Date() + "\" Revision #" + Core.revision;
@@ -229,6 +228,7 @@ public class ProgletsBuilder {
         // Lance javadoc
         try {
           // System.err.println("javadoc\t"+argv);
+	  // @todo Pb avec appel direct : à solder
           System.err.println(Exec.run("javadoc\t" + argv));
           // com.sun.tools.javadoc.Main.main(argv.split("\t"));
         } catch(Throwable e) { throw new IOException(e);

@@ -40,6 +40,11 @@
     <jar destfile="../build/javascool-builder.jar">
       <manifest>
         <attribute name="Main-Class" value="org.javascool.Build"/>
+        <attribute name="Created-By" value="inria.fr (javascool.gforge.inria.fr) ©INRIA: CeCILL V2 + CreativeCommons BY-NC-ND V2"/>
+        <attribute name="Implementation-URL" value="http://javascool.gforge.inria.fr"/>
+        <attribute name="Implementation-Vendor" value="fuscia-accueil@inria.fr, ou=javascool.gforge.inria.fr, o=inria.fr, c=fr"/>
+        <!-- // @ todo: Il est obtenu par la commande Unix <tt>svn info | grep Revision | sed 's/.*: //'</tt> -->
+        <attribute name="Implementation-Version" value="465"/>
       </manifest>
       <fileset dir="./build/classes"/>
       <fileset dir="./src" includes="org/javascool/widgets/icons/*"/>

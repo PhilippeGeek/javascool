@@ -129,9 +129,9 @@ public class JarManager {
    * * <p>Irréversible: à utiliser avec la plus grande prudence.</p>
    */
   public static void rmDir(File dir) {
-    for(File f : dir.listFiles())
-      if(f.isDirectory())
-        rmDir(f);
+    if (dir.isDirectory())
+      for(File f : dir.listFiles())
+	rmDir(f);
     dir.delete();
   }
 }
