@@ -4,7 +4,10 @@ import static org.javascool.proglets.sampleCode.Functions.*;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 
-/** Définit le panneau graphique de la proglet. */
+/** Définit le panneau graphique de la proglet.
+ * @see <a href="Panel.java.html">source code</a>
+ * @serial exclude
+ */
 public class Panel extends JPanel {
   // Construction de la proglet
   public Panel() {
@@ -18,7 +21,7 @@ public class Panel extends JPanel {
 
   /** Démo de la proglet. */
   public static void start() {
-    // On boucle pour 10 clignotements entre oui et non 
+    // On boucle pour 10 clignotements entre oui et non
     for(int i = 0; i < 10; i++) {
       // Si i modulo 2 == 0, donc si i est pair, on affiche OUI, sinon NON.
       setMessage(i % 2 == 0 ? "OUI" : "NON");
@@ -27,4 +30,4 @@ public class Panel extends JPanel {
     }
   }
 }
-			   
+

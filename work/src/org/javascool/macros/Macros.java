@@ -34,6 +34,7 @@ public class Macros {
   // @factory
 
   private Macros() {}
+
   /** Renvoie un nombre entier aléatoire uniformément distribué entre deux valeurs (maximum inclus).
    */
   public static int random(int min, int max) {

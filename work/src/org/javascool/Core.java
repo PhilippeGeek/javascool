@@ -40,9 +40,9 @@ public class Core {
                                            " </ul>",
                                            revision);
   }
-  /** Retrouve le chemin du jar courant
+  /** Retrouve le chemin du jar courant.
    * @return Le chemin du jar
-   * @throws RuntimeException lorsque le builder n'a pas été demmaré depuis un jar
+   * @throws RuntimeException lorsque l'application n'a pas été demmaré depuis un jar
    */
   public static String javascoolJar() {
     String jar = "";

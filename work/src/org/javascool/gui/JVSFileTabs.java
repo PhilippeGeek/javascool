@@ -109,7 +109,7 @@ class JVSFileTabs extends JVSTabs {
         this.setSelectedIndex(this.getTabId(this.getFileId(file.getName())));
         return this.getFileId(file.getName());
       }
-         // Create the fileId wich is unique
+    // Create the fileId wich is unique
     String fileId = UUID.randomUUID().toString();
     // Create the JVSEditor for the file
     JVSEditor editor = new JVSEditor();

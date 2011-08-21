@@ -11,6 +11,7 @@ import org.javascool.tools.Pml;
 import org.javascool.core.Java2Class;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -133,18 +134,18 @@ public class ProgletsBuilder {
             for(String doc : FileManager.list(progletDir, ".*\\.xml"))              // @todo ici il faut remplacer le xslt par un fichier du tmp !!
 
               FileManager.save(doc.replaceFirst("\\.xml", "\\.htm"), Xml2Xml.run(FileManager.load(doc), "../work/src/org/javascool/builder/hdoc2htm.xslt"));
-                         // jarDir+ "/org/javascool/builder/hdoc2htm.xslt"));
+            // jarDir+ "/org/javascool/builder/hdoc2htm.xslt"));
           }
           level = level + (10 / proglets.length == 0 ? 1 : 10 / proglets.length);
           DialogFrame.setUpdate("Construction de " + name + " 3/4", level);
           if(pml.getBoolean("processing")) throw new IllegalStateException("Upps le builder est pas encore implémenté pour le processing");
-                     // @todo Tester que nous avons les tailles explicites
+          // @todo Tester que nous avons les tailles explicites
           // @todo Ne pas compiler mais deployer les jars dans la cible
           else {
             // Extraction des extensions nécessaires à cette proglet
             for(String jar : FileManager.list(progletDir, ".*\\.jar"))
               JarManager.jarExtract(jar, jarDir);
-                         // Création d'une page de lancement de l'applet // @todo à valider avec Guillaume
+            // Création d'une page de lancement de l'applet // @todo à valider avec Guillaume
             FileManager.save(progletDir + File.separator + "index.html",
                              "<html><head><title>" + name + "</title><meta http-equiv='Content-Type' content='text/html; charset=utf-8'/></head><body>\n"
                              + "  <center><h4>" + name + " (<a target='_blank' href='help.htm'>documentation utilisateur</a> <a target='_blank' href='api/index.html'>documentation Java</a>)</h4></center>\n"
@@ -155,6 +156,11 @@ public class ProgletsBuilder {
               String[] javaFiles = FileManager.list(progletDir, ".*\\.java");
               if(javaFiles.length > 0)
                 javac(javaFiles);
+            }
+            // Creation de la javadoc
+            {
+              String apiDir = buildDir + File.separator + "jar" + File.separator + name;
+              javadoc(progletDir, apiDir);
             }
           }
           level = level + (10 / proglets.length);
@@ -179,8 +185,8 @@ public class ProgletsBuilder {
         JarManager.rmDir(buildDir);
       else
         JarManager.rmDir(new File(tmpDir));
-      System.out.println("Construction achevée avec succès: «"+targetJar+"» a été créé");
-      System.out.println("\tIl faut lancer «"+targetJar+"» pour tester/utiliser les proglets.");
+      System.out.println("Construction achevée avec succès: «" + targetJar + "» a été créé");
+      System.out.println("\tIl faut lancer «" + targetJar + "» pour tester/utiliser les proglets.");
       return true;
     } catch(Exception e) {
       System.out.println("Erreur inopinée lors de la construction (" + e.getMessage() + "): corriger l'erreur et relancer la construction");
@@ -210,41 +216,40 @@ public class ProgletsBuilder {
     if(!Java2Class.compile(javaFiles, true)) throw new IllegalArgumentException("Erreur de compilation java");
   }
   /** Construction de javadoc avec sources en java2html. */
-  private static void javadoc(String srcDir, String dstDir) {
-
-    /*
-    <javadoc
-      verbose="false"
-      classpath="${classpath}"
-      access="public" 
-      destdir="../build/web/api"
-      windowtitle="Java's Cool v4"
-      doctitle="Java's Cool v4"
-      author="true"
-      version="true"
-      nodeprecated="true"
-      nohelp="true"
-      nonavbar="true"
-      notree="true"
-      charset="UTF-8"
-      docencoding="UTF-8"
-       >
-      <link href="http://download.oracle.com/javase/6/docs/api"/>
-      <link href="http://javadoc.fifesoft.com/rsyntaxtextarea"/>
-      <fileset dir="./src">
-        <include name="** /*.java"/>
-      </fileset>
-    </javadoc>
-    <copy todir="../build/web/api">        
-      <fileset dir="./src">
-        <include name="** /*.java"/>
-      </fileset>
-      <mapper type="glob" from="*" to="*.java"/>
-    </copy>
-    <java jar="./lib/java2html.jar" fork="true">
-      <arg value="-srcdir"/>
-      <arg value="../build/web/api"/>
-    </java>
-   */
+  private static void javadoc(String srcDir, String apiDir) throws IOException {
+    String files[] = FileManager.list(srcDir, ".*\\.java$");
+    if(files.length > 0) {
+      {
+        // Construit l'appel à javadoc
+        String argv = "-quiet\t-classpath\t" + Core.javascoolJar() + "\t-d\t" + apiDir +
+                      "\t-link\thttp://download.oracle.com/javase/6/docs/api\t-link\thttp://javadoc.fifesoft.com/rsyntaxtextarea" +
+                      "\t-public\t-author\t-windowtitle\tJava's Cool v4\t-doctitle\tJava's Cool v4\t-version\t-nodeprecated\t-nohelp\t-nonavbar\t-notree\t-charset\tUTF-8";
+        for(String f : files)
+          argv += "\t" + f;
+        // Lance javadoc
+        try {
+          // System.err.println("javadoc\t"+argv);
+          System.err.println(Exec.run("javadoc\t" + argv));
+          // com.sun.tools.javadoc.Main.main(argv.split("\t"));
+        } catch(Throwable e) { throw new IOException(e);
+        }
+      }
+      // Construit les sources en HTML à partir de java2html
+      {
+        // Crée les sources à htmléiser
+        for(String f : files)
+          JarManager.copyFiles(f, apiDir + f.replaceFirst(".*" + File.separator + "org", File.separator + "org") + ".java");
+        // Lance java2html
+        de.java2html.Java2HtmlApplication.main(("-srcdir\t" + apiDir).split("\t"));
+        // Nettoie les sources à htmléiser
+        for(String f : files)
+          new File(apiDir + f.replaceFirst(".*" + File.separator + "org", File.separator + "org") + ".java").delete();
+      }
+    }
+    /* Un patch pour la mise au point !
+     *  if (srcDir.matches(".*sampleCode.*"))
+     *  org.javascool.macros.Macros.openURL("file://"+apiDir+"/index.html");
+     */
   }
 }
+
