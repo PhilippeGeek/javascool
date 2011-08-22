@@ -1,5 +1,6 @@
 package org.javascool;
 
+import org.javascool.builder.ProgletsBuilder;
 import org.javascool.tools.ErrorCatcher;
 
 /** Lanceur de l'application "formateur" qui permet de construire des «proglets».
@@ -22,9 +23,12 @@ public class Build {
     }
     ErrorCatcher.checkJavaVersion(6);
     Core.setUncaughtExceptionAlert();
-    if((usage.length > 0) && usage[0].equals("-q"))
-      System.exit((usage.length > 1 ? org.javascool.builder.ProgletsBuilder.build(usage[1]) : org.javascool.builder.ProgletsBuilder.build()) ? 0 : -1);
-    else
+    if(usage.length > 0 && usage[0].equals("-q")) {
+        if (usage.length > 1)
+             System.exit(ProgletsBuilder.build(ProgletsBuilder.getProglets(), usage[1]) ? 0 : -1);
+        else
+             System.exit(ProgletsBuilder.build() ? 0 : -1);
+    }  else
       org.javascool.builder.DialogFrame.startFrame();
   }
 }
