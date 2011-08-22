@@ -3,7 +3,4 @@
 Voici:
   * Le [http://javascool.fr site officiel].
   * L'accès [http://code.google.com/p/javascool/source/browse web aux sources].
-  * L'accès au [http://wiki.inria.fr/sciencinfolycee/Catégorie:JavaScool wiki] javascool du [http://science-info-lycee.fr «SIL:O!»]
-  * Et aux applications 
-  ** [http://code.google.com/p/javascool/source/browse/tags/javascool.jar javascool] et 
-  ** [http://code.google.com/p/javascool/source/browse/tags/javascoolbuilder.jar javascoolbuilder]. 
+  * L'accès au [http://wiki.inria.fr/sciencinfolycee/Catégorie:JavaScool wiki] javascool du [http://science-info-lycee.fr «SIL:O!»]. 
