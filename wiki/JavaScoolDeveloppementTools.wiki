@@ -8,10 +8,10 @@ Il faut aussi être inscrit sur cette forge en nous [http://javascool.gforge.inr
 
 = Quelques documentations utiles =
 
-[http://download.oracle.com/javase/6/docs/api/overview-summary.html API-JDK] 
-[http://download.oracle.com/javase/6/docs JDK] 
-[http://ant.apache.org/manual/index.html Ant]
-[http://ant-contrib.sourceforge.net/tasks/tasks/index.html AntContrib]
+[http://download.oracle.com/javase/6/docs/api/overview-summary.html API-JDK] |
+[http://download.oracle.com/javase/6/docs JDK] |
+[http://ant.apache.org/manual/index.html Ant] |
+[http://ant-contrib.sourceforge.net/tasks/tasks/index.html AntContrib] |
 [http://svnbook.red-bean.com/en/1.5/index.html SVN]
 
 = Détails des outils à installer =
