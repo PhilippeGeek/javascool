@@ -109,7 +109,7 @@ public class Desktop {
    * @return La valeur true si le desktop peut être fermé sans dommage pour l'utilisateur, sinon la valeur fausse.
    */
   public boolean isClosable() {
-    return true;
+    return JVSPanel.getInstance().close();
   }
 }
 
