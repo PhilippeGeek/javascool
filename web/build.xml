@@ -25,10 +25,13 @@
       <arg value="scm.gforge.inria.fr"/>
       <arg value="sh -c 'cd /home/groups/javascool/htdocs/v4 ; cat .htindex.php &gt; index.php ; rm .htindex.php'"/>
     </exec>
+    <exec executable="firefox" os="Linux">
+      <arg value="http://javascool.gforge.inria.fr/v4"/>
+    </exec>
   </target>
 
   <target name="local">
-    <exec executable="./index/start-local-web.sh" os="Linux"/>
+    <exec executable="./includes/start-local-web.sh" os="Linux"/>
     <exec executable="firefox" os="Linux">
       <arg value="http://127.0.0.1:1234"/>
     </exec>
