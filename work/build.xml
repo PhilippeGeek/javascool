@@ -152,7 +152,7 @@
     <delete dir="./nbproject/private"/> 
   </target>
 
-  <target name="svn" depends="clean,svn.revision"> 
+  <target name="svn" depends="clean"> 
     <exec executable="svn">
       <arg value="cleanup"/>
       <arg value=".."/>
@@ -169,16 +169,15 @@
     </exec>
     <echo level="info">${svn.ci.stdout}</echo>
     <input message="Quelle est la raison de ce commit ?" addproperty="svn.commit.message" defaultvalue="une raison inconnue"/> 
-<!-- ,guillaume.quest@gmail.com,philoumailabo@gmail.com -->
-    <mail from="javascool@googlegroups.com" tolist="thierry.vieville@inria.fr"
+    <mail from="javascool@googlegroups.com" tolist="thierry.vieville@inria.fr,guillaume.quest@gmail.com,philoumailabo@gmail.com"
       subject="Commit de http://javascool.googlecode.com"><message>
-Notice: une révision des fichiers javascool a été commitée.
+Notice: une révision des fichiers javascool a été commitée (faire un «svn up» svp).
 * par "${user.name}"
 * pour "${svn.commit.message}"
-* à la révision "${svn.revision}"
 * détails:
   ${svn.ci.stdout}
-Faire 'svn up', svp.
+
+
 + 
     </message></mail>
     <exec executable="svn">
