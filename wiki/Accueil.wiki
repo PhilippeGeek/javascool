@@ -1,4 +1,4 @@
-#summary Ce wiki n'est actuellement pas utilisé.
+#summary Ce wiki n'est utilisé que par les développeurs de JavaScool.
 
 Voici:
   * Le [http://javascool.fr site officiel].
