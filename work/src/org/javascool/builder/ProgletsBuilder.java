@@ -140,6 +140,7 @@ public class ProgletsBuilder {
                     {
                         for (String doc : FileManager.list(progletDir, ".*\\.xml")) // @todo ici il faut remplacer le xslt par un fichier du tmp !!
                         {
+                            System.out.println(FileManager.load(doc));
                             FileManager.save(doc.replaceFirst("\\.xml", "\\.htm"),
                                     Xml2Xml.run(FileManager.load(doc),
                                     "../work/src/org/javascool/builder/hdoc2htm.xslt"));
