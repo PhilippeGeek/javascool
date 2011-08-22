@@ -1,4 +1,0 @@
-= Bienvenue dans la liasse SVN des fichiers de gestion du site web de JavaS'Cool =
-
-Description de la liasse:
-* ''build.xml'' : contient les mécanismes de génération des fichiers du site

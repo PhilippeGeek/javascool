@@ -33,7 +33,7 @@
       </xsl:choose>
       <div id="{@class}"><ol><xsl:for-each select="*"><li><xsl:call-template name="div"/></li></xsl:for-each></ol></div>
     </xsl:when>
-    <xsl:when test="@class = 'code'"><p><table witdh="90%" border="1" align="center"><tr><td><xsl:call-template name="div"/></td></tr></table></p></xsl:when>
+    <xsl:when test="@class = 'code'"><div class="code"><table witdh="90%" border="1" align="center"><tr><td><xsl:call-template name="div"/></td></tr></table></code></xsl:when>
     <xsl:otherwise><xsl:call-template name="div"/></xsl:otherwise>
   </xsl:choose>
 </xsl:template>
@@ -55,7 +55,7 @@
 <!-- These tags performs the Jvs2Htm conversion -->
 
 <xsl:template match="code">
-  <div class="code"><table width="90%" border="2"><tr><td>
+  <div class="code"><table><tr><td>
     <xsl:value-of disable-output-escaping="yes" select="sx:jvs2htm(.)"/>
   </td></tr></table></div>
 </xsl:template>
