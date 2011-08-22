@@ -1,0 +1,14 @@
+#summary Installer la plateforme de développement de JavaScool
+
+= Introduction =
+
+Pour pouvoir co-développer JavaScool il faut installer Java, Ant et Svn et s'inscrire sur cette forge (donc c'est possible sous Linux, MacOs ou Windows), et une [http://en.wikipedia.org/wiki/Integrated_development_environment IDE] de votre choix, nous c'est [http://fr.netbeans.org netbeans].
+
+Il faut aussi être inscrit sur cette forge en nous [http://javascool.gforge.inria.fr/v4/?page=contact contactant]
+
+
+= Détails des outils à installer =
+
+* Une [http://www.oracle.com/technetwork/java/javase/downloads/index.html JDK] au moins 1.6
+* Le logiciel [http://subversion.apache.org/packages.html Subversion/Svn]
+* Les outils [http://ant.apache.org ant] et [tp://ant-contrib.sourceforge.net ant-contrib]
