@@ -92,6 +92,9 @@ public class FileManager {
         }
         location = Macros.getResourceURL(location, false).toString();
         try {
+            if(location.startsWith("file:")){
+                new File(location).getParentFile().mkdirs();
+            }
             if (backup && !location.startsWith("file:")) {
                 throw new IllegalArgumentException("Impossible de procéder à un backup pour l'URL «" + location + "»");
             }
