@@ -41,7 +41,7 @@ public class JarManager {
       Enumeration<JarEntry> entries = jf.entries();
       while(entries.hasMoreElements()) {
         JarEntry je = entries.nextElement();
-        if(je.getName().startsWith(jarEntry) && !je.isDirectory()) {
+        if((jarEntry.isEmpty()?true:je.getName().startsWith(jarEntry)) && !je.isDirectory()&&!je.getName().contains("META-INF")) {
           File dest = new File(destDir + File.separator + je.getName());
           dest.getParentFile().mkdirs();
           copyStream(ClassLoader.getSystemResourceAsStream(je.getName()), new FileOutputStream(dest));
@@ -93,7 +93,7 @@ public class JarManager {
     try {
       if(source.isDirectory()) {
         String name = source.getPath().replace(root.getAbsolutePath() + File.separator, "").replace(File.separator, "/");
-        if(!name.isEmpty() && (source != root)) {
+        if(!name.isEmpty() && (!source.equals(root))) {
           if(!name.endsWith("/"))
             name += "/";
           JarEntry entry = new JarEntry(name);
