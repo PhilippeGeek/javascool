@@ -107,7 +107,7 @@
       <arg value="info"/>
     </exec>
     <propertyregex property="svn.revision" input="${svn.info.stdout}" select="\1">
-      <regexp pattern=".*R.vision *: *([0-9]*).*"/>
+      <regexp pattern=".*R.vision[^:]*: *([0-9]*).*"/>
     </propertyregex>
   </target>
 
