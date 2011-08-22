@@ -27,6 +27,7 @@ $wiki_get_contents_redirections = array(
 					"JavaScool:Faq" => "?page=home&action=faq",
 					"JavaScool:Lancement" => "?page=run",
 					"JavaScool:Licence" => "?page=run&action=licence",
+					"JavaScool:Screenshot" => "?page=run&action=screenshot",
 					"JavaScool:Cr%C3%A9dits" => "?page=contact&action=credits",
 					"JavaScool:Développement" => "?page=developers", 
 					"JavaScool:DocCreationProglet" => "?page=developers&action=spec-proglets",
