@@ -9,6 +9,6 @@ Il faut aussi être inscrit sur cette forge en nous [http://javascool.gforge.inr
 
 = Détails des outils à installer =
 
-* Une [http://www.oracle.com/technetwork/java/javase/downloads/index.html JDK] au moins 1.6
-* Le logiciel [http://subversion.apache.org/packages.html Subversion/Svn]
-* Les outils [http://ant.apache.org ant] et [tp://ant-contrib.sourceforge.net ant-contrib]
+ * Une [http://www.oracle.com/technetwork/java/javase/downloads/index.html JDK] au moins 1.6
+ * Le logiciel [http://subversion.apache.org/packages.html Subversion/Svn]
+ * Les outils [http://ant.apache.org ant] et [tp://ant-contrib.sourceforge.net ant-contrib]
