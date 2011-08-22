@@ -48,7 +48,7 @@ class JVSWidgetPanel extends JVSTabs {
             this.add("Aide de la proglet", "", new HtmlDisplay().setPage(Macros.getResourceURL(proglet.getHelp())));
         }
         HtmlDisplay memo = new HtmlDisplay();
-        memo.setPage(Core.help);
+        memo.setPage(ClassLoader.getSystemResource(Core.help));
         this.add("Mémo", "", memo);
     }
 
