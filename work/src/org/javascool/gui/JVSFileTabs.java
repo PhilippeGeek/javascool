@@ -237,11 +237,11 @@ class JVSFileTabs extends JVSTabs {
       if(!name.endsWith(".jvs"))        // Test if user writed the extension
 
         name = name + ".jvs";                         // If not we just add it
-      JVSFile file = new JVSFile(path, true);
-      if(!this.getFileId(file.getName()).equals("")) {
+      //JVSFile file = new JVSFile(path, true);
+      if(!this.getFileId(name).equals("")) {
         System.out.println("Le fichier n'est pas nouveau ; Test : ");
-        System.out.println(JVSFileTabs.files.get(this.getFileId(file.getName())).getFile().equals(file.getFile()));
-        if(JVSFileTabs.files.get(this.getFileId(file.getName())).getFile().equals(file.getFile())) {
+        System.out.println(JVSFileTabs.files.get(this.getFileId(name)).getFile().getName().equals(name));
+        if(JVSFileTabs.files.get(this.getFileId(name)).getFile().getName().equals(name)) {
           JOptionPane.showMessageDialog(Desktop.getInstance().getFrame(),
                                         "Ce fichier est déjà ouvert dans Java's cool, choisisez un nouvelle endroit.",
                                         "Erreur d'écriture",
