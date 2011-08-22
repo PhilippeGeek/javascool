@@ -35,7 +35,7 @@ EOF
 # Lance le serveur apache
 if [ -f /usr/sbin/httpd ]
 then HTTP=/usr/sbin/httpd 
-elif [-f /usr/sbin/apache2 ]
+elif [ -f /usr/sbin/apache2 ]
 then HTTP=/usr/sbin/apache2 
 else echo "Apache n'est pas installé : impossible de lancer le serveur http" ; exit -1
 fi
