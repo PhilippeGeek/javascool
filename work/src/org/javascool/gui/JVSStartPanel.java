@@ -75,11 +75,11 @@ class JVSStartPanel extends JPanel {
   /** Créer un pannel avec un bouton capâble de lançer la Proglet */
   private JPanel createShortcut(ImageIcon icon, String name, String title, final Runnable start) {
     JPanel panel = new JPanel();
-    panel.setToolTipText(title);
     JButton label = new JButton(name, icon);
     label.setPreferredSize(new Dimension(150, 150));
     label.setVerticalTextPosition(JLabel.BOTTOM);
     label.setHorizontalTextPosition(JLabel.CENTER);
+    
     panel.add(label);
     label.addMouseListener(new MouseListener() {
                              @Override
