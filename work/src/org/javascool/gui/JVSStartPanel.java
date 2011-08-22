@@ -76,10 +76,10 @@ class JVSStartPanel extends JPanel {
   private JPanel createShortcut(ImageIcon icon, String name, String title, final Runnable start) {
     JPanel panel = new JPanel();
     JButton label = new JButton(name, icon);
-    label.setPreferredSize(new Dimension(150, 150));
+    label.setPreferredSize(new Dimension(160, 160));
     label.setVerticalTextPosition(JLabel.BOTTOM);
     label.setHorizontalTextPosition(JLabel.CENTER);
-    
+    label.setToolTipText(title);
     panel.add(label);
     label.addMouseListener(new MouseListener() {
                              @Override
