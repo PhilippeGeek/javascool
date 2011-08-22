@@ -1,6 +1,7 @@
 <?php
-include('index/sal.class.php');
-include('index/wiki_get_contents.php');
+include('includes/sal.class.php');
+include('includes/wiki_get_contents.php');
+include('includes/v3_redirections.php');
 ?>
 <!DOCTYPE html>
 <html>
