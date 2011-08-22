@@ -8,7 +8,6 @@ Description de la liasse:
 tandis que 
 * ''build.xml''  : contient les commandes de gestion/maintenance du projet
 * ''branches''   : contient les copies archivées de la liasse des fichiers sources pour y revenir si besoin;
-* ''build''      : contient les sauvegardes des versions livrées aux utilisateurs;
 * ''wiki'        : contient les fichiers du wiki de développement (actuellement inutilisé).
 
 Pour en savoir plus voir la [http://javascool.gforge.inria.fr/v4/index.php?page=api documentation].

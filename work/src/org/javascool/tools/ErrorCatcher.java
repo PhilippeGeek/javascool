@@ -25,9 +25,9 @@ public class ErrorCatcher {
    * les versions des composants logiciels, le nom du process, la trace de la pile et
    * l'affiche dans une fenêtre séparée afin d'être recueillies et communiquées par l'utilisateur.</p>
    * @param header Un texte entête en HTML expliquant à l'utilisateur quoi faire avec cette sortie d'exception.
-   * @param revision Numéro de révision de l'application pour avoir une trace en cas d'erreur.
+   * @param revision Nom et/ou numéro de révision de l'application pour avoir une trace en cas d'erreur.
    */
-  public static void setUncaughtExceptionAlert(String header, int revision) {
+  public static void setUncaughtExceptionAlert(String header, String revision) {
     uncaughtExceptionAlertHeader = header;
     System.setProperty("application.revision", "" + revision);
     Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {

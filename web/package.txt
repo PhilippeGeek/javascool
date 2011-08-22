@@ -3,4 +3,5 @@
 Description de la liasse:
 * ''pages''     : contient les pages du sites organisées selon son arborescence;
 * ''index.php'' : contient le moteur PHP du site;
-* ''index''     : contient tous les fichiers scripts et images utilisés par index.php;
+* ''images''    : contient tous les fichiers image du site;
+* ''includes''  : contient les scripts php/sh liés au site.
