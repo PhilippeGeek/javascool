@@ -53,31 +53,17 @@ public class FileManager {
      */
     public static String load(String location) {
         try {
-            if (location.startsWith("file:")) {
-                Reader reader = new InputStreamReader(new FileInputStream("file"), "UTF-8");
-                StringBuilder buffer = new StringBuilder();
-                char chars[] = new char[10240];
-                while (true) {
-                    int l = reader.read(chars);
-                    if (l == -1) {
-                        break;
-                    }
-                    buffer.append(chars, 0, l);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(Macros.getResourceURL(location, true).openStream()), 10240);
+            StringBuilder buffer = new StringBuilder();
+            char chars[] = new char[10240];
+            while (true) {
+                int l = reader.read(chars);
+                if (l == -1) {
+                    break;
                 }
-                return buffer.toString();
-            } else {
-                BufferedReader reader = new BufferedReader(new InputStreamReader(Macros.getResourceURL(location, true).openStream()), 10240);
-                StringBuilder buffer = new StringBuilder();
-                char chars[] = new char[10240];
-                while (true) {
-                    int l = reader.read(chars);
-                    if (l == -1) {
-                        break;
-                    }
-                    buffer.append(chars, 0, l);
-                }
-                return buffer.toString();
+                buffer.append(chars, 0, l);
             }
+            return buffer.toString();
 
         } catch (IOException e) {
             throw new RuntimeException(e + " when loading: " + location);
