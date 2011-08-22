@@ -65,6 +65,7 @@ public class ErrorCatcher {
    * @param version Version de Java 5 pour 1.5, 6 pour 1.6.
    */
   public static void checkJavaVersion(int version) {
+      System.setProperty("file.encoding", "UTF-8");
     if(new Integer(System.getProperty("java.version").substring(2, 3)) < version) {
       if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(
            new JFrame(),

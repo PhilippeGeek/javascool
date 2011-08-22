@@ -17,7 +17,7 @@
     </exec>
     <exec executable="svn">
       <arg value="ci"/>
-      <arg line="-m ''"/>
+      <arg line="-m commit"/>
     </exec>
     <exec executable="svn">
       <arg value="status"/>
