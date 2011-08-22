@@ -140,7 +140,6 @@ public class ProgletsBuilder {
                     {
                         for (String doc : FileManager.list(progletDir, ".*\\.xml")) // @todo ici il faut remplacer le xslt par un fichier du tmp !!
                         {
-                            System.out.println(FileManager.load(doc));
                             FileManager.save(doc.replaceFirst("\\.xml", "\\.htm"),
                                     Xml2Xml.run(FileManager.load(doc),
                                     "../work/src/org/javascool/builder/hdoc2htm.xslt"));
@@ -173,7 +172,7 @@ public class ProgletsBuilder {
                         // Creation de la javadoc si on est dans le svn
                         if (new File(".svn").exists()) { // @ todo à consolider
                             //String apiDir = buildDir + File.separator + "jar" + File.separator + name;
-                            File apiDir=new File(".."+File.separator+"work"+File.separator+"dist"+File.separator+"proglets-doc"+File.separator+name);
+                            File apiDir = new File(".." + File.separator + "work" + File.separator + "dist" + File.separator + "proglets-doc" + File.separator + name);
                             apiDir.mkdirs();
                             javadoc(progletDir, apiDir.getAbsolutePath());
                         }
@@ -269,13 +268,13 @@ public class ProgletsBuilder {
 
                 // Crée les sources à htmléiser
                 for (String f : files) {
-                    JarManager.copyFiles(f, apiDir+ File.separator + f.replaceFirst(".*" + (File.separator.equals("\\") ? "\\\\" : File.separator) + "org", "org") + ".java");
+                    JarManager.copyFiles(f, apiDir + File.separator + f.replaceFirst(".*" + (File.separator.equals("\\") ? "\\\\" : File.separator) + "org", "org") + ".java");
                 }
                 // Lance java2html
                 de.java2html.Java2HtmlApplication.main(("-srcdir\t" + apiDir).split("\t"));
                 // Nettoie les sources à htmléiser
                 for (String f : files) {
-                    new File(apiDir+ File.separator + f.replaceFirst(".*" + (File.separator.equals("\\") ? "\\\\" : File.separator) + "org", "org") + ".java").delete();
+                    new File(apiDir + File.separator + f.replaceFirst(".*" + (File.separator.equals("\\") ? "\\\\" : File.separator) + "org", "org") + ".java").delete();
                 }
             }
         }
