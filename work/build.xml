@@ -153,6 +153,7 @@
   </target>
 
   <target name="svn" depends="clean"> 
+    <ant dir="../web" target="clean"/>
     <exec executable="svn">
       <arg value="cleanup"/>
       <arg value=".."/>
@@ -168,7 +169,7 @@
       <arg value=".."/>
     </exec>
     <echo level="info">${svn.ci.stdout}</echo>
-    <if><equals arg1="${os.name}" arg2="Linux"/><then>
+    <if><equals arg1="${os.name}" arg2="Linuxxx"/><then>
         <input message="Quelle est la raison de ce commit ?" addproperty="svn.commit.message" defaultvalue="une raison inconnue"/> 
         <mail from="philoumailabo@gmail.com" tolist="thierry.vieville@inria.fr,guillaume.quest@gmail.com,philoumailabo@gmail.com"
           subject="Commit de http://javascool.googlecode.com"><message>
