@@ -33,7 +33,7 @@
       </xsl:choose>
       <div id="{@class}"><ol><xsl:for-each select="*"><li><xsl:call-template name="div"/></li></xsl:for-each></ol></div>
     </xsl:when>
-    <xsl:when test="@class = 'code'"><div class="code"><table witdh="90%" border="1" align="center"><tr><td><xsl:call-template name="div"/></td></tr></table></code></xsl:when>
+    <xsl:when test="@class = 'code'"><div class="code"><table witdh="90%" border="1" align="center"><tr><td><xsl:call-template name="div"/></td></tr></table></div></xsl:when>
     <xsl:otherwise><xsl:call-template name="div"/></xsl:otherwise>
   </xsl:choose>
 </xsl:template>
