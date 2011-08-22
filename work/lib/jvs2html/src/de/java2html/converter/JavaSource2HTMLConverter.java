@@ -145,15 +145,15 @@ public class JavaSource2HTMLConverter extends AbstractJavaSourceConverter {
     if (title == null) {
       title = ""; //$NON-NLS-1$
     }
-    return MessageFormat.format(HTML_SITE_HEADER, new Object[]{ title });
+    return "";
   }
 
   public String getDocumentFooter(JavaSourceConversionOptions options) {
-    return HTML_SITE_FOOTER;
+    return "";
   }
 
   public String getBlockSeparator(JavaSourceConversionOptions options) {
-    return HTML_BLOCK_SEPARATOR;
+    return "";
   }
 
   public void convert(JavaSource source, JavaSourceConversionOptions options, BufferedWriter writer)
@@ -167,7 +167,7 @@ public class JavaSource2HTMLConverter extends AbstractJavaSourceConverter {
     String bgcolorValue = options.getStyleTable().get(JavaSourceType.BACKGROUND).getHtmlColor();
     String borderValue = options.isShowTableBorder() ? "2" : "0";
 
-    writer.write(MessageFormat.format(HTML_BLOCK_HEADER, new Object[]{ alignValue, borderValue, bgcolorValue }));
+    //writer.write(MessageFormat.format(HTML_BLOCK_HEADER, new Object[]{ alignValue, borderValue, bgcolorValue }));
 
     if (options.isShowFileName() && source.getFileName() != null) {
       writeFileName(source, writer);
@@ -183,9 +183,9 @@ public class JavaSource2HTMLConverter extends AbstractJavaSourceConverter {
 
     //5) Footer with link to web site
     if (options.isShowJava2HtmlLink() || java2HtmlHomepageLinkEnabled) {
-      writer.write(HTML_LINK);
+      //writer.write(HTML_LINK);
     }
-    writer.write(HTML_BLOCK_FOOTER);
+    //writer.write(HTML_BLOCK_FOOTER);
   }
 
   private String getHtmlAlignValue(HorizontalAlignment alignment) {
@@ -207,15 +207,15 @@ public class JavaSource2HTMLConverter extends AbstractJavaSourceConverter {
   }
 
   private void writeFileName(JavaSource source, BufferedWriter writer) throws IOException {
-    writer.write(HTML_HEAD_START);
+    //writer.write(HTML_HEAD_START);
     writer.write(source.getFileName());
     writer.newLine();
-    writer.write(HTML_HEAD_END);
+    //writer.write(HTML_HEAD_END);
   }
 
   private void writeSourceCode(JavaSource source, JavaSourceConversionOptions options, BufferedWriter writer)
       throws IOException {
-    writer.write(HTML_COL2_START);
+    //writer.write(HTML_COL2_START);
 
     lineCifferCount = String.valueOf(source.getLineCount()).length();
 
@@ -243,7 +243,7 @@ public class JavaSource2HTMLConverter extends AbstractJavaSourceConverter {
         writer.newLine();
       }
     }
-    writer.write(HTML_COL2_END);
+    //writer.write(HTML_COL2_END);
   }
 
   private void writeLineAnchorEnd(BufferedWriter writer) throws IOException {
