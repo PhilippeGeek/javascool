@@ -13,6 +13,9 @@ import de.java2html.javasource.JavaSourceParser;
 import de.java2html.options.JavaSourceConversionOptions;
 import de.java2html.util.Ensure;
 import de.java2html.util.IoUtilities;
+import java.io.BufferedWriter;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 
 /**
  * @author Markus Gebhard
@@ -100,7 +103,7 @@ public abstract class AbstractJava2HtmlConversion implements IJava2HtmlConversio
 
     IoUtilities.ensureFoldersExist(targetFile.getParentFile());
     try {
-      writeFile(targetFile, text.getBytes());
+      writeFile(targetFile, text);
     }
     catch (IOException exception) {
       //TODO Mar 11, 2004 (Markus Gebhard):
@@ -115,11 +118,14 @@ public abstract class AbstractJava2HtmlConversion implements IJava2HtmlConversio
    * @param targetFile the file to write the contents to.
    * @param contents the bytes to be written.
    * @throws IOException if the is an error writing the file. */
-  private void writeFile(File targetFile, byte[] contents) throws IOException {
+  private void writeFile(File targetFile, String contents) throws IOException {
     FileOutputStream outputStream = null;
     try {
-      outputStream = new FileOutputStream(targetFile);
-      outputStream.write(contents);
+        Writer out = new BufferedWriter(new OutputStreamWriter(
+        new FileOutputStream(targetFile), "UTF8"));
+      //outputStream = new FileOutputStream(targetFile);
+      //outputStream.write(contents);
+        out.write(contents);
     }
     finally {
       IoUtilities.close(outputStream);
