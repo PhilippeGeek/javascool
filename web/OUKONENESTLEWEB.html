@@ -48,18 +48,17 @@
  style="font-style: italic;"><span style="font-style: italic;">   array("Crédits". "?page=contact&amp;action=credits", "inclut wiki::JavaScool:Crédits")</span><br
  style="font-style: italic;"><span style="font-style: italic;"> )</span><br
  style="font-style: italic;"><span style="font-style: italic;">);</span><br
- style="font-style: italic;"><span style="font-style: italic;">?&gt;</span><br><br>* La remarque qui tue: pourquoi les header des pages sont pas générés automatiquent à partir d'un tel tableau ?<br><br>* Null n'est parfait:  il a fallu ajouter des liens ?page=resources&amp;action=link-* donc des web/pages/resources/link-*.php vers des pages de documents qui ne peuvent pas aller sur le wiki<br><br>* Rebonds de l'ancien site, ci dessous:<br><span
+ style="font-style: italic;"><span style="font-style: italic;">?&gt;</span><br><br>* Structure de la section developers<br>** Dev* display.php  -&gt; (Faire des proglets|Comment ça marche|API)<br>** Faire des proglets -&gt; (doc-proglets.php doc-hml.php  doc-javascoolbuilder.php faq-developers.php)<br>** Comment ca marche -&gt; (spec-proglets.php spec-hml.php spec-javascoolbuilder.php)<br><br>* Null n'est parfait:  il a fallu ajouter des liens ?page=resources&amp;action=link-* donc des web/pages/resources/link-*.php vers des pages de documents qui ne peuvent pas aller sur le wiki<br><br>* Rebonds de l'ancien site, ci dessous:<br><span
  style="font-style: italic;">&lt;?php</span><br
- style="font-style: italic;"><span style="font-style: italic;">  // array("ancien-lien" =&gt; "page-php", ..)</span><br>// A rajouter: indirecy\tion pour chaque proglet, page exomath/index pages /progkeet.<br
- style="font-style: italic;"><span style="font-style: italic;">$v3_redirections = array(</span><br
- style="font-style: italic;"><span style="font-style: italic;">"api/(.*)" =&gt; "?page=api", // puisque toutes les classes ont changé</span><br
+ style="font-style: italic;"><span style="font-style: italic;">  // array("ancien-lien" =&gt; "page-php", ..)</span><br>// A rajouter: indirecy\tion pour chaque proglet, page exomath/index pages /progkeet.<br>// Traiter aussi <span
+ style="font-style: italic;">"api/(.*)" =&gt; "?page=api", // puisque toutes les classes ont changé</span><span
+ style="font-style: italic;">$v3_redirections = array(</span><br
  style="font-style: italic;"><span style="font-style: italic;">"Accueil" =&gt; "?page=home",</span><br
  style="font-style: italic;"><span style="font-style: italic;">"Menu" =&gt; "?page=home",</span><br
  style="font-style: italic;"><span style="font-style: italic;">"Manifest" =&gt; "?page=home&amp;action=manifest",</span><br
  style="font-style: italic;"><span style="font-style: italic;">"Faq" =&gt; "?page=home&amp;action=faq",</span><br
  style="font-style: italic;"><span style="font-style: italic;">"Contacts" =&gt; "?page=contact",</span><br
  style="font-style: italic;"><span style="font-style: italic;">"Contact" =&gt; "?page=contact",</span><br
- style="font-style: italic;"><span style="font-style: italic;">"contact" =&gt; "?page=contact",</span><br
  style="font-style: italic;"><span style="font-style: italic;">"Crédits" =&gt; "?page=contact&amp;action=credits",</span><br
  style="font-style: italic;"><span style="font-style: italic;">"Lancement" =&gt; "?page=run",</span><br
  style="font-style: italic;"><span style="font-style: italic;">"Telechargement" =&gt; "?page=run",</span><br
