@@ -53,7 +53,7 @@ public class FileManager {
      */
     public static String load(String location) {
         try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(Macros.getResourceURL(location, true).openStream()), 10240);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(Macros.getResourceURL(location, true).openStream(),"UTF-8"), 10240);
             StringBuilder buffer = new StringBuilder();
             char chars[] = new char[10240];
             while (true) {
