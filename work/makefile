@@ -4,6 +4,10 @@
 export JHOME=/usr/java/jdk1.6.0_22
 export PATH:=$(JHOME)/bin:$(PATH)
 
+tst :
+	ant -f test.xml
+	cat test.java
+
 ant :
 	ant prun
 
