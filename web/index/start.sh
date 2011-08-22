@@ -1,4 +1,4 @@
-#!/bin.bash
+#!/bin/bash
 #
 # Lancement en local du site web, il faut apache et php installé
 #
