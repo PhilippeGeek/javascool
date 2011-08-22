@@ -2,12 +2,14 @@ package org.javascool.gui;
 
 import java.awt.BorderLayout;
 import java.io.Console;
+import java.io.File;
 import java.util.HashMap;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import org.javascool.core.ProgletEngine;
 import org.javascool.core.ProgletEngine.Proglet;
+import org.javascool.tools.UserConfig;
 
 /** The main panel for Java's cool
  * This class wich is very static contain all that we need to run Java's cool like save and open file command.
@@ -83,11 +85,18 @@ class JVSPanel extends JPanel {
      */
     public void openFile() {
         final JFileChooser fc = new JFileChooser();
+        if (UserConfig.getInstance("javascool").getProperty("dir") != null) {
+            fc.setCurrentDirectory(new File(UserConfig.getInstance("javascool").getProperty("dir")));
+        } else if (System.getProperty("os.name").toLowerCase().contains("nix") || System.getProperty("os.name").toLowerCase().contains("nux")) {
+            fc.setCurrentDirectory(new File(System.getProperty("user.dir")));
+        } else if (System.getProperty("home.dir") != null) {
+            fc.setCurrentDirectory(new File(System.getProperty("home.dir")));
+        }
         int returnVal = fc.showOpenDialog(Desktop.getInstance().getFrame());
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             String path = fc.getSelectedFile().getAbsolutePath();
-            if (noFileEdited) // closeFile();
-            {
+            UserConfig.getInstance("javascool").setProperty("dir", fc.getSelectedFile().getParentFile().getAbsolutePath());
+            if (noFileEdited) {
                 noFileEdited = false;
             }
             String fileId = JVSFileTabs.getInstance().open(path);
