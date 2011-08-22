@@ -161,7 +161,11 @@
       <arg value="up"/>
       <arg value=".."/>
     </exec>
-    <exec executable="svn" append="true" outputproperty="svn.stdout">
+    <exec executable="svn" outputproperty="svn.stdout">
+      <arg value="status"/>
+      <arg value=".."/>
+    </exec>
+    <exec executable="svn">
       <arg value="ci"/>
       <arg value="-m"/>
       <arg value="${svn.commit.message}"/>
