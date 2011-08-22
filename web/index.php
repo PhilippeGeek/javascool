@@ -190,13 +190,13 @@ include('includes/sitemap_data.php');
                 if (frame>80 && increment>0) {
                     var lights=getElementsByClass("pluglight");
                     for (i=0; i<lights.length; i++) {
-                        lights[i].src="index/images/ledgreen.png";
+                        lights[i].src="images/ledgreen.png";
                     }
                 }
                 else if (frame<80 && increment<0) {
                     var lights=getElementsByClass("pluglight");
                     for (i=0; i<lights.length; i++) {
-                        lights[i].src="index/images/ledred.png";
+                        lights[i].src="images/ledred.png";
                     }
                 }
                 
@@ -345,7 +345,7 @@ include('includes/sitemap_data.php');
                 else
                     echo('<span class="label">' . $doc[0] . '</span>');
                 if ($i != count($parents) - 1)
-                    echo('<script type="text/javascript">document.write(\'<span class="label-arrow"></span>\');</script><noscript><img src="index/images/label-separator.png" alt=" -> " style="position:relative; top:7px; margin-left: 15px; margin-right: 15px;" /></noscript>');
+                    echo('<script type="text/javascript">document.write(\'<span class="label-arrow"></span>\');</script><noscript><img src="images/label-separator.png" alt=" -> " style="position:relative; top:7px; margin-left: 15px; margin-right: 15px;" /></noscript>');
                 $i++;
             }
             echo ('</td></tr></table><br />');
@@ -368,18 +368,18 @@ include('includes/sitemap_data.php');
                         <table style="width: 100%">
                             <tr>
                                 <td>
-                                    <img src="index/images/ledred.png" style="width: 50px; height: 50px; display: none;" class="pluglight" id="led1"/>
+                                    <img src="images/ledred.png" style="width: 50px; height: 50px; display: none;" class="pluglight" id="led1"/>
                                     <script>document.getElementById("led1").style.display="inline";</script>
                                     <noscript>
-                                    <a href="index.php?action=jsinfo"><img src="index/images/ledblue.png" style="border: 0px; width: 50px; height: 50px;" class="pluglight" id="led1"/></a>
+                                    <a href="index.php?action=jsinfo"><img src="images/ledblue.png" style="border: 0px; width: 50px; height: 50px;" class="pluglight" id="led1"/></a>
                                     </noscript>
                                 </td>
                                 <td style="width: 100%"></td>
                                 <td>
-                                    <img src="index/images/ledred.png" style="width: 50px; height: 50px; display: none;" class="pluglight" id="led2"/>
+                                    <img src="images/ledred.png" style="width: 50px; height: 50px; display: none;" class="pluglight" id="led2"/>
                                     <script>document.getElementById("led2").style.display="inline";</script>
                                     <noscript>
-                                    <a href="index.php?action=jsinfo"><img src="index/images/ledblue.png" style="border: 0px; width: 50px; height: 50px;" class="pluglight" id="led2"/></a>
+                                    <a href="index.php?action=jsinfo"><img src="images/ledblue.png" style="border: 0px; width: 50px; height: 50px;" class="pluglight" id="led2"/></a>
                                     </noscript>
                                 </td>
                             </tr>
