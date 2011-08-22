@@ -5,33 +5,21 @@
     ant svn		synchronize les fichiers avec le svn
     ant jrun		compile et demmare Java's cool sans les proglets
     ant prun		compile et demmare Java's cool avec les proglets
-    ant brun		compile et demmare Java's cool Builder
+    ant brun		lance Java's cool builder dans le sketchbook
   </echo></target>
 
-  <target name="svn" depends="clean"> 
-    <exec executable="svn">
-      <arg value="cleanup"/>
-    </exec>
-    <exec executable="svn">
-      <arg value="up"/>
-    </exec>
-    <exec executable="svn">
-      <arg value="ci"/>
-      <arg line="-m commit"/>
-    </exec>
-    <exec executable="svn">
-      <arg value="status"/>
-    </exec>
+  <target name="svn">
+    <ant dir="./work" target="svn"/>
   </target>
+
   <target name="jrun">
     <ant dir="./work" target="jrun"/>
   </target>
-  <target name="clean">
-    <ant dir="./work" target="clean"/>
-  </target>
+
   <target name="prun">
     <ant dir="./work" target="prun"/>
   </target>
+
   <target name="brun">
     <ant dir="./work" target="javascool-builder.jar"/>
     <java jar="./work/dist/javascool-builder.jar" dir="../sketchbook" fork="true"/>
