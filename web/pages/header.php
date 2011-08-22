@@ -12,5 +12,5 @@
     
 <td class="menu-right"></td></tr></table>
 
-<img src="index/images/plugleft.png" alt="" id="plugleft" />
-<img src="index/images/plugright.png" alt="" id="plugright"/>
+<img src="images/plugleft.png" alt="" id="plugleft" />
+<img src="images/plugright.png" alt="" id="plugright"/>
