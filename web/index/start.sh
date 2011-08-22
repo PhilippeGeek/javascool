@@ -32,8 +32,14 @@ text/css		.css
 EOF
 
 # Lance le serveur apache
+if [ -f /usr/sbin/httpd ]
+then HTTP=/usr/sbin/httpd 
+elif [-f /usr/sbin/apache2 ]
+then HTTP= /usr/sbin/apache2 
+else echo "Apache n'est pas installé : impossible de lancer le serveur http" ; exit -1
+fi
 
-/usr/sbin/httpd -f `pwd`/.http.root/conf/http.conf -k start
+$HTTP -f `pwd`/.http.root/conf/http.conf -k start
 
 # Liste les logs si il y a un problème
 
