@@ -61,7 +61,8 @@
   <target name="classes" depends="svn.revision">
     <mkdir dir="./build/classes"/>
     <replaceregexp file="src/org/javascool/Core.java" match="[0-9]*(.; *// *@revision)" replace="${svn.revision}\1"/>
-    <javac debug="true" debuglevel="lines,vars,source" includeantruntime="false" deprecation="on" encoding="UTF-8" classpath="${classpath}" srcdir="./src" destdir="./build/classes"/>
+    <javac debug="true" debuglevel="lines,vars,source" includeantruntime="false" deprecation="on" encoding="UTF-8" classpath="${classpath}" srcdir="./src" destdir="./build/classes"/>   
+    <replaceregexp file="src/org/javascool/Core.java" match="[0-9]*(.; *// *@revision)" replace="0\1"/>
   </target>
 
   <target name="javadoc">

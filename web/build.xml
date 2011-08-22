@@ -55,7 +55,7 @@
     </exec>
   </target>
 
-  <target name="local" depends="build">
+  <target name="local">
     <exec os="Linux" executable="./includes/start-local-web.sh"/>
     <exec os="Linux" executable="firefox">
       <arg value="http://127.0.0.1:1234"/>
