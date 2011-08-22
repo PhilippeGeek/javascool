@@ -74,16 +74,9 @@ aevec les maisl de philou . . svnant<br>
   <li><span style="font-weight: bold;">Notre chantier sur les proglets
 et Java'sCool builder:</span></li>
   <ul>
-    <li style="text-decoration: line-through;">[PV2] Creer dans
-sketchbook/* les icones des proglets et mettre
-leurs noms dans les proglet.pml</li>
-    <ul>
-      <li><span style="text-decoration: line-through;">y compris pour
-les proglets processing</span></li>
-      <li>manque celle de analogiqueNumerique.<span
- style="text-decoration: line-through;"><br>
-        </span></li>
-    </ul>
+    <li>[PV1] sketchbook/* les iconesmanque celle de
+analogiqueNumerique.<span style="text-decoration: line-through;"><br>
+      </span></li>
     <li>[PV0] Pourquoi avoir bloqu&eacute; l'extraction des jars d'une
 proglet ?</li>
     <li>[TV0] Id&eacute;alement il faudrait g&eacute;n&eacute;rer pour
@@ -145,36 +138,55 @@ ProgletsBuilder et ProgletsEngine</li>
   <li><span style="font-weight: bold;">Notre chantier sur le web:</span><br>
   </li>
   <ul>
-    <li>[GM0] Le start.sh marche paas c/c Guillaume<br>
+    <li>[GM0] Le start.sh marche pas c/c Guillaume<br>
     </li>
     <li>[PV2] Images lancement windows et max os sur
 web/pages/run/display.php</li>
-    <li>[GM1] Remettre page API dans developers</li>
-    <li>[TV1] Generer le javadoc dans dist/javadoc + lien&nbsp; sur web
-+ publish ok</li>
-    <li>[TV1] Regex internet text et internal internal text + doc<br>
+    <li>[TV2] Regex internet text et internal internal text + doc<br>
+*** Les liens externes du wiki recoivent la class="external text"<br>
+*** Les liens internes du wiki ont pas de classe mais
+wiki_get_contents() rajoute class="internal" pour distinguer des liens
+du wiki<br>
     </li>
     <li>[GM1] Reprendre la astructure des pages developers</li>
-    <li>[GM1] Faire un sitemap (ou pas) a a prtir des fciheirs thierry<br>
-    </li>
-    <li>[TV1] Virer le ngcolor blanc de la page HML</li>
-    <li>[TV1] remettre hors index images et renommer index includes</li>
-    <li>[TV1] changer logo javascool sur page pepites<br>
-    </li>
-    <li>[GM2] Remettre en place le m&eacute;canisme du site web</li>
     <ul>
-      <li>En regenerant [avec aide Thierry] les proglets a partir de la
-version amelioree du javascoolbuilder</li>
+      <li>Voir <a
+ href="http://wiki.inria.fr/sciencinfolycee/Cat%C3%A9gorie:JavaScool">http://wiki.inria.fr/sciencinfolycee/Cat&eacute;gorie:JavaScool</a>
+-&gt; JavaScoolDev<br>
+      </li>
+      <li>Structure de la section developers</li>
       <ul>
-        <li>En utilisant work/build.xml -&gt; javadoc pour la doc</li>
+        <li style="font-style: italic;">Dev* display.php&nbsp; -&gt;
+(Faire des proglets|Comment
+&ccedil;a marche|API)</li>
         <ul>
+          <li style="font-style: italic;">Faire des proglets -&gt;
+(doc-proglets.php
+doc-hml.php&nbsp; doc-javascoolbuilder.php faq-developers.php)</li>
+          <li><span style="font-style: italic;">Comment ca marche -&gt;
+(spec-proglets.php spec-hml.php
+spec-javascoolbuilder.php)</span><br>
+          </li>
         </ul>
       </ul>
-      <li>En impl&eacute;mennat les rebonds pour l'ancien site</li>
+    </ul>
+    <li>[GM2] Faire un sitemap (ou pas) a partir de
+web/includes/sitemap_data.php</li>
+    <li>[GM1] Y a une bizarrerie de pr&eacute;sentation de menus entre
+Contact,Cr&eacute;dits et Lancement,Licence</li>
+    <ul>
+      <li>tu trouves pas ?<br>
+      </li>
+    </ul>
+    <li>[GM2] Remettre en place le m&eacute;canisme proglets du site web</li>
+    <ul>
+      <li>En regenerant [avec aide Thierry] les proglets a partir du
+javascoolbuilder</li>
       <ul>
-        <li>avec un m&eacute;canisme d'alerte mail si page inconnue
-(voir web/index/mailto.php)<br>
+        <li>En utilisant web/build.xml au liey de publy.sh<br>
         </li>
+      </ul>
+      <ul>
         <ul>
         </ul>
       </ul>
@@ -182,31 +194,41 @@ version amelioree du javascoolbuilder</li>
 publis</li>
       <ul>
         <li>en generant les docs java des proglets a partir de javadoc
-+ java2html<br>
++ java2htm</li>
+      </ul>
+      <li>En ajoutant si tu es ok une d&eacute;finition des proglets
+(ou on la wiki et on met <br>
+      </li>
+      <ul>
+        <li><span style="font-style: italic;">Une &laquo;</span><tt
+ style="font-style: italic;">proglet&raquo;</tt><span
+ style="font-style: italic;"> est une petite applette qui permet de
+s'initier &agrave; la programmation de mani&egrave;re ludique. </span><br
+ style="font-style: italic;">
+          <span style="font-style: italic;">Elle se pr&eacute;sente
+sous forme d'une interface mettant en sc&egrave;ne le/les concept(s)
+cl&eacute;(s) &agrave; manipuler, sous forme visuel et/ou sonore,
+&agrave; la fois pour mieux comprendre l'objet num&eacute;rique et pour
+offrir une d&eacute;marche exp&eacute;rimentale concr&egrave;te. </span><br
+ style="font-style: italic;">
+          <span style="font-style: italic;">Il s'agit ici de concourir
+&agrave; la compr&eacute;hension des notions abstraites qui forment le
+fondement des sciences de l'information.</span><br
+ style="font-style: italic;">
+          <span style="font-style: italic;">Une &laquo;proglet&raquo;
+est donc un objet num&eacute;rique que l'on manipule en le programmant
+(en non en cliquant). </span><br style="font-style: italic;">
+          <span style="font-style: italic;">Ces </span><tt
+ style="font-style: italic;">proglets</tt><span
+ style="font-style: italic;"> sont des exemples de &laquo;</span><tt
+ style="font-style: italic;">gamelet</tt><span
+ style="font-style: italic;">&raquo; (c'est &agrave; dire de grains
+p&eacute;dagogiques interactifs pour un apprentissage ludique d'une
+notion). </span><br>
         </li>
         <ul>
         </ul>
       </ul>
-      <li>En virant tous les sh (sauf le web/index/start.sh) et en le
-remplacant par un build.xml</li>
-      <ul>
-        <li>En notant que thierry a pousse tous les sh dans
-web/index/*.sh&nbsp;</li>
-      </ul>
-    </ul>
-    <li>[TV1] Page du site web</li>
-    <ul>
-      <ul>
-        <li>Voir d&eacute;tails dans: <a
- href="./web/OUKONENESTLEWEB.html">OUKONENESTLEWEB.html</a></li>
-      </ul>
-    </ul>
-    <ul>
-      <li>Thierry aime bien <a
- href="http://javascool.gforge.inria.fr/index/images/logo_lycees.jpg">http://javascool.gforge.inria.fr/index/images/logo_lycees.jpg</a>
-et <a href="http://javascool.gforge.inria.fr/index/images/logo.gif">http://javascool.gforge.inria.fr/index/images/logo.gif</a>
-si ca
-peut decorer une page qq part</li>
     </ul>
     <ul>
       <ul>
@@ -227,70 +249,33 @@ les ressources</li>
 ressource</li>
       </ul>
     </ul>
-    <li>[TV1] cpoporriger fleche cyclevieproglet</li>
-    <li>[TV3] Page aide lancement javasccol site web<br>
-      <pre class="western"><br>* Les contenus litt&eacute;raires sont donc tous sur le wiki et sont syndiqu&eacute;s (sans cache pour les tests) avec wiki_get_contents()<br>** On peut facilement contr&ocirc;ler le lien g&eacute;n&eacute;r&eacute; pour distinguer les liens internes/externes : &agrave; discuter<br>*** Les liens externes du wiki recoivent la class="external text"<br>*** Les liens internes du wiki ont pas de classe mais wiki_get_contents() rajoute class="internal" pour distinguer des liens du wiki<br>** Voir <a
- href="http://wiki.inria.fr/sciencinfolycee/Cat%C3%A9gorie:JavaScool">http://wiki.inria.fr/sciencinfolycee/Cat&eacute;gorie:JavaScool</a><br><br>*! Y a une bizarrerie de pr&eacute;sentation de menus entre Contact,Cr&eacute;dits et Lancement,Licence<br><br>* Ajouter en ent&ecirc;te de la page proglet<br>** Une &laquo;<tt>proglet&raquo;</tt> est une petite applette qui permet de s'initier &agrave; la programmation de mani&egrave;re ludique. Elle se pr&eacute;sente sous forme d'une interface mettant <br>en sc&egrave;ne le/les concept(s) cl&eacute;(s) &agrave; manipuler, sous forme visuel et/ou sonore, &agrave; la fois pour mieux comprendre l'objet num&eacute;rique et pour offrir une d&eacute;marche exp&eacute;rimentale concr&egrave;te. <br>Il s'agit ici de concourir &agrave; la compr&eacute;hension des notions abstraites qui forment le fondement des sciences de l'information.<br>Une &laquo;proglet&raquo; est donc un objet num&eacute;rique que l'on manipule en le programmant (en non en cliquant). <br>Ces <tt>proglets</tt> sont des exemples de &laquo;<tt>gamelet</tt>&raquo; (c'est &agrave; dire de grains p&eacute;dagogiques interactifs pour un apprentissage ludique d'une notion).         <br><br>* Structure de la section developers<br>** Dev* display.php  -&gt; (Faire des proglets|Comment &ccedil;a marche|API)<br>** Faire des proglets -&gt; (doc-proglets.php doc-hml.php  doc-javascoolbuilder.php faq-developers.php)<br>** Comment ca marche -&gt; (spec-proglets.php spec-hml.php spec-javascoolbuilder.php)<br></pre>
+    <li>[TV3] Page aide lancement javascool site web<br>
     </li>
-    <ul>
-      <ul>
-        <ul>
-        </ul>
-      </ul>
-    </ul>
   </ul>
-</ul>
-<ul>
 </ul>
 <ul>
   <li><span style="font-weight: bold;">Notre chantier sur le
 fonctionnement du projet et points &agrave; discuter</span></li>
   <ul>
-    <li>[PV3] compl&eacute;ter le build.xml &agrave; la racine qui
-int&egrave;gre
-tous les build.xml</li>
-    <li>[TV1]</li>
-    <ul>
-      <li>On respecte nb build/classes dist/*.jar et dist/javadoc</li>
-      <li>On cree dynamiquement les liens symboliques idoines dans
-web/(api|documents|progelts)&nbsp;</li>
-      <li>Thierry nettoire les liens symboliques<br>
-      </li>
-      <li>Thierry a un peu foutu le merdier <span
- style="text-decoration: line-through;">dans netbeans ET
-dans les
-r&eacute;pertoires build et cie</span><br
- style="text-decoration: line-through;">
-      </li>
-      <li style="text-decoration: line-through;">il utilise
-net/sf/antcontrib/antlib.xml a &eacute;t&eacute;
-install&eacute; mais&nbsp;</li>
-      <li style="text-decoration: line-through;">il a du rajouter
-/usr/java/jdk1.6.0_22/jre/lib/javaws.jar
-&agrave; la main</li>
-      <li style="text-decoration: line-through;">il a ajout&eacute; les
-jar au svn ce qui est vilain</li>
-      <li style="text-decoration: line-through;">il sait pas bien si on
-doit utiliser ./build ou work/build et
-pour quoi</li>
-      <li><span style="text-decoration: line-through;">il est
-"repass&eacute;" en netbeans 6.9 pour des raisons
-d'install standard et se demande si c'est k</span> </li>
-    </ul>
-    <ul>
+    <li>[*]&nbsp; R.A.S.<br>
       <br>
-    </ul>
+    </li>
   </ul>
   <li><span style="font-weight: bold;">Les points d'embellissement pour
 apr&egrave;s:</span></li>
   <ul>
-    <li>d&eacute;tecter l'OS ds ?page=run pour highliter l'OS du ser.<span
+    <li>D&eacute;tecter l'OS ds ?page=run pour highliter l'OS du user.<span
  style="font-weight: bold;"></span></li>
     <li>Ajouter une page outil qui traduise du [X]HTML en HML
 &agrave; partir de work/src/org/javascool/builder/htm2hml.xslt <br>
     </li>
     <li>Rendre disponible ton travail sur gui sous forme de un JPanel
 TextFileEditor et DoubleTabbedPane ?</li>
+    <li>Thierry aime bien <a
+ href="http://javascool.gforge.inria.fr/index/images/logo_lycees.jpg">http://javascool.gforge.inria.fr/index/images/logo_lycees.jpg</a>
+et <a href="http://javascool.gforge.inria.fr/index/images/logo.gif">http://javascool.gforge.inria.fr/index/images/logo.gif</a>
+si ca
+peut decorer une page qq part</li>
   </ul>
 </ul>
 <b><br>

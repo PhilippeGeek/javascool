@@ -2,37 +2,64 @@
 <project default="usage">
 
   <target name="usage"><echo level="info">
+    ant build                   construit les repertoires ./(api|documents|proglets) du site
+    ant clean                   nettoie les liens temporaires ./(api|documents|proglets) pour le site
     ant publish			publi les fichiers du site sur http://javascool.gforge.inria.fr
     ant local			affiche une version locale du site (lance apache et ouvre firefox)
     ant lcheck			teste et liste les liens cassés sur le site
     ant xterm			ouvre une fenêtre pour aller gérer manuellement les fichiers sur le site
   </echo></target>
 
-  <target name="publish">
+  <target name="build">
+    <delete file="./documents"/>
+    <exec os="Linux" executable="ln">
+      <arg line="-s ../documents ./documents"/>
+    </exec>
+    <ant dir="../work" target="javadoc"/> 
+    <delete file="./api"/>
+    <exec os="Linux" executable="ln">
+      <arg line="-s  ../work/dist/javadoc ./api"/>
+    </exec>
+    <delete file="./proglets"/>
+    <exec os="Linux" executable="ln">
+      <arg line="-s  ../work/dist/proglets ./proglets"/>
+    </exec>
+   </target>
+
+  <target name="clean">
+    <delete file="./api"/>
+    <delete file="./documents"/>
+    <delete file="./proglets"/>
+  </target>
+
+  <target name="publish" depends="build">
     <!-- @todo: rsync des proglets buildés -->
     <!-- @todo: rsync de l'api javadoc -->
-    <exec executable="rsync">
+    <exec os="Linux" executable="rsync">
       <arg line="--rsh='ssh -C' -rl --delete-excluded --exclude .svn/ ../documents scm.gforge.inria.fr:/home/groups/javascool/htdocs/v4"/>
     </exec>
-    <exec executable="rsync" os="Linux">     
+    <exec os="Linux" executable="rsync">
+      <arg line="--rsh='ssh -C' -rL --delete-excluded --exclude .svn/ ./api scm.gforge.inria.fr:/home/groups/javascool/htdocs/v4/"/>
+    </exec>
+    <exec os="Linux" executable="rsync">     
       <arg line="--rsh='ssh -C' -rl --delete-excluded --exclude .svn/ pages images includes favicon.ico scm.gforge.inria.fr:/home/groups/javascool/htdocs/v4"/>
     </exec>
     <!-- rsync de index.php en deux temps pour patcher un problème de droit sur le site -->
-    <exec executable="rsync" os="Linux">
+    <exec os="Linux" executable="rsync">
       <arg line="--rsh='ssh -C' index.php scm.gforge.inria.fr:/home/groups/javascool/htdocs/v4/.htindex.php"/>
     </exec>
-    <exec executable="ssh" os="Linux">
+    <exec os="Linux" executable="ssh">
       <arg value="scm.gforge.inria.fr"/>
       <arg value="sh -c 'cd /home/groups/javascool/htdocs/v4 ; cat .htindex.php &gt; index.php ; rm .htindex.php'"/>
     </exec>
-    <exec executable="firefox" os="Linux">
+    <exec os="Linux" executable="firefox">
       <arg value="http://javascool.gforge.inria.fr/v4"/>
     </exec>
   </target>
 
-  <target name="local">
-    <exec executable="./includes/start-local-web.sh" os="Linux"/>
-    <exec executable="firefox" os="Linux">
+  <target name="local" depends="build">
+    <exec os="Linux" executable="./includes/start-local-web.sh"/>
+    <exec os="Linux" executable="firefox">
       <arg value="http://127.0.0.1:1234"/>
     </exec>
   </target>
@@ -46,7 +73,7 @@
   </target>
 
   <target name="xterm">
-    <exec executable="gnome-terminal" os="Linux">
+    <exec os="Linux" executable="gnome-terminal">
       <arg value="-e"/>
       <arg value="ssh scm.gforge.inria.fr 'cd /home/groups/javascool/htdocs ; bash -i'"/>
     </exec>

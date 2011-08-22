@@ -52,6 +52,7 @@
   <target name="javascool-proglets.jar" depends="javascool-builder.jar">
     <java jar="./dist/javascool-builder.jar" dir="../sketchbook" fork="true">
       <arg value="-q"/>
+      <arg value="./dist/proglets"/>
     </java>
     <move file="../sketchbook/javascool-proglets.jar" todir="./dist"/>
   </target>
@@ -114,7 +115,7 @@
         </fileset>
       </path>
       <sequential>
-        <exec executable="uncrustify" os="Linux">
+        <exec os="Linux" executable="uncrustify">
           <arg line="-q -c lib/uncrustify.cfg --replace"/>
           <arg value="@{file}"/>
         </exec>
@@ -136,6 +137,8 @@
   </target>
 
   <target name="clean">
+    <delete dir="./build/class"/> 
+    <delete dir="./dist/javadoc"/> 
     <delete dir="./nbproject/private"/> 
   </target>
 
@@ -148,7 +151,7 @@
   </target>
     
   <target name="drun" depends="javadoc">
-    <exec executable="firefox">
+    <exec os="Linux" executable="firefox">
       <arg value="./dist/javadoc/index.html"/>
     </exec>
   </target>
