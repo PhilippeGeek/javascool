@@ -63,6 +63,7 @@ public class JarManager {
    */
   public static void jarCreate(String jarFile, String mfFile, String srcDir) {
     try {
+      srcDir = new File(srcDir).getCanonicalPath();
       new File(jarFile).delete();
       Manifest manifest = new Manifest(new FileInputStream(mfFile));
       manifest.getMainAttributes().put(Attributes.Name.MANIFEST_VERSION, "1.0");
