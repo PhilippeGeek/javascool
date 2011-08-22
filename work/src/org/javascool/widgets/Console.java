@@ -72,22 +72,25 @@ public class Console extends JPanel {
   }
   /** Redirige le System.out vers cet affichage */
   private void redirectSystemStreams() {
+      final OutputStream oldOut=System.out;
     OutputStream out = new OutputStream() {
       @Override
       public void write(int b) throws IOException {
         print(String.valueOf((char) b));
+        oldOut.write(b);
       }
       @Override
       public void write(byte[] b, int off, int len) throws IOException {
         print(new String(b, off, len));
+        oldOut.write(b, off, len);
       }
       @Override
       public void write(byte[] b) throws IOException {
         write(b, 0, b.length);
+        oldOut.write(b);
       }
     };
     System.setOut(new PrintStream(out, true));
-    System.setErr(new PrintStream(out, true));
   }
   /** Efface le contenu de la console. */
   public void clear() {

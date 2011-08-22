@@ -18,6 +18,8 @@ public class Core {
   public static final String title = "Java's Cool 4";
   /** Logode l'application. */
   public static final String logo = "org/javascool/widgets/icons/logo.png";
+  /** Aide de JVS */
+  public static final String help = "org/javascool/memo.htm";
   /** Numéro de révision de l'application.*/
   public static final int revision = 438;
   // @ todo : Il est obtenu par la commande Unix <tt>svn info | grep Revision | sed 's/.*: //'</tt>

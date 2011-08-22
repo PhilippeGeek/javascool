@@ -1,5 +1,6 @@
 package org.javascool.gui;
 
+import org.javascool.Core;
 import org.javascool.core.ProgletEngine;
 import org.javascool.core.ProgletEngine.Proglet;
 import org.javascool.macros.Macros;
@@ -37,6 +38,8 @@ class JVSWidgetPanel extends JVSTabs {
      * @param name Le nom du package de la proglet
      */
     public void setProglet(String name) {
+        this.removeAll();
+        this.add("Console", "", org.javascool.widgets.Console.getInstance());
         Proglet proglet = ProgletEngine.getInstance().getProglet();
         if (proglet.getPane() != null) {
             this.progletTabId = this.add("Proglet " + name, "", proglet.getPane());
@@ -44,6 +47,9 @@ class JVSWidgetPanel extends JVSTabs {
         if (proglet.getHelp() != null) {
             this.add("Aide de la proglet", "", new HtmlDisplay().setPage(Macros.getResourceURL(proglet.getHelp())));
         }
+        HtmlDisplay memo = new HtmlDisplay();
+        memo.setPage(Core.help);
+        this.add("Mémo", "", memo);
     }
 
     /** Affiche l'onglet de la Proglet si il existe */

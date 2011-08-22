@@ -67,6 +67,7 @@ class JVSPanel extends JPanel {
     public void compileFile() {
         JVSFileTabs.getInstance().getEditor(JVSFileTabs.getCurrentCompiledFile()).removeLineSignals();
         if (JVSFileTabs.getInstance().saveCurrentFile()) {
+            JVSWidgetPanel.getInstance().showConsole();
             if (JVSFileTabs.getInstance().compileFile(JVSFileTabs.getInstance().getCurrentFileId())) {
                 JVSToolBar.getInstance().enableStartStopButton();
             } else {
@@ -324,8 +325,6 @@ class JVSPanel extends JPanel {
         JVSCenterPanel.getInstance().revalidate();
         JVSCenterPanel.getInstance().setDividerLocation(getWidth() / 2);
         JVSCenterPanel.getInstance().revalidate();
-        JVSWidgetPanel.getInstance().removeAll();
-        JVSWidgetPanel.getInstance().add("Console", "", org.javascool.widgets.Console.getInstance());
         JVSWidgetPanel.getInstance().setProglet(name);
         if (proglet.hasDemo()) {
             JVSToolBar.getInstance().enableDemoButton();
