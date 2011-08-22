@@ -10,26 +10,24 @@
     ant xterm			ouvre une fenêtre pour aller gérer manuellement les fichiers sur le site
   </echo></target>
 
-  <target name="build">
-    <delete file="./documents"/>
+  <target name="build" depends="clean">
     <exec os="Linux" executable="ln">
       <arg line="-s ../documents ./documents"/>
     </exec>
     <ant dir="../work" target="javadoc"/> 
-    <delete file="./api"/>
     <exec os="Linux" executable="ln">
       <arg line="-s  ../work/dist/javadoc ./api"/>
     </exec>
-    <delete file="./proglets"/>
+    <ant dir="../work" target="javascool-proglets.jar"/> 
     <exec os="Linux" executable="ln">
       <arg line="-s  ../work/dist/proglets ./proglets"/>
     </exec>
    </target>
 
   <target name="clean">
-    <delete file="./api"/>
-    <delete file="./documents"/>
-    <delete file="./proglets"/>
+    <exec os="Linux" executable="rm">
+      <arg line="-f ./api ./documents ./proglets"/>
+    </exec>
   </target>
 
   <target name="publish" depends="build">

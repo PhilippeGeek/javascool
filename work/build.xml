@@ -52,7 +52,7 @@
   <target name="javascool-proglets.jar" depends="javascool-builder.jar">
     <java jar="./dist/javascool-builder.jar" dir="../sketchbook" fork="true">
       <arg value="-q"/>
-      <arg value="./dist/proglets"/>
+      <arg value="../work/dist/proglets"/>
     </java>
     <move file="../sketchbook/javascool-proglets.jar" todir="./dist"/>
   </target>
