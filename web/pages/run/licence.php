@@ -17,7 +17,7 @@
 <p>Tout le code source de <?php showLink('?','Java\'s Cool','internal');?> et de ses variantes logicielles est distribué sous la licence <?php showLink('http://www.cecill.info/licences/Licence_CeCILL_V2-fr.html','CeCILL V2','external');?> (Compatible GNU GPL)
 </p>
 </td><td align="center">
-<p><?php showLink('http://www.cecill.info/licences/Licence_CeCILL_V2-fr.html','<img width="100" src="http://javascool.gforge.inria.fr/v3/index/images/logo_cecill.png" class="imagelink" alt="Logo CeCILL"/>','external');?>
+<p><?php showLink('http://www.cecill.info/licences/Licence_CeCILL_V2-fr.html','<img width="100" src="http://javascool.gforge.inria.fr/v3/images/logo_cecill.png" class="imagelink" alt="Logo CeCILL"/>','external');?>
 </p>
 </td></tr>
 <tr>
