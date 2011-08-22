@@ -332,9 +332,7 @@ class JVSPanel extends JPanel {
         } else {
             JVSToolBar.getInstance().disableDemoButton();
         }
-        if (this.haveToSave.isEmpty()) {
-            this.newFile();
-        }
+        this.newFile();
     }
 
     public void reportRuntimeBug(String ex) {
