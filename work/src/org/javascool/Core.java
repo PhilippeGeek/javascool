@@ -25,7 +25,7 @@ public class Core {
 
   /** Affiche le message de "about". */
   public static void showAboutMessage() {
-    Macros.message(title + "est un logiciel conçut en colaboration avec : <br/><center>"
+    Macros.message(title + " ("+revision+") est un logiciel conçut en colaboration avec : <br/><center>"
                    + "Philippe VIENNE<br/>"
                    + "Guillaume MATHERON<br/>"
                    + " et Inria<br/>"
