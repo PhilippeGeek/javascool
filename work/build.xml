@@ -103,10 +103,10 @@
   <taskdef resource="net/sf/antcontrib/antlib.xml"/>
 
   <target name="svn.revision">
-    <exec executable="svn" outputproperty="svn.stdout">
+    <exec executable="svn" outputproperty="svn.info.stdout">
       <arg value="info"/>
     </exec>
-    <propertyregex property="svn.revision" input="${svn.stdout}" select="\1">
+    <propertyregex property="svn.revision" input="${svn.info.stdout}" select="\1">
       <regexp pattern=".*Revision: *([0-9]*).*"/>
     </propertyregex>
   </target>
@@ -161,16 +161,13 @@
       <arg value="up"/>
       <arg value=".."/>
     </exec>
-    <exec executable="svn" outputproperty="svn.stdout">
-      <arg value="status"/>
-      <arg value=".."/>
-    </exec>
-    <exec executable="svn">
+    <exec executable="svn" outputproperty="svn.ci.stdout">
       <arg value="ci"/>
       <arg value="-m"/>
       <arg value="${svn.commit.message}"/>
       <arg value=".."/>
     </exec>
+    <echo level="info">${svn.ci.stdout}</echo>
     <input message="Quelle est la raison de ce commit ?" addproperty="svn.commit.message" defaultvalue="une raison inconnue"/> 
 <!-- ,guillaume.quest@gmail.com,philoumailabo@gmail.com -->
     <mail from="javascool@googlegroups.com" tolist="thierry.vieville@inria.fr"
@@ -180,7 +177,7 @@ Notice: une révision des fichiers javascool a été commitée.
 * pour "${svn.commit.message}"
 * à la révision "${svn.revision}"
 * détails:
-  ${svn.stdout}
+  ${svn.ci.stdout}
 Faire 'svn up', svp.
 + 
     </message></mail>
