@@ -82,7 +82,7 @@ public class ProgletsBuilder {
         String javascoolJar = Core.javascoolJar();
         JarManager.jarExtract(javascoolJar, jarDir, "org/javascool");
         JarManager.jarExtract(javascoolJar, jarDir, "org/fife");
-        // @todo Repaire unsafe command
+        // @todo REMETTRE AVEC /// JASCCOOL Repaire unsafe command
 // for(String jar : FileManager.list(System.getProperty("user.dir"), ".*\\.jar"))
 // if(!jar.matches(".*/javascool-proglets.jar"))
 // JarManager.jarExtract(jar, jarDir, "org/javascool/proglets");
@@ -130,8 +130,10 @@ public class ProgletsBuilder {
           {
             for(String doc : FileManager.list(progletDir, ".*\\.xml"))              // @todo ici il faut remplacer le xslt par un fichier du tmp !!
 
-              FileManager.save(doc.replaceFirst("\\.xml", "\\.htm"), Xml2Xml.run(FileManager.load(doc), "../work/src/org/javascool/builder/hdoc2htm.xslt"));
-            // jarDir+ "/org/javascool/builder/hdoc2htm.xslt"));
+              FileManager.save(doc.replaceFirst("\\.xml", "\\.htm"), 
+              Xml2Xml.run(FileManager.load(doc),
+              "../work/src/org/javascool/builder/hdoc2htm.xslt"));
+            // buildDir con !! // .. . jarDir+ "/org/javascool/builder/hdoc2htm.xslt"));
           }
           DialogFrame.setUpdate("Construction de " + name + " 3/4", level += (10 / proglets.length == 0 ? 1 : 10 / proglets.length));
           if(pml.getBoolean("processing")) throw new IllegalStateException("Upps le builder est pas encore implémenté pour le processing");
