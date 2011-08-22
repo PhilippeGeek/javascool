@@ -23,6 +23,9 @@ import org.javascool.Core;
  * @serial exclude
  */
 public class ProgletsBuilder {
+    
+    private static String pathReg=(File.separator.equals("\\") ? "\\\\" : File.separator);
+    
     // @factory
 
     private ProgletsBuilder() {
@@ -90,10 +93,11 @@ public class ProgletsBuilder {
                 String javascoolJar = Core.javascoolJar();
                 JarManager.jarExtract(javascoolJar, jarDir, "org/javascool");
                 JarManager.jarExtract(javascoolJar, jarDir, "org/fife");
-                // @todo REMETTRE AVEC /// JASCCOOL Repaire unsafe command
-// for(String jar : FileManager.list(System.getProperty("user.dir"), ".*\\.jar"))
-// if(!jar.matches(".*/javascool-proglets.jar"))
-// JarManager.jarExtract(jar, jarDir, "org/javascool/proglets");
+                for (String jar : FileManager.list(System.getProperty("user.dir"), ".*\\.jar")) {
+                    if (!jar.matches(".*"+pathReg+"javascool-proglets.jar")) {
+                        JarManager.jarExtract(jar, jarDir);
+                    }
+                }
             }
             DialogFrame.setUpdate("Installation 2/2", 20);
             Integer level = 20;
@@ -142,9 +146,8 @@ public class ProgletsBuilder {
                         {
                             FileManager.save(doc.replaceFirst("\\.xml", "\\.htm"),
                                     Xml2Xml.run(FileManager.load(doc),
-                                    "../work/src/org/javascool/builder/hdoc2htm.xslt"));
+                                    buildDir.getPath()+File.separator+"jar"+File.separator+"org"+File.separator+"javascool"+File.separator+"builder"+File.separator+"hdoc2htm.xslt"));
                         }
-                        // buildDir con !! // .. . jarDir+ "/org/javascool/builder/hdoc2htm.xslt"));
                     }
                     DialogFrame.setUpdate("Construction de " + name + " 3/4", level += (10 / proglets.length == 0 ? 1 : 10 / proglets.length));
                     if (pml.getBoolean("processing")) {
