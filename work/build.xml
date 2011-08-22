@@ -167,8 +167,9 @@
       <arg value="${svn.commit.message}"/>
       <arg value=".."/>
     </exec>
-    <input message="Quelle est la raison de ce commit ?" addproperty="svn.commit.message" defaultvalue="une raison inconnue"/>
-    <mail from="javascool@googlegroups.com" tolist="thierry.vieville@inria.fr,guillaume.quest@gmail.com,philoumailabo@gmail.com" 
+    <input message="Quelle est la raison de ce commit ?" addproperty="svn.commit.message" defaultvalue="une raison inconnue"/> 
+<!-- ,guillaume.quest@gmail.com,philoumailabo@gmail.com -->
+    <mail from="javascool@googlegroups.com" tolist="thierry.vieville@inria.fr"
       subject="Commit de http://javascool.googlecode.com"><message>
 Notice: une révision des fichiers javascool a été commitée.
 * par "${user.name}"
