@@ -29,8 +29,8 @@ public class Core {
                    + "Philippe VIENNE<br/>"
                    + "Guillaume MATHERON<br/>"
                    + " et Inria<br/>"
-                   + "</center><br/>"
-		   + "en collaboration avec David Pichardie, Philippe Lucaud, etc.. et le conseil de Robert Cabane<br/>"
+                   + "</center>"
+		   + "en collaboration avec David Pichardie, Philippe Lucaud, etc.. et le conseil de Robert Cabane<br/><br/>"
                    + "Il est distribué sous les conditions de la licence CeCILL et GNU GPL V3<br/>", true);
   }
   /** Mets en place le système d'alerte en cas d'erreur non gérée. */
