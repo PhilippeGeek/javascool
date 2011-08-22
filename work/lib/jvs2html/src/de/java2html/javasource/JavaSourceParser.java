@@ -14,6 +14,7 @@ import java.util.StringTokenizer;
 
 import de.java2html.options.JavaSourceConversionOptions;
 import de.java2html.util.IoUtilities;
+import java.io.FileInputStream;
 
 /**
  * Parses raw text to a {@link de.java2html.javasource.JavaSource} object. The
@@ -269,7 +270,7 @@ public class JavaSourceParser {
   //}
 
   public JavaSource parse(File file) throws IOException {
-    source = parse(new FileReader(file));
+    source = parse(new InputStreamReader(new FileInputStream(file),"UTF-8"));
     source.setFileName(file.getName());
     return source;
   }

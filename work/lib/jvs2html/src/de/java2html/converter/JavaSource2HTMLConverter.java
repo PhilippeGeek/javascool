@@ -161,31 +161,9 @@ public class JavaSource2HTMLConverter extends AbstractJavaSourceConverter {
     if (source == null) {
       throw new IllegalStateException("Trying to write out converted code without having source set.");
     }
-
-    //Header
-    String alignValue = getHtmlAlignValue(options.getHorizontalAlignment());
-    String bgcolorValue = options.getStyleTable().get(JavaSourceType.BACKGROUND).getHtmlColor();
-    String borderValue = options.isShowTableBorder() ? "2" : "0";
-
-    //writer.write(MessageFormat.format(HTML_BLOCK_HEADER, new Object[]{ alignValue, borderValue, bgcolorValue }));
-
-    if (options.isShowFileName() && source.getFileName() != null) {
-      writeFileName(source, writer);
-    }
-
-    writer.write("   <tr>");
     writer.newLine();
-
     writeSourceCode(source, options, writer);
-
-    writer.write("   </tr>");
     writer.newLine();
-
-    //5) Footer with link to web site
-    if (options.isShowJava2HtmlLink() || java2HtmlHomepageLinkEnabled) {
-      //writer.write(HTML_LINK);
-    }
-    //writer.write(HTML_BLOCK_FOOTER);
   }
 
   private String getHtmlAlignValue(HorizontalAlignment alignment) {
