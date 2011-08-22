@@ -155,8 +155,8 @@ public class ProgletsBuilder {
             }
             // Creation de la javadoc si on est dans le svn
             if (new File(".svn").exists()) { // @ todo à consolider
-              String apiDir = buildDir + File.separator + "jar" + File.separator + name;
-              javadoc(progletDir, apiDir);
+              //String apiDir = buildDir + File.separator + "jar" + File.separator + name;
+              //javadoc(progletDir, apiDir);
             }
           }
           DialogFrame.setUpdate("Construction de " + name + " 4/4", level += (10 / proglets.length));
@@ -238,12 +238,12 @@ public class ProgletsBuilder {
       {
         // Crée les sources à htmléiser
         for(String f : files)
-          JarManager.copyFiles(f, apiDir + f.replaceFirst(".*" + File.separator + "org", File.separator + "org") + ".java");
+          JarManager.copyFiles(f, apiDir + f.replaceFirst(".*" + (File.separator.equals("\\")?"\\\\":File.separator) + "org", File.separator + "org") /*+ ".java"*/);
         // Lance java2html
         de.java2html.Java2HtmlApplication.main(("-srcdir\t" + apiDir).split("\t"));
         // Nettoie les sources à htmléiser
         for(String f : files)
-          new File(apiDir + f.replaceFirst(".*" + File.separator + "org", File.separator + "org") + ".java").delete();
+          new File(apiDir + f.replaceFirst(".*" + (File.separator.equals("\\")?"\\\\":File.separator) + "org", File.separator + "org") + ".java").delete();
       }
     }
     /* Un patch pour la mise au point !
