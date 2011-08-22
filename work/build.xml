@@ -2,11 +2,11 @@
 <project name="Java's Cool v4" default="usage">
 
   <target name="usage"><echo level="info">
-    ant javacool.jar		construit dans ../build la jarre Javas'Cool Core "apprenant" sans proglet
-    ant javacool-builder.jar	construit dans ../build la jarre Javas'Cool Builder "formateur" pour genérer les progetss
-    ant javascool-proglets.jar	construit dans ../sketchbook la jarre Javas'Cool Core "apprenant" avec toutes les proglets disponibles
+    ant javacool.jar		construit dans ./dist la jarre Javas'Cool Core "apprenant" sans proglet
+    ant javacool-builder.jar	construit dans ./dist la jarre Javas'Cool Builder "formateur" pour genérer les progetss
+    ant javascool-proglets.jar	construit dans ./dist la jarre Javas'Cool Core "apprenant" avec toutes les proglets disponibles
+    ant javadoc			construit dans ./dist/javadoc la javadoc des classes (avec java2html)
     ant classes                 teste la compilation des classes
-    ant javadoc			construit dans ../build/web/api la javadoc des classes (avec java2html)
     ant beautify                reformate tous les sources avec la commande uncrustify
     ant processing              lance (si l'installation est ok) la plateforme processing
     ant clean                   nettoie les cibles non retenues dans le svn
@@ -16,11 +16,10 @@
   </echo></target>
 
   <target name="javascool.jar" depends="classes" >
-    <mkdir dir="../build"/>
-    <delete file="../build/javascool.jar"/>
+    <delete file="./dist/javascool.jar"/>
     <unzip dest="./build/classes" src="./lib/RSyntaxTextArea.jar"/>
     <unzip dest="./build/classes" src="./lib/javac.jar"/>
-    <jar destfile="../build/javascool.jar">
+    <jar destfile="./dist/javascool.jar">
       <manifest>
         <attribute name="Main-Class" value="org.javascool.Core"/>
       </manifest>
@@ -30,14 +29,12 @@
   </target>
 
   <target name="javascool-builder.jar" depends="classes" >
-    <mkdir dir="../build"/>
-    <delete file="../build/javascool-builder.jar"/>
+    <delete file="./dist/javascool-builder.jar"/>
     <unzip dest="./build/classes" src="./lib/RSyntaxTextArea.jar"/>
-    <unzip dest="./build/classes" src="./lib/javadoc.jar"/>
     <unzip dest="./build/classes" src="./lib/javac.jar"/>
     <unzip dest="./build/classes" src="./lib/jvs2html.jar"/>
     <unzip dest="./build/classes" src="./lib/saxon.jar"/>
-    <jar destfile="../build/javascool-builder.jar">
+    <jar destfile="./dist/javascool-builder.jar">
       <manifest>
         <attribute name="Main-Class" value="org.javascool.Build"/>
         <attribute name="Created-By" value="inria.fr (javascool.gforge.inria.fr) ©INRIA: CeCILL V2 + CreativeCommons BY-NC-ND V2"/>
@@ -53,9 +50,10 @@
   </target>
 
   <target name="javascool-proglets.jar" depends="javascool-builder.jar">
-    <java jar="../build/javascool-builder.jar" dir="../sketchbook" fork="true">
+    <java jar="./dist/javascool-builder.jar" dir="../sketchbook" fork="true">
       <arg value="-q"/>
-    </java>    
+    </java>
+    <move file="../sketchbook/javascool-proglets.jar" todir="./dist"/>
   </target>
   
   <property name="classpath" value="./lib/RSyntaxTextArea.jar:lib/jvs2html.jar"/>
@@ -66,12 +64,12 @@
   </target>
 
   <target name="javadoc">
-    <mkdir dir="../build/web/api"/>
+    <mkdir dir="./dist/web/api"/>
     <javadoc
       verbose="false"
       classpath="${classpath}"
       access="public" 
-      destdir="../build/web/api"
+      destdir="./dist/javadoc"
       windowtitle="Java's Cool v4"
       doctitle="Java's Cool v4"
       author="true"
@@ -89,7 +87,7 @@
         <include name="**/*.java"/>
       </fileset>
     </javadoc>
-    <copy todir="../build/web/api">        
+    <copy todir="./dist/web/api">        
       <fileset dir="./src">
         <include name="**/*.java"/>
       </fileset>
@@ -97,7 +95,7 @@
     </copy>
     <java jar="./lib/java2html.jar" fork="true">
       <arg value="-srcdir"/>
-      <arg value="../build/web/api"/>
+      <arg value="./dist/web/api"/>
     </java>
   </target>
 
@@ -138,21 +136,20 @@
   </target>
 
   <target name="clean">
-    <delete dir="../build/web/api"/>
     <delete dir="./nbproject/private"/> 
   </target>
 
   <target name="jrun" depends="javascool.jar">
-    <java jar="../build/javascool.jar" dir="../sketchbook" fork="true"/>
+    <java jar="./dist/javascool.jar" dir="../sketchbook" fork="true"/>
   </target>
   
   <target name="prun" depends="javascool-proglets.jar">
-    <java jar="../sketchbook/javascool-proglets.jar" fork="true"/>
+    <java jar="./dist/javascool-proglets.jar" fork="true"/>
   </target>
     
   <target name="drun" depends="javadoc">
     <exec executable="firefox">
-      <arg value="../build/web/api/index.html"/>
+      <arg value="./dist/javadoc/index.html"/>
     </exec>
   </target>
     
