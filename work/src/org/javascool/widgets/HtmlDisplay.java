@@ -236,6 +236,7 @@ public class HtmlDisplay extends JPanel {
     if(push)
       urls.push(url);
     pane.getDocument().putProperty(Document.StreamDescriptionProperty, null);
+    
     try {
       pane.setPage(url);
     } catch(IOException e) {
