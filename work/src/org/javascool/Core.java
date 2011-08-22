@@ -25,11 +25,12 @@ public class Core {
 
   /** Affiche le message de "about". */
   public static void showAboutMessage() {
-    Macros.message(title + " ("+revision+") est un logiciel conçut en colaboration avec : <br/><center>"
+    Macros.message(title + " ("+revision+") est un logiciel conçut par : <br/><center>"
                    + "Philippe VIENNE<br/>"
                    + "Guillaume MATHERON<br/>"
                    + " et Inria<br/>"
                    + "</center><br/>"
+		   + "en collaboration avec David Pichardie, Philippe Lucaud, etc.. et le conseil de Robert Cabane"
                    + "Il est distribué sous les conditions de la licence CeCILL et GNU GPL V3<br/>", true);
   }
   /** Mets en place le système d'alerte en cas d'erreur non gérée. */
