@@ -508,7 +508,7 @@ public class Pml {
         return "<?php $pml = array(); ?>";
       else {
 	String tag = toName(pml.getTag());
-	if (tag.length() > 0)
+	if (tag.length() == 0)
 	  tag = "pml";
         string.append("<?php $").append(tag).append(" = array(\"_tag\" => ").append(quote(pml.getTag()));
         for(String name : pml.attributes())
