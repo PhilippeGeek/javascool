@@ -31,6 +31,7 @@
   <target name="javascool-builder.jar" depends="classes,svn.revision">
     <delete file="./dist/javascool-builder.jar"/>
     <unzip dest="./build/classes" src="./lib/RSyntaxTextArea.jar"/>
+    <unzip dest="./build/classes" src="./lib/javadoc.jar"/>
     <unzip dest="./build/classes" src="./lib/javac.jar"/>
     <unzip dest="./build/classes" src="./lib/jvs2html.jar"/>
     <unzip dest="./build/classes" src="./lib/saxon.jar"/>
