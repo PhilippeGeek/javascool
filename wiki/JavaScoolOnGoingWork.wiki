@@ -1,27 +1,27 @@
 #summary Les points en cours de développement pour finaliser JavaScool v4.
   *  *Notre planning*:
-  ** Ve 26 août : JVS4 Beta 1
-  ** Me 31 août : JVS4 Beta 2
-  ** Me 7 Sept : JVS4 RC1
-  ** Me 21 Sept : JVS4 RC2
+  * Ve 26 août : JVS4 Beta 1
+  * Me 31 août : JVS4 Beta 2
+  * Me 7 Sept : JVS4 RC1
+  * Me 21 Sept : JVS4 RC2
 
   * *Chantier Javas'Cool core*:
-  ** (PV1) [http://code.google.com/p/javascool/issues/detail?id=51 Remettre en place l'option de formatage du code]
-  ** (PV1) [http://code.google.com/p/javascool/issues/detail?id=52 Relier le org.javascool.gui.Desktop aux classes JVS*.java]
-  ** (PV2) [http://code.google.com/p/javascool/issues/detail?id=50 Creer une fonction d'insertion automatique d'élements dans l'éditeur]
-  ** (PV3) [http://code.google.com/p/javascool/issues/detail?id=53 Implementer le fait qu'on ajoute @proglet:nom-de-la-proglet]
-  ** (TV1) Ajouter la doc des mémos à partir de du texte de DL
+  * (PV1) [http://code.google.com/p/javascool/issues/detail?id=51 Remettre en place l'option de formatage du code]
+  * (PV1) [http://code.google.com/p/javascool/issues/detail?id=52 Relier le org.javascool.gui.Desktop aux classes JVS*.java]
+  * (PV2) [http://code.google.com/p/javascool/issues/detail?id=50 Creer une fonction d'insertion automatique d'élements dans l'éditeur]
+  * (PV3) [http://code.google.com/p/javascool/issues/detail?id=53 Implementer le fait qu'on ajoute @proglet:nom-de-la-proglet]
+  * (TV1) Ajouter la doc des mémos à partir de du texte de DL
 
-  * '''Chantier Javas'Cool builder''':
-  ** (GM1) Mettre en conformité la proglet jeux2D
-  *** sans ProgletPanel mais avec Functions et Panel
-  *** en recupérant les regex de Jvs2Java dans un Translator
-  ** (TV1) Documentation des proglets: 
-  *** renommer les npms de proglets sans prefixe; 
-  *** mettre à jour les docs XML : liens, nom des routines, texte;
-  *** Rechercher les Jvs et XML v3 oubliés en v4
-  *** Publier sur le site en ressource les pages activites et exodematsh index en page ressource
-  ** (TV3)Intégration des proglets processing dans ProgletsBuilder et ProgletsEngine
+  * *Chantier Javas'Cool builder*:
+  * (GM1) Mettre en conformité la proglet jeux2D
+  # sans ProgletPanel mais avec Functions et Panel
+  # en recupérant les regex de Jvs2Java dans un Translator
+  * (TV1) Documentation des proglets: 
+  # renommer les npms de proglets sans prefixe; 
+  # mettre à jour les docs XML : liens, nom des routines, texte;
+  # Rechercher les Jvs et XML v3 oubliés en v4
+  # Publier sur le site en ressource les pages activites et exodematsh index en page ressource
+  * (TV3)Intégration des proglets processing dans ProgletsBuilder et ProgletsEngine
 
   * *Chantier web*
   ** (PV1) Images lancement windows et max os sur web/pages/run/display.php
