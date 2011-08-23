@@ -87,7 +87,7 @@ public class ProgletsBuilder {
       {
 	// Expansion des jars du sketchbook
 	for (String jar : FileManager.list(System.getProperty("user.dir"), ".*\\.jar"))
-	  if (!jar.matches(".*"+fileRegexSeparator+"javascool-proglets.jar"))
+	  if (!jar.matches(".*"+fileRegexSeparator+"javascool-(builder|proglets).jar"))
 	    JarManager.jarExtract(jar, jarDir);
 	// Expansion des jars des proglets
 	for (String proglet : proglets)
