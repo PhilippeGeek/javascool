@@ -60,16 +60,16 @@ public class JarManager {
    * @param jarFile Jar à construire. Elle est détruite avant d'être crée.
    * @param mfFile Fichier de manifeste (obligatoire).
    * @param srcDir Dossier source avec les fichiers à mettre en jarre.
-   * @param jarEntry Racine des sous-dossiers à extraire. Si null extrait tout les fichiers.
+   * @param jarEntries Racine des sous-dossiers à extraire. Si null extrait tout les fichiers.
    */
-  public static void jarCreate(String jarFile, String mfFile, String srcDir, String jarEntry) {
+  public static void jarCreate(String jarFile, String mfFile, String srcDir, String[] jarEntries) {
     try {
       srcDir = new File(srcDir).getCanonicalPath();
       new File(jarFile).delete();
       Manifest manifest = new Manifest(new FileInputStream(mfFile));
       manifest.getMainAttributes().put(Attributes.Name.MANIFEST_VERSION, "1.0");
       JarOutputStream target = new JarOutputStream(new FileOutputStream(jarFile), manifest);
-      copyFileToJar(new File(srcDir), target, new File(srcDir), jarEntry);
+      copyFileToJar(new File(srcDir), target, new File(srcDir), jarEntries);
       target.close();
     } catch(Exception ex) { throw new RuntimeException(ex);
     }
@@ -95,9 +95,9 @@ public class JarManager {
       copyStream(new FileInputStream(srcDir), new FileOutputStream(dstDir));
   }
   // Ajoute un stream a un jar
-  private static void copyFileToJar(File source, JarOutputStream target, File root, String jarEntry) throws IOException {
+  private static void copyFileToJar(File source, JarOutputStream target, File root, String[] jarEntries) throws IOException {
     /** @todo ptach pour extraire uniquement un sous-jar 
-    if (jarEntry != null && !source.toString().startsWith(root.toString() + File.separator + jarEnrty))
+    if (jarEntries != null && !source.toString().startsWith(root.toString() + File.separator + jarEnrty))
       return;
     System.err.println("s="+source.toString().substring(root.toString().length()));
     */
@@ -114,7 +114,7 @@ public class JarManager {
           target.closeEntry();
         }
         for(File nestedFile : source.listFiles())
-          copyFileToJar(nestedFile, target, root, jarEntry);
+          copyFileToJar(nestedFile, target, root, jarEntries);
       } else {
 	JarEntry entry = new JarEntry(source.getPath().replace(root.getAbsolutePath() + File.separator, "").replace(File.separator, "/"));
 	entry.setTime(source.lastModified());
