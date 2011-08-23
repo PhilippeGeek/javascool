@@ -36,7 +36,7 @@ public class JarManager {
    */
   public static void jarExtract(String jarFile, String destDir, String jarEntry) {
     try {
-      System.out.println("Extract files from " + jarFile + " to " + destDir + ((!jarEntry.isEmpty()) ? " which start with " + jarEntry : ""));
+      //System.out.println("Extract files from " + jarFile + " to " + destDir + ((!jarEntry.isEmpty()) ? " which start with " + jarEntry : ""));
       JarFile jf = new JarFile(jarFile);
       Enumeration<JarEntry> entries = jf.entries();
       while(entries.hasMoreElements()) {
