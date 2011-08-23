@@ -18,7 +18,7 @@
     <exec os="Linux" executable="ln">
       <arg line="-s  ../work/dist/javadoc ./api"/>
     </exec>
-    <ant dir="../work" target="javascool-proglets.jar"/> 
+    <ant dir="../work" target="webproglets"/> 
     <exec os="Linux" executable="ln">
       <arg line="-s  ../work/dist/proglets/jar/org/javascool/proglets ./proglets"/>
     </exec>

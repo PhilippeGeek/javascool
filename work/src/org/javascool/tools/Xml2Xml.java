@@ -50,7 +50,7 @@ public class Xml2Xml {
           xslSource = new StreamSource(xsl);
           xslSource.setSystemId(xsl);
         }
-        tranformers.put(xsl, tfactory.newTemplates(xslSource).newTransformer());
+        tranformers.put(xsl, tfactory.newTransformer(xslSource));
       }
     } catch(TransformerConfigurationException e) { throw new RuntimeException(e + " when compiling: " + xsl);
     }

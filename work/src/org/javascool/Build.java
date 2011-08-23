@@ -23,7 +23,7 @@ public class Build {
             System.out.println("Usage : java -jar javascool-builder.jar [-q [targetDir]]");
             System.out.println("Options : ");
             System.out.println("\t-q\tPermet de lancer l'application en console sur toutes les proglets disponibles et sans interface graphique.");
-            System.out.println("\t-qj\tPermet de lancer l'application avec javascool en console sur toutes les proglets disponibles et sans interface graphique.");
+            System.out.println("\t-w\tPermet de lancer l'application en console et génère les fichiers jaavadoc et jars des proglets.");
             System.out.println("\ttargetDir\tLe répertoire cible dans lequel la construction se fait (ou un répertoire temporaire par défaut).");
             System.exit(0);
         }
@@ -36,7 +36,7 @@ public class Build {
             } else {
                 System.exit(ProgletsBuilder.build() ? 0 : -1);
             }
-        } else if (usage.length > 0 && usage[0].equals("-qj")) {
+        } else if (usage.length > 0 && usage[0].equals("-w")) {
 	  if (usage.length > 1) {
 	    System.exit(ProgletsBuilder.build(usage[1], true) ? 0 : -1);
 	  } else {

@@ -92,8 +92,10 @@ public class JarManager {
           String d = dstDir + File.separator + new File(s).getName();
           copyFiles(s, d);
         }
-    } else
+    } else {
+      new File(dstDir).getParentFile().mkdirs();
       copyStream(new FileInputStream(srcDir), new FileOutputStream(dstDir));
+    }
   }
   // Ajoute un stream a un jar
   private static void copyFileToJar(File source, JarOutputStream target, File root, String[] jarEntries) throws IOException {
