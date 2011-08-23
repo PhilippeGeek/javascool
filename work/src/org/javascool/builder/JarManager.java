@@ -88,7 +88,8 @@ public class JarManager {
       copyStream(new FileInputStream(srcDir), new FileOutputStream(dstDir));
   }
   // Ajoute un stream a un jar
-  public static void copyFileToJar(File source, JarOutputStream target, File root) throws IOException {
+  private static void copyFileToJar(File source, JarOutputStream target, File root) throws IOException {
+    System.err.println("s="+source.toString().substring(root.toString().length()));
     BufferedInputStream in = null;
     try {
       if(source.isDirectory()) {
@@ -103,12 +104,12 @@ public class JarManager {
         }
         for(File nestedFile : source.listFiles())
           copyFileToJar(nestedFile, target, root);
-        return;
+      } else {
+	JarEntry entry = new JarEntry(source.getPath().replace(root.getAbsolutePath() + File.separator, "").replace(File.separator, "/"));
+	entry.setTime(source.lastModified());
+	target.putNextEntry(entry);
+	copyStream(new BufferedInputStream(new FileInputStream(source)), target);
       }
-      JarEntry entry = new JarEntry(source.getPath().replace(root.getAbsolutePath() + File.separator, "").replace(File.separator, "/"));
-      entry.setTime(source.lastModified());
-      target.putNextEntry(entry);
-      copyStream(new BufferedInputStream(new FileInputStream(source)), target);
     } catch(Throwable e) {
       e.printStackTrace(System.out); throw new IllegalStateException(e);
     }
