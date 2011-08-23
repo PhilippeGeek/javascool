@@ -1,19 +1,23 @@
 #summary Les points en cours de développement pour finaliser JavaScool v4.
-  *  *Notre planning*:
+
+=Notre planning=
 
   * Ve 26 août : JVS4 Beta 1
   * Me 31 août : JVS4 Beta 2
   * Me 7 Sept : JVS4 RC1
   * Me 21 Sept : JVS4 RC2
 
-  * *Chantier en cours: Javas'Cool core*:
+= Chantiers en cours =
+
+==Chantier en cours: Javas'Cool core==
+
   # (PV1) [http://code.google.com/p/javascool/issues/detail?id=51 Remettre en place l'option de formatage du code]
   # (PV1) [http://code.google.com/p/javascool/issues/detail?id=52 Relier le org.javascool.gui.Desktop aux classes JVS*.java]
   # (PV2) [http://code.google.com/p/javascool/issues/detail?id=50 Creer une fonction d'insertion automatique d'élements dans l'éditeur]
   # (PV3) [http://code.google.com/p/javascool/issues/detail?id=53 Implementer le fait qu'on ajoute @proglet:nom-de-la-proglet]
   # (TV1) Ajouter la doc des mémos à partir de du texte de DL
 
-  * *Chantier en cours: Javas'Cool builder*:
+== Chantier en cours: Javas'Cool builder ==
 
   # (GM1) Mettre en conformité la proglet jeux2D
   * sans ProgletPanel mais avec Functions et Panel
@@ -27,7 +31,7 @@
 
   # (TV3)Intégration des proglets processing dans ProgletsBuilder et ProgletsEngine
 
-  * *Chantier en cours: web*
+== Chantier en cours: web ==
 
   # (PV1) Images lancement windows et max os sur web/pages/run/display.php
 
@@ -50,10 +54,10 @@ Comment ca marche -> (spec-proglets.php spec-hml.php spec-javascoolbuilder.php)
 
   # (TV2) Finaliser page aide lancement javascool site web qd le core est stable
 
-  * *Chanter en cours: plateforme de développement*
+== Chanter en cours: plateforme de développement ==
   * R.A.S.
 
-  * *Développements ultérieurs proposés* 
+= Développements ultérieurs proposés=
 
   # (web) Détecter l'OS ds ?page=run pour highliter l'OS du user.
   # (web/builder) Ajouter une page outil qui traduise du [X]HTML en HML à partir de work/src/org/javascool/builder/htm2hml.xslt
