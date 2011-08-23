@@ -7,6 +7,8 @@
   * Me 7 Sept : JVS4 RC1
   * Me 21 Sept : JVS4 RC2
 
+*[http://code.google.com/p/javascool/issues/list Issues en cours]*
+
 = Chantiers en cours =
 
 ==Chantier en cours: Javas'Cool core==
