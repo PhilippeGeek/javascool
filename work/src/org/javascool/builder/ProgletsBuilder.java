@@ -75,6 +75,7 @@ public class ProgletsBuilder {
 	  buildDir = FileManager.createTempDir("build");
 	} else {
 	  buildDir = new File(targetDir);
+	  JarManager.rmDir(buildDir);
 	  buildDir.mkdirs();
 	}
 	jarDir = buildDir + File.separator + "jar";
