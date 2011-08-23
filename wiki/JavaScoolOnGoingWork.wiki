@@ -1,8 +1,7 @@
 #summary Les points en cours de développement pour finaliser JavaScool v4.
 <wiki:toc max_depth="2" />
 
-=Notre planning=
-
+*Notre planning*
   * Ve 26 août : JVS4 Beta 1
   * Me 31 août : JVS4 Beta 2
   * Me 7 Sept : JVS4 RC1
