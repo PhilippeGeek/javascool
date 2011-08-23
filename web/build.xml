@@ -20,7 +20,7 @@
     </exec>
     <ant dir="../work" target="javascool-proglets.jar"/> 
     <exec os="Linux" executable="ln">
-      <arg line="-s  ../work/dist/proglets ./proglets"/>
+      <arg line="-s  ../work/dist/proglets/jar/org/javascool/proglets ./proglets"/>
     </exec>
    </target>
 
