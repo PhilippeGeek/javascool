@@ -167,11 +167,8 @@ public class ProgletsBuilder {
 	  javac(javaFiles);
       }
       DialogFrame.setUpdate("Finalisation 1/2", 90);
-      // Elimination de la proglet sampleCode 
-      {
-	JarManager.rmDir(new File(progletsDir + File.separator + "sampleCode"));
-      }
-      // Création de l'archive et du manifest
+      System.out.println("Compilation des jarres .. ");
+      // Création des jarres avec le manifest
       {
 	String version = "Java'sCool v4 on \"" + new Date() + "\" Revision #" + Core.revision;
 	Pml manifest = new Pml().set("Main-Class", "org.javascool.Core").
@@ -181,7 +178,27 @@ public class ProgletsBuilder {
 	  set("Implementation-Vendor", "fuscia-accueil@inria.fr, ou=javascool.gforge.inria.fr, o=inria.fr, c=fr").
 	  set("Implementation-Version", version).
 	  save(buildDir + "/manifest.jmf");
+	// Création des archives pour chaque proglet
+	for (String proglet : proglets) {
+	  String name = new File(proglet).getName();
+	  String javascoolPrefix = "org" + File.separator + "javascool" + File.separator;
+	  String jarEntries[] = { 
+	    javascoolPrefix + "core", javascoolPrefix + "gui", javascoolPrefix + "macros", javascoolPrefix + "tools", javascoolPrefix + "widgets", 
+	    javascoolPrefix + "proglets" + File.separator + name};
+	  String tmpJar = buildDir + File.separator + "javascool-proglet-"+name+".jar";
+	  JarManager.jarCreate(tmpJar, buildDir + "/manifest.jmf", jarDir, jarEntries);
+	}   
+	// Elimination de la proglet sampleCode 
+	JarManager.rmDir(new File(progletsDir + File.separator + "sampleCode"));
+	// Création de l'archive principale
 	JarManager.jarCreate(targetJar, buildDir + "/manifest.jmf", jarDir);
+	// Déplacement des "javascool-proglet-"+name+".jar" dans les répetoires des proglets
+	for (String proglet : proglets) {
+	  String name = new File(proglet).getName();
+	  String tmpJar = buildDir + File.separator + "javascool-proglet-"+name+".jar", 
+	    progletJar = progletsDir + File.separator + name + File.separator + "javascool-proglet-"+name+".jar";;
+	  new File(tmpJar).renameTo(new File(progletJar));
+	}
 	DialogFrame.setUpdate("Finalisation 2/2", 100);
       }
       if (targetDir == null) {

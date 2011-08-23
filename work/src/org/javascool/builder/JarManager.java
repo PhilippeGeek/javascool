@@ -64,8 +64,9 @@ public class JarManager {
    */
   public static void jarCreate(String jarFile, String mfFile, String srcDir, String[] jarEntries) {
     try {
-      srcDir = new File(srcDir).getCanonicalPath();
+      new File(jarFile).getParentFile().mkdirs();
       new File(jarFile).delete();
+      srcDir = new File(srcDir).getCanonicalPath();
       Manifest manifest = new Manifest(new FileInputStream(mfFile));
       manifest.getMainAttributes().put(Attributes.Name.MANIFEST_VERSION, "1.0");
       JarOutputStream target = new JarOutputStream(new FileOutputStream(jarFile), manifest);
@@ -75,7 +76,7 @@ public class JarManager {
     }
   }  
   /**
-   * @see #jarCreate(String, String, String, String)
+   * @see #jarCreate(String, String, String, String[])
    */
   public static void jarCreate(String jarFile, String mfFile, String srcDir) {
     jarCreate(jarFile, mfFile, srcDir, null);
@@ -96,11 +97,16 @@ public class JarManager {
   }
   // Ajoute un stream a un jar
   private static void copyFileToJar(File source, JarOutputStream target, File root, String[] jarEntries) throws IOException {
-    /** @todo ptach pour extraire uniquement un sous-jar 
-    if (jarEntries != null && !source.toString().startsWith(root.toString() + File.separator + jarEnrty))
-      return;
-    System.err.println("s="+source.toString().substring(root.toString().length()));
-    */
+    // Teste si la source est dans les fichier à extraire
+    if (jarEntries != null) {
+      boolean skip = true;
+      for(String jarEntry : jarEntries) {
+	String entry = root.toString() + File.separator + jarEntry;
+	skip &= !(entry.startsWith(source.toString()) | source.toString().startsWith(entry));
+      }
+      if (skip)
+	return;
+    }
     BufferedInputStream in = null;
     try {
       if(source.isDirectory()) {
