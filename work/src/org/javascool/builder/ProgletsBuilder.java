@@ -155,11 +155,8 @@ public class ProgletsBuilder {
 			   + "  <applet width='560' height='720' code='org.javascool.widgets.PanelApplet' archive='../javasccool-progets><param name='pane' value='org.javascool.proglets." + name + "'/><pre>Impossible de lancer " + name + ": Java n'est pas installé ou mal configuré</pre></applet>\n"
 			   + "</body></html>\n");
 	  // Creation de la javadoc si option ok
-	  if (javadoc) {
-	    File apiDir = new File(".." + File.separator + "work" + File.separator + "dist" + File.separator + "proglets-doc" + File.separator + name);
-	    apiDir.mkdirs();
-	    javadoc(progletDir, apiDir.getAbsolutePath());
-	  }
+	  if (javadoc) 
+	    javadoc(progletDir, progletDir + File.separator + "api");
 	  DialogFrame.setUpdate("Construction de " + name + " 4/4", level += (10 / proglets.length));
 	}
       }
@@ -259,6 +256,8 @@ public class ProgletsBuilder {
 
   /** Construction de javadoc avec sources en java2html. */
   private static void javadoc(String srcDir, String apiDir) throws IOException {
+    apiDir = new File(apiDir).getCanonicalPath();
+    new File(apiDir).mkdirs();
     String files[] = FileManager.list(srcDir, ".*\\.java$");
     if (files.length > 0) {
       {
