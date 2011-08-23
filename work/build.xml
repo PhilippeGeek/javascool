@@ -107,9 +107,10 @@
     <exec executable="svn" outputproperty="svn.info.stdout">
       <arg value="info"/>
     </exec>
-    <propertyregex property="svn.revision" input="${svn.info.stdout}" select="\1">
+    <!--propertyregex property="svn.revision" input="${svn.info.stdout}" select="\1">
       <regexp pattern=".*R.vision[^:]*: *([0-9]*).*"/>
-    </propertyregex>
+    </propertyregex-->
+    <property name=svn.revision" value="0"/>
   </target>
 
   <target name="beautify">
