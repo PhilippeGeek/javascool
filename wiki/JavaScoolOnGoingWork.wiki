@@ -1,0 +1,49 @@
+#summary Les points en cours de développement pour finaliser JavaScool v4.
+ *  '''Notre planning''':
+ ** Ve 26 août : JVS4 Beta 1
+ ** Me 31 août : JVS4 Beta 2
+ ** Me 7 Sept : JVS4 RC1
+ ** Me 21 Sept : JVS4 RC2
+
+ * '''Chantier Javas'Cool core''':
+ ** (PV1) [http://code.google.com/p/javascool/issues/detail?id=51 Remettre en place l'option de formatage du code]
+ ** (PV1) [http://code.google.com/p/javascool/issues/detail?id=52 Relier le org.javascool.gui.Desktop aux classes JVS*.java]
+ ** (PV2) [http://code.google.com/p/javascool/issues/detail?id=50 Creer une fonction d'insertion automatique d'élements dans l'éditeur]
+ ** (PV3) [http://code.google.com/p/javascool/issues/detail?id=53 Implementer le fait qu'on ajoute @proglet:nom-de-la-proglet]
+ ** (TV1) Ajouter la doc des mémos à partir de du texte de DL
+
+ * '''Chantier Javas'Cool builder''':
+ ** (GM1) Mettre en conformité la proglet jeux2D
+ *** sans ProgletPanel mais avec Functions et Panel
+ *** en recupérant les regex de Jvs2Java dans un Translator
+ ** (TV1) Documentation des proglets: 
+ *** renommer les npms de proglets sans prefixe; 
+ *** mettre à jour les docs XML : liens, nom des routines, texte;
+ *** Rechercher les Jvs et XML v3 oubliés en v4
+ *** Publier sur le site en ressource les pages activites et exodematsh index en page ressource
+ ** (TV3)Intégration des proglets processing dans ProgletsBuilder et ProgletsEngine
+
+ * '''Chantier web'''    *
+ ** (PV1) Images lancement windows et max os sur web/pages/run/display.php
+ ** (GM1) Reprendre la astructure des pages developers
+ *** Voir http://wiki.inria.fr/sciencinfolycee/Catégorie:JavaScool -> JavaScoolDev
+ *** Structure de la section developers:
+ **** Dev* display.php  -> (Faire des proglets|Comment ça marche|API)
+ **** Faire des proglets -> (doc-proglets.php doc-hml.php  doc-javascoolbuilder.php faq-developers.php)
+ **** Comment ca marche -> (spec-proglets.php spec-hml.php spec-javascoolbuilder.php)
+ ** (GM2) Mettre en place le mécanisme de redirection à partir de v3_redirections.
+ ** (GM2) [http://code.google.com/p/javascool/issues/detail?id=48 Créer des thèmes bien pour les h1 etc.]
+ ** (GM3) Faire un sitemap (ou pas) a partir de web/includes/sitemap_data.php
+ ** (TV2) Finir le travail d'édition extermne sur le wiki : Catégorie:TPE Catégorie:JavaScoolRes
+ *** Pages TPE: revoir la présentation et renre visibles les ressources
+ *** Pages Ressources . . tout revoir !!
+ **** Utiliser http://javascool.gforge.inria.fr/index/images/logo_lycees.jpg dans les ressources
+ ** (TV2) Finaliser page aide lancement javascool site web qd le core est stable
+
+ * '''Chanter plateforme de développement'''
+ ** R.A.S.
+
+ * '''Développements proposés''' 
+ ** Détecter l'OS ds ?page=run pour highliter l'OS du user.
+ ** Ajouter une page outil qui traduise du [X]HTML en HML à partir de work/src/org/javascool/builder/htm2hml.xslt
+ ** Rendre disponible TextFileEditor & TextFilesEditor (avec boutons et interface) et DoubleTabbedPane sortis de org/javascool/gui
