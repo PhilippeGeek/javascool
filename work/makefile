@@ -5,7 +5,8 @@ export JHOME=/usr/java/jdk1.6.0_22
 export PATH:=$(JHOME)/bin:$(PATH)
 
 ant :
-	ant prun
+	ant jrun
+#	ant prun
 #	ant javascool-proglets.jar ; java -jar dist/proglets/javascool-proglet-sampleCode.jar 
 
 svn :

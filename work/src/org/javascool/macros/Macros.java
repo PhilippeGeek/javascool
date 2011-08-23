@@ -9,6 +9,8 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.net.URISyntaxException;
 
 import java.util.Calendar;
@@ -133,14 +135,13 @@ public class Macros {
 
     public NonModalDialog() {
       super(MainFrame.getFrame());
-
-      /*addWindowListener(new WindowAdapter() {
-       *  @Override
-       *  public void windowClosing(WindowEvent e) {
-       *  pending = false;
-       *  }
-       *  }
-       *  );*/
+      addWindowListener(new WindowAdapter() {
+       @Override
+       public void windowClosing(WindowEvent e) {
+       pending = false;
+       }
+       }
+			);
     }
     /** Ouvre le dialogue et entre en attente d'un retour de l'utilisateur. */
     public void open() {
@@ -148,10 +149,9 @@ public class Macros {
       pack();
       setLocation((MainFrame.getFrame().getWidth() - getWidth()) / 2, (MainFrame.getFrame().getHeight() - getHeight()) / 2);
       setVisible(true);
-
-      /*pending = true;
-       *  while(pending)
-       *  Macros.sleep(100);*/
+      pending = true;
+      while(pending)
+	Macros.sleep(100);
     }
     /** Routine à appeler quand le dialogue à été achevé pour continuer le programme. */
     public void close() {
