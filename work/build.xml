@@ -110,7 +110,7 @@
     <!--propertyregex property="svn.revision" input="${svn.info.stdout}" select="\1">
       <regexp pattern=".*R.vision[^:]*: *([0-9]*).*"/>
     </propertyregex-->
-    <property name=svn.revision" value="0"/>
+    <property name="svn.revision" value="0"/>
   </target>
 
   <target name="beautify">
