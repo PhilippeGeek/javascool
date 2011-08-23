@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import org.javascool.Core;
 
-/** Cette factory contient les mécanismes de construction d'un application Java's Cool avec des proglets.
+/** Cette factory contient les mécanismes de construction d'une application Java's Cool avec des proglets.
  *
  * @see <a href="ProgletsBuilder.java.html">code source</a>
  * @serial exclude
@@ -154,7 +154,7 @@ public class ProgletsBuilder {
 			   + "  <center><h4>" + name + " (<a target='_blank' href='help.htm'>documentation utilisateur</a> <a target='_blank' href='api/index.html'>documentation Java</a>)</h4></center>\n"
 			   + "  <applet width='560' height='720' code='org.javascool.widgets.PanelApplet' archive='../javasccool-progets><param name='pane' value='org.javascool.proglets." + name + "'/><pre>Impossible de lancer " + name + ": Java n'est pas installé ou mal configuré</pre></applet>\n"
 			   + "</body></html>\n");
-	  // Creation de la javadoc si on est dans le svn
+	  // Creation de la javadoc si option ok
 	  if (javadoc) {
 	    File apiDir = new File(".." + File.separator + "work" + File.separator + "dist" + File.separator + "proglets-doc" + File.separator + name);
 	    apiDir.mkdirs();
