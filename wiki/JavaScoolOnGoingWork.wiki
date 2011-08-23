@@ -1,4 +1,5 @@
 #summary Les points en cours de développement pour finaliser JavaScool v4.
+<wiki:toc max_depth="2" />
 
 =Notre planning=
 
