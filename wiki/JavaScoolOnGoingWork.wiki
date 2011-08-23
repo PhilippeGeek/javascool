@@ -34,7 +34,7 @@
   * (GM1) Reprendre la structure des pages developers
   # Voir http://wiki.inria.fr/sciencinfolycee/Catégorie:JavaScool -> JavaScoolDev
   # Structure de la section developers:
-  * Dev* display.php  -> (Faire des proglets|Comment ça marche|API)
+  * Dev display.php  -> (Faire des proglets|Comment ça marche|API)
   * Faire des proglets -> (doc-proglets.php doc-hml.php  doc-javascoolbuilder.php faq-developers.php)
   * Comment ca marche -> (spec-proglets.php spec-hml.php spec-javascoolbuilder.php)
  
