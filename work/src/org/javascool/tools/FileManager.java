@@ -178,11 +178,12 @@ public class FileManager {
     /** Renvoie les fichiers d'un répertoire ou d'un jar.
      * @param folder Le nom du répertoire ou du fichier jar (fichier d'extension ".jar").
      * @param pattern Une regex qui définit le type de fichier (ex : <tt>".*\.java"</tt>). Par défaut tous les fichiers.
+     * @param depth Dans le cas d'un répertoire, profondeur: 0 (défaut) pour lire dans le répertoire, 1: répertoire et sous-répertoire, etc..
      * @return Une énumération des fichiers listés: le path canonique est renvoyé. Si le répertoire ou le jar ne peut être lu, renvoie une liste vide dans erreur.
      *
      * @throws IllegalArgumentException Si l'URL ne peut pas être listée.
      */
-    public static String[] list(String folder, String pattern) {
+  public static String[] list(String folder, String pattern, int depth) {
         if (folder.matches("(ftp|http|https|jar):.*")) {
             throw new IllegalArgumentException("Impossible de lister le contenu d'un URL de ce type: " + folder);
         }
@@ -200,13 +201,19 @@ public class FileManager {
                 }
             } catch (Exception e) {
             }
-        } else {
+        } else if (new File(folder).isDirectory() && depth >= 0) {
             try {
                 for (File file : new File(folder).listFiles()) {
                     if ((pattern == null) || file.getName().matches(pattern)) {
                         files.add(file.getCanonicalPath());
                     }
                 }
+		if (depth > 0) {
+		  for (File file : new File(folder).listFiles()) 
+		    if (file.isDirectory()) 
+		      for(String path : list(file.getCanonicalPath(), pattern, depth - 1))
+			files.add(path);
+		}
             } catch (Exception e) {
             }
         }
@@ -214,10 +221,18 @@ public class FileManager {
     }
 
     /**
-     * @see #list(String, String)
+     * @see #list(String, String, int)
+     */
+    public static String[] list(String folder, String pattern) {
+    return list(folder, pattern, 0);
+    }
+
+
+    /**
+     * @see #list(String, String, int)
      */
     public static String[] list(String folder) {
-        return list(folder, null);
+      return list(folder, null, 0);
     }
 
     /** Crée un répertoire temporaire dans le répertoire temporaire de la machine.
