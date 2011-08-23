@@ -6,6 +6,7 @@ export PATH:=$(JHOME)/bin:$(PATH)
 
 ant :
 	ant prun
+#	ant javascool-proglets.jar ; java -jar dist/proglets/javascool-proglet-sampleCode.jar 
 
 svn :
 	cd .. ; ant svn
