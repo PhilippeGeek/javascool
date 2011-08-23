@@ -183,7 +183,8 @@ public class ProgletsBuilder {
 	  String name = new File(proglet).getName();
 	  String javascoolPrefix = "org" + File.separator + "javascool" + File.separator;
 	  String jarEntries[] = { 
-	    javascoolPrefix + "core", javascoolPrefix + "gui", javascoolPrefix + "macros", javascoolPrefix + "tools", javascoolPrefix + "widgets", 
+	    javascoolPrefix + "Core", "org" + File.separator + "fife", 
+	    javascoolPrefix + "builder", javascoolPrefix + "core", javascoolPrefix + "gui", javascoolPrefix + "macros", javascoolPrefix + "tools", javascoolPrefix + "widgets", 
 	    javascoolPrefix + "proglets" + File.separator + name};
 	  String tmpJar = buildDir + File.separator + "javascool-proglet-"+name+".jar";
 	  JarManager.jarCreate(tmpJar, buildDir + "/manifest.jmf", jarDir, jarEntries);

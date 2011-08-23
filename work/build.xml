@@ -152,10 +152,10 @@
     <delete dir="./build/class"/> 
     <delete dir="./dist/javadoc"/> 
     <delete dir="./nbproject/private"/> 
+    <ant dir="../web" target="clean"/>
   </target>
 
   <target name="svn" depends="clean"> 
-    <ant dir="../web" target="clean"/>
     <exec executable="svn">
       <arg value="cleanup"/>
       <arg value=".."/>
