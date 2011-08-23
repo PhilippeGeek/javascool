@@ -6,6 +6,7 @@
     ant javacool-builder.jar	construit dans ./dist la jarre Javas'Cool Builder "formateur" pour genérer les progetss
     ant javascool-proglets.jar	construit dans ./dist la jarre Javas'Cool Core "apprenant" avec toutes les proglets disponibles
     ant javadoc			construit dans ./dist/javadoc la javadoc des classes (avec java2html)
+    ant webproglets             construit dans ./dist/proglets les éléments pour la mise en ligne web des proglets
     ant classes                 teste la compilation des classes
     ant beautify                reformate tous les sources avec la commande uncrustify
     ant processing              lance (si l'installation est ok) la plateforme processing
@@ -52,12 +53,19 @@
   <target name="javascool-proglets.jar" depends="javascool-builder.jar">
     <java jar="./dist/javascool-builder.jar" dir="../sketchbook" fork="true">
       <arg value="-q"/>
+    </java>
+    <move file="../sketchbook/javascool-proglets.jar" todir="./dist"/>
+  </target>
+  
+  <target name="webproglets" depends="javascool-builder.jar">
+    <java jar="./dist/javascool-builder.jar" dir="../sketchbook" fork="true">
+      <arg value="-w"/>
       <arg value="../work/dist/proglets"/>
     </java>
     <move file="../sketchbook/javascool-proglets.jar" todir="./dist"/>
   </target>
   
-  <property name="classpath" value="./lib/RSyntaxTextArea.jar:lib/jvs2html.jar"/>
+  <property name="classpath" value="./lib/RSyntaxTextArea.jar:lib/jvs2html.jar:lib/javadoc.jar"/>
 
   <target name="classes" depends="svn.revision">
     <mkdir dir="./build/classes"/>
@@ -67,7 +75,7 @@
   </target>
 
   <target name="javadoc">
-    <mkdir dir="./dist/web/api"/>
+    <mkdir dir="./dist/javadoc"/>
     <javadoc
       verbose="false"
       classpath="${classpath}"
@@ -90,7 +98,7 @@
         <include name="**/*.java"/>
       </fileset>
     </javadoc>
-    <copy todir="./dist/web/api">        
+    <copy todir="./dist/javadoc">        
       <fileset dir="./src">
         <include name="**/*.java"/>
       </fileset>
@@ -98,7 +106,7 @@
     </copy>
     <java jar="./lib/java2html.jar" fork="true">
       <arg value="-srcdir"/>
-      <arg value="./dist/web/api"/>
+      <arg value="./dist/javadoc"/>
     </java>
   </target>
 
@@ -108,9 +116,9 @@
     <exec executable="svn" outputproperty="svn.info.stdout">
       <arg value="info"/>
     </exec>
-    <!--propertyregex property="svn.revision" input="${svn.info.stdout}" select="\1">
+    <propertyregex property="svn.revision" input="${svn.info.stdout}" select="\1">
       <regexp pattern=".*R.vision[^:]*: *([0-9]*).*"/>
-    </propertyregex-->
+    </propertyregex>
     <property name="svn.revision" value="0"/>
   </target>
 
@@ -149,7 +157,8 @@
   </target>
 
   <target name="clean">
-    <delete dir="./build/class"/> 
+    <delete dir="./build/classes"/> 
+    <delete dir="./dist/proglets"/> 
     <delete dir="./dist/javadoc"/> 
     <delete dir="./nbproject/private"/> 
     <ant dir="../web" target="clean"/>

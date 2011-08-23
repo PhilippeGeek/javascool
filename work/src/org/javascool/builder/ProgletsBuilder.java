@@ -55,10 +55,10 @@ public class ProgletsBuilder {
   /** Construit une nouvelle archive avec les proglets proposées.
    * @param proglets Les proglets sélectionnées. Par défaut toutes les proglets disponibles.
    * @param targetDir Le répertoire cible dans lequel la construction se fait. Si null utilise un répertoire temporaire.
-   * @param javadoc Si true compile la javadoc de chaque proglet (false par défaut).
+   * @param webdoc Si true compile la javadoc et les jars de chaque proglet (false par défaut).
    * @return La valeur true si la construction est sans erreur, false sinon.
    */
-  public static boolean build(String[] proglets, String targetDir, boolean javadoc) {
+  public static boolean build(String[] proglets, String targetDir, boolean webdoc) {
     if (!canBuildProglets()) {
       throw new IllegalArgumentException("Mauvaise configuration du builder, il faut utiliser le bon jar !");
     }
@@ -73,7 +73,7 @@ public class ProgletsBuilder {
       // Création des répertoires cible.
       {
 	if (targetDir == null) {
-	  buildDir = FileManager.createTempDir("build");
+	  buildDir = new File(".build");
 	} else {
 	  buildDir = new File(targetDir);
 	  JarManager.rmDir(buildDir);
@@ -155,7 +155,7 @@ public class ProgletsBuilder {
 			   + "  <applet width='560' height='720' code='org.javascool.widgets.PanelApplet' archive='../javasccool-progets><param name='pane' value='org.javascool.proglets." + name + "'/><pre>Impossible de lancer " + name + ": Java n'est pas installé ou mal configuré</pre></applet>\n"
 			   + "</body></html>\n");
 	  // Creation de la javadoc si option ok
-	  if (javadoc) 
+	  if (webdoc) 
 	    javadoc(progletDir, progletDir + File.separator + "api");
 	  DialogFrame.setUpdate("Construction de " + name + " 4/4", level += (10 / proglets.length));
 	}
@@ -179,27 +179,29 @@ public class ProgletsBuilder {
 	  set("Implementation-Version", version).
 	  save(buildDir + "/manifest.jmf");
 	// Création des archives pour chaque proglet
-	for (String proglet : proglets) {
-	  String name = new File(proglet).getName();
-	  String javascoolPrefix = "org" + File.separator + "javascool" + File.separator;
-	  String jarEntries[] = { 
-	    javascoolPrefix + "Core", "org" + File.separator + "fife", 
-	    javascoolPrefix + "builder", javascoolPrefix + "core", javascoolPrefix + "gui", javascoolPrefix + "macros", javascoolPrefix + "tools", javascoolPrefix + "widgets", 
-	    javascoolPrefix + "proglets" + File.separator + name};
-	  String tmpJar = buildDir + File.separator + "javascool-proglet-"+name+".jar";
-	  JarManager.jarCreate(tmpJar, buildDir + "/manifest.jmf", jarDir, jarEntries);
-	}   
+	if (webdoc)
+	  for (String proglet : proglets) {
+	    String name = new File(proglet).getName();
+	    String javascoolPrefix = "org" + File.separator + "javascool" + File.separator;
+	    String jarEntries[] = { 
+	      javascoolPrefix + "Core", "org" + File.separator + "fife", 
+	      javascoolPrefix + "builder", javascoolPrefix + "core", javascoolPrefix + "gui", javascoolPrefix + "macros", javascoolPrefix + "tools", javascoolPrefix + "widgets", 
+	      javascoolPrefix + "proglets" + File.separator + name};
+	    String tmpJar = buildDir + File.separator + "javascool-proglet-"+name+".jar";
+	    JarManager.jarCreate(tmpJar, buildDir + "/manifest.jmf", jarDir, jarEntries);
+	  }   
 	// Elimination de la proglet sampleCode 
 	JarManager.rmDir(new File(progletsDir + File.separator + "sampleCode"));
 	// Création de l'archive principale
 	JarManager.jarCreate(targetJar, buildDir + "/manifest.jmf", jarDir);
 	// Déplacement des "javascool-proglet-"+name+".jar" dans les répetoires des proglets
-	for (String proglet : proglets) {
-	  String name = new File(proglet).getName();
-	  String tmpJar = buildDir + File.separator + "javascool-proglet-"+name+".jar", 
-	    progletJar = progletsDir + File.separator + name + File.separator + "javascool-proglet-"+name+".jar";;
-	  new File(tmpJar).renameTo(new File(progletJar));
-	}
+	if (webdoc)
+	  for (String proglet : proglets) {
+	    String name = new File(proglet).getName();
+	    String tmpJar = buildDir + File.separator + "javascool-proglet-"+name+".jar", 
+	      progletJar = progletsDir + File.separator + name + File.separator + "javascool-proglet-"+name+".jar";;
+	    new File(tmpJar).renameTo(new File(progletJar));
+	  }
 	DialogFrame.setUpdate("Finalisation 2/2", 100);
       }
       if (targetDir == null) {
@@ -209,6 +211,7 @@ public class ProgletsBuilder {
       System.out.println("\tIl faut lancer «" + targetJar + "» pour tester/utiliser les proglets.");
       return true;
     } catch (Exception e) {
+      e.printStackTrace();
       System.out.println("Erreur inopinée lors de la construction (" + e.getMessage() + "): corriger l'erreur et relancer la construction");
       return false;
     }
@@ -225,15 +228,15 @@ public class ProgletsBuilder {
   /**
    * @see #build(String[], String, boolean)
    */
-  public static boolean build(String[] proglets, boolean javadoc) {
-    return build(proglets, null, javadoc);
+  public static boolean build(String[] proglets, boolean webdoc) {
+    return build(proglets, null, webdoc);
   }
 
   /**
    * @see #build(String[], String, boolean)
    */
-  public static boolean build(String targetDir, boolean javadoc) {
-    return build(getProglets(), targetDir, javadoc);
+  public static boolean build(String targetDir, boolean webdoc) {
+    return build(getProglets(), targetDir, webdoc);
   }
 
 
@@ -254,8 +257,8 @@ public class ProgletsBuilder {
   /**
    * @see #build(String[], String, boolean)
    */
-  public static boolean build(boolean javadoc) {
-    return build(getProglets(), null, javadoc);
+  public static boolean build(boolean webdoc) {
+    return build(getProglets(), null, webdoc);
   }
 
   /**
@@ -288,8 +291,7 @@ public class ProgletsBuilder {
 	}
 	// Lance javadoc
 	try {
-	  // @todo pb de classe javadoc a trouver
-	  // com.sun.tools.javadoc.Main.execute(argv.split("\t"));
+	  com.sun.tools.javadoc.Main.execute(argv.split("\t"));
 	} catch (Throwable e) {
 	  throw new IOException(e);
 	}
@@ -298,15 +300,13 @@ public class ProgletsBuilder {
       {
 	File htmlDir = new File(apiDir + files[0].replaceFirst(".*" + fileRegexSeparator + "org", File.separator + "org")).getParentFile();
 	// Crée les sources à htmléiser
-	for (String f : files) {
+	for (String f : files) 
 	  JarManager.copyFiles(f, apiDir + File.separator + f.replaceFirst(".*" + fileRegexSeparator + "org", "org") + ".java");
-	}
 	// Lance java2html
 	de.java2html.Java2HtmlApplication.main(("-srcdir\t" + apiDir).split("\t"));
 	// Nettoie les sources à htmléiser
-	for (String f : files) {
+	for (String f : files)
 	  new File(apiDir + File.separator + f.replaceFirst(".*" + fileRegexSeparator + "org", "org") + ".java").delete();
-	}
       }
     }
   }
