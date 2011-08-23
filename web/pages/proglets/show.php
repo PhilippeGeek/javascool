@@ -5,11 +5,11 @@
     Sal::validateProgletId($id);
     if (!is_file("proglets/" . $id . "/proglet.php"))
         die("La proglet " . $id . " n'a pas de fichier proglet.php");
-    $proglet=null;
+    $pml=null;
     include("proglets/" . $id . "/proglet.php");  //TODO testme
-    if (isset($proglet['name'])) $name=$proglet['name']; else $name="";
-    if (isset($proglet['description'])) $desc=$proglet['description']; else $desc="";
-    if (isset($proglet['icon'])) $icon='proglets/'.$id.'/'.$proglet['icon']; else $icon="";
+    if (isset($pml['name'])) $name=$pml['name']; else $name="";
+    if (isset($pml['description'])) $desc=$pml['description']; else $desc="";
+    if (isset($pml['icon'])) $icon='proglets/'.$id.'/'.$pml['icon']; else $icon="";
     if ($name=="") $name=$id;
 
     $defaulticon="images/defaultProglet.png";

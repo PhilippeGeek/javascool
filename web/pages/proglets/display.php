@@ -3,7 +3,7 @@
     <table class="proglets">
         <tr>
             <?php
-            $sketchbook = opendir('proglets');
+           $sketchbook = opendir('proglets');
             $proglets = array();
             $i = 0;
             while ($file = readdir($sketchbook)) {
@@ -17,18 +17,17 @@
                     Sal::validateProgletId($id);
                     if (!is_file("proglets/" . $id . "/proglet.php"))
                         die("La proglet " . $id . " n'a pas de fichier proglet.php");
-                    $proglet=null;
-                    include("proglets/" . $id . "/proglet.php");  //TODO testme
-                    if (isset($proglet['title'])) $name=$proglet['title']; else $name="";
-                    if (isset($proglet['description'])) $desc=$proglet['description']; else $desc="";
-                    if (isset($proglet['icon'])) $icon='proglets/'.$id.'/'.$proglet['icon']; else $icon="";
+                    $pml=null;
+                    include("proglets/" . $id . "/proglet.php");
+                    if (isset($pml['title'])) $name=$pml['title']; else $name="";
+                    if (isset($pml['description'])) $desc=$pml['description']; else $desc="";
+                    if (isset($pml['icon'])) $icon='proglets/'.$id.'/'.$pml['icon']; else $icon="";
                     if ($name=="") $name=$id;
 
                     $defaulticon="images/defaultProglet.png";
-
                     if ($icon=="")
                         $icon=$defaulticon;
-                    
+
                     if (!is_file($icon))
                         $icon=$defaulticon;
                     
