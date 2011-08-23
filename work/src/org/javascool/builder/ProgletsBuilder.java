@@ -55,9 +55,10 @@ public class ProgletsBuilder {
   /** Construit une nouvelle archive avec les proglets proposées.
    * @param proglets Les proglets sélectionnées. Par défaut toutes les proglets disponibles.
    * @param targetDir Le répertoire cible dans lequel la construction se fait. Si null utilise un répertoire temporaire.
+   * @param javadoc Si true compile la javadoc de chaque proglet (false par défaut).
    * @return La valeur true si la construction est sans erreur, false sinon.
    */
-  public static boolean build(String[] proglets, String targetDir) {
+  public static boolean build(String[] proglets, String targetDir, boolean javadoc) {
     if (!canBuildProglets()) {
       throw new IllegalArgumentException("Mauvaise configuration du builder, il faut utiliser le bon jar !");
     }
@@ -154,7 +155,7 @@ public class ProgletsBuilder {
 			   + "  <applet width='560' height='720' code='org.javascool.widgets.PanelApplet' archive='../javasccool-progets><param name='pane' value='org.javascool.proglets." + name + "'/><pre>Impossible de lancer " + name + ": Java n'est pas installé ou mal configuré</pre></applet>\n"
 			   + "</body></html>\n");
 	  // Creation de la javadoc si on est dans le svn
-	  if (new File(".svn").exists()) {
+	  if (javadoc) {
 	    File apiDir = new File(".." + File.separator + "work" + File.separator + "dist" + File.separator + "proglets-doc" + File.separator + name);
 	    apiDir.mkdirs();
 	    javadoc(progletDir, apiDir.getAbsolutePath());
@@ -199,24 +200,54 @@ public class ProgletsBuilder {
   }
 
   /**
-   * @see #build(String[], String)
+   * @see #build(String[], String, boolean)
+   */
+  public static boolean build(String[] proglets, String targetDir) {
+    return build(proglets, targetDir, false);
+  }
+
+
+  /**
+   * @see #build(String[], String, boolean)
+   */
+  public static boolean build(String[] proglets, boolean javadoc) {
+    return build(proglets, null, javadoc);
+  }
+
+  /**
+   * @see #build(String[], String, boolean)
+   */
+  public static boolean build(String targetDir, boolean javadoc) {
+    return build(getProglets(), targetDir, javadoc);
+  }
+
+
+  /**
+   * @see #build(String[], String, boolean)
    */
   public static boolean build(String[] proglets) {
-    return build(proglets, null);
+    return build(proglets, null, false);
   }
 
   /**
-   * @see #build(String[], String)
+   * @see #build(String[], String, boolean)
    */
   public static boolean build(String targetDir) {
-    return build(getProglets(), targetDir);
+    return build(getProglets(), targetDir, false);
   }
 
   /**
-   * @see #build(String[], String)
+   * @see #build(String[], String, boolean)
+   */
+  public static boolean build(boolean javadoc) {
+    return build(getProglets(), null, javadoc);
+  }
+
+  /**
+   * @see #build(String[], String, boolean)
    */
   public static boolean build() {
-    return build(getProglets(), null);
+    return build(getProglets(), null, false);
   }
 
   /** Lance la compilation java sur un groupe de fichiers. */
@@ -240,7 +271,8 @@ public class ProgletsBuilder {
 	}
 	// Lance javadoc
 	try {
-	  com.sun.tools.javadoc.Main.execute(argv.split("\t"));
+	  // @todo pb de classe javadoc a trouver
+	  // com.sun.tools.javadoc.Main.execute(argv.split("\t"));
 	} catch (Throwable e) {
 	  throw new IOException(e);
 	}
