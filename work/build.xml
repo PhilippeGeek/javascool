@@ -169,25 +169,20 @@
       <arg value=".."/>
     </exec>
     <echo level="info">${svn.ci.stdout}</echo>
-    <if>
-	<equals arg1="${os.name}" arg2="Linuxxx"/>
-		<then>
-        		<input message="Quelle est la raison de ce commit ?" addproperty="svn.commit.message" defaultvalue="une raison inconnue"/> 
-		        <mail from="philoumailabo@gmail.com" tolist="thierry.vieville@inria.fr,guillaume.quest@gmail.com,philoumailabo@gmail.com"
-			          subject="Commit de http://javascool.googlecode.com">
-				<message>
-					Notice: une révision des fichiers javascool a été commitée (faire un «svn up» svp).
-					* par "${user.name}"
-					* pour "${svn.commit.message}"
-					* détails:
-					  ${svn.ci.stdout}
-					
-					
-					+ 
-      				</message>
-			</mail>
-    		</then>
-    </if>
+    <!--if><equals arg1="${os.name}" arg2="Linux"/><then>
+        <input message="Quelle est la raison de ce commit ?" addproperty="svn.commit.message" defaultvalue="une raison inconnue"/> 
+        <mail from="philoumailabo@gmail.com" tolist="thierry.vieville@inria.fr,guillaume.quest@gmail.com,philoumailabo@gmail.com"
+          subject="Commit de http://javascool.googlecode.com"><message>
+Notice: une révision des fichiers javascool a été commitée (faire un «svn up» svp).
+* par "${user.name}"
+* pour "${svn.commit.message}"
+* détails:
+  ${svn.ci.stdout}
+
+
++ 
+      </message></mail>
+    </then></if-->
     <exec executable="svn">
       <arg value="status"/>
       <arg value=".."/>
