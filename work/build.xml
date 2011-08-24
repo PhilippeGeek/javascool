@@ -22,6 +22,7 @@
     <target name="javascool-base.jar" depends="classes" >
         <delete file="./dist/javascool-base.jar"/>
         <unzip dest="./build/classes" src="./lib/RSyntaxTextArea.jar"/>
+        <unzip dest="./build/classes" src="./lib/autocomplete.jar"/>
         <unzip dest="./build/classes" src="./lib/javac.jar"/>
         <jar destfile="./dist/javascool-base.jar">
             <manifest>
@@ -36,6 +37,7 @@
     <target name="javascool-builder.jar" depends="classes,svn.revision">
         <delete file="./dist/javascool-builder.jar"/>
         <unzip dest="./build/classes" src="./lib/RSyntaxTextArea.jar"/>
+        <unzip dest="./build/classes" src="./lib/autocomplete.jar"/>
         <unzip dest="./build/classes" src="./lib/javadoc.jar"/>
         <unzip dest="./build/classes" src="./lib/javadoc.jar"/>
         <unzip dest="./build/classes" src="./lib/jarsigner.jar"/>
@@ -102,7 +104,7 @@
         <move file="./../sketchbook/javascool-proglets.jar" todir="./dist"/>
     </target>
   
-    <property name="classpath" value="./lib/RSyntaxTextArea.jar:lib/jvs2html.jar:lib/javadoc.jar:lib/jarsigner.jar"/>
+    <property name="classpath" value="./lib/autocomplete.jar:./lib/RSyntaxTextArea.jar:lib/jvs2html.jar:lib/javadoc.jar:lib/jarsigner.jar"/>
     
     <target name="classes" depends="svn.revision">
         <mkdir dir="./build/classes"/>
