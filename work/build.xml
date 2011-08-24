@@ -60,9 +60,7 @@
 
     <target name="javascool-proglets.exe" depends="javascool-proglets.jar">
         <echo>Don't use this target</echo>
-        <taskdef name="jsmoothgen"
-     classname="net.charabia.jsmoothgen.ant.JSmoothGen"
-     classpath="lib/jsmooth.jar"/>
+        <taskdef name="jsmoothgen" classname="net.charabia.jsmoothgen.ant.JSmoothGen" classpath="lib/jsmooth.jar"/>
         <jsmoothgen project="lib/javascool.jsmooth" 
       skeletonroot="." verbose="true"/>
     </target>
@@ -224,25 +222,25 @@
         <ant dir="./../web" target="clean"/>
     </target>
 
-    <target name="svn" depends="clean"> 
-        <exec executable="svn">
+    <target name="svn" depends="clean">  
+        <exec executable="svn" dir="..">
             <arg value="cleanup"/>
-            <arg value="./.."/>
         </exec>
-        <exec executable="svn">
+         <echo level="info">Information sur les éléments à synchroniser:</echo>
+        <exec executable="svn" dir="..">
+            <arg value="status"/>
+            <arg value="-u"/>
+        </exec>
+        <echo level="info">Update des éléments distants:</echo>
+        <exec executable="svn" dir="..">
             <arg value="up"/>
-            <arg value="./.."/>
         </exec>
         <input message="Quelle est la raison de ce commit ?" addproperty="svn.commit.message" defaultvalue="une raison inconnue"/> 
-        <exec executable="svn">
+        <echo level="info">Commit des éléments distants:</echo>
+        <exec executable="svn" dir="..">
             <arg value="ci"/>
             <arg value="-m"/>
             <arg value="${svn.commit.message}"/>
-            <arg value="./.."/>
-        </exec>
-        <exec executable="svn">
-            <arg value="status"/>
-            <arg value="./.."/>
         </exec>
     </target>
 

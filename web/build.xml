@@ -5,12 +5,12 @@
   <property environment="env"/>
 
   <target name="usage"><echo level="info">
-    ant build                   construit les repertoires ./(api|documents|proglets) du site
-    ant clean                   nettoie les liens temporaires ./(api|documents|proglets) pour le site
-    ant publish			publi les fichiers du site sur http://javascool.gforge.inria.fr
-    ant local			affiche une version locale du site (lance apache et ouvre firefox)
-    ant lcheck			teste et liste les liens cassés sur le site
-    ant xterm			ouvre une fenêtre pour aller gérer manuellement les fichiers sur le site
+    ant build          construit les repertoires ./(api|documents|proglets) du site
+    ant clean          nettoie les liens temporaires ./(api|documents|proglets) pour le site
+    ant publish        publi les fichiers du site sur http://javascool.gforge.inria.fr
+    ant local          affiche une version locale du site (lance apache et ouvre firefox)
+    ant lcheck         teste et liste les liens cassés sur le site
+    ant xterm          ouvre une fenêtre pour aller gérer manuellement les fichiers sur le site
   </echo></target>
 
   <target name="build" depends="clean">

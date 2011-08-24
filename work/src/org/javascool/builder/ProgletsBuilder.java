@@ -194,18 +194,22 @@ public class ProgletsBuilder {
 	// Création de l'archive principale
 	JarManager.jarCreate(targetJar, buildDir + "/manifest.jmf", jarDir);
 	// Signature et déplacement des "javascool-proglet-"+name+".jar" dans les répetoires des proglets
-	if (webdoc)
+	if (webdoc) {
+	  System.out.print("Signature des jarres: "); System.out.flush();
 	  for (String proglet : proglets) {
 	    String name = new File(proglet).getName();
 	    String tmpJar = buildDir + File.separator + "javascool-proglet-"+name+".jar";
 	    String signedJar = progletsDir + File.separator + name + File.separator + "javascool-proglet-"+name+".jar";
 	    if (new File(signedJar).getParentFile().exists()) {
+	      System.out.print(name+" .. "); System.out.flush();
 	      String keystore = jarDir + File.separator + "org" + File.separator + "javascool" + File.separator + "builder" + File.separator + "javascool.key";
-	      String argv = "-storepass\tjavascool\t-keypass\tmer,d,azof\t-keystore\t"+keystore+"\t-signedjar\t"+signedJar+"\t"+tmpJar+"\tjavascool";
-	      System.err.println(Exec.run("jarsigner\t"+argv));
-	      //- sun.security.tools.JarSigner.main(argv.split("-t"));
+	      String args = "-storepass\tjavascool\t-keypass\tmer,d,azof\t-keystore\t"+keystore+"\t-signedjar\t"+signedJar+"\t"+tmpJar+"\tjavascool";
+	      // @todo en fait bloquant !! sun.security.tools.JarSigner.main(args.split("\t")); donc remplacé par 
+	      Exec.run("jarsigner\t"+args);
 	    }
 	  }
+	  System.out.println("ok.");
+	}
 	DialogFrame.setUpdate("Finalisation 2/2", 100);
       }
       if (targetDir == null)
