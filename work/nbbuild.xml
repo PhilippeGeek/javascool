@@ -9,15 +9,15 @@
 <!-- in the project's Project Properties dialog box.-->
 <project name="Java's_Cool_v4" default="default" basedir=".">
     <description>Builds, tests, and runs the project Java's Cool v4.</description>
-    <import file="nbproject/build-impl.xml"/>
-	<!--<target name="build"></target>
+    <!--<import file="nbproject/build-impl.xml"/>-->
+	<target name="build"></target>
 	<target name="clean">
 		<ant antfile="build.xml" target="clean"/>
 	</target>
 	<target name="jar">
-		<ant antfile="build.xml" target="jrun"/>
+		<ant antfile="build.xml" target="prun"/>
 	</target>
-	<target name="run"></target>-->
+	<target name="run"></target>
 	
     <!--
 

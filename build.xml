@@ -21,7 +21,6 @@
   </target>
 
   <target name="brun">
-    <ant dir="./work" target="javascool-builder.jar"/>
-    <java jar="./work/dist/javascool-builder.jar" dir="../sketchbook" fork="true"/>
+    <ant dir="./work" target="brun"/>
   </target>
 </project>

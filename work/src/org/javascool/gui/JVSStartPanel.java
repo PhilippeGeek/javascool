@@ -55,7 +55,7 @@ class JVSStartPanel extends JPanel {
     for(ProgletEngine.Proglet proglet : ProgletEngine.getInstance().getProglets())
       shortcuts.add(this.createShortcut(Macros.getIcon(proglet.getIcon()), proglet.getName(), proglet.getTitle(), new ProgletLoader(proglet.getName())));
     shortcuts.add(Box.createHorizontalGlue());
-    vertical.add(shortcuts);
+    vertical.add(new javax.swing.JScrollPane(shortcuts));
     vertical.add(Box.createVerticalGlue());
     return vertical;
   }
