@@ -211,7 +211,7 @@ public class ProgletsBuilder {
       System.out.println("\tIl faut lancer «" + targetJar + "» pour tester/utiliser les proglets.");
       return true;
     } catch (Exception e) {
-      e.printStackTrace();
+      e.printStackTrace(System.out);
       System.out.println("Erreur inopinée lors de la construction (" + e.getMessage() + "): corriger l'erreur et relancer la construction");
       return false;
     }
