@@ -22,6 +22,7 @@ import javax.swing.text.BadLocationException;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rtextarea.Gutter;
 import org.fife.ui.rtextarea.RTextScrollPane;
+import org.javascool.widgets.ToolBar;
 
 /** Define a JVSEditor
  * Use JVSEditor to edit jvs files, it can be used as a panel
@@ -33,18 +34,27 @@ class JVSEditor extends JPanel {
   private RSyntaxTextArea TextPane;
   /** The scroll pane */
   private RTextScrollPane scrollPane;
+  /** La ToolBar */
+  private ToolBar toolBar;
 
   /** Create a new JVSEditor
    * Common setup
    */
   public JVSEditor() {
     this.setLayout(new BorderLayout());
+    toolBar=new ToolBar();
     TextPane = this.createTextArea();
     TextPane.setSyntaxEditingStyle(org.fife.ui.rsyntaxtextarea.SyntaxConstants.SYNTAX_STYLE_JAVA);
     scrollPane = new RTextScrollPane(TextPane, true);
     Gutter gutter = scrollPane.getGutter();
     gutter.setBorderColor(Color.BLUE);
-
+    toolBar.addTool("Reformater le code", new Runnable(){
+            @Override
+            public void run() {
+                setText(org.javascool.core.JvsBeautifier.run(getText()));
+            }
+        });
+    this.add(toolBar,BorderLayout.NORTH);
     this.add(scrollPane, BorderLayout.CENTER);
     this.setVisible(true);
   }
