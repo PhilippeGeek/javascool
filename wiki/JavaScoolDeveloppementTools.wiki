@@ -6,13 +6,15 @@ Pour pouvoir co-développer [http://javascool.gforge.inria.fr JavaScool] il faut
 
 Il faut aussi être inscrit sur cette forge en nous [http://javascool.gforge.inria.fr/v4/?page=contact contactant]
 
+
 = Quelques documentations utiles =
 
 | | | 
 [http://download.oracle.com/javase/6/docs/api/overview-summary.html JDK-API] |
 [http://download.oracle.com/javase/6/docs JDK-Tools] |
 [http://ant.apache.org/manual/index.html Ant] |
-[http://ant-contrib.sourceforge.net/tasks/tasks/index.html Ant-Contrib] |
+[http://ant-contrib.sourceforge.net/tasks/tasks/index.html Ant-Contrib]  
+([http://ant-contrib.sourceforge.net/#install install]) |
 [http://svnbook.red-bean.com/en/1.5/index.html SVN]
 | | |
 
