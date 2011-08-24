@@ -9,6 +9,7 @@ import javax.swing.JApplet;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import javax.swing.JLabel;
+import org.javascool.widgets.Console;
 import org.javascool.tools.Invoke;
 
 /** Définit une applet qui encapsule un objet graphique.
@@ -54,15 +55,17 @@ public class PanelApplet extends JApplet {
     try {
       if(panel == null) {
         panel = getParameter("panel");
-        manualStart = getParameter("manualStart") != null&& getParameter("manualStart").toLowerCase().equals("true");
+        manualStart = getParameter("manualStart") == null || getParameter("manualStart").toLowerCase().equals("true");
       }
     } catch(Exception e) {}
     try {
       getContentPane().add(pane = (Component) Class.forName(panel).newInstance(), BorderLayout.CENTER);
     } catch(Exception e) {
-      getContentPane().add(new JLabel("Impossible d'instancier : " + panel + "erreur: " + e));
+      System.err.println(e);
+      getContentPane().add(new JLabel("Pas d'applet à montrer.", JLabel.CENTER), BorderLayout.CENTER);
+      manualStart = false;
     }
-    if(manualStart) {
+    if(manualStart && Invoke.run(pane, "start", false)) {
       getContentPane().add(new StartStopButton() {
                              @Override
                              public void start() {
