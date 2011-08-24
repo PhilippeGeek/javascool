@@ -3,9 +3,10 @@
 
     <target name="usage">
         <echo level="info">
-    ant javacool.jar		construit dans ./dist la jarre Javas'Cool Core "apprenant" sans proglet
+    ant javacool-base.jar	construit dans ./dist la jarre Javas'Cool Core "apprenant" sans proglet
     ant javacool-builder.jar	construit dans ./dist la jarre Javas'Cool Builder "formateur" pour genérer les progetss
     ant javascool-proglets.jar	construit dans ./dist la jarre Javas'Cool Core "apprenant" avec toutes les proglets disponibles
+    ant javascool-proglets.exe	(EN COURS) construit dans ./dist l'executable windows Javas'Cool Core "apprenant" avec toutes les proglets disponibles
     ant javadoc			construit dans ./dist/javadoc la javadoc des classes (avec java2html)
     ant webproglets             construit dans ./dist/proglets les éléments pour la mise en ligne web des proglets
     ant classes                 teste la compilation des classes
@@ -18,11 +19,11 @@
         </echo>
     </target>
 
-    <target name="javascool.jar" depends="classes" >
-        <delete file="./dist/javascool.jar"/>
+    <target name="javascool-base.jar" depends="classes" >
+        <delete file="./dist/javascool-base.jar"/>
         <unzip dest="./build/classes" src="./lib/RSyntaxTextArea.jar"/>
         <unzip dest="./build/classes" src="./lib/javac.jar"/>
-        <jar destfile="./dist/javascool.jar">
+        <jar destfile="./dist/javascool-base.jar">
             <manifest>
                 <attribute name="Main-Class" value="org.javascool.Core"/>
             </manifest>
@@ -35,6 +36,8 @@
         <delete file="./dist/javascool-builder.jar"/>
         <unzip dest="./build/classes" src="./lib/RSyntaxTextArea.jar"/>
         <unzip dest="./build/classes" src="./lib/javadoc.jar"/>
+        <unzip dest="./build/classes" src="./lib/javadoc.jar"/>
+        <unzip dest="./build/classes" src="./lib/jarsigner.jar"/>
         <unzip dest="./build/classes" src="./lib/javac.jar"/>
         <unzip dest="./build/classes" src="./lib/jvs2html.jar"/>
         <unzip dest="./build/classes" src="./lib/saxon.jar"/>
@@ -52,6 +55,15 @@
         </jar>
     </target>
 
+    <target name="javascool-proglets.exe" depends="javascool-proglets.jar">
+        <echo>Don't use this target</echo>
+        <taskdef name="jsmoothgen"
+     classname="net.charabia.jsmoothgen.ant.JSmoothGen"
+     classpath="lib/jsmooth.jar"/>
+        <jsmoothgen project="lib/javascool.jsmooth" 
+      skeletonroot="." verbose="true"/>
+    </target>
+    
     <target name="javascool-proglets.jar" depends="javascool-builder.jar">
         <if>
             <not>
@@ -89,13 +101,23 @@
         <move file="./../sketchbook/javascool-proglets.jar" todir="./dist"/>
     </target>
   
-    <property name="classpath" value="./lib/RSyntaxTextArea.jar:lib/jvs2html.jar:lib/javadoc.jar"/>
+    <property name="classpath" value="./lib/RSyntaxTextArea.jar:lib/jvs2html.jar:lib/javadoc.jar:lib/jarsigner.jar"/>
     
     <target name="classes" depends="svn.revision">
         <mkdir dir="./build/classes"/>
+        <copy file="src/org/javascool/Core.java" tofile="src/org/javascool/Core.java.save" preservelastmodified="true"/>
         <replaceregexp file="src/org/javascool/Core.java" match="[0-9]*(.; *// *@revision)" replace="${svn.revision}\1"/>
         <javac debug="true" debuglevel="lines,vars,source" includeantruntime="false" deprecation="on" encoding="UTF-8" classpath="${classpath}" srcdir="./src" destdir="./build/classes"/>   
-        <replaceregexp file="src/org/javascool/Core.java" match="[0-9]*(.; *// *@revision)" replace="0\1"/>
+        <move tofile="src/org/javascool/Core.java" file="src/org/javascool/Core.java.save" preservelastmodified="true"/>
+    </target>
+
+    <target name="javascool.key">
+      <delete file="src/org/javascool/builder/javascool.key"/>
+      <exec os="Linux" executable="keytool">
+        <arg line="-genkey -alias javascool -validity 3000 -storepass javascool -keypass mer,d,azof -keystore src/org/javascool/builder/javascool.key"/>
+        <arg value="-dname"/>
+        <arg value="cn=fuscia-accueil@inria.fr,ou=javascool.gforge.inria.fr,o=inria.fr,c=fr"/>
+      </exec>
     </target>
 
     <target name="javadoc">
@@ -146,6 +168,7 @@
 
     <taskdef resource="net/sf/antcontrib/antlib.xml"
               classpath="lib/ant/ant-contrib-1.0b3.jar:lib/ant/bcel-5.1.jar:lib/ant/commons-httpclient-3.0.1.jar:lib/ant/commons-logging-1.0.4.jar:lib/ant/ivy-1.3.1.jar"/>
+
     <target name="svn.revision">
         <exec executable="svn" outputproperty="svn.info.stdout">
             <arg value="info"/>
@@ -220,8 +243,8 @@
         </exec>
     </target>
 
-    <target name="jrun" depends="javascool.jar">
-        <java jar="./dist/javascool.jar" dir="./../sketchbook" fork="true"/>
+    <target name="jrun" depends="javascool-base.jar">
+        <java jar="./dist/javascool-base.jar" dir="./../sketchbook" fork="true"/>
     </target>
   
     <target name="prun" depends="javascool-proglets.jar">
@@ -238,13 +261,4 @@
         <java jar="./dist/javascool-builder.jar" dir="./../sketchbook" fork="true"/>
     </target>
   
-    <target name="javascool.exe" depends="javascool.jar">
-        <echo>Don't use this target</echo>
-        <taskdef name="jsmoothgen"
-     classname="net.charabia.jsmoothgen.ant.JSmoothGen"
-     classpath="lib/jsmooth.jar"/>
-        <jsmoothgen project="javascool.jsmooth" 
-      skeletonroot="." verbose="true"/>
-    </target>
-    
 </project>
