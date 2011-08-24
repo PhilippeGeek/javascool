@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import org.javascool.widgets.Dialog;
 
 /** Cette factory contient des fonctions générales rendues visibles à l'utilisateur de proglets.
  * <p>Elle permet de définir des fonctions statiques qui seront utilisées pour faire des programmes élèves.</p>
@@ -33,7 +34,7 @@ public class Stdin {
       return inputBuffer.popString();
     inputQuestion = question;
     inputString = null;
-    inputDialog = new Macros.NonModalDialog();
+    inputDialog = new Dialog();
     inputDialog.setTitle("Java's Cool read");
     inputDialog.add(new JPanel() {
                       {
@@ -54,10 +55,10 @@ public class Stdin {
                       }
                     }
                     );
-    inputDialog.open();
+    inputDialog.open(true);
     return inputString == null ? "" : inputString;
   }
-  private static Macros.NonModalDialog inputDialog;
+  private static Dialog inputDialog;
   private static String inputQuestion, inputString;
 
   /**
@@ -159,7 +160,7 @@ public class Stdin {
       return inputBuffer.popBoolean();
     inputQuestion = question;
     inputString = null;
-    inputDialog = new Macros.NonModalDialog();
+    inputDialog = new Dialog();
     inputDialog.setTitle("Java's Cool read");
     inputDialog.add(new JPanel() {
                       {
@@ -193,7 +194,7 @@ public class Stdin {
                       }
                     }
                     );
-    inputDialog.open();
+    inputDialog.open(true);
     return "OUI".equals(inputString);
   }
   /**

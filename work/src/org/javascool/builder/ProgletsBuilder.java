@@ -193,19 +193,21 @@ public class ProgletsBuilder {
 	JarManager.rmDir(new File(progletsDir + File.separator + "sampleCode"));
 	// Création de l'archive principale
 	JarManager.jarCreate(targetJar, buildDir + "/manifest.jmf", jarDir);
-	// Déplacement des "javascool-proglet-"+name+".jar" dans les répetoires des proglets
+	// Signature et déplacement des "javascool-proglet-"+name+".jar" dans les répetoires des proglets
 	if (webdoc)
 	  for (String proglet : proglets) {
 	    String name = new File(proglet).getName();
 	    String tmpJar = buildDir + File.separator + "javascool-proglet-"+name+".jar", 
-	      progletJar = progletsDir + File.separator + name + File.separator + "javascool-proglet-"+name+".jar";;
-	    new File(tmpJar).renameTo(new File(progletJar));
+	      signedJar = progletsDir + File.separator + name + File.separator + "javascool-proglet-"+name+".jar";;
+	    /*
+	    sun.security.tools.JarSigner.main(("-storepass\tjavascool\t-keypass\tmer,d,azof\t-keystore\t"+javascoolPrefix+"builder"+ File.separator +"javascool.key\t-signedjar\t"+
+					       signedJar+"\t"+tmpJar+"\tjavascool").split("\t"));
+	    */
 	  }
 	DialogFrame.setUpdate("Finalisation 2/2", 100);
       }
-      if (targetDir == null) {
+      if (targetDir == null)
 	JarManager.rmDir(buildDir);
-      }
       System.out.println("Construction achevée avec succès: «" + targetJar + "» a été créé");
       System.out.println("\tIl faut lancer «" + targetJar + "» pour tester/utiliser les proglets.");
       return true;

@@ -112,6 +112,7 @@ class JVSToolBar extends ToolBar {
 
                 @Override
                 public void run() {
+                    JVSWidgetPanel.getInstance().focusOnProgletPanel();
                     ProgletEngine.getInstance().getProglet().doDemo();
                 }
             });

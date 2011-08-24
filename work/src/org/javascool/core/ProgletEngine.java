@@ -278,10 +278,12 @@ public class ProgletEngine {
          * @return La valeur true si la méthode est invocable, false sinon.
          * @throws RuntimeException si la méthode génère une exception lors de son appel.
          */
-        public boolean doDemo() {
-            return getPane() != null && Invoke.run(getPane(), "start");
+        public void doDemo() {
+            if (hasDemo())
+            (new Thread() { public void run() {
+                    Invoke.run(getPane(), "start");
+                }}).start();
         }
-
         /**  Indique si la proglet est une proglet processing.
          */
         public boolean isProcessing() {

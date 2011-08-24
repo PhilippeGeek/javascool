@@ -20,6 +20,14 @@
     <jar destfile="./javadoc.jar" basedir="${build.dir}" includes="com/sun/tools/javadoc/**,com/sun/javadoc/**,com/sun/tools/doclets/**"/>
     <delete dir="${build.dir}"/>
   </target>
+  <!-- Construction de la library jarsigner.jar où jarsigner est extrait du tools.jar standard -->
+  <target name="jarsigner.jar"> 
+    <delete file="jarsigner.jar"/>
+    <mkdir dir="${build.dir}"/>
+    <unzip dest="${build.dir}" src="${jdk.dir}/lib/tools.jar"/>
+    <jar destfile="./jarsigner.jar" basedir="${build.dir}" includes="com/sun/tools/jarsigner/**,sun.security.tools/**"/>
+    <delete dir="${build.dir}"/>
+  </target>
   <!-- Construction de la library java2html patchée par  Philippe Vienne <philoumailabo@gmail.com> et renommée ici java2html -->
   <target name="jvs2html.jar">   
     <mkdir dir="${build.dir}"/>

@@ -60,7 +60,7 @@ class JVSWidgetPanel extends JVSTabs {
     }
 
     /** Affiche la console */
-    public void showConsole() {
+    public void focusOnConsolePanel() {
         this.setSelectedIndex(this.indexOfTab("Console"));
     }
 
