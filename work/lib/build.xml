@@ -1,5 +1,5 @@
 <project name="javac" basedir="." default="all">
-  <target name="all" depends="javac.jar,javadoc.jar,jvs2html.jar"/>
+  <target name="all" depends="javac.jar,javadoc.jar,jarsigner.jar,jvs2html.jar"/>
 
   <property name="jdk.dir" value="/usr/java/jdk1.6.0_22"/>
   <property name="build.dir" value="../../build/lib"/>
@@ -25,7 +25,7 @@
     <delete file="jarsigner.jar"/>
     <mkdir dir="${build.dir}"/>
     <unzip dest="${build.dir}" src="${jdk.dir}/lib/tools.jar"/>
-    <jar destfile="./jarsigner.jar" basedir="${build.dir}" includes="com/sun/tools/jarsigner/**,sun.security.tools/**"/>
+    <jar destfile="./jarsigner.jar" basedir="${build.dir}" includes="com/sun/tools/jarsigner/**,sun/security/tools/**"/>
     <delete dir="${build.dir}"/>
   </target>
   <!-- Construction de la library java2html patchée par  Philippe Vienne <philoumailabo@gmail.com> et renommée ici java2html -->
