@@ -48,10 +48,10 @@ public class PanelApplet extends JApplet {
   }
   private String panel = null;
   private boolean manualStart = true;
-  private Component pane = null;
-
   @Override
   public void init() {
+    if (pane != null)
+      throw new IllegalStateException("Impossible d'instancier deux PanelApplet dans une application");
     try {
       if(panel == null) {
         panel = getParameter("panel");
@@ -67,13 +67,9 @@ public class PanelApplet extends JApplet {
     }
     if(manualStart && Invoke.run(pane, "start", false)) {
       getContentPane().add(new ToolBar().addTool("Démo de la proglet", "org/javascool/widgets/icons/play.png", new Runnable() { public void run() {
-	System.err.println("Démo start1");
 	(new Thread() { public void run() {
-	  System.err.println("Démo start2");
 	  Invoke.run(pane, "start");
-	  System.err.println("Démo stop1");
 	}}).start();
-	System.err.println("Démo stop2");
       }}), BorderLayout.NORTH);
     }
     Invoke.run(pane, "init");
@@ -92,6 +88,16 @@ public class PanelApplet extends JApplet {
     if(!manualStart)
       Invoke.run(pane, "stop");
   }
+ /** Renvoie le panneau graphique de la proglet courante.
+   * @return Le panneau graphique de la proglet courante ou null si il n'est pas défini.
+   */
+  public static Component getPane() {
+    return pane;
+  }
+  static {
+    MainFrame.setLookAndFeel();
+  }
+  private static Component pane = null;
   /** Lanceur dans une fenêtre principale d'une objet graphique.
    * @param usage <tt>java org.javascool.widgets.PanelApplet nom-complet-qualifé-de-l-objet-graphique</tt>.
    */

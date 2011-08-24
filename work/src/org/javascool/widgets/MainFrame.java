@@ -22,7 +22,7 @@ public class MainFrame extends JFrame {
   private static int frameCount = 0;
 
   /** Définit le look and feel de l'application. */
-  static {
+  static void setLookAndFeel() {
     try {
       for(LookAndFeelInfo info : UIManager.getInstalledLookAndFeels())
         if("Nimbus".equals(info.getName())) {
@@ -43,6 +43,9 @@ public class MainFrame extends JFrame {
         }
       }
     }
+  }
+  static {
+    setLookAndFeel();
   }
 
   /** Construit et ouvre une fenêtre principale pour lancer une application.

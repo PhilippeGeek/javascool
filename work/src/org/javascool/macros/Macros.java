@@ -22,6 +22,7 @@ import javax.swing.JEditorPane;
 import org.javascool.core.ProgletEngine;
 import org.javascool.widgets.Dialog;
 import javax.swing.SwingUtilities;
+import org.javascool.widgets.PanelApplet;
 
 
 /** Cette factory contient des fonctions générales rendues visibles à l'utilisateur de proglets.
@@ -214,7 +215,12 @@ public class Macros {
    * @return Le panneau graphique de la proglet courante ou null si il n'est pas défini.
    */
   public static < T extends Component > T getProgletPane() {
-    Component c = ProgletEngine.getInstance().getProglet().getPane();
+    Component c = null;
+    try {
+       c = ProgletEngine.getInstance().getProglet().getPane();
+    } catch(Throwable e) {
+       c = PanelApplet.getPane();
+    }
     return (T) c;
   }
 }
