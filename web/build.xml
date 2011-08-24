@@ -31,23 +31,26 @@
   </target>
 
   <target name="publish" depends="build,rsync.user.name">
+    <!-- Définir la variable GEFORGEUSER -->
+    <property environment="env"/>
+
     <!-- @todo: rsync des proglets buildés -->
     <!-- @todo: rsync de l'api javadoc -->
     <exec os="Linux" executable="rsync">
-      <arg line="--rsh='ssh -C' -rl --delete-excluded --exclude .svn/ ../documents ${rsync.user.name}@scm.gforge.inria.fr:/home/groups/javascool/htdocs/v4"/>
+      <arg line="--rsh='ssh -C' -rl --delete-excluded --exclude .svn/ ../documents ${env.GFORGEUSER}@scm.gforge.inria.fr:/home/groups/javascool/htdocs/v4"/>
     </exec>
     <exec os="Linux" executable="rsync">
-      <arg line="--rsh='ssh -C' -rL --delete-excluded --exclude .svn/ ./api ${rsync.user.name}@scm.gforge.inria.fr:/home/groups/javascool/htdocs/v4/"/>
+      <arg line="--rsh='ssh -C' -rL --delete-excluded --exclude .svn/ ./api ${env.GFORGEUSER}@scm.gforge.inria.fr:/home/groups/javascool/htdocs/v4/"/>
     </exec>
-    <exec os="Linux" executable="rsync">     
-      <arg line="--rsh='ssh -C' -rl --delete-excluded --exclude .svn/ pages images includes favicon.ico ${rsync.user.name}@scm.gforge.inria.fr:/home/groups/javascool/htdocs/v4"/>
+    <exec os="Linux" executable="rsync">
+      <arg line="--rsh='ssh -C' -rl --delete-excluded --exclude .svn/ pages images includes favicon.ico ${env.GFORGEUSER}@scm.gforge.inria.fr:/home/groups/javascool/htdocs/v4"/>
     </exec>
     <!-- rsync de index.php en deux temps pour patcher un problème de droit sur le site -->
     <exec os="Linux" executable="rsync">
-      <arg line="--rsh='ssh -C' index.php ${rsync.user.name}@scm.gforge.inria.fr:/home/groups/javascool/htdocs/v4/.htindex.php"/>
+      <arg line="--rsh='ssh -C' index.php ${env.GFORGEUSER}@scm.gforge.inria.fr:/home/groups/javascool/htdocs/v4/.htindex.php"/>
     </exec>
     <exec os="Linux" executable="ssh">
-      <arg value="${rsync.user.name}@scm.gforge.inria.fr"/>
+      <arg value="${env.GFORGEUSER}@scm.gforge.inria.fr"/>
       <arg value="sh -c 'cd /home/groups/javascool/htdocs/v4 ; cat .htindex.php &gt; index.php ; rm .htindex.php'"/>
     </exec>
     <exec os="Linux" executable="firefox">
@@ -78,7 +81,7 @@
   <target name="xterm" depends="rsync.user.name">
     <exec os="Linux" executable="gnome-terminal">
       <arg value="-e"/>
-      <arg value="ssh ${rsync.user.name}@scm.gforge.inria.fr 'cd /home/groups/javascool/htdocs ; bash -i'"/>
+      <arg value="ssh ${env.GFORGEUSER}@scm.gforge.inria.fr 'cd /home/groups/javascool/htdocs ; bash -i'"/>
     </exec>
   </target>
 

@@ -1,4 +1,4 @@
-<?php showBrowser(array(array("Java's Cool", "index.php"), array("Proglets", ""))); ?>
+<?php showBrowser(array(array("Java's Cool", "index.php"), array("Proglets", "")),array(array("Qu'est-ce qu'une proglet","?page=proglets&action=info"))); ?>
 <div class="proglets">
     <table class="proglets">
         <tr>

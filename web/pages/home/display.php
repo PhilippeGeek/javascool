@@ -11,7 +11,6 @@
     );
 ?>
 
-
 <div class="home">
     <table class="home"><tr><td class="news">
                 <div class="news">

@@ -29,10 +29,10 @@ include('includes/sitemap_data.php');
             function loaded() {
                 applyLabelStyles();
                 addListeners();
-                updateAnimation(1);
+                updateAnimation(5);
             }
             function unloaded() {
-                updateAnimation(1);
+                updateAnimation(5);
             }
             function applyLabelStyles() {
                 var labels=getElementsByClass('label');
@@ -104,7 +104,7 @@ include('includes/sitemap_data.php');
                 document.location=loc;
             }
             function gotoloc(loc) {
-                updateAnimation(-4,loc);
+                updateAnimation(-100,loc);
             }
             function followLink(e) {
                 var elem=this;
@@ -178,7 +178,7 @@ include('includes/sitemap_data.php');
                     plugleft.style.left=(framePosition.left-400)+"px";
                     plugright.style.top=120-frame*3+"px";
                     plugright.style.left=(framePosition.left+w+400-document.getElementById("plugright").offsetWidth)+"px";
-                    mainPanel.style.top=(29*3-frame*3)+"px";
+          //          mainPanel.style.top=(29*3-frame*3)+"px";
                 }
                 if (frame>30) {
                     plugleft.style.left=(framePosition.left-400)+(frame-30)*3+"px";

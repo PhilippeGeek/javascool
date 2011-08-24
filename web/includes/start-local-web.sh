@@ -3,6 +3,13 @@
 # Lancement en local du site web, il faut apache et php installé
 #
 
+#
+# Si ce script ne marche pas, configurer un serveur apache local et faire un lien symbolique
+# du dossier web du serveur local (souvent /var/www ou /var/www/htdocs) vers le dossier web
+# du svn. Exemple de commande : 
+# sudo ln -s /var/www/jvs /home/utilisateur/javascool/jvs/web
+#
+
 # Tue tous les serveurs locaux
 
 killall -KILL httpd 2> /dev/null
