@@ -69,7 +69,7 @@ class JVSPanel extends JPanel {
     public void compileFile() {
         JVSFileTabs.getInstance().getEditor(JVSFileTabs.getCurrentCompiledFile()).removeLineSignals();
         if (JVSFileTabs.getInstance().saveCurrentFile()) {
-            JVSWidgetPanel.getInstance().showConsole();
+            JVSWidgetPanel.getInstance().focusOnConsolePanel();
             if (JVSFileTabs.getInstance().compileFile(JVSFileTabs.getInstance().getCurrentFileId())) {
                 JVSToolBar.getInstance().enableStartStopButton();
             } else {
@@ -160,7 +160,7 @@ class JVSPanel extends JPanel {
      */
     public void reportCompileError(int line, String explication) {
         org.javascool.widgets.Console.getInstance().clear();
-        JVSWidgetPanel.getInstance().showConsole();
+        JVSWidgetPanel.getInstance().focusOnConsolePanel();
         if (JVSFileTabs.getInstance().getEditor(JVSFileTabs.getCurrentCompiledFile()) != null) {
             JVSFileTabs.getInstance().getEditor(JVSFileTabs.getCurrentCompiledFile()).signalLine(line);
         }

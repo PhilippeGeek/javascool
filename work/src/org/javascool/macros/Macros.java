@@ -9,8 +9,6 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.net.URISyntaxException;
 
 import java.util.Calendar;
@@ -20,10 +18,11 @@ import java.net.URL;
 import java.io.File;
 import java.io.IOException;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JEditorPane;
 import org.javascool.core.ProgletEngine;
-import org.javascool.widgets.MainFrame;
+import org.javascool.widgets.Dialog;
+import javax.swing.SwingUtilities;
+
 
 /** Cette factory contient des fonctions générales rendues visibles à l'utilisateur de proglets.
  * <p>Elle permet de définir des fonctions plus facile d'utilisation que les appels Java usuels.</p>
@@ -101,7 +100,7 @@ public class Macros {
       p.setContentType("text/html; charset=utf-8");
     p.setText(text);
     p.setBackground(new java.awt.Color(200, 200, 200, 0));
-    messageDialog = new NonModalDialog();
+    messageDialog = new Dialog();
     messageDialog.setTitle("Java's Cool message");
     messageDialog.add(p);
     messageDialog.add(new JButton("OK") {
@@ -115,51 +114,9 @@ public class Macros {
                                             );
                         }
                       }, BorderLayout.SOUTH);
-    messageDialog.open();
+    messageDialog.open(!SwingUtilities.isEventDispatchThread());
   }
-  private static NonModalDialog messageDialog;
-
-  /** Définit un JDialog non modal.
-   * <p>Son utilisation typique se fait à travers une construction de la forme:<pre>
-   * dialog = new NonModalDialog();
-   * dialog.add(.. le composant du dialogue ..);
-   * dialog.open();</pre></p>
-   * <p>Lorsque le composant du dialogue reçoit la réponse il ferme le dialogue, par exemple:<pre>
-   *  public void actionPerformed(ActionEvent e) {
-   *    ... report de la valeur fournie par l'utilisateur ...
-   *    messageDialog.close();
-   * }</pre></p>
-   */
-  static class NonModalDialog extends JDialog {
-    // @bean
-
-    public NonModalDialog() {
-      super(MainFrame.getFrame());
-      addWindowListener(new WindowAdapter() {
-       @Override
-       public void windowClosing(WindowEvent e) {
-       pending = false;
-       }
-       }
-			);
-    }
-    /** Ouvre le dialogue et entre en attente d'un retour de l'utilisateur. */
-    public void open() {
-      setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-      pack();
-      setLocation((MainFrame.getFrame().getWidth() - getWidth()) / 2, (MainFrame.getFrame().getHeight() - getHeight()) / 2);
-      setVisible(true);
-      pending = true;
-      while(pending)
-	Macros.sleep(100);
-    }
-    /** Routine à appeler quand le dialogue à été achevé pour continuer le programme. */
-    public void close() {
-      dispose();
-      pending = false;
-    }
-    private boolean pending;
-  }
+  private static Dialog messageDialog;
 
   /**
    * @see #message(String, boolean)
