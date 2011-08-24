@@ -19,6 +19,10 @@
   # (PV3) [http://code.google.com/p/javascool/issues/detail?id=53 Implementer le fait qu'on ajoute @proglet:nom-de-la-proglet]
   # (TV1) Ajouter la doc des mémos à partir de du texte de DL
 
+  # (PV0) Création d'un lanceur .exe et .app pour le lancement de jascool
+  # (PV1) Pb de poule est d'oeuf avec le teste de version : lancer le 
+browser avec du code 1.5 !
+
 == Chantier en cours: Javas'Cool builder ==
 
   # (GM1) Mettre en conformité la proglet jeux2D
@@ -31,7 +35,7 @@
   * Rechercher les Jvs et XML v3 oubliés en v4
   * Publier sur le site en ressource les pages activites et exodematsh index en page ressource
 
-  # (TV3)Intégration des proglets processing dans ProgletsBuilder et ProgletsEngine
+  # (TV3) Intégration des proglets processing dans ProgletsBuilder et ProgletsEngine
 
 == Chantier en cours: web ==
 
@@ -44,6 +48,10 @@
 
   # (GM2) [http://code.google.com/p/javascool/issues/detail?id=48 Créer des thèmes bien pour les h1 etc.]
 
+  # (GM1) Reprendre la page lancement avec : dire java1.6 en haut appel au .exe et .app et .jar sinon
+
+  # (GM0) Mettre une ligne de doc pour dire quoi faire si start.sh marche paas
+
   # (GM3) Faire un sitemap (ou pas) a partir de web/includes/sitemap_data.php
 
   # (TV2) Finir le travail d'édition extermne sur le wiki : Catégorie:TPE Catégorie:JavaScoolRes
@@ -53,6 +61,11 @@
   # (TV2) Finaliser page aide lancement javascool site web qd le core est stable
 
 == Chanter en cours: plateforme de développement ==
+
+  # (PV1) Ajouter dans le build.xml les commandes pour ne pas regenerer une cible inutilement
+* ex: ../work/dist/proglets : ../sketchbook/**, ../work/src/** sauf Core
+* ex: ../work/dist/javadoc : ../work/src/** sauf Core
+
   * R.A.S.
 
 = Développements ultérieurs proposés=
