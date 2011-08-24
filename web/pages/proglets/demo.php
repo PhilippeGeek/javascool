@@ -50,13 +50,6 @@ if (!is_file($icon))
             <td class="news-leftborder"></td>
             <td class="news-center">
 		<?php include('proglets/'.$id.'/applet-tag.htm'); ?>
-                <p>
-                    <object type="application/x-java-applet" height="300" width="550">
-                        <param name="code" value="Sample" />
-                        <param name="archive" value="proglets/javascool-proglet-<?php echo $id; ?>.jar" />
-                        Applet failed to run.  No Java plug-in was found.
-                    </object>
-                </p>
 	    </td>
             <td class="news-rightborder"></td>
             <td class="news-right"></td>
