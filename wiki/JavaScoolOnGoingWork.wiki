@@ -45,7 +45,9 @@ browser avec du code 1.5 !
   * Thierry a crée applet-tag.htm mais doit le debugger
   * Tester les tooltips pour ceaux qu on pas javascript
   * Il y a un lien caassé vers le jar alors qu il est genere
+    * OK mais todo : mettre ce lien sur la page demo.php (trivial)
   * iL y a de sliens casses si on apsse d une page de doc a la autre
+    * ?
 
   # (TV2) Finir le travail d'édition extermne sur le wiki : Catégorie:TPE Catégorie:JavaScoolRes
   * Pages TPE: revoir la présentation et renre visibles les ressources
