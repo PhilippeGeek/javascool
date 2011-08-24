@@ -52,6 +52,8 @@ browser avec du code 1.5 !
   * Pages TPE: revoir la présentation et renre visibles les ressources
   * Pages Ressources . . tout revoir !!
 
+  # (PV3) Nous apsser les infos de ce que disent les forums sur jvs (qq exemples, liens de recherche google forum en plus du [http://www.google.com/alerts/feeds/00449836169777998004/17613704024521026334 flux RSS].
+
   # (TV2) Finaliser page aide lancement javascool site web qd le core est stable
 
 == Chanter en cours: plateforme de développement ==
