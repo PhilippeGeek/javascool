@@ -1,8 +1,9 @@
 # vthierry's commands et tbd
 ### http://code.google.com/p/javascool/wiki/JavaScoolOnGoingWork
-# (TV0) finir de faire marcher le jarsigner, applets vraiment signées ?
 # (TV0) finir de faire marcher les applets
+# (TV0) Pb dans le Core avec ces versions
 # (TV1) Ajouter la doc des mémos à partir de du texte de DL creer memo.htm memo.xml
+# (TVx) maj du wiki/issues
 
 # Using sun-jdk because of processing and windows platforms
 export JHOME=/usr/java/jdk1.6.0_22
@@ -10,8 +11,8 @@ export PATH:=$(JHOME)/bin:$(PATH)
 
 ant :
 #	ant prun
-	ant webproglets
-	appletviewer dist/proglets/jar/org/javascool/proglets/tortueLogo/applet-tag.htm 
+	ant webproglets 
+#	killall.sh firefox ; firefox ./jpgl/tortueLogo/applet-tag.htm
 #	ant javascool-proglets.jar ; java -jar dist/proglets/javascool-proglet-sampleCode.jar 
 
 svn :
