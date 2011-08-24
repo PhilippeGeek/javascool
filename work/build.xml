@@ -29,6 +29,7 @@
             </manifest>
             <fileset dir="./build/classes"/>
             <fileset dir="./src" includes="org/javascool/widgets/icons/*"/>
+            <fileset dir="./src" includes="org/javascool/macros/*.htm"/>
         </jar>
     </target>
 
@@ -51,6 +52,8 @@
             </manifest>
             <fileset dir="./build/classes"/>
             <fileset dir="./src" includes="org/javascool/widgets/icons/*"/>
+            <fileset dir="./src" includes="org/javascool/macros/*.htm"/>
+            <fileset dir="./src" includes="org/javascool/builder/*.key"/>
             <fileset dir="./src" includes="org/javascool/builder/*.xslt"/>
         </jar>
     </target>
