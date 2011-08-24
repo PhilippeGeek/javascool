@@ -1,5 +1,6 @@
 # vthierry's commands et tbd
 ### http://code.google.com/p/javascool/wiki/JavaScoolOnGoingWork
+# (TV0) finir de faire marcher le jarsigner, applets vraiment signées ?
 # (TV0) finir de faire marcher les applets
 # (TV1) Ajouter la doc des mémos à partir de du texte de DL creer memo.htm memo.xml
 
@@ -9,7 +10,8 @@ export PATH:=$(JHOME)/bin:$(PATH)
 
 ant :
 #	ant prun
-	ant webproglets; appletviewer dist/proglets/jar/org/javascool/proglets/tortueLogo/applet-tag.htm 
+	ant webproglets
+	appletviewer dist/proglets/jar/org/javascool/proglets/tortueLogo/applet-tag.htm 
 #	ant javascool-proglets.jar ; java -jar dist/proglets/javascool-proglet-sampleCode.jar 
 
 svn :

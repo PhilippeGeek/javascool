@@ -199,9 +199,12 @@ public class ProgletsBuilder {
 	    String name = new File(proglet).getName();
 	    String tmpJar = buildDir + File.separator + "javascool-proglet-"+name+".jar";
 	    String signedJar = progletsDir + File.separator + name + File.separator + "javascool-proglet-"+name+".jar";
-	    
-	    sun.security.tools.JarSigner.main(("-storepass\tjavascool\t-keypass\tmer,d,azof\t-keystore\t"+javascoolPrefix+"builder"+ File.separator +"javascool.key\t-signedjar\t"+
-					       signedJar+"\t"+tmpJar+"\tjavascool").split("\t"));
+	    if (new File(signedJar).getParentFile().exists()) {
+	      String keystore = jarDir + File.separator + "org" + File.separator + "javascool" + File.separator + "builder" + File.separator + "javascool.key";
+	      String argv = "-storepass\tjavascool\t-keypass\tmer,d,azof\t-keystore\t"+keystore+"\t-signedjar\t"+signedJar+"\t"+tmpJar+"\tjavascool";
+	      System.err.println(Exec.run("jarsigner\t"+argv));
+	      //- sun.security.tools.JarSigner.main(argv.split("-t"));
+	    }
 	  }
 	DialogFrame.setUpdate("Finalisation 2/2", 100);
       }
