@@ -44,13 +44,9 @@ browser avec du code 1.5 !
   # (GM2) Faire marcher les applets de proglets (depends on TV)
   * Thierry a crée applet-tag.htm
 
-  # (GM2) Mettre en place le mécanisme de redirection à partir de v3_redirections.
-
   # (GM2) [http://code.google.com/p/javascool/issues/detail?id=48 Créer des thèmes bien pour les h1 etc.]
 
   # (GM1) Reprendre la page lancement avec : dire java1.6 en haut appel au .exe et .app et .jar sinon
-
-  # (GM0) Mettre une ligne de doc pour dire quoi faire si start.sh marche paas
 
   # (GM3) Faire un sitemap (ou pas) a partir de web/includes/sitemap_data.php
 
