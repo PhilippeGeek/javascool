@@ -66,16 +66,13 @@ public class PanelApplet extends JApplet {
       manualStart = false;
     }
     if(manualStart && Invoke.run(pane, "start", false)) {
-      getContentPane().add(new StartStopButton() {
-                             @Override
-                             public void start() {
-                               Invoke.run(pane, "start");
-                             }
-                             @Override
-                             public void stop() {
-                               Invoke.run(pane, "stop");
-                             }
-                           }, BorderLayout.NORTH);
+      getContentPane().add(new ToolBar().addTool("Démo de la proglet", "org/javascool/widgets/icons/play.png", new Runnable() { public void run() {
+	(new Thread() { public void run() {
+	  System.err.println("Démo start");
+	  Invoke.run(pane, "start");
+	  System.err.println("Démo stop");
+	}}).start();
+      }}), BorderLayout.NORTH);
     }
     Invoke.run(pane, "init");
   }
