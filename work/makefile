@@ -9,9 +9,9 @@
 export JHOME=/usr/java/jdk1.6.0_22
 export PATH:=$(JHOME)/bin:$(PATH)
 
-run : ant
-	-killall.sh firefox 
-	firefox ./jpgl/tortueLogo/applet-tag.htm
+run : #ant
+	#-killall.sh firefox 
+	seamonkey ./jpgl/tortueLogo/applet-tag.htm
 
 ant :
 #	ant prun
