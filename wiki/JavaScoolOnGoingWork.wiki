@@ -63,8 +63,8 @@ browser avec du code 1.5 !
 == Chanter en cours: plateforme de développement ==
 
   # (PV1) Ajouter dans le build.xml les commandes pour ne pas regenerer une cible inutilement
-* ex: ../work/dist/proglets : ../sketchbook/**, ../work/src/** sauf Core
-* ex: ../work/dist/javadoc : ../work/src/** sauf Core
+  * ex: ../work/dist/proglets : ../sketchbook/**, ../work/src/** sauf Core
+  * ex: ../work/dist/javadoc : ../work/src/** sauf Core
 
   * R.A.S.
 
