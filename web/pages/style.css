@@ -485,8 +485,6 @@ table.main td.main-rightborder {
 span.label:before {
 }
 
-
-
 table.label {
     display: block;
     float:left;
@@ -564,7 +562,18 @@ div.label2 {
     background-repeat: repeat-y;
     font-weight: bold;
     padding-left:25px;
+    font-size: 15px;
 }
+
+h1 {
+    display:block;
+    background-image: url(images/label2.png);
+    background-repeat: repeat-y;
+    font-weight: bold;
+    padding-left:25px;
+    font-size: 15px;
+}
+
 
 /*
  * Proglets
@@ -706,3 +715,4 @@ table.wikitable {
 table.wikitable td {
     border: 1px solid black;
 }
+
