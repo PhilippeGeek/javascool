@@ -68,6 +68,13 @@
     </target>
     
     <target name="javascool-proglets.jar" depends="javascool-builder.jar">
+                <java jar="./dist/javascool-builder.jar" dir="./../sketchbook" fork="true">
+                    <arg value="-q"/>
+                </java>
+                <move file="./../sketchbook/javascool-proglets.jar" todir="./dist"/>
+    </target>
+  
+    <target name="webproglets" depends="javascool-builder.jar">
         <if>
             <not>
                 <available file="./dist/javascool-proglets.jar"/>
@@ -88,20 +95,13 @@
                 <fileset dir="./dist/" includes="javascool-proglets.jar"/>
             </targetfiles>
             <sequential>
-                <java jar="./dist/javascool-builder.jar" dir="./../sketchbook" fork="true">
-                    <arg value="-q"/>
-                </java>
-                <move file="./../sketchbook/javascool-proglets.jar" todir="./dist"/>
-            </sequential>
-        </outofdate>
-    </target>
-  
-    <target name="webproglets" depends="javascool-builder.jar">
         <java jar="./dist/javascool-builder.jar" dir="./../sketchbook" fork="true">
             <arg value="-w"/>
             <arg value="./../work/dist/proglets"/>
         </java>
         <move file="./../sketchbook/javascool-proglets.jar" todir="./dist"/>
+            </sequential>
+        </outofdate>
     </target>
   
     <property name="classpath" value="./lib/autocomplete.jar:./lib/RSyntaxTextArea.jar:lib/jvs2html.jar:lib/javadoc.jar:lib/jarsigner.jar"/>
@@ -111,7 +111,10 @@
         <copy file="src/org/javascool/Core.java" tofile="src/org/javascool/Core.java.save" preservelastmodified="true"/>
         <replaceregexp file="src/org/javascool/Core.java" match="[0-9]*(.; *// *@revision)" replace="${svn.revision}\1"/>
         <javac debug="true" debuglevel="lines,vars,source" includeantruntime="false" deprecation="on" encoding="UTF-8" classpath="${classpath}" srcdir="./src" destdir="./build/classes"/>   
-        <move tofile="src/org/javascool/Core.java" file="src/org/javascool/Core.java.save" preservelastmodified="true"/>
+        <move tofile="src/org/javascool/Core.java" file="src/org/javascool/Core.java.save" overwrite="true" preservelastmodified="true"/>
+        <java jar="lib/saxon.jar" dir="src/org/javascool/macros" fork="yes">
+          <arg line="-o memo-macros.htm memo-macros.xml ../builder/hdoc2htm.xslt"/>
+        </java>
     </target>
 
     <target name="javascool.key">
