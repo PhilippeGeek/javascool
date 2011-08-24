@@ -42,10 +42,6 @@ browser avec du code 1.5 !
   # (GM2) Faire marcher les applets de proglets (depends on TV)
   * Thierry a crée applet-tag.htm mais doit le debugger
 
-  # (GM1) Reprendre la page lancement avec : dire java1.6 en haut appel au .exe et .app et .jar sinon
-
-  # (GM3) Faire un sitemap (ou pas) a partir de web/includes/sitemap_data.php
-
   # (TV2) Finir le travail d'édition extermne sur le wiki : Catégorie:TPE Catégorie:JavaScoolRes
   * Pages TPE: revoir la présentation et renre visibles les ressources
   * Pages Ressources . . tout revoir !!
@@ -62,6 +58,7 @@ browser avec du code 1.5 !
 
 = Développements ultérieurs proposés=
 
+  # Faire un sitemap (ou pas) a partir de web/includes/sitemap_data.php
   # (web) Détecter l'OS ds ?page=run pour highliter l'OS du user.
   # (web/builder) Ajouter une page outil qui traduise du [X]HTML en HML à partir de work/src/org/javascool/builder/htm2hml.xslt
   # (core/platform) Rendre disponible TextFileEditor & TextFilesEditor (avec boutons et interface) et DoubleTabbedPane sortis de org/javascool/gui
