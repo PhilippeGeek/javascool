@@ -15,6 +15,8 @@
 
   # (PV1) [http://code.google.com/p/javascool/issues/detail?id=52 Relier le org.javascool.gui.Desktop aux classes JVS*.java]
   # (PV2) [http://code.google.com/p/javascool/issues/detail?id=50 Creer une fonction d'insertion automatique d'élements dans l'éditeur]
+  * Comment appeler le fichier XML qui decrit les insertions Guillaume
+    * instructions.xml ? raccourcis.xml ? insertions.xml ?
   # (PV3) [http://code.google.com/p/javascool/issues/detail?id=53 Implementer le fait qu'on ajoute @proglet:nom-de-la-proglet]
   # (TV1) Ajouter la doc des mémos à partir de du texte de DL
 
