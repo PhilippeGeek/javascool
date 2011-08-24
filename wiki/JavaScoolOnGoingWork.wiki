@@ -37,13 +37,8 @@
 
   # (PV1) Images lancement windows et max os sur web/pages/run/display.php
 
-  # (GM1) Reprendre la structure des pages developers
-  * Voir http://wiki.inria.fr/sciencinfolycee/Catégorie:JavaScool -> JavaScoolDev
-  * Structure de la section developers:
-Dev display.php  -> (Faire des proglets|Comment ça marche|API) 
-Faire des proglets -> (doc-proglets.php doc-hml.php  doc-javascoolbuilder.php faq-developers.php)
-Comment ca marche -> (spec-proglets.php spec-hml.php spec-javascoolbuilder.php)
- 
+  # (GM2) Faire marcher les applets de proglets (depends on TV)
+
   # (GM2) Mettre en place le mécanisme de redirection à partir de v3_redirections.
 
   # (GM2) [http://code.google.com/p/javascool/issues/detail?id=48 Créer des thèmes bien pour les h1 etc.]
