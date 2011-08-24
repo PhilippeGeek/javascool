@@ -63,26 +63,30 @@
         </if>
         <outofdate>
             <sourcefiles>
-                <fileset dir="../sketchbook" includes="**/*"/>
+                <fileset dir="./../sketchbook" includes="**/*"/>
+                <fileset dir="./src">
+                    <include name="**/*"/>
+                    <exclude name="org/javascool/Core.java"/>
+                </fileset>
             </sourcefiles>
             <targetfiles>
                 <fileset dir="./dist/" includes="javascool-proglets.jar"/>
             </targetfiles>
             <sequential>
-                <java jar="./dist/javascool-builder.jar" dir="../sketchbook" fork="true">
+                <java jar="./dist/javascool-builder.jar" dir="./../sketchbook" fork="true">
                     <arg value="-q"/>
                 </java>
-                <move file="../sketchbook/javascool-proglets.jar" todir="./dist"/>
+                <move file="./../sketchbook/javascool-proglets.jar" todir="./dist"/>
             </sequential>
         </outofdate>
     </target>
   
     <target name="webproglets" depends="javascool-builder.jar">
-        <java jar="./dist/javascool-builder.jar" dir="../sketchbook" fork="true">
+        <java jar="./dist/javascool-builder.jar" dir="./../sketchbook" fork="true">
             <arg value="-w"/>
-            <arg value="../work/dist/proglets"/>
+            <arg value="./../work/dist/proglets"/>
         </java>
-        <move file="../sketchbook/javascool-proglets.jar" todir="./dist"/>
+        <move file="./../sketchbook/javascool-proglets.jar" todir="./dist"/>
     </target>
   
     <property name="classpath" value="./lib/RSyntaxTextArea.jar:lib/jvs2html.jar:lib/javadoc.jar"/>
@@ -155,7 +159,7 @@
     <target name="beautify">
         <for param="file">
             <path>
-                <fileset dir="../sketchbook">
+                <fileset dir="./../sketchbook">
                     <include name="**/*.java"/>
                     <include name="**/*.jvs"/>
                     <include name="**/*.pde"/>
@@ -191,33 +195,33 @@
         <delete dir="./dist/proglets"/> 
         <delete dir="./dist/javadoc"/> 
         <delete dir="./nbproject/private"/> 
-        <ant dir="../web" target="clean"/>
+        <ant dir="./../web" target="clean"/>
     </target>
 
     <target name="svn" depends="clean"> 
         <exec executable="svn">
             <arg value="cleanup"/>
-            <arg value=".."/>
+            <arg value="./.."/>
         </exec>
         <exec executable="svn">
             <arg value="up"/>
-            <arg value=".."/>
+            <arg value="./.."/>
         </exec>
         <input message="Quelle est la raison de ce commit ?" addproperty="svn.commit.message" defaultvalue="une raison inconnue"/> 
         <exec executable="svn">
             <arg value="ci"/>
             <arg value="-m"/>
             <arg value="${svn.commit.message}"/>
-            <arg value=".."/>
+            <arg value="./.."/>
         </exec>
         <exec executable="svn">
             <arg value="status"/>
-            <arg value=".."/>
+            <arg value="./.."/>
         </exec>
     </target>
 
     <target name="jrun" depends="javascool.jar">
-        <java jar="./dist/javascool.jar" dir="../sketchbook" fork="true"/>
+        <java jar="./dist/javascool.jar" dir="./../sketchbook" fork="true"/>
     </target>
   
     <target name="prun" depends="javascool-proglets.jar">
@@ -228,6 +232,10 @@
         <exec os="Linux" executable="firefox">
             <arg value="./dist/javadoc/index.html"/>
         </exec>
+    </target>
+    
+    <target name="brun" depends="javascool-builder.jar">
+        <java jar="./dist/javascool-builder.jar" dir="./../sketchbook" fork="true"/>
     </target>
   
     <target name="javascool.exe" depends="javascool.jar">
