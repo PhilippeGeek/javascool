@@ -2,31 +2,31 @@
 include('includes/mailto.php');
 
 // Effectue la redirection des liens et renvoie vraie si il y eu redirection et faux sinon
-function v3_redictions($page) {
-  global $v3_redictions_link_table, $v3_redictions_prefix_table, $v3_redictions_v4pages_table;
+function v3_redirections($page) {
+  global $v3_redirections_link_table, $v3_redirections_prefix_table, $v3_redirections_v4pages_table;
   // Redirection des liens qui sont dans la table
-  if (array_key_exists($page, $v3_redictions_table)) {
-    header("Location: ".$v3_redictions_table[$page]);
+  if (array_key_exists($page, $v3_redirections_link_table)) {
+    header("Location: ".$v3_redirections_link_table[$page]);
     return true;
   }
   // Redirection sur les prefix des liens v3
-  foreach($v3_redictions_prefix_table as $prefix => $redirect)
+  foreach($v3_redirections_prefix_table as $prefix => $redirect)
     if (strncmp($page, $prefix, strlen($prefix)) == 0) {
       header("Location: ".$redirect);
       return true;
     }
   // Envoie d'un mail si une page bizarre est demandée
-  if (!in_array($page, $v3_redictions_v4pages_table))
+  if (!in_array($page, $v3_redirections_v4pages_table))
     mailto("mailto:thierry.vieville@inria.fr?subject=broken-link-on-javascool-v3-web", "Spurious link = $page");
   return false;
 }
 
-$v3_redictions_v4pages_table = array("api", "contact", "developers", "home", "proglets", "resources", "run");
+$v3_redirections_v4pages_table = array("api", "contact", "developers", "home", "proglets", "resources", "run");
 		
-$v3_redictions_prefix_table = array(
-				    "api/" =>  "?page=api",
+$v3_redirections_prefix_table = array(
+				    "api:" =>  "?page=api",
 				    "doc%3Asketchbook" => "http://wiki.inria.fr/sciencinfolycee/JavaScool:ProgletsProcessing");
-$v3_redictions_link_table = array(
+$v3_redirections_link_table = array(
 			     "Accueil" => "?page=home",
 			     "Menu" => "?page=home",
 			     "Manifest" => "?page=home&action=manifest",
