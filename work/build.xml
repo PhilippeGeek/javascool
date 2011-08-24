@@ -54,8 +54,12 @@
 
     <target name="javascool-proglets.jar" depends="javascool-builder.jar">
         <if>
-            <not><available file="./dist/javascool-proglets.jar"/></not>
-            <then><touch file="./dist/javascool-proglets.jar" datetime="09/10/1974 4:30 pm"/></then>
+            <not>
+                <available file="./dist/javascool-proglets.jar"/>
+            </not>
+            <then>
+                <touch file="./dist/javascool-proglets.jar" datetime="09/10/1974 4:30 pm"/>
+            </then>
         </if>
         <outofdate>
             <sourcefiles>
@@ -136,8 +140,9 @@
         </outofdate>
     </target>
 
-    <taskdef resource="net/sf/antcontrib/antlib.xml"/>
-
+    <!--<taskdef resource="net/sf/antcontrib/antlib.xml"/>-->
+    <taskdef resource="net/sf/antcontrib/antlib.xml"
+              classpath="lib/ant/ant-contrib-1.0b3.jar:lib/ant/bcel-5.1.jar:lib/ant/commons-httpclient-3.0.1.jar:lib/ant/commons-logging-1.0.4.jar:lib/ant/ivy-1.3.1.jar"/>
     <target name="svn.revision">
         <exec executable="svn" outputproperty="svn.info.stdout">
             <arg value="info"/>
