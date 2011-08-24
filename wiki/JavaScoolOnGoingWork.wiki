@@ -40,9 +40,7 @@ browser avec du code 1.5 !
 == Chantier en cours: web ==
 
   # (GM2) Faire marcher les applets de proglets (depends on TV)
-  * Thierry a crée applet-tag.htm
-
-  # (GM2) [http://code.google.com/p/javascool/issues/detail?id=48 Créer des thèmes bien pour les h1 etc.]
+  * Thierry a crée applet-tag.htm mais doit le debugger
 
   # (GM1) Reprendre la page lancement avec : dire java1.6 en haut appel au .exe et .app et .jar sinon
 
