@@ -43,7 +43,7 @@ browser avec du code 1.5 !
 
   # (GM2) Faire marcher les applets de proglets (depends on TV)
   * Thierry a crée applet-tag.htm mais doit le debugger
-  * Ajouter les tooltips
+  * Tester les tooltips pour ceaux qu on pas javascript
 
   # (TV2) Finir le travail d'édition extermne sur le wiki : Catégorie:TPE Catégorie:JavaScoolRes
   * Pages TPE: revoir la présentation et renre visibles les ressources
