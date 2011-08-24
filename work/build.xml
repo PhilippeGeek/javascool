@@ -236,7 +236,7 @@
             <arg value="up"/>
         </exec>
         <input message="Quelle est la raison de ce commit ?" addproperty="svn.commit.message" defaultvalue="une raison inconnue"/> 
-        <echo level="info">Commit des éléments distants:</echo>
+        <echo level="info">Commit des éléments locaux:</echo>
         <exec executable="svn" dir="..">
             <arg value="ci"/>
             <arg value="-m"/>
