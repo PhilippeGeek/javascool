@@ -148,11 +148,10 @@ public class ProgletsBuilder {
 					   buildDir.getPath()+File.separator+"jar"+File.separator+"org"+File.separator+"javascool"+File.separator+"builder"+File.separator+"hdoc2htm.xslt"));
 	  }
 	  DialogFrame.setUpdate("Construction de " + name + " 3/4", level += (10 / proglets.length == 0 ? 1 : 10 / proglets.length));
-	  // Création d'une page de lancement de l'applet // @todo à valider avec Guillaume
-	  FileManager.save(progletDir + File.separator + "index.html",
+	  // Création d'une page de lancement de l'applet
+	  FileManager.save(progletDir + File.separator + "applet-tag.htm",
 			   "<html><head><title>" + name + "</title><meta http-equiv='Content-Type' content='text/html; charset=utf-8'/></head><body>\n"
-			   + "  <center><h4>" + name + " (<a target='_blank' href='help.htm'>documentation utilisateur</a> <a target='_blank' href='api/index.html'>documentation Java</a>)</h4></center>\n"
-			   + "  <applet width='560' height='720' code='org.javascool.widgets.PanelApplet' archive='../javasccool-progets><param name='pane' value='org.javascool.proglets." + name + "'/><pre>Impossible de lancer " + name + ": Java n'est pas installé ou mal configuré</pre></applet>\n"
+			   + "  <applet width='560' height='720' code='org.javascool.widgets.PanelApplet' archive='./javascool-proglet-"+name+".jar><param name='pane' value='org.javascool.proglets." + name + "'/><pre>Impossible de lancer " + name + ": Java n'est pas installé ou mal configuré</pre></applet>\n"
 			   + "</body></html>\n");
 	  // Creation de la javadoc si option ok
 	  if (webdoc) 

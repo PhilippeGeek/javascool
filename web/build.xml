@@ -2,7 +2,7 @@
 <!-- Notice: Pour accéder à la gforge.inria.fr, si le login distant n'est pas le même que le login local, il faut le définir dans la variable d'environnement GFORGEUSER -->
 <project default="usage">
 
-    <property environment="env"/>
+  <property environment="env"/>
 
   <target name="usage"><echo level="info">
     ant build                   construit les repertoires ./(api|documents|proglets) du site
@@ -34,16 +34,17 @@
   </target>
 
   <target name="publish" depends="build,rsync.user.name">
-    <property environment="env"/>
-    <!-- @todo: rsync des proglets buildés -->
     <exec os="Linux" executable="rsync">
-      <arg line="--rsh='ssh -C' -rl --delete-excluded --exclude .svn/ ../documents ${env.GFORGEUSER}@scm.gforge.inria.fr:/home/groups/javascool/htdocs/v4"/>
+      <arg line="--rsh='ssh -C' -rl --delete-excluded --exclude .svn/ pages images includes favicon.ico ${env.GFORGEUSER}@scm.gforge.inria.fr:/home/groups/javascool/htdocs/v4"/>
     </exec>
     <exec os="Linux" executable="rsync">
       <arg line="--rsh='ssh -C' -rL --delete-excluded --exclude .svn/ ./api ${env.GFORGEUSER}@scm.gforge.inria.fr:/home/groups/javascool/htdocs/v4/"/>
     </exec>
     <exec os="Linux" executable="rsync">
-      <arg line="--rsh='ssh -C' -rl --delete-excluded --exclude .svn/ pages images includes favicon.ico ${env.GFORGEUSER}@scm.gforge.inria.fr:/home/groups/javascool/htdocs/v4"/>
+      <arg line="--rsh='ssh -C' -rL --delete-excluded --exclude .svn/ ./proglets ${env.GFORGEUSER}@scm.gforge.inria.fr:/home/groups/javascool/htdocs/v4/"/>
+    </exec>
+    <exec os="Linux" executable="rsync">
+      <arg line="--rsh='ssh -C' -rl --delete-excluded --exclude .svn/ ../documents ${env.GFORGEUSER}@scm.gforge.inria.fr:/home/groups/javascool/htdocs/v4"/>
     </exec>
     <!-- rsync de index.php en deux temps pour patcher un problème de droit sur le site -->
     <exec os="Linux" executable="rsync">
@@ -59,7 +60,6 @@
   </target>
 
   <target name="rsync.user.name" unless="env.GFORGEUSER">
-    <property environment="env"/>
     <property name="env.GFORGEUSER" value="${user.name}"/>
   </target>
 
@@ -79,7 +79,6 @@
   </target>
 
   <target name="xterm" depends="rsync.user.name">
-    <property environment="env"/>
     <exec os="Linux" executable="gnome-terminal">
       <arg value="-e"/>
       <arg value="ssh ${env.GFORGEUSER}@scm.gforge.inria.fr 'cd /home/groups/javascool/htdocs ; bash -i'"/>
