@@ -10,7 +10,7 @@
     );
 ?>
 <div align="center">
-    <big>Il suffit  de cliquer <big><big><a href="http://javascool.gforge.inria.fr/v4/javascool.jar">ICI</a></big></big> et de choisir <tt>Ouvrir avec . . <i>java</i></tt>.</big>
+    <big>Il suffit  de cliquer <big><big><a href="http://javascool.gforge.inria.fr/v4/javascool.jar">ICI</a></big></big> et de choisir <tt>Ouvrir avec . . <i>java</i></tt>.</big><br />En cas d'échec voir la section "Plus d'informations" en bas de cette page.
 </div>
 
 <div class="display">
