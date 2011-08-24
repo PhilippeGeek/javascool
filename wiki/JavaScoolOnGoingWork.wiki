@@ -38,6 +38,7 @@
   # (PV1) Images lancement windows et max os sur web/pages/run/display.php
 
   # (GM2) Faire marcher les applets de proglets (depends on TV)
+  * Thierry a crée applet-tag.htm
 
   # (GM2) Mettre en place le mécanisme de redirection à partir de v3_redirections.
 
