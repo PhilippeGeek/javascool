@@ -40,12 +40,12 @@ browser avec du code 1.5 !
 
 == Chantier en cours: web ==
 
-  # (GM2) Faire marcher les applets de proglets (depends on TV)
-  * Thierry a crée applet-tag.htm mais doit le debugger
-  * Tester les tooltips pour ceaux qu on pas javascript
+  # (GM1) Faire marcher les proglets etc..
+  * Thierry a crée applet-tag.htm et CA MARCHE
+  * Tester les tooltips pour ceux qu on pas javascript
   * Il y a un lien caassé vers le jar alors qu il est genere
     * OK mais todo : mettre ce lien sur la page demo.php (trivial)
-  * iL y a de sliens casses si on apsse d une page de doc a la autre
+  * Il y a de sliens casses si on apsse d une page de doc a la autre
     * Tu cliques sur http://javascool.gforge.inria.fr/v4/index.php?page=proglets&action=show&id=ingredients et dans la doc essaye d aller sur un autre page : boum !
 
   # (TV2) Finir le travail d'édition extermne sur le wiki : Catégorie:TPE Catégorie:JavaScoolRes
