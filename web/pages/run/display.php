@@ -9,23 +9,19 @@
         )
     );
 ?>
-<div align="center">
-    <big>Il suffit  de cliquer <big><big><a href="http://javascool.gforge.inria.fr/v4/javascool.jar">ICI</a></big></big> et de choisir <tt>Ouvrir avec . . <i>java</i></tt>.</big><br />En cas d'échec voir la section "Plus d'informations" en bas de cette page.
-</div>
 
 <div class="display">
-    <div class="label2">Windows</div>&nbsp;<br />
-    //@TODO windaube screenshots
-    <div class="label2">Mac OS</div>&nbsp;<br />
-    //@TODO macosxx screenshots
-    
-    
+    <p>Pour lancer Java's Cool sans installation, cliquez sur un des liens ci-dessus. Si le lancement échoue, vous devrez probablement installer Java. En cas d'échec voir la section "Plus d'informations" en bas de cette page.</p>
+
+    <div class="label2">Windows</div>
+<p>Téléchargez Java's Cool au format .exe <a href="javascool.exe">ici</a></p>
+    <div class="label2">Mac OS</div>
+<p>Téléchargez Java's Cool au format .app <a href="javascool.app">ici</a></p>
     <div class="label2">Linux</div>
-	<p>Pour lancer Java's Cool sans installation, cliquez sur le lien ci-dessus. Si le lancement échoue, vous devrez probablement installer Java.
-	Sous linux, téléchargez le fichier .jar, puis suivez les instructions ci-dessous : 
-    <table><tr><td><img src="/images/screen1.png" alt="screenshot" style="width: 300px; height: auto;"/></td><td>
+	<p>Sous linux, téléchargez Java's Cool au format .jar <a href="javascool.jar">ici</a>, puis suivez les instructions ci-dessous : 
+    <table><tr><td><img src="images/screen1.png" alt="screenshot" style="width: 300px; height: auto;"/></td><td>
                 <span class="label-arrow" /></td><td>
-                <img src="/images/screen2.png" alt="screenshot" style="width: 300px; height: auto;"/></td></tr></table></p>
+                <img src="images/screen2.png" alt="screenshot" style="width: 300px; height: auto;"/></td></tr></table></p>
                 
 <p>-On peut aussi choisir <tt>Sauver sous</tt> pour ne pas télécharger le logiciel à chaque lancement puis <tt>Ouvrir avec . . <i>java</i></tt>.</p>
 <p>-On peut aussi lancer à partir d'une ligne de commande <tt>java -jar javascool.jar</tt> une fois le logiciel téléchargé.</p>
@@ -33,5 +29,5 @@
 
 <div class="label2">Plus d'informations</div>
     <?php echo wiki_get_contents('JavaScool:Lancement'); ?>
-
+    <p>Vous pouvez aussi télécharger Java's Cool au format jar exécutable <a href="javascool.jar">ici</a></p>
 </div>
