@@ -13,7 +13,6 @@
 
 ==Chantier en cours: Javas'Cool core==
 
-  # (PV1) [http://code.google.com/p/javascool/issues/detail?id=51 Remettre en place l'option de formatage du code]
   # (PV1) [http://code.google.com/p/javascool/issues/detail?id=52 Relier le org.javascool.gui.Desktop aux classes JVS*.java]
   # (PV2) [http://code.google.com/p/javascool/issues/detail?id=50 Creer une fonction d'insertion automatique d'élements dans l'éditeur]
   # (PV3) [http://code.google.com/p/javascool/issues/detail?id=53 Implementer le fait qu'on ajoute @proglet:nom-de-la-proglet]
@@ -22,7 +21,6 @@
   # (PV0) Création d'un lanceur .exe et .app pour le lancement de jascool
   # (PV1) Pb de poule est d'oeuf avec le teste de version : lancer le 
 browser avec du code 1.5 !
-  # (PV1) Ajouter des scrools à JVSStartPanel
 
 == Chantier en cours: Javas'Cool builder ==
 
