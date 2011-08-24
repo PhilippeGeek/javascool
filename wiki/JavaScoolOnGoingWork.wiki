@@ -39,8 +39,6 @@ browser avec du code 1.5 !
 
 == Chantier en cours: web ==
 
-  # (PV1) Images lancement windows et max os sur web/pages/run/display.php
-
   # (GM2) Faire marcher les applets de proglets (depends on TV)
   * Thierry a crée applet-tag.htm
 
