@@ -6,6 +6,5 @@
 	    array("Qu'est-ce qu'une proglet","")
 	)
     );
+    echo(wiki_get_contents("JavaScool:Proglet"));
 ?>
-
-Proglet

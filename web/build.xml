@@ -2,6 +2,8 @@
 <!-- Notice: Pour accéder à la gforge.inria.fr, si le login distant n'est pas le même que le login local, il faut le définir dans la variable d'environnement GFORGEUSER -->
 <project default="usage">
 
+    <property environment="env"/>
+
   <target name="usage"><echo level="info">
     ant build                   construit les repertoires ./(api|documents|proglets) du site
     ant clean                   nettoie les liens temporaires ./(api|documents|proglets) pour le site
@@ -57,6 +59,7 @@
   </target>
 
   <target name="rsync.user.name" unless="env.GFORGEUSER">
+    <property environment="env"/>
     <property name="env.GFORGEUSER" value="${user.name}"/>
   </target>
 
@@ -76,6 +79,7 @@
   </target>
 
   <target name="xterm" depends="rsync.user.name">
+    <property environment="env"/>
     <exec os="Linux" executable="gnome-terminal">
       <arg value="-e"/>
       <arg value="ssh ${env.GFORGEUSER}@scm.gforge.inria.fr 'cd /home/groups/javascool/htdocs ; bash -i'"/>
