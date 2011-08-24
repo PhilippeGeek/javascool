@@ -1,4 +1,5 @@
 <!-- Construction des éléments de site web -->
+<!-- Notice: Pour accéder à la gforge.inria.fr, si le login distant n'est pas le même que le login local, il faut le définir dans la variable d'environnement GFORGEUSER -->
 <project default="usage">
 
   <target name="usage"><echo level="info">
@@ -31,11 +32,8 @@
   </target>
 
   <target name="publish" depends="build,rsync.user.name">
-    <!-- Définir la variable GEFORGEUSER -->
     <property environment="env"/>
-
     <!-- @todo: rsync des proglets buildés -->
-    <!-- @todo: rsync de l'api javadoc -->
     <exec os="Linux" executable="rsync">
       <arg line="--rsh='ssh -C' -rl --delete-excluded --exclude .svn/ ../documents ${env.GFORGEUSER}@scm.gforge.inria.fr:/home/groups/javascool/htdocs/v4"/>
     </exec>
@@ -58,9 +56,8 @@
     </exec>
   </target>
 
-  <target name="rsync.user.name">
-    <!-- @todo ajouter ici changement de user selon qui est qui  -->
-    <property name="rsync.user.name" value="${user.name}"/>
+  <target name="rsync.user.name" unless="env.GFORGEUSER">
+    <property name="env.GFORGEUSER" value="${user.name}"/>
   </target>
 
   <target name="local">
