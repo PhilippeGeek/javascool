@@ -85,6 +85,5 @@ public class Panel extends JPanel {
       pen_down();
       t = t + 1;
     }
-    System.err.println("done");
   }
 }
