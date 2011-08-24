@@ -18,7 +18,6 @@
   * Comment appeler le fichier XML qui decrit les insertions Guillaume, t'as un avis ?
     * instructions.xml ? raccourcis.xml ? insertions.xml ? aide-insertion.xml 
   # (PV3) [http://code.google.com/p/javascool/issues/detail?id=53 Implementer le fait qu'on ajoute @proglet:nom-de-la-proglet]
-  # (TV1) Ajouter la doc des mémos à partir de du texte de DL
 
   # (PV0) Création d'un lanceur .exe et .app pour le lancement de jascool
   # (PV1) Pb de poule est d'oeuf avec le teste de version : lancer le 
