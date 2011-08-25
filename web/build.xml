@@ -33,7 +33,8 @@
     </exec>
   </target>
 
-  <target name="publish" depends="build,rsync.user.name">
+  <target name="publish" depends="build">
+    <property environment="env"/>
     <exec os="Linux" executable="rsync">
       <arg line="--rsh='ssh -C' -rl --delete-excluded --exclude .svn/ pages images includes favicon.ico ${env.GFORGEUSER}@scm.gforge.inria.fr:/home/groups/javascool/htdocs/v4"/>
     </exec>
