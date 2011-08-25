@@ -1,4 +1,4 @@
-package org.javascool.proglets.analogiqueNumerique;
+package org.javascool.proglets.analogNumerique;
 import static org.javascool.macros.Macros.*;
 
 /**  Définit les fonctions de la proglet qui permet un algorithme dichotomiqiue de conversion analogique-numérique.
@@ -15,7 +15,7 @@ public class Functions {
    * @param value La tension en milli-volts entre 0 et 1023.
    */
   static public void convaOut(int value) {
-    getPane().value.setValue(value);
+    Functions.value = value;
     getPane().out.setText(value + " mV");
   }
   private static int value = 0;
@@ -24,7 +24,7 @@ public class Functions {
    * @return -1 si la tension inconnue est plus petite et 1 si elle plus grande ou égale.
    */
   public static int convaCompare() {
-    int r = getPane().value.getValue() < value ? -1 : 1;
+    int r = getPane().value.getValue() < Functions.value ? -1 : 1;
     getPane().cmp.setText("" + r);
     return r;
   }
