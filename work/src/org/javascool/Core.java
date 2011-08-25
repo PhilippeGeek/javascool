@@ -25,7 +25,7 @@ public class Core {
 
   /** Affiche le message de "about". */
   public static void showAboutMessage() {
-    Macros.message(title + " ("+revision+") est un logiciel conçut par : <br/><center>"
+    Macros.message(title + " ("+revision+") est un logiciel conçu par : <br/><center>"
                    + "Philippe VIENNE<br/>"
                    + "Guillaume MATHERON<br/>"
                    + " et Inria<br/>"
