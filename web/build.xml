@@ -64,6 +64,7 @@
 
   <target name="rsync.user.name" unless="env.GFORGEUSER">
     <property name="env.GFORGEUSER" value="${user.name}"/>
+    <echo message="Setting GForge name to ${user.name}"/>
   </target>
 
   <target name="local">
