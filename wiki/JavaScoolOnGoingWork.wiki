@@ -43,15 +43,15 @@ browser avec du code 1.5 !
   * Thierry a crée applet-tag.htm et CA MARCHE
     * Requires testing
     * En ligne c est pas applet-tag.html qui est copié (et ça marche pas: il ne faut pas je pense encapsuler d objet)
-  * Tester les tooltips pour ceux qu on pas javascript
-    * Requires testing
-  * Il y a un lien caassé vers le jar alors qu il est genere
-    * OK mais todo : mettre ce lien sur la page demo.php (trivial)
-      * Done but requires testing
   * Il y a de sliens casses si on apsse d une page de doc a la autre
     * Tu cliques sur http://javascool.gforge.inria.fr/v4/index.php?page=proglets&action=show&id=ingredients et dans la doc essaye d aller sur un autre page : boum !
         * Mais là je ne vois pas trop de solution... Il faudrait rewriter les liens mais il me faudrait une liste de règles de ré-écriture (genre si le lien pointe sur xxxx/doc-files/xxx.htm rediriger vers ?page=proglets&action=show&proglet=xxx. En plus le système actuel ne permet pas d'afficher un autre fichier que help.htm (j'immagine que c'est mal, non ?)
         * En fait la page page=proglets&action=show ../.. doit receveoir un autre parameter sur ce qui est montré et le rewritting est moralement href="([a-zA-Z0.9]+\.htm) ---> href="?page=....doc=\1
+            * Fait : le site accepte un param helpFile
+              * http://javascool.gforge.inria.fr/v4/index.php?page=proglets&action=show&id=analogNumerique&helpFile=dichotomie/help.htm
+              * http://javascool.gforge.inria.fr/v4/index.php?page=proglets&action=show&id=analogNumerique&helpFile=help.htm
+              * http://javascool.gforge.inria.fr/v4/index.php?page=proglets&action=show&id=analogNumerique&helpFile=dichotomie
+            * Mais manque le rewriting
 
   # (TV2) Finir le travail d'édition extermne sur le wiki : Catégorie:TPE Catégorie:JavaScoolRes
   * Pages TPE: revoir la présentation et renre visibles les ressources
