@@ -54,6 +54,7 @@
             </manifest>
             <fileset dir="./build/classes"/>
             <fileset dir="./src" includes="org/javascool/widgets/icons/*"/>
+			<fileset dir="./src" includes="org/javascool/gui/jvs.xml"/>
             <fileset dir="./src" includes="org/javascool/macros/*.htm"/>
             <fileset dir="./src" includes="org/javascool/builder/*.key"/>
             <fileset dir="./src" includes="org/javascool/builder/*.xslt"/>

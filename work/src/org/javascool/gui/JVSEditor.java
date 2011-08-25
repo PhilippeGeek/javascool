@@ -12,6 +12,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -177,18 +178,20 @@ class JVSEditor extends JPanel {
 
         public JVSAutoCompletionProvider(RSyntaxTextArea TextPane) {
             super(createCompletionProvider());
-            setShowDescWindow(false);
+            setShowDescWindow(true);
             setParameterAssistanceEnabled(true);
             install(TextPane);
-            TextPane.setToolTipSupplier((ToolTipSupplier)this.getCompletionProvider());
+            TextPane.setToolTipSupplier((ToolTipSupplier) this.getCompletionProvider());
             ToolTipManager.sharedInstance().registerComponent(TextPane);
-            TextPane.addKeyListener(new KeyListener(){
+            TextPane.addKeyListener(new KeyListener() {
 
                 @Override
                 public void keyTyped(KeyEvent e) {
-                    char ch=e.getKeyChar();
-                    if(Character.isJavaIdentifierPart(ch)){
+                    char ch = e.getKeyChar();
+                    if (Character.isJavaIdentifierPart(ch)&&!e.isActionKey()&&e.getKeyCode()!=KeyEvent.VK_BACK_SPACE&&e.getKeyCode()!=KeyEvent.VK_SPACE&&e.getKeyCode()!=KeyEvent.VK_ENTER) {
                         showPopupWindow();
+                    } else {
+                        hideChildWindows();
                     }
                 }
 
@@ -219,10 +222,20 @@ class JVSEditor extends JPanel {
 
         // Add completions for the C standard library.
         DefaultCompletionProvider cp = new DefaultCompletionProvider();
-
-        cp.addCompletion(new BasicCompletion(cp, "readString()", "Demande à l'utilisateur une chaine de caractères"));
-        cp.addCompletion(new BasicCompletion(cp, "readInt()", "Demande à l'utilisateur une chiffre"));
-        cp.addCompletion(new BasicCompletion(cp, "echo(\"\")", "Affiche un message dans la console"));
+        // First try loading resource (running from demo jar), then try
+        // accessing file (debugging in Eclipse).
+        ClassLoader cl = getClass().getClassLoader();
+        InputStream in = JVSEditor.class.getResourceAsStream("jvs.xml");
+        try {
+            cp.loadFromXML(in);
+            in.close();
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+                
+        //cp.addCompletion(new BasicCompletion(cp, "readString()", "Demande à l'utilisateur une chaine de caractères"));
+        //cp.addCompletion(new BasicCompletion(cp, "readInt()", "Demande à l'utilisateur une chiffre"));
+        cp.addCompletion(new BasicCompletion(cp, "if(true){\n\n}else{\n\n}", "Structure de condition"));
 
         return cp;
 
