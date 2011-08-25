@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+   jvs.xml - API specification for Java's cool Standard Library.
+           Used by RSyntaxTextArea to provide code completion.
+
+   Author:         Philippe Vienne
+   Version:        0.1
+
+   This file was generated from: C:/Users/Philippe Vienne/RSyntaxtTextArea/AutoCompleteDemo/trunk/lang/c/c.txt
+   on date: 2011-08-25 10:30:37
+
+-->
+<api language="JVS">
+
+	<environment paramStartChar="(" paramEndChar=")" paramSeparator=", " terminal=";"/>
+
+	<keywords>
+
+
+<keyword name="echo" type="function" returnType="void" definedIn="org.javascool.macros.Stdout">
+	<params>
+		<param type="String" name="text"/>
+	</params>
+	<desc>Affiche un texte dans la console</desc>
+</keyword>
+<keyword name="println" type="function" returnType="void" definedIn="org.javascool.macros.Stdout">
+	<params>
+		<param type="String" name="text"/>
+	</params>
+	<desc>Affiche un texte dans la console</desc>
+</keyword>
+<keyword name="println" type="function" returnType="void" definedIn="org.javascool.macros.Stdout">
+	<params>
+		<param type="String" name="text"/>
+	</params>
+	<desc>Affiche un texte dans la console</desc>
+</keyword>
+<keyword name="readBoolean" type="function" returnType="boolean" definedIn="org.javascool.macros.Stdin">
+	<params>
+		<param type="String" name="question"/>
+	</params>
+	<desc>Pose une question à l'utilisateur</desc>
+</keyword>
+<keyword name="readInt" type="function" returnType="int" definedIn="org.javascool.macros.Stdin">
+	<params>
+		<param type="String" name="question"/>
+	</params>
+	<desc>Demande un nombre à l'utilisateur</desc>
+</keyword>
+<keyword name="readString" type="function" returnType="String" definedIn="org.javascool.macros.Stdin">
+	<params>
+		<param type="String" name="question"/>
+	</params>
+	<desc>Demande une chaîne de caractères à l'utilisateur</desc>
+</keyword>
+	</keywords>
+
+</api>
