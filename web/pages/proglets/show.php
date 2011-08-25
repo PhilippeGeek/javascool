@@ -22,13 +22,12 @@
     if (isset($_GET['helpFile'])) {
 	$helpFile=$_GET['helpFile'];
 	if (preg_match('#^[a-z0-9_-]+\.htm$#i',$helpFile)) $helpFile=$id.'/'.$helpFile;
-	else if (preg_match('#^[a-z0-9_-]+\\[a-z0-9_-]+\.htm$#i')) {}
-	else if (preg_match('#^[a-z0-9_-]+#i')) $helpFile=$id.'/help.htm';
+	else if (preg_match('#^[a-z0-9_-]+/[a-z0-9_-]+\.htm$#i',$helpFile)) {}
+	else if (preg_match('#^[a-z0-9_-]+#i',$helpFile)) $helpFile=$helpFile.'/help.htm';
 	else die('Invalid help file name');
     }
     else
 	$helpFile=$id.'/help.htm';
-    echo $helpFile;
 ?>
 
 <?php showBrowser(array(array("Java's Cool","index.php"),array("Proglets","index.php?page=proglets"),array($name,""))); ?>
@@ -53,7 +52,15 @@
             <td class="news-left"></td>
             <td class="news-leftborder"></td>
             <td class="news-center">
-                <p><div style="max-width: 100%"><?php include('proglets/'.$helpFile); '?></div></p>
+                <p><div style="max-width: 100%"><?php
+
+	$help=file_get_contents('proglets/'.$helpFile);
+//	$help=preg_replace('#href="([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+\.htm)"#g','href="?page=proglets&action=show&id='.$id.'&helpFile=$1/$2"',$help);
+	$help=preg_replace('#href="([a-zA-Z0-9_-]+)/doc-files/([a-zA-Z0-9_-]+\.htm)"#g','href="?page=proglets&action=show&id='.$id.'&helpFile=$1/$2"',$help);
+//	$help=preg_replace('#href="([a-zA-Z0-9_-]+\.htm)"#g','href="?page=proglets&action=show&id='.$id.'&helpFile=$1"',$help);
+
+	echo $help;
+		?></div></p>
             </td>
             <td class="news-rightborder"></td>
             <td class="news-right"></td>
