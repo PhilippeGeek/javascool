@@ -18,6 +18,17 @@
         $icon=$defaulticon;
     if (!is_file($icon))
         $icon=$defaulticon;
+
+    if (isset($_GET['helpFile'])) {
+	$helpFile=$_GET['helpFile'];
+	if (preg_match('#^[a-z0-9_-]+\.htm$#i',$helpFile)) $helpFile=$id.'/'.$helpFile;
+	else if (preg_match('#^[a-z0-9_-]+\\[a-z0-9_-]+\.htm$#i')) {}
+	else if (preg_match('#^[a-z0-9_-]+#i')) $helpFile=$id.'/help.htm';
+	else die('Invalid help file name');
+    }
+    else
+	$helpFile=$id.'/help.htm';
+    echo $helpFile;
 ?>
 
 <?php showBrowser(array(array("Java's Cool","index.php"),array("Proglets","index.php?page=proglets"),array($name,""))); ?>
@@ -42,7 +53,7 @@
             <td class="news-left"></td>
             <td class="news-leftborder"></td>
             <td class="news-center">
-                <p><div style="max-width: 100%"><?php include('proglets/'.$id.'/help.htm'); ?></div></p>
+                <p><div style="max-width: 100%"><?php include('proglets/'.$helpFile); '?></div></p>
             </td>
             <td class="news-rightborder"></td>
             <td class="news-right"></td>
