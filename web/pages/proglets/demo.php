@@ -31,10 +31,10 @@ if (!is_file($icon))
 
 <table>
     <tr>
-        <td class="proglet">
-            <span><?php echo $name; ?></span>
-            <span class="proglet-image"><img src="<?php echo($icon); ?>" alt=""/></span>
-        </td>
+        <?php
+        echo('<script type="text/javascript">document.write(\'<td class="progletclickable" onClick="gotolocnow(\\\'proglets/'.$id.'/javascool-proglet-' . $id . '.jar\\\')"><span>' . $id . '</span><span class="proglet-image"><img src="'.$icon.'" alt=""/></span></td>\');</script>');
+                    echo('<noscript><td class="progletclickable"><a href="proglets/'.$id.'/javascool-proglet-' . $id . '.jar"><span>' . $id . '</span><span class="proglet-image"><img style="border: 0px" src="'.$icon.'" alt=""/></span></a></td></noscript>');
+                    ?>
     </tr>
 </table>
 
