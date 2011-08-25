@@ -46,6 +46,7 @@ browser avec du code 1.5 !
     * OK mais todo : mettre ce lien sur la page demo.php (trivial)
   * Il y a de sliens casses si on apsse d une page de doc a la autre
     * Tu cliques sur http://javascool.gforge.inria.fr/v4/index.php?page=proglets&action=show&id=ingredients et dans la doc essaye d aller sur un autre page : boum !
+  * Il manque le lieen vers lels API dans la section developers
 
   # (TV2) Finir le travail d'édition extermne sur le wiki : Catégorie:TPE Catégorie:JavaScoolRes
   * Pages TPE: revoir la présentation et renre visibles les ressources
