@@ -55,9 +55,9 @@
                 <p><div style="max-width: 100%"><?php
 
 	$help=file_get_contents('proglets/'.$helpFile);
-//	$help=preg_replace('#href="([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+\.htm)"#g','href="?page=proglets&action=show&id='.$id.'&helpFile=$1/$2"',$help);
-	$help=preg_replace('#href="([a-zA-Z0-9_-]+)/doc-files/([a-zA-Z0-9_-]+\.htm)"#g','href="?page=proglets&action=show&id='.$id.'&helpFile=$1/$2"',$help);
-//	$help=preg_replace('#href="([a-zA-Z0-9_-]+\.htm)"#g','href="?page=proglets&action=show&id='.$id.'&helpFile=$1"',$help);
+	$help=preg_replace('#href="([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+\.htm)"#','href="?page=proglets&action=show&id='.$id.'&helpFile=$1/$2"',$help);
+	$help=preg_replace('#href="(\.\./\.\./)?([a-zA-Z0-9_-]+)/doc-files/([a-zA-Z0-9_-]+\.htm)"#','href="?page=proglets&action=show&id='.$id.'&helpFile=$2/$3"',$help);
+	$help=preg_replace('#href="([a-zA-Z0-9_-]+\.htm)"#','href="?page=proglets&action=show&id='.$id.'&helpFile=$1"',$help);
 
 	echo $help;
 		?></div></p>
