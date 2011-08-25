@@ -177,7 +177,7 @@ class JVSEditor extends JPanel {
 
         public JVSAutoCompletionProvider(RSyntaxTextArea TextPane) {
             super(createCompletionProvider());
-            setShowDescWindow(true);
+            setShowDescWindow(false);
             setParameterAssistanceEnabled(true);
             install(TextPane);
             TextPane.setToolTipSupplier((ToolTipSupplier)this.getCompletionProvider());
