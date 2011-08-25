@@ -37,6 +37,7 @@ if (!is_file($icon))
         </td>
     </tr>
 </table>
+
 <br />
 
 <?php showButton(array('Voir la documentation', '?page=proglets&action=show&id=' . $id)); ?>
