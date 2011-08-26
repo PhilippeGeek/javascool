@@ -23,6 +23,8 @@
   # (PV0) Pb d'erreur jetée si on charge un fichier inexistant
      * plus généralement Core ne doit pas jeter d erreur si l utilisateur fait une betise
 
+ # (PV0) Peute etre pouvoir active desactiver la completion si ca detablise le mec
+
 == Chantier en cours: Javas'Cool builder ==
 
   # (GM1) Mettre en conformité la proglet jeux2D
