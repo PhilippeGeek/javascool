@@ -13,7 +13,6 @@ import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,21 +23,19 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.ToolTipManager;
 import javax.swing.text.BadLocationException;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import org.fife.ui.autocomplete.AutoCompletion;
 import org.fife.ui.autocomplete.BasicCompletion;
 import org.fife.ui.autocomplete.CompletionProvider;
-import org.fife.ui.autocomplete.CompletionXMLParser;
 import org.fife.ui.autocomplete.DefaultCompletionProvider;
 import org.fife.ui.autocomplete.LanguageAwareCompletionProvider;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rtextarea.Gutter;
 import org.fife.ui.rtextarea.RTextScrollPane;
 import org.fife.ui.rtextarea.ToolTipSupplier;
+import org.javascool.macros.Macros;
 import org.javascool.widgets.ToolBar;
-import org.xml.sax.SAXException;
 
 /** Define a JVSEditor
  * Use JVSEditor to edit jvs files, it can be used as a panel
@@ -168,7 +165,7 @@ class JVSEditor extends JPanel {
         ImageIcon icon = null;
         BufferedImage img;
         try {
-            img = ImageIO.read(ClassLoader.getSystemResourceAsStream("org/javascool/widgets/iconsx/error.png"));
+            img = ImageIO.read(ClassLoader.getSystemResourceAsStream("org/javascool/widgets/icons/error.png"));
             icon = new ImageIcon(img);
         } catch (IOException ex1) {
         }
@@ -183,9 +180,9 @@ class JVSEditor extends JPanel {
     private class JVSAutoCompletionProvider extends AutoCompletion {
 
         public JVSAutoCompletionProvider(RSyntaxTextArea TextPane) {
-            super(createCompletionProvider());
+            super(createCodeCompletionProvider());
             setShowDescWindow(true);
-            setParameterAssistanceEnabled(true);
+            //setParameterAssistanceEnabled(true);
             install(TextPane);
             TextPane.setToolTipSupplier((ToolTipSupplier) this.getCompletionProvider());
             ToolTipManager.sharedInstance().registerComponent(TextPane);
@@ -193,8 +190,9 @@ class JVSEditor extends JPanel {
 
                 @Override
                 public void keyTyped(KeyEvent e) {
-                    char ch = e.getKeyChar();
-                    if (Character.isJavaIdentifierPart(ch) && !e.isActionKey() && e.getKeyCode() != KeyEvent.VK_BACK_SPACE && e.getKeyCode() != KeyEvent.VK_SPACE && e.getKeyCode() != KeyEvent.VK_ENTER) {
+                    System.err.println(e.getKeyChar()+" : "+((int)e.getKeyChar()));
+                    int ch = e.getKeyChar();
+                    if (ch>33&&ch!=127&&ch!=129&&ch!=141&&ch!=143&&ch!=144&&ch!=157&&ch!=160) {
                         showPopupWindow();
                     } else {
                         hideChildWindows();
@@ -215,76 +213,31 @@ class JVSEditor extends JPanel {
             this.refreshPopupWindow();
             return;
         }
+
+        private boolean isJavaLetter(char l) {
+            System.err.println((int)l);
+            if (Character.isLetter(l)) {
+                return true;
+            } else if (Character.isDigit(l)) {
+                return true;
+            } else if (Character.isSpaceChar(l)) {
+                return false;
+            } else if (Character.isUnicodeIdentifierPart(l)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
 
     /**
      * Returns the provider to use when editing code.
      *
      * @return The provider.
-     * @see #createCommentCompletionProvider()
-     * @see #createStringCompletionProvider()
      */
-    private CompletionProvider createCodeCompletionProvider() {
-
-        // Add completions for the C standard library.
+    public static CompletionProvider createCodeCompletionProvider() {
         DefaultCompletionProvider cp = new DefaultCompletionProvider();
-        SAXParserFactory factory = SAXParserFactory.newInstance();
-        JvsXMLCompletion handler = new JvsXMLCompletion(cp, ClassLoader.getSystemClassLoader());
-        BufferedInputStream bin = new BufferedInputStream(JVSEditor.class.getResourceAsStream("completion-macros.xml"));
-        try {
-            SAXParser saxParser = factory.newSAXParser();
-            saxParser.parse(bin, handler);
-            List completions = handler.getCompletions();
-            cp.addCompletions(completions);
-        } catch (Exception ex) {
-            throw new RuntimeException(ex.toString());
-        } finally {
-            try {
-                bin.close();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex.toString());
-            }
-        }
-
-        //cp.addCompletion(new BasicCompletion(cp, "readString()", "Demande à l'utilisateur une chaine de caractères"));
-        //cp.addCompletion(new BasicCompletion(cp, "readInt()", "Demande à l'utilisateur une chiffre"));
-        cp.addCompletion(new BasicCompletion(cp, "if(true){\n\n}else{\n\n}", "Structure de condition"));
-
-        return cp;
-
-    }
-
-    /**
-     * Creates the completion provider for a C editor.  This provider can be
-     * shared among multiple editors.
-     *
-     * @return The provider.
-     */
-    private CompletionProvider createCompletionProvider() {
-
-        // Create the provider used when typing code.
-        CompletionProvider codeCP = createCodeCompletionProvider();
-
-        // The provider used when typing a string.
-        CompletionProvider stringCP = createStringCompletionProvider();
-
-        // Create the "parent" completion provider.
-        LanguageAwareCompletionProvider provider = new LanguageAwareCompletionProvider(codeCP);
-        provider.setStringCompletionProvider(stringCP);
-
-        return provider;
-
-    }
-
-    /**
-     * Returns the completion provider to use when the caret is in a string.
-     *
-     * @return The provider.
-     * @see #createCodeCompletionProvider()
-     * @see #createCommentCompletionProvider()
-     */
-    private CompletionProvider createStringCompletionProvider() {
-        DefaultCompletionProvider cp = new DefaultCompletionProvider();
-        return cp;
+        LanguageAwareCompletionProvider lacp = new LanguageAwareCompletionProvider(JvsXMLCompletion.readCompletionToProvider("org/javascool/gui/completion-macros.xml", cp));
+        return lacp;
     }
 }
