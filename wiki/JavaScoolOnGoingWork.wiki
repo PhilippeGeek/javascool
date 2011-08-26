@@ -30,8 +30,6 @@
   * Rechercher les Jvs et XML v3 oubliés en v4
   * Publier sur le site en ressource les pages activites et exodematsh index en page ressource
 
-  # (TV3) Intégration des proglets processing dans ProgletsBuilder et ProgletsEngine
-
 == Chantier en cours: web ==
 
   # (GM1) Faire marcher les proglets etc..
@@ -48,7 +46,7 @@
   * R.A.S.
 
 = Développements ultérieurs en réflexion=
-
+  # (TV, octobre) Intégration des proglets processing dans le core et builder
   # (web) Faire un sitemap (ou pas) a partir de web/includes/sitemap_data.php
   # (web) Détecter l'OS ds ?page=run pour highliter l'OS du user.
   # (web/builder) Ajouter une page outil qui traduise du [X]HTML en HML à partir de work/src/org/javascool/builder/htm2hml.xslt
