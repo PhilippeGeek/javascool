@@ -39,7 +39,6 @@
         <unzip dest="./build/classes" src="./lib/RSyntaxTextArea.jar"/>
         <unzip dest="./build/classes" src="./lib/autocomplete.jar"/>
         <unzip dest="./build/classes" src="./lib/javadoc.jar"/>
-        <unzip dest="./build/classes" src="./lib/javadoc.jar"/>
         <unzip dest="./build/classes" src="./lib/jarsigner.jar"/>
         <unzip dest="./build/classes" src="./lib/javac.jar"/>
         <unzip dest="./build/classes" src="./lib/jvs2html.jar"/>
