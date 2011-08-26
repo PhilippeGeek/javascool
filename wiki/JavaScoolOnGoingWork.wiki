@@ -23,7 +23,6 @@
 == Chantier en cours: Javas'Cool builder ==
 
   # (GM1) Mettre en conformité la proglet jeux2D
-  * sans ProgletPanel mais avec Functions et Panel
   * en recupérant les regex de jvs2java dans un Translator
 
   # (TV1) Documentation des proglets: 
