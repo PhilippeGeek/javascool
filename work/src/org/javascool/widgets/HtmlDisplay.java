@@ -226,9 +226,10 @@ public class HtmlDisplay extends JPanel {
         setText("Le lien : <tt>«" + location + "»</tt> est mal formé");
       }
     } else if(location.startsWith(editorPrefix))   // Affichage dand JavaScool
-      org.javascool.gui.Desktop.getInstance().addFile(location.substring(editorPrefix.length()));
+      org.javascool.gui.Desktop.getInstance().openFile(location.substring(editorPrefix.length()));
     else if(location.startsWith(newtabPrefix))     // Affichage dand JavaScool
-      org.javascool.gui.Desktop.getInstance().addTab(location.substring(newtabPrefix.length()));
+      org.javascool.gui.Desktop.getInstance().openBrowserTab(location.substring(newtabPrefix.length()),
+                location.replaceFirst("[^/]*(.*)\\.[\\.]*", "$1").replace('_', ' '));
     else if(!doBrowse(location))     // Délégation au client
       setText("Le lien : <tt>«" + location + "»</tt> n'a pas pu être affiché");
   }

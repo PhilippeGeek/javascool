@@ -6,6 +6,8 @@
 package org.javascool.gui;
 
 import java.awt.Component;
+import java.io.File;
+import java.net.URL;
 import javax.swing.JFrame;
 import org.javascool.Core;
 import org.javascool.widgets.HtmlDisplay;
@@ -50,70 +52,9 @@ public class Desktop {
     }
     private MainFrame frame;
 
-    /** Ouvre un fichier dans l'éditeur.
-     * @param location L'URL (Universal Resource Location) du fichier.
-     * @throws RuntimeException Si une erreur d'entrée-sortie s'est produite lors de l'exécution.
-     */
-    public void addFile(String location) {
-        // @todo a implementer
-        throw new RuntimeException("Non implémenté");
-    }
-
-    /** Ouvre un document HTML dans l'interface.
-     * @param location L'URL (Universal Resource Location) du fichier.
-     * @param east Affiche dans le panneau de droite si vrai (valeur par défaut), sinon le panneau de gauche.
-     * @throws RuntimeException Si une erreur d'entrée-sortie s'est produite lors de l'exécution.
-     */
-    public void addTab(String location, boolean east) {
-        addTab("Document", new HtmlDisplay().setPage(location), "", null, east, true);
-    }
-
-    /**
-     * @see #addTab(String, boolean)
-     */
-    public void addTab(String location) {
-        addTab(location, true);
-    }
-
-    /** Ajoute un composant graphique à l'interface.
-     * @param label Nom du bouton. Chaque composant doit avoir un nom différent.
-     * @param pane  Le composant à ajouter.
-     * @param title Une description d'une ligne du composant.
-     * @param icon  Icone descriptive du composant. Pas d'icone si la valeur est nulle ou le fichier inconnu.
-     * @param east Affiche dans le panneau de droite si vrai (valeur par défaut), sinon le panneau de gauche.
-     * @param show Rend le composant visible si vrai (valeur par défaut), sinon ne modifie pas l'onglet affiché.
-     */
-    public void addTab(String label, Component pane, String title, String icon, boolean east, boolean show) {
-        // @todo a implementer
-        throw new RuntimeException("Non implémenté");
-    }
-
-    /**
-     * @see #addTab(String, Component, String, String, boolean, boolean)
-     */
-    public void addTab(String label, Component pane, String title, String icon, boolean east) {
-        addTab(label, pane, title, icon, east, true);
-    }
-
-    /**
-     * @see #addTab(String, Component, String, String, boolean, boolean)
-     */
-    public void addTab(String label, Component pane, String title, String icon) {
-        addTab(label, pane, title, icon, true, true);
-    }
-
-    /**
-     * @see #addTab(String, Component, String, String, boolean, boolean)
-     */
-    public void addTab(String label, Component pane, String title) {
-        addTab(label, pane, title, null, true, true);
-    }
-
-    /**
-     * @see #addTab(String, Component, String, String, boolean, boolean)
-     */
-    public void addTab(String label, Component pane) {
-        addTab(label, pane, "", null, true, true);
+    /** Retourne la bare d'outils de Java's cool */
+    public ToolBar getToolBar(){
+        return (ToolBar) JVSToolBar.getInstance();
     }
 
     /** Demande la fermeture du desktop à la fin du programme.
@@ -123,15 +64,8 @@ public class Desktop {
         return JVSPanel.getInstance().close();
     }
 
-    /** Demande à l'utilisateur de sauvegarder le fichier courant
-     * @return True si le fichier est sauvegardé
-     */
-    public boolean saveCurrentFile() {
-        return JVSPanel.getInstance().saveFile();
-    }
-
-    /** Crée un nouveau fichier
-     * @return true On success
+    /** Crée un nouveau fichier.
+     * @return  La valeur true si le fichier est bien créé.
      */
     public boolean openNewFile() {
         try {
@@ -144,9 +78,9 @@ public class Desktop {
 
     /** Ouvre un fichier
      * Demande à l'utilisateur de choisir un fichier et l'ouvre
-     * @param file Le fichier à ouvrir peut être spécifié, si null, une boîte de dialogue le demendera à l'utilisateur
+     * @param file Le fichier à ouvrir. Avec la valeur null une boîte de dialogue le demandera à l'utilisateur.
      */
-    public boolean openFile(java.io.File file) {
+    public boolean openFile(File file) {
         try {
             if (file == null) {
                 JVSPanel.getInstance().openFile();
@@ -158,18 +92,36 @@ public class Desktop {
             return false;
         }
     }
+        /**
+         * @see openFile(File)
+         */
+  public boolean openFile(String file) {
+      return openFile(new File(file));
+  }
+        /**
+         * @see openFile(File)
+         */
+  public boolean openFile() {
+      return openFile((File) null);
+  }
+    /** Demande à l'utilisateur de sauvegarder le fichier courant.
+     * @return La valeur true si le fichier est bien sauvegardé.
+     */
+    public boolean saveCurrentFile() {
+        return JVSPanel.getInstance().saveFile();
+    }
 
-    /** Ferme le fichier en cours d'édition */
+    /** Ferme le fichier en cours d'édition. */
     public void closeFile() {
         JVSPanel.getInstance().closeFile();
     }
 
-    /** Compile le fichier en cours d'édition */
+    /** Compile le fichier en cours d'édition. */
     public void compileFile() {
         JVSPanel.getInstance().compileFile();
     }
 
-    /** Ferme la proglet en cours d'édition */
+    /** Ferme la proglet en cours d'édition. */
     public void closeProglet() {
         JVSPanel.getInstance().closeProglet();
     }
@@ -189,25 +141,17 @@ public class Desktop {
     
     /** Ouvre un nouvel onglet de navigation
      * Ouvre un onglet HTML3 dans le JVSWidgetPanel, cet onglet peut être fermé
-     * @param url L'adresse à ouvrir
+     * @param url L'adresse à ouvrir sous forme de chaîne de caractères ou d'URL.
      * @param name Le titre du nouvel onglet
      */
-    public void openBrowserTab(String url,String name){
-        JVSWidgetPanel.getInstance().openWebTab(url, name);
-    }
-    
-    /** Ouvre un nouvel onglet de navigation
-     * Ouvre un onglet HTML3 dans le JVSWidgetPanel, cet onglet peut être fermé
-     * @param url L'adresse à ouvrir
-     * @param name Le titre du nouvel onglet
-     * @see #openBrowserTab(String,String)
-     */
-    public void openBrowserTab(java.net.URL url,String name){
+
+    public void openBrowserTab(URL url,String name){
         openBrowserTab(url.toString(), name);
     }
-    
-    /** Retourne la bare d'outils de Java's cool */
-    public ToolBar getToolBar(){
-        return (ToolBar)JVSToolBar.getInstance();
+    /**
+     * @see #openBrowserTab(URL, String)
+     */
+    public void openBrowserTab(String url, String name){
+        JVSWidgetPanel.getInstance().openWebTab(url, name);
     }
 }
