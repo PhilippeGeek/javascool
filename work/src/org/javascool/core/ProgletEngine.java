@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import org.javascool.macros.Macros;
 
 import java.io.File;
-import org.fife.ui.autocomplete.CompletionProvider;
-import org.fife.ui.autocomplete.DefaultCompletionProvider;
 import org.javascool.Core;
 import org.javascool.tools.FileManager;
 import org.javascool.tools.Pml;
@@ -54,10 +52,14 @@ public class ProgletEngine {
         }
         // Définit une proglet "vide" pour lancer l'interface
         if (proglets.isEmpty()) {
-            Proglet p = new Proglet();
-            p.pml.set("name", "Interface");
-            p.pml.set("icon-location", "org/javascool/widgets/icons/scripts.png");
-            proglets.add(p);
+
+            for (int i = 0; i < 100; i++) {
+                Proglet p = new Proglet();
+                p.pml.set("name", "Interface");
+                p.pml.set("icon-location", "org/javascool/widgets/icons/scripts.png");
+                p.pml.set("help-location", "org/javascool/macros/memo-macros.htm");
+                proglets.add(p);
+            }
         }
     }
     //
@@ -96,6 +98,7 @@ public class ProgletEngine {
         // Lancement du runnable dans un thread
         if (runnable != null) {
             (thread = new Thread(new Runnable() {
+
                 @Override
                 public void run() {
                     try {
@@ -117,15 +120,17 @@ public class ProgletEngine {
             thread.interrupt();
             thread = null;
         }
-        if (message != null)
-        System.out.println("Cause de l'interruption : "+ message);
+        if (message != null) {
+            System.out.println("Cause de l'interruption : " + message);
+        }
     }
+
     /**
      * @see #doStop(String)
      */
-  public void doStop() {
-    doStop(null);
-  }
+    public void doStop() {
+        doStop(null);
+    }
 
     /** Renvoie true si le programme est en cours. */
     public boolean isRunning() {
@@ -137,12 +142,13 @@ public class ProgletEngine {
     /** Renvoie le runnable correspondant au programme utilisateur en cours.
      * @return Le runnable correspondant au programme démarré par doRun() ou null si il n'y en a pas.
      */
-     public Runnable getProgletRunnable() {
-     return runnable;
-     }
+    public Runnable getProgletRunnable() {
+        return runnable;
+    }
     //
     // Mécanisme de chargement d'une proglet
     //
+
     /** Mécanisme de chargement d'une proglet.
      * @param proglet Le nom de la proglet.
      * @return La proglet en fonctionnement ou null si la proglet n'existe pas.
@@ -208,7 +214,7 @@ public class ProgletEngine {
             } catch (Exception e) {
                 throw new IllegalArgumentException(e + " : " + location + " is a malformed URL");
             }
-            if(FileManager.exists(Macros.getResourceURL(location + "completion.xml"))){
+            if (FileManager.exists(Macros.getResourceURL(location + "completion.xml"))) {
                 pml.set("completion", location + "completion.xml");
             }
             if (pml.isDefined("icon")
@@ -223,7 +229,9 @@ public class ProgletEngine {
             } catch (Throwable e) {
                 pml.set("has-functions", false);
             }
-            pml.set("help-location", pml.getString("location") + "help.htm");
+            if (!pml.isDefined("help-location")) {
+                pml.set("help-location", pml.getString("location") + "help.htm");
+            }
             try {
                 pml.set("java-pane", (Component) Class.forName("org.javascool.proglets." + pml.getString("name") + ".Panel").newInstance());
             } catch (Throwable e) {
@@ -267,12 +275,12 @@ public class ProgletEngine {
         public String getHelp() {
             return pml.getString("help-location");
         }
-        
+
         /** Renvoie l'url du fichier de completion de la proglet.
          * @return L'URL de l'xml de completion de la proglet.
          */
         public String getCompletion() {
-            return pml.getString("completion","");
+            return pml.getString("completion", "");
         }
 
         /** Indique si la proglet définit des fonctions statiques pour l'utilisateur.
@@ -305,13 +313,17 @@ public class ProgletEngine {
          * @throws RuntimeException si la méthode génère une exception lors de son appel.
          */
         public void doDemo() {
-            if (hasDemo())
-            (new Thread() {
-                @Override
-    public void run() {
-                    Invoke.run(getPane(), "start");
-                }}).start();
+            if (hasDemo()) {
+                (new Thread() {
+
+                    @Override
+                    public void run() {
+                        Invoke.run(getPane(), "start");
+                    }
+                }).start();
+            }
         }
+
         /**  Indique si la proglet est une proglet processing.
          * @return La valeur true si cette applet est développée en processing.
          */
