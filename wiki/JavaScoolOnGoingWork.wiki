@@ -16,6 +16,9 @@
   # (TV2) Finaliser page aide lancement javascool site web qd le core est stable
 
 == Chantier en cours: Javas'Cool builder ==
+  * R.A.S.
+
+== Chantier en cours: Proglets  ==
 
   # (GM1) Mettre en conformité la proglet jeux2D
   * en recupérant les regex de jvs2java dans un Translator
