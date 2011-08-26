@@ -119,8 +119,8 @@ public class ProgletsBuilder {
 	  // Vérification des spécifications
 	  {
 	    boolean error = false;
-	    if (!name.matches("[a-z][a-zA-Z][a-zA-Z][a-zA-Z]+")) {
-	      System.out.println("Le nom de la proglet «" + name + "» est bizarre il ne doit contenir que des lettres faire au moins quatre caractères et démarrer par une minuscule");
+	    if (!(name.matches("[a-z][a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9]+") && name.length() <= 16)) {
+	      System.out.println("Le nom de la proglet «" + name + "» est bizarre il ne doit contenir que des lettres faire au moins quatre caractères et au plus seize et démarrer par une lettre minuscule");
 	      error = true;
 	    }
 	    if (!FileManager.exists(progletDir + File.separator + "help.xml")) {
