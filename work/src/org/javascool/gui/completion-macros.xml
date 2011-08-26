@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<keywords>
+    <keyword name="readString" title="Stock dans une variable s une String" text="String s=readString();">
+        <desc>Crée une variable s qui va contenir une chaîne de caractères demandé à l'utilisateur</desc>
+    </keyword>
+    <keyword name="readString" title="Demande à l'utilisateur une chaîne">
+        <desc>Lit une chaîne de caractère dans une fenêtre présentée à l'utilisateur.
+Il peut prendre un paramètre de type String qui décrit la valeur à entrer (optionel).
+        </desc>
+    </keyword>
+</keywords>
