@@ -38,13 +38,19 @@ public class ProgletCreator {
       String tail = new File(location).exists() ? "un fichier existe à cet emplacement" : "il doit être interdit de créer le répertoire ici";
       System.out.println("Impossible de créer le répertoire «" + location + "» de la proglet, " + tail);
     }
+    FileManager.save(location + File.separator + "proglet.pml", progletPattern.replaceAll("@name", name), true);
     FileManager.save(location + File.separator + "help.xml", helpPattern.replaceAll("@name", name), true);
     FileManager.save(location + File.separator + "Panel.java", panelPattern.replaceAll("@name", name), true);
     FileManager.save(location + File.separator + "Functions.java", functionsPattern.replaceAll("@name", name), true);
+    FileManager.save(location + File.separator + "completion.xml", completionPattern.replaceAll("@name", name), true);
     FileManager.save(location + File.separator + "Translator.java", translatorPattern.replaceAll("@name", name), true);
     System.out.println("La proglet «" + name + "» est crée dans " + location);
     return true;
   }
+  private static final String progletPattern =
+   "title=\"Exemple de «proglet»\"\n" +
+   "author=\"Prenom Nom<email@serveur.com>\"\n" +
+   "icon=\"sample.png\"\n";
   private static final String helpPattern =
     "<div title=\"La «proglet» @name\">\n" +
     "  <div class=\"objectif\">\n" +
@@ -113,6 +119,18 @@ public class ProgletCreator {
     "  //@todo Définir ici les fonctions <tt>public static</tt>\n" +
     "\n" +
     "}\n";
+
+  private static final String completionPattern =
+    "<keywords>\n" +
+    "  <keyword \n" +
+    "    name=\"nom de la complétion\" \n" +
+    "    title=\"description en ligne\">\n" +
+    "    <code>texte source de la complétion</code>\n" +
+    "    <doc>Texte qui documente la fonction de l'on complète</doc>\n" +
+    "  </keyword>\n" +
+    "  <!-- autres keyword -->\n" +
+    "</keywords>\n";
+
 
   private static final String translatorPattern =
     "package org.javascool.proglets.@name;\n" +
