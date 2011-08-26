@@ -18,8 +18,8 @@
   # (PV3) [http://code.google.com/p/javascool/issues/detail?id=53 Implementer le fait qu'on ajoute @proglet:nom-de-la-proglet]
 
   # (PV0) Création d'un lanceur .exe et .app pour le lancement de jascool
-  # (PV1) Pb de poule est d'oeuf avec le teste de version : lancer le 
-browser avec du code 1.5 !
+  # (PV1) Pb de poule est d'oeuf avec le teste de version 
+     * lancer le browser avec du code 1.5 !
 
 == Chantier en cours: Javas'Cool builder ==
 
