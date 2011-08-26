@@ -7,7 +7,7 @@ export JHOME=/usr/java/jdk1.6.0_22
 export PATH:=$(JHOME)/bin:$(PATH)
 
 ant :
-	ant prun
+	ant jrun
 
 svn :
 	cd .. ; ant svn
