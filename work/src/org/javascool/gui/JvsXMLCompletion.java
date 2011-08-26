@@ -27,7 +27,7 @@ import org.xml.sax.helpers.DefaultHandler;
  *
  * @version 1.0
  */
-public class JvsXMLCompletion extends DefaultHandler {
+class JvsXMLCompletion extends DefaultHandler {
 
     /**
      * The completions found after parsing the XML.

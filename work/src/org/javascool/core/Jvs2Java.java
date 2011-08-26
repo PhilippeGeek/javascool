@@ -86,11 +86,8 @@ public class Jvs2Java extends Translator {
     }
     String finalBody = body.toString().
                        replaceAll("(while.*\\{)", "$1 sleep(1);");
-    System.err.println("\n!!! code avant translator:" + finalBody);
-    System.err.println("\n!!! le translator = "+progletTranslator);
       if(progletTranslator != null)
         finalBody = progletTranslator.translate(finalBody);
-    System.err.println("\n!!!code après translator:" + finalBody);
     return head.toString() + finalBody + "}";
   }
   /** Renvoie le nom de la dernière classe Java générée lors de la traduction. */
