@@ -115,8 +115,12 @@
     <mkdir dir="./build/classes"/>
     <copy file="src/org/javascool/Core.java" tofile="src/org/javascool/Core.java.save" preservelastmodified="true"/>
     <replaceregexp file="src/org/javascool/Core.java" match="[0-9]*(.; *// *@revision)" replace="${svn.revision}\1"/>
-    <javac debug="true" debuglevel="lines,vars,source" includeantruntime="false" deprecation="on" encoding="UTF-8" classpath="${classpath}" srcdir="./src" destdir="./build/classes"/>   
-    <move tofile="src/org/javascool/Core.java" file="src/org/javascool/Core.java.save" overwrite="true" preservelastmodified="true"/>
+    <try>
+      <javac debug="true" debuglevel="lines,vars,source" includeantruntime="false" deprecation="on" encoding="UTF-8" classpath="${classpath}" srcdir="./src" destdir="./build/classes"/>   
+    </try>
+    <finally>
+      <move tofile="src/org/javascool/Core.java" file="src/org/javascool/Core.java.save" overwrite="true" preservelastmodified="true"/>
+    </finally>
     <java jar="lib/saxon.jar" dir="src/org/javascool/macros" fork="yes">
       <arg line="-o memo-macros.htm memo-macros.xml ../builder/hdoc2htm.xslt"/>
     </java>
