@@ -147,7 +147,7 @@
       version="true"
       nodeprecated="true"
       nohelp="true"
-      nonavbar="true"
+      nonavbar="false"
       notree="true"
       charset="UTF-8"
       docencoding="UTF-8"
