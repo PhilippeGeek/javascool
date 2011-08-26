@@ -40,12 +40,6 @@ browser avec du code 1.5 !
 == Chantier en cours: web ==
 
   # (GM1) Faire marcher les proglets etc..
-  * Thierry a crée applet-tag.htm et CA MARCHE
-    * Requires testing
-    * En ligne c est pas applet-tag.html qui est copié (et ça marche pas: il ne faut pas je pense encapsuler d objet)
-      * Mais si mais si, c'est bien applet-tag.htm qui est copié (sur la version svn, je te laisse faire un build&publish pour être propre). Par contre il faut cahnger 2-3 trucs dans applet-tag : 
-        * Virer le <html> et le <body> autour de la balise <applet>
-        * Changer le target de l'applet : le jar est là : proglets/maProglet/javascool-proglet-maProglet.jar
 
   # (TV2) Finir le travail d'édition extermne sur le wiki : Catégorie:TPE Catégorie:JavaScoolRes
   * Pages TPE: revoir la présentation et renre visibles les ressources
