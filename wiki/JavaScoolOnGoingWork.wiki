@@ -35,7 +35,7 @@
 
   # (GM1) Ajouter un moyen d'accéder par un [http://javascool.gforge.inria.fr/v4/index.php?page=proglets&action=show&id=ingredients&helpFile=api/all/classes-noframe.html lien interne] en laissant la responsabilité au mec de référencer ces liens de ces pages doc.
 
-  # (TV2) Finir le travail d'édition extermne sur le wiki : Catégorie:TPE Catégorie:JavaScoolRes
+  # (TV2) Finir le travail d'édition externe sur le wiki : Catégorie:TPE Catégorie:JavaScoolRes
   * Pages TPE: revoir la présentation et renre visibles les ressources
   * Pages Ressources . . tout revoir !!
 
@@ -44,7 +44,7 @@
 == Chanter en cours: plateforme de développement ==
   * R.A.S.
 
-= Développements ultérieurs en réflexion=
+= Développements ultérieurs et/ou en réflexion=
   # (TV, octobre) Intégration des proglets processing dans le core et builder
   # (web) Faire un sitemap (ou pas) a partir de web/includes/sitemap_data.php
   # (web) Détecter l'OS ds ?page=run pour highliter l'OS du user.
