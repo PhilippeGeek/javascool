@@ -212,11 +212,13 @@ public class ProgletsBuilder {
                         String signedJar = progletsDir + File.separator + name + File.separator + "javascool-proglet-" + name + ".jar";
                         if (new File(signedJar).getParentFile().exists()) {
                             System.out.print(name + " .. ");
-                            System.out.flush();
+                            //System.out.flush();
                             String keystore = jarDir + File.separator + "org" + File.separator + "javascool" + File.separator + "builder" + File.separator + "javascool.key";
                             String args = "-storepass\tjavascool\t-keypass\tmer,d,azof\t-keystore\t" + keystore + "\t-signedjar\t" + signedJar + "\t" + tmpJar + "\tjavascool";
-                            // @todo en fait bloquant !! sun.security.tools.JarSigner.main(args.split("\t")); donc remplacé par 
-                            Exec.run("jarsigner\t" + args);
+                            sun.security.tools.JarSigner.main(args.split("\t"));
+                            //Exec.run("jarsigner\t" + args);
+                                     // @todo en fait bloquant !!
+                            
                         }
                     }
                     System.out.println("ok.");

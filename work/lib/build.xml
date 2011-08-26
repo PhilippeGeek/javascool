@@ -25,7 +25,7 @@
     <delete file="jarsigner.jar"/>
     <mkdir dir="${build.dir}"/>
     <unzip dest="${build.dir}" src="${jdk.dir}/lib/tools.jar"/>
-    <jar destfile="./jarsigner.jar" basedir="${build.dir}" includes="com/sun/tools/jarsigner/**,sun/security/tools/**"/>
+    <jar destfile="./jarsigner.jar" basedir="${build.dir}" includes="com/sun/tools/jarsigner/**,com/sun/jarsigner/**,sun/security/tools/**"/>
     <delete dir="${build.dir}"/>
   </target>
   <!-- Construction de la library java2html patchée par  Philippe Vienne <philoumailabo@gmail.com> et renommée ici java2html -->
