@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import org.javascool.macros.Macros;
 
 import java.io.File;
+import org.fife.ui.autocomplete.CompletionProvider;
+import org.fife.ui.autocomplete.DefaultCompletionProvider;
 import org.javascool.Core;
 import org.javascool.tools.FileManager;
 import org.javascool.tools.Pml;
@@ -206,6 +208,9 @@ public class ProgletEngine {
             } catch (Exception e) {
                 throw new IllegalArgumentException(e + " : " + location + " is a malformed URL");
             }
+            if(FileManager.exists(Macros.getResourceURL(location + "completion.xml"))){
+                pml.set("completion", location + "completion.xml");
+            }
             if (pml.isDefined("icon")
                     && FileManager.exists(Macros.getResourceURL(location + pml.getString("icon")))) {
                 pml.set("icon-location", location + pml.getString("icon"));
@@ -261,6 +266,13 @@ public class ProgletEngine {
          */
         public String getHelp() {
             return pml.getString("help-location");
+        }
+        
+        /** Renvoie l'url du fichier de completion de la proglet.
+         * @return L'URL de l'xml de completion de la proglet.
+         */
+        public String getCompletion() {
+            return pml.getString("completion","");
         }
 
         /** Indique si la proglet définit des fonctions statiques pour l'utilisateur.

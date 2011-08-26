@@ -34,6 +34,7 @@ import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rtextarea.Gutter;
 import org.fife.ui.rtextarea.RTextScrollPane;
 import org.fife.ui.rtextarea.ToolTipSupplier;
+import org.javascool.core.ProgletEngine;
 import org.javascool.macros.Macros;
 import org.javascool.widgets.ToolBar;
 
@@ -213,21 +214,6 @@ class JVSEditor extends JPanel {
             this.refreshPopupWindow();
             return;
         }
-
-        private boolean isJavaLetter(char l) {
-            System.err.println((int)l);
-            if (Character.isLetter(l)) {
-                return true;
-            } else if (Character.isDigit(l)) {
-                return true;
-            } else if (Character.isSpaceChar(l)) {
-                return false;
-            } else if (Character.isUnicodeIdentifierPart(l)) {
-                return true;
-            } else {
-                return false;
-            }
-        }
     }
 
     /**
@@ -237,7 +223,12 @@ class JVSEditor extends JPanel {
      */
     public static CompletionProvider createCodeCompletionProvider() {
         DefaultCompletionProvider cp = new DefaultCompletionProvider();
-        LanguageAwareCompletionProvider lacp = new LanguageAwareCompletionProvider(JvsXMLCompletion.readCompletionToProvider("org/javascool/gui/completion-macros.xml", cp));
+        if(!ProgletEngine.getInstance().getProglet().getCompletion().equals("")){
+            System.err.println("loadCompletion");
+            JvsXMLCompletion.readCompletionToProvider(ProgletEngine.getInstance().getProglet().getCompletion(), cp);
+        }
+        JvsXMLCompletion.readCompletionToProvider("org/javascool/gui/completion-macros.xml", cp);
+        LanguageAwareCompletionProvider lacp = new LanguageAwareCompletionProvider(cp);
         return lacp;
     }
 }
