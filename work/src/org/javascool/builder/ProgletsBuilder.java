@@ -150,9 +150,7 @@ public class ProgletsBuilder {
 	  DialogFrame.setUpdate("Construction de " + name + " 3/4", level += (10 / proglets.length == 0 ? 1 : 10 / proglets.length));
 	  // Création d'une page de lancement de l'applet
 	  FileManager.save(progletDir + File.separator + "applet-tag.htm",
-			   "<html><head><title>" + name + "</title><meta http-equiv='Content-Type' content='text/html; charset=utf-8'/></head><body>\n"
-			   + "  <applet width='560' height='720' code='org.javascool.widgets.PanelApplet' archive='./javascool-proglet-"+name+".jar'><param name='panel' value='org.javascool.proglets." + name + ".Panel'/><pre>Impossible de lancer " + name + ": Java n'est pas installé ou mal configuré</pre></applet>\n"
-			   + "</body></html>\n");
+			  "<applet width='560' height='620' code='org.javascool.widgets.PanelApplet' archive='./proglets/"+name+"/javascool-proglet-"+name+".jar'><param name='panel' value='org.javascool.proglets." + name + ".Panel'/><pre>Impossible de lancer " + name + ": Java n'est pas installé ou mal configuré</pre></applet>\n");
 	  // Creation de la javadoc si option ok
 	  if (webdoc) 
 	    javadoc(progletDir, progletDir + File.separator + "api");
