@@ -132,6 +132,12 @@ public class ProgletEngine {
     private Thread thread = null;
     private Runnable runnable = null;
 
+    /** Renvoie le runnable correspondant au programme utilisateur en cours.
+     * @return Le runnable correspondant au programme démarré par doRun() ou null si il n'y en a pas.
+     */
+     Runnable getProgletRunnable() {
+     return runnable;
+     }
     //
     // Mécanisme de chargement d'une proglet
     //
