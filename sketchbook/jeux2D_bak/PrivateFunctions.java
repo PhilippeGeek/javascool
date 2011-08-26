@@ -132,17 +132,17 @@ public class PrivateFunctions implements EventCatcher {
   private static void call(String method, Object s) {
     boolean found = false;
     try {
-      for(int i = 0; i < org.javascool.core.ProgletEngine.getInstance().getProgletRunnable().getClass().getMethods().length; i++) {
-        java.lang.reflect.Method m = org.javascool.core.ProgletEngine.getInstance().getProgletRunnable().getClass().getMethods()[i];
+      for(int i = 0; i < Macros.getProgram().getClass().getMethods().length; i++) {
+        java.lang.reflect.Method m = Macros.getProgram().getClass().getMethods()[i];
         if(m.getName().equals(method)) {
           int params = m.getParameterTypes().length;
           if(params == 0) {
-            m.invoke(org.javascool.core.ProgletEngine.getInstance().getProgletRunnable());
+            m.invoke(Macros.getProgram());
             found = true;
           } else if(params == 1)
             if(m.getParameterTypes()[0] == s.getClass()) {
               m.getParameterTypes()[0].cast(s);
-              m.invoke(org.javascool.core.ProgletEngine.getInstance().getProgletRunnable(), m.getParameterTypes()[0].cast(s));
+              m.invoke(Macros.getProgram(), m.getParameterTypes()[0].cast(s));
               found = true;
             }
         }
@@ -158,8 +158,8 @@ public class PrivateFunctions implements EventCatcher {
     }
     if(!found) {
       Logger.getLogger(PrivateFunctions.class.getName()).log(Level.SEVERE, null, new Exception("Callback method " + method + " not found"));
-      for(int i = 0; i < org.javascool.core.ProgletEngine.getInstance().getProgletRunnable().getClass().getMethods().length; i++) {
-        java.lang.reflect.Method m = org.javascool.core.ProgletEngine.getInstance().getProgletRunnable().getClass().getMethods()[i];
+      for(int i = 0; i < Macros.getProgram().getClass().getMethods().length; i++) {
+        java.lang.reflect.Method m = Macros.getProgram().getClass().getMethods()[i];
         System.out.println(m.getName());
       }
       System.out.println("");
@@ -172,11 +172,11 @@ public class PrivateFunctions implements EventCatcher {
   private static void call(String method) {
     boolean found = false;
     try {
-      for(int i = 0; i < org.javascool.core.ProgletEngine.getInstance().getProgletRunnable().getClass().getMethods().length; i++) {
-        java.lang.reflect.Method m = org.javascool.core.ProgletEngine.getInstance().getProgletRunnable().getClass().getMethods()[i];
+      for(int i = 0; i < Macros.getProgram().getClass().getMethods().length; i++) {
+        java.lang.reflect.Method m = Macros.getProgram().getClass().getMethods()[i];
         if(m.getName().equals(method))
           if(m.getParameterTypes().length == 0) {
-            m.invoke(org.javascool.core.ProgletEngine.getInstance().getProgletRunnable());
+            m.invoke(Macros.getProgram());
             found = true;
           }
       }
@@ -296,8 +296,8 @@ public class PrivateFunctions implements EventCatcher {
       double targetTimeMs = 1000 / m_fps;
       System.err.println("Starting clock");
       while(true) {
-        if(!org.javascool.core.ProgletEngine.getInstance().isRunning() || m_exit) {
-          System.err.println("Stopped clock. Console.isRunning()=" + (org.javascool.core.ProgletEngine.getInstance().isRunning() ? "yes" : "no") + ", m_exit=" + (m_exit ? "yes" : "no"));
+        if(!Console.isRunning() || m_exit) {
+          System.err.println("Stopped clock. Console.isRunning()=" + (Console.isRunning() ? "yes" : "no") + ", m_exit=" + (m_exit ? "yes" : "no"));
           break;
         }
         m_lastTick = System.currentTimeMillis();
@@ -332,6 +332,7 @@ public class PrivateFunctions implements EventCatcher {
      */
     @SuppressWarnings("AccessingNonPublicFieldOfAnotherObject")
     private void tick() {
+      Macros.getResource("test.txt");         // DEBUG
       for(int j = 0; j < 3; j++) {
         if(getFunctionsElementSingleton().m_mouseDown[j])
           callback(getFunctionsElementSingleton().m_onMouseDown);

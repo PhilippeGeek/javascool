@@ -28,7 +28,7 @@ public class Oval extends Geometry implements Drawable {
   public Oval(double x, double y, double w, double h) {
     super(x, y, w, h);
     m_solid = true;
-    Panel.getPane().getGamePanel().addItem(this);
+    ((Panel) Macros.getProgletPanel()).getGamePanel().addItem(this);
   }
   /**
    * Creates and draws an oval
@@ -40,7 +40,7 @@ public class Oval extends Geometry implements Drawable {
    */
   public Oval(double x, double y, double w, double h, boolean solid) {
     super(x, y, w, h);
-    Panel.getPane().getGamePanel().addItem(this);
+    ((Panel) Macros.getProgletPanel()).getGamePanel().addItem(this);
     m_solid = solid;
   }
   /**

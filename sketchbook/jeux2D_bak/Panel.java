@@ -1,7 +1,9 @@
 package org.javascool.proglets.jeux2D;
-import static org.javascool.macros.Macros.*;
-import static org.javascool.proglets.jeux2D.Functions.*;
-import javax.swing.JPanel;
+
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 import java.applet.Applet;
 import java.awt.Color;
 import java.util.logging.Logger;
@@ -15,16 +17,8 @@ import java.util.logging.Logger;
 import org.javascool.widgets.Console;
 import org.javascool.macros.Macros;
 
-
-
-
-
-
-
-/** Définit le panneau graphique de la proglet «jeux2D»
+/**
  *
- * @see <a href="Panel.java.html">code source</a>
- * @serial exclude
  * @author gmatheron
  */
 public class Panel extends JApplet {
@@ -32,12 +26,6 @@ public class Panel extends JApplet {
   private static final Logger LOG = Logger.getLogger(Panel.class.getName());
   public static GamePanel m_panel;
 
-  /** Renvoie l'instance de la proglet pour accéder à ses éléments. */
-  public static Panel getPane() {
-    return getProgletPane();
-  }
-
-  // @bean
   public Panel() {
     m_panel = new GamePanel();
     setContentPane(m_panel);

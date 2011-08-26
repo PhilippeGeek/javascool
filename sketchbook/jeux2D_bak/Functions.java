@@ -1,26 +1,16 @@
 package org.javascool.proglets.jeux2D;
-import static org.javascool.macros.Macros.*;
+
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 import java.util.logging.Logger;
 
-/** Définit les fonctions pour manipuler la proglet «jeux2D»
+/**
  *
- * @see <a href="Functions.java.html">code source</a>
- * @serial exclude
  * @author gmatheron
  */
-
 public class Functions {
-  private static final long serialVersionUID = 1L;
-  
-  // @factory
-  private Functions() {}
-  /** Renvoie l'instance de la proglet pour accéder à ses éléments.
-   * <p> Utilisé dans une construction de type <tt>getPane().appelDeMethode(..)</tt>.</p>
-   */
-  private static Panel getPane() {
-     return getProgletPane();
-  }
-
   /**
    * Returns the mouse X position relative to the top-left corner of the
    * proglet panel
@@ -222,4 +212,6 @@ public class Functions {
   public static char KEY_DEL = 127, KEY_INSERT = 155, KEY_NUMLOCK = 144;
 
   private static final Logger LOG = Logger.getLogger(Functions.class.getName());
+
+  private Functions() {}
 }

@@ -5,6 +5,7 @@ package org.javascool.proglets.jeux2D;
  * and open the template in the editor.
  */
 import java.util.ArrayList;
+import org.javascool.gui.JVSMainPanel;
 
 /**
  *
@@ -23,7 +24,7 @@ public abstract class Accessible extends LinkedEventGroup {
   public void addProperty(String name, Object o) {
     for(StoredProperty s : m_props)
       if(s.getName().equals(name))
-        org.javascool.core.ProgletEngine.getInstance().doStop("Impossible de rajouter une propriété nommée " + name + " car une propriété de ce nom existe déjà");
+        JVSMainPanel.reportRuntimeBug("Impossible de rajouter une propriété nommée " + name + " car une propriété de ce nom existe déjà");
     m_props.add(new StoredProperty(name, o, o.getClass()));
   }
   public void removeProperty(String name) {
