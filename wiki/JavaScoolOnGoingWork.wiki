@@ -57,4 +57,4 @@
   # (web/builder) Ajouter une page outil qui traduise du [X]HTML en HML à partir de work/src/org/javascool/builder/htm2hml.xslt
   # (core/platform) Rendre disponible TextFileEditor & TextFilesEditor (avec boutons et interface) et DoubleTabbedPane sortis de org/javascool/gui
   # (platform) Deployer dans svn:work/lib la construction de autocomplete.jar
-  # (core) Améliorer la gestion d'erreur des completions.xml
+  # (core) Améliorer la gestion d'erreur des completion.xml
