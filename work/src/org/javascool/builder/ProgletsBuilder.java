@@ -143,6 +143,8 @@ public class ProgletsBuilder {
 	  // Traduction Hml -> Htm des docs
 	  {
 	    for (String doc : FileManager.list(progletDir, ".*\\.xml"))
+              // Escape le fichier de spécification des complétion de l'éditeur
+              if (!new File(doc).getName().equals("completion.xml"))
 	      FileManager.save(doc.replaceFirst("\\.xml", "\\.htm"),
 			       Xml2Xml.run(FileManager.load(doc),
 					   buildDir.getPath()+File.separator+"jar"+File.separator+"org"+File.separator+"javascool"+File.separator+"builder"+File.separator+"hdoc2htm.xslt"));

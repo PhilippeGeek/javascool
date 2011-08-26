@@ -35,6 +35,7 @@ $wiki_get_contents_redirections = array(
 					"JavaScool:DocCreationProgletExemple" => "?page=developers&action=doc-proglets",
 					"JavaScool:DocFormatHml" => "?page=developers&action=doc-hml",
 					"JavaScool:DocumentsHml" => "?page=developers&action=spec-hml",
+					"JavaScool:EditorCompletion" => "?page=developers&action=doc-completion",
 					"JavaScool:DocJavaScoolBuilder" => "?page=developers&action=doc-javascoolbuilder",
 					"JavaScool:SpecJavaScoolBuilder" => "?page=developers&action=spec-javascoolbuilder",
 					"JavaScool:FaqD%C3%A9veloppement" => "?page=developers&action=faq-developers",
