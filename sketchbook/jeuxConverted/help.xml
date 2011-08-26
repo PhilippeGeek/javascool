@@ -1,0 +1,20 @@
+<div title="La «proglet» jeuxConverted">
+  <div class="objectif">
+  </div>
+  <div class="intros">
+    <div title="item 1">
+    </div>
+  etc..
+  </div>
+  <div class="works">
+    <div title="item 1">
+    </div>
+  etc..
+  </div>
+  <div class="notes">
+   <!-- référencées par des tags de la forme <l class="note" link="1"/> -->
+    <div title="item 1">
+    </div>
+  etc..
+  </div>
+</div>
