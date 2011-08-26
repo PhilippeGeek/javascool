@@ -571,9 +571,27 @@ h1 {
     background-repeat: repeat-y;
     font-weight: bold;
     padding-left:25px;
-    font-size: 15px;
+    font-size: 20px;
 }
 
+h2 {
+    display:block;
+    font-weight: bold;
+    padding-left:25px;
+    font-size: 15px;
+}
+h3 {
+    display:block;
+    font-weight: bold;
+    padding-left:25px;
+    font-size: 12px;
+}
+h4 {
+    display:block;
+    font-style: italic;
+    padding-left:25px;
+    font-size: 12px;
+}
 
 /*
  * Proglets
@@ -683,8 +701,9 @@ ul.developpers {
 /* Define colors, fonts and other style attributes here to override the defaults */
 
 
-/* Headings */
+/* Headings 
 #javadoc h1 { font-size: 145% }
+*/
 
 /* Table colors */
 #javadoc .TableHeadingColor     { background: #CCCCFF; color:#000000 } /* Dark mauve */
