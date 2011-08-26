@@ -4,10 +4,13 @@
  */
 package org.javascool.gui;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -49,7 +52,7 @@ class JVSStartPanel extends JScrollPane {
         for (ProgletEngine.Proglet proglet : ProgletEngine.getInstance().getProglets()) {
             i++;
         }
-        shortcuts.setLayout(new GridLayout(0, (i/4)+1));
+        shortcuts.setLayout(new GridLayout(0, (i/3)==0?1:(i/3)));
         for (ProgletEngine.Proglet proglet : ProgletEngine.getInstance().getProglets()) {
             shortcuts.add(JVSStartPanel.createShortcut(Macros.getIcon(proglet.getIcon()), proglet.getName(), proglet.getTitle(), new ProgletLoader(proglet.getName())));
         }
@@ -75,13 +78,17 @@ class JVSStartPanel extends JScrollPane {
     /** Créer un pannel avec un bouton capâble de lançer la Proglet */
     private static JPanel createShortcut(ImageIcon icon, String name, String title, final Runnable start) {
         JPanel panel = new JPanel();
-        
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.add(Box.createVerticalGlue());
         JButton label = new JButton(name, icon);
         label.setToolTipText(title);
         label.setPreferredSize(new Dimension(160, 160));
         label.setVerticalTextPosition(JLabel.BOTTOM);
         label.setHorizontalTextPosition(JLabel.CENTER);
+        label.setAlignmentX(Component.CENTER_ALIGNMENT);
+        label.setAlignmentY(Component.CENTER_ALIGNMENT);
         panel.add(label);
+        panel.add(Box.createVerticalGlue());
         label.addMouseListener(new MouseListener() {
 
             @Override
