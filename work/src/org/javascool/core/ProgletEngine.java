@@ -135,7 +135,7 @@ public class ProgletEngine {
     /** Renvoie le runnable correspondant au programme utilisateur en cours.
      * @return Le runnable correspondant au programme démarré par doRun() ou null si il n'y en a pas.
      */
-     Runnable getProgletRunnable() {
+     public Runnable getProgletRunnable() {
      return runnable;
      }
     //
