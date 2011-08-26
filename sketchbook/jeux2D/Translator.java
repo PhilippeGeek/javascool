@@ -1,4 +1,4 @@
-package org.javascool.proglets.jeuxConverted;
+package org.javascool.proglets.jeux2D;
 
 import java.lang.String;
 
@@ -19,6 +19,7 @@ public class Translator extends org.javascool.core.Translator {
     code.replaceAll("\\(double\\)", "(Double)");
     code.replaceAll("((^|\n)([ \t]*)(?!((public|private|protected)([ \t]+)))([A-Za-z0-9_]+)([ ]+)([A-Za-z0-9_]+)\\(([^()]*)\\)([ ]*)\\{([ \t]*)(\n|$))", "public $1");
     code.replaceAll("(^|[\n\t ])for[\n\t ]*\\(([A-Za-z0-9_.]+)[\n\t ]+([A-Za-z0-9_.]+)[\n\t ]+in[\n\t ]+([A-Za-z0-9_.]+)[\n\t ]*\\)[\n\t ]*\\{", "for (int tmpsystemi=0; tmpsystemi<$4.size(); tmpsystemi++) {$2 $3=($2)($4.get(tmpsystemi));");
-    return code;
+    System.out.println("TRANSLATING !!!");
+    return code+"//TRANSLATED";
   }
 }
