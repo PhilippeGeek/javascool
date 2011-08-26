@@ -66,7 +66,7 @@ public class Java2Html {
       source = new JavaSourceParser(settings.getConversionOptions()).parse(stringReader);
     }
     catch (IOException e) {
-      return null;
+      throw new RuntimeException("IOException while Parse Java Source");
     }
 
     IJavaSourceConverter converter = settings.createConverter();
@@ -75,7 +75,7 @@ public class Java2Html {
       converter.convert(source, settings.getConversionOptions(), writer);
     }
     catch (IOException e) {
-      return null;
+      throw new RuntimeException("IOException while Parse Java Source");
     }
     return writer.toString();
   }
