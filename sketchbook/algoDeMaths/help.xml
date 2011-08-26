@@ -1,5 +1,4 @@
-<div title="La «proglet» exosdemaths">
-  <p class="margin">Autres <l link="../../../org/javascool/doc-files/about-proglets.htm" text="«proglets»"/>.</p>
+<div title="La «proglet» algoDeMaths">
   <p>
     Cette proglet<l class="note" link="1"/> permet d'afficher des tracés de couleurs différentes.
     <div>Pour tracer un point de la courbe: <div class="code">

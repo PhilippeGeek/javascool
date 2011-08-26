@@ -33,15 +33,15 @@ void main() {
   double YD = 2 * YI - YB;
   println("Les coordonnées du point D sont : ( " + XD + " ; " + YD + " )");
   // Tracé du parallélogramme
-  scopeReset(15, 10);
-  scopeAdd(XA, YA, "A", 5);
-  scopeAdd(XB, YB, "B", 5);
-  scopeAdd(XC, YC, "C", 5);
-  scopeAdd(XD, YD, "D", 5);
-  scopeAddLine(XA, YA, XB, YB, 6);
-  scopeAddLine(XB, YB, XC, YC, 6);
-  scopeAddLine(XC, YC, XD, YD, 6);
-  scopeAddLine(XD, YD, XA, YA, 6);
+  reset(15, 10);
+  addString(XA, YA, "A", 5);
+  addString(XB, YB, "B", 5);
+  addString(XC, YC, "C", 5);
+  addString(XD, YD, "D", 5);
+  addLine(XA, YA, XB, YB, 6);
+  addLine(XB, YB, XC, YC, 6);
+  addLine(XC, YC, XD, YD, 6);
+  addLine(XD, YD, XA, YA, 6);
   // Calcul des longueurs
   double AB2 = Math.pow(XB - XA, 2) + Math.pow(YB - YA, 2);
   double AD2 = Math.pow(XD - XA, 2) + Math.pow(YD - YA, 2);
