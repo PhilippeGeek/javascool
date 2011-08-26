@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import org.javascool.core.ProgletEngine;
 import org.javascool.core.ProgletEngine.Proglet;
+import org.javascool.macros.Macros;
 import org.javascool.tools.UserConfig;
 
 /** The main panel for Java's cool
@@ -95,6 +96,10 @@ class JVSPanel extends JPanel {
         int returnVal = fc.showOpenDialog(Desktop.getInstance().getFrame());
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             String path = fc.getSelectedFile().getAbsolutePath();
+            if(!fc.getSelectedFile().exists()){
+                Dialog.error("Erreur", "Le fichier indiqué n'existe pas !!!");
+                return;
+            }
             UserConfig.getInstance("javascool").setProperty("dir", fc.getSelectedFile().getParentFile().getAbsolutePath());
             if (noFileEdited) {
                 noFileEdited = false;
