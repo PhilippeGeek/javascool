@@ -6,6 +6,7 @@ package org.javascool.proglets.jeux2D;
  */
 import java.awt.Color;
 import java.util.logging.Logger;
+import org.javascool.gui.JVSMainPanel;
 
 /**
  * This class is parent of all the objects that are rectangular, that can be
@@ -141,7 +142,8 @@ public abstract class Geometry extends Accessible implements Drawable {
     try {
       m_color = new Color((float) (r / 255), (float) (g / 255), ((float) b / 255), (float) a);
     } catch(IllegalArgumentException e) {
-      org.javascool.core.ProgletEngine.getInstance().doStop("Impossible de créer une couleur si les valeurs spécifiées ne sont pas comprises entre 0 et 255 pour r, g et b et entre 0 et 1 pour alpha");
+      JVSMainPanel.reportRuntimeBug("Impossible de créer une couleur si les valeurs spécifiées ne sont pas comprises "
+                                    + "entre 0 et 255 pour r, g et b et entre 0 et 1 pour alpha");
     }
   }
   private static final Logger LOG = Logger.getLogger(Geometry.class.getName());

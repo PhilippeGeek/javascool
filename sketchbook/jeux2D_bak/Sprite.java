@@ -20,8 +20,8 @@ import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import org.javascool.gui.JVSMainPanel;
 import org.javascool.macros.Macros;
-import java.io.FileInputStream;
 
 /**
  * This class defines a sprite that can be drawn in the render area and addressed events
@@ -66,7 +66,7 @@ public class Sprite extends Geometry implements Drawable {
    */
   public Sprite(double x, double y, double w, double h) {
     super(x, y, w, h);
-    Panel.getPane().getGamePanel().addItem(this);
+    ((Panel) Macros.getProgletPanel()).getGamePanel().addItem(this);
   }
   /**
    * Loads the image from a file. This must be done before drawing starts.
@@ -79,21 +79,16 @@ public class Sprite extends Geometry implements Drawable {
     try {
       m_image = ImageIO.read(new File(fileName));
     } catch(IOException e) {
-	try {
-     	      InputStream stream = Macros.getResourceURL(fileName).openStream();
-	      if(stream == null)
-	        org.javascool.core.ProgletEngine.getInstance().doStop("Le fichier " + fileName + " n'extste pas");
-	      else {
-	        try {
-	          m_image = ImageIO.read(stream);
-	        } catch(IOException ex) {
-	          org.javascool.core.ProgletEngine.getInstance().doStop("Le fichier " + fileName + " est illisible");
-	        }
-	      }
-	}
-	catch(IOException e2) {
-	    org.javascool.core.ProgletEngine.getInstance().doStop("Le fichier " + fileName + " est illisible");
-	}
+      InputStream stream = Macros.getResource(fileName);
+      if(stream == null)
+        JVSMainPanel.reportRuntimeBug("Le fichier " + fileName + " n'extste pas");
+      else {
+        try {
+          m_image = ImageIO.read(stream);
+        } catch(IOException ex) {
+          JVSMainPanel.reportRuntimeBug("Le fichier " + fileName + " est illisible");
+        }
+      }
     }
   }
   /**
