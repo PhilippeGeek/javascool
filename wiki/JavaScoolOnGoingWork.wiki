@@ -29,6 +29,7 @@ browser avec du code 1.5 !
 
   # (TV1) Documentation des proglets: 
   * renommer les npms de proglets sans prefixe; 
+  * ajouter les aides/ibnsertion
   * mettre à jour les docs XML : liens, nom des routines, texte;
   * Rechercher les Jvs et XML v3 oubliés en v4
   * Publier sur le site en ressource les pages activites et exodematsh index en page ressource
