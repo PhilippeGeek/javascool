@@ -19,6 +19,9 @@
   # (GM1) Mettre en conformité la proglet jeux2D
   * en recupérant les regex de jvs2java dans un Translator
   * en validant si les "liens jvs" sont ok apres nos changements
+  * Ok c'est fait mais il faut encore : 
+    * Virer la partie de l'aide qui traite des collisions (pas implémenté entièrement)
+    * Résoudre des bugs (voir mails)
 
   # (TV1) Documentation des proglets: 
   * renommer les npms de proglets sans prefixe; 
