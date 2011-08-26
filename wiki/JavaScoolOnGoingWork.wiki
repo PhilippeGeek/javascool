@@ -55,3 +55,4 @@
   # (core) Implementer le fait qu'on ajoute @proglet:nom-de-la-proglet.
      * Proposer des accès depuis Desktop vers les instances des jvs
   # (core) Virer le HtmlDisplay HTML3 et trouver un bon browser
+  # (core) restaurer AlgoEditor et about-algo-editor en proglet
