@@ -12,8 +12,19 @@ public class Translator extends org.javascool.core.Translator {
   public java.lang.String getImports() {
     return "import static org.javascool.proglets.jeux2D.*;";
   }
+
     @Override
   public java.lang.String translate(java.lang.String code) {
+    String[] lines = code.split("\n");
+    String body="";
+    for(String line : lines) {
+      line=translateLine(line);
+      body+=line+"\n";
+    }
+    return body;
+  }
+
+  public java.lang.String translateLine(java.lang.String code) {
     code.replaceAll("(.*[^a-zA-Z0-9_])([a-zA-Z0-9_]+[ \t=]*\\.getProperty[ \t=]*\\()[ \t=]*([a-zA-Z0-9_]+)[ \t=]*,([^)]*\\))(.*)", "$1(($3)$2$4)$5");
     code.replaceAll("\\(int\\)", "(Integer)");
     code.replaceAll("\\(double\\)", "(Double)");
