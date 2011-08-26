@@ -84,10 +84,10 @@ public class Jvs2Java extends Translator {
       head.append("    else System.out.println(\"\\n-------------------\\nErreur lors de l'exécution de la proglet\\n\"+e+\"\\n-------------------\\n\");}");
       head.append("}");
     }
-
     String finalBody = body.toString().
                        replaceAll("(while.*\\{)", "$1 sleep(1);");
-
+      if(progletTranslator != null)
+        finalBody = progletTranslator.translate(finalBody);
     return head.toString() + finalBody + "}";
   }
   /** Renvoie le nom de la dernière classe Java générée lors de la traduction. */
