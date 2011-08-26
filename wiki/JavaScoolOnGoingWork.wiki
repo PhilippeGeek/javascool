@@ -2,10 +2,8 @@
 <wiki:toc max_depth="2" />
 
 *Notre planning*
-  * Ve 26 août : JVS4 Beta 1
-  * Me 31 août : JVS4 Beta 2
-  * Me 7 Sept : JVS4 RC1
-  * Me 21 Sept : JVS4 RC2
+  * Lu 29 août : JVS4 RC1 partagée avec les co-développeurs
+  * Me 7 Sept : JVS4 RC2 publiée en version principale sur le site 
 
 *[http://code.google.com/p/javascool/issues/list Issues en cours]*
 
