@@ -82,6 +82,7 @@
   </target>
 
   <target name="xterm" depends="rsync.user.name">
+    <echo level="info" message="Connecting on ${env.GFORGEUSER}@scm.gforge.inria.fr"/>
     <exec os="Linux" executable="gnome-terminal">
       <arg value="-e"/>
       <arg value="ssh ${env.GFORGEUSER}@scm.gforge.inria.fr 'cd /home/groups/javascool/htdocs ; bash -i'"/>

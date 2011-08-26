@@ -31,7 +31,7 @@
         <xsl:when test="@class = 'works'"><h2>Travail proposé.</h2></xsl:when>
         <xsl:when test="@class = 'notes'"><h2>Remarques.</h2></xsl:when>
       </xsl:choose>
-      <div id="{@class}"><ol><xsl:for-each select="*"><li><xsl:call-template name="div"/></li></xsl:for-each></ol></div>
+      <div id="{@class}"><ol><xsl:for-each select="*"><li><xsl:call-template name="div-2"/></li></xsl:for-each></ol></div>
     </xsl:when>
     <xsl:when test="@class = 'code'"><div class="code"><table witdh="90%" border="1" align="center"><tr><td><xsl:call-template name="div"/></td></tr></table></div></xsl:when>
     <xsl:otherwise><xsl:call-template name="div"/></xsl:otherwise>
