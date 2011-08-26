@@ -54,13 +54,11 @@ public class Jvs2Html {
      */
     public static boolean runDirectory(String srcDir, String destDir) {
         try {
-            System.out.println("Convert Java to html in " + srcDir);
             File src = new File(srcDir);
             File dest = new File(destDir);
             String[] fileList = FileManager.list(srcDir);
             for (String file : fileList) {
                 if (file.endsWith(".java")) {
-                    System.out.println(file);
                     FileManager.save(dest.getCanonicalPath() + File.separator + new File(file).getName() + ".html", Jvs2Html.run(FileManager.load(file)));
                 }
             }
