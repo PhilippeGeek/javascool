@@ -93,13 +93,13 @@ public class Desktop {
         }
     }
         /**
-         * @see openFile(File)
+         * @see #openFile(File)
          */
   public boolean openFile(String file) {
       return openFile(new File(file));
   }
         /**
-         * @see openFile(File)
+         * @see #openFile(File)
          */
   public boolean openFile() {
       return openFile((File) null);

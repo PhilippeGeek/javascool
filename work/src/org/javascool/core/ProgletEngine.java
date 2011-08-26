@@ -108,7 +108,7 @@ public class ProgletEngine {
     }
 
     /** Mécanisme d'arrêt du programme compilé. 
-     * @param Message d'erreur affiché à la console. Si null (par défaut) pas de message.
+     * @param message Message d'erreur affiché à la console. Si null (par défaut) pas de message.
      */
     public void doStop(String message) {
         if (thread != null) {
@@ -290,7 +290,6 @@ public class ProgletEngine {
         }
 
         /** Lance la démo de la proglet.
-         * @return La valeur true si la méthode est invocable, false sinon.
          * @throws RuntimeException si la méthode génère une exception lors de son appel.
          */
         public void doDemo() {
@@ -302,6 +301,7 @@ public class ProgletEngine {
                 }}).start();
         }
         /**  Indique si la proglet est une proglet processing.
+         * @return La valeur true si cette applet est développée en processing.
          */
         public boolean isProcessing() {
             return pml.getBoolean("processing");
