@@ -33,7 +33,7 @@
 
 == Chantier en cours: web ==
 
-  # (GM1) Faire marcher les proglets etc..
+  # (GM1) Ajouter un moyen d'accéder par un [http://javascool.gforge.inria.fr/v4/index.php?page=proglets&action=show&id=ingredients&helpFile=api/all/classes-noframe.html lien interne] en laissant la responsabilité au mec de référencer ces liens de ces pages doc.
 
   # (TV2) Finir le travail d'édition extermne sur le wiki : Catégorie:TPE Catégorie:JavaScoolRes
   * Pages TPE: revoir la présentation et renre visibles les ressources
