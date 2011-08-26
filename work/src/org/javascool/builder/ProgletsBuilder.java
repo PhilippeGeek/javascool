@@ -212,12 +212,9 @@ public class ProgletsBuilder {
                         String signedJar = progletsDir + File.separator + name + File.separator + "javascool-proglet-" + name + ".jar";
                         if (new File(signedJar).getParentFile().exists()) {
                             System.out.print(name + " .. ");
-                            //System.out.flush();
                             String keystore = jarDir + File.separator + "org" + File.separator + "javascool" + File.separator + "builder" + File.separator + "javascool.key";
                             String args = "-storepass\tjavascool\t-keypass\tmer,d,azof\t-keystore\t" + keystore + "\t-signedjar\t" + signedJar + "\t" + tmpJar + "\tjavascool";
                             sun.security.tools.JarSigner.main(args.split("\t"));
-                            //Exec.run("jarsigner\t" + args);
-                                     // @todo en fait bloquant !!
                             
                         }
                     }
@@ -226,7 +223,7 @@ public class ProgletsBuilder {
                 DialogFrame.setUpdate("Finalisation 2/2", 100);
             }
             if (targetDir == null) {
-                //JarManager.rmDir(buildDir);
+                JarManager.rmDir(buildDir);
             }
             System.out.println("Construction achevée avec succès: «" + targetJar + "» a été créé");
             System.out.println("\tIl faut lancer «" + targetJar + "» pour tester/utiliser les proglets.");
