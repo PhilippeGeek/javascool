@@ -2,10 +2,6 @@
 
   <div class="objectif">
     Le but de ce tutoriel est de programmer quelques calculs géométriques.
-    Il faut déja savoir <l link="../../ingredients/doc-files/sujet-hello-world.htm" text="utiliser l'interface"/>,
-    se servir de <l link="../../ingredients/doc-files/sujet-about-variables.htm" text="variables"/> 
-    et avoir découvert l'<l link="../../ingredients/doc-files/sujet-about-if.htm" text="instruction conditionnelle"/>
-    et définir une <l link="../../ingredients/doc-files/sujet-about-functions.htm" text="fonction"/>.
   </div>
   
   <div class="intros">
@@ -13,8 +9,8 @@
       Considérons le code suivant: <div class="code">
         <p><r>void main</r>() {</p>
         <m>Lecture des valeurs du réticule</m>
-        <p><T/><r>double</r> x_A = scopeX();</p>
-        <p><T/><r>double</r> y_A = scopeY();</p>
+        <p><T/><r>double</r> x_A = getX();</p>
+        <p><T/><r>double</r> y_A = getY();</p>
         <m>Définition d'un autre point, avec des valeurs dans [-1, 1]</m>
         <p><T/><r>double</r> x_B = 0.2;</p>
         <p><T/><r>double</r> y_B = 0.4;</p>
@@ -22,11 +18,11 @@
         <p><T/><r>double</r> x_I = (x_A + x_B) / 2;</p>
         <p><T/><r>double</r> y_I = (y_A + y_B) / 2;</p>
         <m>Tracé des points et des lignes correspondants</m>
-        <p><T/><r>scopeReset</r>();</p>
-        <p><T/><r>scopeAdd</r>(x_A, y_A, <v>A</v>, 5);</p>
-        <p><T/><r>scopeAdd</r>(x_I, y_I, <v>I</v>, 2);</p>
-        <p><T/><r>scopeAdd</r>(x_B, y_B, <v>B</v>, 5);</p>
-        <p><T/><r>scopeAddLine</r>(x_A, y_A, x_B, y_B, 6);</p>
+        <p><T/><r>reset</r>();</p>
+        <p><T/><r>addString</r>(x_A, y_A, <v>A</v>, 5);</p>
+        <p><T/><r>addString</r>(x_I, y_I, <v>I</v>, 2);</p>
+        <p><T/><r>addString</r>(x_B, y_B, <v>B</v>, 5);</p>
+        <p><T/><r>addLine</r>(x_A, y_A, x_B, y_B, 6);</p>
         <p>}</p>
     </div>Le programme principal <r>main</r>:<div class="ul">
       <div>lit dans <b>x_A</b> et <b>y_A</b> les valeurs horizontales et verticales du réticule du scope.</div>
@@ -61,8 +57,8 @@
       En utilisant le code qui commence ainsi: <div class="code">
         <p><r>void main</r>() {</p>
         <m>Lecture des valeurs du réticule</m>
-        <p><T/><r>double</r> x_A = scopeX();</p>
-        <p><T/><r>double</r> y_A = scopeY();</p>
+        <p><T/><r>double</r> x_A = getX();</p>
+        <p><T/><r>double</r> y_A = getY();</p>
         <m>Définition de deux autres points, avec des valeurs dans [-1, 1]</m>
         <p><T/><r>double</r> x_B = 0.2;</p>
         <p><T/><r>double</r> y_B = 0.4;</p>
@@ -79,8 +75,8 @@
       En utilisant le code qui commence ainsi: <div class="code">
         <p><r>void main</r>() {</p>
         <m>Lecture des valeurs du réticule</m>
-        <p><T/><r>double</r> x_A = scopeX();</p>
-        <p><T/><r>double</r> y_A = scopeY();</p>
+        <p><T/><r>double</r> x_A = getX();</p>
+        <p><T/><r>double</r> y_A = getY();</p>
         <m>Définition de deux autres points, avec des valeurs dans [-1, 1]</m>
         <p><T/><r>double</r> x_B = 0.2;</p>
         <p><T/><r>double</r> y_B = 0;</p>

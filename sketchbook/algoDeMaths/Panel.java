@@ -1,4 +1,4 @@
-package org.javascool.proglets.algoDeMath;
+package org.javascool.proglets.algoDeMaths;
 
 import javax.swing.JPanel;
 import java.awt.BorderLayout;

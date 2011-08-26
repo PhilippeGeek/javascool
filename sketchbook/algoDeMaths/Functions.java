@@ -1,4 +1,4 @@
-package org.javascool.proglets.algoDeMath;
+package org.javascool.proglets.algoDeMaths;
 import static org.javascool.macros.Macros.*;
 
 /** Définit les fonctions de la proglet.
@@ -73,10 +73,10 @@ public class Functions {
    * @param c Numéro de la courbe: 0 (noir, défaut), 1 (brun), 2 (rouge), 3 (orange), 4 (jaune), 5 (vert), 6 (bleu), 7 (violet), 8 (gris), 9 (blanc).
    */
   public static void addRectangle(double xmin, double ymin, double xmax, double ymax, int c) {
-    scopeAddLine(xmin, ymin, xmax, ymin, c);
-    scopeAddLine(xmax, ymin, xmax, ymax, c);
-    scopeAddLine(xmax, ymax, xmin, ymax, c);
-    scopeAddLine(xmin, ymax, xmin, ymin, c);
+    addLine(xmin, ymin, xmax, ymin, c);
+    addLine(xmax, ymin, xmax, ymax, c);
+    addLine(xmax, ymax, xmin, ymax, c);
+    addLine(xmin, ymax, xmin, ymin, c);
   }
   /*
    * @see #addRectangle(double, double, double, double, int)
