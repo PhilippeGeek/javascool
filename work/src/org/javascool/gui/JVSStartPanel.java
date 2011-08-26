@@ -4,13 +4,10 @@
  */
 package org.javascool.gui;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -47,19 +44,15 @@ class JVSStartPanel extends JScrollPane {
      * @return Le JPanel dessiné
      */
     private static JPanel shortcutPanel() {
-        //JPanel vertical = new JPanel();
-        //vertical.setLayout(new BoxLayout(vertical, BoxLayout.Y_AXIS));
-        //vertical.add(Box.createVerticalGlue());
         JPanel shortcuts = new JPanel();
-        shortcuts.setLayout(new GridLayout(0, 4));
-        //JScrollPane jsp = new JScrollPane(shortcuts);
-        //shortcuts.add(Box.createHorizontalGlue());
+        int i=0;
+        for (ProgletEngine.Proglet proglet : ProgletEngine.getInstance().getProglets()) {
+            i++;
+        }
+        shortcuts.setLayout(new GridLayout(0, (i/4)+1));
         for (ProgletEngine.Proglet proglet : ProgletEngine.getInstance().getProglets()) {
             shortcuts.add(JVSStartPanel.createShortcut(Macros.getIcon(proglet.getIcon()), proglet.getName(), proglet.getTitle(), new ProgletLoader(proglet.getName())));
         }
-        //shortcuts.add(Box.createHorizontalGlue());
-        //vertical.add(jsp);
-        //vertical.add(Box.createVerticalGlue());
         return shortcuts;
     }
 
