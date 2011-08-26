@@ -13,8 +13,7 @@
 
   # (PV1) [http://code.google.com/p/javascool/issues/detail?id=52 Relier le org.javascool.gui.Desktop aux classes JVS*.java]
   # (PV2) [http://code.google.com/p/javascool/issues/detail?id=50 Creer une fonction d'insertion automatique d'élements dans l'éditeur]
-  * Comment appeler le fichier XML qui decrit les insertions Guillaume, t'as un avis ?
-    * instructions.xml ? raccourcis.xml ? insertions.xml ? aide-insertion.xml 
+     * completion.xml
   # (PV3) [http://code.google.com/p/javascool/issues/detail?id=53 Implementer le fait qu'on ajoute @proglet:nom-de-la-proglet]
 
   # (PV0) Création d'un lanceur .exe et .app pour le lancement de jascool
