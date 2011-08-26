@@ -80,7 +80,8 @@ public class Jvs2Java extends Translator {
       head.append("  private static final long serialVersionUID = ").append(uid).append("L;");
       head.append("  public void run() {");
       head.append("   try{ main(); } catch(Throwable e) { ");
-      head.append("     System.out.println(\"\\n-------------------\\nErreur lors de l'exécution de la proglet\\n\"+e+\"\\n-------------------\\n\");}");
+      head.append("    if (e.toString().matches(\".*Interrupted.*\"))System.out.println(\"\\n-------------------\\nProggramme arrêté !\\n-------------------\\n\");");
+      head.append("    else System.out.println(\"\\n-------------------\\nErreur lors de l'exécution de la proglet\\n\"+e+\"\\n-------------------\\n\");}");
       head.append("}");
     }
 

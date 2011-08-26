@@ -64,7 +64,7 @@ public class Core {
     }
     System.err.println("" + title + " is starting ...");
     ErrorCatcher.checkJavaVersion(6);
-    // -setUncaughtExceptionAlert();
+    setUncaughtExceptionAlert();
     Desktop.getInstance().getFrame();
   }
 }

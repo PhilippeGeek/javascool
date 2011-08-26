@@ -94,7 +94,6 @@ public class ProgletEngine {
         // Lancement du runnable dans un thread
         if (runnable != null) {
             (thread = new Thread(new Runnable() {
-
                 @Override
                 public void run() {
                     try {
@@ -108,13 +107,23 @@ public class ProgletEngine {
         }
     }
 
-    /** Mécanisme d'arrêt du programme compilé. */
-    public void doStop() {
+    /** Mécanisme d'arrêt du programme compilé. 
+     * @param Message d'erreur affiché à la console. Si null (par défaut) pas de message.
+     */
+    public void doStop(String message) {
         if (thread != null) {
             thread.interrupt();
             thread = null;
         }
+        if (message != null)
+        System.out.println("Cause de l'interruption : "+ message);
     }
+    /**
+     * @see #doStop(String)
+     */
+  public void doStop() {
+    doStop(null);
+  }
 
     /** Renvoie true si le programme est en cours. */
     public boolean isRunning() {
@@ -280,7 +289,9 @@ public class ProgletEngine {
          */
         public void doDemo() {
             if (hasDemo())
-            (new Thread() { public void run() {
+            (new Thread() {
+                @Override
+    public void run() {
                     Invoke.run(getPane(), "start");
                 }}).start();
         }
