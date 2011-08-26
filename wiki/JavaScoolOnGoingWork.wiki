@@ -23,6 +23,7 @@
 
   # (GM1) Mettre en conformité la proglet jeux2D
   * en recupérant les regex de jvs2java dans un Translator
+  * en validant si les "liens jvs" sont ok apres nos changements
 
   # (TV1) Documentation des proglets: 
   * renommer les npms de proglets sans prefixe; 
