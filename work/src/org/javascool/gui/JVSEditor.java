@@ -11,9 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
-import java.io.BufferedInputStream;
 import java.io.IOException;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -23,10 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.ToolTipManager;
 import javax.swing.text.BadLocationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
 import org.fife.ui.autocomplete.AutoCompletion;
-import org.fife.ui.autocomplete.BasicCompletion;
 import org.fife.ui.autocomplete.CompletionProvider;
 import org.fife.ui.autocomplete.DefaultCompletionProvider;
 import org.fife.ui.autocomplete.LanguageAwareCompletionProvider;
@@ -35,7 +30,6 @@ import org.fife.ui.rtextarea.Gutter;
 import org.fife.ui.rtextarea.RTextScrollPane;
 import org.fife.ui.rtextarea.ToolTipSupplier;
 import org.javascool.core.ProgletEngine;
-import org.javascool.macros.Macros;
 import org.javascool.widgets.ToolBar;
 
 /** Define a JVSEditor
@@ -191,7 +185,6 @@ class JVSEditor extends JPanel {
 
                 @Override
                 public void keyTyped(KeyEvent e) {
-                    System.err.println(e.getKeyChar()+" : "+((int)e.getKeyChar()));
                     int ch = e.getKeyChar();
                     if (ch>33&&ch!=127&&ch!=129&&ch!=141&&ch!=143&&ch!=144&&ch!=157&&ch!=160) {
                         showPopupWindow();
