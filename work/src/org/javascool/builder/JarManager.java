@@ -89,7 +89,8 @@ public class JarManager {
     if(new File(srcDir).isDirectory()) {
       if(!new File(srcDir).getName().equals(".svn"))
         for(String s : FileManager.list(srcDir)) {
-          String d = dstDir + File.separator + new File(s).getName();
+          String d = dstDir + File.separator + new File(s).getAbsoluteFile().getName();
+          System.out.println("Copy "+s+">"+d);
           copyFiles(s, d);
         }
     } else {

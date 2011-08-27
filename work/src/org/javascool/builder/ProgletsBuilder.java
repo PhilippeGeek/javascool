@@ -5,6 +5,8 @@
  *********************************************************************************/
 package org.javascool.builder;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.javascool.tools.FileManager;
 import org.javascool.tools.Xml2Xml;
 import org.javascool.tools.Pml;
@@ -105,69 +107,26 @@ public class ProgletsBuilder {
             }
             DialogFrame.setUpdate("Installation 2/2", 20);
             Integer level = 20;
+            int up=(10 / proglets.length == 0 ? 1 : 10 / proglets.length);
             // Construction des proglets
             for (String proglet : proglets) {
-                String name = new File(proglet).getName(), progletDir = progletsDir + File.separator + name;
-                Pml pml = new Pml().load(proglet + File.separator + "proglet.pml");
+                ProgletBuild build = new ProgletBuild(proglet, new File(proglet).getAbsolutePath(), jarDir);
+                String name=new File(proglet).getName();
                 System.out.println("Compilation de " + name + " ...");
-                if (pml.getBoolean("processing")) {
-                    System.out.println("==>proglet processing (non pris en charge ici: à suivre !)");
+                if (build.isprocessing) {
+                    System.out.println("!=>proglet processing (non pris en charge ici: à suivre !)");
                 } else {
-                    DialogFrame.setUpdate("Construction de " + name + " 1/4", level += (10 / proglets.length == 0 ? 1 : 10 / proglets.length));
-                    // Copie de tous les fichiers
-                    {
-                        new File(progletDir).mkdirs();
-                        JarManager.copyFiles(proglet, progletDir);
-                    }
-                    DialogFrame.setUpdate("Construction de " + name + " 2/4", level += (10 / proglets.length == 0 ? 1 : 10 / proglets.length));
-                    // Vérification des spécifications
-                    {
-                        boolean error = false;
-                        if (!(name.matches("[a-z][a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9]+") && name.length() <= 16)) {
-                            System.out.println("Le nom de la proglet «" + name + "» est bizarre il ne doit contenir que des lettres faire au moins quatre caractères et au plus seize et démarrer par une lettre minuscule");
-                            error = true;
-                        }
-                        if (!FileManager.exists(progletDir + File.separator + "help.xml")) {
-                            System.out.println("Pas de fichier d'aide pour " + name + ", la proglet ne sera pas construite.");
-                            error = true;
-                        }
-                        if (!pml.isDefined("author")) {
-                            System.out.println("Le champ «author» n'est pas défini dans " + name + "/proglet.pml, la proglet ne sera pas construite.");
-                            error = true;
-                        }
-                        if (!pml.isDefined("title")) {
-                            System.out.println("Le champ «title» n'est pas défini dans " + name + "/proglet.pml, la proglet ne sera pas construite.");
-                            error = true;
-                        }
-                        pml.save(progletDir + File.separator + "proglet.php");
-                        if (error) {
-                            throw new IllegalArgumentException("La proglet ne respecte pas les spécifications");
-                        }
-                    }
-                    // Traduction Hml -> Htm des docs
-                    {
-                        for (String doc : FileManager.list(progletDir, ".*\\.xml")) // Escape le fichier de spécification des complétion de l'éditeur
-                        {
-                            if (!new File(doc).getName().equals("completion.xml")) {
-                                try {
-                                FileManager.save(doc.replaceFirst("\\.xml", "\\.htm"),
-                                        Xml2Xml.run(FileManager.load(doc),
-						    FileManager.load(buildDir.getPath() + File.separator + "jar" + File.separator + "org" + File.separator + "javascool" + File.separator + "builder" + File.separator + "hdoc2htm.xslt")));
-                                } catch(IllegalArgumentException e) {
-                                    throw new IllegalArgumentException("dans "+new File(doc).getName()+" : "+e.getMessage());
-                                }
-                            }
-                        }
-                    }
-                    DialogFrame.setUpdate("Construction de " + name + " 3/4", level += (10 / proglets.length == 0 ? 1 : 10 / proglets.length));
-                    // Création d'une page de lancement de l'applet
-                    FileManager.save(progletDir + File.separator + "applet-tag.htm",
-                            "<applet width='560' height='620' code='org.javascool.widgets.PanelApplet' archive='./proglets/" + name + "/javascool-proglet-" + name + ".jar'><param name='panel' value='org.javascool.proglets." + name + ".Panel'/><pre>Impossible de lancer " + name + ": Java n'est pas installé ou mal configuré</pre></applet>\n");
-                    // Creation de la javadoc si option ok
+                    DialogFrame.setUpdate("Construction de " + name + " 1/4", level += up);
+                    build.copyFiles();
+                    DialogFrame.setUpdate("Construction de " + name + " 2/4", level += up);
+                    build.checkProglet();
+                    DialogFrame.setUpdate("Construction de " + name + " 3/4", level += up);
+                    build.convertHdocs();
+                    DialogFrame.setUpdate("Construction de " + name + " 4/4", level += up);
+                    build.createHtmlApplet();
                     if (webdoc) {
-                        javadoc(progletDir, progletDir + File.separator + "api");
+                        build.javadoc();
                     }
-                    DialogFrame.setUpdate("Construction de " + name + " 4/4", level += (10 / proglets.length));
                 }
             }
             // Lancement de la compilation de tous les java des proglets
@@ -219,7 +178,7 @@ public class ProgletsBuilder {
                             String keystore = jarDir + File.separator + "org" + File.separator + "javascool" + File.separator + "builder" + File.separator + "javascool.key";
                             String args = "-storepass\tjavascool\t-keypass\tmer,d,azof\t-keystore\t" + keystore + "\t-signedjar\t" + signedJar + "\t" + tmpJar + "\tjavascool";
                             sun.security.tools.JarSigner.main(args.split("\t"));
-                            
+
                         }
                     }
                     System.out.println("ok.");
@@ -320,6 +279,121 @@ public class ProgletsBuilder {
             {
                 // Lance java2html
                 Jvs2Html.runDirectory(srcDir, apiDir);
+            }
+        }
+    }
+
+    /** Contôleur pour la compilation d'une proglet. */
+    private static class ProgletBuild {
+
+        /** Le nom de la proglet */
+        private String name;
+        /** Le répertoire de la proglet à compiler */
+        private String progletSrc;
+        /** Le répertoire de la proglet compilée */
+        private String progletDir;
+        /** Le fichier Pml d'information de la proglet */
+        private Pml pml;
+        /** Le dossier du jar final */
+        private String jarDest;
+        /** Vrai si la proglet est processing */
+        private boolean isprocessing;
+
+        /** Crée un nouveau contôleur pour la compilation d'une proglet.
+         * @param name Le nom de la proglet
+         * @param progletDir Le répertoire de la proglet à compiler
+         * @param pml Le fichier Pml d'information de la proglet
+         * @param jarDest Le dossier du jar final
+         */
+        public ProgletBuild(String name, String progletDir, Pml pml, String jarDest) {
+            this.name = name != null ? new File(name).getName() : "?";
+            this.pml = pml != null ? pml : new Pml().load(progletDir + File.separator + "proglet.pml");
+            try {
+                this.progletSrc = progletDir != null ? new File(progletDir).getAbsolutePath() : "";
+            } catch (Exception ex) {
+                throw new RuntimeException("Le dossier source de " + this.name + " n'existe pas");
+            }
+            this.jarDest = jarDest != null ? new File(jarDest).getAbsolutePath() : "";
+            if (this.pml.getBoolean("processing")) {
+                this.isprocessing = true;
+            } else {
+                this.isprocessing = false;
+            }
+            this.progletDir = jarDest + "/org/javascool/proglets/".replace("/", File.separator) + this.name;
+        }
+
+        /** Lit automatiquement le fichier Pml
+         * @see ProgletBuild#ProgletBuild(java.lang.String, java.lang.String, org.javascool.tools.Pml, java.lang.String) 
+         */
+        public ProgletBuild(String name, String progletDir, String jarDest) {
+            this(name, progletDir, null, jarDest);
+        }
+
+        /** Copie les fichiers de la proglet de la source à la destination. */
+        public void copyFiles() {
+            try {
+                new File(progletDir).mkdirs();
+                JarManager.copyFiles(progletSrc, progletDir);
+            } catch (IOException ex) {
+                throw new RuntimeException("Erreur lors de la copie des fichiers de " + name, ex);
+            }
+        }
+
+        /** Vérifie si la proglet respect les specifications */
+        public void checkProglet() {
+            boolean error = false;
+            if (!(name.matches("[a-z][a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9]+") && name.length() <= 16)) {
+                System.out.println("Le nom de la proglet «" + name + "» est bizarre il ne doit contenir que des lettres faire au moins quatre caractères et au plus seize et démarrer par une lettre minuscule");
+                error = true;
+            }
+            if (!FileManager.exists(progletDir + File.separator + "help.xml")) {
+                System.out.println("Pas de fichier d'aide pour " + name + ", la proglet ne sera pas construite.");
+                error = true;
+            }
+            if (!pml.isDefined("author")) {
+                System.out.println("Le champ «author» n'est pas défini dans " + name + "/proglet.pml, la proglet ne sera pas construite.");
+                error = true;
+            }
+            if (!pml.isDefined("title")) {
+                System.out.println("Le champ «title» n'est pas défini dans " + name + "/proglet.pml, la proglet ne sera pas construite.");
+                error = true;
+            }
+            pml.save(progletDir + File.separator + "proglet.php");
+            if (error) {
+                throw new IllegalArgumentException("La proglet ne respecte pas les spécifications");
+            }
+        }
+
+        /** Convertit les XML en Htm.
+         * Sauf le completion.xml
+         */
+        public void convertHdocs() {
+            for (String doc : FileManager.list(progletDir, ".*\\.xml")) // Escape le fichier de spécification des complétion de l'éditeur
+            {
+                if (!new File(doc).getName().equals("completion.xml")) {
+                    try {
+                        FileManager.save(doc.replaceFirst("\\.xml", "\\.htm"),
+                                Xml2Xml.run(FileManager.load(doc),
+                                FileManager.load(this.jarDest + "/org/javascool/builder/hdoc2htm.xslt".replace("/", File.separator))));
+                    } catch (IllegalArgumentException e) {
+                        throw new IllegalArgumentException("dans " + new File(doc).getName() + " : " + e.getMessage());
+                    }
+                }
+            }
+        }
+
+        /** Crée la page html de l'applet de la proglet */
+        public void createHtmlApplet() {
+            FileManager.save(progletDir + File.separator + "applet-tag.htm",
+                    "<applet width='560' height='620' code='org.javascool.widgets.PanelApplet' archive='./proglets/" + name + "/javascool-proglet-" + name + ".jar'><param name='panel' value='org.javascool.proglets." + name + ".Panel'/><pre>Impossible de lancer " + name + ": Java n'est pas installé ou mal configuré</pre></applet>\n");
+        }
+
+        /** Génère la javadoc de la proglet */
+        public void javadoc() {
+            try {
+                ProgletsBuilder.javadoc(progletDir, progletDir + File.separator + "api");
+            } catch (IOException ex) {
+                throw new RuntimeException("Erreur lors de la génération de la javadoc");
             }
         }
     }
