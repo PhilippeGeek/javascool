@@ -152,7 +152,7 @@ public class ProgletsBuilder {
                                 try {
                                 FileManager.save(doc.replaceFirst("\\.xml", "\\.htm"),
                                         Xml2Xml.run(FileManager.load(doc),
-                                        buildDir.getPath() + File.separator + "jar" + File.separator + "org" + File.separator + "javascool" + File.separator + "builder" + File.separator + "hdoc2htm.xslt"));
+						    FileManager.load(buildDir.getPath() + File.separator + "jar" + File.separator + "org" + File.separator + "javascool" + File.separator + "builder" + File.separator + "hdoc2htm.xslt")));
                                 } catch(IllegalArgumentException e) {
                                     throw new IllegalArgumentException("dans "+new File(doc).getName()+" : "+e.getMessage());
                                 }

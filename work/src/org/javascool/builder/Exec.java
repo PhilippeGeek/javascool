@@ -13,7 +13,7 @@ import java.io.InputStreamReader;
  * @see <a href="Exec.java.html">code source</a>
  * @serial exclude
  */
-public class Exec {
+class Exec {
   // @factory
   private Exec() {}
 

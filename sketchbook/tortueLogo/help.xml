@@ -7,13 +7,13 @@
   La tortue est toujours visible et ne peut sortir du jardin et disparaître de l'écran graphique.
   </div>
 
-  <div>Toutes les instructions disponibles sont documentées <l link="page=proglets&amp;action=show&amp;id=ingredients&amp;helpFile=api/org/javascool/proglets/tortueLogo/Functions.html" text="ici"/></div>
+  <div>Toutes les instructions disponibles sont documentées <l link="http://javascool.gforge.inria.fr/?page=proglets&amp;action=show&amp;id=ingredients&amp;helpFile=api/org/javascool/proglets/tortueLogo/Functions.html" text="ici"/></div>
 
   <div>Que les nostalgiques de cette ancienne façon d'apprendre à programmer en profite, la tortue est de retour:
   <div class="center"><l class="icon" icon="turtle.gif"/></div>
   </div>
 
-  <div>Un exemple d'utilisation: lors de la <l link="http://javascool.gforge.inria.fr/v3/?page=api:/proglet/tortuelogo/doc-files/the-proglet.htm" text="démonstration"/>,
+  <div>Un exemple d'utilisation: lors de la démonstration,
   la tortue trace de belles <l link="http://fr.wikipedia.org/wiki/Courbe_de_Lissajous" text="courbes de Lissajous"/> en changeant la couleur:<div class="code">
     <m>Initialisation du tracé</m>
     <p><r>clear_all</r>();</p>

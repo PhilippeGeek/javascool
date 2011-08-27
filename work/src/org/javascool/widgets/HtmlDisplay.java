@@ -10,6 +10,7 @@ import java.net.MalformedURLException;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.io.File;
 import java.io.IOException;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
@@ -35,9 +36,9 @@ import java.util.ArrayList;
  * <li>Les pages locales d'extension <tt>*.htm</tt> sont réputées être du HTML3 et sont affichées ici.</li>
  * <li>Les autres pages <tt>http://</tt>, <tt>file://</tt>, etc.. sont visualiées dans le navigateur du système, extérieur à javascool.</li>
  * <li>Il est possible d'ouvrir des pages dans une cible autre que ce visualisateur: <ul>
- *   <li>Les liens de la forme <tt>jvs://?editor:<i>location</i></tt> ouvrent le document dans l'éditeur de JavaScool. <br>
+ *   <li>Les liens de la forme <tt>http://editor/<i>location</i></tt> ouvrent le document dans l'éditeur de JavaScool. <br>
  *     Il sont générés par un tag de la form <tt>&lt;l class="editor" ..</tt></li>
- *   <li>Les liens de la forme <tt>jvs://?newtab:<i>location</i></tt> ouvrent le document dans un autre onglet de JavaScool.<br>
+ *   <li>Les liens de la forme <tt>http://newtab/<i>location</i></tt> ouvrent le document dans un autre onglet de JavaScool.<br>
  *     Il sont générés par un tag de la form <tt>&lt;l class="newtab" ..</tt></li> </li>
  * </ul> Il sont produits par les tags <tt>&lt;a target="editor" . . </tt> du XML.
  * En cas d'échec les contenus sont dirigés vers le navigateur du système, extérieur à javascool.</li>
@@ -57,11 +58,11 @@ public class HtmlDisplay extends JPanel {
   private JButton home, prev, next;
 
   /** Définit le préfix pour une chaîne. */
-  static private final String stringPrefix = "string://?value=:";
+  static private final String stringPrefix = "http://string?";
   /** Définit le préfix pour une ouverture dans l'éditeur. */
-  static private final String editorPrefix = "vs://?editor:";
+  static private final String editorPrefix = "http://editor?";
   /** Définit le préfix pour une ouverture dans un onglet. */
-  static private final String newtabPrefix = "jvs://?newtab:";
+  static private final String newtabPrefix = "http://newtab?";
 
   // @bean
   public HtmlDisplay() {
@@ -214,23 +215,17 @@ public class HtmlDisplay extends JPanel {
         pane.setText(URLDecoder.decode(location.substring(stringPrefix.length()), "UTF-8"));
       } catch(java.io.UnsupportedEncodingException e) { throw new IllegalStateException("UTF-8 n'est pas reconnu comme encodage: (" + e + ") c'est un bug Java !");
       }
-    } else if(location.matches("^(http|https|rtsp|mailto):.*$"))      // Gestion des URL externes
+    } else if(location.startsWith(editorPrefix)) {  // Affichage dand JavaScool
+      org.javascool.gui.Desktop.getInstance().openFile(toURL(location.substring(editorPrefix.length())).toString());
+    } else if(location.startsWith(newtabPrefix)) {    // Affichage dans JavaScool
+      URL url = toURL(location.substring(newtabPrefix.length()));
+      String name = new File(url.getPath()).getName().replaceFirst("\\.[^\\.]*$", "").replace('_', '.');
+      org.javascool.gui.Desktop.getInstance().openBrowserTab(url.toString(), name.substring(0, 1).toUpperCase()+name.substring(1));
+    } else if(location.matches("^(http|https|rtsp|mailto):.*$"))     // Gestion des URL externes
       browse(location);
     else if(location.matches(".*\\.htm$") || location.matches("^#.*")) {   // Gestion des URLs en HTML3 et des ancres
-      try {
-        URL url = urls.isEmpty() ? Macros.getResourceURL(location) :
-                  urls.getCurrent() instanceof URL ? new URL((URL) urls.getCurrent(), location) :
-                  new URL(location);
-        update(url, push);
-      } catch(MalformedURLException e) {
-        setText("Le lien : <tt>«" + location + "»</tt> est mal formé");
-      }
-    } else if(location.startsWith(editorPrefix))   // Affichage dand JavaScool
-      org.javascool.gui.Desktop.getInstance().openFile(location.substring(editorPrefix.length()));
-    else if(location.startsWith(newtabPrefix))     // Affichage dand JavaScool
-      org.javascool.gui.Desktop.getInstance().openBrowserTab(location.substring(newtabPrefix.length()),
-                location.replaceFirst("[^/]*(.*)\\.[\\.]*", "$1").replace('_', ' '));
-    else if(!doBrowse(location))     // Délégation au client
+      update(toURL(location), push);
+    }    else if(!doBrowse(location))     // Délégation au client
       setText("Le lien : <tt>«" + location + "»</tt> n'a pas pu être affiché");
   }
   private void update(URL url, boolean push) {
@@ -250,6 +245,19 @@ public class HtmlDisplay extends JPanel {
       update((URL) link, push);
     else
       update(link.toString(), push);
+  }
+  private URL toURL(String location) {
+    try {
+      return urls.isEmpty() ? Macros.getResourceURL(location) :
+	urls.getCurrent() instanceof URL ? new URL((URL) urls.getCurrent(), location) :
+	new URL(location);
+    } catch(MalformedURLException e) {
+      try {
+      return new URL(stringPrefix+"Le lien : <tt>«" + location + "»</tt> est mal formé");
+      } catch(MalformedURLException ex) {
+          throw new IllegalStateException(ex);
+      }
+    }
   }
 }
 
