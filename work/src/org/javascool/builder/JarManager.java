@@ -21,6 +21,7 @@ import java.util.Enumeration;
 import java.util.jar.Attributes;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+import java.util.jar.JarInputStream;
 import java.util.jar.JarOutputStream;
 import java.util.jar.Manifest;
 
@@ -38,15 +39,18 @@ public class JarManager {
     try {
       //System.out.println("Extract files from " + jarFile + " to " + destDir + ((!jarEntry.isEmpty()) ? " which start with " + jarEntry : ""));
       JarFile jf = new JarFile(jarFile);
+      JarInputStream jip=new JarInputStream(new FileInputStream(jarFile));
       Enumeration<JarEntry> entries = jf.entries();
-      while(entries.hasMoreElements()) {
-        JarEntry je = entries.nextElement();
+      JarEntry je;
+      while((je = jip.getNextJarEntry())!=null) {
         if((jarEntry.isEmpty()?true:je.getName().startsWith(jarEntry)) && !je.isDirectory()&&!je.getName().contains("META-INF")) {
           File dest = new File(destDir + File.separator + je.getName());
           dest.getParentFile().mkdirs();
-          copyStream(ClassLoader.getSystemResourceAsStream(je.getName()), new FileOutputStream(dest));
+          copyStream(jip, new FileOutputStream(dest));
         }
       }
+      jip.close();
+      
     } catch(Exception ex) { throw new IllegalStateException(ex);
     }
   }
@@ -90,7 +94,6 @@ public class JarManager {
       if(!new File(srcDir).getName().equals(".svn"))
         for(String s : FileManager.list(srcDir)) {
           String d = dstDir + File.separator + new File(s).getAbsoluteFile().getName();
-          System.out.println("Copy "+s+">"+d);
           copyFiles(s, d);
         }
     } else {
@@ -136,7 +139,7 @@ public class JarManager {
   }
   // Copy un stream dans un autre
   private static void copyStream(InputStream in, OutputStream out) throws IOException {
-    InputStream i = new BufferedInputStream(in, 2048);
+    InputStream i = in instanceof JarInputStream?in :new BufferedInputStream(in, 2048);
     OutputStream o = out instanceof JarOutputStream ? out : new BufferedOutputStream(out, 2048);
     byte data[] = new byte[2048];
     for(int c; (c = i.read(data, 0, 2048)) != -1;)
@@ -145,7 +148,11 @@ public class JarManager {
       ((JarOutputStream) o).closeEntry();
     else
       o.close();
-    i.close();
+    if(i instanceof JarInputStream){
+        ((JarInputStream)i).closeEntry();
+    } else {
+        i.close();
+    }
   }
   /** Détruit récursivement un fichier ou répertoire.
    * * <p>Irréversible: à utiliser avec la plus grande prudence.</p>

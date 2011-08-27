@@ -26,6 +26,8 @@ import org.javascool.Core;
  */
 public class ProgletsBuilder {
 
+    static final boolean verbose=false;
+    
     /** Définit le file separator dans une expression régulière. */
     private static final String fileRegexSeparator = File.separator.equals("\\") ? "\\\\" : File.separator;
 
@@ -107,14 +109,21 @@ public class ProgletsBuilder {
             }
             DialogFrame.setUpdate("Installation 2/2", 20);
             Integer level = 20;
-            int up=(10 / proglets.length == 0 ? 1 : 10 / proglets.length);
+            int up = (10 / proglets.length == 0 ? 1 : 10 / proglets.length);
             // Construction des proglets
             for (String proglet : proglets) {
                 ProgletBuild build = new ProgletBuild(proglet, new File(proglet).getAbsolutePath(), jarDir);
-                String name=new File(proglet).getName();
+                String name = new File(proglet).getName();
                 System.out.println("Compilation de " + name + " ...");
                 if (build.isprocessing) {
-                    System.out.println("!=>proglet processing (non pris en charge ici: à suivre !)");
+                    System.out.println("!=>proglet processing (En alpha !)");
+                    DialogFrame.setUpdate("Construction de " + name + " 1/4", level += up);
+                    build.copyFiles();
+                    DialogFrame.setUpdate("Construction de " + name + " 2/4", level += up);
+                    build.checkProglet();
+                    build.setupProcessingProglet();
+                    DialogFrame.setUpdate("Construction de " + name + " 3/4", level += up);
+                    build.convertHdocs();
                 } else {
                     DialogFrame.setUpdate("Construction de " + name + " 1/4", level += up);
                     build.copyFiles();
@@ -282,6 +291,27 @@ public class ProgletsBuilder {
             }
         }
     }
+    
+    /** Envoie un message de log dans la console.
+     * @param text Le message
+     * @param onlyVerbose Ne s'affiche que si l'option -v est activé
+     */
+    public static void log(String text,boolean onlyVerbose){
+        if(onlyVerbose){
+            if(verbose){
+                System.out.println(text);
+            }
+        } else {
+            System.out.println(text);
+        }
+    }
+    
+    /** Imprime un message dans la console
+     * @see ProgletsBuilder#log(java.lang.String, boolean) 
+     */
+    public static void log(String text){
+        log(text,false);
+    }
 
     /** Contôleur pour la compilation d'une proglet. */
     private static class ProgletBuild {
@@ -342,11 +372,11 @@ public class ProgletsBuilder {
         /** Vérifie si la proglet respect les specifications */
         public void checkProglet() {
             boolean error = false;
-            if (!(name.matches("[a-z][a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9]+") && name.length() <= 16)) {
+            if (!(name.matches("[a-zA-Z][a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9]+") && name.length() <= 20)) {
                 System.out.println("Le nom de la proglet «" + name + "» est bizarre il ne doit contenir que des lettres faire au moins quatre caractères et au plus seize et démarrer par une lettre minuscule");
                 error = true;
             }
-            if (!FileManager.exists(progletDir + File.separator + "help.xml")) {
+            if (!FileManager.exists(progletDir + File.separator + "help.xml") && !isprocessing) {
                 System.out.println("Pas de fichier d'aide pour " + name + ", la proglet ne sera pas construite.");
                 error = true;
             }
@@ -391,9 +421,28 @@ public class ProgletsBuilder {
         /** Génère la javadoc de la proglet */
         public void javadoc() {
             try {
+                log("Création de la javadoc pour "+name);
                 ProgletsBuilder.javadoc(progletDir, progletDir + File.separator + "api");
             } catch (IOException ex) {
                 throw new RuntimeException("Erreur lors de la génération de la javadoc");
+            }
+        }
+
+        private void setupProcessingProglet() {
+            if (isprocessing) {
+                log("Extrait les archives de la proglet ...");
+                for (String jar : FileManager.list(this.progletDir + File.separator + "applet", ".*\\.jar")) {
+                    log(jar,true);
+                    JarManager.jarExtract(jar, this.jarDest);
+                }
+                log("Efface les dossiers processing ...");
+                JarManager.rmDir(new File(this.progletDir,"applet"));
+                log("Efface les .mov ...",true);
+                for (String mov : FileManager.list(this.progletDir, ".*\\.mov")) {
+                    new File(mov).delete();
+                }
+            } else {
+                throw new IllegalStateException("La proglet n'est pas en processing");
             }
         }
     }
