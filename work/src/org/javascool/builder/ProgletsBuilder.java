@@ -428,7 +428,8 @@ public class ProgletsBuilder {
             }
         }
 
-        private void setupProcessingProglet() {
+        /** Configure une proglet Processing */
+        public void setupProcessingProglet() {
             if (isprocessing) {
                 log("Extrait les archives de la proglet ...");
                 for (String jar : FileManager.list(this.progletDir + File.separator + "applet", ".*\\.jar")) {
@@ -442,7 +443,7 @@ public class ProgletsBuilder {
                     new File(mov).delete();
                 }
             } else {
-                throw new IllegalStateException("La proglet n'est pas en processing");
+                throw new IllegalStateException("La proglet "+name+" n'est pas en processing");
             }
         }
     }

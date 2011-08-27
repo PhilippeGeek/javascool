@@ -71,6 +71,6 @@
       <p><l link="http://javascool.gforge.inria.fr/v3/?page=api:/sketchbook/ExplorationSonore/interface.pde.html" text="interface"/></p>
     </p></div>
     pour permettre des développements dérivés.</div>
-   <l class="include" link="about-opengl.xml"/>
+   <l class="include" link="./about-opengl.xml"/>
   </div>
 </div>
