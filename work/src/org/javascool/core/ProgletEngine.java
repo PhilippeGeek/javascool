@@ -5,12 +5,16 @@
  *********************************************************************************/
 package org.javascool.core;
 
+import java.applet.Applet;
 import java.awt.Component;
 
+import java.awt.Dimension;
 import java.util.ArrayList;
 import org.javascool.macros.Macros;
 
 import java.io.File;
+import javax.swing.JApplet;
+import javax.swing.JPanel;
 import org.javascool.Core;
 import org.javascool.tools.FileManager;
 import org.javascool.tools.Pml;
@@ -45,15 +49,15 @@ public class ProgletEngine {
             String javascoolJar = Core.javascoolJar();
             for (String dir : FileManager.list(javascoolJar, "org.javascool.proglets.[^\\.]+.proglet.pml")) {
                 Proglet proglet = new Proglet().load(dir.replaceFirst("jar:[^!]*!(.*)proglet.pml", "$1"));
-                if (!proglet.isProcessing()) {
-                    proglets.add(proglet);
-                }
+                //if (!proglet.isProcessing()) {
+                proglets.add(proglet);
+                //}
             }
         }
         // Définit une proglet "vide" pour lancer l'interface
         if (proglets.isEmpty()) {
 
-            for (int i = 0; i < 100; i++) {
+            for (int i = 0; i < 1; i++) {
                 Proglet p = new Proglet();
                 p.pml.set("name", "Interface");
                 p.pml.set("icon-location", "org/javascool/widgets/icons/scripts.png");
@@ -232,9 +236,21 @@ public class ProgletEngine {
             if (!pml.isDefined("help-location")) {
                 pml.set("help-location", pml.getString("location") + "help.htm");
             }
-            try {
-                pml.set("java-pane", (Component) Class.forName("org.javascool.proglets." + pml.getString("name") + ".Panel").newInstance());
-            } catch (Throwable e) {
+            if (this.isProcessing()) {
+                try {
+                    Applet applet=(Applet)Class.forName("" + pml.getString("name") + "").newInstance();
+                    applet.init();
+                    applet.start();
+                    applet.setMinimumSize(new Dimension(500,500));
+                    applet.setMaximumSize(new Dimension(500,500));
+                    pml.set("java-pane", (Component) applet);
+                } catch (Throwable e) {
+                }
+            } else {
+                try {
+                    pml.set("java-pane", (Component) Class.forName("org.javascool.proglets." + pml.getString("name") + ".Panel").newInstance());
+                } catch (Throwable e) {
+                }
             }
             try {
                 pml.set("jvs-translator", (Translator) Class.forName("org.javascool.proglets." + pml.getString("name") + ".Translator").newInstance());
