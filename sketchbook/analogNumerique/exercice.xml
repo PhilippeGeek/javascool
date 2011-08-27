@@ -2,24 +2,13 @@
   
   <div class="objectif">
     Le but de ce tutoriel est de comprendre comment deviner une valeur  analogique à partir de comparaisons et de découvrir la recherche dichotomique.
-    Une autre activité, plus autonome, sur la recherche dichotomique est proposée <l link="../../dichotomie/doc-files/sujet-appli-dicho.htm" text="ici"/>.
-    Il faut déja savoir <l link="../../ingredients/doc-files/sujet-hello-world.htm" text="utiliser l'interface"/>,
-    se servir de <l link="../../ingredients/doc-files/sujet-about-variables.htm" text="variables"/> 
-    et avoir découvert l'<l link="../../ingredients/doc-files/sujet-about-if.htm" text="instruction conditionnelle"/> et 
-    utiliser des <l link="../../ingredients/doc-files/sujet-about-while.htm" text="boucles"/>.
   </div>
   
   <div class="intros">
-    <div>L'ordinateur peut grâce à un convertisseur numérique analogique générer une tension en volt, grâce à la fonction :
-    <div class="code">
-      <p><r>convaOut</r>(tension);</p>
-    </div>
-    cette <b>tension</b> est un <r>int</r> varie en 0 et 1.023 volts et est donnée en milli-volts et il peut aussi comparer cette tension à la tension inconnue avec la fonction :
-    <div class="code">
-      <p><r>convaCompare</r>();</p>
-    </div>
-     qui renvoie -1 si la tension inconnue est plus petite et 1 si elle plus grande ou égale.
-    </div>
+    <div>L'ordinateur peut grâce à un convertisseur numérique analogique générer une tension en volt, 
+    grâce à la fonction <b><r>output</r>(tension);</b> qui varie en 0 et 1.023 volts et est donnée en milli-volts.
+    Il peut aussi comparer cette tension à la tension inconnue avec la fonction <b><r>compare</r>();</b> 
+    qui renvoie -1 si la tension inconnue est plus petite et 1 si elle plus grande ou égale.</div>
     <div>Le schéma est illustré ici :
      <div class="center"><l class="icon" icon="conv.png"/></div>
      Bien entendu, ici, nous simulons ce mécanisme par une petite proglet.
@@ -33,8 +22,8 @@
     <div class="code">
       <p><r>int</r> v = 1023;</p>
       <p><r>while</r>(v &gt;= 0) {</p>
-      <p><T/><r>convaOut</r>(v);</p>
-      <p><T/><r>if</r> (<r>convaCompare</r>() == 1) {</p>
+      <p><T/><r>output</r>(v);</p>
+      <p><T/><r>if</r> (<r>compare</r>() == 1) {</p>
       <p><T/><T/><r>echo</r>("valeur = "+v);</p>
       <p><T/>}</p>
       <p><T/>v = v - 1;</p>
@@ -48,7 +37,7 @@
       Voici une idée : On va couper l'espace de recherche en deux, puis en deux, puis en deux, etc. Dans le programme suivant on a déjà divisé l'espace de recherche en 2 !
       <div class="code">
         <m>La valeur est donc comprise entre 0 et 1023</m>
-        <p><r>convaOut</r>(512); <r>if</r> (<r>convaCompare</r>() == 1) {</p>
+        <p><r>output</r>(512); <r>if</r> (<r>compare</r>() == 1) {</p>
         <m>Si le test est vrai, nous savons que la valeur est plus petite que 512</m>
         <p><T/><r>echo</r>(<v>La valeur est comprise entre 0 et 511</v>);</p>
         <m>A vous de compléter en comparant à 256</m>
@@ -76,7 +65,7 @@
        <p><T/><r>echo</r>(<v>La valeur est comprise entre </v> + (min) + <v> et </v> + (max - 1));</p>
        <m> ? à vous de COMPLETER et commenter les lignes qui suivent</m>
        <p><T/><r>int</r> milieu = (min + max) / 2;</p>
-       <p><T/><r>convaOut</r>(milieu); <r>if</r> (<r>convaCompare</r>() == 1) {</p>
+       <p><T/><r>output</r>(milieu); <r>if</r> (<r>compare</r>() == 1) {</p>
        <p><T/><T/>??? = ???;</p>
        <p><T/>} <r>else</r> {</p>
        <p><T/><T/>??? = ???;</p>
