@@ -12,6 +12,7 @@
 ==Chantier en cours: Javas'Cool core==
 
   # (TV0) Remplacer fuscia par la mailong liste ggo??? dans alert
+  # (PV0) AHHH si nom fichier avec accent gros kk jar etc...
 
   # (PV1) Que la proglet s'ouvre sur l'onglet help.xml plutot que la console
   # (PV0) Création d'un lanceur .exe et .app pour le lancement de jascool
