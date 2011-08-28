@@ -15,9 +15,14 @@ function v3_redirections($page) {
       header("Location: ".$redirect);
       return true;
     }
-  // Envoie d'un mail si une page bizarre est demandée
-  if (!in_array($page, $v3_redirections_v4pages_table))
-    mailto("mailto:thierry.vieville@inria.fr?subject=broken-link-on-javascool-v3-web", "Spurious link = $page");
+  // Proposition de mail si une page bizarre est demandée
+  if (!in_array($page, $v3_redirections_v4pages_table)) {echo "
+    <h4>Uppss vous être en train de demander une page JavaScool qui n'existe pas (ou plus)</h4>
+    <b>N'hésitez pas à nous <a href='mailto:thierry.vieville@inria.fr?subject=broken-link-on-javascool-web ($page)'>contacter</a>, nous allons vous dépanner.</b>
+    <hr>";
+    mailto("mailto:thierry.vieville@inria.fr?subject=broken-link-on-javascool-web", "Spurious link = $page");
+    return true;
+  }
   return false;
 }
 
