@@ -436,10 +436,6 @@ public class ProgletsBuilder {
                 }
                 log("Efface les dossiers processing ...");
                 JarManager.rmDir(new File(this.progletDir,"applet"));
-                log("Efface les .mov ...",true);
-                for (String mov : FileManager.list(this.progletDir, ".*\\.mov")) {
-                    new File(mov).delete();
-                }
             } else {
                 throw new IllegalStateException("La proglet "+name+" n'est pas en processing");
             }
