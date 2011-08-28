@@ -16,9 +16,7 @@ nbe :
 	netbeans --jdkhome $(JHOME) &
 
 pro :
+	for f in ../sketchbook/*/applet/.svn ; do cp -r $$f $$f/../../svn ; done
 	ant processing
-
-svo :
-	svn rm --keep-local ../sketchbook/*/applet ; svn ci -m 'compilation sketchbook/*/applet 1/2'
-	svn add ../sketchbook/*/applet ; svn ci -m 'compilation sketchbook/*/applet 1/2'
-
+	for f in ../sketchbook/*/svn ; do mv $$f `echo $$f | sed 's/svn/applet\/.svn/'` ; done
+	svn status ../sketchbook
