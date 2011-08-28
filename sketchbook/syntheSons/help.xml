@@ -1,7 +1,6 @@
-<div title="La «proglet» synthesons">
-  <p class="margin">Autres <l link="../../../org/javascool/doc-files/about-proglets.htm" text="«proglets»"/>.</p>
+<div title="La «proglet» syntheSons">
   <p>
-    Cette proglet<l class="note" link="1"/> permet de générer une séquence de notes et d'en regarder le spectre de fréquence.
+    Cette proglet permet de générer une séquence de notes et d'en regarder le spectre de fréquence.
 
    <div>Pour définir son propre son il faut utiliser la construction <l class="javascool"/>, par exemple:<div class="code">
      <p><r>@tone:</r> sqr(t) + noi(t);</p>
@@ -18,7 +17,7 @@
    </div></div>
 
    <div>Pour écouter le son ou la séquence de notes il faut utiliser la fonction:<div class="code">
-     <p><r>synthePlay</r>();</p>
+     <p><r>play</r>();</p>
    </div></div>
 
    <div>La visualisation du son s'effectue en montrant: <div class="ul">
@@ -31,29 +30,24 @@
    </div></div>
  
    <div>Pour définir une séquence de notes il faut utiliser la fonction:<div class="code">
-     <p><r>syntheSet</r>(<v>séquence-de-note</v>);</p>
-   </div> où la syntaxe de <v>séquence-de-note</v> est définie dans la <l link="../NotesSoundBit.html#reset(java.lang.String)" text="documentation"/> de la classe.</div>
+     <p><r>setNotes</r>(<v>séquence-de-note</v>);</p>
+   </div> où la syntaxe de <v>séquence-de-note</v> est définie dans la <l link="http://javascool.gforge.inria.fr/?page=proglets&amp;action=show&amp;id=syntheSons&amp;helpFile=api/org/javascool/proglets/syntheSons/NotesSoundBit.html#reset(java.lang.String)" text="documentation"/> de la classe.</div>
 
-  <div>Un exemple d'utilisation: lors de la <l link="http://javascool.gforge.inria.fr/v3/?page=api:/proglet/synthesons/doc-files/the-proglet.htm" text="démonstration"/>, 
+  <div>Un exemple d'utilisation: lors de la démonstration, 
   les différents sons:<div class="code">
      <p><r>@tone:</r> cos(t);</p>
-     <p><r>synthePlay</r>();</p>
+     <p><r>play</r>();</p>
    </div>puis<div class="code">
      <p><r>@tone:</r> 0.5 * sqr(t);</p>
-     <p><r>synthePlay</r>();</p>
+     <p><r>play</r>();</p>
    </div>puis<div class="code">
      <p><r>@tone:</r> 0.8 * tri(t) + 0.2 * noi(t);</p>
-     <p><r>synthePlay</r>();</p>
+     <p><r>play</r>();</p>
    </div>puis<div class="code">
      <p><r>@tone:</r> 0.3 * sqr(t/2) * sin(t) + 0.3 * sin(2 * t) + 0.3 * tri(3 * t);</p>
-     <p><r>synthePlay</r>();</p>
+     <p><r>play</r>();</p>
    </div>sont présentés, puis les 1ères notes de quelque chose qui ressemble à la «Lettre à Elise» de L.v.Beethoven est jouée et son spectre affiché et ensuite 
    <div> . . à vous de jouer !</div></div>
 
   </p>
-
-  <div class="notes">
-    <div id="1">Cette proglet est un <l link="http://fr.wikipedia.org/wiki/Open_source" text="code source libre"/>, programmée en Java et <l link="http://javascool.gforge.inria.fr/v3/?page=api:/proglet/synthesons/SoundDisplay.html" text="documentée"/> 
-    pour sa libre redistribution, l'accès <l link="http://javascool.gforge.inria.fr/v3/?page=api:/proglet/synthesons/SoundDisplay.java.html" text="au code source"/>, et permettre des développements dérivés.</div>
-  </div>
 </div>

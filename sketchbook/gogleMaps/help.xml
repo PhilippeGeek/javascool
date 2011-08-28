@@ -1,7 +1,6 @@
 <div title="La «proglet» goglemap">
-  <p class="margin">Autres <l link="../../../org/javascool/doc-files/about-proglets.htm" text="«proglets»"/>.</p>
   <p>
-    Cette proglet<l class="note" link="1"/> permet d'afficher des
+    Cette proglet permet d'afficher des
 villes et des routes sur une carte de France à partir de coordonnées
 géographiques (longitude,latitude). La proglet fournie aussi une base
 de donnée constituée des coordonnées géographiques des grandes villes
@@ -89,10 +88,5 @@ chemin dans ce réseau de routes est aussi fournie.
 <b>voisins</b> de la proglet.</m>
       <p><r>List&lt;String></r> <r>plusCourtCheminGogleMap</r>(<r>Map&lt;String,List&lt;String>></r> voisinages, <r>String</r> <b>depart</b>, <r>String</r> <b>arrivee</b>)</p>
     </div>
-  </div>
-  <div class="notes">
-
-    <div id="1">Cette proglet est un <l link="http://fr.wikipedia.org/wiki/Open_source" text="code source libre"/>, programmée en Java et <l link="http://javascool.gforge.inria.fr/v3/?page=api:/proglet/paintbrush/ImageDisplay.html" text="documentée"/> 
-    pour sa libre redistribution, l'accès <l link="http://javascool.gforge.inria.fr/v3/?page=api:/proglet/paintbrush/PaintBrush.java.html" text="au code source"/>, et permettre des développements dérivés.</div>
   </div>
 </div>

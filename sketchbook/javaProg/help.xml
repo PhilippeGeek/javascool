@@ -1,7 +1,6 @@
-<div title="La «proglet» javaprog">
-  <p class="margin">Autres <l link="../../../org/javascool/doc-files/about-proglets.htm" text="«proglets»"/>.</p>
+<div title="La «proglet» javaProg">
   <p>
-    Cette proglet<l class="note" link="1"/> permet de simuler de programmer toutes sortes d'applet en utilisant la syntaxe Java ordinaire.
+    Cette proglet permet de simuler de programmer toutes sortes d'applet en utilisant la syntaxe Java ordinaire.
 
   <p>On peut utiliser toute l'<l link="http://java.sun.com/javase/6/docs/api/overview-summary.html" text="API Java"/> et 
   l'<l link="http://javascool.gforge.inria.fr/v3/api/org/javascool/package-summary.html" text="API JavaScool"/>. 
@@ -22,14 +21,13 @@
     </div>
     au début du fichier.</div>
 
-  <div>Un exemple d'utilisation est proposé en <l link="http://javascool.gforge.inria.fr/v3/?page=api:/proglet/javaprog/doc-files/the-proglet.htm" text="démonstration"/>, 
-  à partir d'un <l link="http://javascool.gforge.inria.fr/v3/?page=api:/proglet/javaprog/FleurEnRythme.jvs.html" text="code Jvs"/> réalisé avec deux lycéens du 
+  <div>Un exemple d'utilisation est proposé en démonstration, 
+  à partir d'un <l class="editor" link="fleurEnRythme.jvs" text="code Jvs"/> réalisé avec deux lycéens du 
+  <l link="http://www.civfrance.com" text="Lycée International de Valbonne"/>.</div>
+
+  <div>Un autre exemple d'utilisation est proposé en démonstration, 
+  à partir d'un <l class="editor" link="elephant.jvs" text="code Jvs"/> réalisé avec trois lycéennes du 
   <l link="http://www.civfrance.com" text="Lycée International de Valbonne"/>.</div>
 
  </p>
-
-  <div class="notes">
-    <div id="1">Cette proglet est un <l link="http://fr.wikipedia.org/wiki/Open_source" text="code source libre"/>, programmée en Java et <l link="http://javascool.gforge.inria.fr/v3/?page=api:/proglet/javaprog/JavaPanel.html" text="documentée"/> 
-    pour sa libre redistribution, l'accès <l link="http://javascool.gforge.inria.fr/v3/?page=api:/proglet/javaprog/JavaPanel.java.html" text="au code source"/>, et permettre des développements dérivés.</div>
-  </div>
 </div>

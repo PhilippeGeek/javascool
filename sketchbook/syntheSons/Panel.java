@@ -53,12 +53,12 @@ public class Panel extends SoundBitPanel {
            }
          }
          );
-    syntheSet("e5 e5b e5 e5b e5 e5b e5 b d5 c5 4 a | 1 h c e a 4 b | 1 h e g g# 4 a");
-    synthePlay();
+    setNotes("e5 e5b e5 e5b e5 e5b e5 b d5 c5 4 a | 1 h c e a 4 b | 1 h e g g# 4 a");
+    play();
   }
   private void test(SoundBit sound) {
     Functions.tone = sound;
-    syntheSet("16 a");
-    synthePlay();
+    setNotes("16 a");
+    play();
   }
 }

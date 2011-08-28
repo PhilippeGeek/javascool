@@ -9,7 +9,7 @@ La taille de l'image ne doit pas être trop importante (pas plus de 500^2).</doc
   <keyword 
     name="load"
     title="Charge une image">
-    <code>load(fichierdelimage);</code>
+    <code>load("fichierdelimage");</code>
     <doc>Initialise une image en chargeant ses pixels à partir d'un fichier.
 La taille de l'image ne doit pas être trop importante (pas plus de 500^2).</doc>
   </keyword>
