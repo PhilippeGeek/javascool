@@ -7,6 +7,8 @@
   * Lu 29 août au soir : JVS4 RC1 partagée avec les co-développeurs
   * Me 7 Sept au soir : JVS4 RC2 publiée en version principale sur le site 
 
+----
+
 = Chantiers en cours =
 
 ==Chantier en cours: Javas'Cool core==
@@ -56,6 +58,8 @@
 
 == Chantier en cours: plateforme de développement ==
   * R.A.S.
+
+----
 
 = Développements ultérieurs et/ou en réflexion =
 
