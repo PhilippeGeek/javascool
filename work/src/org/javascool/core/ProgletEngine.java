@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import org.javascool.macros.Macros;
 
 import java.io.File;
+import java.util.Collections;
+import java.util.Comparator;
 import org.javascool.Core;
 import org.javascool.tools.FileManager;
 import org.javascool.tools.Pml;
@@ -47,10 +49,13 @@ public class ProgletEngine {
             String javascoolJar = Core.javascoolJar();
             for (String dir : FileManager.list(javascoolJar, "org.javascool.proglets.[^\\.]+.proglet.pml")) {
                 Proglet proglet = new Proglet().load(dir.replaceFirst("jar:[^!]*!(.*)proglet.pml", "$1"));
-                //if (!proglet.isProcessing()) {
                 proglets.add(proglet);
-                //}
             }
+            Collections.sort(proglets, new Comparator<Proglet>() {
+                @Override
+                 public int compare(Proglet p1, Proglet p2) {
+                     return p1.getName().compareTo(p2.getName());
+            }});
         }
         // Définit une proglet "vide" pour lancer l'interface
         if (proglets.isEmpty()) {
