@@ -27,6 +27,7 @@
 == Chantier en cours: Javas'Cool builder ==
 
   # (TV1) Créer la doc developpeurs proglets processing
+  # (TV1) Ajouter les width et height pour les processing
 
 == Chantier en cours: Proglets  ==
 
