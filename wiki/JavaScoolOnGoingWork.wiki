@@ -15,6 +15,8 @@
   # (PV0) Pouvoir active desactiver la completion si ca detablise le mec
   # (TV2) Finaliser page aide lancement javascool site web qd le core est stable
 
+ # (PV0) Allesz: encore deux icones pour les proglets !
+
 == Chantier en cours: Javas'Cool builder ==
   * R.A.S.
 
