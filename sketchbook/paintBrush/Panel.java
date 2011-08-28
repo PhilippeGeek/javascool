@@ -29,7 +29,7 @@ public class Panel extends JPanel {
   }
   private MainPanel mainPanel;
   /** Démo de la proglet. */
-  public static void start() {
+  public void start() {
     Macros.message("Pour la démo . . à vous de manipuler l'interface\n .. en \"mode démo\", tout simplement !");
   }
 }

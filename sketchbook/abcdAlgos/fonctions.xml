@@ -1,7 +1,7 @@
 <div class="sujet" title="Un tutoriel pour se familiariser avec les fonctions">
   
   <div class="objectif">
-    Le but de ce tutoriel est de se familiariser avec les fonctions. Il faut déja savoir <l link="sequence.htm" text="utiliser l'interface"/>,
+    Le but de ce tutoriel est de se familiariser avec les fonctions. Il faut déja savoir <l link="tutoriel.htm" text="utiliser l'interface"/>,
   se servir de <l link="variables.htm" text="variables"/> et avoir découvert l'instruction <l link="condition.htm" text="conditionnelle"/>.
   </div>
   

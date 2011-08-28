@@ -215,9 +215,9 @@ public class HtmlDisplay extends JPanel {
         pane.setText(URLDecoder.decode(location.substring(stringPrefix.length()), "UTF-8"));
       } catch(java.io.UnsupportedEncodingException e) { throw new IllegalStateException("UTF-8 n'est pas reconnu comme encodage: (" + e + ") c'est un bug Java !");
       }
-    } else if(location.startsWith(editorPrefix)) {  // Affichage dand JavaScool
+    } else if(location.startsWith(editorPrefix)) {  // Affichage dans editeur JavaScool
       org.javascool.gui.Desktop.getInstance().openFile(toURL(location.substring(editorPrefix.length())).toString());
-    } else if(location.startsWith(newtabPrefix)) {    // Affichage dans JavaScool
+    } else if(location.startsWith(newtabPrefix)) {    // Affichage dans browser JavaScool
       URL url = toURL(location.substring(newtabPrefix.length()));
       String name = new File(url.getPath()).getName().replaceFirst("\\.[^\\.]*$", "").replace('_', '.');
       org.javascool.gui.Desktop.getInstance().openBrowserTab(url.toString(), name.substring(0, 1).toUpperCase()+name.substring(1));

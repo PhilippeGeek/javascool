@@ -1,15 +1,14 @@
 <div title="Découvrir les ingrédients des algorithmes">
 
   <div title="Un parcours pour s'initier à la programmation">
-    Ce parcours permet de s'approprier les cinq ingrédients des algorithmes (en <l link="http://javascool.gforge.inria.fr/v3/javascool.jar" text="lançant javascool"/>):
+    Ce parcours permet de s'approprier les cinq ingrédients des algorithmes.
    <div class="table">
-     <p><p><b>Utiliser des <l link="sequence.htm" text="séquences d'instructions"/>.</b></p></p>
-     <p><p><b>Apprendre à se servir de <l link="variables.htm" text="variables"/>.</b></p></p>
-     <p><p><b>Découvrir l'instruction <l link="condition.htm" text="conditionnelle"/>.</b></p></p>
-     <p><p><b>Se familiariser avec les <l link="fonctions.htm" text="fonctions"/>.</b></p></p>
-     <p><p><b>Programmer avec des <l link="boucles.htm" text="boucles"/>.</b></p></p>
+     <p><p><b>Utiliser des <l class="newtab" link="tutoriel.htm" text="séquences d'instructions"/>.</b></p></p>
+     <p><p><b>Apprendre à se servir de <l class="newtab" link="variables.htm" text="variables"/>.</b></p></p>
+     <p><p><b>Découvrir l'instruction <l class="newtab" link="condition.htm" text="conditionnelle"/>.</b></p></p>
+     <p><p><b>Se familiariser avec les <l class="newtab" link="fonctions.htm" text="fonctions"/>.</b></p></p>
+     <p><p><b>Programmer avec des <l class="newtab" link="boucles.htm" text="boucles"/>.</b></p></p>
    </div>
-   <p>avec un <l link="about-memo.htm" text="mémorandum"/> des constructions et instructions, et la <l link="about-proglet.htm" text="proglet"/> "console".</p>
   </div>
 
   <div title="La différence entre une machine à café et un ordinateur">
@@ -25,17 +24,10 @@
 
   <div id="1" title="Des documents (sur le web) pour apprendre et se cultiver sur le sujet"><div class="ul">
     <div>Le poly de cours pour <l link="http://interstices.info/ingredients-algorithmes" text="découvrir les ingrédients des algorithmes"/>
-    avec un <l link="http://javascool.gforge.inria.fr/v3/?page=api:/proglet/ingredients/doc-files/LaRecetteDAriane.jvs.html" text="exemple de programme"/> qui s'amuse à détourner la métaphore des "ingrédients des algoritmes".</div>
+    avec un <l class="editor" link="LaRecetteDAriane.jvs" text="exemple de programme"/> qui s'amuse à détourner la métaphore des "ingrédients des algoritmes".</div>
+    <div>Un petit <l link="http://www-sop.inria.fr/science-participative/film" text="film condensé d'histoire de l'informatique"/> permet de se cultiver sur le domaine, il est doté d'un <l link="http://www-sop.inria.fr/science-participative/film/livret.pdf" text="livret"/>.</div>
     <div>Les documents <l link="http://interstices.info/algo-mode-emploi" text="Algorithme mode d'emploi"/> et 
       <l link="http://interstices.info/demandez-le-programme" text="Demandez le programme"/> offrent une introduction à l'élève ce sujet.</div>
-    <div>Pour le professeur: Une <l link="rtsp://stream-serv.inrialpes.fr/Roc/SeminaireInformatiqueObjetsNumeriques/G_Dowek.rm" text="présentation vidéo"/> 
-      accompagnée de ses <l link="http://javascool.gforge.inria.fr/v3/documents/slides-dowek.pdf" text="supports"/> donne les fondements de cette leçon.</div>
-  </div></div>
-
-  <div title="Pour aller plus loin (sur le web)."><div class="ul">
-    <div>Découvrir <l link="http://interstices.info/turing" text="Alan Turing"/>, "le" pionnier de l'informatique et 
-     sur la différence entre <l link="http://interstices.info/calculer-penser" text="calculer (avec un ordinateur) et penser (avec un cerveau)"/>.</div>
-    <div>Faire des exercices d'<l link="../../exosdemaths/doc-files/index.htm" text="algoritmhique du programme de mathématique de seconde"/>.</div>
-    <div>Découvrir le <l link="../../dichotomie/doc-files/index.htm" text="principe algoritmhique de la dichotomie"/>.</div>
+    <div>Pour le professeur: des <l link="http://www.canal-u.tv/producteurs/fuscia/%28onglet%29/collections/%28id%29/217136#onglet_collection" text="cours vidéo"/> sont disponibles.</div>
   </div></div>
 </div>

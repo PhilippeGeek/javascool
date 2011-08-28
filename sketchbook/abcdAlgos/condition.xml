@@ -1,8 +1,7 @@
 <div class="sujet" title="Un tutoriel pour découvrir l'instruction conditionnelle.">
   
-  
   <div class="objectif">
-    Le but de ce tutoriel est de découvrir l'instruction conditionnelle. Il faut déjà savoir <l link="sequence.htm" text="utiliser l'interface"/>,
+    Le but de ce tutoriel est de découvrir l'instruction conditionnelle. Il faut déjà savoir <l link="tutoriel.htm" text="utiliser l'interface"/>,
     et savoir se servir de <l link="variables.htm" text="variables"/>.
   </div>
   

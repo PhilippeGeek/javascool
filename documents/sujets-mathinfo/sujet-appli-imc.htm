@@ -1,0 +1,56 @@
+<div title="Un tutoriel sur les valeurs numériques" class="sujet">
+    
+  <div class="objectif">
+    Le but de ce tutoriel est d'appliquer quelques unes des notions fondamentales.
+  </div>
+
+  <div class="intros">
+    <div title="Calculer son indice de masse corporelle"> Voici un exemple concret : 
+    calculer son . Voici un code (volontairement) erroné :
+    <div class="code">
+      <div>void main() {</div>
+      <div>println(Quel est ton poids ?) ;</div>
+      <div>int poids = readInteger() ;</div>
+      <div>println(Quel est ta taille ?) ;</div>
+      <div>double taille = readFloat() ;</div>
+      <div>??? imc = poids + taille / (poids * taille) ;</div>
+      <div>println(Ton indice de masse corporelle est donc :  + imc) ;</div>
+      <div>}</div>
+     </div>
+     Le début du code ressemble à celui utilisé pour apprendre à se servir de variables : 
+     on demande à l'utilisateur son poids et sa taille. Ensuite on calcule l'indice de masse corporelle ...  mais ... attention :<div class="ul">
+       <div>La formule est fausse !!! Ce sera à vous de la corriger.</div>
+       <div>Il faut remplacer ??? par le bon 'adjectif' (int ? double ?)</div>
+     </div>
+   </div>
+ </div>
+
+  <div class="works">
+    <div title="Spécifier le code avec une formule juste"> Reprendre le code précédent et en utilisant la définition de  
+    l'. <div class="ul">
+      <div>Pourquoi choisir le poids (int) en entier et la taille en décimal (double) ?</div>
+      <div>L'indice de masse corporelle doit-il être un entier ou un décimal ?</div>
+      <div>Entrez la formule juste et essayez (c'est à dire : sauver, compiler et ... exécuter)</div>
+      <div>Vérifiez le code à la main sur l'exemple d'une personne pesant 95 kg et mesurant 1,81 m.</div>
+      <div>Vérifiez le code à la main sur l'exemple d'une personne pesant 48 kg et mesurant 1,69 m.</div>
+    </div></div>
+    <div title="Ajouter un message personnalisé"> Ajoutons au code précédent un message "personnalisé" :
+    <div class="code">
+      <div>if(imc &lt;= 25) {</div>
+      <div>println(Plutôt mince);</div>
+      <div>} else if(imc &lt;= 50) {</div>
+      <div>println(Plutôt gros);</div>
+      <div>} else {</div>
+      <div>println(Sacré menteur !);</div>
+      <div>}</div>
+    </div><div class="ul">
+      <div>Ajoutez ce code au bon endroit et constatez qu'il permet de donner une information plus parlante à l'utilisateur.</div>
+      <div>Utiliser le tableau donné sur le  pour 
+      indiquer la dénutrition, maigreur, corpulence normale, surpoids, etc... en combinant les constructions if / else.</div>
+    </div></div>
+  </div>
+  
+  <div class="notes">
+    <div title="A propos de ce tutoriel" id="1"> Ce tutoriel est une idée originale de Aurélien Astroux, Professeur de Physique en 2nd Mesures Physiques et Informatique au Lycée  d'Antibes.</div>
+  </div>
+</div>
