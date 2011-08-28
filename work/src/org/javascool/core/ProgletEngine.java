@@ -241,13 +241,14 @@ public class ProgletEngine {
             }
             if (this.isProcessing()) {
                 try {
-                    Applet applet=(Applet)Class.forName("" + pml.getString("name") + "").newInstance();
+                    Applet applet=(Applet) Class.forName("" + pml.getString("name") + "").newInstance();
                     applet.init();
                     applet.start();
                     applet.setMinimumSize(new Dimension(500,500));
                     applet.setMaximumSize(new Dimension(500,500));
                     pml.set("java-pane", (Component) applet);
                 } catch (Throwable e) {
+                   System.err.println("Upps erreur de chargement d'une proglet processing : "+e);
                 }
             } else {
                 try {
