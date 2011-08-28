@@ -39,13 +39,6 @@
     * Virer la partie de l'aide qui traite des collisions (pas implémenté entièrement)
     * Résoudre des bugs (voir mails)
 
-  # (TV1) Documentation des proglets: 
-  * renommer les npms de proglets sans prefixe; 
-  * ajouter les aides/ibnsertion
-  * mettre à jour les docs XML : liens, nom des routines, texte;
-  * Rechercher les Jvs et XML v3 oubliés en v4
-  * Publier sur le site en ressource les pages activites et exodematsh index en page ressource
-
 == Chantier en cours: web ==
 
   # (GM1) Ajouter un moyen d'accéder par un [http://javascool.gforge.inria.fr/v4/index.php?page=proglets&action=show&id=ingredients&helpFile=api/all/classes-noframe.html lien interne] en laissant la responsabilité au mec de référencer ces liens de ces pages doc.
