@@ -18,3 +18,7 @@ nbe :
 pro :
 	ant processing
 
+svo :
+	svn rm --keep-local ../sketchbook/*/applet ; svn ci -m 'compilation sketchbook/*/applet 1/2'
+	svn add ../sketchbook/*/applet ; svn ci -m 'compilation sketchbook/*/applet 1/2'
+
