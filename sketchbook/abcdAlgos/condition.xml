@@ -2,8 +2,8 @@
   
   
   <div class="objectif">
-    Le but de ce tutoriel est de découvrir l'instruction conditionnelle. Il faut déjà savoir <l link="sujet-hello-world.htm" text="utiliser l'interface"/>,
-    et savoir se servir de <l link="sujet-about-variables.htm" text="variables"/>.
+    Le but de ce tutoriel est de découvrir l'instruction conditionnelle. Il faut déjà savoir <l link="sequence.htm" text="utiliser l'interface"/>,
+    et savoir se servir de <l link="variables.htm" text="variables"/>.
   </div>
   
   <div class="intros">
@@ -82,7 +82,7 @@
    </div>
    
    <div class="works">
-    <div title="Ajouter des tests à un code"> Reprendre le code proposé pour apprendre à se servir de <l link="sujet-about-variables.htm" text="variables"/> 
+    <div title="Ajouter des tests à un code"> Reprendre le code proposé pour apprendre à se servir de <l link="variables.htm" text="variables"/> 
       qui demandent le <i>nom</i> et l'<i>âge</i> de l'utilisateur et ajouter
       au bon endroit :
       <div class="code">
@@ -124,7 +124,7 @@
   </div>
   
   <div class="notes">
-    <div title="A propos de l'égalité" id="1"> Notez que le signe <r>=</r> veut dire "<l link="sujet-about-variables.htm" text="affecter une valeur"/>"
+    <div title="A propos de l'égalité" id="1"> Notez que le signe <r>=</r> veut dire "<l link="variables.htm" text="affecter une valeur"/>"
     tandis que être égal s'écrit <r>==</r> pour les nombres et <b><r>equal</r>(s, c)</b> pour les chaines de caractères : voici quelque chose d'un peu compliqué.</div>
     <div title="A propos de la touche |" id="2"> Sur les claviers français des PC, il faut taper <c>Alt Gr + 6</c>: 
     <c>Alt Gr</c> est la touche à droite de la barre espace qu'il faut enfoncer en même temps que la touche du chiffre 6. 
