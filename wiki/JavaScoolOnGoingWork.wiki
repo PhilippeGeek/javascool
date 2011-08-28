@@ -4,8 +4,8 @@
 <wiki:toc max_depth="2" />
 
 *Notre planning*
-  * Lu 29 août au soir : JVS4 RC1 partagée avec les co-développeurs
-  * Me 7 Sept au soir : JVS4 RC2 publiée en version principale sur le site 
+  * Me 31 août au soir : JVS4 RC1 partagée avec les co-développeurs
+  * Ve 9 Sept au soir : JVS4 RC2 publiée en version principale sur le site 
 
 ----
 
