@@ -63,7 +63,7 @@ Status:
   * (`*`1) Implementer le fait qu'on ajoute @proglet:nom-de-la-proglet.
     * (`*`2) Proposer des accès depuis Desktop vers les instances des jvs
 
-  * (`*`1) Virer le HtmlDisplay HTML3 et trouver un bon browser
+  * (`*`1) Virer le `HtmlDisplay` HTML3 et trouver un bon browser
 
 == Javas'Cool Builder ==
 
@@ -81,7 +81,7 @@ Voir aussi les proglets en [http://wiki.inria.fr/sciencinfolycee/JavaScool:FaqD%
 
 == Javas'Cool Web ==
 
-  * (`*`3) Ajouter une page outil qui traduise du [X]HTML en HML à partir de work/src/org/javascool/builder/htm2hml.xslt
+  * (`*`3) Ajouter une page outil qui traduise du `[X]HTML` en HML à partir de work/src/org/javascool/builder/htm2hml.xslt
 
   * (`*`4) Voir à restaurer les mécanismes javascript d'animation de liens à partir du site 
 
@@ -91,6 +91,6 @@ Voir aussi les proglets en [http://wiki.inria.fr/sciencinfolycee/JavaScool:FaqD%
 
 == Javas'Cool Platform ==
 
- * (`*`2) Rendre disponible TextFileEditor & TextFilesEditor (avec boutons et interface) et DoubleTabbedPane sortis de org/javascool/gui
+ * (`*`2) Rendre disponible `TextFileEditor` & `TextFilesEditor` (avec boutons et interface) et `DoubleTabbedPane` sortis de org/javascool/gui
 
  * (`*`3) Déployer dans svn:work/lib la construction de autocomplete.jar
