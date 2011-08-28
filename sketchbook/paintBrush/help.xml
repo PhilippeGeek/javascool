@@ -1,8 +1,6 @@
-<div title="La «proglet» paintbrush">
-  <p class="margin">Autres <l link="../../../org/javascool/doc-files/about-proglets.htm" text="«proglets»"/>.</p>
+<div title="La «proglet» paintBrush">
   <p>
-    Cette proglet<l class="note" link="1"/> permet de dessiner dans une petite image de résolution minimale pour comprendre le codage 
-    matriciel pixels par pixels. 
+    Cette proglet permet de dessiner dans une petite image de résolution minimale pour comprendre le codage matriciel pixels par pixels. 
   </p>
 
   <p>
@@ -53,11 +51,7 @@
      <r>affichePoint</r>, <r>supprimePoint</r>, <r>remplir</r>, 
      <r>afficheLigne</r> et <r>afficheRectangle</r>.</p>
 
-   <div>On pourra partir du programme <l link="http://javascool.gforge.inria.fr/v3/?page=api:proglet/paintbrush/doc-files/Exemple.jvs.html" text="exemple donné ici"/>.</div>
+   <div>On pourra partir du programme <l class="editor" link="Exemple.jvs" text="exemple donné ici"/>.</div>
 
   </p>
-  <div class="notes">
-    <div id="1">Cette proglet est un <l link="http://fr.wikipedia.org/wiki/Open_source" text="code source libre"/>, programmée en Java et <l link="http://javascool.gforge.inria.fr/v3/?page=api:/proglet/paintbrush/ImageDisplay.html" text="documentée"/> 
-    pour sa libre redistribution, l'accès <l link="http://javascool.gforge.inria.fr/v3/?page=api:/proglet/paintbrush/PaintBrush.java.html" text="au code source"/>, et permettre des développements dérivés.</div>
-  </div>
 </div>

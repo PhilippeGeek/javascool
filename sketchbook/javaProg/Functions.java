@@ -35,11 +35,19 @@ public class Functions {
    * <p>- déplacé avec la construction <tt>icon.setLocation(x, y);</tt></p>
    * <p>- rendu visible/invisible avec la construction <tt>icon.setVisible(trueOrFalse);</tt></p>
    */
-  public static JLabel showIcon(String location, int x, int y, int p) {
+  public static JLabel showIcon(String location, int x, int y, int w, int h, int p) {
     JLabel icon = new JLabel();
     icon.setIcon(getIcon(location));
     icon.setLocation(x, y);
+    if (w > 0 && h > 0)
+      icon.setSize(w, h);
     getPane().add(icon, new Integer(p), 0);
     return icon;
+  }
+  /** 
+   * @see #showIcon(String, int, int, int, int, int)
+   */
+  public static JLabel showIcon(String location, int x, int y, int p) {
+    return showIcon(location, x, y, 0, 0, p);
   }
 }

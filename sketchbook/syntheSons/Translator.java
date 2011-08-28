@@ -16,6 +16,6 @@ public class Translator extends org.javascool.core.Translator {
   public String translate(String code) {
     // Translates the  @tone macro
     return code.replaceAll("@tone:(.*)\\s*;",
-                           "org.javascool.proglets.syntheSons.Functions.tone = new org.javascool.proglets.syntheSons.SoundBit() { public double get(char c, double t) { return $1; } }; org.javascool.proglets.syntheSons.Functions.syntheSet(\"16 a\");");
+                           "org.javascool.proglets.syntheSons.Functions.tone = new org.javascool.proglets.syntheSons.SoundBit() { public double get(char c, double t) { return $1; } }; org.javascool.proglets.syntheSons.Functions.setNotes(\"16 a\");");
   }
 }

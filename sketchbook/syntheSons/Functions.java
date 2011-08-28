@@ -41,12 +41,12 @@ public class Functions {
   /** Définit les notes à jouer dans cet interface.
    * @param notes Définition des <a href="NotesSoundBit.html#reset(java.lang.String)">notes</a> selon une syntaxe simplifiée.
    */
-  static public void syntheSet(String notes) {
+  static public void setNotes(String notes) {
     getPane().sound.reset(notes);
     getPane().reset(getPane().sound, 'l');
   }
-  /** Fait entendre le son sur le système audio. */
-  static public void synthePlay() {
+  /** Fait entendre le son à travers le système audio. */
+  static public void play() {
     try { getPane().sound.play();
     } catch(Exception e) {
       System.out.println(e.toString());

@@ -1,5 +1,5 @@
 <div title="Proglet exemple">
- Voici l eprogramme minimal qui permet de tester cette proglet:
+ Voici le programme minimal qui permet de tester cette proglet:
   <code>
     void main() {
       setMessage("Hello World!");
