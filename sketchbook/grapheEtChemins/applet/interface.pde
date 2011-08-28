@@ -122,4 +122,4 @@ public static void dijkstra(String nStart, String nEnd) {
     return;
   proglet.myGraph.dijkstra(nStart, nEnd);
 }
-static UnGrapheDesChemins proglet;
+static grapheEtChemins proglet;
