@@ -5,11 +5,6 @@
     La première partie de ce tutoriel est introductive à la notion de graphe, 
 	se limitant essentiellement à un cas concret de parcours d'une voiture entre des villes. 
 	On veut faire passer l'idée ici que l'application se retrouve dans de nombreuses situations du quotidien.
-    Il faut déja savoir <l link="../../ingredients/doc-files/sujet-hello-world.htm" text="utiliser l'interface"/>,
-    se servir de <l link="../../ingredients/doc-files/sujet-about-variables.htm" text="variables"/> 
-    et avoir découvert l'<l link="../../ingredients/doc-files/sujet-about-if.htm" text="instruction conditionnelle"/> et 
-    les <l link="../../ingredients/doc-files/sujet-about-while.htm" text="boucles"/>, 
-    ansi que les <l link="../../ingredients/doc-files/sujet-about-functions.htm" text="fonctions"/>..
   </div>
   <div class="intros">
     <p>Un graphe est un ensemble de points dont certaines paires sont directement reliées par un lien.</p>
@@ -78,13 +73,11 @@
       <p class="center"><c>V_Dep - V_interm1 - V_interm22 - V_Arr</c></p></p>
       <p>On gardera le parcours le plus court.</p>
     </div></p>
-    On propose de programmer l'algorithme du plus court chemin dans une seconde partie grâce à l'interface <l link="../../../sketchbook/UnGrapheDesChemins/about-proglet.htm" text="Un graphe et des chemins"/>.
     </div>
   </div>
   <div title="Pour se détendre . . programmer soi-même la voiture et les villes">
-    A partir des <l link="about-proglet.htm" text="fonctions"/> proposées à vous de programmer (juste pour le fun et pour s'entrainer à programmer) un petit voyage de la voiture 
+    A partir des <l link="help.htm" text="fonctions"/> proposées à vous de programmer (juste pour le fun et pour s'entrainer à programmer) un petit voyage de la voiture 
   à travers un paysage que vous aurez créé. Pour "temporiser" la fonction: <c><r>sleep</r>(delay_en_millisecondes)</c> va introduire un délai.
     <p>Regarder l'exécution et observer selon l'ordinateur si l'animation est freinée par vos délais ou par . . le calcul de l'image 3D</p>
   </div>
-  <l class="include" link="about-opengl.xml"/>
 </div>

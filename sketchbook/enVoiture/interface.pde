@@ -78,5 +78,5 @@ public static double getLink(String nA, String nB) {
   p_ = proglet.myTrip.getLink(nA, nB);
   return p_;
 }
-static EnVoiture proglet;
+static enVoiture proglet;
 

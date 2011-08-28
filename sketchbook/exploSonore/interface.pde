@@ -147,5 +147,5 @@ public static void playStop() {
     return;
   proglet.StopAnySound();
 }
-static ExplorationSonore proglet;
+static exploSonore proglet;
 

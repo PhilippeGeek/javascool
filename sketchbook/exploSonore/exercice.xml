@@ -1,21 +1,16 @@
 <div class="sujet" title="Un tutoriel sur les signaux sonores"> 
-  <div class="margin">Voir aussi l'<l link="activites-unplug.htm" text="activité «unplug»"/> (sans programmation)</div>
+  <div class="margin">Voir aussi l'<l link="tutoriel.htm" text="activité «unplug»"/> (sans programmation)</div>
   <div class="objectif">
     Le but de ce tutoriel est <div class="ul">
       <p>d'apprendre à programmer des sons, c'est à dire une séquence de signaux sonores périodiques, </p>
       <p>en appliquant les ingrédients des algorithmes sur un objet numérique non alpha-numérique.</p>
     </div>
-    Il faut déja savoir <l link="../../ingredients/doc-files/sujet-hello-world.htm" text="utiliser l'interface"/>,
-    se servir de <l link="../../ingredients/doc-files/sujet-about-variables.htm" text="variables"/> 
-    et avoir découvert l'<l link="../../ingredients/doc-files/sujet-about-if.htm" text="instruction conditionnelle"/> et 
-    les <l link="../../ingredients/doc-files/sujet-about-while.htm" text="boucles"/>, 
-    ansi que les <l link="../../ingredients/doc-files/sujet-about-functions.htm" text="fonctions"/>..
   </div>
   <div class="intros">
     <div title="La notion de signal périodique"> Une note est une vibration de l'air 
-    comme <l link="http://javascool.gforge.inria.fr/v3/sketchbook/ExplorationSonore/OndeSonore.pdf" text="détaillé ici"/> (bien lire le document avant de commencer).
+    comme <l link="http://javascool.gforge.inria.fr/documents/sketchbook/exploSonore/OndeSonore.pdf" text="détaillé ici"/> (bien lire le document avant de commencer).
     Les sons les plus graves correspondent à une vibration de 20Hz (20 fois par seconde), les plus aigus de 20000Hz, notre voix humaine vibre principalement entre 100 et 3000Hz.
-    <div class="margin">Voir aussi un document sur la <l link="http://javascool.gforge.inria.fr/v3/sketchbook/ExplorationSonore/Numeriser-un-son.pdf" text="numérisation du son"/>.</div>
+   <div class="margin">Voir aussi un document sur la <l link="http://javascool.gforge.inria.fr/documents/sketchbook/exploSonore/Numeriser-un-son.pdf" text="numérisation du son"/>.</div>
     </div>
   </div>
   <div class="works">
@@ -28,7 +23,7 @@
       <!-- commande maple pour sin2square2: plot([Sum(sin((2*k+1) * t) / (2*k+1), k= 0..n)$n=1..20], t = 0..4*Pi); -->
       </p>
       <div class="ul">
-        <p>En utilisant la fonction <r>playSignal</r> décrite <l link="about-proglet.htm" text="ici"/> faire un petit programme qui va déclencher sur les
+        <p>En utilisant la fonction <r>playSignal</r> décrite <l link="help.htm" text="ici"/> faire un petit programme qui va déclencher sur les
         canaux 1, 2 et 3, des sinusoïdes de fréquence 100Hz puis 300Hz etc.. avec les bonnes amplitudes. Ecrire ce programme en mettant une instruction  <r>playSignal</r>
         sur chaque ligne.</p>
         <p>Observer le son (sa forme sur l'affichage de la proglet et écouter sa forme). 
@@ -50,7 +45,7 @@
       Nous allons recréer cet effet en programmant cette proglet.</p>
       <div class="ul">
         <p>Choisir une musique ou un son de votre choix (quelques secondes) et créer un programme d'une ligne avec l'instruction <r>playRecord</r> 
-        décrite <l link="about-proglet.htm" text="ici"/> pour le lancer.</p>
+        décrite <l link="help.htm" text="ici"/> pour le lancer.</p>
         <p>Utiliser manuellement l'interface pour ajuster la fréquence de coupure des sons aigus et l'amplitude du signal afin de voir comment créer l'effet sonore 
 /        du son original ou assourdi.</p>
         <p>Utiliser ensuite la fonction <r>playStop</r> et la fonction:
