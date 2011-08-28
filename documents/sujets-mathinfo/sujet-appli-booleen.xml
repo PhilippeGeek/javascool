@@ -1,17 +1,7 @@
 <div class="sujet" title="Un tutoriel sur les valeurs booléenes">
   
-  
   <div class="objectif">
     Le but de ce tutoriel est de découvrir quelques notions de logique à travers la programmation.
-    Il faut déja savoir <l link="../../ingredients/doc-files/sujet-hello-world.htm" text="utiliser l'interface"/>,
-    se servir de <l link="../../ingredients/doc-files/sujet-about-variables.htm" text="variables"/> 
-    et avoir découvert l'<l link="../../ingredients/doc-files/sujet-about-if.htm" text="instruction conditionnelle"/>.
-  </div>
-
-  <div class="intros">
-    <div title="Avant de commencer . . ">
-      . . . Relire attentivement le sujet sur l'<l link="../../ingredients/doc-files/sujet-about-if.htm" text="instruction conditionnelle"/>.
-    </div>
   </div>
 
   <div class="works">

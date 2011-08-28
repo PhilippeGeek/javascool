@@ -75,7 +75,7 @@ public class Panel extends JPanel {
     garden[x + y * width] = c;
   }
   /** Démo de la proglet. */
-  public static void start() {
+  public void start() {
     clear_all();
     pen_up();
     int t = 0;

@@ -2,7 +2,7 @@
 * Thierry.Vieville@sophia.inria.fr, Copyright (C) 2009.  All rights reserved. *
 *******************************************************************************/
 
-package org.javascool.proglets.pixelsAlgos;
+package org.javascool.proglets.codagePixels;
 
 // Used to load/save images
 import java.awt.image.BufferedImage;

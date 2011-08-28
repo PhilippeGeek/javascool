@@ -1,4 +1,7 @@
 <div title="La «proglet» algoDeMaths">
+ <p class="margin">
+    <p>Cliquer <l class="newtab" link="http://javascool.gforge.inria.fr/v4/index.php?page=resources&amp;action=link-sujets-mathinfo" text="ici"/> pour accéder aux exercices.</p>
+  </p>
   <p>
     Cette proglet permet d'afficher des tracés de couleurs différentes.
     <div>Pour tracer un point de la courbe: <div class="code">

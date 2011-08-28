@@ -1,13 +1,7 @@
 <div class="sujet" title="Comprendre quelques opérations de manipulation d'images">
   
-  
   <div class="objectif">
-    Le but de ce tutoriel est de comprendre comment un code manipule une image pixellique. 
-    Il faut déja savoir <l link="../../ingredients/doc-files/sujet-hello-world.htm" text="utiliser l'interface"/>,
-    se servir de <l link="../../ingredients/doc-files/sujet-about-variables.htm" text="variables"/> 
-    et avoir découvert l'<l link="../../ingredients/doc-files/sujet-about-if.htm" text="instruction conditionnelle"/> et 
-    utiliser des <l link="../../ingredients/doc-files/sujet-about-while.htm" text="boucles"/> 
-    et définir une <l link="../../ingredients/doc-files/sujet-about-functions.htm" text="fonction"/>.
+    Le but de ce tutoriel est de comprendre comment un code manipule une image pixellique.
   </div>
   
   <div class="intros">
@@ -26,22 +20,22 @@
         <p>}</p>
         <m>Boucle sur tous les pixels</m>
         <p><r>void</r> filtre() {</p>
-        <p><T/><r>for</r>(<r>int</r> j = -<r>smileyHeight</r>(); j &lt;= <r>smileyHeight</r>(); j = j + 1) {</p>
-        <p><T/><T/><r>for</r>(<r>int</r> i = -<r>smileyHeight</r>(); i &lt;= <r>smileyHeight</r>(); i = i + 1) {</p>
-        <p><T/><T/><T/><r>smileySet</r>(i, j, f(<r>smileyGet</r>(i, j)));</p>
+        <p><T/><r>for</r>(<r>int</r> j = -<r>getHeight</r>(); j &lt;= <r>getHeight</r>(); j = j + 1) {</p>
+        <p><T/><T/><r>for</r>(<r>int</r> i = -<r>getHeight</r>(); i &lt;= <r>getHeight</r>(); i = i + 1) {</p>
+        <p><T/><T/><T/><r>setPixel</r>(i, j, f(<r>getPixel</r>(i, j)));</p>
         <p><T/><T/>}</p>
         <p><T/>}</p>
         <p>}</p>
         <p/>
         <p><r>void main</r>() {</p>
-        <p><T/><r>smileyLoad</r>("http://javascool.gforge.inria.fr/v3/api/proglet/pixelsetcie/doc-files/doisneaubuffon.jpg");</p>
+        <p><T/><r>load</r>("http://javascool.gforge.inria.fr/v3/api/proglet/pixelsetcie/doc-files/doisneaubuffon.jpg");</p>
         <p>}</p>
       </div><div class="ul">
         <div>Le programme principal <r>main</r> charge une belle photo noir et blanc de <l link="http://fr.wikipedia.org/wiki/Doisneau" text="Doisneau"/>.</div>
         <div>Les deux premières lignes de la fonction <b>filtre</b> bouclent sur tous les pixels en vertical et en horizontal.</div>
         <div>Expliquez en quelques mots le rôle des variables <b>i</b> et <b>j</b>.</div>
-        <div>Que fait la construction <b><r>smileySet</r>(i, j, f(<r>smileyGet</r>(i, j)));</b> pour un pixel de coordonnée (<b>i, j</b>) ?.</div>
-        <div>Essayez ce code, puis le code en ajoutant la fonction <b>filtre();</b> après <b><r>smileyLoad</r>()</b> dans le programme principal : que se passe t'il ?</div>
+        <div>Que fait la construction <b><r>setPixel</r>(i, j, f(<r>getPixel</r>(i, j)));</b> pour un pixel de coordonnée (<b>i, j</b>) ?.</div>
+        <div>Essayez ce code, puis le code en ajoutant la fonction <b>filtre();</b> après <b><r>load</r>()</b> dans le programme principal : que se passe t'il ?</div>
         <div>Expliquez en quelques mots ce phénomène d'«inversion vidéo».</div>
         <div>A la place de la construction <b><r>return</r> 255 - x;</b>, mettre la construction <b><r>return</r>x;</b>: que se passe t'il et pourquoi ?</div>
         <div>Augmenter ou baisser la <i>luminosité</i> d'une image revient à ajouter ou soustraire une valeur constante à la valeur de chaque pixel : 
@@ -70,7 +64,7 @@
     <div title="Soustraire deux images : détecter des changements">
       Cette partie se fera sans rien programmer, comme la précédente. <div class="ul">
         <div>Si l'on considère les deux images suivantes (cliquer sur l'image de gauche pour visualiser la séquence):
-        <div class="center"><div class="table"><div><div><l link="http://javascool.gforge.inria.fr/v3/api/proglet/pixelsetcie/doc-files/13_11.avi" icon="cmu-jump1.jpg" text=""/></div><div><l class="icon" icon="cmu-jump2.jpg"/></div></div></div></div>
+        <div class="center"><div class="table"><div><div><l link="http://javascool.gforge.inria.fr/proglets/codagePixels/13_11.avi" icon="cmu-jump1.jpg" text=""/></div><div><l class="icon" icon="cmu-jump2.jpg"/></div></div></div></div>
         que s'est il passé entre les deux images ? Si l'on ``soustrait´´ les deux images de manière similaire à ce qui a été fait pour les ``additionner´´ que va t'il se passer,
         pour les pixels correspondants à des points immobiles entre les deux images ? Et les pixels correspondants à des points en mouvement ? 
         Expliquer en deux/trois phrases.</div>
@@ -82,20 +76,20 @@
       Considérons le code suivant : <div class="code">
         <m>Fonction appliquée à chaque pixel</m>
         <p><r>void</r> filtrePixel(<r>int</r> i, <r>int</r> j) {</p>
-        <p><T/><r>int</r> valeur = (<r>smileyGet</r>(i, j) + <r>smileyGet</r>(i + 1, j)+ <r>smileyGet</r>(i, j + 1)+ <r>smileyGet</r>(i - 1, j)+ <r>smileyGet</r>(i, j - 1)) / 5;</p>
-        <p><T/><r>smileySet</r>(i, j, valeur);</p>
+        <p><T/><r>int</r> valeur = (<r>getPixel</r>(i, j) + <r>getPixel</r>(i + 1, j)+ <r>getPixel</r>(i, j + 1)+ <r>getPixel</r>(i - 1, j)+ <r>getPixel</r>(i, j - 1)) / 5;</p>
+        <p><T/><r>setPixel</r>(i, j, valeur);</p>
         <p>}</p>
         <m>Boucle sur tous les pixels</m>
         <p><r>void</r> filtre() {</p>
-        <p><T/><r>for</r>(<r>int</r> j = -<r>smileyHeight</r>() + 1; j &lt;= <r>smileyHeight</r>() - 1; j = j + 1) {</p>
-        <p><T/><T/><r>for</r>(<r>int</r> i = -<r>smileyHeight</r>() + 1; i &lt;= <r>smileyHeight</r>() - 1; i = i + 1) {</p>
+        <p><T/><r>for</r>(<r>int</r> j = -<r>getHeight</r>() + 1; j &lt;= <r>getHeight</r>() - 1; j = j + 1) {</p>
+        <p><T/><T/><r>for</r>(<r>int</r> i = -<r>getHeight</r>() + 1; i &lt;= <r>getHeight</r>() - 1; i = i + 1) {</p>
         <p><T/><T/><T/>filtrePixel(i, j);</p>
         <p><T/><T/>}</p>
         <p><T/>}</p>
         <p>}</p>
         <p/>
         <p><r>void main</r>() {</p>
-        <p><T/><r>smileyLoad</r>("http://javascool.gforge.inria.fr/v3/api/proglet/pixelsetcie/doc-files/doisneaubuffon.jpg");</p>
+        <p><T/><r>load</r>("http://javascool.gforge.inria.fr/v3/api/proglet/pixelsetcie/doc-files/doisneaubuffon.jpg");</p>
         <p><T/><r>for</r>(<r>int</r> n = 0; n &lt; 2; n = n + 1) {</p>
         <p><T/><T/>filtre();</p>
         <p><T/>}</p>
@@ -113,32 +107,32 @@
       Considérons le code suivant, avec une autre fonction de filtre : <div class="code">
         <m>Fonction appliquée à chaque pixel</m>
         <p><r>void</r> filtrePixel(<r>int</r> i, <r>int</r> j) {</p>
-        <p><T/><r>int</r> valeur = 128 + (<r>smileyGet</r>(i, j) - <r>smileyGet</r>(i + 1, j));</p>
-        <p><T/><r>smileySet</r>(i, j, valeur);</p>
+        <p><T/><r>int</r> valeur = 128 + (<r>getPixel</r>(i, j) - <r>getPixel</r>(i + 1, j));</p>
+        <p><T/><r>setPixel</r>(i, j, valeur);</p>
         <p>}</p>
         <m>Boucle sur tous les pixels</m>
         <p><r>void</r> filtre() {</p>
-        <p><T/><r>for</r>(<r>int</r> j = -<r>smileyHeight</r>() + 1; j &lt;= <r>smileyHeight</r>() - 1; j = j + 1) {</p>
-        <p><T/><T/><r>for</r>(<r>int</r> i = -<r>smileyHeight</r>() + 1; i &lt;= <r>smileyHeight</r>() - 1; i = i + 1) {</p>
+        <p><T/><r>for</r>(<r>int</r> j = -<r>getHeight</r>() + 1; j &lt;= <r>getHeight</r>() - 1; j = j + 1) {</p>
+        <p><T/><T/><r>for</r>(<r>int</r> i = -<r>getHeight</r>() + 1; i &lt;= <r>getHeight</r>() - 1; i = i + 1) {</p>
         <p><T/><T/><T/>filtrePixel(i, j);</p>
         <p><T/><T/>}</p>
         <p><T/>}</p>
         <p>}</p>
         <p/>
         <p><r>void main</r>() {</p>
-        <p><T/><r>smileyLoad</r>("http://javascool.gforge.inria.fr/v3/api/proglet/pixelsetcie/doc-files/doisneaubuffon.jpg");</p>
+        <p><T/><r>load</r>("http://javascool.gforge.inria.fr/v3/api/proglet/pixelsetcie/doc-files/doisneaubuffon.jpg");</p>
         <p><T/>filtre();</p>
         <p>}</p>
       </div><div class="ul">
        <div>Que se passe t'il dans ce cas ? Décrivez ce que vous observez.</div>
-       <div>Pourquoi avoir ajouté <c>128</c> ? Essayez avec les expressions <b>valeur = (<r>smileyGet</r>(i, j) - <r>smileyGet</r>(i + 1, j));</b> 
-       puis <b>valeur = -(<r>smileyGet</r>(i, j) - <r>smileyGet</r>(i + 1, j));</b> pour bien comprendre ce qui se passe.</div>
+       <div>Pourquoi avoir ajouté <c>128</c> ? Essayez avec les expressions <b>valeur = (<r>getPixel</r>(i, j) - <r>getPixel</r>(i + 1, j));</b> 
+       puis <b>valeur = -(<r>getPixel</r>(i, j) - <r>getPixel</r>(i + 1, j));</b> pour bien comprendre ce qui se passe.</div>
        <div>Comment observer la même chose avec les contours horizontaux ? Proposez une nouvelle fonction pour ce faire.</div>
-       <div>Essayez la construction <b>valeur = (<r>smileyGet</r>(i, j) - <r>smileyGet</r>(i + 1, j) - <r>smileyGet</r>(i, j + 1));</b> et commentez le résultat.</div>
+       <div>Essayez la construction <b>valeur = (<r>getPixel</r>(i, j) - <r>getPixel</r>(i + 1, j) - <r>getPixel</r>(i, j + 1));</b> et commentez le résultat.</div>
        <div>Deux questions très subtiles, pour les «cracks» : <div class="ul">
          <div>Avez vous remarqué que la boucle de la fonction <b>filtre()</b> n'a pas les mêmes bornes d'itération pour ces filtres 
          que lors du 1er cas où on tranformait juste l'intensité d'un pixel ? Sauriez-vous dire pourqoi ?</div>
-         <div>Que se passerait-il si on utilisait <b>valeur = 128 + (<r>smileyGet</r>(i, j) - <r>smileyGet</r>(i - 1, j));</b> : essayez et tentez d'expliquer pourquoi.</div>
+         <div>Que se passerait-il si on utilisait <b>valeur = 128 + (<r>getPixel</r>(i, j) - <r>getPixel</r>(i - 1, j));</b> : essayez et tentez d'expliquer pourquoi.</div>
        </div></div>
       </div>
     </div>

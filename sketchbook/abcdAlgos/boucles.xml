@@ -1,7 +1,7 @@
 <div class="sujet" title="Un tutoriel pour utiliser des boucles.">
 
   <div class="objectif">
-    Le but de ce tutoriel d'apprendre à  utiliser des boucles. Il faut déjà savoir <l link="sequence.htm" text="utiliser l'interface"/>,
+    Le but de ce tutoriel d'apprendre à  utiliser des boucles. Il faut déjà savoir <l link="tutoriel.htm" text="utiliser l'interface"/>,
   se servir de <l link="variables.htm" text="variables"/>, avoir découvert l'instruction <l link="condition.htm" text="conditionnelle"/>, 
   et s'être familiarisé avec les <l link="fonctions.htm" text="fonctions"/>.
   </div>
@@ -40,7 +40,7 @@
    </div>
    <div title="Tous les ingrédients des algorithmes"> Il y a quelque chose de formidable ici : 
    avec des <l link="variables.htm" text="variables"/> et des <l link="fonctions.htm" text="fonctions"/>, 
-   une <l link="sequence.htm" text="séquence"/> d'instruction, 
+   une <l link="tutoriel.htm" text="séquence"/> d'instruction, 
    l'instruction <l link="condition.htm" text="conditionnelle"/>, 
    et une instruction<l class="note" link="1"/> pour faire des <l link="boucles.htm" text="boucles"/>, 
    nous avons <i>tous les ingrédients</i> pour programmer efficacement <i>tous les algorithmes possibles</i>! 

@@ -5,12 +5,10 @@
  *********************************************************************************/
 package org.javascool.gui;
 
-import java.awt.Component;
 import java.io.File;
 import java.net.URL;
 import javax.swing.JFrame;
 import org.javascool.Core;
-import org.javascool.widgets.HtmlDisplay;
 import org.javascool.widgets.MainFrame;
 import org.javascool.widgets.ToolBar;
 
@@ -85,6 +83,7 @@ public class Desktop {
             if (file == null) {
                 JVSPanel.getInstance().openFile();
             } else {
+                System.err.println("Pour Philou: trying openFile("+file+")");
                 JVSFileTabs.getInstance().open(file.getAbsolutePath());
             }
             return true;

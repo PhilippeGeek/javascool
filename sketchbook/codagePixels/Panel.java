@@ -2,9 +2,9 @@
 * Thierry.Vieville@sophia.inria.fr, Copyright (C) 2009.  All rights reserved. *
 *******************************************************************************/
 
-package org.javascool.proglets.pixelsAlgos;
+package org.javascool.proglets.codagePixels;
 
-import static org.javascool.proglets.pixelsAlgos.Functions.*;
+import static org.javascool.proglets.codagePixels.Functions.*;
 import org.javascool.macros.Macros;
 import org.javascool.widgets.IconOutput;
 
@@ -19,9 +19,9 @@ public class Panel extends IconOutput {
   public Panel() {}
 
   /** Démo de la proglet. */
-  public static void start() {
+  public void start() {
     for(int size = 256; size > 0; size /= 2) {
-      smileyReset(size, size);
+      Functions.reset(size, size);
       peace(size);
       Macros.sleep(1000 - size);
     }
@@ -30,10 +30,10 @@ public class Panel extends IconOutput {
   static private void peace(int radius) {
     circle(radius);
     for(int y = 0; y <= radius; y++) {
-      smileySet(0, -y, "black");
+      setPixel(0, -y, "black");
       if(y < Math.rint(1 / Math.sqrt(2) * radius)) {
-        smileySet(y, y, "black");
-        smileySet(-y, y, "black");
+        setPixel(y, y, "black");
+        setPixel(-y, y, "black");
       }
     }
   }
@@ -42,10 +42,10 @@ public class Panel extends IconOutput {
     for(int x = 0; x <= radius; x++)
       for(int y = 0; y <= radius; y++)
         if(radius * radius - x * x - y * y <= 1) {
-          smileySet(x, y, "black");
-          smileySet(x, -y, "black");
-          smileySet(-x, y, "black");
-          smileySet(-x, -y, "black");
+          setPixel(x, y, "black");
+          setPixel(x, -y, "black");
+          setPixel(-x, y, "black");
+          setPixel(-x, -y, "black");
         }
   }
 }
