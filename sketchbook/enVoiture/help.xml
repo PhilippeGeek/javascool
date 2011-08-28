@@ -1,6 +1,5 @@
-<div title="La «proglet» EnVoiture">
-  <p class="margin">Autres <l link="http://javascool.gforge.inria.fr/v3/?page=api:/org/javascool/doc-files/about-proglets.htm" text="«proglets»"/>.</p>
-  <p>Cette proglet<l class="note" link="1"/> vise à s’approprier les différents éléments caractéristiques d’un graphe, 
+<div title="La «proglet» enVoiture">
+  <p>Cette proglet vise à s’approprier les différents éléments caractéristiques d’un graphe, 
   en vue de saisir les algorithmes qui en font usage, comme par exemple, l'algorithme du plus court chemin.</p>
   <p>Il s'agit de la première partie du tutoriel sur les graphes. De nature introductive, 
 	elle se limite essentiellement à un cas concret de parcours d'une voiture entre des villes, ici appelées "spots". 
@@ -14,7 +13,7 @@
   <p>Pour construire et manipuler un graphe, ici un ensemble de villes dénommées "spots", il faut utiliser la construction javascool. 
   Toutes ces fonctions sont accessibles par l'interface, ou par des fonctions programmable: <div class="code">
     <m>Ajouter ou modifier un spot:</m>
-    <p><r>EnVoiture.addSpot</r>(<r>String</r> n, <r>int</r> col, <r>String</r> f, <r>int</r> x, <r>int</r> y, <r>float</r> d1, <r>float</r> d2, <r>float</r> h)</p>
+    <p><r>addSpot</r>(<r>String</r> n, <r>int</r> col, <r>String</r> f, <r>int</r> x, <r>int</r> y, <r>float</r> d1, <r>float</r> d2, <r>float</r> h)</p>
     </div>où: <div class="ul">
       <p><c>n</c> est le nom du spot.</p>
       <p><c>col</c> est la couleur du spot: le codage est <c>0xRRVVBB</c> où <c>RR</c>, <c>VV</c>, <c>BB</c> sont les intensités rouge, verte et bleue, codées en héxadécimal de <c>00</c> à <c>FF</c>.</p>
@@ -26,31 +25,31 @@
       <p><c>h</c> est la hauteur du spot, typiquement 10 à 100.</p>
     </div><div class="code">
     <m>Obtenir un spot à partir d'une position 2D:</m>
-    <p><r>String</r> n = <r>EnVoiture.getClosestSpot</r>(<r>int</r> x, <r>int</r> y)</p>
+    <p><r>String</r> n = <r>getClosestSpot</r>(<r>int</r> x, <r>int</r> y)</p>
     </div>où: <div class="ul">
       <p><c>x</c> est l'abscisse de la position entre -1000 et 1000.</p>
       <p><c>y</c> est l'ordonnée de la position entre -1000 et 1000.</p>
       <p><c>n</c> est le nom du spot, qui est renvoyé.</p>
       </div><div class="code">
     <m>Détruire un spot:</m>
-    <p><r>EnVoiture.removeSpot</r>(<r>String</r> n)</p>
+    <p><r>removeSpot</r>(<r>String</r> n)</p>
     </div>où: <div class="ul">
       <p><c>n</c> est le nom du spot.</p>
       </div><div class="code">
     <m>Ajouter ou modifier un lien existant entre deux spots:</m>
-    <p><r>EnVoiture.addLink</r>(<r>String</r> nA, <r>String</r> nB)</p>
+    <p><r>addLink</r>(<r>String</r> nA, <r>String</r> nB)</p>
     </div>où: <div class="ul">
       <p><c>nA</c> est le nom du premier spot.</p>
       <p><c>nB</c> est le nom du second spot.</p>
       </div><div class="code">
     <m>Détruire un lien existant entre deux spots:</m>
-    <p><r>EnVoiture.removeLink</r>(<r>String</r> nA, <r>String</r> nB)</p>
+    <p><r>removeLink</r>(<r>String</r> nA, <r>String</r> nB)</p>
     </div>où: <div class="ul">
       <p><c>nA</c> est le nom du premier spot du lien à détruire.</p>
       <p><c>nB</c> est le nom du second spot du lien à détruire.</p>
       </div><div class="code">
     <m>Questionner si deux spots sont liés:</m>
-    <p><r>boolean</r> a = <r>EnVoiture.isLink</r>(<r>String</r> nA, <r>String</r> nB)</p>
+    <p><r>boolean</r> a = <r>isLink</r>(<r>String</r> nA, <r>String</r> nB)</p>
     </div>où: <div class="ul">
       <p><c>nA</c> est le nom du premier spot du lien considéré.</p>
       <p><c>nB</c> est le nom du second spot du lien considéré.</p>
@@ -58,19 +57,9 @@
       </div>
   </p>      
    <div>Un exemple d'utilisation se fait lors du lancement de la proglet avec une fenêtre d'interaction.</div>
-   <div>Un exemple de programme d'utilisation est <l link="http://javascool.gforge.inria.fr/v3/?page=api:/sketchbook/EnVoiture/Exemple.jvs.html" text="disponible ici"/>.</div>
+   <div>Un exemple de programme d'utilisation est <l class="editor" link="Exemple.jvs" text="disponible ici"/>.</div>
    <div class="notes">
-    <div id="1">Cette proglet est un <l link="http://fr.wikipedia.org/wiki/Open_source" text="code source libre"/>, 
-    programmée en <l link="http://processing.org" text="Processing"/> et disponible sous forme de code documenté:
-    <div class="table"><p>
-      <p><l link="http://javascool.gforge.inria.fr/v3/?page=api:/sketchbook/EnVoiture/EnVoiture.pde.html" text="EnVoiture"/></p>
-      <p><l link="http://javascool.gforge.inria.fr/v3/?page=api:/sketchbook/EnVoiture/Car.pde.html" text="Car"/></p>
-      <p><l link="http://javascool.gforge.inria.fr/v3/?page=api:/sketchbook/EnVoiture/Spot.pde.html" text="Spot"/></p>
-      <p><l link="http://javascool.gforge.inria.fr/v3/?page=api:/sketchbook/EnVoiture/Trip.pde.html" text="Trip"/></p>
-      <p><l link="http://javascool.gforge.inria.fr/v3/?page=api:/sketchbook/EnVoiture/Link.pde.html" text="Link"/></p>
-      <p><l link="http://javascool.gforge.inria.fr/v3/?page=api:/sketchbook/ExplorationSonore/interface.pde.html" text="interface"/></p>
-    </p></div>
-    pour permettre des développements dérivés.</div>
-   <l class="include" link="./about-opengl.xml"/>
-  </div>
-</div>
+    <div title="Utilisation du 3D">Attention, sous <i>windows</i>, pour utiliser cette proglet (qui utilise OpenGL)
+    il faut copier les librairies dynamiques <l link="http://javascool.gforge.inria.fr/documents/sketchbook/enVoiture/opengl-windows.zip" text="disponibles ici"/>
+    dans le répertoire <i>Java</i> de la machine, c'est à dire, normalement <c>Program Files/java/jre6/bin</c>. Se faire aider du responsable informatique si besoin.
+</div></div></div>

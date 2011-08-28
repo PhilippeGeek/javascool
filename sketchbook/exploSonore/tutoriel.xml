@@ -1,6 +1,6 @@
 <div class="sujet" title="Un tutoriel sur les signaux sonores (unplug)"> 
-  <div class="margin">Voir aussi l'<l link="sujet-creation-de-sons.htm" text="activité «proglet»"/> (découverte à travers la programmation)</div>
- <div title="Description de l'applete">
+  <div class="margin">Voir aussi l'<l link="exercice.htm" text="activité «proglet»"/> (découverte à travers la programmation)</div>
+ <div title="Description">
     <p>Cette applete permet de visualiser l'évolution temporelle et le contenu fréquentiel des graves aux aigus (le spectre) d'un son, 
   	d'une parole, d'un extrait musical ou d'un signal sonore numérique.</p>
   	<p>L'analyse s'effectue en temps réel. 
@@ -8,20 +8,20 @@
   	L'application permet également de générer des signaux numériques (sinusoïde, signaux carrés et scie, bruit), pour en observer le spectre.
   	Finalement on peut lancer des enregistrements (musicaux ou autres), et en visualiser les représentations temporelles et fréquentielles. </p>
   </div>
-  <div class="center"><l class="icon" link="http://www.openprocessing.org/visuals/?visualID=16032" icon="ExplorationSonore_xml.png"/></div>  
+  <div class="center"><l class="icon" link="http://www.openprocessing.org/visuals/?visualID=16032" icon="org/javascool/proglets/exploSonore/ExplorationSonore_xml.png"/></div>  
   <div class="objectif">
     Le but de ce tutoriel est d'expérimenter avec des sons. Le son est une somme de signaux périodiques, des sinusoides.
     Nous allons les observer et en manipuler. Il suffit d'utiliser l'interface à partir des boutons.
    </div>
   <div class="intros">
     <div title="La notion de signal périodique"> Une note est une vibration de l'air 
-    comme <l link="http://javascool.gforge.inria.fr/v3/sketchbook/ExplorationSonore/OndeSonore.pdf" text="détaillé ici"/> (bien lire le document avant de commencer).
+    comme <l link="http://javascool.gforge.inria.fr/documents/sketchbook/exploSonore/OndeSonore.pdf" text="détaillé ici"/> (bien lire le document avant de commencer).
     Un son se mesure en Hertz (Hz), et correspond au nombre de battements de la vibration par seconde. 
     Les sons les plus graves que l'oreille humaine puisse entendre correspondent à une vibration de 20Hz (20 battements par seconde), 
     tandis que les plus aigus sont de 20 000Hz. Les ultrasons, littéralement "au delà du son", correspondent à des sons que notre oreille ne peut percevoir 
     mais qui peuvent être captés par des animaux tels que les chiens ou les chauve-souris.
     <p>La voix humaine vibre principalement entre 100 et 3000Hz.</p> 
-    <div class="margin">Voir aussi un document sur la <l link="http://javascool.gforge.inria.fr/v3/sketchbook/ExplorationSonore/Numeriser-un-son.pdf" text="numérisation du son"/>.</div>
+    <div class="margin">Voir aussi un document sur la <l link="http://javascool.gforge.inria.fr/documents/sketchbook/exploSonore/Numeriser-un-son.pdf" text="numérisation du son"/>.</div>
     </div>
   </div>
   <div class="works">

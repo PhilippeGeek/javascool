@@ -3,11 +3,6 @@
     Le but de ce tutoriel est de manipuler les concepts liés à l'encryptage/décryptage par clés publique et privée, RSA. 
     L'intérêt de la manipulation est de faire passer la non-symétrie du processus: autrement dit, tout le monde peut encrypter (par la clé publique),
     mais seule une personne pourra décrypter (possédant la clé privée).. 
-    Il faut déja savoir <l link="../../ingredients/doc-files/sujet-hello-world.htm" text="utiliser l'interface"/>,
-    se servir de <l link="../../ingredients/doc-files/sujet-about-variables.htm" text="variables"/> 
-    et avoir découvert l'<l link="../../ingredients/doc-files/sujet-about-if.htm" text="instruction conditionnelle"/> et 
-    les <l link="../../ingredients/doc-files/sujet-about-while.htm" text="boucles"/>, 
-    ansi que les <l link="../../ingredients/doc-files/sujet-about-functions.htm" text="fonctions"/>..
   </div>
   <div class="intros">
     La cryptologie, science du secret, englobe la cryptographie — le codage secret d'un message — et la cryptanalyse — le décodage d'un message codé. 
@@ -91,7 +86,7 @@
    </div></div>
    <div title="Coder vous même les fonctions de cryptage et de décryptage">
      <p>Ecrire la formule du cryptage de Bob et celle du décyptage d'Alice.</p>
-     <p>Reprendre alors les deux codes précédents en remplaçant les routines <r>CryptageRSA.encrypt</r> et <r>CryptageRSA.dcrypt</r> par vos propres routines:<div class="ul">
+     <p>Reprendre alors les deux codes précédents en remplaçant les routines <r>encrypt</r>() et <r>decrypt</r>() par vos propres routines:<div class="ul">
        <p>Pour passer du message à sa valeur en chiffres on utilise: <c><r>BigInteger</r> X = new <r>BigInteger</r>(message.<r>getBytes</r>());</c></p>
        <p>Pour passer du message en chiffres à sa valeur en chaine de caractères on utilise: <c><r>String</r> message = new <r>String</r>(X.<r>totByteArray</r>());</c></p>
        <p>Pour calculer <c>Y = X ^ E modulo N</c> on utilise: <c>modPow</c> [mettre un lien vers la doc] </p>
