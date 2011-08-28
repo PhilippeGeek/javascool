@@ -9,7 +9,6 @@ import javax.swing.JApplet;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import javax.swing.JLabel;
-import org.javascool.widgets.Console;
 import org.javascool.tools.Invoke;
 
 /** Définit une applet qui encapsule un objet graphique.

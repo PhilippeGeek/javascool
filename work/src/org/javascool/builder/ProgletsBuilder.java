@@ -5,8 +5,6 @@
  *********************************************************************************/
 package org.javascool.builder;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.javascool.tools.FileManager;
 import org.javascool.tools.Xml2Xml;
 import org.javascool.tools.Pml;

@@ -13,8 +13,6 @@ import java.util.ArrayList;
 import org.javascool.macros.Macros;
 
 import java.io.File;
-import javax.swing.JApplet;
-import javax.swing.JPanel;
 import org.javascool.Core;
 import org.javascool.tools.FileManager;
 import org.javascool.tools.Pml;
