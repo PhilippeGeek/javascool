@@ -50,7 +50,6 @@
   * R.A.S.
 
 = Développements ultérieurs et/ou en réflexion=
-  # (TV, octobre) Intégration des proglets processing dans le core et builder
   # (web) Faire un sitemap (ou pas) a partir de web/includes/sitemap_data.php
   # (web) Détecter l'OS ds ?page=run pour highliter l'OS du user.
   # (web/builder) Ajouter une page outil qui traduise du [X]HTML en HML à partir de work/src/org/javascool/builder/htm2hml.xslt
