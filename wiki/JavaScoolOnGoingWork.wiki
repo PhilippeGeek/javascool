@@ -2,8 +2,8 @@
 <wiki:toc max_depth="2" />
 
 *Notre planning*
-  * Lu 29 août : JVS4 RC1 partagée avec les co-développeurs
-  * Me 7 Sept : JVS4 RC2 publiée en version principale sur le site 
+  * Lu 29 août au soir : JVS4 RC1 partagée avec les co-développeurs
+  * Me 7 Sept au soir : JVS4 RC2 publiée en version principale sur le site 
 
 *[http://code.google.com/p/javascool/issues/list Issues en cours]*
 
@@ -15,12 +15,13 @@
   # (PV0) Pouvoir active desactiver la completion si ca detablise le mec
   # (TV2) Finaliser page aide lancement javascool site web qd le core est stable
 
- # (PV0) Allesz: encore deux icones pour les proglets !
 
 == Chantier en cours: Javas'Cool builder ==
   * R.A.S.
 
 == Chantier en cours: Proglets  ==
+
+  # (PV0) Allez: encore deux icones pour les proglets !
 
   # (GM1) Mettre en conformité la proglet jeux2D
   * en recupérant les regex de jvs2java dans un Translator
@@ -49,14 +50,47 @@
 == Chanter en cours: plateforme de développement ==
   * R.A.S.
 
-= Développements ultérieurs et/ou en réflexion=
-  # (web) Faire un sitemap (ou pas) a partir de web/includes/sitemap_data.php
-  # (web) Détecter l'OS ds ?page=run pour highliter l'OS du user.
-  # (web/builder) Ajouter une page outil qui traduise du [X]HTML en HML à partir de work/src/org/javascool/builder/htm2hml.xslt
-  # (core/platform) Rendre disponible TextFileEditor & TextFilesEditor (avec boutons et interface) et DoubleTabbedPane sortis de org/javascool/gui
-  # (platform) Deployer dans svn:work/lib la construction de autocomplete.jar
-  # (builder) Améliorer la gestion d'erreur des completion.xml
-  # (core) Implementer le fait qu'on ajoute @proglet:nom-de-la-proglet.
-     * Proposer des accès depuis Desktop vers les instances des jvs
-  # (core) Virer le HtmlDisplay HTML3 et trouver un bon browser
-  # (core) restaurer AlgoEditor et about-algo-editor en proglet
+= Développements ultérieurs et/ou en réflexion =
+
+Status: 
+  * [1] à faire dès que possible, 
+  * [2] à spécifier avant de mettre en action, 
+  * [3] à rediscuter avant de fixer, 
+  * [4] juste une idée à pas oublier.
+
+== Javas'Cool Core ==
+
+  * [1] Implementer le fait qu'on ajoute @proglet:nom-de-la-proglet.
+    * [2] Proposer des accès depuis Desktop vers les instances des jvs
+
+  * [1] Virer le HtmlDisplay HTML3 et trouver un bon browser
+
+== Javas'Cool Builder ==
+
+  * [1] Améliorer la gestion d'erreur des completion.xml
+
+== Javas'Cool Proglets ==
+
+  * [1] Créer une proglet RS232C interface
+
+  * [2] Créer une proglet interface robotique (voir partenariat http://www.pobot.org).
+
+  * [3] Restaurer AlgoEditor et about-algo-editor en proglet
+
+Voir aussi les proglets en [http://wiki.inria.fr/sciencinfolycee/JavaScool:FaqD%C3%A9veloppement#Quelles_sont_les_proglets_en_cours_de_d.C3.A9veloppement_.3F développement] et en [http://wiki.inria.fr/sciencinfolycee/JavaScool:FaqD%C3%A9veloppement#Quelles_sont_les_proglets_en_projet_.3Fprojet].
+
+== Javas'Cool Web ==
+
+  * [3] Ajouter une page outil qui traduise du [X]HTML en HML à partir de work/src/org/javascool/builder/htm2hml.xslt
+
+  * [4] Voir à restaurer les mécanismes javascript d'animation de liens à partir du site 
+
+  * [4] Faire un sitemap (ou pas) a partir de web/includes/sitemap_data.php
+
+  * [4] Détecter l'OS ds ?page=run pour highliter l'OS du user.
+
+== Javas'Cool Platform ==
+
+ * [2] Rendre disponible TextFileEditor & TextFilesEditor (avec boutons et interface) et DoubleTabbedPane sortis de org/javascool/gui
+
+ * [3] Déployer dans svn:work/lib la construction de autocomplete.jar
