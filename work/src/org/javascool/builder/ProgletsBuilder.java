@@ -152,7 +152,7 @@ public class ProgletsBuilder {
                         set("Manifest-version", version).
                         set("Created-By", "inria.fr (javascool.gforge.inria.fr) ©INRIA: CeCILL V2 + CreativeCommons BY-NC-ND V2").
                         set("Implementation-URL", "http://javascool.gforge.inria.fr").
-                        set("Implementation-Vendor", "fuscia-accueil@inria.fr, ou=javascool.gforge.inria.fr, o=inria.fr, c=fr").
+                        set("Implementation-Vendor", "javascool@googlegroups.com, ou=javascool.gforge.inria.fr, o=inria.fr, c=fr").
                         set("Implementation-Version", version).
                         save(buildDir + "/manifest.jmf");
                 // Création des archives pour chaque proglet

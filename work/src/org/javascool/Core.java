@@ -38,7 +38,7 @@ public class Core {
     ErrorCatcher.setUncaughtExceptionAlert("<h1>Détection d'une anomalie liée à Java:</h1>\n" +
                                            "Il y a un problème de compatibilité avec votre système, nous allons vous aider:<ul>\n" +
                                            "  <li>Copier/Coller tous les éléments de cette fenêtre et</li>\n" +
-                                           "  <li>Envoyez les par mail à <b>fuscia-accueil@inria.fr</b> avec toute information utile.</li>" +
+                                           "  <li>Envoyez les par mail à <b>javascool@googlegroups.com</b> avec toute information utile.</li>" +
                                            " </ul>",
                                            revision);
   }

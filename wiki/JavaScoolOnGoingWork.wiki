@@ -13,9 +13,7 @@
 
 ==Chantier en cours: Javas'Cool core==
 
-  # (TV0) Remplacer fuscia par la mailong liste ggo??? dans alert
   # (PV1) Si on ouvre deux fois une page en newtab le close s'affiche pas : il faut pas afficher si ideja la
-  # (TV/PV0) AHHH si nom fichier avec accent gros kk jar etc...
   # (PV0) Upps a pas Desktop.openFile si fichier dans un jar !
 
   # (PV1) Que la proglet s'ouvre sur l'onglet help.xml plutot que la console
@@ -23,6 +21,7 @@
   # (PV0) Pouvoir active desactiver la completion si ca detablise le mec
   # (TV2) Finaliser page aide lancement javascool site web qd le core est stable
 
+  # (TV/PV0) AHHH si nom fichier avec accent gros kk jar etc...
 
 == Chantier en cours: Javas'Cool builder ==
 
@@ -49,7 +48,7 @@
   * Pages TPE: revoir la présentation et renre visibles les ressources
   * Pages Ressources . . tout revoir !!
 
-  # (PV3) Nous apsser les infos de ce que disent les forums sur jvs (qq exemples, liens de recherche google forum en plus du [http://www.google.com/alerts/feeds/00449836169777998004/17613704024521026334 flux RSS].
+  # (PV3) Nous passer les infos de ce que disent les forums sur jvs (qq exemples, liens de recherche google forum en plus du [http://www.google.com/alerts/feeds/00449836169777998004/17613704024521026334 flux RSS].
 
 == Chantier en cours: plateforme de développement ==
   * R.A.S.
