@@ -11,13 +11,15 @@
 
 ==Chantier en cours: Javas'Cool core==
 
+  # (PV1) Que la proglet s'ouvre sur l'onglet help.xml plutot que la console
   # (PV0) Création d'un lanceur .exe et .app pour le lancement de jascool
   # (PV0) Pouvoir active desactiver la completion si ca detablise le mec
   # (TV2) Finaliser page aide lancement javascool site web qd le core est stable
 
 
 == Chantier en cours: Javas'Cool builder ==
-  * R.A.S.
+
+  # (TV1) Créer la doc developpeurs proglets processing
 
 == Chantier en cours: Proglets  ==
 
@@ -68,6 +70,8 @@ Status:
 == Javas'Cool Builder ==
 
   * (`*`1) Améliorer la gestion d'erreur des completion.xml
+ 
+  * (`*`2) Créer une doc pour l'usage des proglets sous netbean
 
 == Javas'Cool Proglets ==
 
@@ -91,6 +95,10 @@ Voir aussi les proglets en [http://wiki.inria.fr/sciencinfolycee/JavaScool:FaqD%
 
 == Javas'Cool Platform ==
 
- * (`*`2) Rendre disponible `TextFileEditor` & `TextFilesEditor` (avec boutons et interface) et `DoubleTabbedPane` sortis de org/javascool/gui
+ * (`*`2) Améliorer l'usage de ant
+   * offrir le jar de ant 1.8 en lib/ant 
+   * mieux contrôler ce qui s'écrit en sortie : rendre silencieux les messages inutiles
+
+ * (`*`2)  Rendre disponible `TextFileEditor` & `TextFilesEditor` (avec boutons et interface) et `DoubleTabbedPane` sortis de org/javascool/gui
 
  * (`*`3) Déployer dans svn:work/lib la construction de autocomplete.jar
