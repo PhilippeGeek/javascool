@@ -63,7 +63,7 @@ Status:
   * (`*`1) Implementer le fait qu'on ajoute @proglet:nom-de-la-proglet.
     * (`*`2) Proposer des accès depuis Desktop vers les instances des jvs
 
-  * (`*`1) Virer le `HtmlDisplay` HTML3 et trouver un bon browser
+  * (`*`4) Virer le `HtmlDisplay` HTML3 et trouver un bon browser
 
 == Javas'Cool Builder ==
 
