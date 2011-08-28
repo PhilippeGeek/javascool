@@ -53,44 +53,44 @@
 = Développements ultérieurs et/ou en réflexion =
 
 Status: 
-  * [1] à faire dès que possible, 
-  * [2] à spécifier avant de mettre en action, 
-  * [3] à rediscuter avant de fixer, 
-  * [4] juste une idée à pas oublier.
+  * (`*`1) à faire dès que possible, 
+  * (`*`2) à spécifier avant de mettre en action, 
+  * (`*`3) à rediscuter avant de fixer, 
+  * (`*`4) juste une idée à pas oublier.
 
 == Javas'Cool Core ==
 
-  * [1] Implementer le fait qu'on ajoute @proglet:nom-de-la-proglet.
-    * [2] Proposer des accès depuis Desktop vers les instances des jvs
+  * (`*`1) Implementer le fait qu'on ajoute @proglet:nom-de-la-proglet.
+    * (`*`2) Proposer des accès depuis Desktop vers les instances des jvs
 
-  * [1] Virer le HtmlDisplay HTML3 et trouver un bon browser
+  * (`*`1) Virer le HtmlDisplay HTML3 et trouver un bon browser
 
 == Javas'Cool Builder ==
 
-  * [1] Améliorer la gestion d'erreur des completion.xml
+  * (`*`1) Améliorer la gestion d'erreur des completion.xml
 
 == Javas'Cool Proglets ==
 
-  * [1] Créer une proglet RS232C interface
+  * (`*`1) Créer une proglet RS232C interface
 
-  * [2] Créer une proglet interface robotique (voir partenariat http://www.pobot.org).
+  * (`*`2) Créer une proglet interface robotique (voir partenariat http://www.pobot.org).
 
-  * [3] Restaurer AlgoEditor et about-algo-editor en proglet
+  * (`*`3) Restaurer AlgoEditor et about-algo-editor en proglet
 
-Voir aussi les proglets en [http://wiki.inria.fr/sciencinfolycee/JavaScool:FaqD%C3%A9veloppement#Quelles_sont_les_proglets_en_cours_de_d.C3.A9veloppement_.3F développement] et en [http://wiki.inria.fr/sciencinfolycee/JavaScool:FaqD%C3%A9veloppement#Quelles_sont_les_proglets_en_projet_.3Fprojet].
+Voir aussi les proglets en [http://wiki.inria.fr/sciencinfolycee/JavaScool:FaqD%C3%A9veloppement#Quelles_sont_les_proglets_en_cours_de_d.C3.A9veloppement_.3F développement] et en [http://wiki.inria.fr/sciencinfolycee/JavaScool:FaqD%C3%A9veloppement#Quelles_sont_les_proglets_en_projet_.3F projet].
 
 == Javas'Cool Web ==
 
-  * [3] Ajouter une page outil qui traduise du [X]HTML en HML à partir de work/src/org/javascool/builder/htm2hml.xslt
+  * (`*`3) Ajouter une page outil qui traduise du [X]HTML en HML à partir de work/src/org/javascool/builder/htm2hml.xslt
 
-  * [4] Voir à restaurer les mécanismes javascript d'animation de liens à partir du site 
+  * (`*`4) Voir à restaurer les mécanismes javascript d'animation de liens à partir du site 
 
-  * [4] Faire un sitemap (ou pas) a partir de web/includes/sitemap_data.php
+  * (`*`4) Faire un sitemap (ou pas) a partir de web/includes/sitemap_data.php
 
-  * [4] Détecter l'OS ds ?page=run pour highliter l'OS du user.
+  * (`*`4) Détecter l'OS ds ?page=run pour highliter l'OS du user.
 
 == Javas'Cool Platform ==
 
- * [2] Rendre disponible TextFileEditor & TextFilesEditor (avec boutons et interface) et DoubleTabbedPane sortis de org/javascool/gui
+ * (`*`2) Rendre disponible TextFileEditor & TextFilesEditor (avec boutons et interface) et DoubleTabbedPane sortis de org/javascool/gui
 
- * [3] Déployer dans svn:work/lib la construction de autocomplete.jar
+ * (`*`3) Déployer dans svn:work/lib la construction de autocomplete.jar
