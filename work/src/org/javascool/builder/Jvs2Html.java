@@ -69,7 +69,7 @@ public class Jvs2Html {
     }
 
     /** Lanceur de la conversion d'une portion de source Java ou Jvs en Html colorisé.
-     * @param usage <tt>java org.javascool.tools.Jvs2Html input-file [output-file]</tt>
+     * @param usage <tt>java org.javascool.builder.Jvs2Html input-file [output-file]</tt>
      */
     public static void main(String[] usage) {
         // @main

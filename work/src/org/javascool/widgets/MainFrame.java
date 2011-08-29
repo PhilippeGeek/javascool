@@ -63,9 +63,11 @@ public class MainFrame extends JFrame {
         System.setProperty("com.apple.mrj.application.apple.menu.about.name", title);
       } catch(Exception e2) {}
     }
-    ImageIcon image = Macros.getIcon(icon);
-    if(image != null)
-      setIconImage(image.getImage());
+    if (icon != null) {
+      ImageIcon image = Macros.getIcon(icon);
+      if(image != null)
+        setIconImage(image.getImage());
+      }
     add(this.pane = pane);
     if(pane instanceof Applet) {
       ((Applet) pane).init();
