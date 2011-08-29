@@ -9,6 +9,8 @@ import java.io.File;
 import java.net.URL;
 import javax.swing.JFrame;
 import org.javascool.Core;
+import org.javascool.macros.Macros;
+import org.javascool.tools.FileManager;
 import org.javascool.widgets.MainFrame;
 import org.javascool.widgets.ToolBar;
 
@@ -76,14 +78,15 @@ public class Desktop {
 
     /** Ouvre un fichier
      * Demande à l'utilisateur de choisir un fichier et l'ouvre
-     * @param file Le fichier à ouvrir. Avec la valeur null une boîte de dialogue le demandera à l'utilisateur.
+     * @param file Le fichier à ouvrir. 
+     * <p>-Avec la valeur null une boîte de dialogue le demandera à l'utilisateur.</p>
+     * <p>- Si le fichier est une URL, une copie locale du fichier (avec sauvegarde du fichier existant) est effectuée avant ouverture.</p>
      */
     public boolean openFile(File file) {
         try {
             if (file == null) {
                 JVSPanel.getInstance().openFile();
             } else {
-                System.err.println("Pour Philou: trying openFile("+file+")");
                 JVSFileTabs.getInstance().open(file.getAbsolutePath());
             }
             return true;
@@ -94,8 +97,16 @@ public class Desktop {
         /**
          * @see #openFile(File)
          */
+  public boolean openFile(URL url) {
+      File file = new File(new File(url.getPath()).getName());
+      FileManager.save(file.getAbsolutePath(), FileManager.load(url.toString()), true);
+      return openFile();
+  }
+        /**
+         * @see #openFile(File)
+         */
   public boolean openFile(String file) {
-      return openFile(new File(file));
+      return openFile(Macros.getResourceURL(file));
   }
         /**
          * @see #openFile(File)
