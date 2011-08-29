@@ -14,13 +14,11 @@ import java.io.InputStreamReader;
 import java.io.BufferedReader;
 
 // Used for URL write
-import java.io.FileInputStream;
 import java.net.URLConnection;
 import java.io.OutputStreamWriter;
 import java.io.FileOutputStream;
 
 // Used for list/exists
-import java.io.Reader;
 import java.util.ArrayList;
 import java.util.jar.JarFile;
 import java.util.jar.JarEntry;
@@ -129,18 +127,22 @@ public class FileManager {
         return writer;
     }
 
-    /** Met en place le writer dans le cas d'un fichier. */
+    /** Mets en place le writer dans le cas d'un fichier. */
     private static OutputStreamWriter getFileWriter(String location, boolean backup) throws IOException {
         File file = new File(location), parent = file.getParentFile();
         if ((parent != null) && (!parent.isDirectory())) {
             parent.mkdirs();
         }
-        if (backup && file.exists()) {
-            File newFile = File.createTempFile(file.getName(), "", parent);
-            newFile.delete();
-            file.renameTo(newFile);
-        }
+        if (backup && file.exists())
+            backup(file);
         return new OutputStreamWriter(new FileOutputStream(location), "UTF-8");
+    }
+    /** Mécanisme de backup. */
+    private static void backup(File file) {
+      File backup = new File(file.getAbsolutePath()+"~");
+      if (backup.exists())
+        backup(backup);
+      file.renameTo(backup);
     }
 
     /** Détecte si une URL existe.

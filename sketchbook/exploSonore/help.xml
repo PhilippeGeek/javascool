@@ -1,4 +1,8 @@
 <div title="La «proglet» Exploration sonore">
+  <p class="margin">
+    <p>Cliquer <l class="newtab" link="exercice.htm" text="ici"/> pour faire l'activité.</p>
+    <p>Cliquer <l class="newtab" link="tutoriel.htm" text="ici"/> pour lire le tutoriel.</p>
+  </p>
   <p>Cette proglet<l class="note" link="1"/> permet de visualiser l'évolution temporelle et le contenu fréquentiel des graves aux aigues (le spectre) d'un son, 
   d'une parole, d'un extrait musical ou d'un signal sonore numérique.</p>
   <p>L'analyse s'effectue en temps réel. 
