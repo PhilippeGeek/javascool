@@ -14,7 +14,7 @@
 ==Chantier en cours: Javas'Cool core==
 
   # (PV1) Si on ouvre deux fois une page en newtab le close s'affiche pas : il faut pas afficher si ideja la
-  # (PV0) Upps a pas Desktop.openFile si fichier dans un jar !
+  # (TV0) Upps a pas Desktop.openFile si fichier dans un jar !
 
   # (PV1) Que la proglet s'ouvre sur l'onglet help.xml plutot que la console
   # (PV0) Création d'un lanceur .exe et .app pour le lancement de jascool
