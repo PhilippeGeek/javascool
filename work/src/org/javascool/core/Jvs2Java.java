@@ -86,6 +86,7 @@ public class Jvs2Java extends Translator {
     }
     String finalBody = body.toString().
                        replaceAll("(while.*\\{)", "$1 sleep(1);");
+    System.err.println("\n------------------------------------------\nHeader with the translator import:\n"+head+"\n------------------------------------------\n");
     System.err.println("\n------------------------------------------\nText before proglet translation:\n"+finalBody+"\n------------------------------------------\n");
       if(progletTranslator != null)
         finalBody = progletTranslator.translate(finalBody);

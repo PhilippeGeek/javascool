@@ -9,7 +9,7 @@ package org.javascool.core;
 public class Translator {
   /** Renvoie les déclarations d'import spécifiques à cette proglet.
    * <p>Ce sont les déclarations d'import spécifiques dont l'utilisateur a besoin pour que son code Jvs puisse se compiler.</p>
-   * <p>- Par exemple: <tt>"import javax.swing.JPanel;"</tt></p>
+   * <p>- Par exemple: <tt>"import javax.swing.JPanel;import static org.javascool.proglets.maProglet.*;"</tt></p>
    * <p>Note: tous les imports liés aux fonctions de la proglet à l'usage des macros de JavaScool etc.. sont automatiquement prises en charge.</p>
    * @return Renvoie les imports en syntaxe Java (par défaut la chaîne vide).
    */
