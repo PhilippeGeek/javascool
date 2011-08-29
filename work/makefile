@@ -6,10 +6,6 @@
 export JHOME=/usr/java/jdk1.6.0_22
 export PATH:=$(JHOME)/bin:$(PATH)
 
-tst :
-	ant classes
-	cd .. ; java -cp work/build/classes org.javascool.builder.AntMenu
-
 ant :
 	ant prun
 

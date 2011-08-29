@@ -6,6 +6,7 @@
     ant jrun	compile et demarre Java's cool sans les proglets
     ant prun	compile et demarre Java's cool avec les proglets
     ant brun	lance Java's cool builder dans le sketchbook
+    ant menu    propose les commandes ant à travers un menu
   </echo></target>
 
   <target name="svn">
@@ -23,4 +24,11 @@
   <target name="brun">
     <ant dir="./work" target="brun"/>
   </target>
+
+  <target name="menu">
+    <ant dir="./work" target="javascool-base.jar"/>
+    <java classpath="./work/dist/javascool-base.jar" classname="org.javascool.builder.AntMenu" dir="." fork="true"/>
+  </target>
+
+
 </project>
