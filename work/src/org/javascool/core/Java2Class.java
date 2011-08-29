@@ -89,8 +89,10 @@ public class Java2Class {
         else
           jvsDiagnostic = "Erreur Java : \n" + jvsDiagnostic;
         int line = (int) diagnostic.getLineNumber();
-        String where = javaFiles.length == 1 ? "" : " de " + new File(diagnostic.getSource().toString()).getName() + "";
+        String source = new File(diagnostic.getSource().toString()).getParentFile().getName() + "/" + new File(diagnostic.getSource().toString()).getName();
+        String where = javaFiles.length == 1 ? "" : " de " + source + "";
         System.out.println("-------------------\nErreur lors de la compilation à la ligne " + line + where + ".\n" + jvsDiagnostic + "\n-------------------");
+        System.err.println("Erreur à la compilation: fichier="+source+" ligne ="+line +" erreur="+diagnostic.getMessage(Locale.FRENCH));
         // En fait ici on choisit d'arrêter à la 1ère erreur pour pas embrouiller l'apprennant
         if(diagnostic.getKind().equals(Diagnostic.Kind.ERROR))
           return false;
