@@ -1,4 +1,8 @@
 <div title="La «proglet» cryptageRSA">
+  <p class="margin">
+    <p>Cliquer <l class="newtab" link="exercice.htm" text="ici"/> pour faire l'activité.</p>
+    <p>Cliquer <l class="newtab" link="tutoriel.htm" text="ici"/> pour lire le tutoriel.</p>
+  </p>
   <p>Cette proglet permet de manipuler les concepts liés à l'encryptage/décryptage par clés publique et privée, RSA. </p>
         <p>La cryptologie, science du secret, englobe la cryptographie — le codage secret d'un message — et la cryptanalyse — le décodage d'un message codé. 
 	<p>Le principe de la cryptographie consiste à définir une transformation des symboles d'un langage (les lettres ou les mots par exemple) 
