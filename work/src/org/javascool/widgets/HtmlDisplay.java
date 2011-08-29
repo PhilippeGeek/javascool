@@ -216,7 +216,7 @@ public class HtmlDisplay extends JPanel {
       } catch(java.io.UnsupportedEncodingException e) { throw new IllegalStateException("UTF-8 n'est pas reconnu comme encodage: (" + e + ") c'est un bug Java !");
       }
     } else if(location.startsWith(editorPrefix)) {  // Affichage dans editeur JavaScool
-      org.javascool.gui.Desktop.getInstance().openFile(toURL(location.substring(editorPrefix.length())).toString());
+      org.javascool.gui.Desktop.getInstance().openFile(toURL(location.substring(editorPrefix.length())));
     } else if(location.startsWith(newtabPrefix)) {    // Affichage dans browser JavaScool
       URL url = toURL(location.substring(newtabPrefix.length()));
       String name = new File(url.getPath()).getName().replaceFirst("\\.[^\\.]*$", "").replace('_', '.');

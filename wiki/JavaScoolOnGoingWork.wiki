@@ -13,15 +13,8 @@
 
 ==Chantier en cours: Javas'Cool core==
 
-  # (PV1) Si on ouvre deux fois une page en newtab le close s'affiche pas : il faut pas afficher si ideja la
-  # (TV0) Upps a pas Desktop.openFile si fichier dans un jar !
-
-  # (PV1) Que la proglet s'ouvre sur l'onglet help.xml plutot que la console
   # (PV0) Création d'un lanceur .exe et .app pour le lancement de jascool
-  # (PV0) Pouvoir active desactiver la completion si ca detablise le mec
-  # (TV2) Finaliser page aide lancement javascool site web qd le core est stable
-
-  # (TV/PV0) AHHH si nom fichier avec accent gros kk jar etc...
+    * (TV2) Finaliser page aide lancement javascool site web qd le core est stable
 
 == Chantier en cours: Javas'Cool builder ==
 
@@ -75,6 +68,8 @@ Status:
   * (`*`1) Améliorer la gestion d'erreur des completion.xml
  
   * (`*`2) Créer une doc pour l'usage des proglets sous netbean
+
+  * (`*``) Voir comment gérer le fait que les noms de fichiers de docs ne peuvent avoir d'accent bien que utilises comme titre des pages de docs ouvertes en "newtab"
 
 == Javas'Cool Proglets ==
 
