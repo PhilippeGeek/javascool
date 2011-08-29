@@ -87,12 +87,12 @@ public class ProgletCreator {
     "\n" +
     "  // @bean\n" +
     " public Panel() {" +
-    "  // @todo Définir ici la construction de l'objet graphique\n" +
+    "  // @"+"todo Définir ici la construction de l'objet graphique\n" +
     "  }\n" +
     "\n" +
     "  /** Démo de la proglet. */\n" +
     "  public void start() {\n" +
-    "  // @todo Définir ici le code de démo de la proglet.\n" +
+    "  // @"+"todo Définir ici le code de démo de la proglet.\n" +
     "  }\n" +
     "\n" +
     "}\n";
@@ -116,7 +116,7 @@ public class ProgletCreator {
     "     return getProgletPane();\n" +
     "  }\n" +
     "\n" +
-    "  //@todo Définir ici les fonctions <tt>public static</tt>\n" +
+    "  //@"+"todo Définir ici les fonctions <tt>public static</tt>\n" +
     "\n" +
     "}\n";
 
