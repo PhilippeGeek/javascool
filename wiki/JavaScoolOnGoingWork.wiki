@@ -17,9 +17,7 @@
     * (TV2) Finaliser page aide lancement javascool site web qd le core est stable
 
 == Chantier en cours: Javas'Cool builder ==
-
-  # (TV1) Créer la doc developpeurs proglets processing
-  # (TV1) Ajouter les width et height pour les processing
+ * R.A.S.
 
 == Chantier en cours: Proglets  ==
 
@@ -29,17 +27,11 @@
     * Virer la partie de l'aide qui traite des collisions (pas implémenté entièrement)
     * Résoudre des bugs (voir mails)
 
-  # (TV1) tester les codes demo de javaProg des le mecanisme openFile 
-  # (TV1) tester les programmes exemple des proglets processing
-  # (TV1) ajouter les tailles dans les proglets
-
 == Chantier en cours: web ==
 
   # (GM1) Ajouter un moyen d'accéder par un [http://javascool.gforge.inria.fr/v4/index.php?page=proglets&action=show&id=ingredients&helpFile=api/all/classes-noframe.html lien interne] en laissant la responsabilité au mec de référencer ces liens de ces pages doc.
 
-  # (TV2) Finir le travail d'édition externe sur le wiki : Catégorie:TPE Catégorie:JavaScoolRes
-  * Pages TPE: revoir la présentation et renre visibles les ressources
-  * Pages Ressources . . tout revoir !!
+  # (TV2) Finir le travail d'édition externe des ressources sur le wiki
 
   # (PV3) Nous passer les infos de ce que disent les forums sur jvs (qq exemples, liens de recherche google forum en plus du [http://www.google.com/alerts/feeds/00449836169777998004/17613704024521026334 flux RSS].
 
