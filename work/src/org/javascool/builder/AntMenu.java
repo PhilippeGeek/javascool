@@ -1,8 +1,6 @@
 package org.javascool.builder;
 
 import java.io.FileInputStream;
-import java.util.Properties;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParserFactory;
 import org.javascool.macros.Stdin;
 import org.javascool.widgets.Console;

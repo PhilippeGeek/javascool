@@ -37,7 +37,7 @@ public class JarManager {
    */
   public static void jarExtract(String jarFile, String destDir, String jarEntry) {
     try {
-      //System.out.println("Extract files from " + jarFile + " to " + destDir + ((!jarEntry.isEmpty()) ? " which start with " + jarEntry : ""));
+      ProgletsBuilder.log("Extract files from " + jarFile + " to " + destDir + ((!jarEntry.isEmpty()) ? " which start with " + jarEntry : ""),true);
       JarFile jf = new JarFile(jarFile);
       JarInputStream jip=new JarInputStream(new FileInputStream(jarFile));
       Enumeration<JarEntry> entries = jf.entries();
@@ -68,6 +68,7 @@ public class JarManager {
    */
   public static void jarCreate(String jarFile, String mfFile, String srcDir, String[] jarEntries) {
     try {
+        ProgletsBuilder.log("Création du jar "+jarFile,true);
       new File(jarFile).getParentFile().mkdirs();
       new File(jarFile).delete();
       srcDir = new File(srcDir).getCanonicalPath();
