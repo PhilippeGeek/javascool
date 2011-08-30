@@ -225,6 +225,9 @@
                     <include name="**/*.jvs"/>
                     <include name="**/*.pde"/>
                 </fileset>
+                <fileset dir="./../documents">
+                    <include name="**/*.jvs"/>
+                </fileset>
                 <fileset dir="./src">
                     <include name="**/*.java"/>
                 </fileset>
@@ -238,7 +241,27 @@
         </for>
     </target>
   
-    <target name="processing">
+    <target name="processing"> 
+      <for param="file">
+        <path>
+          <dirset dir="./../sketchbook" includes="*/applet"/>
+        </path>
+        <sequential> 
+          <move file="@{file}/.svn" tofile="@{file}/../svn.save"/>
+        </sequential>
+      </for>
+      <antcall target="run.processing"/>
+      <for param="file">
+        <path>
+          <dirset dir="./../sketchbook" includes="*/applet"/>
+        </path>
+        <sequential> 
+          <move file="@{file}/../svn.save" tofile="@{file}/.svn"/>
+        </sequential>
+      </for>
+    </target>
+
+    <target name="run.processing">
         <property name="pHome" value="/usr/java/processing-1.2.1"/>
         <java dir="${pHome}" jvm="${pHome}/java/bin/java" classname="processing.app.Base" fork="true">
             <classpath>
