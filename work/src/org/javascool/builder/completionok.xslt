@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:sx="http://icl.com/saxon" extension-element-prefixes="sx">
 
 <xsl:output 
   method="text"
@@ -43,31 +43,22 @@
 
 <xsl:template name="no-attribute">
   <xsl:param name="name"/>
-  <xsl:message terminate="yes">Missing attribute: <xsl:value-of select="$name"/> </xsl:message>
+  [Missing attribute: <xsl:value-of select="$name"/>]
 </xsl:template>
 
 <xsl:template name="no-element">
   <xsl:param name="name"/>
-  <xsl:message terminate="yes">Missing element: <xsl:value-of select="$name"/> </xsl:message>
+  [Missing element: <xsl:value-of select="$name"/>]
 </xsl:template>
 
 <xsl:template match="*" mode="error">
-  <xsl:message terminate="yes">Unexpected tag: <xsl:value-of select="name(.)"/> </xsl:message>
+  [Unexpected tag: <xsl:value-of select="name(.)"/>]
 </xsl:template>
 
 <xsl:template match="text()" mode="error">
   <xsl:if test="not (normalize-space(.) = '')">
-    <xsl:message terminate="yes">Unexpected text: <xsl:value-of select="."/> </xsl:message>
+    [Unexpected text: "<xsl:value-of select="."/>"]
   </xsl:if>
 </xsl:template>
 
 </xsl:stylesheet>
-
-
-<!--
-<keywords>
-    <keyword name="readString" title="Stocke une chaîne de caractères dans une variable">
-        <doc>Crée une variable s qui va contenir une chaîne de caractères demandé à l'utilisateur.
-Il peut prendre un paramètre "question" de type String qui décrit la valeur à entrer (optionel).</doc>
-        <code>String s = readString("question");</code>
--->

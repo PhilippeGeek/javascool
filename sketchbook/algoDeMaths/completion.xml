@@ -86,11 +86,13 @@ Couleur du tracé: 0 (noir, défaut), 1 (brun), 2 (rouge), 3 (orange), 4 (jaune)
     name="getX"
     title = "Renvoie la valeur horizontale du réticule">
     <code>double x = getX();</code>
+    <doc>Renvoie la valeur horizontale du réticule</doc>
   </keyword>
   <keyword 
     name="getY"
     title = "Renvoie la valeur verticale du réticule">
     <code>double y = getY();</code>
+    <doc>Renvoie la valeur verticale du réticule</doc>
   </keyword>
 </keywords>
 

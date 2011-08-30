@@ -28,7 +28,7 @@ public class Xml2Xml {
   private Xml2Xml() {}
 
   /** Convertit une chaîne XML en une autre chaîne XML selon des règles XSL.
-   * @param xml La chaîne XML en entrée.
+   * @param xml Le nom de fichier ou la chaîne XML en entrée.
    * @param xsl Le nom de fichier ou la chaîne avec les règles de transformation XSL.
    * <p> - Si la chaîne commence par un <tt>&lt;</tt> elle est reconnue comme un texte XSLT.</p>
    * <p> - Sinon elle est reconnue comme un non de fichier.</p>
@@ -67,7 +67,8 @@ public class Xml2Xml {
           for(String name : params.stringPropertyNames())
             transformer.setParameter(name, params.getProperty(name));
       }
-      transformer.transform(new StreamSource(new StringReader(xml)), new StreamResult(writer));
+      StreamSource in = xml.trim().startsWith("<") ? new StreamSource(new StringReader(xml)) : new StreamSource(xml);
+      transformer.transform(in, new StreamResult(writer));
       return writer.toString();
     } catch(TransformerException e) { throw new IllegalArgumentException(e.getMessageAndLocation());
     }
