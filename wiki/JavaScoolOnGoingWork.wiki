@@ -69,6 +69,8 @@ Status:
 
   * (`*`3) Restaurer `AlgoEditor` et about-algo-editor en proglet
 
+  * (`*`2) Proposer un plugin netbeans
+
 Voir aussi les proglets en [http://wiki.inria.fr/sciencinfolycee/JavaScool:FaqD%C3%A9veloppement#Quelles_sont_les_proglets_en_cours_de_d.C3.A9veloppement_.3F développement] et en [http://wiki.inria.fr/sciencinfolycee/JavaScool:FaqD%C3%A9veloppement#Quelles_sont_les_proglets_en_projet_.3F projet].
 
 == Javas'Cool Web ==
