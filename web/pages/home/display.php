@@ -6,7 +6,8 @@
         ),
         array(
             array("Manifeste","?page=home&action=manifest"),
-            array("FAQ","?page=home&action=faq")
+            array("FAQ","?page=home&action=faq"),
+            array("About","?page=home&action=about")
         )
     );
 ?>
