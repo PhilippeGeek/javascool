@@ -9,14 +9,5 @@ export PATH:=$(JHOME)/bin:$(PATH)
 ant :
 	ant prun
 
-svn :
-	cd .. ; ant svn
-
 nbe :
 	netbeans --jdkhome $(JHOME) &
-
-pro :
-	for f in ../sketchbook/*/applet/.svn ; do cp -r $$f $$f/../../svn ; done
-	ant processing
-	for f in ../sketchbook/*/svn ; do mv $$f `echo $$f | sed 's/svn/applet\/.svn/'` ; done
-	svn status ../sketchbook
