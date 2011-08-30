@@ -378,6 +378,14 @@ public class ProgletsBuilder {
                 System.out.println("Pas de fichier d'aide pour " + name + ", la proglet ne sera pas construite.");
                 error = true;
             }
+            if (FileManager.exists(progletDir + File.separator + "completion.xml") && !isprocessing) {
+                String err = Xml2Xml.run(FileManager.load(progletDir + File.separator + "completion.xml"),
+                                FileManager.load(this.jarDest + "/org/javascool/builder/completionok.xslt".replace("/", File.separator))).trim();
+                if (err.length() > 0) {
+                 System.out.println("Il y a une erreur dans le fichier completion.xml : «" + err.replaceAll("\\s+", " ") + "», la proglet ne sera pas construite.");
+                  error = true;
+                }
+            }
             if (!pml.isDefined("author")) {
                 System.out.println("Le champ «author» n'est pas défini dans " + name + "/proglet.pml, la proglet ne sera pas construite.");
                 error = true;
