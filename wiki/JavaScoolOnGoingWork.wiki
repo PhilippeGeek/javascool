@@ -83,12 +83,12 @@ Voir aussi les proglets en [http://wiki.inria.fr/sciencinfolycee/JavaScool:FaqD%
 
 == Javas'Cool Platform ==
 
+ * (`*`2) Rendre disponible `TextFileEditor` & `TextFilesEditor` (avec boutons et interface) et `DoubleTabbedPane` sortis de org/javascool/gui
+
  * (`*`2) Améliorer l'usage de ant
    * offrir le jar de ant 1.8 en lib/ant 
    * mieux contrôler ce qui s'écrit en sortie : rendre silencieux les messages inutiles
 
- * (`*`2)  Rendre disponible `TextFileEditor` & `TextFilesEditor` (avec boutons et interface) et `DoubleTabbedPane` sortis de org/javascool/gui
+ * (`*`3) Finaliser l'usage de AntMenu (libs ant sans exec + éditeur + ..) avec tooltips/description.
 
  * (`*`3) Déployer dans svn:work/lib la construction de autocomplete.jar
-
- * (`*`3) Finaliser l'usage de AntMenu (libs ant sans exec + éditeur + ..)

@@ -5,7 +5,8 @@
             array("Lancement","")
         ),
         array(
-            array("Licence","?page=run&action=licence")
+            array("Licence","?page=run&action=licence"),
+            array("Usage","?page=run&action=screenshot")
         )
     );
 ?>
