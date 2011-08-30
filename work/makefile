@@ -6,6 +6,10 @@
 export JHOME=/usr/java/jdk1.6.0_22
 export PATH:=$(JHOME)/bin:$(PATH)
 
+tst :
+	java -jar lib/saxon.jar jsrc/gui/completion-macros.xml jsrc/builder/completionok.xslt
+
+
 ant :
 	ant prun
 
