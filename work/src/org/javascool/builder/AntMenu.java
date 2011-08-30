@@ -34,7 +34,7 @@ public class AntMenu {
     }
     @Override
       public void run() {
-      System.out.println("\nStarting "+target+" . .");
+      System.out.println("\nStarting "+target+" . .\n");
       new Thread(new Runnable() {
 	  @Override
 	    public void run() {
