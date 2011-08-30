@@ -23,7 +23,8 @@ function wiki_get_contents_cache_load($name) {
 $wiki_get_contents_redirections = array(
 					"JavaScool:Accueil" => "?page=home",
 					"JavaScool:Actualité" => "?page=home",
-					"JavaScool:Manifeste" => "?page=home&action=manifest",
+					"JavaScool:Ailleurs" => "?page=home&action=faq-ailleurs",
+					"JavaScool:About" => "?page=home&action=about",
 					"JavaScool:Faq" => "?page=home&action=faq",
 					"JavaScool:Ailleurs" => "?page=home&action=faq-ailleurs",
 					"JavaScool:AutresInitiatives" => "?page=home&action=faq-autres",
@@ -38,6 +39,7 @@ $wiki_get_contents_redirections = array(
 					"JavaScool:DocCreationProglet" => "?page=developers&action=spec-proglets",
 					"JavaScool:DocCreationProgletExemple" => "?page=developers&action=doc-proglets",
 					"JavaScool:ProgletProcessing" => "?page=developers&action=doc-processing",
+					"JavaScool:UsingNetbeans" => "?page=developers&action=using-netbeans",
 					"JavaScool:DocFormatHml" => "?page=developers&action=doc-hml",
 					"JavaScool:DocumentsHml" => "?page=developers&action=spec-hml",
 					"JavaScool:EditorCompletion" => "?page=developers&action=doc-completion",
