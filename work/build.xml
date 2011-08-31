@@ -4,10 +4,10 @@
     <target name="usage">
         <echo level="info">
       ant javacool-base.jar	construit dans ./dist la jarre Javas'Cool Core "apprenant" sans proglet
-      ant javacool-builder.jar	construit dans ./dist la jarre Javas'Cool Builder "formateur" pour genérer les progetss
-      ant javascool-proglets.jar	construit dans ./dist la jarre Javas'Cool Core "apprenant" avec toutes les proglets disponibles
-      ant javascool-framework.jar	construit dans ./dist la jarre Javas'Cool Framework contenant les packages : macros, tools et widgets (Mais sans les icones)
-      ant javascool-proglets.exe	(EN COURS) construit dans ./dist l'executable windows Javas'Cool Core "apprenant" avec toutes les proglets disponibles
+      ant javacool-builder.jar	construit dans ./dist la jarre Javas'Cool Builder "formateur" pour genérer les progets
+      ant javascool-proglets.jar	construit dans ./dist la jarre Javas'Cool Core "apprenant" avec toutes les proglets listées validées
+      ant javascool-framework.jar	construit dans ./dist la jarre Javas'Cool Framework contenant les packages : macros, tools et widgets (mais sans les icones)
+      ant javascool-proglets.exe	(EN COURS) construit dans ./dist l'executable windows Javas'Cool Core "apprenant" avec toutes les proglets validées
       ant javadoc			construit dans ./dist/javadoc la javadoc des classes (avec java2html)
       ant webproglets             construit dans ./dist/proglets les éléments pour la mise en ligne web des proglets
       ant classes                 teste la compilation des classes
@@ -86,10 +86,15 @@
         <jsmoothgen project="lib/javascool.jsmooth" 
       skeletonroot="." verbose="true"/>
     </target>
-  
+
+    <property name="proglets.validated" value="abcdAlgos algoDeMaths analogNumerique codagePixels dichotomie gogleMaps paintBrush syntheSons tortueLogo"/>
+    <property name="proglets.unvalidated" value="jeux2D jeux2D_bak  javaProg  cryptageRSA enVoiture exploSonore grapheEtChemins sampleCode"/>
+
     <target name="javascool-proglets.jar" depends="javascool-builder.jar">
         <java jar="./dist/javascool-builder.jar" dir="./../sketchbook" fork="true">
             <arg value="-q"/>
+            <arg value="-proglets"/>
+            <arg value="${proglets.validated}"/>
         </java>
         <move file="./../sketchbook/javascool-proglets.jar" todir="./dist"/>
     </target>
@@ -97,7 +102,9 @@
     <target name="webproglets" depends="javascool-builder.jar">
         <java jar="./dist/javascool-builder.jar" dir="./../sketchbook" fork="true">
             <arg value="-w"/>
-            <arg value="./../work/dist/proglets"/>
+            <arg line="-target ./../work/dist/proglets"/>
+            <arg value="-proglets"/>
+            <arg value="${proglets.validated}"/>
         </java>
         <move file="./../sketchbook/javascool-proglets.jar" todir="./dist"/>
     </target>

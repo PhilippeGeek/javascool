@@ -11,3 +11,9 @@ ant :
 
 nbe :
 	netbeans --jdkhome $(JHOME) &
+
+#
+# Questionnements:
+# - qui du javascool-framework.jar ?
+# - ok pour http://wiki.inria.fr/sciencinfolycee/JavaScool:About ?
+#

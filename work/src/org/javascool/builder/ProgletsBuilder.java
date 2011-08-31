@@ -23,11 +23,6 @@ import org.javascool.Core;
  * @serial exclude
  */
 public class ProgletsBuilder {
-
-    public static void setVerbose(boolean v) {
-        verbose = v;
-    }
-    static boolean verbose = false;
     /** Définit le file separator dans une expression régulière. */
     private static final String fileRegexSeparator = File.separator.equals("\\") ? "\\\\" : File.separator;
 
@@ -35,6 +30,11 @@ public class ProgletsBuilder {
     private ProgletsBuilder() {
     }
 
+    /** Définit si la construction se fait avec tous les messages intermédiaires. */
+    public static void setVerbose(boolean v) {
+        verbose = v;
+    }
+    static boolean verbose = false;
     /** Teste si cette version de Java'sCool a la capacité de créer des jar.  */
     public static boolean canBuildProglets() {
         try {
@@ -45,17 +45,30 @@ public class ProgletsBuilder {
         }
     }
 
-    /** Renvoie les proglets à construire. */
-    public static String[] getProglets() {
+    /** Renvoie les proglets à construire. 
+     * @param names Noms ou suffixes des proglets à sélectionner.
+     * @return La liste des noms absolus des répertoires des proglets trouvées
+     */
+    public static String[] getProglets(String[] names) {
         ArrayList<String> proglets = new ArrayList<String>();
         for (String dir : FileManager.list(System.getProperty("user.dir"))) {
             if (FileManager.exists(dir + File.separator + "proglet.pml")) {
+	      boolean found = names == null;
+	      if (names != null)
+		for(String name : names)
+		  found |= dir.endsWith(name);
+	      if (found)
                 proglets.add(dir);
             }
         }
         return proglets.toArray(new String[proglets.size()]);
     }
-
+   /**
+    * @see #getProglets(String[])
+    */
+    public static String[] getProglets() {
+      return getProglets(null);
+    }
     /** Construit une nouvelle archive avec les proglets proposées.
      * @param proglets Les proglets sélectionnées. Par défaut toutes les proglets disponibles.
      * @param targetDir Le répertoire cible dans lequel la construction se fait. Si null utilise un répertoire temporaire.
@@ -66,7 +79,6 @@ public class ProgletsBuilder {
         if (!canBuildProglets()) {
             throw new IllegalArgumentException("Mauvaise configuration du builder, il faut utiliser le bon jar !");
         }
-
         try {
             if (proglets.length == 0) {
                 throw new IllegalArgumentException("Aucune proglet à construire");
@@ -179,8 +191,6 @@ public class ProgletsBuilder {
                         JarManager.jarCreate(tmpJar, buildDir + "/manifest.jmf", jarDir, jarEntries);
                     }
                 }
-                // Elimination de la proglet sampleCode 
-                JarManager.rmDir(new File(progletsDir + File.separator + "sampleCode"));
                 // Création de l'archive principale
                 JarManager.jarCreate(targetJar, buildDir + "/manifest.jmf", jarDir);
                 // Signature et déplacement des "javascool-proglet-"+name+".jar" dans les répetoires des proglets
