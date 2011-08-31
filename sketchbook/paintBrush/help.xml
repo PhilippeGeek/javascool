@@ -1,4 +1,7 @@
 <div title="La «proglet» paintBrush">
+  <p class="margin">
+    <p>Cliquer <l class="newtab" link="exercice.htm" text="ici"/> pour faire l'activité.</p>
+  </p>
   <p>
     Cette proglet permet de dessiner dans une petite image de résolution minimale pour comprendre le codage matriciel pixels par pixels. 
   </p>
