@@ -1,99 +1,291 @@
-<div title="Un tutoriel sur les tableaux" class="sujet"> 
-  <div class="objectif">
-    Le but de ce tutoriel est d'apprendre à utiliser et manipuler les structures de données que sont les tableaux.
-  </div>
 
-  <div class="intros">
-    <div title="La notion de tableau"> Un tableau constitue la manière la plus efficace pour stocker et accéder aléatoirement à une séquence de données.
-      Chaque donnée est référencée par un <i>index</i> compté <i>à partir de zéro</i>, par exemple, en écrivant:
-      <div class="code">
-        <div>String names = {Alice, Bob, Samia, Zheng-You};</div>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="class" content="sujet">
+      <title>Un tutoriel sur les tableaux</title>
+   </head>
+   <body>
+      <h1>Un tutoriel sur les tableaux.</h1> 
+      
+      <h2>Objectif.</h2>
+      <div class="objectif">
+         Le but de ce tutoriel est d'apprendre &agrave; utiliser et manipuler les structures de donn&eacute;es que sont les tableaux.
+           
       </div>
-      nous avons créé une collection de quatre jolis prénoms, et la variable noms[0] a pris la valeur Alice et, 
-      par exemple, noms[2] a pris la valeur Samia. On peut lire une valeur d'un tableau, par exemple:
-      <div class="code">
-        <div>String him = noms[3];</div>
+      
+        
+      <h2>Introduction.</h2>
+      <div id="intros">
+         <ol>
+            <li>
+               <h3>La notion de tableau.</h3> Un tableau constitue la mani&egrave;re la plus efficace pour stocker et acc&eacute;der al&eacute;atoirement &agrave; une s&eacute;quence de donn&eacute;es.
+                     Chaque donn&eacute;e est r&eacute;f&eacute;renc&eacute;e par un <i>index</i> compt&eacute; <i>&agrave; partir de z&eacute;ro</i>, par exemple, en &eacute;crivant:
+                     
+               <div class="code">
+                  <table witdh="90%" border="1" align="center">
+                     <tr>
+                        <td>
+                           <div class="code">
+                                      
+                              <div><font color="#990000"><b>String</b></font> names = {<font color="#008000">"Alice"</font>, <font color="#008000">"Bob"</font>, <font color="#008000">"Samia"</font>, <font color="#008000">"Zheng-You"</font>};
+                              </div>
+                                    
+                           </div>
+                        </td>
+                     </tr>
+                  </table>
+               </div>
+                     nous avons cr&eacute;&eacute; une collection de quatre jolis<sup><a href="#2">2</a></sup> pr&eacute;noms, et la variable <tt>noms[0]</tt> a pris la valeur <font color="#008000">"Alice"</font> et, 
+                     par exemple, <tt>noms[2]</tt> a pris la valeur <tt><font color="#008000">"Samia"</font></tt>. On peut lire une valeur d'un tableau, par exemple:
+                     
+               <div class="code">
+                  <table witdh="90%" border="1" align="center">
+                     <tr>
+                        <td>
+                           <div class="code">
+                                      
+                              <div><font color="#990000"><b>String</b></font> him = noms[3];
+                              </div>
+                                    
+                           </div>
+                        </td>
+                     </tr>
+                  </table>
+               </div>
+                     donne la valeur <font color="#008000">"Zheng-You"</font> &agrave; la variable de nom <tt>him</tt>. On peut aussi changer la valeur d'un tableau, par exemple:
+                     
+               <div class="code">
+                  <table witdh="90%" border="1" align="center">
+                     <tr>
+                        <td>
+                           <div class="code">
+                                      
+                              <div>noms[2] = <font color="#008000">"Samiha"</font>;
+                              </div>
+                                    
+                           </div>
+                        </td>
+                     </tr>
+                  </table>
+               </div>
+                     changera la valeur de la <i>3&egrave;me</i> valeurs du tableau, celle d'index <i>2</i>.
+                   
+            </li>
+            <li class="ul">
+               <h3>La taille du tableau.</h3>
+                     
+               <li>La taille<sup><a href="#1">1</a></sup> d'un tableau est fix&eacute;e lors de la cr&eacute;ation et ne peut plus &ecirc;tre chang&eacute; pendant toute la dur&eacute;e de sa vie.
+               </li>
+                     
+               <li>La taille d'un tableau est donn&eacute;e par la variable <tt>noms.<font color="#990000"><b>length</b></font></tt> (dans notre cas elle vaut <tt>4</tt>).
+               </li>
+                     
+               <li>Si on tente d'acc&eacute;der &agrave; une case du tableau qui n'existe pas (par exemple <tt>noms[-1]</tt> ou <tt>noms[4]</tt>),
+                        alors une erreur est g&eacute;n&eacute;r&eacute;e lors de l'ex&eacute;cution du programme.
+               </li>
+                     
+               <li>Note:Il y a d'autres structures de donn&eacute;es (des "piles", des "tables", etc..) de taille variable, . . mais c'est une autre
+                  histoire.
+                        Ces autres structures qui peuvent d'ailleurs &ecirc;tre ind&eacute;x&eacute;es par autre chose que des entiers positifs: des mots, des objets
+                  num&eacute;riques, etc..
+               </li>
+                   
+            </li>
+         </ol>
       </div>
-      donne la valeur Zheng-You à la variable de nom him. On peut aussi changer la valeur d'un tableau, par exemple:
-      <div class="code">
-        <div>noms[2] = Samiha;</div>
+      
+        
+      <h2>Travail propos&eacute;.</h2>
+      <div id="works">
+         <ol>
+            <li>
+               <h3>Manipuler un tableau de valeurs num&eacute;riques.</h3> La construction suivante va vous permettre de cr&eacute;er<sup><a href="#3">3</a></sup> un tableau de dix nombres entiers:
+                     
+               <div class="code">
+                  <table witdh="90%" border="1" align="center">
+                     <tr>
+                        <td>
+                           <div class="code">
+                                      
+                              <div><font color="#990000"><b>int</b></font> squares[] = <font color="#990000"><b>new</b></font> <font color="#990000"><b>int</b></font>[10];
+                              </div>
+                                    
+                           </div>
+                        </td>
+                     </tr>
+                  </table>
+               </div>
+                     C'est la commande <font color="#990000"><b>new</b></font> qui permet de construire ce tableau.
+                     La construction de remplir les valeurs avec des <tt>1</tt>:
+                    
+               <div class="code">
+                  <table witdh="90%" border="1" align="center">
+                     <tr>
+                        <td>
+                           <div class="code">
+                                     
+                              <div><font color="#990000"><b>for</b></font>(<font color="#990000"><b>int</b></font> i = 0; i &lt;squares.<font color="#990000"><b>length</b></font>; i++) {
+                              </div>
+                                     
+                              <div>
+                                 &nbsp;&nbsp;&nbsp;
+                                 squares[i] = 1;
+                              </div>
+                                     
+                              <div>}</div>
+                                   
+                           </div>
+                        </td>
+                     </tr>
+                  </table>
+               </div>
+                    et cette construction d'imprimer toutes les valeurs du tableau:
+                    
+               <div class="code">
+                  <table witdh="90%" border="1" align="center">
+                     <tr>
+                        <td>
+                           <div class="code">
+                                     
+                              <div><font color="#990000"><b>for</b></font>(<font color="#990000"><b>int</b></font> i = 0; i &lt;squares.<font color="#990000"><b>length</b></font>; i++) {
+                              </div>
+                                     
+                              <div>
+                                 &nbsp;&nbsp;&nbsp;
+                                 println(<font color="#008000">"squares["</font>+i+<font color="#008000">"] = "</font>+squares[i]);
+                              </div>
+                                     
+                              <div>}</div>
+                                   
+                           </div>
+                        </td>
+                     </tr>
+                  </table>
+               </div>
+                    Mettez ces trois blocs bout &agrave; bout et observer.
+                    
+               <div>Modifier le code pour .. non pas imprimer des <tt>1</tt> mais imprimer les dix premiers carr&eacute;s : <tt>0, 1, 4, 9, ..</tt>.
+               </div>
+                   
+            </li>
+            <li>
+               <h3>Trouver l'erreur !!.</h3> Le morceau de programme suivant est-il correct ? expliquez pourquoi.
+                     
+               <div class="code">
+                  <table witdh="90%" border="1" align="center">
+                     <tr>
+                        <td>
+                           <div class="code">    
+                                      
+                              <div><font color="#990000"><b>int</b></font> tab[] = <font color="#990000"><b>new</b></font> <font color="#990000"><b>int</b></font>[5];
+                              </div>
+                                      
+                              <div>tab[0] = 5;</div>
+                                      
+                              <div>tab[1] = 9;</div>
+                                      
+                              <div>tab[2] = "trois";</div>
+                                      
+                              <div>tab[3] = 59;</div>
+                                    
+                           </div>
+                        </td>
+                     </tr>
+                  </table>
+               </div>
+                     Note aussi que l'&eacute;l&eacute;ment <tt>tab[4]</tt> n'a pas &eacute;t&eacute; initialis&eacute; . . c'est &agrave; dire que personne n'a donn&eacute; de valeur &agrave; cette case du tableau. 
+                     
+               <div>Faire un petit code pour v&eacute;rifier &agrave; quelle valeur Java initialise les valeurs des tabelaux par d&eacute;faut. Lancer le code plusieurs
+                  fois, pour exp&eacute;rimenter.
+               </div>
+                   
+            </li>
+            <li>
+               <h3>Appliquer une fonction &agrave; un tableau.</h3> Cr&eacute;er la fonction:
+                     
+               <div class="code">
+                  <table witdh="90%" border="1" align="center">
+                     <tr>
+                        <td>
+                           <div class="code">
+                                      
+                              <div><font color="#990000"><b>void</b></font> double_les_elements(<font color="#990000"><b>int</b></font> tab[]) {
+                              </div>
+                                      
+                              <div>
+                                 &nbsp;&nbsp;&nbsp;
+                                 ../..
+                              </div>
+                                      
+                              <div>}</div>
+                                    
+                           </div>
+                        </td>
+                     </tr>
+                  </table>
+               </div>
+                     qui prend un tableau et multiplie par deux tous ces &eacute;l&eacute;ments. Ecrire un petit code qui illustre cette fonction.
+                     
+               <div>Nous notons ici que la <i>r&eacute;f&eacute;rence</i> du tableau est pass&eacute; &agrave; la fonction <tt>incremente</tt> qui peut donc le modifier. 
+                        Le tableau n'est donc pas recopi&eacute; avant d'&ecirc;tre pass&eacute; &agrave; la fonction.
+               </div>
+                   
+            </li>
+            <li>
+               <h3>Tableaux &agrave; plusieurs dimensions.</h3> Ecrite un algorithme qui remplisse ce tableau &agrave; deux dimensions:
+                     
+               <div class="code">
+                  <table witdh="90%" border="1" align="center">
+                     <tr>
+                        <td>
+                           <div class="code">
+                                      
+                              <div><font color="#990000"><b>int</b></font> table[][] = <font color="#990000"><b>new</b></font> <font color="#990000"><b>int</b></font>[11][11];
+                              </div>
+                                    
+                           </div>
+                        </td>
+                     </tr>
+                  </table>
+               </div>
+                     avec la cable de multiplication, c'est &agrave; dire de mani&egrave;re &agrave; ce que <tt>table[i][j]</tt> soit le produit de <tt>i</tt> par <tt>j</tt> et &eacute;crire le r&eacute;sultat sous forme de table.
+                     
+               <div>On voit ici qu'il est tr&egrave;s facile de passer &agrave; des tableaux de dimensions quelconques.</div>
+                   
+            </li>
+            <li>
+               <h3>Aller plus loin: un exemple de jeu avec des tableaux..</h3> 
+                      Prendre connaissance du <a href="JeuDePendu.htm">petit programme</a> ,
+                      propos&eacute; par des lyc&eacute;ens, qui permet de jouer <a href="http://fr.wikipedia.org/wiki/Le_pendu_%28jeu%29">jeu du pendu</a> et s'en inspirer pour cr&eacute;er un autre 
+                      <a href="http://fr.wikipedia.org/wiki/Cat%C3%A9gorie:Jeu_de_papier_et_crayon">jeu de crayon</a>
+                      comme le <a href="http://fr.wikipedia.org/wiki/Mastermind">mastermind</a> . !
+                    
+            </li>
+         </ol>
       </div>
-      changera la valeur de la <i>3ème</i> valeurs du tableau, celle d'index <i>2</i>.
-    </div>
-    <div title="La taille du tableau" class="ul">
-      <div>La taille d'un tableau est fixée lors de la création et ne peut plus être changé pendant toute la durée de sa vie.</div>
-      <div>La taille d'un tableau est donnée par la variable noms.length (dans notre cas elle vaut 4).</div>
-      <div>Si on tente d'accéder à une case du tableau qui n'existe pas (par exemple noms[-1] ou noms[4]),
-      alors une erreur est générée lors de l'exécution du programme.</div>
-      <div>Note:Il y a d'autres structures de données (des "piles", des "tables", etc..) de taille variable, . . mais c'est une autre histoire.
-      Ces autres structures qui peuvent d'ailleurs être indéxées par autre chose que des entiers positifs: des mots, des objets numériques, etc..</div>
-    </div>
-  </div>
-
-  <div class="works">
-    <div title="Manipuler un tableau de valeurs numériques"> La construction suivante va vous permettre de créer un tableau de dix nombres entiers:
-      <div class="code">
-        <div>int squares[] = new int[10];</div>
+        
+      <h2>Remarques.</h2>
+      <div id="notes">
+         <ol>
+            <li id="1"><a name="1"></a><h3>Tableau et r&eacute;f&eacute;rences.</h3> Dans la m&eacute;moire de l'ordinateur, le tableau m&eacute;morise juste les r&eacute;f&eacute;rences des donn&eacute;es ou des objets qui le composent.
+                   Les donn&eacute;es ne sont donc pas "recopi&eacute;es dans le tableau".
+            </li>
+            <li id="2"><a name="2"></a><h3>Pr&eacute;noms et significations.</h3> Tandis que <tt>Samia</tt> signifie "la noble" , <tt>Samiha</tt> signifie "la g&eacute;n&eacute;reuse": 
+                     plusieurs langues dont l'<a href="http://www.djamila.be/Documents/prenoms.htm">arabe</a> et le chinois (<tt>Zheng-You</tt> signifie "l'ami fid&egrave;le")
+                     permettent d'assosier une belle qualit&eacute; morale &agrave; un pr&eacute;nom.
+            </li>
+            <li id="3"><a name="3"></a><h3>Cr&eacute;er et d&eacute;truire les objets en m&eacute;moire.</h3>Il faut cr&eacute;er un tableau avant de pouvoir l'utiliser, 
+                     mais en Java pas besoin de se soucier de le d&eacute;truire quand on ne s'en sert plus: ce sera d&eacute;tect&eacute; et g&eacute;r&eacute; automatiquement.
+               
+                     D'autres langages comem le <tt>C/C++</tt> obligent &agrave; explicitement d&eacute;truire les objets qui ne servent plus.
+            </li>
+         </ol>
       </div>
-      C'est la commande new qui permet de construire ce tableau.
-      La construction de remplir les valeurs avec des 1:
-     <div class="code">
-       <div>for(int i = 0; i &lt;squares.length; i++) {</div>
-       <div>squares[i] = 1;</div>
-       <div>}</div>
-     </div>
-     et cette construction d'imprimer toutes les valeurs du tableau:
-     <div class="code">
-       <div>for(int i = 0; i &lt;squares.length; i++) {</div>
-       <div>println(squares[+i+] = +squares[i]);</div>
-       <div>}</div>
-     </div>
-     Mettez ces trois blocs bout à bout et observer.
-     <div>Modifier le code pour .. non pas imprimer des 1 mais imprimer les dix premiers carrés : 0, 1, 4, 9, ...</div>
-    </div>
-    <div title="Trouver l'erreur !!"> Le morceau de programme suivant est-il correct ? expliquez pourquoi.
-      <div class="code">    
-        <div>int tab[] = new int[5];</div>
-        <div>tab[0] = 5;</div>
-        <div>tab[1] = 9;</div>
-        <div>tab[2] = "trois";</div>
-        <div>tab[3] = 59;</div>
-      </div>
-      Note aussi que l'élément tab[4] n'a pas été initialisé . . c'est à dire que personne n'a donné de valeur à cette case du tableau. 
-      <div>Faire un petit code pour vérifier à quelle valeur Java initialise les valeurs des tabelaux par défaut. Lancer le code plusieurs fois, pour expérimenter.</div>
-    </div>
-    <div title="Appliquer une fonction à un tableau"> Créer la fonction:
-      <div class="code">
-        <div>void double_les_elements(int tab[]) {</div>
-        <div>../..</div>
-        <div>}</div>
-      </div>
-      qui prend un tableau et multiplie par deux tous ces éléments. Ecrire un petit code qui illustre cette fonction.
-      <div>Nous notons ici que la <i>référence</i> du tableau est passé à la fonction incremente qui peut donc le modifier. 
-      Le tableau n'est donc pas recopié avant d'être passé à la fonction.</div>
-    </div>
-    <div title="Tableaux à plusieurs dimensions"> Ecrite un algorithme qui remplisse ce tableau à deux dimensions:
-      <div class="code">
-        <div>int table[][] = new int[11][11];</div>
-      </div>
-      avec la cable de multiplication, c'est à dire de manière à ce que table[i][j] soit le produit de i par j et écrire le résultat sous forme de table.
-      <div>On voit ici qu'il est très facile de passer à des tableaux de dimensions quelconques.</div>
-    </div> 
-    <div title="Aller plus loin: un exemple de jeu avec des tableaux."> 
-       Prendre connaissance du  ,
-       proposé par des lycéens, qui permet de jouer  et s'en inspirer pour créer un autre 
-       
-       comme le  . !
-     </div>
-  </div>
-  <div class="notes">
-    <div title="Tableau et références" id="1"> Dans la mémoire de l'ordinateur, le tableau mémorise juste les références des données ou des objets qui le composent.
-    Les données ne sont donc pas "recopiées dans le tableau".</div>
-    <div title="Prénoms et significations" id="2"> Tandis que Samia signifie "la noble" , Samiha signifie "la généreuse": 
-      plusieurs langues dont l' et le chinois (Zheng-You signifie "l'ami fidèle")
-      permettent d'assosier une belle qualité morale à un prénom.</div>
-    <div title="Créer et détruire les objets en mémoire" id="3">Il faut créer un tableau avant de pouvoir l'utiliser, 
-      mais en Java pas besoin de se soucier de le détruire quand on ne s'en sert plus: ce sera détecté et géré automatiquement. 
-      D'autres langages comem le C/C++ obligent à explicitement détruire les objets qui ne servent plus.</div>
-  </div>
-</div>
+      
+   </body>
+</html>

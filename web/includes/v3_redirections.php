@@ -64,6 +64,8 @@ $v3_redirections_link_table = array(
 			     "TPE-Methode" => "http://wiki.inria.fr/sciencinfolycee/JavaScool:TPE-Methode",
 			     "doc%3Adocuments%2Fquelques-t-p-e%2Faffiche_finale_inria.pdf" => "doc/documents/quelques-t-p-e/affiche_finale_inria.pdf",
 			     "doc%3Adocuments%2Fquelques-t-p-e%2Fquelques-t-p-e.pdf" => "doc/documents/quelques-t-p-e/quelques-t-p-e.pdf",
+			     "doc%3A%2Fsketchbook%2Findex.html" => "?page=resources&action=link-processing",
+			     "api:%3A%2Forg%2Fjavascool%2Fdoc-files%2Fabout-proglets.html" => "?page=resources&action=link-proglets",
 			     );
 ?>
 

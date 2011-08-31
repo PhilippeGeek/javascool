@@ -16,7 +16,7 @@
   <div class="works">
     <div title="Construire un signal périodique de forme donnée">
       <p>Tous les signaux périodiques peuvent se construire comme une somme de sinusoïdes. Par exemple, comme on peut l'observer sur la figure suivante:
-        <div class="center"><div class="table"><p><p><l class="icon" icon="sin2square1.png"/></p><p><l class="icon" icon="sin2square2.png"/></p></p></div></div>
+      <div class="center"><div class="table"><p><p><l class="icon" icon="sin2square1.png"/></p><p><l class="icon" icon="sin2square2.png"/></p></p></div></div>
       où l'on voit, à gauche, la sinusoïde <c>sinus(t)</c> en marron, puis la sinusoïde "scpultée" en vert où en ajoutant <c>sinus(t) + sinus(3 t) / 3</c> on rabote un peu le 
       haut de la sinusoïde, puis en rouge <c>sinus(t) + sinus(3 t) / 3 + sinus(5 t) / 5</c> et, à droite, on continue d'ajouter les sinusoïdes jusqu'à approcher un signal carré.
       <!-- commande maple pour sin2square1: plot([sin(t) + sin(3 * t) / 3 + sin(5 * t) / 5, sin(t)  + sin(3 * t) / 3,  sin(t)], t = 0..4*Pi); -->

@@ -46,7 +46,10 @@ $wiki_get_contents_redirections = array(
 					"JavaScool:DocJavaScoolBuilder" => "?page=developers&action=doc-javascoolbuilder",
 					"JavaScool:SpecJavaScoolBuilder" => "?page=developers&action=spec-javascoolbuilder",
 					"JavaScool:FaqD%C3%A9veloppement" => "?page=developers&action=faq-developers",
-					"JavaScool:Ressources" => "?page=resources");
+					"JavaScool:Ressources" => "?page=resources",
+					"JavaScool:ProgletsProcessing" => "?page=resources&action=link-processing",
+					"JavaScool:Activites" => "?page=resources&action=link-proglets",
+					);
 
 // Lecture du wiki et mise en forme des liens
 function wiki_get_contents_load($name) {
