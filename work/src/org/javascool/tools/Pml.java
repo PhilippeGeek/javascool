@@ -79,6 +79,7 @@ public class Pml {
   }
   /** Initialise la PML en en recopiant la PML en entrée.
    * @param pml Le PML à copier.
+   * @return Cet objet, permettant de définir la construction <tt>Pml pml= new Pml().reset(..)</tt>.
    */
   public Pml reset(Pml pml) {
     // Initializes the Pml
@@ -92,6 +93,36 @@ public class Pml {
         set(name, pml.getChild(name));
       for(int i = 0; i < pml.getCount(); i++)
         set(i, pml.getChild(i));
+    }
+    return this;
+  }
+  /** Initialise la PML à partir des arguments d'une ligne de commande.
+   * <p>La méthode s'utilise dans la construction: <pre>
+   * public static void main(String usage[]) {
+   *   Pml arguments = new Pml.reset(usage);
+   * ../..<pre></p>
+   * <p>Il respecte les conventions suivantes: <ul>
+   * <li><tt>-name</tt> définit un paramètre à la valeur true (la syntaxe <tt>--name</tt> est aussi acceptée),</li>
+   * <li><tt>-name value</tt> définit la valeur d'un paramètre,</li>
+   * <li><tt>file</tt> ajoute un élément de type string,</li>
+   * <li><tt>- file</tt> ajoute un élément de type string qui commence par un <tt>-</tt>.</li>
+   *</ul> Par exemple: <tt>command -quiet -level 123 input1 input2</tt> definit la PML <tt>{usage quiet=true level=123 input1 inpu2}</tt>.</p>
+   * @param usage Les éléments de la ligne de commande.
+   * @return Cet objet, permettant de définir la construction <tt>Pml pml= new Pml().reset(..)</tt>.   
+   */
+  public Pml reset(String[] usage) {
+    reset("{usage}");
+    for(int i = 0; i < usage.length; i++) {
+      if (!"-".equals(usage[i])) {
+	if (usage[i].startsWith("-") && (i == 0 || !"-".equals(usage[i-1]))) {
+	  String name = usage[i].replaceFirst("-+", "");
+	  if (i == usage.length - 1 || usage[i+1].startsWith("-"))
+	    set(name, true);
+	  else
+	    set(name, usage[++i]);
+	} else 
+	  add(usage[i]);
+      }
     }
     return this;
   }
