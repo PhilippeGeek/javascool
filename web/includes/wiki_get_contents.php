@@ -49,6 +49,15 @@ $wiki_get_contents_redirections = array(
 					"JavaScool:Ressources" => "?page=resources",
 					"JavaScool:ProgletsProcessing" => "?page=resources&action=link-processing",
 					"JavaScool:Activites" => "?page=resources&action=link-proglets",
+					"JavaScool:TPE-Accueil" => "?page=resources&action=link-tpe-accueil",
+					"JavaScool:Pepites" =>  "?page=resources&action=link-pepites",
+					"JavaScool:Revues" =>  "?page=resources&action=link-revues",
+					"JavaScool:TPE-Quizz" =>  "?page=resources&action=link-quizz",
+					"JavaScool:TPE-Sujets" =>  "?page=resources&action=link-idees-tpe",
+                                        "JavaScool:TPE-Demos" =>  "?page=resources&action=link-tpe-demos",
+                                        "JavaScool:TPE-Exemples" =>  "?page=resources&action=link-tpe-exemples",
+                                        "JavaScool:TPE-Interventions" =>  "?page=resources&action=link-interventions",
+                                        "JavaScool:TPE-Methode" =>  "?page=resources&action=link-tpe-methode",
 					);
 
 // Lecture du wiki et mise en forme des liens
