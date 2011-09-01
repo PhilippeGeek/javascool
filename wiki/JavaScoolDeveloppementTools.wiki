@@ -5,8 +5,8 @@
 Pour pouvoir co-développer [http://javascool.gforge.inria.fr JavaScool] il faut installer Java, Ant et Svn et s'inscrire sur cette forge (donc c'est possible sous Linux, Mac\Os ou Windows), et utiliser une [http://en.wikipedia.org/wiki/Integrated_development_environment IDE] de votre choix, nous c'est [http://fr.netbeans.org netbeans] (ou xemacs !).
 
 Il est important de suivre deux flux RSS:
-# celui des [http://code.google.com/feeds/p/javascool/svnchanges/basic commit]
-# celui des [http://code.google.com/p/javascool/issues/list issues]
+  # celui des [http://code.google.com/feeds/p/javascool/svnchanges/basic commit]
+  # celui des [http://code.google.com/p/javascool/issues/list issues]
 tandis que notre [JavaScoolOnGoingWork todo-list] tient à jour ce que nosu avosn en cours.
 
 Il faut aussi être inscrit sur cette forge en nous [http://javascool.gforge.inria.fr/v4/?page=contact contactant] pour mettre à jour le site web.
