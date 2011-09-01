@@ -54,7 +54,7 @@ Status:
 
   * (`*`2) Créer une doc pour l'usage des proglets sous netbean
 
-  * (`*``) Voir comment gérer le fait que les noms de fichiers de docs ne peuvent avoir d'accent bien que utilises comme titre des pages de docs ouvertes en "newtab"
+  * (`*`3) Voir comment gérer le fait que les noms de fichiers de docs ne peuvent avoir d'accent bien que utilises comme titre des pages de docs ouvertes en "newtab"
 
 == Javas'Cool Proglets ==
 
@@ -72,13 +72,13 @@ Voir aussi les proglets en [http://wiki.inria.fr/sciencinfolycee/JavaScool:FaqD%
 
   * (`*`3) Ajouter une page outil qui traduise du `[X]HTML` en HML à partir de work/src/org/javascool/builder/htm2hml.xslt
 
-  * (`*`4) Voir à restaurer les mécanismes javascript d'animation de liens à partir du site 
-
-  * (`*`4) Faire un sitemap (ou pas) a partir de web/includes/sitemap_data.php
+  * (`*`4) Proposer un mécanisme XML/XSLT pour produire les pages du site et gérer les liens, voir la production des pages syndiquées.
 
   * (`*`4) Détecter l'OS ds ?page=run pour highliter l'OS du user.
 
 == Javas'Cool Platform ==
+
+ * (`*`2) Voir à passer en javadoc 1.7 pour y gagner en présentation
 
  * (`*`2) Rendre disponible `TextFileEditor` & `TextFilesEditor` (avec boutons et interface) et `DoubleTabbedPane` sortis de org/javascool/gui
 
