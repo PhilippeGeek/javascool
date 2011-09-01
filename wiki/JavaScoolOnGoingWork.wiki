@@ -25,7 +25,9 @@
 
 == Chantier en cours: Web ==
 
-  # RC2: (TV1) activer le mécanisme de cache 
+  # RC2: (TV1) normaliser les liens
+
+  # RC2: (TV3) activer le mécanisme de cache 
 
 == Chantier en cours: plateforme de développement ==
   * R.A.S.
