@@ -88,3 +88,5 @@ Voir aussi les proglets en [http://wiki.inria.fr/sciencinfolycee/JavaScool:FaqD%
  * (`*`3) Finaliser l'usage de AntMenu (libs ant sans exec + éditeur + ..) avec tooltips/description.
 
  * (`*`3) Déployer dans svn:work/lib la construction de autocomplete.jar
+
+ * (`*`4) Voir à se libérer de https://gforge.inria.fr/projects/javascool pour le site web
