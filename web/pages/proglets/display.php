@@ -33,7 +33,7 @@
 	    $escapedName=str_replace("'","\\'",$name);
 
 	    echo('<script type="text/javascript">document.write(\'<td class="progletclickable" onClick="gotoloc(\\\'index.php?page=proglets&action=show&id=' . $id . '\\\')"><div title="Description : '.$escapedName.'" class="tooltip"><span>' . $id . '</span><span class="proglet-image"><img src="'.$icon.'" alt=""/></span></div>	</td>\');</script>');
-	    echo('<noscript><td class="progletclickable"><div title="tooltip" class="tooltip"><a href="index.php?page=proglets&action=show&id=' . $id . '"><span>' . $id . '</span><span class="proglet-image"><img style="border: 0px" src="'.$icon.'" alt=""/></span></a></div></td></noscript>');
+	    echo('<noscript><td class="progletclickable"><div title="Description : '.$escapedName.'" class="tooltip"><a href="index.php?page=proglets&action=show&id=' . $id . '"><span>' . $id . '</span><span class="proglet-image"><img style="border: 0px" src="'.$icon.'" alt=""/></span></a></div></td></noscript>');
 	}
     }
     ?>
