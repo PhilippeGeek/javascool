@@ -73,6 +73,10 @@ class JVSWidgetPanel extends JVSTabs {
      * @see String
      */
     public void openWebTab(String url, String tabName) {
+        if(this.indexOfTab(tabName)>=0){
+            this.switchToTab(tabName);
+            return;
+        }
         HtmlDisplay memo = new HtmlDisplay();
         memo.setPage(url);
         this.add(tabName, "", memo);
