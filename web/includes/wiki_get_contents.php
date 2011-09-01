@@ -79,7 +79,7 @@ function wiki_get_contents_load($name) {
   // Remplace tous les liens wikis locaux pas des liens distants
   $text = ereg_replace('src="/wikis/sciencinfolycee', 'src="http://wiki.inria.fr/wikis/sciencinfolycee', $text);
   // Qualifie proprement les liens internes issus du wiki
-  $text = ereg_replace("href=\"http://javascool.gforge.inria.fr/([^\"]*)\" *class=\"external text\"", "href=\"\\1\" class=\"internal\"", $text);
+  $text = ereg_replace("href=\"http://javascool.gforge.inria.fr/(v4/)*([^\"]*)\" *class=\"external text\"", "href=\"/v4/\\2\" class=\"internal\"", $text);
   // Elimine la table de méta-donnée
   $text = ereg_replace('<table class="wikitable">.*</table>', '', $text);
   // Détecte les erreurs

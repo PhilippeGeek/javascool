@@ -4,7 +4,7 @@
     <p>Cliquer <l class="newtab" link="tutoriel.htm" text="ici"/> pour lire le tutoriel.</p>
   </p>
  <p>
-    Cette proglet<l class="note" link="1"/> permet de manipuler une petite image de résolution variable, dont les coordonnées se définissent ainsi:
+    Cette proglet permet de manipuler une petite image de résolution variable, dont les coordonnées se définissent ainsi:
      <div class="center"><l class="icon" icon="smiley.png"/></div>
      c'est à dire que l'abscisse (la position horizontale ou largeur, width en anglais) va de <c>-width</c> à <c>+width</c> 
      et l'ordonnée (la position verticale ou hauteur, height en anglais) va de <c>-height</c> à <c>+height</c>.

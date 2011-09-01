@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import org.javascool.widgets.Console;
@@ -24,6 +25,10 @@ import org.javascool.tools.UserConfig;
  * A powerful JVSTabs to manage a multi-file editing. It only support JVSFile.
  */
 class JVSFileTabs extends JVSTabs {
+    // Empeche de pouvoir renommer itempestivement des folder
+    static {
+    UIManager.put("FileChooser.readOnly", Boolean.TRUE);
+    }
 
     private static final long serialVersionUID = 1L;
     /** Store all JVSEditor in an HashMap by the fileId */
@@ -258,7 +263,8 @@ class JVSFileTabs extends JVSTabs {
         JFileChooser fc = new JFileChooser();             // We create a file chooser
         if (System.getProperty("os.name").toLowerCase().contains("nix") || System.getProperty("os.name").toLowerCase().contains("nux")) {
             fc.setCurrentDirectory(new File(System.getProperty("user.dir")));
-        } else if (!UserConfig.getInstance("javascool").getProperty("dir").isEmpty()) {
+        } else if (UserConfig.getInstance("javascool").getProperty("dir") != null &&
+                   !UserConfig.getInstance("javascool").getProperty("dir").isEmpty()) {
             fc.setCurrentDirectory(new File(UserConfig.getInstance("javascool").getProperty("dir")));
         } else {
             fc.setCurrentDirectory(new File(System.getProperty("home.dir")));

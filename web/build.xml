@@ -25,6 +25,7 @@
     <exec os="Linux" executable="ln">
       <arg line="-s  ../work/dist/proglets/jar/org/javascool/proglets ./proglets"/>
     </exec>
+    <ant dir="../work" target="javascool-proglets.jar"/> 
    </target>
 
   <target name="clean">
@@ -48,7 +49,6 @@
       <arg line="--rsh='ssh -C' -rl --delete-excluded --exclude .svn/ ../documents ${env.GFORGEUSER}@scm.gforge.inria.fr:/home/groups/javascool/htdocs/v4"/>
     </exec>
     <exec os="Linux" executable="rsync">
-      <!-- ajouter: ../work/dist/javascool-proglets.exe ../work/dist/javascool-proglets.app des que dispo -->
       <arg line="--rsh='ssh -C' -rl --delete-excluded --exclude .svn/ ../work/dist/javascool-proglets.jar ../work/dist/javascool-builder.jar ${env.GFORGEUSER}@scm.gforge.inria.fr:/home/groups/javascool/htdocs/v4"/>
     </exec>
     <!-- rsync de index.php en deux temps pour patcher un problème de droit sur le site -->
@@ -75,9 +75,10 @@
     </exec>
   </target>
 
-  <target name ="lcheck">
-    <ant dir="../work" target="javascool.jar"/>
-    <java classpath="../build/javascool.jar" classname="org.javascool.builder.LinkCheck">
+  <target name ="lcheck" depends="build,publish">
+    <ant dir="../work" target="javascool-base.jar"/>
+    <echo>LINKCHECK: http://javascool.gforge.inria.fr/v4 > broken-links.log . . </echo>
+    <java classpath="../work/dist/javascool-base.jar" classname="org.javascool.builder.LinkCheck" output="broken-links.log">
       <arg line="-recursive http://javascool.gforge.inria.fr/v4/"/>
     </java>
   </target>

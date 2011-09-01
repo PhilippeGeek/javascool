@@ -7,6 +7,7 @@ import java.util.HashMap;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
 import org.javascool.core.ProgletEngine;
 import org.javascool.core.ProgletEngine.Proglet;
 import org.javascool.tools.UserConfig;
@@ -18,6 +19,10 @@ import org.javascool.tools.UserConfig;
  * @author Philippe Vienne
  */
 class JVSPanel extends JPanel {
+    // Empeche de pouvoir renommer itempestivement des folder
+    static {
+    UIManager.put("FileChooser.readOnly", Boolean.TRUE);
+    }
 
     private static final long serialVersionUID = 1L;
     /** This HashMap say if a file has to be saved */
