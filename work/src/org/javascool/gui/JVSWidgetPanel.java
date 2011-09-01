@@ -46,6 +46,7 @@ class JVSWidgetPanel extends JVSTabs {
         }
         if (proglet.getHelp() != null) {
             this.add("Aide de la proglet", "", new HtmlDisplay().setPage(Macros.getResourceURL(proglet.getHelp())));
+            this.switchToTab("Aide de la proglet");
         }
         HtmlDisplay memo = new HtmlDisplay();
         memo.setPage(ClassLoader.getSystemResource(Core.help));

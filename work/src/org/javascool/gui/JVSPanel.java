@@ -9,7 +9,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import org.javascool.core.ProgletEngine;
 import org.javascool.core.ProgletEngine.Proglet;
-import org.javascool.macros.Macros;
 import org.javascool.tools.UserConfig;
 
 /** The main panel for Java's cool
@@ -329,6 +328,10 @@ class JVSPanel extends JPanel {
         }
     }
 
+    /** Charge une nouvelle proglet dans l'interface utilisateur.
+     * @param name Le nom de code de la proglet (ex:abcdAlgos)
+     * @see org.javascool.core.ProgletEngine
+     */
     public void loadProglet(String name) {
         Proglet proglet = ProgletEngine.getInstance().setProglet(name);
         System.gc();
