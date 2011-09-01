@@ -30,3 +30,5 @@ www :
 #   4. 4 x Mettre a plat les Functions.java
 #   5. 4 x tester les programmes exemples
 #
+# Flux RSS issues -> http://code.google.com/p/javascool/wiki/JavaScoolDeveloppementTools
+# Voir la finalisation des .exe ou .app ou la doc ecran
