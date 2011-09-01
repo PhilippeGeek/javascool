@@ -139,7 +139,7 @@ public class Macros {
      * @return L'icone chargée ou null si elle n'existe pas.
      */
     public static ImageIcon getIcon(String path) {
-        URL icon = Thread.currentThread().getContextClassLoader().getResource(path);
+      URL icon = getResourceURL(path); // Thread.currentThread().getContextClassLoader().getResource(path);
         if (icon == null) {
             System.err.println("Warning : getIcon(" + path + ") not found");
         }

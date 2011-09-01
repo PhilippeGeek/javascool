@@ -42,8 +42,9 @@ public class Build {
            throw new IllegalArgumentException("Le répertoire du build n'est pas utilisable.");
           }
 	ProgletsBuilder.setVerbose(args.getBoolean("v") || args.getBoolean("verbose"));
+        String target = args.isDefined("target") ? args.getString("target") : null;
         String names[] = args.isDefined("proglets") ? args.getString("proglets").split("[, \t]+") : null;
-	System.exit(ProgletsBuilder.build(ProgletsBuilder.getProglets(names), args.getString("target"), args.getBoolean("w")) ? 0 : -1);
+	System.exit(ProgletsBuilder.build(ProgletsBuilder.getProglets(names), target, args.getBoolean("w")) ? 0 : -1);
       }
     }
 }
