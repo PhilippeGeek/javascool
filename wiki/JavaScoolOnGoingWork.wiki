@@ -13,7 +13,7 @@
 
 ==Chantier en cours: Javas'Cool core==
 
-  # RC2: (PV0) Création d'un lanceur .exe et .app pour le lancement de jascool
+  # RC2: (PV1) Création d'un lanceur .exe et .app pour le lancement de jascool
 
 == Chantier en cours: Javas'Cool builder ==
  * R.A.S.
