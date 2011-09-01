@@ -6,9 +6,6 @@
 export JHOME=/usr/java/jdk1.6.0_22
 export PATH:=$(JHOME)/bin:$(PATH)
 
-tst :
-	ant webproglets
-
 ant : 
 	ant prun
 
@@ -24,6 +21,18 @@ www :
 # ProWeb: 
 #   1. Tester les liens !
 #
+# besoin de reduire les liens avec toto/.. voir dichotomie
+## http://javascool.gforge.inria.fr/v4/?page=proglets&action=show&id=abcdAlgos&helpFile=abcdAlgos/tutoriel.htm -> http://javascool.gforge.inria.fr/v4/widgets/icons/play.png
+# bref y a un tortueLogo/ en trop !
+# BROKEN  Anchor in http://javascool.gforge.inria.fr/v4//?page=api&api=org/javascool/core/JvsBeautifier.html -> http://javascool.gforge.inria.fr/v4//?page=api&api=org/javascool/core/http://download.oracle.com/javase/6/docs/api/java/lang/Object.html?is-external=true #wait()
+# user for group javascool) Spurious link = ressources
+php :
+	xemacs ../web/pages/api/display.php ../web/pages/proglets/show.php 
+#  - <div id="javadoc">
+#  - name/../ -> / ; /./ -> /
+# 
+#
+#
 # ProProglets:
 #   1. Ajouter les width et height pour les processing + les tailles dans ProgletEngine + test dans Builder
 #   2. Virer tests sur processing ds Builder sur help.xml etc...
@@ -31,5 +40,7 @@ www :
 #   4. 4 x Mettre a plat les Functions.java
 #   5. 4 x tester les programmes exemples
 #
-# Flux RSS issues -> http://code.google.com/p/javascool/wiki/JavaScoolDeveloppementTools
 # Voir la finalisation des .exe ou .app ou la doc ecran
+#
+
+

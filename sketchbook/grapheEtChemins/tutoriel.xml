@@ -7,8 +7,6 @@
         <p>Voir les notes d'<l link="http://javascool.gforge.inria.fr/documents/sketchbook/grapheEtChemins/Introduction-aux-graphes.pdf" text="introduction aux graphes"/> pour permettre de comprendre le contexte historique.</p>
     <p>Le but est de cette applete est de s’approprier les différents éléments caractéristiques d’un graphe, 
     en vue de saisir les algorithmes qui en font usage, comme par exemple, l'algorithme du plus court chemin.</p>
-    <p>Si la première partie de ce tutoriel <l link="../enVoiture/tutoriel.hml" text="En Voiture"/> visait uniquement à introduire la notion de graphe avec un cas concret de parcours d'une voiture,
-    on manipulera ici les notions clés et on élaborera les outils nécessaires pour la construction de l'algorithme du plus court chemin.</p>
   </div>
   <div class="center"><l class="icon" link="http://www.openprocessing.org/visuals/?visualID=16148" icon="UnGrapheDesChemins_xml.png"/></div>  
   <div title="Utilisation comme outil">
@@ -32,9 +30,6 @@
       <p>Comme nous le disions, plus grand est le réseau, plus difficile il est de déduire de manière visuelle le plus court chemin. 
       Si le groupe d'amis est de 20 personnes, combien de liens doivent être potentiellement considérés? Et si le groupe est de 30 personnes? </p>
   </div></div>
-  <div title="Utilisation dans une activité">
-    Voir le <l link="exercice.htm" text="sujet d'activité"/> proposé.
-  </div>
 </div>
 
 

@@ -7,4 +7,4 @@
     );
 ?>
 
-<?php echo file_get_contents('./documents/sujets-mathinfo/index.html'); ?>
+<?php echo file_get_contents('./documents/sujets-mathinfo/index.htm'); ?>

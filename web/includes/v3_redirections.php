@@ -20,7 +20,7 @@ function v3_redirections($page) {
     <h4>Uppss vous être en train de demander une page JavaScool qui n'existe pas (ou plus)</h4>
     <b>N'hésitez pas, si besoin, à nous <a href='mailto:thierry.vieville@inria.fr?subject=broken-link-on-javascool-web ($page)'>contacter</a>, nous allons vous dépanner.</b>
     <hr>";
-    mailto("mailto:thierry.vieville@inria.fr?subject=broken-link-on-javascool-web", "Spurious link = $page");
+    mailto("mailto:thierry.vieville@inria.fr?subject=broken-link-on-javascool-web", "Spurious link = $page, Referer =".$_SERVER["HTTP_REFERER"]);
     return true;
   }
   return false;
