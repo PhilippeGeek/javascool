@@ -337,7 +337,7 @@ if (isset($_GET['page'])) {
                     $j=0;
                     foreach($brothers as $brother) {
                         $brother[0]=addslashes($brother[0]);
-                        $doc[0].='<script type="text/javascript">document.write(\'<a href="#" onclick="gotoloc(\\\'' . $brother[1] . '\\\');">'.$brother[0].'</a>\');</script><noscript><a href="'.$brother[1].'">'.$brother[0].'</a></noscript>';
+                        $doc[0].='<script type="text/javascript">document.write(\'<a href="#" onclick="gotoloc(\\\'' . $brother[1] . '\\\');">'.$brother[0].'</a>\');</script><noscript><a href="'.$brother[1].'">'.stripslashes($brother[0]).'</a></noscript>';
                         if ($j!=count($brothers)-1) $doc[0].=', ';
                         $j++;
                     }
