@@ -12,6 +12,7 @@
 	    $i++;
 	}
     }
+    sort($proglets);
     foreach ($proglets as $id) {
 	if (!preg_match('#^\.#',$id)) {
 	    Sal::validateProgletId($id);
