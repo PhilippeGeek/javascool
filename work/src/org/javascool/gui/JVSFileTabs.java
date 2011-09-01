@@ -114,7 +114,7 @@ class JVSFileTabs extends JVSTabs {
      * @param file The opened file
      * @return The file's tempory id in editor tabs
      */
-    private String openFile(JVSFile file) {
+    String openFile(JVSFile file) {
         // Check if file is not already opened
         if (!this.getFileId(file.getName()).equals("")) {
             if (JVSFileTabs.files.get(this.getFileId(file.getName())).getFile().equals(file.getFile())) {
@@ -164,6 +164,9 @@ class JVSFileTabs extends JVSTabs {
 
         // Store the new fileId by the tab name
         JVSFileTabs.fileIds.put(tabTitle, fileId);
+        
+        JVSPanel.getInstance().haveNotToSave(fileId);
+        
         // Select the new tab
         this.setSelectedIndex(this.getTabId(fileId));
         this.setTabComponentAt(this.getTabId(fileId), new TabPanel(this, fileId));
