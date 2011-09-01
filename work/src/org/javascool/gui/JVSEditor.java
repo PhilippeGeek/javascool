@@ -8,6 +8,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Event;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
@@ -17,7 +18,9 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JToggleButton;
 import javax.swing.KeyStroke;
 import javax.swing.ToolTipManager;
 import javax.swing.text.BadLocationException;
@@ -39,6 +42,7 @@ import org.javascool.widgets.ToolBar;
 class JVSEditor extends JPanel {
 
     private static final long serialVersionUID = 1L;
+    private static boolean completion=true;
     /** The editor */
     private RSyntaxTextArea TextPane;
     /** The scroll pane */
@@ -66,6 +70,22 @@ class JVSEditor extends JPanel {
                 setText(org.javascool.core.JvsBeautifier.run(getText()));
             }
         });
+        final JButton completionButton=new JButton();
+        completionButton.setText("Désactiver la completion");
+        completionButton.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(JVSEditor.completion){
+                    JVSEditor.completion=false;
+                    completionButton.setText("Activer la completion");
+                } else {
+                    JVSEditor.completion=true;
+                    completionButton.setText("Désactiver la completion");
+                }
+            }
+        });
+        toolBar.addTool("Activer/Désactiver la complétion", completionButton);
         this.add(toolBar, BorderLayout.NORTH);
         this.add(scrollPane, BorderLayout.CENTER);
         this.setVisible(true);
@@ -186,7 +206,7 @@ class JVSEditor extends JPanel {
                 @Override
                 public void keyTyped(KeyEvent e) {
                     int ch = e.getKeyChar();
-                    if (ch>33&&ch!=127&&ch!=129&&ch!=141&&ch!=143&&ch!=144&&ch!=157&&ch!=160) {
+                    if (ch>33&&ch!=127&&ch!=129&&ch!=141&&ch!=143&&ch!=144&&ch!=157&&ch!=160&&JVSEditor.completion) {
                         showPopupWindow();
                     } else {
                         hideChildWindows();
