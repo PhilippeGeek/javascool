@@ -4,7 +4,7 @@
     $id = $_GET['id'];
     Sal::validateProgletId($id);
     if (!is_file("proglets/" . $id . "/proglet.php"))
-        die("La proglet " . $id . " n'a pas de fichier proglet.php");
+        die("La proglet " . $id . " n'est pas définie sur le site web.");
     $pml=null;
     include("proglets/" . $id . "/proglet.php");  //TODO testme
     if (isset($pml['name'])) $name=$pml['name']; else $name="";
