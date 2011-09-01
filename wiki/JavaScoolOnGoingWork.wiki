@@ -43,14 +43,13 @@ Status:
 
   * (`*`1) Ajouter un CRTL+F search à l'éditeur
 
-  * (`*`1) Implementer le fait qu'on ajoute @proglet:nom-de-la-proglet.
-    * (`*`2) Proposer des accès depuis Desktop vers les instances des jvs
+  * (`*`1) Création d'un lanceur .exe et .app pour le lancement de jascool
 
+  * (`*`1) Implementer le fait qu'on ajoute @proglet:nom-de-la-proglet.
+    
   * (`*`4) Virer le `HtmlDisplay` HTML3 et trouver un bon browser
 
 == Javas'Cool Builder ==
-
-  * (`*`1) Création d'un lanceur .exe et .app pour le lancement de jascool
 
   * (`*`2) Créer une doc pour l'usage des proglets sous netbean
 
