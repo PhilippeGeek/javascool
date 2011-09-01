@@ -22,6 +22,7 @@
     if (isset($_GET['helpFile'])) {
 	$helpFile=$_GET['helpFile'];
 	if (preg_match('#^[a-z0-9_-]+\.htm$#i',$helpFile)) $helpFile=$id.'/'.$helpFile;
+	else if (preg_match('#^api/.*$#',$helpFile)) $helpFile=$id.'/'.$helpFile;
 	else if (preg_match('#^[a-z0-9_-]+/[a-z0-9_-]+\.htm$#i',$helpFile)) {}
 	else if (preg_match('#^[a-z0-9_-]+#i',$helpFile)) $helpFile=$helpFile.'/help.htm';
 	else die('Invalid help file name');
@@ -55,9 +56,11 @@
                 <p><div style="max-width: 100%"><?php
 
 	$help=file_get_contents('proglets/'.$helpFile);
-	$help=preg_replace('#href="([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+\.htm)"#','href="?page=proglets&action=show&id='.$id.'&helpFile=$1/$2"',$help);
-	$help=preg_replace('#href="(\.\./\.\./)?([a-zA-Z0-9_-]+)/doc-files/([a-zA-Z0-9_-]+\.htm)"#','href="?page=proglets&action=show&id='.$id.'&helpFile=$2/$3"',$help);
-	$help=preg_replace('#href="([a-zA-Z0-9_-]+\.htm)"#','href="?page=proglets&action=show&id='.$id.'&helpFile=$1"',$help);
+	$help=preg_replace('#href="([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+\.htm(\#[^"]*))"#i','href="?page=proglets&action=show&id='.$id.'&helpFile=$1/$2"',$help);
+	$help=preg_replace('#href="(\.\./\.\./)?([a-zA-Z0-9_-]+)/doc-files/([a-zA-Z0-9_-]+\.htm)(\#[^"]*)"#i','href="?page=proglets&action=show&id='.$id.'&helpFile=$2/$3"',$help);
+	$help=preg_replace('#href="([a-zA-Z0-9_-]+\.htm)(\#[^"]*)?"#i','href="?page=proglets&action=show&id='.$id.'&helpFile=$1"',$help);
+	$help=preg_replace('#href="\./org/javascool/proglets/'.$id.'/([^"]*)"#i','href="?page=proglets&action=show&id='.$id.'&helpFile=api/$1"',$help);
+	//$help=preg_replace('#src="org/javascool/#i','src="',$help);
 
 	echo $help;
 		?></div></p>
