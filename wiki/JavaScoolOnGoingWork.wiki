@@ -24,7 +24,8 @@
   # RC2: (TV1) Mise au point proglets processing
 
 == Chantier en cours: Web ==
-  * R.A.S.
+
+  # RC2: (TV1) activer le mécanisme de cache 
 
 == Chantier en cours: plateforme de développement ==
   * R.A.S.
