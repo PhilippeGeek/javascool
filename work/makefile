@@ -6,7 +6,10 @@
 export JHOME=/usr/java/jdk1.6.0_22
 export PATH:=$(JHOME)/bin:$(PATH)
 
-ant :
+tst :
+	ant webproglets
+
+ant : 
 	ant prun
 
 nbe :

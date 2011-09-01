@@ -5,7 +5,7 @@ function wiki_get_contents($name) {
    return wiki_get_contents_load($name);
 }
 
-// Lecture du wiki`a travers un cache local
+// Lecture du wiki à  travers un cache local
 function wiki_get_contents_cache_load($name) {
   $name = rawurlencode($name);
   // Utilisation d'un cache local
@@ -17,6 +17,13 @@ function wiki_get_contents_cache_load($name) {
     chmod($cache.'/'.$name, 0666);
   }
   return file_get_contents($cache.'/'.$name);
+}
+
+// Vide le cache 
+function wiki_get_contents_cache_clear() {
+  if(isset($_GET['kezako']) && $_GET['kezako'] == 'niquelekacheux') { 
+    passthru("rm -rf .http.cache"); exit; 
+  }
 }
 
 // Redirections des pages du wiki
@@ -45,6 +52,7 @@ $wiki_get_contents_redirections = array(
 					"JavaScool:EditorCompletion" => "?page=developers&action=doc-completion",
 					"JavaScool:DocJavaScoolBuilder" => "?page=developers&action=doc-javascoolbuilder",
 					"JavaScool:SpecJavaScoolBuilder" => "?page=developers&action=spec-javascoolbuilder",
+                                        "JavaScool:SyndicationWiki" => "?page=developers&action=syndication-wiki",
 					"JavaScool:FaqD%C3%A9veloppement" => "?page=developers&action=faq-developers",
 					"JavaScool:Ressources" => "?page=resources",
 					"JavaScool:ProgletsProcessing" => "?page=resources&action=link-processing",
