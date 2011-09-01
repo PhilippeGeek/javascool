@@ -47,6 +47,8 @@ Status:
 
 == Javas'Cool Core ==
 
+  * (`*`1) Ajouter un CRTL+F search à l'éditeur
+
   * (`*`1) Implementer le fait qu'on ajoute @proglet:nom-de-la-proglet.
     * (`*`2) Proposer des accès depuis Desktop vers les instances des jvs
 
