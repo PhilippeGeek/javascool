@@ -33,6 +33,10 @@ a img {
     border: none;
 }
 
+a {
+  text-decoration: none;
+}
+
 /*
  * Globals
  */
