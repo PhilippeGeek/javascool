@@ -433,9 +433,11 @@ public class ProgletsBuilder {
                 if (!new File(doc).getName().equals("completion.xml")) {
                     try {
                         log("Convertion de " + new File(doc).getName(), true);
+                        // Conversion des pages hdoc pour le web
                         FileManager.save(doc.replaceFirst("\\.xml", "\\.htm"),
                                 Xml2Xml.run(FileManager.load(doc),
-                                FileManager.load(this.jarDest + "/org/javascool/builder/hdoc2htm.xslt".replace("/", File.separator))));
+					    FileManager.load(this.jarDest + "/org/javascool/builder/hdoc2htm.xslt".replace("/", File.separator)),
+					    "output", "web"));
                     } catch (IllegalArgumentException e) {
                         throw new IllegalArgumentException("dans " + new File(doc).getName() + " : " + e.getMessage());
                     }
