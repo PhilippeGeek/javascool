@@ -12,8 +12,7 @@
 = Chantiers en cours =
 
 ==Chantier en cours: Javas'Cool core==
-
-  # RC2: (PV1) Création d'un lanceur .exe et .app pour le lancement de jascool
+ * R.A.S.
 
 == Chantier en cours: Javas'Cool builder ==
  * R.A.S.
@@ -51,8 +50,8 @@ Status:
 
 == Javas'Cool Builder ==
 
-  * (`*`1) Améliorer la gestion d'erreur des completion.xml
- 
+  * (`*`1) Création d'un lanceur .exe et .app pour le lancement de jascool
+
   * (`*`2) Créer une doc pour l'usage des proglets sous netbean
 
   * (`*``) Voir comment gérer le fait que les noms de fichiers de docs ne peuvent avoir d'accent bien que utilises comme titre des pages de docs ouvertes en "newtab"
