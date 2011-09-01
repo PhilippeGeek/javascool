@@ -1,7 +1,6 @@
 // Code développé par Anaïs Ducourthial et deux co-lycéennes du CIV lors d'un stage Inria d'initiation à la programmaation
 
 import java.awt.event. *;
-
 import javax.swing. *;
 
 // Ici on declare les variables elephants
@@ -15,13 +14,13 @@ int x[] = { 200, 350, 500, 650 };
 // Gere un clique sur un elephant de numero n
 void cliqueElephant(int n) {
   if(c[n] == 0) {
-    e[n].setIcon(org.javascool.Utils.getIcon("http://javascool.gforge.inria.fr/documents/sketchbook/javaProg/elephant3.gif "));
+    e[n].setIcon(getIcon("http://javascool.gforge.inria.fr/documents/sketchbook/javaProg/elephant3.gif"));
     c[n] = 1;
   } else if(c[n] == 1) {
-    e[n].setIcon(org.javascool.Utils.getIcon("http://javascool.gforge.inria.fr/documents/sketchbook/javaProg/elephant2.gif "));
+    e[n].setIcon(getIcon("http://javascool.gforge.inria.fr/documents/sketchbook/javaProg/elephant2.gif"));
     c[n] = 2;
   } else if(c[n] == 2) {
-    e[n].setIcon(org.javascool.Utils.getIcon("http://javascool.gforge.inria.fr/documents/sketchbook/javaProg/elephant1.gif "));
+    e[n].setIcon(getIcon("http://javascool.gforge.inria.fr/documents/sketchbook/javaProg/elephant1.gif"));
     c[n] = 3;
   } else if(c[n] == 3) {
     c[n] = 4; // ca veut dire plus-d-elephant
@@ -40,10 +39,10 @@ class Cacaouette {
   Cacaouette(int n) {
     n_ch = n;
     // Cree les cacaouettes
-    ch1 = showIcon("http://javascool.gforge.inria.fr/documents/sketchbook/javaProg/elephanth.gif ", x[n_ch], 300, 100, 100, 2);
-    ch2 = showIcon("http://javascool.gforge.inria.fr/documents/sketchbook/javaProg/elephanth.gif ", x[n_ch] + 100, 300, 100, 100, 2);
-    cv1 = showIcon("http://javascool.gforge.inria.fr/documents/sketchbook/javaProg/elephantv.gif ", x[n_ch] + 50, 250, 100, 100, 2);
-    cv2 = showIcon("http://javascool.gforge.inria.fr/documents/sketchbook/javaProg/elephantv.gif ", x[n_ch] + 50, 250, 100, 100, 2);
+    ch1 = showIcon("http://javascool.gforge.inria.fr/documents/sketchbook/javaProg/elephanth.gif", x[n_ch], 300, 100, 100, 2);
+    ch2 = showIcon("http://javascool.gforge.inria.fr/documents/sketchbook/javaProg/elephanth.gif", x[n_ch] + 100, 300, 100, 100, 2);
+    cv1 = showIcon("http://javascool.gforge.inria.fr/documents/sketchbook/javaProg/elephantv.gif", x[n_ch] + 50, 250, 100, 100, 2);
+    cv2 = showIcon("http://javascool.gforge.inria.fr/documents/sketchbook/javaProg/elephantv.gif", x[n_ch] + 50, 250, 100, 100, 2);
     new Thread(new Runnable() {
                  public void run() {
                    // Ces variables deviennent fausses si une cacaouette touche un elephant
@@ -91,7 +90,7 @@ void main() {
   getPane().setBackground(java.awt.Color.WHITE);
   // Cree les elephants
   for(int n = 0; n < 4; n++) {
-    e[n] = showIcon("http://javascool.gforge.inria.fr/documents/sketchbook/javaProg/elephant" + (n + 1) + ".gif ", x[n], 300, 100, 100, 3);
+    e[n] = showIcon("http://javascool.gforge.inria.fr/documents/sketchbook/javaProg/elephant" + (n + 1) + ".gif", x[n], 300, 100, 100, 3);
     c[n] = 3 - n;
   }
   // La souris gere les elephants
