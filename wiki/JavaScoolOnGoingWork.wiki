@@ -48,13 +48,13 @@ Status:
 
   * (`*`1) Création d'un lanceur .exe et .app pour le lancement de jascool
 
-  * (`*`1) Implementer le fait qu'on ajoute @proglet:nom-de-la-proglet.
+  * (`*`3) Implementer le fait qu'on ajoute @proglet:nom-de-la-proglet.
     
   * (`*`4) Virer le `HtmlDisplay` HTML3 et trouver un bon browser
 
 == Javas'Cool Builder ==
 
-  * (`*`2) Créer une doc pour l'usage des proglets sous netbean
+  * (`*`3) Créer une doc pour l'usage des proglets sous netbeans
 
   * (`*`3) Voir comment gérer le fait que les noms de fichiers de docs ne peuvent avoir d'accent bien que utilises comme titre des pages de docs ouvertes en "newtab"
 
