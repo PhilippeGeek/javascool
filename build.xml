@@ -5,7 +5,7 @@
     ant svn 	synchronize les fichiers avec le svn
     ant jrun	compile et demarre Java's cool sans les proglets
     ant prun	compile et demarre Java's cool avec les proglets
-    ant brun	lance Java's cool builder dans le sketchbook
+    ant web	construit et publie tout le site web 
     ant menu    propose les commandes ant à travers un menu
   </echo></target>
 
@@ -21,8 +21,9 @@
     <ant dir="./work" target="prun"/>
   </target>
 
-  <target name="brun">
-    <ant dir="./work" target="brun"/>
+  <target name="web">
+    <ant dir="./web" target="build"/>
+    <ant dir="./web" target="publish"/>
   </target>
 
   <target name="menu">

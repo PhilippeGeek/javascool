@@ -6,7 +6,7 @@
       ant javacool-base.jar	construit dans ./dist la jarre Javas'Cool Core "apprenant" sans proglet
       ant javacool-builder.jar	construit dans ./dist la jarre Javas'Cool Builder "formateur" pour genérer les progets
       ant javascool-proglets.jar	construit dans ./dist la jarre Javas'Cool Core "apprenant" avec toutes les proglets listées validées
-      ant javascool-framework.jar	construit dans ./dist la jarre Javas'Cool Framework contenant les packages : macros, tools et widgets (mais sans les icones)
+      ant javascool-framework.jar	construit dans ./dist la jarre Javas'Cool Framework contenant les packages macros, tools et widgets (mais sans les icones) pour utiliser les classes javascool dans un autre projet
       ant javascool-proglets.exe	(EN COURS) construit dans ./dist l'executable windows Javas'Cool Core "apprenant" avec toutes les proglets validées
       ant javadoc			construit dans ./dist/javadoc la javadoc des classes (avec java2html)
       ant webproglets             construit dans ./dist/proglets les éléments pour la mise en ligne web des proglets

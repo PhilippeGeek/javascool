@@ -18,9 +18,10 @@ www :
 #
 # Questionnements:
 #
-# ProWeb:
+# ProWeb: apres travail Guillaume
 #   1. produire le web et tester les liens !
 #   2. Ajouter référence au proglet-builder.jar -> dans run et dans la doc du Javascoolbuilder
+#   3. Presenter les proglets par ordre alaphebetique
 #
 # ProProglets:
 #   1. Ajouter les width et height pour les processing + les tailles dans ProgletEngine + test dans Builder
