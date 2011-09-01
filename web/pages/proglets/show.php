@@ -56,8 +56,8 @@
                 <p><div style="max-width: 100%"><?php
 
 	$help=file_get_contents('proglets/'.$helpFile);
-        $help=preg_replace('#href="\./org/javascool/proglets/'.$id.'/([^"]*)"#i','href="?page=proglets&action=show&id='.$id.'&helpFile=api/$1"',$help);
-	$help=preg_replace('#href="([a-z0-9A-Z.][^:"]*)"#i','href="?page=proglets&action=show&id='.$id.'&helpFile=$1"',$help);
+        $help=preg_replace('#href="\./org/javascool/proglets/'.$id.'/([^"]*)"#i','href="?page=proglets&action=show&id='.$id.'&helpFile=api/$1##"',$help);
+	$help=preg_replace('#href="([a-z0-9A-Z.][^:"]*[^:"\#][^:"])"#i','href="?page=proglets&action=show&id='.$id.'&helpFile='.dirname($helpFile).'/$1"',$help);
 	//$help=preg_replace('#href="([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+\.htm(\#[^"]*))"#i','href="?page=proglets&action=show&id='.$id.'&helpFile=$1/$2"',$help);
 	//$help=preg_replace('#href="(\.\./\.\./)?([a-zA-Z0-9_-]+)/doc-files/([a-zA-Z0-9_-]+\.htm)(\#[^"]*)"#i','href="?page=proglets&action=show&id='.$id.'&helpFile=$2/$3"',$help);
 	//$help=preg_replace('#href="([a-zA-Z0-9_-]+\.htm)(\#[^"]*)?"#i','href="?page=proglets&action=show&id='.$id.'&helpFile=$1"',$help);
