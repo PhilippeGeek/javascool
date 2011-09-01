@@ -14,7 +14,7 @@
 <p><br /> 
 Nous sommes à votre écoute&nbsp;! Pour nous contacter:
 </p>
-<ul><li> Il suffit de nous envoyer un message <form action="mailto:philoumailabo@gmail.com,guillaume@matheron.fr,thierry.vieville@inria.fr?subject=A propos de JavaScool" method="post" enctype="text/plain"><table align="center">
+<ul><li> Il suffit de nous envoyer un message <form action="mailto:javascool@googlecode.com?subject=A propos de JavaScool" method="post" enctype="text/plain"><table align="center">
     <tr><td><select name="Le-sujet">
      <option>Commentaire général, avis, etc.</option>
 
@@ -24,7 +24,7 @@ Nous sommes à votre écoute&nbsp;! Pour nous contacter:
    </select><input type="submit" value="[Créer le message]" /><input type="hidden" name="Mon-message"/></td></tr>
  </table></form>
 </li></ul>
-<p>ou un <a href="mailto:philoumailabo@gmail.com,guillaume@matheron.fr,thierry.vieville@inria.fr?subject=A%20propos%20de%20qq%20JavaScool" class="external text" rel="nofollow">simple mail</a> voir même au téléphone, au <i>+33 4 9238 7688</i>, si nécessaire.
+<p>ou un <a href="mailto:javascool@googlecode.com?subject=A%20propos%20de%20qq%20JavaScool" class="external text" rel="nofollow">simple mail</a> voir même au téléphone, au <i>+33 4 9238 7688</i>, si nécessaire.
 
 </p>
 <ul><li> Voici nos réponses à vos premières <a href="http://javascool.gforge.inria.fr?page=Faq" class="external text" rel="nofollow">questions</a>&nbsp;!

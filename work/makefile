@@ -21,8 +21,8 @@ www :
 #
 # Questionnements:
 #
-# ProWeb: apres travail Guillaume
-#   1. produire le web et tester les liens !
+# ProWeb: 
+#   1. Tester les liens !
 #
 # ProProglets:
 #   1. Ajouter les width et height pour les processing + les tailles dans ProgletEngine + test dans Builder

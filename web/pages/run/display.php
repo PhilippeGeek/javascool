@@ -16,11 +16,11 @@
 En cas d'échec voir la section "Plus d'informations" en bas de cette page.</p>
 
     <div class="label2">Windows</div>
-<p>Téléchargez Java's Cool au format <tt>.jar</tt> exécutable <a href="javascool-proglets.jar">ici</a>, en choisissant l'option «ouvrir avec Java».</p>
+<p>Téléchargez Java's Cool au format <tt>JAR</tt> exécutable <b><a href="javascool-proglets.jar">ici</a></b>, en choisissant l'option «ouvrir avec Java».</p>
     <div class="label2">Mac OS</div>
-<p>Téléchargez Java's Cool au format <tt>.jar</tt> exécutable <a href="javascool-proglets.jar">ici</a>, en choisissant l'option «ouvrir avec Java».</p>
+<p>Téléchargez Java's Cool au format <tt>JAR</tt> exécutable <b><a href="javascool-proglets.jar">ici</a></b>, en choisissant l'option «ouvrir avec Java».</p>
     <div class="label2">Linux</div>
-	<p>Sous linux, téléchargez Java's Cool au format <tt>.jar</tt> <a href="javascool-proglets.jar">ici</a>, puis suivez les instructions ci-dessous : 
+	<p>Sous linux, téléchargez Java's Cool au format <tt>JAR</tt> <b><a href="javascool-proglets.jar">ici</a></b>, puis suivez les instructions ci-dessous : 
     <table><tr><td><img src="images/screen1.png" alt="screenshot" style="width: 300px; height: auto;"/></td><td>
                 <span class="label-arrow" /></td><td>
                 <img src="images/screen2.png" alt="screenshot" style="width: 300px; height: auto;"/></td></tr></table></p>
