@@ -20,13 +20,14 @@ public class Build {
      * @param usage <tt>java org.javascool.Build  [-q [targetDir]]</tt>
      */
     public static void main(String[] usage) {
-      Pml args = new Pml().reset(usage);
-      ErrorCatcher.checkJavaVersion(6);
-      Core.setUncaughtExceptionAlert();
-      if (args.getBoolean("h") || args.getBoolean("help")) {
+        Pml args = new Pml().reset(usage);
+        ErrorCatcher.checkJavaVersion(6);
+        Core.setUncaughtExceptionAlert();
+        ProgletsBuilder.setVerbose(args.getBoolean("v") || args.getBoolean("verbose"));
+        if (args.getBoolean("h") || args.getBoolean("help")) {
             System.out.println("Java's Cool Builder - Construit un jar avec les proglets souhaitées");
             System.out.println("Usage : java -jar javascool-builder.jar [-q] [-w] [-v] [-target target-dir] [-proglets proglet-list]");
-	    System.out.println("Options : ");
+            System.out.println("Options : ");
             System.out.println("\t-q\tPermet de lancer l'application en console sur toutes les proglets disponibles et sans interface graphique.");
             System.out.println("\t-w\tPermet de lancer l'application en console et génère les fichiers javadoc et jars des proglets.");
             System.out.println("\t-v\tPermet de lancer l'application en mode verbose, toute les étapes sont affiché.");

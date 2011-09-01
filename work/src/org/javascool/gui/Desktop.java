@@ -5,6 +5,7 @@
  *********************************************************************************/
 package org.javascool.gui;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.net.URL;
 import javax.swing.JFrame;
@@ -53,7 +54,7 @@ public class Desktop {
     private MainFrame frame;
 
     /** Retourne la bare d'outils de Java's cool */
-    public ToolBar getToolBar(){
+    public ToolBar getToolBar() {
         return (ToolBar) JVSToolBar.getInstance();
     }
 
@@ -94,26 +95,39 @@ public class Desktop {
             return false;
         }
     }
-        /**
-         * @see #openFile(File)
-         */
-  public boolean openFile(URL url) {
-      File file = new File(new File(url.getPath()).getName());
-      FileManager.save(file.getAbsolutePath(), FileManager.load(url.toString()), true);
-      return openFile();
-  }
-        /**
-         * @see #openFile(File)
-         */
-  public boolean openFile(String file) {
-      return openFile(Macros.getResourceURL(file));
-  }
-        /**
-         * @see #openFile(File)
-         */
-  public boolean openFile() {
-      return openFile((File) null);
-  }
+
+    /**
+     * @see #openFile(File)
+     */
+    public boolean openFile(URL url) {
+        try{
+            System.err.println(url.getProtocol());
+            if(url.getProtocol().equals("jar")){
+                JVSFileTabs.getInstance().openFile(new JVSFile(FileManager.load(url.toExternalForm())));
+                return true;
+            }
+            return openFile(new File(url.toURI()));
+        }catch(Exception ex){
+            System.err.println("Error : ");
+            ex.printStackTrace(System.err);
+            return false;
+        }
+    }
+
+    /**
+     * @see #openFile(File)
+     */
+    public boolean openFile(String file) {
+        return openFile(Macros.getResourceURL(file));
+    }
+
+    /**
+     * @see #openFile(File)
+     */
+    public boolean openFile() {
+        return openFile((File) null);
+    }
+
     /** Demande à l'utilisateur de sauvegarder le fichier courant.
      * @return La valeur true si le fichier est bien sauvegardé.
      */
@@ -148,20 +162,20 @@ public class Desktop {
             return false;
         }
     }
-    
+
     /** Ouvre un nouvel onglet de navigation
      * Ouvre un onglet HTML3 dans le JVSWidgetPanel, cet onglet peut être fermé
      * @param url L'adresse à ouvrir sous forme de chaîne de caractères ou d'URL.
      * @param name Le titre du nouvel onglet
      */
-
-    public void openBrowserTab(URL url,String name){
+    public void openBrowserTab(URL url, String name) {
         openBrowserTab(url.toString(), name);
     }
+
     /**
      * @see #openBrowserTab(URL, String)
      */
-    public void openBrowserTab(String url, String name){
+    public void openBrowserTab(String url, String name) {
         JVSWidgetPanel.getInstance().openWebTab(url, name);
     }
 }
