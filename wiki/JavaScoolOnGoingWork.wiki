@@ -14,20 +14,15 @@
 ==Chantier en cours: Javas'Cool core==
 
   # RC2: (PV0) Création d'un lanceur .exe et .app pour le lancement de jascool
-    * (TV2) Finaliser page aide lancement javascool site web qd le core est stable
 
 == Chantier en cours: Javas'Cool builder ==
  * R.A.S.
 
 == Chantier en cours: Proglets  ==
 
-  # (PV0) Allez: encore deux icones pour les proglets !
+  # RC2: (GM1) Mettre en conformité la proglet jeux2D (sans les collisions)
 
-  # RC2: (GM1) Mettre en conformité la proglet jeux2D
-    * Virer la partie de l'aide qui traite des collisions (pas implémenté entièrement)
-    * Résoudre des bugs (voir mails)
-
-  # RC2: (TV1) Mise au point proglets processing et javaProg
+  # RC2: (TV1) Mise au point proglets processing
 
 == Chantier en cours: web ==
   * R.A.S.
