@@ -283,7 +283,7 @@ public class ProgletsBuilder {
     }
 
     /** Construction de javadoc avec sources en java2html. */
-    private static void javadoc(String srcDir, String apiDir) throws IOException {
+    private static void javadoc(String name, String srcDir, String apiDir) throws IOException {
         apiDir = new File(apiDir).getCanonicalPath();
         new File(apiDir).mkdirs();
         String files[] = FileManager.list(srcDir, ".*\\.java$");
@@ -306,7 +306,7 @@ public class ProgletsBuilder {
             // Construit les sources en HTML à partir de java2html
             {
                 // Lance java2html
-                Jvs2Html.runDirectory(srcDir, apiDir);
+                Jvs2Html.runDirectory(srcDir, apiDir + File.separator + "org" +  File.separator + "javascool" +  File.separator + "proglets"  +  File.separator + name);
             }
         }
     }
@@ -461,7 +461,7 @@ public class ProgletsBuilder {
         public void javadoc() {
             try {
                 log("Création de la javadoc pour " + name, true);
-                ProgletsBuilder.javadoc(progletDir, progletDir + File.separator + "api");
+                ProgletsBuilder.javadoc(name, progletDir, progletDir + File.separator + "api");
             } catch (IOException ex) {
                 throw new RuntimeException("Erreur lors de la génération de la javadoc");
             }

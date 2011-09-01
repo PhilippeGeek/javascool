@@ -48,7 +48,7 @@ public class Jvs2Html {
 
     /** Convertit un répertoire de source Java vers un autre répertoire en source HTML Colorisé.
      * @param srcDir Le répertoire source
-     * @param destDir Le répertoire de déstination
+     * @param destDir Le répertoire de destination
      * @return true si la convertion a réussit
      * @throws RuntimeException si il y a une erreur durant la convertion
      */
