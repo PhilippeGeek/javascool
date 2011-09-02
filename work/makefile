@@ -1,5 +1,9 @@
-# vthierry's commands et tbd
-### http://code.google.com/p/javascool/wiki/JavaScoolOnGoingWork & http://code.google.com/p/javascool/issues/list
+# vthierry's ongoing tasks
+#
+# ProProglets: tester contruction, completion et programme exemples 
+# Basculement site: virer /home/groups/javascool/htdocs/{index|sketchbook|javascool.jar|sources.zip|index.php} et ln -s v4/index.php .
+#
+# Refs: http://code.google.com/p/javascool/wiki/JavaScoolOnGoingWork & http://code.google.com/p/javascool/issues/list
 
 # Using sun-jdk because of processing and windows platforms
 export JHOME=/usr/java/jdk1.6.0_22
@@ -10,18 +14,6 @@ ant :
 
 nbe :
 	netbeans --jdkhome $(JHOME) &
-
-#
-# ProProglets:
-#   1. Ajouter les width et height dans ProgletEngine + test dans Builder
-#   4. 4 x Mettre a plat les Functions.java 
-#   3. 4 x Ajouter les completion.xml dans les proglets
-#   5. 4 x tester les programmes exemples
-#
-# Basculement site
-#  virer /home/groups/javascool/htdocs/{index|sketchbook|javascool.jar|sources.zip|index.php}
-#  ln -s v4/index.php .
-#
 
 
 
