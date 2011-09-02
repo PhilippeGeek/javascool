@@ -2,6 +2,9 @@
 
 // Renvoie le texte sur http://wiki.inria.fr/sciencinfolycee avec mise en forme des liens
 function wiki_get_contents($name) {
+  return cache_get_contents_exists($name) ? cache_get_contents_get($name) : cache_get_contents_put($name, wiki_get_contents_load($name));
+}
+function wiki_get_contents_load($name) {
   global $wiki_get_contents_redirections;
   // Recuperation de la page sur le wiki
   $text = file_get_contents('http://wiki.inria.fr/sciencinfolycee/'.$name.'?printable=yes&action=render');  
