@@ -19,6 +19,7 @@ www :
 # Questionnements:
 #
 # ProWeb: 
+#   2. Une ligne <p>Cette «proglet» est une composant logiciel libre et ouvert dont documentation et source sont disponibles <l link="api/org/javascool/proglets/algoDeMaths/package-frame.html" text="ici"/></p>
 #   1. Tester les liens !
 #
 # besoin de reduire les liens avec toto/.. voir dichotomie

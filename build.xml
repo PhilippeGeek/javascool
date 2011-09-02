@@ -6,7 +6,6 @@
     ant jrun	compile et demarre Java's cool sans les proglets
     ant prun	compile et demarre Java's cool avec les proglets
     ant web	construit et publie tout le site web 
-    ant menu    propose les commandes ant à travers un menu
   </echo></target>
 
   <target name="svn">
@@ -25,11 +24,5 @@
     <ant dir="./web" target="build"/>
     <ant dir="./web" target="publish"/>
   </target>
-
-  <target name="menu">
-    <ant dir="./work" target="javascool-base.jar"/>
-    <java classpath="./work/dist/javascool-base.jar" classname="org.javascool.builder.AntMenu" dir="." fork="true"/>
-  </target>
-
 
 </project>
