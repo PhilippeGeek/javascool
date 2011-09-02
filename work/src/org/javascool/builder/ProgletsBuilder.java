@@ -153,9 +153,8 @@ public class ProgletsBuilder {
                     build.convertHdocs();
                     DialogFrame.setUpdate("Construction de " + name + " 4/4", level += up);
                     build.createHtmlApplet();
-                    if (webdoc) {
+                    if (webdoc)
                         build.javadoc();
-                    }
                 }
             }
             // Lancement de la compilation de tous les java des proglets
@@ -397,11 +396,11 @@ public class ProgletsBuilder {
                 System.out.println("Le nom de la proglet «" + name + "» est bizarre il ne doit contenir que des lettres faire au moins quatre caractères et au plus seize et démarrer par une lettre minuscule");
                 error = true;
             }
-            if (!FileManager.exists(progletDir + File.separator + "help.xml") && !isprocessing) {
+            if (!FileManager.exists(progletDir + File.separator + "help.xml")) {
                 System.out.println("Pas de fichier d'aide pour " + name + ", la proglet ne sera pas construite.");
                 error = true;
             }
-            if (FileManager.exists(progletDir + File.separator + "completion.xml") && !isprocessing) {
+            if (FileManager.exists(progletDir + File.separator + "completion.xml")) {
                 String err = Xml2Xml.run(FileManager.load(progletDir + File.separator + "completion.xml"),
                         FileManager.load(this.jarDest + "/org/javascool/builder/completionok.xslt".replace("/", File.separator))).trim();
                 if (err.length() > 0) {

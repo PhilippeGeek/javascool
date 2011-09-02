@@ -89,5 +89,5 @@ chemin dans ce réseau de routes est aussi fournie.
       <p><r>List&lt;String></r> <r>plusCourtCheminGogleMap</r>(<r>Map&lt;String,List&lt;String>></r> voisinages, <r>String</r> <b>depart</b>, <r>String</r> <b>arrivee</b>)</p>
     </div>
   </div>
-<p>Cette «proglet» est un composant logiciel ouvert dont documentation et code-source sont disponibles <l link="api/org/javascool/proglets/gogleMap/package-summary.html" text="ici"/></p>
+<p>Cette «proglet» est un composant logiciel ouvert dont documentation et code-source sont disponibles <l link="api/org/javascool/proglets/gogleMaps/package-summary.html" text="ici"/></p>
 </div>
