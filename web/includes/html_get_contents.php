@@ -5,7 +5,10 @@
    * @param path Racine d'un fichier où va se situer la page, utilisée pour les chemins relatifs des images.
    * @return Le texte avec les liens mis à jours.
    */
-function html_get_contents($file, $base, $path) {
+function html_get_contents($file, $base, $path) {/*
+  return cache_get_contents_exists($file) ? cache_get_contents_get($file) : cache_get_contents_put($file, html_get_contents_load($file, $base, $path));
+}
+function html_get_contents_load($file, $base, $path) {*/
   $body = file_get_contents($file);
   // Ne conserve que le corps de page
   $body = ereg_replace(".*<(body|BODY)[^>]*>", "", ereg_replace("</(body|BODY)[^>]*>", "", $body));
