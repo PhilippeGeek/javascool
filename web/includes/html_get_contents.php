@@ -1,11 +1,14 @@
 <?php
   /** Renvoie une page HTML avec les liens correctement mis à jour pour être produite à n'importe quel endroit du site.
-   * @param body Texte initial de la page HTML.
+   * @param file Fichier où se trouve le texte HTML à normaliser.
    * @param base Référence d'une URL où se situe la page, utilisée pour les chemins relatifs des liens.
    * @param path Racine d'un fichier où va se situer la page, utilisée pour les chemins relatifs des images.
    * @return Le texte avec les liens mis à jours.
    */
-function html_contents_normalize($body, $base, $path) {
+function html_get_contents($file, $base, $path) {
+  $body = file_get_contents($file);
+  // Ne conserve que le corps de page
+  $body = ereg_replace(".*<(body|BODY)[^>]*>", "", ereg_replace("</(body|BODY)[^>]*>", "", $body));
   // Quote les liens externes par un préfixe /
   $body = ereg_replace("(src|SRC|href|HREF) *= *([\"'])([a-z]+:)", "\\1=\\2/\\3", $body);
   // Ajoute une base au liens web relatif
@@ -18,8 +21,8 @@ function html_contents_normalize($body, $base, $path) {
 }
 
 /** Renvoie le path debarassé des «../» et des «./» redondants. */
-function html_contents_path_normalize($path) {
+function html_get_contents_path($path) {
   $newpath = ereg_replace("^\./", "",  ereg_replace("[^\./][^/]*/\.\.", "", ereg_replace("(/+|/\./)", "/", "./$path")));
-  return $newpath == $path ? $path : html_contents_path_normalize($newpath);
+  return $newpath == $path ? $path : html_get_contents_path($newpath);
 }
 ?>

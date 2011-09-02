@@ -19,7 +19,7 @@
     if (!is_file($icon))
         $icon=$defaulticon;
 
-    $helpFile = isset($_GET['helpFile']) ? html_contents_path_normalize($_GET['helpFile']) : 'help.htm';
+    $helpFile = isset($_GET['helpFile']) ? html_get_contents_path($_GET['helpFile']) : 'help.htm';
 ?>
 
 <?php showBrowser(array(array("Java's Cool","index.php"),array("Proglets","index.php?page=proglets"),array($name,""))); ?>
@@ -45,8 +45,7 @@
             <td class="news-leftborder"></td>
             <td class="news-center">
                 <p><div style="max-width: 100%"><?php
-	$help = file_get_contents("proglets/$id/".$helpFile); 
-        $help = html_contents_normalize($help, "?page=proglets&action=show&id=$id&helpFile=".dirname($helpFile), "/proglets/$id/".dirname($helpFile));
+        $help = html_get_contents("proglets/$id/$helpFile", "?page=proglets&action=show&id=$id&helpFile=".dirname($helpFile), "/proglets/$id/".dirname($helpFile));
 	echo '<div id="javadoc">'.$help.'</div>';
 		?></div></p>
             </td>

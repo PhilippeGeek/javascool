@@ -1,29 +1,23 @@
 <?php
 
-// Renvoie le texte sur http://wiki.inria.fr/sciencinfolycee
+// Renvoie le texte sur http://wiki.inria.fr/sciencinfolycee avec mise en forme des liens
 function wiki_get_contents($name) {
-   return wiki_get_contents_load($name);
-}
-
-// Lecture du wiki à  travers un cache local
-function wiki_get_contents_cache_load($name) {
-  $name = rawurlencode($name);
-  // Utilisation d'un cache local
-  $cache = '.http.cache';
-  if (!file_exists($cache)) 
-    mkdir($cache, 0777);
-  if (!file_exists($cache.'/'.$name)) {
-    file_put_contents($cache.'/'.$name, wiki_get_contents_load($name));
-    chmod($cache.'/'.$name, 0666);
-  }
-  return file_get_contents($cache.'/'.$name);
-}
-
-// Vide le cache 
-function wiki_get_contents_cache_clear() {
-  if(isset($_GET['kezako']) && $_GET['kezako'] == 'niquelekacheux') { 
-    passthru("rm -rf .http.cache"); exit; 
-  }
+  global $wiki_get_contents_redirections;
+  // Recuperation de la page sur le wiki
+  $text = file_get_contents('http://wiki.inria.fr/sciencinfolycee/'.$name.'?printable=yes&action=render');  
+  // Remplace tous les liens entre pages par des pages vues du site
+  foreach($wiki_get_contents_redirections as $wiki => $php) 
+    $text = ereg_replace("href=\"http://wiki.inria.fr/sciencinfolycee/$wiki\"", "class=\"internal\" href=\"$php\"", $text);
+  // Remplace tous les liens wikis locaux pas des liens distants
+  $text = ereg_replace('src="/wikis/sciencinfolycee', 'src="http://wiki.inria.fr/wikis/sciencinfolycee', $text);
+  // Qualifie proprement les liens internes issus du wiki
+  $text = ereg_replace("href=\"http://javascool.gforge.inria.fr(/v4)*([^\"]*)\"( *class=\"external text\")?", "href=\"/v4/\\2\" class=\"internal\"", $text);
+  // Elimine la table de méta-donnée
+  $text = ereg_replace('<table class="wikitable">.*</table>', '', $text);
+  // Détecte les erreurs
+  if (ereg("<title>(Erreur|Connexion nécessaire)", $text))
+    $text = "Erreur: la page wiki $name est en erreur.\n";
+  return $text;
 }
 
 // Redirections des pages du wiki
@@ -67,25 +61,5 @@ $wiki_get_contents_redirections = array(
                                         "JavaScool:TPE-Interventions" =>  "?page=resources&action=link-interventions",
                                         "JavaScool:TPE-Methode" =>  "?page=resources&action=link-tpe-methode",
 					);
-
-// Lecture du wiki et mise en forme des liens
-function wiki_get_contents_load($name) {
-  global $wiki_get_contents_redirections;
-  // Recuperation de la page sur le wiki
-  $text = file_get_contents('http://wiki.inria.fr/sciencinfolycee/'.$name.'?printable=yes&action=render');  
-  // Remplace tous les liens entre pages par des pages vues du site
-  foreach($wiki_get_contents_redirections as $wiki => $php) 
-    $text = ereg_replace("href=\"http://wiki.inria.fr/sciencinfolycee/$wiki\"", "class=\"internal\" href=\"$php\"", $text);
-  // Remplace tous les liens wikis locaux pas des liens distants
-  $text = ereg_replace('src="/wikis/sciencinfolycee', 'src="http://wiki.inria.fr/wikis/sciencinfolycee', $text);
-  // Qualifie proprement les liens internes issus du wiki
-  $text = ereg_replace("href=\"http://javascool.gforge.inria.fr(/v4)*([^\"]*)\"( *class=\"external text\")?", "href=\"/v4/\\2\" class=\"internal\"", $text);
-  // Elimine la table de méta-donnée
-  $text = ereg_replace('<table class="wikitable">.*</table>', '', $text);
-  // Détecte les erreurs
-  if (ereg("<title>(Erreur|Connexion nécessaire)", $text))
-    $text = "Erreur: la page wiki $name est en erreur.\n";
-  return $text;
-}
 
 ?>
