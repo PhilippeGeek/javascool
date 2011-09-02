@@ -5,9 +5,6 @@
 export JHOME=/usr/java/jdk1.6.0_22
 export PATH:=$(JHOME)/bin:$(PATH)
 
-chk :
-	cd ../web ; ant lcheck
-
 ant : 
 	ant prun
 
@@ -17,7 +14,6 @@ nbe :
 #
 # ProProglets:
 #   1. Ajouter les width et height pour les processing + les tailles dans ProgletEngine + test dans Builder
-#   2. Virer tests sur processing ds Builder sur help.xml etc...
 #   3. 4 x Ajouter les completion.xml dans les proglets
 #   4. 4 x Mettre a plat les Functions.java
 #   5. 4 x tester les programmes exemples
