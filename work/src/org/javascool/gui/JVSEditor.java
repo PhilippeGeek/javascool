@@ -20,7 +20,6 @@ import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.JToggleButton;
 import javax.swing.KeyStroke;
 import javax.swing.ToolTipManager;
 import javax.swing.text.BadLocationException;
@@ -42,7 +41,7 @@ import org.javascool.widgets.ToolBar;
 class JVSEditor extends JPanel {
 
     private static final long serialVersionUID = 1L;
-    private static boolean completion=true;
+    private boolean completion=true;
     /** The editor */
     private RSyntaxTextArea TextPane;
     /** The scroll pane */
@@ -76,11 +75,11 @@ class JVSEditor extends JPanel {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(JVSEditor.completion){
-                    JVSEditor.completion=false;
+                if(JVSEditor.this.completion){
+                    JVSEditor.this.completion=false;
                     completionButton.setText("Activer la completion");
                 } else {
-                    JVSEditor.completion=true;
+                    JVSEditor.this.completion=true;
                     completionButton.setText("Désactiver la completion");
                 }
             }
@@ -206,7 +205,7 @@ class JVSEditor extends JPanel {
                 @Override
                 public void keyTyped(KeyEvent e) {
                     int ch = e.getKeyChar();
-                    if (ch>33&&ch!=127&&ch!=129&&ch!=141&&ch!=143&&ch!=144&&ch!=157&&ch!=160&&JVSEditor.completion) {
+                    if (ch>33&&ch!=127&&ch!=129&&ch!=141&&ch!=143&&ch!=144&&ch!=157&&ch!=160&&JVSEditor.this.completion) {
                         showPopupWindow();
                     } else {
                         hideChildWindows();
