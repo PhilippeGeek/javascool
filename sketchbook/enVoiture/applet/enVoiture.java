@@ -75,7 +75,6 @@ public void setup() {
   size(900, 500, OPENGL);  // 1024, 576, OPENGL);
 
   // Ces deux lignes permettent l'interface avec JavaScool
-  proglet = this;
   frame = new Frame();
 
   ArialB = createFont("Arial Bold", 14, true);
@@ -942,88 +941,6 @@ class Trip {
 
 // Taille pour l'insertion dans JavaScool
 public static final int WIDTH = 900, HEIGHT = 500;
-
-/* Fonctions pour javascool. */
-
-/** Ajoute ou modifie un spot au graphe (modifie dans le cas ou meme nom employ\u00e9 et diff\u00e9rentes coordonn\u00e9es).
- * @param n Nom du spot.
- * @param col Couleur du spot.
- * @param f forme du spot: 'B' = Box, 'P' = Pentagone, 'O' = Octogone, 'C' = Cylindre.
- * @param x Abcisse du spot.
- * @param y Ordonn\u00e9e du spot.
- * @param d1 dimension1 \u00e0 la base du spot.
- * @param d2 dimension2 au sommet du spot.
- * @param h hauteur du spot.
- */
-public static void addSpot(String n, int col, String f, int x, int y, float d1, float d2, float h) {
-  if(proglet == null)
-    return;
-  proglet.myTrip.addSpot(n, col, f.charAt(0), x, y, d1, d2, h);
-}
-/** Cherche spot plus proche d'une position.
- * @param x Abcisse position.
- * @param y Ordonn\u00e9e position.
- * @return Nom du spot.
- */
-public static String getClosestSpot(float x, float y) {
-  if(proglet == null)
-    return null;
-  String S_;
-  S_ = proglet.myTrip.getClosestSpot(x, y);
-  return S_;
-}
-/** D\u00e9truit un spot au graphe si il existe.
- * @param n Nom du spot.
- */
-public static void removeSpot(String n) {
-  if(proglet == null)
-    return;
-  proglet.myTrip.removeSpot(n);
-}
-/** Ajoute ou modifie un lien entre deux spots
- * @param nA Premier spot du lien.
- * @param nB Deuxi\u00e8me spot du lien.
- * ici poids du lien = distance euclidienne entre les deux spots.
- */
-public static void addLink(String nA, String nB) {
-  if(proglet == null)
-    return;
-  proglet.myTrip.addLink(nA, nB);
-}
-/** D\u00e9truit un lien entre deux spots si il existe.
- * @param nA Premier spot du lien.
- * @param nB Deuxi\u00e8me spot du lien.
- */
-public static void removeLink(String nA, String nB) {
-  if(proglet == null)
-    return;
-  proglet.myTrip.removeLink(nA, nB);
-}
-/** Affirme si il y a lien entre 2 spots.
- * @param nA Premier spot du lien.
- * @param nB Deuxi\u00e8me spot du lien.
- * @return oui ou non.
- */
-public static boolean isLink(String nA, String nB) {
-  if(proglet == null)
-    return false;
-  boolean link_ = false;
-  link_ = proglet.myTrip.isLink(nA, nB);
-  return link_;
-}
-/** Donne le poids d'un lien entre deux spots.
- * @param nA Premier spot du lien.
- * @param nB Deuxi\u00e8me spot du lien.
- * @return Le poids du lien o\u00f9 0 si il n'y a pas de lien.
- */
-public static double getLink(String nA, String nB) {
-  if(proglet == null)
-    return 0;
-  double p_ = 0;
-  p_ = proglet.myTrip.getLink(nA, nB);
-  return p_;
-}
-static enVoiture proglet;
 
   static public void main(String args[]) {
     PApplet.main(new String[] { "--bgcolor=#DFDFDF", "enVoiture" });

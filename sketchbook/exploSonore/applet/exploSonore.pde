@@ -54,7 +54,6 @@ void setup() {
   frameRate(60);
 
   // Ces deux lignes permettent l'interface avec JavaScool
-  proglet = this;
   frame = new Frame();
 
   f = createFont("Arial Bold", 14, true);

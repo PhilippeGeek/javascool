@@ -40,7 +40,6 @@ int topWidth;  // width of text
 
 public void setup() {
   // Ces deux lignes permettent l'interface avec JavaScool
-  proglet = this;
   frame = new Frame();
 
   size(900, 500); // screen.width,screen.height);//1200,800);
@@ -705,131 +704,6 @@ class Node {
     g = parent.g + o.p;
   }
 }
-/* Fonctions pour javascool. */
-
-/** Ajoute ou modifie un noeud au graphe (modifie dans le cas ou meme nom employ\u00e9 et diff\u00e9rentes coordonn\u00e9es).
- * @param n Nom du noeud.
- * @param x Abcisse du noeud.
- * @param y Ordonn\u00e9e du noeud.
- */
-public static void addNode(String n, int x, int y) {
-  if(proglet == null)
-    return;
-  proglet.myGraph.addNode(n, x, y);
-}
-/** Renvoie l'objet Noeud \u00e0 partir de son nom.
- * @param n Nom du noeud.
- * @return objet Node.
- */
-public static Node getNode(String n) {
-  if(proglet == null)
-    return null;
-  Node N_;
-  N_ = proglet.myGraph.getNode(n);
-  return N_;
-}
-/** Cherche noeud plus proche d'une position.
- * @param x Abcisse position.
- * @param y Ordonn\u00e9e position.
- * @return Nom du noeud.
- */
-public static String getClosestNode(float x, float y) {
-  if(proglet == null)
-    return null;
-  String n_ = null;
-  n_ = proglet.myGraph.getClosestNode(x, y);
-  return n_;
-}
-/** D\u00e9truit un noeud au graphe si il existe.
- * @param n Nom du noeud.
- */
-public static void removeNode(String n) {
-  if(proglet == null)
-    return;
-  proglet.myGraph.removeNode(n);
-}
-/** Donne la liste de tous les noeuds.
- * @return La liste des noms des noeuds.
- */
-public static String[] getAllNodes() {
-  if(proglet == null)
-    return null;
-  String[] ListN_ = new String[50];
-  ListN_ = proglet.myGraph.getAllNodes();
-  return ListN_;
-}
-/** Donne la liste des noeuds en lien avec un noeud donn\u00e9.
- * @param n Nom du noeud dont on veut les noeuds en lien.
- * @return La liste des noms des noeuds en lien avec le noeud donn\u00e9.
- */
-public static String[] getNodes(String n) {
-  if(proglet == null)
-    return null;
-  String[] ListN_ = new String[50];
-  ListN_ = proglet.myGraph.getNodes(n);
-  return ListN_;
-}
-/** Ajoute ou modifie un lien entre deux noeuds (modifie dans le cas ou memes noeuds et diff\u00e9rent poids attribu\u00e9).
- * @param nA Premier noeud du lien.
- * @param nB Deuxi\u00e8me noeud du lien.
- * @param p Poids du lien.
- */
-public static void addLink(String nA, String nB, double p) {
-  if(proglet == null)
-    return;
-  proglet.myGraph.addLink(nA, nB, p);
-}
-/** Ajoute ou modifie un lien entre deux noeuds (modifie dans le cas ou memes noeuds et diff\u00e9rent poids attribu\u00e9).
- * @param nA Premier noeud du lien.
- * @param nB Deuxi\u00e8me noeud du lien.
- * ici poids du lien = distance euclidienne entre les deux noeuds.
- */
-public static void addLink(String nA, String nB) {
-  if(proglet == null)
-    return;
-  proglet.myGraph.addLink(nA, nB);
-}
-/** D\u00e9truit un lien entre deux noeuds si il existe.
- * @param nA Premier noeud du lien.
- * @param nB Deuxi\u00e8me noeud du lien.
- */
-public static void removeLink(String nA, String nB) {
-  if(proglet == null)
-    return;
-  proglet.myGraph.removeLink(nA, nB);
-}
-/** Affirme si il y a lien entre 2 noeuds.
- * @param nA Premier noeud du lien.
- * @param nB Deuxi\u00e8me noeud du lien.
- * @return "vrai" ou "faux".
- */
-public static boolean isLink(String nA, String nB) {
-  if(proglet == null)
-    return false;
-  boolean a_ = false;
-  a_ = proglet.myGraph.isLink(nA, nB);
-  return a_;
-}
-/** Donne le poids d'un lien entre deux noeuds.
- * @param nA Premier noeud du lien.
- * @param nB Deuxi\u00e8me noeud du lien.
- * @return Le poids du lien o\u00f9 0 si il n'y a pas de lien.
- */
-public static double getLink(String nA, String nB) {
-  double p_ = 0;
-  p_ = proglet.myGraph.getLink(nA, nB);
-  return p_;
-}
-/**   Algorithme de Dijkstra
- * @param nStart Noeud d\u00e9part.
- * @param nEnd Noeud final.
- */
-public static void dijkstra(String nStart, String nEnd) {
-  if(proglet == null)
-    return;
-  proglet.myGraph.dijkstra(nStart, nEnd);
-}
-static grapheEtChemins proglet;
   static public void main(String args[]) {
     PApplet.main(new String[] { "--bgcolor=#DFDFDF", "grapheEtChemins" });
   }

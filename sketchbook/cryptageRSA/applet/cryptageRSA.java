@@ -507,16 +507,12 @@ public static BigInteger decrypt(BigInteger c, BigInteger d, BigInteger n) {
 
   return m;
 }
-// //////////////////////////////////////////////////
-// Fonctions pour API
-// //////////////////////////////////////////////////
-
-/** Cr\u00e9er une cl\u00e9 priv\u00e9e D et le couple de cl\u00e9 publiques (E, N).
+/** Cr\u00e9e une cl\u00e9 priv\u00e9e D et le couple de cl\u00e9 publiques (E, N).
  * @return Un tableau de 3 entiers avec les cl\u00e9s keys[] = {D, E, N};
  */
 public static BigInteger[] createKeys() {
   BigInteger[] Keys = new BigInteger[3];
-
+  
   int pqSize = (int) (4 + 6 * Math.random());
   BigInteger p_ = new BigInteger(pqSize + 1, prime_certainty, new Random());
   BigInteger q_ = new BigInteger(pqSize - 1, prime_certainty, new Random());
@@ -525,42 +521,42 @@ public static BigInteger[] createKeys() {
   if(q_ == null)
     q_ = new BigInteger(pqSize - 1, prime_certainty, new Random());
   BigInteger n_ = p_.multiply(q_);
-  BigInteger e_ = generate_e(p_, q_, 16);
-  BigInteger d_ = calculate_d(p_, q_, e_);
-
+  BigInteger e_ = cryptageRSA.generate_e(p_, q_, 16);
+  BigInteger d_ = cryptageRSA.calculate_d(p_, q_, e_);
+  
   Keys[0] = d_;
   Keys[1] = e_;
   Keys[2] = n_;
-
+  
   return Keys;
 }
-/** Encrypte un message \u00e0 l'aide de cl\u00e9s.
- * @param m Le message \u00e0 encrypter.
- * @param E cl\u00e9 publique.
- * @param N cl\u00e9 publique.
- * @return Le message encrypt\u00e9 sous forme d'une suite de chiffres.
- */
-public static BigInteger encrypt(String m, BigInteger E, BigInteger N) {
-  BigInteger EncMessBits = null;
+  /** Encrypte un message \u00e0 l'aide de cl\u00e9s.
+   * @param m Le message \u00e0 encrypter.
+   * @param E cl\u00e9 publique.
+   * @param N cl\u00e9 publique.
+   * @return Le message encrypt\u00e9 sous forme d'une suite de chiffres.
+   */
+  public static BigInteger encrypt(String m, BigInteger E, BigInteger N) {
+    BigInteger EncMessBits = null;
 
-  BigInteger MessBits = new BigInteger(m.getBytes());
-  EncMessBits = encrypt(MessBits, E, N);
+    BigInteger MessBits = new BigInteger(m.getBytes());
+    EncMessBits = cryptageRSA.encrypt(MessBits, E, N);
 
-  return EncMessBits;
-}
-/** D\u00e9crypte un message \u00e0 l'aide de cl\u00e9s.
- * @param m Le message encrypt\u00e9 sous forme de chiffres.
- * @param k cl\u00e9s, publique et priv\u00e9e.
- * @return Le message d\u00e9crypt\u00e9.
- */
-public static String decrypt(BigInteger m, BigInteger[] k) {
-  String decryptedMessage = null;
+    return EncMessBits;
+  }
+  /** D\u00e9crypte un message \u00e0 l'aide de cl\u00e9s.
+   * @param m Le message encrypt\u00e9 sous forme de chiffres.
+   * @param k cl\u00e9s, publique et priv\u00e9e.
+   * @return Le message d\u00e9crypt\u00e9.
+   */
+  public static String decrypt(BigInteger m, BigInteger[] k) {
+    String decryptedMessage = null;
 
-  BigInteger DecMessBits = decrypt(m, k[0], k[2]);
-  decryptedMessage = new String(DecMessBits.toByteArray());
+    BigInteger DecMessBits = cryptageRSA.decrypt(m, k[0], k[2]);
+    decryptedMessage = new String(DecMessBits.toByteArray());
 
-  return decryptedMessage;
-}
+    return decryptedMessage;
+  }
   static public void main(String args[]) {
     PApplet.main(new String[] { "--bgcolor=#DFDFDF", "cryptageRSA" });
   }
