@@ -416,6 +416,10 @@ public class ProgletsBuilder {
                 System.out.println("Le champ «title» n'est pas défini dans " + name + "/proglet.pml, la proglet ne sera pas construite.");
                 error = true;
             }
+            if (isprocessing && !(pml.isDefined("width") && pml.isDefined("height"))) {
+                System.out.println("Les champ «width» et «height» ne sont pas définis dans " + name + "/proglet.pml, la proglet processing ne sera pas construite.");
+                error = true;
+            }
             pml.save(progletDir + File.separator + "proglet.php");
             if (error) {
                 throw new IllegalArgumentException("La proglet ne respecte pas les spécifications");

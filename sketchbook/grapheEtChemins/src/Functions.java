@@ -12,7 +12,7 @@ public class Functions {
     return org.javascool.macros.Macros.getProgletPane();
   }
 
-  /** Ajoute ou modifie un noeud au graphe (modifie dans le cas ou meme nom employé et différentes coordonnées).
+  /** Ajoute ou modifie les coordonnées d'un noeud du graphe.
    * @param n Nom du noeud.
    * @param x Abcisse du noeud.
    * @param y Ordonnée du noeud.
@@ -20,26 +20,17 @@ public class Functions {
   public static void addNode(String n, int x, int y) {
     getPane().myGraph.addNode(n, x, y);
   }
-  /** Renvoie l'objet Noeud à partir de son nom.
-   * @param n Nom du noeud.
-   * @return objet Node.
-   */
-  public static Node getNode(String n) {
-    Node N_;
-    N_ = getPane().myGraph.getNode(n);
-    return N_;
-  }
-  /** Cherche noeud plus proche d'une position.
+  /** Renvoie le noeud le plus proche d'une position.
    * @param x Abcisse position.
    * @param y Ordonnée position.
-   * @return Nom du noeud.
+   * @return Nom du noeud ou null si il n'y a pas de noeud.
    */
-  public static String getClosestNode(float x, float y) {
+  public static String getClosestNode(double x, double y) {
     String n_ = null;
-    n_ = getPane().myGraph.getClosestNode(x, y);
+    n_ = getPane().myGraph.getClosestNode((float) x, (float) y);
     return n_;
   }
-  /** Détruit un noeud au graphe si il existe.
+  /** Détruit un noeud du graphe si il existe.
    * @param n Nom du noeud.
    */
   public static void removeNode(String n) {
@@ -57,7 +48,7 @@ public class Functions {
    * @param n Nom du noeud dont on veut les noeuds en lien.
    * @return La liste des noms des noeuds en lien avec le noeud donné.
    */
-  public static String[] getNodes(String n) {
+  public static String[] getLinkedNodes(String n) {
     String[] ListN_ = new String[50];
     ListN_ = getPane().myGraph.getNodes(n);
     return ListN_;
@@ -69,14 +60,6 @@ public class Functions {
    */
   public static void addLink(String nA, String nB, double p) {
     getPane().myGraph.addLink(nA, nB, p);
-  }
-  /** Ajoute ou modifie un lien entre deux noeuds (modifie dans le cas ou memes noeuds et différent poids attribué).
-   * @param nA Premier noeud du lien.
-   * @param nB Deuxième noeud du lien.
-   * ici poids du lien = distance euclidienne entre les deux noeuds.
-   */
-  public static void addLink(String nA, String nB) {
-    getPane().myGraph.addLink(nA, nB);
   }
   /** Détruit un lien entre deux noeuds si il existe.
    * @param nA Premier noeud du lien.
@@ -105,7 +88,7 @@ public class Functions {
     p_ = getPane().myGraph.getLink(nA, nB);
     return p_;
   }
-  /**   Algorithme de Dijkstra
+  /** Lance l'algorithme de Dijkstra entre deux noeuds.
    * @param nStart Noeud départ.
    * @param nEnd Noeud final.
    */

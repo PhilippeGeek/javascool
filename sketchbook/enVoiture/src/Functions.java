@@ -46,14 +46,14 @@ public class Functions {
    * @param nB Deuxième spot du lien.
    * ici poids du lien = distance euclidienne entre les deux spots.
    */
-  public static void addLink(String nA, String nB) {
+  public static void addRoad(String nA, String nB) {
     getPane().myTrip.addLink(nA, nB);
   }
   /** Détruit un lien entre deux spots si il existe.
    * @param nA Premier spot du lien.
    * @param nB Deuxième spot du lien.
    */
-  public static void removeLink(String nA, String nB) {
+  public static void removeRoad(String nA, String nB) {
     getPane().myTrip.removeLink(nA, nB);
   }
   /** Affirme si il y a lien entre 2 spots.
@@ -61,20 +61,10 @@ public class Functions {
    * @param nB Deuxième spot du lien.
    * @return oui ou non.
    */
-  public static boolean isLink(String nA, String nB) {
+  public static boolean isRoad(String nA, String nB) {
     boolean link_ = false;
     link_ = getPane().myTrip.isLink(nA, nB);
     return link_;
-  }
-  /** Donne le poids d'un lien entre deux spots.
-   * @param nA Premier spot du lien.
-   * @param nB Deuxième spot du lien.
-   * @return Le poids du lien où 0 si il n'y a pas de lien.
-   */
-  public static double getLink(String nA, String nB) {
-    double p_ = 0;
-    p_ = getPane().myTrip.getLink(nA, nB);
-    return p_;
   }
 }
 

@@ -2,3 +2,5 @@ title="Permet de visualiser l'évolution temporelle et le contenu fréquentiel (
 author="Cécile Picard-Limpens <ccl.picard@gmail.com>"
 processing = "true"
 icon="logo.png"
+width="800"
+height="600"
