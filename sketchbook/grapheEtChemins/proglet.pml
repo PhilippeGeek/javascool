@@ -2,3 +2,5 @@ title="Pour s’approprier sur un exemple 2D les différents éléments caracté
 author="Cécile Picard-Limpens <ccl.picard@gmail.com>"
 icon="logo.png"
 processing = "true"
+width="900"
+height="500"
