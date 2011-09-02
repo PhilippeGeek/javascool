@@ -22,5 +22,10 @@ nbe :
 #   4. 4 x Mettre a plat les Functions.java
 #   5. 4 x tester les programmes exemples
 #
+# Basculement site
+#  virer /home/groups/javascool/htdocs/{index|sketchbook|javascool.jar|sources.zip|index.php}
+#  ln -s v4/index.php .
+#
+
 
 
