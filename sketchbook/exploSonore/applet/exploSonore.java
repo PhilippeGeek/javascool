@@ -80,7 +80,6 @@ public void setup() {
   frameRate(60);
 
   // Ces deux lignes permettent l'interface avec JavaScool
-  proglet = this;
   frame = new Frame();
 
   f = createFont("Arial Bold", 14, true);
@@ -417,47 +416,6 @@ public void drawSignal(String n) {
   }
   strokeWeight(0.5f);
 }
-/* Fonctions pour javascool. */
-
-/** Joue un signal de type choisi.
- * @param c : numero du canal \u00e0 lancer: 1, 2 ou 3.
- * @param n nom du type: sinus, square, triangle, saw, white noise.
- * @param f fr\u00e9quence du signal.
- * @param a amplitude du signal.
- */
-public static void playSignal(int c, String n, double f, double a) {
-  if(proglet == null)
-    return;
-  switch(c) {
-  case 1:
-    proglet.signal1.setSignal(n, (float) f, (float) a, false);
-    break;
-  case 2:
-    proglet.signal2.setSignal(n, (float) f, (float) a, false);
-    break;
-  case 3:
-    proglet.signal3.setSignal(n, (float) f, (float) a, false);
-    break;
-  }
-}
-/** Joue un enregistrement de son choix.
- * @param path Nom de l'extrait
- * @param f fr\u00e9quence de coupure du signal.
- */
-public static void playRecord(String path, double frequence) {
-  if(proglet == null)
-    return;
-  proglet.record1.setRecord(path);
-  proglet.record1.setFilter(path, (float) frequence);
-}
-/** Arr\u00eate l'\u00e9mission sonore. */
-public static void playStop() {
-  if(proglet == null)
-    return;
-  proglet.StopAnySound();
-}
-static exploSonore proglet;
-
 /** D\u00e9finit un signal sonore enregistr\u00e9. */
 class record {
   /** Construction du signal et de son interaction graphique. */

@@ -21,7 +21,6 @@ int topWidth;  // width of text
 
 void setup() {
   // Ces deux lignes permettent l'interface avec JavaScool
-  proglet = this;
   frame = new Frame();
 
   size(900, 500); // screen.width,screen.height);//1200,800);

@@ -14,8 +14,8 @@ nbe :
 #
 # ProProglets:
 #   1. Ajouter les width et height pour les processing + les tailles dans ProgletEngine + test dans Builder
+#   4. 4 x Mettre a plat les Functions.java 
 #   3. 4 x Ajouter les completion.xml dans les proglets
-#   4. 4 x Mettre a plat les Functions.java
 #   5. 4 x tester les programmes exemples
 #
 # Basculement site

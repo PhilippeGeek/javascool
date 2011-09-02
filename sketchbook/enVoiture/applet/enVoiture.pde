@@ -49,7 +49,6 @@ void setup() {
   size(900, 500, OPENGL);  // 1024, 576, OPENGL);
 
   // Ces deux lignes permettent l'interface avec JavaScool
-  proglet = this;
   frame = new Frame();
 
   ArialB = createFont("Arial Bold", 14, true);
