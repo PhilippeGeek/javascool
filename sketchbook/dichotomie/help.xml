@@ -33,4 +33,5 @@
     </div></div>
     <div>En appuyant sur les touches <c>&lt;-</c> et <c>-&gt;</c> nous pouvons tourner manuellement les pages à gauche ou à droite.</div>
   </p>
+<p>Cette «proglet» est un composant logiciel ouvert dont documentation et code-source sont disponibles <l link="api/org/javascool/proglets/dichotomie/package-summary.html" text="ici"/></p>
 </div>

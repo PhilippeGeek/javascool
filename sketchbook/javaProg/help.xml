@@ -1,5 +1,4 @@
 <div title="La «proglet» javaProg">
-  <p>
     Cette proglet permet de simuler de programmer toutes sortes d'applet en utilisant la syntaxe Java ordinaire.
 
   <p>On peut utiliser toute l'<l link="http://java.sun.com/javase/6/docs/api/overview-summary.html" text="API Java"/> et 
@@ -29,5 +28,5 @@
   à partir d'un <l class="editor" link="elephantEnFolie.jvs" text="code Jvs"/> réalisé avec trois lycéennes du 
   <l link="http://www.civfrance.com" text="Lycée International de Valbonne"/>.</div>
 
- </p>
+<p>Cette «proglet» est un composant logiciel ouvert dont documentation et code-source sont disponibles <l link="api/org/javascool/proglets/javaProg/package-summary.html" text="ici"/></p>
 </div>

@@ -17,13 +17,6 @@
     mais seule une personne pourra décrypter (possédant la clé privée)..</p>
   </div>
   <div class="center"><l class="icon" link="http://www.openprocessing.org/visuals/?visualID=16149" icon="CryptageRSA_xml.png"/></div>  
-  <div title="Utilisation comme outil">
-    Voir le <l link="exercice.htm" text="sujet d'activité"/> proposé, partie "Manipuler l'interface: cryptage de données".
-  </div>
-  <div title="Utilisation dans une activité">
-    Voir le <l link="exercice.htm" text="sujet d'activité"/> proposé, partie "Utiliser les clés pour s'authentifier", 
-    puis "Utiliser les fonctions dans votre propre programme".
-  </div>  
   <div title="Autres activités liées à la cryptographie"><div class="ul">
    <p>Un <l link="http://javascool.gforge.inria.fr/documents/sketchbook/cryptageRSA/a-propos-de-crypto.pdf" text="texte de présentation de la cryptographie"/></p>
    <p>A propos de <l link="http://interstices.info/rsa" text="nombres premiers et cryptologie : l’algorithme RSA"/></p>

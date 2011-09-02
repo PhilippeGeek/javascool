@@ -21,4 +21,5 @@
     <div>Un exemple d'utilisation:  dans la démonstration les résultats de la conversion analogique-numérique s'affichent avec un algorithme dichotomique . . 
     qui doit être trouvé en <l class="newtab" link="exercice.htm" text="exercice"/> !</div>
   </p>
+<p>Cette «proglet» est un composant logiciel ouvert dont documentation et code-source sont disponibles <l link="api/org/javascool/proglets/analogNumerique/package-summary.html" text="ici"/></p>
 </div>

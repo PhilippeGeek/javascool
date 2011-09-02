@@ -32,7 +32,7 @@
  
    <div>Pour définir une séquence de notes il faut utiliser la fonction:<div class="code">
      <p><r>setNotes</r>(<v>séquence-de-note</v>);</p>
-   </div> où la syntaxe de <v>séquence-de-note</v> est définie dans la <l link="http://javascool.gforge.inria.fr/?page=proglets&amp;action=show&amp;id=syntheSons&amp;helpFile=api/org/javascool/proglets/syntheSons/NotesSoundBit.html#reset(java.lang.String)" text="documentation"/> de la classe.</div>
+   </div> où la syntaxe de <v>séquence-de-note</v> est définie dans la <l link="http://javascool.gforge.inria.fr/v4?page=proglets&amp;action=show&amp;id=syntheSons&amp;helpFile=api/org/javascool/proglets/syntheSons/NotesSoundBit.html" text="documentation"/> de la classe.</div>
 
   <div>Un exemple d'utilisation: lors de la démonstration, 
   les différents sons:<div class="code">
@@ -52,4 +52,6 @@
 
    <div>Un autre exempleautre exemple d'utilisation est proposé en démonstration, 
   à partir d'un <l class="editor" link="pianoJoue.jvs" text="code Jvs"/> réalisé par un enseignant.</div>
+
+<p>Cette «proglet» est un composant logiciel ouvert dont documentation et code-source sont disponibles <l link="api/org/javascool/proglets/syntheSons/package-summary.html" text="ici"/></p>
 </div>

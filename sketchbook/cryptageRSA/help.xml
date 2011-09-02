@@ -39,4 +39,6 @@
     </div><div class="code">
    <div>Un exemple d'utilisation se fait lors du lancement de la proglet avec une fenêtre d'interaction.</div>
    <div>Un exemple de programme d'utilisation est <l class="editor" link="Exemple.jvs" text="disponible ici"/>.</div>
-</div></div></div>
+</div></div>
+<p>Cette «proglet» est un composant logiciel ouvert dont documentation et code-source sont disponibles <l link="http://www.openprocessing.org/portal/?userID=8553" text="ici"/></p>
+</div>

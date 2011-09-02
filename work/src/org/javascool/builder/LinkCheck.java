@@ -112,7 +112,9 @@ public class LinkCheck {
       Matcher matcher = linkPattern.matcher(text).region(i, l);
       if(matcher.find()) {
         int i1 = matcher.end(), i2 = nextQuote(text, i1);
-        h.add(text.substring(i1, i2));
+	String link = text.substring(i1, i2);
+	if (!link.startsWith("'"))
+	  h.add(link);
         i = i2;
       } else
         break;

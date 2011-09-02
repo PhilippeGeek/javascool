@@ -19,18 +19,7 @@
     if (!is_file($icon))
         $icon=$defaulticon;
 
-    if (isset($_GET['helpFile'])) {
-	$helpFile=$_GET['helpFile'];
-	// @todo
-	if (preg_match('#^[a-z0-9_-]+\.htm$#i',$helpFile)) $helpFile=$id.'/'.$helpFile;
-	else if (preg_match('#^api/.*$#',$helpFile)) $helpFile=$id.'/'.$helpFile;
-	else if (preg_match('#^[a-z0-9_-]+/[a-z0-9_-]+\.htm$#i',$helpFile)) {}
-	else if (preg_match('#^[a-z0-9_-]+#i',$helpFile)) $helpFile=$helpFile.'/help.htm';
-	else die('Invalid help file name');
-	//
-    }
-    else
-	$helpFile=$id.'/help.htm';
+    $helpFile = isset($_GET['helpFile']) ? html_contents_path_normalize($_GET['helpFile']) : 'help.htm';
 ?>
 
 <?php showBrowser(array(array("Java's Cool","index.php"),array("Proglets","index.php?page=proglets"),array($name,""))); ?>
@@ -56,18 +45,9 @@
             <td class="news-leftborder"></td>
             <td class="news-center">
                 <p><div style="max-width: 100%"><?php
-
-	$help=file_get_contents('proglets/'.$helpFile);
-// @todo
-        $help=preg_replace('#href="\./org/javascool/proglets/'.$id.'/([^"]*)"#i','href="?page=proglets&action=show&id='.$id.'&helpFile=api/$1##"',$help);
-	$help=preg_replace('#href="([a-z0-9A-Z.][^:"]*[^:"\#][^:"])"#i','href="?page=proglets&action=show&id='.$id.'&helpFile='.dirname($helpFile).'/$1"',$help);
-	$help=preg_replace('#src="([a-z0-9A-Z.][^:"]*[^:"\#][^:"])"#i','src="proglets/'.dirname($helpFile).'/$1"',$help);
-	//$help=preg_replace('#href="([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+\.htm(\#[^"]*))"#i','href="?page=proglets&action=show&id='.$id.'&helpFile=$1/$2"',$help);
-	//$help=preg_replace('#href="(\.\./\.\./)?([a-zA-Z0-9_-]+)/doc-files/([a-zA-Z0-9_-]+\.htm)(\#[^"]*)"#i','href="?page=proglets&action=show&id='.$id.'&helpFile=$2/$3"',$help);
-	//$help=preg_replace('#href="([a-zA-Z0-9_-]+\.htm)(\#[^"]*)?"#i','href="?page=proglets&action=show&id='.$id.'&helpFile=$1"',$help);
-	//$help=preg_replace('#src="org/javascool/#i','src="',$help);
-//
-	echo $help;
+	$help = file_get_contents("proglets/$id/".$helpFile); 
+        $help = html_contents_normalize($help, "?page=proglets&action=show&id=$id&helpFile=".dirname($helpFile), "/proglets/$id/".dirname($helpFile));
+	echo '<div id="javadoc">'.$help.'</div>';
 		?></div></p>
             </td>
             <td class="news-rightborder"></td>
