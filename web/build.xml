@@ -68,7 +68,7 @@
     <property name="env.GFORGEUSER" value="${user.name}"/>
   </target>
 
-  <target name="local">
+  <target name="local" depends="build">
     <exec os="Linux" executable="./includes/start-local-web.sh"/>
     <exec os="Linux" executable="firefox">
       <arg value="http://127.0.0.1:1234"/>

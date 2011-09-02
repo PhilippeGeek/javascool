@@ -12,7 +12,7 @@
     comportement du mode démo.
     <div class="code">
      <p><r>void main</r>() {</p>
-     <p><T/><r>PaintBrush.setManipImage</r>(<r>new PaintBrushManipImage</r>() {</p>
+     <p><T/><r>setManipImage</r>(<r>new PaintBrushManipImage</r>() {</p>
      <m>NE RIEN ECRIRE AU DESSUS DE CETTE ZONE</m>
      <m>Affiche un point de coordonnées (x,y)</m>
      <p><T/><T/><r>public void affichePoint</r>(<r>int</r> <b>x</b>, <r>int</r> <b>y</b>, <r>int</r> <b>couleur</b>) {  }</p>
@@ -55,6 +55,6 @@
      <r>afficheLigne</r> et <r>afficheRectangle</r>.</p>
 
    <div>On pourra partir du programme <l class="editor" link="Exemple.jvs" text="exemple donné ici"/>.</div>
-
   </p>
+<p>Cette «proglet» est un composant logiciel ouvert dont documentation et code-source sont disponibles <l link="api/org/javascool/proglets/paintBrush/package-summary.html" text="ici"/></p>
 </div>

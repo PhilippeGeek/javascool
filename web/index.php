@@ -2,7 +2,7 @@
 include('includes/sal.class.php');
 include('includes/wiki_get_contents.php');
 include('includes/v3_redirections.php');
-include('includes/sitemap_data.php');
+include('includes/html_contents_normalize.php');
 
 // If page is defined, test redirections
 if (isset($_GET['page'])) {

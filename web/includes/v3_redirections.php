@@ -3,7 +3,7 @@ include('includes/mailto.php');
 
 // Effectue la redirection des liens et renvoie vraie si il y eu redirection et faux sinon
 function v3_redirections($page) {
-  global $v3_redirections_link_table, $v3_redirections_prefix_table, $v3_redirections_v4pages_table;
+  global $v3_redirections_link_table, $v3_redirections_prefix_table, $v3_redirections_v4pages_table, $_SERVER;
   // Redirection des liens qui sont dans la table
   if (array_key_exists($page, $v3_redirections_link_table)) {
     header("Location: ".$v3_redirections_link_table[$page]);
@@ -20,7 +20,7 @@ function v3_redirections($page) {
     <h4>Uppss vous être en train de demander une page JavaScool qui n'existe pas (ou plus)</h4>
     <b>N'hésitez pas, si besoin, à nous <a href='mailto:thierry.vieville@inria.fr?subject=broken-link-on-javascool-web ($page)'>contacter</a>, nous allons vous dépanner.</b>
     <hr>";
-    mailto("mailto:thierry.vieville@inria.fr?subject=broken-link-on-javascool-web", "Spurious link = $page, Referer =".$_SERVER["HTTP_REFERER"]);
+    mailto("mailto:thierry.vieville@inria.fr?subject=broken-link-on-javascool-web", "Spurious page=$page, request = ".$_SERVER["REQUEST_URI"]);
     return true;
   }
   return false;

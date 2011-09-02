@@ -1,64 +1,64 @@
 <div title="Faire des exercices d'application: les algorithmes mathématiques en 2nd">
 
-  <p><l class="javascool"/> permet de programmer la 20taine d'exercices et activités du document de <l link="../Algo_Doc_Ress.pdf" text="ressources"/> publié par <l link="http://eduscol.education.fr" text="ÉduSCOL"/>, dont les solutions ont été instanciées en <l class="javascool"/>.</p>
+  <p><l class="javascool"/> permet de programmer la 20taine d'exercices et activités du document de <l link="/documents/Algo_Doc_Ress.pdf" text="ressources"/> publié par <l link="http://eduscol.education.fr" text="ÉduSCOL"/>, dont les solutions ont été instanciées en <l class="javascool"/>.</p>
 
   <p>Les "<l link="http://wiki.inria.fr/sciencinfolycee/Private:ProgletSoluce" text="soluces"/>" (aide syntaxique) sont proposées ici (nous <l link="mailto:thierry.vieville@sophia.inria.fr?subject=[javascool] A propos de qq proglet : accès aux soluce sur [scienceinfolycee]&amp;body=Bonjour,%0a,%20%20Je%20suis%20un%20enseignant%20du%20lycée%20de%20??%20à%20??%20et%20souhaite%20accéder%20aux%20soluces%20des%20proglets.%0a,%20%20%20Voici%20un%20élément%20qui%20prouve%20que%20je%20ne%20suis%20pas%20élève%20!%20:%20??%0a,%20%20Signature%20:%20??" text="contacter"/> pour l'accès).</p>
 
   <div title="Quelques sujets:"><div class="table">
 
-    <p><p>Réaliser une <l link="sujet-appli-imc.htm" text="calculette d'indice de masse corporelle"/> pour appliquer les notions d'algorithmique.</p></p>
+    <p><p>Réaliser une <l link="/documents/sujets-mathinfo/sujet-appli-imc.htm" text="calculette d'indice de masse corporelle"/> pour appliquer les notions d'algorithmique.</p></p>
 
-    <p><p>Programmer quelques <l link="sujet-appli-geometry.htm" text="calculs géométriques"/>.</p></p>
+    <p><p>Programmer quelques <l link="/documents/sujets-mathinfo/sujet-appli-geometry.htm" text="calculs géométriques"/>.</p></p>
   
-    <p><p>Apprentissage de l'<l link="sujet-about-tableaux.htm" text="utilisation des tableaux"/>.</p></p>
+    <p><p>Apprentissage de l'<l link="/documents/sujets-mathinfo/sujet-about-tableaux.htm" text="utilisation des tableaux"/>.</p></p>
 
-    <p><p>Un travail sur la <l link="sujet-conversion-binaire.htm" text="conversion binaire/décimale"/>.</p></p>
+    <p><p>Un travail sur la <l link="/documents/sujets-mathinfo/sujet-conversion-binaire.htm" text="conversion binaire/décimale"/>.</p></p>
 
-    <p><p>Un approfondissement <l link="sujet-appli-booleen.htm" text="découvrir quelques notions de logique"/>.</p></p>
+    <p><p>Un approfondissement <l link="/documents/sujets-mathinfo/sujet-appli-booleen.htm" text="découvrir quelques notions de logique"/>.</p></p>
 
-    <p><p>Un travail sur <l link="Répondre-à-un-QCM.doc" text="«est-il judicieux de répondre au hasard a un QCM»"/> (<l link="Répondre-à-un-QCM.pdf" text="pdf"/>, <l link="Répondre-à-un-QCM.java.pdf" text="code exemple"/>).</p></p>
+    <p><p>Un travail sur <l link="/documents/sujets-mathinfo/Répondre-à-un-QCM.doc" text="«est-il judicieux de répondre au hasard a un QCM»"/> (<l link="/documents/sujets-mathinfo/Répondre-à-un-QCM.pdf" text="pdf"/>, <l link="/documents/sujets-mathinfo/Répondre-à-un-QCM.java.pdf" text="code exemple"/>).</p></p>
 
   </div></div>
 
   <div title="Quelques exemples de programmes réalisés en classe:"><div class="ul">
 
-  <p>Expérimenter la différence entre <l link="QuotientEntierEtFlottant.jvs.html" text="calcul en nombre entiers et flottants"/></p>
+  <p>Expérimenter la différence entre <l link="/documents/sujets-mathinfo/QuotientEntierEtFlottant.jvs.html" text="calcul en nombre entiers et flottants"/></p>
 
-  <p>Effectuer le <l link="Parallelogramme.jvs.html" text="calcul du 4ème point d'un parallélogramme"/>avec 
-     <l link="lucaud-parallelogramme.odt" text="un sujet «unplugged» de préparation"/> 
-    (<l link="sujets-mathinfo/lucaud-parallelogramme.pdf" text="pdf"/>)</p>
+  <p>Effectuer le <l link="/documents/sujets-mathinfo/Parallelogramme.jvs.html" text="calcul du 4ème point d'un parallélogramme"/>avec 
+     <l link="/documents/sujets-mathinfo/lucaud-parallelogramme.odt" text="un sujet «unplugged» de préparation"/> 
+    (<l link="/documents/sujets-mathinfo/lucaud-parallelogramme.pdf" text="pdf"/>)</p>
 
-  <p>Effectuer le <l link="TirageAleatoireSurSegment.jvs.html" text="calcul d'une surface par tirages aléatoires de points"/></p>
+  <p>Effectuer le <l link="/documents/sujets-mathinfo/TirageAleatoireSurSegment.jvs.html" text="calcul d'une surface par tirages aléatoires de points"/></p>
 
-  <p>Découvrir les méthodes de   <l link="lucaud-montecarlo.odt" text="calcul par tirage aléatoire (dites de Monte-Carlo)"/> 
-    (<l link="http://javascool.gforge.inria.fr/v3/documents/sujets-mathinfo/lucaud-montecarlo.pdf" text="pdf"/>)</p>
+  <p>Découvrir les méthodes de   <l link="/documents/sujets-mathinfo/lucaud-montecarlo.odt" text="calcul par tirage aléatoire (dites de Monte-Carlo)"/> 
+    (<l link="/documents/sujets-mathinfo/lucaud-montecarlo.pdf" text="pdf"/>)</p>
 
   <p>Découvrir les algorithmes de tri avec un sujet «unplugged» de préparation sur les 
-     <l link="lucaud-algo-tri.odt" text="algorithmes de tri et la gestion des variables"/> 
-    (<l link="lucaud-algo-tri.pdf" text="pdf"/>) et des exemples de programme de tri 
-     de <l link="Tri_trois_nombres.jvs.html" text="trois valeurs"/> et de 
-     <l link="Tri_plusieurs_nombres.jvs.html" text="plusieurs valeurs"/>.</p>
+     <l link="/documents/sujets-mathinfo/lucaud-algo-tri.odt" text="algorithmes de tri et la gestion des variables"/> 
+    (<l link="/documents/sujets-mathinfo/lucaud-algo-tri.pdf" text="pdf"/>) et des exemples de programme de tri 
+     de <l link="/documents/sujets-mathinfo/Tri_trois_nombres.jvs.html" text="trois valeurs"/> et de 
+     <l link="/documents/sujets-mathinfo/Tri_plusieurs_nombres.jvs.html" text="plusieurs valeurs"/>.</p>
 
   </div></div>
      
   <div title="Quelques sujets «unplugged» (sans ordinateur):"><div class="ul">
      
-    <p><l link="dageville-exos-base-deux.html" text="Découvrir le codage binaire"/></p>
+    <p><l link="/documents/sujets-mathinfo/dageville-exos-base-deux.html" text="Découvrir le codage binaire"/></p>
 
-    <p><l link="larrieu-codage-binaire.odt" text="Fabriquer un reflet numérique d'un objet"/> 
-    (<l link="larrieu-codage-binaire.pdf" text="pdf"/>)</p>
+    <p><l link="/documents/sujets-mathinfo/larrieu-codage-binaire.odt" text="Fabriquer un reflet numérique d'un objet"/> 
+    (<l link="/documents/sujets-mathinfo/larrieu-codage-binaire.pdf" text="pdf"/>)</p>
 
-    <p><l link="larrieu-sujet-ascii.odt" text="Le codage numérique ASCII"/>
-    (<l link="larrieu-sujet-ascii.pdf" text="pdf"/>)</p>
+    <p><l link="/documents/sujets-mathinfo/larrieu-sujet-ascii.odt" text="Le codage numérique ASCII"/>
+    (<l link="/documents/sujets-mathinfo/larrieu-sujet-ascii.pdf" text="pdf"/>)</p>
 
-    <p><l link="larrieu-codage-nombres.odt" text="Codage des nombres"/>
-    (<l link="larrieu-codage-nombres.pdf" text="pdf"/>)</p>
+    <p><l link="/documents/sujets-mathinfo/larrieu-codage-nombres.odt" text="Codage des nombres"/>
+    (<l link="/documents/sujets-mathinfo/larrieu-codage-nombres.pdf" text="pdf"/>)</p>
 
-    <p><l link="larrieu-sujet-image.odt" text="Codage des images"/>
-    (<l link="larrieu-sujet-image.pdf" text="pdf"/>)</p>
+    <p><l link="/documents/sujets-mathinfo/larrieu-sujet-image.odt" text="Codage des images"/>
+    (<l link="/documents/sujets-mathinfo/larrieu-sujet-image.pdf" text="pdf"/>)</p>
 
-    <p><l link="larrieu-devoir-maison-1.odt" text="Qq exercices récapitutatifs"/>
-    (<l link="larrieu-devoir-maison-1.pdf" text="pdf"/>)</p>
+    <p><l link="/documents/sujets-mathinfo/larrieu-devoir-maison-1.odt" text="Qq exercices récapitutatifs"/>
+    (<l link="/documents/sujets-mathinfo/larrieu-devoir-maison-1.pdf" text="pdf"/>)</p>
 
   </div></div>
 

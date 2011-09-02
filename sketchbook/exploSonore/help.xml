@@ -1,4 +1,4 @@
-<div title="La «proglet» Exploration sonore">
+<div title="La «proglet» exploSonore">
   <p>ATTENTION: CETTE PROGLET EST EN COURS DE VALIDATION NE PAS UTILISER !!!</p>
   <p class="margin">
     <p>Cliquer <l class="newtab" link="exercice.htm" text="ici"/> pour faire l'activité.</p>
@@ -31,4 +31,6 @@
   </p>
    <div>Un exemple d'utilisation se fait lors du lancement de la proglet avec une fenêtre d'interaction.</div>
    <div>Un exemple de programme d'utilisation est <l class="editor" link="Exemple.jvs" text="disponible ici"/>.</div>
+<p>Cette «proglet» est un composant logiciel ouvert dont documentation et code-source sont disponibles <l link="http://www.openprocessing.org/portal/?userID=8553" text="ici"/></p>
+
  </div>

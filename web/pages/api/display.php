@@ -1,19 +1,9 @@
 <?php
-    $apiurl=$_GET['api'];
-    if ($apiurl=='') $apiurl='overview-summary.html';
+    $apiurl = isset($_GET['api']) ? html_contents_path_normalize($_GET['api']) : 'overview-summary.html';
     Sal::validateApiUrl($apiurl);
     $api=file_get_contents("api/".$apiurl);
     $api=preg_replace('#^.*<BODY[^>]*>#sm','',$api);
     $api=preg_replace('#^</BODY[^>]*>.*#sm','',$api);
-// @todo
-    $api=preg_replace('#<A HREF=\"[^"]*?[^"]*\"[^>]*><B>(NO )?FRAMES</B></A>#i','',$api);
-    $api=preg_replace('#<A HREF=\"([^"\#][^"]*)\"[^>]*>((.(?!</A>))*.)</A>#i','<a href="?page=api&api='.dirname($apiurl).'/$1">$2</a>',$api);
-    $api=preg_replace('#SRC=\"([^"\#][^"]*)\"[^>]*>((.(?!</A>))*.)</A>#i','src="?page=api&api='.dirname($apiurl).'/$1">$2</a>',$api);
-    $api=preg_replace('#[^"= /.]+/[^"= /.]+/[^"= /.]+/[^"= /.]+/\.\./\.\./\.\./\.\./#','',$api);
-    $api=preg_replace('#[^"= /.]+/[^"= /.]+/[^"= /.]+/\.\./\.\./\.\./#','',$api);
-    $api=preg_replace('#[^"= /.]+/[^"= /.]+/\.\./\.\./#','',$api);
-    $api=preg_replace('#[^"= /.]+/\.\./#','',$api);
-    $api=preg_replace('#=\./#','=',$api);
-//
+    $api = html_contents_normalize($api, "?page=api&api=".dirname($apiurl), "/api/".dirname($apiurl));
     echo '<div id="javadoc">'.$api.'</div>';
 ?>

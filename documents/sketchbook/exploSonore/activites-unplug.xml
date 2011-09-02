@@ -1,5 +1,4 @@
 <div class="sujet" title="Un tutoriel sur les signaux sonores (unplug)"> 
-  <div class="margin">Voir aussi l'<l link="exercice.htm" text="activité «proglet»"/> (découverte à travers la programmation)</div>
  <div title="Description">
     <p>Cette applete permet de visualiser l'évolution temporelle et le contenu fréquentiel des graves aux aigus (le spectre) d'un son, 
   	d'une parole, d'un extrait musical ou d'un signal sonore numérique.</p>

@@ -32,13 +32,6 @@
       	L'interface va nous servir d'outil. Les deux stations tirées au hasard apparaissent en rouge; en tapant 'p', elle calcule le plus court chemin entre deux stations avec une escale, puis en tapant 'q', elle propose deux escales.
       	Le but de cette activité est de trouver la réponse calculée: la voiture relie les stations, et en cliquant centre de manière maintenue, la distance parcourue est mémorisée.
       	Si la distance parcourue est optimum, un 'BRAVO!' s'inscrira sur la visualisation. </p>
-      	<p>Se référer au <l link="exercice.htm" text="sujet d'activité"/> proposé, partie "Introduire la notion de plus court chemin (sans programmation)". 
-      	puis "Expérimenter une solution sous-optimale (sans programmation)"</p>
-     
-  </div>
-  <div title="Utilisation dans une activité">
-    Cette applete n'étant qu'une introduction à la théorie des graphes, nous proposons de poursuivre avec <l link="../grapheEtChemins/tutoriel.htm" text="grapheEtChemins"/> pour pousser davantage les 
-    concepts sur ce sujet.
   </div>
 </div>
 
