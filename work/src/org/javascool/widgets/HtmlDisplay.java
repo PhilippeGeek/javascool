@@ -221,11 +221,11 @@ public class HtmlDisplay extends JPanel {
       URL url = toURL(location.substring(newtabPrefix.length()));
       String name = new File(url.getPath()).getName().replaceFirst("\\.[^\\.]*$", "").replace('_', '.');
       org.javascool.gui.Desktop.getInstance().openBrowserTab(url.toString(), name.substring(0, 1).toUpperCase()+name.substring(1));
-    } else if(location.matches("^(http|https|rtsp|mailto):.*$"))     // Gestion des URL externes
+    } else if(location.matches("^(http|https|rtsp|mailto):.*$")) {    // Gestion des URL externes
       browse(location);
-    else if(location.matches(".*\\.htm$") || location.matches("^#.*")) {   // Gestion des URLs en HTML3 et des ancres
+    } else if(location.matches(".*\\.htm$") || location.matches("^#.*")) {   // Gestion des URLs en HTML3 et des ancres
       update(toURL(location), push);
-    }    else if(!doBrowse(location))     // Délégation au client
+    } else if(!doBrowse(location))     // Délégation au client
       setText("Le lien : <tt>«" + location + "»</tt> n'a pas pu être affiché");
   }
   private void update(URL url, boolean push) {
