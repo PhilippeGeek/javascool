@@ -40,12 +40,15 @@ a {
 /*
  * Globals
  */
- 
 table {
     margin:auto;
     border-collapse:collapse;
 }
-
+/*
+table td {
+    width: 15%;
+}
+*/
 .imagelink {
     border: 0px;
 }

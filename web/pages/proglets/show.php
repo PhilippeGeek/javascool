@@ -46,6 +46,7 @@
             <td class="news-center">
                 <p><div style="max-width: 100%"><?php
         $help = html_get_contents("proglets/$id/$helpFile", "?page=proglets&action=show&id=$id&helpFile=".dirname($helpFile), "/proglets/$id/".dirname($helpFile));
+    	$help=preg_replace('#<TD ([^>]*)WIDTH="([0-9]+%)"([^>]*)>#i','<TD $1 style="width:$2" $3>',$help);
 	echo '<div id="javadoc">'.$help.'</div>';
 		?></div></p>
             </td>
