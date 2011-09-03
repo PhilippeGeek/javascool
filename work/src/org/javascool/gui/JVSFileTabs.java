@@ -261,6 +261,7 @@ class JVSFileTabs extends JVSTabs {
      */
     public Boolean saveFilePromptWhere(String fileId) {
         JFileChooser fc = new JFileChooser();             // We create a file chooser
+        try {
         if (System.getProperty("os.name").toLowerCase().contains("nix") || System.getProperty("os.name").toLowerCase().contains("nux")) {
             fc.setCurrentDirectory(new File(System.getProperty("user.dir")));
         } else if (UserConfig.getInstance("javascool").getProperty("dir") != null &&
@@ -268,6 +269,9 @@ class JVSFileTabs extends JVSTabs {
             fc.setCurrentDirectory(new File(UserConfig.getInstance("javascool").getProperty("dir")));
         } else {
             fc.setCurrentDirectory(new File(System.getProperty("home.dir")));
+        }
+        } catch(Exception e) {
+         System.err.println("Notice: échec de la mise en place du répertoire par défaut: "+ e);
         }
         fc.setApproveButtonText("Enregistrer");
         fc.setDialogTitle("Enregistrer");
