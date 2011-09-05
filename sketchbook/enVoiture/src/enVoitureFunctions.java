@@ -1,11 +1,9 @@
-package org.javascool.proglets.enVoiture;
-
 /** Définit les fonctions de la proglet.
  *
- * @see <a href="Functions.java.html">code source</a>
+ * @see <a href="enVoitureFunctions.java.html">code source</a>
  * @serial exclude
  */
-public class Functions {
+public class enVoitureFunctions {
   private static final long serialVersionUID = 1L;
   /** Renvoie l'instance de la proglet pour accéder à ses éléments. */
   private static enVoiture getPane() {
