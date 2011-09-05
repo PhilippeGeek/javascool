@@ -99,9 +99,9 @@ public class ProgletsBuilder {
                     if (new File(".").equals(buildDir.getCanonicalFile())) {
                         throw new IllegalArgumentException("Le répertoire des proglets et celui du build ne peuvent pas être identiques");
                     }
-                    JarManager.rmDir(buildDir);
-                    buildDir.mkdirs();
                 }
+		JarManager.rmDir(buildDir);
+		buildDir.mkdirs();
                 jarDir = buildDir + File.separator + "jar";
                 progletsDir = jarDir + File.separator + "org" + File.separator + "javascool" + File.separator + "proglets";
                 new File(progletsDir).mkdirs();
@@ -154,7 +154,7 @@ public class ProgletsBuilder {
                 log("Compilation des fichiers java");
                 String[] javaFiles = FileManager.list(progletsDir, ".*\\.java", 2);
                 if (javaFiles.length > 0)
-                    javac(javaFiles);
+		  javac(jarDir, javaFiles);
             }
             DialogFrame.setUpdate("Finalisation 1/2", 90);
             System.out.println("Compilation des jarres .. ");
@@ -204,7 +204,7 @@ public class ProgletsBuilder {
                 DialogFrame.setUpdate("Finalisation 2/2", 100);
             }
             if (targetDir == null) {
-                JarManager.rmDir(buildDir);
+	      // JarManager.rmDir(buildDir);
             }
             System.out.println("Construction achevée avec succès: «" + targetJar + "» a été créé");
             System.out.println("\tIl faut lancer «" + targetJar + "» pour tester/utiliser les proglets.");
@@ -266,11 +266,24 @@ public class ProgletsBuilder {
     }
 
     /** Lance la compilation java sur un groupe de fichiers. */
-    private static void javac(String[] javaFiles) {
-        if (!Java2Class.compile(javaFiles, true)) {
-            throw new IllegalArgumentException("Erreur de compilation java");
-        }
+  private static void javac(String classPath, String[] javaFiles) {
+    // if (!Java2Class.compile(javaFiles, true)) throw new IllegalArgumentException("Erreur de compilation java");
+    try {
+      // Appel au compilateur en spécifiant le classpath
+      String args[] = new String[javaFiles.length + 2];
+      args[0] = "-cp";
+      args[1] = classPath;
+      for(int i = 0; i < javaFiles.length; i++)
+	args[i + 2] = javaFiles[i];
+      if (((Integer) Class.forName("com.sun.tools.javac.Main").
+	   getDeclaredMethod("compile", Class.forName("[Ljava.lang.String;")).
+	   invoke(null, (Object) args)) != 0)
+	throw new IllegalArgumentException("Erreur de compilation java");
+    } catch(Throwable e) {
+      System.err.println("Echec de compilation :"+ e);
+	throw new IllegalArgumentException("Erreur de compilation java");
     }
+  }
 
     /** Construction de javadoc avec sources en java2html. */
     private static void javadoc(String name, String srcDir, String apiDir) throws IOException {

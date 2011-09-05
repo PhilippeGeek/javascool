@@ -36,7 +36,6 @@ public class Java2Class {
    * @throws RuntimeException Si une erreur d'entrée-sortie s'est produite lors de la compilation.
    */
   public static boolean compile(String javaFile, boolean allErrors) {
-    System.out.println("Compile : " + javaFile);
     String javaFiles[] = { javaFile };
     return compile(javaFiles);
   }
@@ -75,11 +74,14 @@ public class Java2Class {
       // Gestion des erreurs
       for(Diagnostic diagnostic : diagnostics.getDiagnostics()) {
         String javaDiagnostic = diagnostic.getMessage(Locale.FRENCH);
-        String jvsDiagnostic = javaDiagnostic.split(" ", 2)[1];
+        String jvsDiagnostic = javaFiles.length == 1 ? javaDiagnostic : javaDiagnostic.split(" ", 2)[1];
         if(jvsDiagnostic.equals("not a statement"))
           jvsDiagnostic = "L'instruction n'est pas valide.\n (Il se peut qu'une variable indiquée n'existe pas)";
         else if(jvsDiagnostic.equals("';' expected"))
           jvsDiagnostic = "Un ';' est attendu (il peut manquer, ou une parenthèse être incorrecte, ..)";
+        else if(jvsDiagnostic.startsWith("cannot find symbol"))
+          jvsDiagnostic = "Il y a un symbole non-défini cette ligne: " +
+	    jvsDiagnostic.replaceFirst("cannot[^:]*:\\s*([^\\n]*)[^:]*:\\s*(.*)", "«$1»");
         else if(jvsDiagnostic.matches(".*\\W*found\\W*:\\W([A-Za-z\\.]*)\\Wrequired:\\W([A-Za-z\\.]*)"))
           jvsDiagnostic = jvsDiagnostic.replaceAll("incompatible\\Wtypes\\W*found\\W*:\\W([A-Za-z\\.]*)\\Wrequired:\\W([A-Za-z\\.]*)",
                                                    "Vous avez mis une valeur de type $1 alors qu'il faut une valeur de type $2");
@@ -87,18 +89,19 @@ public class Java2Class {
           jvsDiagnostic = jvsDiagnostic.replaceAll("package org\\.javascool\\.proglets\\.([A-Za-z0-9_]+) does not exist",
                                                    "La proglet $1 n'existe pas");
         else
-          jvsDiagnostic = "Erreur Java : \n" + jvsDiagnostic;
+          jvsDiagnostic = "Erreur Java : «" + jvsDiagnostic + "»";
         int line = (int) diagnostic.getLineNumber();
         String source = new File(diagnostic.getSource().toString()).getParentFile().getName() + "/" + new File(diagnostic.getSource().toString()).getName();
         String where = javaFiles.length == 1 ? "" : " de " + source + "";
         System.out.println("-------------------\nErreur lors de la compilation à la ligne " + line + where + ".\n" + jvsDiagnostic + "\n-------------------");
-        System.err.println("Erreur à la compilation: fichier="+source+" ligne ="+line +" erreur="+diagnostic.getMessage(Locale.FRENCH));
+        System.err.println("Erreur à la compilation: fichier="+source+" ligne ="+line +" erreur="+javaDiagnostic);
         // En fait ici on choisit d'arrêter à la 1ère erreur pour pas embrouiller l'apprennant
         if(diagnostic.getKind().equals(Diagnostic.Kind.ERROR))
           return false;
       }
       return true;
-    } catch(Throwable e) { throw new RuntimeException(e + " when compiling !");
+    } catch(Throwable e) { 
+      throw new RuntimeException(e + " when compiling !");
     }
   }
   /** Charge dynamiquement une classe Java qui implémente un Runnable, pour son e×écution au cours d'une session.

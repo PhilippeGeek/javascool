@@ -12,6 +12,6 @@ public class Translator extends org.javascool.core.Translator {
   }
   @Override
   public String translate(String code) {
-    reeturn code;
+    return code;
   }
 }

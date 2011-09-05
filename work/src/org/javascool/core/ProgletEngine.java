@@ -161,17 +161,15 @@ public class ProgletEngine {
      * @return La proglet en fonctionnement ou null si la proglet n'existe pas.
      */
     public Proglet setProglet(String proglet) {
-        if (currentProglet != null && currentProglet.getPane() != null) {
-            Invoke.run(currentProglet.getPane(), "destroy");
-        }
+        if (currentProglet != null && currentProglet.getPane() != null && currentProglet.getPane() instanceof Applet)
+            ((Applet) currentProglet.getPane()).stop();
         for (Proglet p : getProglets()) {
             if (p.getName().equals(proglet)) {
                 currentProglet = p;
             }
         }
-        if (currentProglet != null && currentProglet.getPane() != null) {
-            Invoke.run(currentProglet.getPane(), "init");
-        }
+        if (currentProglet != null && currentProglet.getPane() != null && currentProglet.getPane() instanceof Applet)
+            ((Applet) currentProglet.getPane()).start();
         return currentProglet;
     }
 
@@ -242,12 +240,12 @@ public class ProgletEngine {
             if (this.isProcessing()) {
                 try {
 		  int width = pml.getInteger("width", 500), height = pml.getInteger("height", 500);
-                    Applet applet=(Applet) Class.forName("" + pml.getString("name") + "").newInstance();
+                    Applet applet = (Applet) Class.forName("" + pml.getString("name") + "").newInstance();
                     applet.init();
-                    applet.start();
                     applet.setMinimumSize(new Dimension(width, height));
                     applet.setMaximumSize(new Dimension(width, height));
-                    pml.set("java-pane", (Component) applet);
+                    System.err.println("add processing . . ["+width+"x"+height+"] "+applet);
+                    pml.set("java-pane", applet);
                 } catch (Throwable e) {
                    System.err.println("Upps erreur de chargement d'une proglet processing : "+e);
                 }

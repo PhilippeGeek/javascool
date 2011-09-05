@@ -1,12 +1,11 @@
-package org.javascool.proglets.cryptageRSA;
 import java.math.BigInteger;
 
 /** Définit les fonctions de la proglet.
  *
- * @see <a href="Functions.java.html">code source</a>
+ * @see <a href="cryptageRSAFunctions.java.html">code source</a>
  * @serial exclude
  */
-public class Functions {
+public class cryptageRSAFunctions {
   /** Crée une clé privée D et le couple de clé publiques (E, N).
    * @return Un tableau de 3 entiers avec les clés keys[] = {D, E, N};
    */

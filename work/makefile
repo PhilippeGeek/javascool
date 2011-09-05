@@ -9,6 +9,9 @@
 export JHOME=/usr/java/jdk1.6.0_22
 export PATH:=$(JHOME)/bin:$(PATH)
 
+#tst :
+#	javac -cp ../sketchbook/.build/jar ../sketchbook/grapheEtChemins/src/grapheEtCheminsFunctions.java
+
 ant : 
 	ant prun
 
@@ -16,4 +19,5 @@ nbe :
 	netbeans --jdkhome $(JHOME) &
 
 
-
+#> throwable = java.lang.NullPointerException
+#> stack-trace = «ddf.minim.javasound.JSMinim.getAudioInputStream(JSMinim.java:604)ddf.minim.javasound.JSMinim.getAudioRecordingStream(JSMinim.java:200)ddf.minim.Minim.loadFile(Minim.java:357)ddf.minim.Minim.loadFile(Minim.java:341)exploSonore$record.setRecord(exploSonore.java:446)»
