@@ -43,7 +43,7 @@ Status:
 
   * (`*`1) Ajouter un CRTL+F search à l'éditeur
 
-  * (`*`1) Création d'un lanceur .exe et .app pour le lancement de jascool
+  * (`*`1) Création d'un lanceur .exe et .app pour le lancement de jascool [http://www.excelsior-usa.com/articles/java-to-exe.html ref] (sauf si le jnlp peut gérer les pbs de chargement dynamique)
 
   * (`*`3) Implementer le fait qu'on ajoute @proglet:nom-de-la-proglet.
     
