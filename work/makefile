@@ -9,14 +9,20 @@
 export JHOME=/usr/java/jdk1.6.0_22
 export PATH:=$(JHOME)/bin:$(PATH)
 
-#tst :
-#	javac -cp ../sketchbook/.build/jar ../sketchbook/grapheEtChemins/src/grapheEtCheminsFunctions.java
+dft : tst1
 
 ant : 
 	ant prun
 
 nbe :
 	netbeans --jdkhome $(JHOME) &
+
+tst1 :
+	ant javascool-proglets.jar
+	/usr/java/jre1.6.0_27/bin/java -jar dist/javascool-proglets.jar
+
+tst2 :
+	javac -cp ../sketchbook/.build/jar ../sketchbook/grapheEtChemins/src/grapheEtCheminsFunctions.java
 
 
 #> throwable = java.lang.NullPointerException
