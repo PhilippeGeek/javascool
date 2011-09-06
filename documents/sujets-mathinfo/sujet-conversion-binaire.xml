@@ -5,7 +5,7 @@
   </div>
 
   <div class="intros">
-    <div title="Décrire des nombres en binaire"> (voir le texte "<l l="http://interstices.info/reflet-numerique" n="tout a un reflet numérique"/>" pour une introduction complète)
+    <div title="Décrire des nombres en binaire"> (voir le texte "<l link="http://interstices.info/reflet-numerique" text="tout a un reflet numérique"/>" pour une introduction complète)
      Le tableau suivant donne les 10 premiers nombres en base 10 dans la colonne du milieu et leur représentation binaire dans la colonne de droite :
     <div class="center"><l class="icon" icon="algo-n-1b.jpg"/></div>
      Si nous observons bien ce codage, nous constatons qu'il est le résultat d'un calcul, montré dans la colonne de gauche. 
