@@ -18,16 +18,16 @@
     <doc>Initialise le tracé dans une fenêtre de taille [Xmin, Xmax] x [Ymin, Ymax]</doc>
   </keyword>
   <keyword 
-    name="addPoint"
+    name="setPoint"
     title="Change la valeur d'un point de couleur du tracé">
-    <code>addPoint(x, y, c);</code>
+    <code>setPoint(x, y, c);</code>
     <doc>Ajoute un point à la position (x, y) de couleur c (nombre entier).
 Couleur du tracé: 0 (noir, défaut), 1 (brun), 2 (rouge), 3 (orange), 4 (jaune), 5 (vert), 6 (bleu), 7 (violet), 8 (gris), 9 (blanc).</doc>
   </keyword>
   <keyword 
-    name="addPoint"
+    name="setPoint"
     title="Change la valeur d'un point du tracé">
-    <code>addPoint(x, y);</code>
+    <code>setPoint(x, y);</code>
     <doc>Ajoute un point noir à la position (x, y).</doc>
   </keyword>
   <keyword 

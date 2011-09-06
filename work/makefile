@@ -30,6 +30,6 @@ tst2 :
 
 # Basculement site: virer /home/groups/javascool/htdocs/{index|sketchbook|javascool.jar|sources.zip|index.php} et ln -s v4/index.php .
 
-# Problèmes à traite rpour la RC2: 
+# Problèmes à traite rpour la RC2: verifier que les ressources sont bien chargees et bon noms de fichier 
 # - Problème proglet (lecture du fichier wav) son avec java.lang.NullPointerException stack-trace = «ddf.minim.javasound.JSMinim.getAudioInputStream(JSMinim.java:604)ddf.minim.javasound.JSMinim.getAudioRecordingStream(JSMinim.java:200)ddf.minim.Minim.loadFile(Minim.java:357)ddf.minim.Minim.loadFile(Minim.java:341)exploSonore$record.setRecord(exploSonore.java:446)»
 # - Problème proglet enVoiture avec la fenêtre qui apparait pas
