@@ -275,7 +275,8 @@
   <target name="clean">
     <delete dir="./build/classes"/> 
     <delete dir="./dist/proglets"/> 
-    <delete dir="./dist/javadoc"/> 
+    <delete dir="./dist/javadoc"/>  
+    <delete dir="../sketchbook/.build"/>
     <delete dir="./nbproject/private"/> 
     <ant dir="./../web" target="clean"/>
   </target>
