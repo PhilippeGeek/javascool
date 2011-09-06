@@ -41,14 +41,14 @@ public class Functions {
    * @param y Ordonnée de la courbe, dans [-Y, Y], par défaut [-1, 1].
    * @param c Numéro de la courbe: 0 (noir, défaut), 1 (brun), 2 (rouge), 3 (orange), 4 (jaune), 5 (vert), 6 (bleu), 7 (violet), 8 (gris), 9 (blanc).
    */
-  public static void addPoint(double x, double y, int c) {
+  public static void setPoint(double x, double y, int c) {
     getPane().scope.add(x, y, c);
   }
   /*
-   * @see #addPoint(double, double, int)
+   * @see #setPoint(double, double, int)
    */
-  public static void addPoint(double x, double y) {
-    addPoint(x, y, 0);
+  public static void setPoint(double x, double y) {
+    setPoint(x, y, 0);
   }
   /** Ajoute une chaîne de caractères au tracé.
    * @param x Abcisse du coin inférieur gauche de la chaîne, dans [-X, X], par défaut [-1, 1].
