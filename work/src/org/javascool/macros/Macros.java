@@ -7,6 +7,7 @@ package org.javascool.macros;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URISyntaxException;
@@ -110,6 +111,7 @@ public class Macros {
         p.setBackground(new java.awt.Color(200, 200, 200, 0));
         messageDialog = new Dialog();
         messageDialog.setTitle("Java's Cool message");
+	messageDialog.setMinimumSize(new Dimension(300, 100));
         messageDialog.add(p);
         messageDialog.add(new JButton("OK") {
 

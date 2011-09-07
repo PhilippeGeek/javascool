@@ -3,6 +3,7 @@
 # Proglets: tester contruction et programme exemples 
 # * retarder la construction de la proglet à l'ouverture et non au load pour alleger le jar
 # * tester les proglets en popup 
+# * pb : javax/media/opengl/glu/GLUtessellatorCallback enVoiture
 # * voir à ajouter javascool-base.jar au jar de processing pour avoir la compilation sans ./src
 # * verifer que processing met bien le .class dans org/**/proglets
 # * traiter le problème par une regex dans Translator poru avoir une soluce et documenter

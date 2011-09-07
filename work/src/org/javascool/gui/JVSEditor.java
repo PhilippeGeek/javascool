@@ -235,8 +235,7 @@ class JVSEditor extends JPanel {
      */
     public static CompletionProvider createCodeCompletionProvider() {
         DefaultCompletionProvider cp = new DefaultCompletionProvider();
-        if(!ProgletEngine.getInstance().getProglet().getCompletion().equals("")){
-            System.err.println("loadCompletion");
+        if(!ProgletEngine.getInstance().getProglet().getCompletion().equals("")) {
             JvsXMLCompletion.readCompletionToProvider(ProgletEngine.getInstance().getProglet().getCompletion(), cp);
         }
         JvsXMLCompletion.readCompletionToProvider("org/javascool/gui/completion-macros.xml", cp);
