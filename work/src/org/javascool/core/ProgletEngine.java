@@ -159,17 +159,29 @@ public class ProgletEngine {
     /** Mécanisme de chargement d'une proglet.
      * @param proglet Le nom de la proglet.
      * @return La proglet en fonctionnement ou null si la proglet n'existe pas.
+     * @throws IllegalArgumentException Si il y a tentative d'utilisation d'une proglet indéfinie
      */
     public Proglet setProglet(String proglet) {
+        try {
         if (currentProglet != null && currentProglet.getPane() != null && currentProglet.getPane() instanceof Applet)
             ((Applet) currentProglet.getPane()).stop();
+        } catch(Throwable e) {
+            System.err.println("Erreur à l'arrêt de l'applet/proglet");
+        }
+        currentProglet = null;
         for (Proglet p : getProglets()) {
             if (p.getName().equals(proglet)) {
                 currentProglet = p;
             }
         }
-        if (currentProglet != null && currentProglet.getPane() != null && currentProglet.getPane() instanceof Applet)
+        if (currentProglet == null)
+            throw new IllegalArgumentException("Tentative d'utilisation d'une proglet indéfinie : "+proglet);
+       try {
+        if (currentProglet.getPane() != null && currentProglet.getPane() instanceof Applet)
             ((Applet) currentProglet.getPane()).start();
+        } catch(Throwable e) {
+            System.err.println("Erreur au démarrage de l'applet/proglet");
+        }
         return currentProglet;
     }
 
@@ -237,24 +249,6 @@ public class ProgletEngine {
             if (!pml.isDefined("help-location")) {
                 pml.set("help-location", pml.getString("location") + "help.htm");
             }
-            if (this.isProcessing()) {
-                try {
-		  int width = pml.getInteger("width", 500), height = pml.getInteger("height", 500);
-                    Applet applet = (Applet) Class.forName("" + pml.getString("name") + "").newInstance();
-                    applet.init();
-                    applet.setMinimumSize(new Dimension(width, height));
-                    applet.setMaximumSize(new Dimension(width, height));
-                    System.err.println("add processing . . ["+width+"x"+height+"] "+applet);
-                    pml.set("java-pane", applet);
-                } catch (Throwable e) {
-                   System.err.println("Upps erreur de chargement d'une proglet processing : "+e);
-                }
-            } else {
-                try {
-                    pml.set("java-pane", (Component) Class.forName("org.javascool.proglets." + pml.getString("name") + ".Panel").newInstance());
-                } catch (Throwable e) {
-                }
-            }
             try {
                 pml.set("jvs-translator", (Translator) Class.forName("org.javascool.proglets." + pml.getString("name") + ".Translator").newInstance());
             } catch (Throwable e) {
@@ -312,6 +306,27 @@ public class ProgletEngine {
          * @return Le panneau graphique de la proglet si il existe, sinon null.
          */
         public Component getPane() {
+          if (!pml.isDefined("pane-defined")) {
+              pml.set("pane-defined", true);
+            if (this.isProcessing()) {
+                try {
+		  int width = pml.getInteger("width", 500), height = pml.getInteger("height", 500);
+                    Applet applet = (Applet) Class.forName("" + pml.getString("name") + "").newInstance();
+                    applet.init();
+                    applet.setMinimumSize(new Dimension(width, height));
+                    applet.setMaximumSize(new Dimension(width, height));
+                    System.err.println("add processing . . ["+width+"x"+height+"] "+applet);
+                    pml.set("java-pane", applet);
+                } catch (Throwable e) {
+                   System.err.println("Upps erreur de chargement d'une proglet processing : "+e);
+                }
+            } else {
+                try {
+                    pml.set("java-pane", (Component) Class.forName("org.javascool.proglets." + pml.getString("name") + ".Panel").newInstance());
+                } catch (Throwable e) {
+                }
+            }
+            }
             return (Component) pml.getObject("java-pane");
         }
 

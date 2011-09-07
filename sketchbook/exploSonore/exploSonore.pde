@@ -149,9 +149,9 @@ void keyPressed() {
   if(key == '4')
     signal1.setSignal("bruit", 1000, 0.0, true);
   if(key == 'e')
-    record1.setRecord("./Ahmed_Ex2.wav");
+    record1.setRecord("org/javascool/proglets/exploSonore/Ahmed_Ex2.wav");
   if(key == 'f')
-    record1.setFilter("./Ahmed_Ex2.wav", 500);
+    record1.setFilter("org/javascool/proglets/exploSonore/Ahmed_Ex2.wav", 500);
   if(key == 's')
     StopAnySound();
 }
@@ -169,9 +169,9 @@ void update(int x, int y) {
         if(i < 4)
           signal1.setSignal(T1[i].value, 1000, 0.0, true);
         else if(i == 4)
-          record1.setRecord("./Ahmed_Ex2.wav");
+          record1.setRecord("org/javascool/proglets/exploSonore/Ahmed_Ex2.wav");
         else if(i == 5) {
-          record1.setRecord("./Ahmed_Ex2.wav");
+          record1.setRecord("org/javascool/proglets/exploSonore/Ahmed_Ex2.wav");
           record1.applyFilter();
         } else if(i == 6)
           StopAnySound();
