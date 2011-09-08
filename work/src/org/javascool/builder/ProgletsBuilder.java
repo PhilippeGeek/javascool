@@ -8,7 +8,6 @@ package org.javascool.builder;
 import org.javascool.tools.FileManager;
 import org.javascool.tools.Xml2Xml;
 import org.javascool.tools.Pml;
-import org.javascool.core.Java2Class;
 
 import java.io.File;
 import java.io.IOException;
@@ -55,7 +54,7 @@ public class ProgletsBuilder {
             if (FileManager.exists(dir + File.separator + "proglet.pml")) {
 	      boolean found = names == null;
 	      if (names != null)
-		for(String name : names)
+		for(String name : names) 
 		  found |= dir.endsWith(name);
 	      if (found)
                 proglets.add(dir);

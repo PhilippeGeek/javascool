@@ -1,7 +1,6 @@
 # vthierry's ongoing tasks
 #
 # Proglets: tester contruction et programme exemples 
-# * retarder la construction de la proglet à l'ouverture et non au load pour alleger le jar
 # * tester les proglets en popup 
 # * pb : javax/media/opengl/glu/GLUtessellatorCallback enVoiture
 # * voir à ajouter javascool-base.jar au jar de processing pour avoir la compilation sans ./src
@@ -21,8 +20,8 @@ www :
 	firefox http://code.google.com/p/javascool/issues/list
 
 tst1 :
-	ant javascool-proglets.jar
-	/usr/java/jre1.6.0_27/bin/java -jar dist/javascool-proglets.jar
+	ant clean javascool-proglets.jar
+	/usr/java/jre1.6.0_11/bin/java -jar dist/javascool-proglets.jar
 
 tst2 :
 	javac -cp ../sketchbook/.build/jar ../sketchbook/grapheEtChemins/src/grapheEtCheminsFunctions.java

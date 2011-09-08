@@ -19,6 +19,7 @@ import org.javascool.Core;
 import org.javascool.tools.FileManager;
 import org.javascool.tools.Pml;
 import org.javascool.tools.Invoke;
+import org.javascool.widgets.MainFrame;
 
 /** Définit les mécanismes de compilation, exécution, gestion de proglet.
  *
@@ -309,6 +310,7 @@ public class ProgletEngine {
           if (!pml.isDefined("pane-defined")) {
               pml.set("pane-defined", true);
             if (this.isProcessing()) {
+                boolean popup = true;
                 try {
 		  int width = pml.getInteger("width", 500), height = pml.getInteger("height", 500);
                     Applet applet = (Applet) Class.forName("" + pml.getString("name") + "").newInstance();
@@ -316,7 +318,12 @@ public class ProgletEngine {
                     applet.setMinimumSize(new Dimension(width, height));
                     applet.setMaximumSize(new Dimension(width, height));
                     System.err.println("add processing . . ["+width+"x"+height+"] "+applet);
-                    pml.set("java-pane", applet);
+                    if (popup) {
+                        new MainFrame().reset(getName(), getIcon(), width, height, applet);
+                        pml.set("java-pane", null);
+                    }  else {
+                        pml.set("java-pane", applet);
+                    }
                 } catch (Throwable e) {
                    System.err.println("Upps erreur de chargement d'une proglet processing : "+e);
                 }
