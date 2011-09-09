@@ -87,7 +87,7 @@
     <java jar="./dist/javascool-builder.jar" dir="./../sketchbook" fork="true">
       <arg value="-q"/>
       <arg value="-proglets"/>
-      <arg value="${proglets.validated}"/>
+      <arg value="${proglets.processing}"/>
     </java>
     <move file="./../sketchbook/javascool-proglets.jar" todir="./dist"/>
   </target>

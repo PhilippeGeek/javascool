@@ -24,11 +24,13 @@ class record {
     } else if(signal1.sounding)
       signal1.switchOff();
     if(path != null) {
+      try {
       count += 1;
       player = minim.loadFile(path);
       changeValue();
       player.loop();
       sounding = true;
+      } catch(Exception e) { }
     }
   }
   void applyFilter() {
@@ -53,6 +55,7 @@ class record {
     } else if(signal1.sounding)
       signal1.switchOff();
     if(path != null) {
+      try {
       count += 1;
       player = minim.loadFile(path);
       changeValue();
@@ -63,6 +66,7 @@ class record {
         lpf.setFreq(Fc_);
         filtering = true;
       }
+      } catch(Exception e) { }
     }
   }
   void removeFilter() {
