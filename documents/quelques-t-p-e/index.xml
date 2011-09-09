@@ -65,7 +65,7 @@
     <link l="http://www.cnrs.fr/cw/dossiers/dosclim/index.htm"/>
     <link l="http://www.criseclimatique.fr"/>
     <link l="http://www2.cnrs.fr/presse/communique/696.htm"/>
-    <link l="http://www.cnrs.fr/cw/dossiers/dosclim/index.htm"/><
+    <link l="http://www.cnrs.fr/cw/dossiers/dosclim/index.htm"/>
   </tpe>
 
   <tpe id="a-voter" title="Les machines à voter en question." icon="/documents/quelques-t-p-e/voting_machine.png" theme="B"> 
@@ -336,7 +336,7 @@
     <link l="http://interstices.info/display.jsp?id=c_15578"/>
   </tpe>
 
-  <tpe id="cd" title="Comment encoder au mieux un CD ? (les formats, le principe, le son ...)" icon="http://www.voir.ca/blogs/nouvelles_musique/cd.jpg" theme="D">
+  <tpe id="cd" title="Comment encoder au mieux un CD ? (les formats, le principe, le son ...)" icon="http://cdn4.iconfinder.com/data/icons/Web_icons/PNG/128/music.png" theme="D">
     <!--link l="http://www.zdnet.fr/produits/logiciels/audio_video/0,39049729,39161987,00.htm"/-->
     <link l="http://www.ogg-stream.info/Ogg_Vorbis.html"/>
   </tpe>
