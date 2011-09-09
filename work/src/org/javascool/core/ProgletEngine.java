@@ -163,12 +163,8 @@ public class ProgletEngine {
      * @throws IllegalArgumentException Si il y a tentative d'utilisation d'une proglet indéfinie
      */
     public Proglet setProglet(String proglet) {
-        try {
-        if (currentProglet != null && currentProglet.getPane() != null && currentProglet.getPane() instanceof Applet)
-            ((Applet) currentProglet.getPane()).stop();
-        } catch(Throwable e) {
-            System.err.println("Erreur à l'arrêt de l'applet/proglet");
-        }
+        if (currentProglet != null)
+        currentProglet.stop();
         currentProglet = null;
         for (Proglet p : getProglets()) {
             if (p.getName().equals(proglet)) {
@@ -177,12 +173,7 @@ public class ProgletEngine {
         }
         if (currentProglet == null)
             throw new IllegalArgumentException("Tentative d'utilisation d'une proglet indéfinie : "+proglet);
-       try {
-        if (currentProglet.getPane() != null && currentProglet.getPane() instanceof Applet)
-            ((Applet) currentProglet.getPane()).start();
-        } catch(Throwable e) {
-            System.err.println("Erreur au démarrage de l'applet/proglet");
-        }
+        currentProglet.start();
         return currentProglet;
     }
 
@@ -319,12 +310,16 @@ public class ProgletEngine {
                     applet.setMaximumSize(new Dimension(width, height));
                     System.err.println("add processing . . ["+width+"x"+height+"] "+applet);
                     if (popup) {
-                        new MainFrame().reset(getName(), getIcon(), width, height, applet);
+                        popupframe = (new MainFrame() {
+                                @Override
+                            public boolean isClosable() { return false; }
+                        }).reset(getName(), getIcon(), width, height, applet);
                         pml.set("java-pane", null);
                     }  else {
                         pml.set("java-pane", applet);
                     }
                 } catch (Throwable e) {
+                    e.printStackTrace();
                    System.err.println("Upps erreur de chargement d'une proglet processing : "+e);
                 }
             } else {
@@ -336,7 +331,7 @@ public class ProgletEngine {
             }
             return (Component) pml.getObject("java-pane");
         }
-
+        private MainFrame popupframe = null;
         /** Renvoie, si il existe, le translateur de code de la proglet.
          * @return Le translateur de code de la proglet si il existe, sinon null.
          */
@@ -370,6 +365,28 @@ public class ProgletEngine {
          */
         public boolean isProcessing() {
             return pml.getBoolean("processing");
+        }
+        /** Démarre la proglet. */
+        public void start() {
+        if (popupframe != null)
+            popupframe.setVisible(true);
+       try {
+        if (getPane() != null && getPane() instanceof Applet)
+            ((Applet) getPane()).start();
+        } catch(Throwable e) {
+            System.err.println("Erreur au démarrage de l'applet/proglet");
+        }
+        }
+        /** Arrête la proglet. */
+        public void stop() {
+        try {
+        if (getPane() != null && getPane() instanceof Applet)
+            ((Applet) getPane()).stop();
+        } catch(Throwable e) {
+            System.err.println("Erreur à l'arrêt de l'applet/proglet");
+        }
+        if (popupframe != null)
+            popupframe.setVisible(false);
         }
     }
 }

@@ -69,29 +69,13 @@ public class MainFrame extends JFrame {
         setIconImage(image.getImage());
       }
     add(this.pane = pane);
-    if(pane instanceof Applet) {
+    if(pane instanceof Applet)
       ((Applet) pane).init();
-      ((Applet) pane).start();
-    }
     setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
     addWindowListener(new WindowAdapter() {
                         @Override
                         public void windowClosing(WindowEvent e) {
-                          if(isClosable()) {
-                            if(MainFrame.this.pane instanceof Applet) {
-			      try {
-				((Applet) MainFrame.this.pane).stop();
-			      } catch (Throwable e1) { }
-			      try {
-				((Applet) MainFrame.this.pane).destroy();
-			      } catch (Throwable e2) { }
-                            }
-                            e.getWindow().setVisible(false);
-                            e.getWindow().dispose();
-                            frameCount--;
-                            if(frameCount == 0)
-                              System.exit(0);
-                          }
+                            close();
                         }
                       }
                       );
@@ -101,6 +85,8 @@ public class MainFrame extends JFrame {
     else
       setExtendedState(JFrame.MAXIMIZED_BOTH);
     setVisible(true);
+    if(pane instanceof Applet)
+      ((Applet) pane).start();
     if(firstFrame == null)
       firstFrame = this;
     frameCount++;
@@ -135,6 +121,32 @@ public class MainFrame extends JFrame {
    */
   public MainFrame reset(Component pane) {
     return reset(pane.getClass().toString(), null, 0, 0, pane);
+  }
+  /** Ferme la fenêtre principale à partir du programme.
+   * @param force Si true ferme la fenêter même si isClosable() renvoie false.
+   */
+  public void close(boolean force) {
+                          if(force || isClosable()) {
+                            if(MainFrame.this.pane instanceof Applet) {
+			      try {
+				((Applet) MainFrame.this.pane).stop();
+			      } catch (Throwable e1) { }
+			      try {
+				((Applet) MainFrame.this.pane).destroy();
+			      } catch (Throwable e2) { }
+                            }
+                            setVisible(false);
+                            dispose();
+                            frameCount--;
+                            if(frameCount == 0)
+                              System.exit(0);
+                          }
+  }
+  /**
+   * @see #close(boolean)
+   */
+  public void close() {
+      close(false);
   }
   /** Détermine si la fenêtre principale peut-être fermée.
    * @return La valeur true si la fenêtre principale peut-être fermée, sinon false.

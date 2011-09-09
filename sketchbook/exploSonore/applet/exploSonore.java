@@ -175,9 +175,9 @@ public void keyPressed() {
   if(key == '4')
     signal1.setSignal("bruit", 1000, 0.0f, true);
   if(key == 'e')
-    record1.setRecord("./Ahmed_Ex2.wav");
+    record1.setRecord("org/javascool/proglets/exploSonore/Ahmed_Ex2.wav");
   if(key == 'f')
-    record1.setFilter("./Ahmed_Ex2.wav", 500);
+    record1.setFilter("org/javascool/proglets/exploSonore/Ahmed_Ex2.wav", 500);
   if(key == 's')
     StopAnySound();
 }
@@ -195,9 +195,9 @@ public void update(int x, int y) {
         if(i < 4)
           signal1.setSignal(T1[i].value, 1000, 0.0f, true);
         else if(i == 4)
-          record1.setRecord("./Ahmed_Ex2.wav");
+          record1.setRecord("org/javascool/proglets/exploSonore/Ahmed_Ex2.wav");
         else if(i == 5) {
-          record1.setRecord("./Ahmed_Ex2.wav");
+          record1.setRecord("org/javascool/proglets/exploSonore/Ahmed_Ex2.wav");
           record1.applyFilter();
         } else if(i == 6)
           StopAnySound();
@@ -442,11 +442,14 @@ class record {
     } else if(signal1.sounding)
       signal1.switchOff();
     if(path != null) {
+      try {
       count += 1;
+      System.err.println("loading "+path);
       player = minim.loadFile(path);
       changeValue();
       player.loop();
       sounding = true;
+      } catch(Exception e) { }
     }
   }
   public void applyFilter() {
@@ -471,6 +474,7 @@ class record {
     } else if(signal1.sounding)
       signal1.switchOff();
     if(path != null) {
+      try {
       count += 1;
       player = minim.loadFile(path);
       changeValue();
@@ -481,6 +485,7 @@ class record {
         lpf.setFreq(Fc_);
         filtering = true;
       }
+      } catch(Exception e) { }
     }
   }
   public void removeFilter() {

@@ -789,7 +789,7 @@ public class Pml {
   }
   /** Définit la valeur d'un paramètre de ce PML.
    * @param name  Le nom de l'attribut ou l'index de l'élément (sous forme de chaîne ou d'entier).
-   * @param value La valeur du paramètre (en tant que PML, object Java, entier, décimal ou entier).
+   * @param value La valeur du paramètre (en tant que PML, object Java, entier, décimal ou entier). Si null efface la valeur précédente.
    * @return Cet objet, permettant de définir la construction <tt>Pml pml= new Pml().set(..)</tt>.
    */
   public Pml set(String name, Object value) {
@@ -826,9 +826,13 @@ public class Pml {
    * @see #set(String, Object)
    */
   public final Pml set(String name, String value) {
-    Pml v = new Pml();
-    v.reset("\"" + value.replaceAll("\"", "\\\"") + "\"");
-    return set(name, v);
+    if (value == null) {
+      return set(name, (Object) null);
+    } else {
+      Pml v = new Pml();
+      v.reset("\"" + value.replaceAll("\"", "\\\"") + "\"");
+      return set(name, v);
+    }
   }
   /**
    * @see #set(String, Object)
