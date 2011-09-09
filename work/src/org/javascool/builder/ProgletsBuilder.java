@@ -447,6 +447,11 @@ public class ProgletsBuilder {
 		} catch (IllegalArgumentException e) {		  throw new IllegalArgumentException("dans " + new File(doc).getName() + " : " + e.getMessage());
 		}
 	      }
+            // Construit les sources exemples en HTML à partir de java2html
+            {
+                // Lance java2html
+                Jvs2Html.runDirectory(progletDir, progletDir);
+            }
         }
 
         /** Crée la page html de l'applet de la proglet */

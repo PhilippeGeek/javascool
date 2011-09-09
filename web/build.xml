@@ -52,7 +52,7 @@
       <arg line="--rsh='ssh -C' -rl --delete-excluded --exclude .svn/ ../work/dist/javascool-proglets.jar ../work/dist/javascool-builder.jar ${env.GFORGEUSER}@scm.gforge.inria.fr:/home/groups/javascool/htdocs/v4"/>
     </exec>
     <exec os="Linux" executable="wget">
-      <arg line="-q -O - http://javascool.gforge.inria.fr?kezako=niquelekacheux"/>
+      <arg line="-q -O - http://javascool.gforge.inria.fr/v4?kezako=niquelekacheux"/>
     </exec>
     <!-- rsync de index.php en deux temps pour patcher un problème de droit sur le site -->
     <exec os="Linux" executable="rsync">

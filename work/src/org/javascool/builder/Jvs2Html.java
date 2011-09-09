@@ -58,7 +58,7 @@ public class Jvs2Html {
             File dest = new File(destDir);
             String[] fileList = FileManager.list(srcDir);
             for (String file : fileList) {
-                if (file.endsWith(".java")) {
+                if (file.endsWith(".java") || file.endsWith(".jvs") ) {
                     FileManager.save(dest.getCanonicalPath() + File.separator + new File(file).getName() + ".html", Jvs2Html.run(FileManager.load(file)));
                 }
             }
