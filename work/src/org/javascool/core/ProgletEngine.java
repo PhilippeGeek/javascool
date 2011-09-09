@@ -294,10 +294,21 @@ public class ProgletEngine {
             return pml.getBoolean("has-functions");
         }
 
-        /** Renvoie, si il existe, le panneau graphique de la proglet.
+        /** Renvoie, si il existe, le panneau graphique à insérer dans javascool.
          * @return Le panneau graphique de la proglet si il existe, sinon null.
          */
         public Component getPane() {
+           setPane();
+            return (Component) pml.getObject("java-pane");
+        }
+        /** Renvoie, si il existe, le panneau graphique de la proglet.
+         * @return Le panneau graphique de la proglet si il existe, sinon null.
+         */
+        public Component getProgletPane() {
+           setPane();
+           return (Component) pml.getObject("java-proglet-pane");
+        }
+        private void setPane() {
           if (!pml.isDefined("pane-defined")) {
               pml.set("pane-defined", true);
             if (this.isProcessing()) {
@@ -308,7 +319,6 @@ public class ProgletEngine {
                     applet.init();
                     applet.setMinimumSize(new Dimension(width, height));
                     applet.setMaximumSize(new Dimension(width, height));
-                    System.err.println("add processing . . ["+width+"x"+height+"] "+applet);
                     if (popup) {
                         popupframe = (new MainFrame() {
                                 @Override
@@ -318,18 +328,20 @@ public class ProgletEngine {
                     }  else {
                         pml.set("java-pane", applet);
                     }
+                    pml.set("java-proglet-pane", applet);
                 } catch (Throwable e) {
                     e.printStackTrace();
                    System.err.println("Upps erreur de chargement d'une proglet processing : "+e);
                 }
             } else {
                 try {
-                    pml.set("java-pane", (Component) Class.forName("org.javascool.proglets." + pml.getString("name") + ".Panel").newInstance());
+                    Component pane = (Component) Class.forName("org.javascool.proglets." + pml.getString("name") + ".Panel").newInstance();
+                    pml.set("java-pane", pane);
+                    pml.set("java-proglet-pane", pane);
                 } catch (Throwable e) {
                 }
             }
             }
-            return (Component) pml.getObject("java-pane");
         }
         private MainFrame popupframe = null;
         /** Renvoie, si il existe, le translateur de code de la proglet.

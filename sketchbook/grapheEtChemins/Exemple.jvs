@@ -35,18 +35,18 @@ void dump(String what) {
 }
 void main() {
   unbuild();
-  sleep(5000);
+  sleep(1500);
   // Parterre initial
   build();
   dump("initial");
   println("Le node le plus prêt de (10, 10) est le " + getClosestNode(10, 10));
   println("Le node le plus prêt de (50, 50) est le " + getClosestNode(50, 50));
-  sleep(5000);
+  sleep(1500);
   // On détruit un node et un lien
   removeNode("Centre");
   removeLink("Nord", "Ouest");
   dump("amputé");
   // On nettoie avant de finir
-  sleep(5000);
+  sleep(1500);
   unbuild();
 }

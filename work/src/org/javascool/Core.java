@@ -21,7 +21,7 @@ public class Core {
   /** Aide de JVS */
   public static final String help = "org/javascool/macros/memo-macros.htm";
   /** Numéro de révision de l'application.*/
-  public static final String revision = "4.0.704"; // @revision automatiquement mis à jour par ant -f work/build.xml classes
+  public static final String revision = "4.0.846"; // @revision automatiquement mis à jour par ant -f work/build.xml classes
 
   /** Affiche le message de "about". */
   public static void showAboutMessage() {

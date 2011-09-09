@@ -444,7 +444,6 @@ class record {
     if(path != null) {
       try {
       count += 1;
-      System.err.println("loading "+path);
       player = minim.loadFile(path);
       changeValue();
       player.loop();

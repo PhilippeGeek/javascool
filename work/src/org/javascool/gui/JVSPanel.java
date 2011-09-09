@@ -46,8 +46,6 @@ class JVSPanel extends JPanel {
     }
 
     public void closeProglet() {
-        if (ProgletEngine.getInstance().getProglet() != null)
-           ProgletEngine.getInstance().getProglet().stop();
         if (closeAllFiles()) {
             this.removeAll();
             this.setOpaque(true);
@@ -58,7 +56,8 @@ class JVSPanel extends JPanel {
             this.repaint();
             this.revalidate();
             this.repaint();
-        } else {
+        if (ProgletEngine.getInstance().getProglet() != null)
+           ProgletEngine.getInstance().getProglet().stop();
         }
     }
 

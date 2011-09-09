@@ -12,9 +12,9 @@ public class exploSonoreFunctions {
 
   /** Joue un signal de type choisi.
    * @param c : numero du canal à lancer: 1, 2 ou 3.
-   * @param n nom du type: sinus, square, triangle, saw, white noise.
-   * @param f fréquence du signal.
-   * @param a amplitude du signal.
+   * @param n nom du type: "sinus", "carré", "scie", "bruit".
+   * @param f fréquence du signal en Herz.
+   * @param a amplitude du signal entre 0 et 1.
    */
   public static void playSignal(int c, String n, double f, double a) {
     switch(c) {
@@ -31,7 +31,7 @@ public class exploSonoreFunctions {
   }
   /** Joue un enregistrement de son choix.
    * @param path Nom de l'extrait
-   * @param f fréquence de coupure du signal.
+   * @param f fréquence de coupure du signal en Herz.
    */
   public static void playRecord(String path, double frequence) {
     getPanel().record1.setRecord(path);
