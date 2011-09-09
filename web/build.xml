@@ -80,9 +80,9 @@
 
   <target name ="lcheck" depends="build,publish">
     <ant dir="../work" target="javascool-base.jar"/>
-    <echo>LINKCHECK: http://javascool.gforge.inria.fr/v4 > broken-links.log . . </echo>
+    <echo>LINKCHECK: http://javascool.gforge.inria.fr > broken-links.log . . </echo>
     <java classpath="../work/dist/javascool-base.jar" classname="org.javascool.builder.LinkCheck" output="broken-links.log">
-      <arg line="-recursive http://javascool.gforge.inria.fr/v4/"/>
+      <arg line="-recursive http://javascool.gforge.inria.fr"/>
     </java>
   </target>
 

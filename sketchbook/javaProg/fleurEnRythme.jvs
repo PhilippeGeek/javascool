@@ -24,7 +24,7 @@ void main() {
     0, 0, getPane().getWidth(), getPane().getHeight(), 1);
   // On  charge le son
   FlowerSoundBit sound = new FlowerSoundBit();
-  sound.reset("http://javascool.gforge.inria.fr/documents/black-dog.wav");
+  sound.reset("http://javascool.gforge.inria.fr/documents/sketchbook/javaProg/black-dog.wav");
   // On calcule les évènements qui déclenchent des fleurs
   double frequence = 100, period = 0.2, cut = 0;
   sound.events = sound.events(frequence, period, cut);

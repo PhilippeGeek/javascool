@@ -29,7 +29,7 @@ forme et la rotation d'images.
        Passer ensuite en mode proglet, les fonctionnalités précédentes ne
        fonctionnent plus ! Vous devez vous même programmer ces
        fonctionnalités. Il faut pour cela recopier le squelette de
-       programme <l link="http://javascool.gforge.inria.fr/v3/?page=api:proglet/paintbrush/doc-files/Exemple.jvs.html" text="suivant"/>
+       programme <l link="Exemple.jvs.html" text="suivant"/>
        et compléter chaque fonction.
      </p>
      <p>
@@ -50,7 +50,7 @@ forme et la rotation d'images.
      </p>
 
   </div>
-  <div>On pourra partir du programme <l link="http://javascool.gforge.inria.fr/v3/?page=api:proglet/paintbrush/doc-files/Exemple.jvs.html" text="exemple donné ici" />.</div>
+  <div>On pourra partir du programme <l link="Exemple.jvs.html" text="exemple donné ici" />.</div>
   <div class="works">
      <div>
        Compléter la fonction <r>affichePoint</r> qui est utilisée

@@ -1,6 +1,6 @@
 # vthierry's ongoing tasks
 #
-# * Basculement site: virer /home/groups/javascool/htdocs/{index|sketchbook|javascool.jar|sources.zip|index.php} et ln -s v4/index.php .
+# * Basculement site: tester liens
 # * Pb avec enVoiture reste vide, pete tout, exemple pas valide ! (repartir d'une JRE propre pour installer opengl)
 
 ant :
