@@ -1,4 +1,4 @@
-#summary Les points en cours de développement pour finaliser JavaScool v4.
+#summary Les points en cours de développement pour JavaScool v4.
 
  * *[http://code.google.com/p/javascool/issues/list Issues en cours]*
 <wiki:toc max_depth="2" />
@@ -6,6 +6,7 @@
 *Notre planning*
   * Je 1 Sept au soir : JVS4 RC1 partagée avec les co-développeurs
   * Ve 9 Sept au soir : JVS4 RC2 publiée en version principale sur le site 
+  * Après vacances de la Toussaint : JVs4 RC3 avec améliorations demandées par les utilisateurs
 
 ----
 
