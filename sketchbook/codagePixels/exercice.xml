@@ -28,7 +28,7 @@
         <p>}</p>
         <p/>
         <p><r>void main</r>() {</p>
-        <p><T/><r>load</r>("http://javascool.gforge.inria.fr/v3/api/proglet/pixelsetcie/doc-files/doisneaubuffon.jpg");</p>
+        <p><T/><r>load</r>("http://javascool.gforge.inria.fr/documents/sketchbook/codagePixels/doisneaubuffon.jpg");</p>
         <p>}</p>
       </div><div class="ul">
         <div>Le programme principal <r>main</r> charge une belle photo noir et blanc de <l link="http://fr.wikipedia.org/wiki/Doisneau" text="Doisneau"/>.</div>
@@ -89,7 +89,7 @@
         <p>}</p>
         <p/>
         <p><r>void main</r>() {</p>
-        <p><T/><r>load</r>("http://javascool.gforge.inria.fr/v3/api/proglet/pixelsetcie/doc-files/doisneaubuffon.jpg");</p>
+        <p><T/><r>load</r>("http://javascool.gforge.inria.fr/documents/sketchbook/codagePixels/doisneaubuffon.jpg");</p>
         <p><T/><r>for</r>(<r>int</r> n = 0; n &lt; 2; n = n + 1) {</p>
         <p><T/><T/>filtre();</p>
         <p><T/>}</p>
@@ -120,7 +120,7 @@
         <p>}</p>
         <p/>
         <p><r>void main</r>() {</p>
-        <p><T/><r>load</r>("http://javascool.gforge.inria.fr/v3/api/proglet/pixelsetcie/doc-files/doisneaubuffon.jpg");</p>
+        <p><T/><r>load</r>("http://javascool.gforge.inria.fr/documents/sketchbook/codagePixels/doisneaubuffon.jpg");</p>
         <p><T/>filtre();</p>
         <p>}</p>
       </div><div class="ul">

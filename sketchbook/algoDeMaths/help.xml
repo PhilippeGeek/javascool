@@ -35,9 +35,7 @@
     <div><b>Note</b> : quand on clique sur la fenêtre de tracé, manipule les glissoirs de <b>X</b> et <b>Y</b>, ou entre une valeur numérique au clavier, 
     la fonction <r>main</r> est relancée pour mettre à jour le calcul avec ces nouvelles valeurs.</div>
    </div>
-   <div>Un exemple d'utilisation: lors de la <l link="http://javascool.gforge.inria.fr/v3/?page=api:/proglet/exosdemaths/doc-files/the-proglet.htm" text="démonstration"/>, 
-   se tracent une sinusoïde bleue et une exponentielle violette,
-   selon le programme suivant:
+   <div>Un exemple d'utilisation où se tracent une sinusoïde bleue et une exponentielle violette, selon le programme suivant:
    <div class="code">
      <p><r>reset</r>();</p>
      <p><r>for</r>(<r>double</r> x = -1; x &lt;= 1; x += 0.001) {</p>

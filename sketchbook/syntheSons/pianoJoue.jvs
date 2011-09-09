@@ -55,7 +55,6 @@ ActionListener player = new ActionListener() {
     for(int i = 0; i < notes.length; i++)
       if(notes[i].equals(e.getActionCommand())) {
         println("Oh oh vous jouez un «" + notes[i] + "» à la fréquence de " + frequences[i] + "Hz !");
-        // Ici on utilise un http://javascool.gforge.inria.fr/v3/?page=api:/org/javascool/SoundBit.html
         sound.play(frequences[i]);
       }
   }

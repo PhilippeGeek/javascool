@@ -33,7 +33,7 @@ function quizzOpen(quizz) {
 
   /* add close window icon */
   winClose = document.createElement('img');
-  winClose.src = 'http://javascool.gforge.inria.fr/v3/documents/speed-dating-09/close.gif';
+  winClose.src = 'http://javascool.gforge.inria.fr/documents/speed-dating-09/close.gif';
   winClose.className = 'questionWinClose';
   winClose.border = 0;
   winCloseLink.appendChild(winClose);
@@ -91,7 +91,7 @@ function quizzAnswer(answer, response, door) {
 
   /* show clock */
   winTimeImage = document.createElement('img');
-  winTimeImage.src = 'http://javascool.gforge.inria.fr/v3/documents/speed-dating-09/clock.gif';
+  winTimeImage.src = 'http://javascool.gforge.inria.fr/documents/speed-dating-09/clock.gif';
   winTimeImage.className = 'questionWinClock';
   winTimeImage.border= 0;
   winResult.appendChild(winTimeImage);
