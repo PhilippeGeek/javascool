@@ -50,8 +50,7 @@ public class ErrorCatcher {
                                                   s += "</pre><hr>";
                                                   if(uncaughtExceptionAlertOnce == 0)
                                                     Macros.message(s, true);
-                                                  else
-                                                    System.err.println(s);
+						  System.err.println(s);
                                                   uncaughtExceptionAlertOnce++;
                                                 }
                                               }
