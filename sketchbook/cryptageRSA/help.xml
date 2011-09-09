@@ -36,7 +36,7 @@
       <p><c>crypt</c> est le message encrypté sous forme de chiffres.</p>
       <p><c>keys</c> sont les clés, publique et privées, sous forme de vecteur à 3 entrées, comme celui donné par <r>createKeys</r>().</p>
       <p>est retourné le message decrypté en caractères.</p>
-    </div><div class="code">
+    </div><div>
    <div>Un exemple d'utilisation se fait lors du lancement de la proglet avec une fenêtre d'interaction.</div>
    <div>Un exemple de programme d'utilisation est <l class="editor" link="Exemple.jvs" text="disponible ici"/>.</div>
 </div></div>

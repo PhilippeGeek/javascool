@@ -9,10 +9,6 @@ package org.javascool.proglets.syntheSons;
  */
 public class Translator extends org.javascool.core.Translator {
   @Override
-  public String getImports() {
-    return "";
-  }
-  @Override
   public String translate(String code) {
     // Translates the  @tone macro
     return code.replaceAll("@tone:(.*)\\s*;",

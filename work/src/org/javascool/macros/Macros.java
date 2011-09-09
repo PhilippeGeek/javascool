@@ -276,7 +276,7 @@ public class Macros {
     public static < T extends Component> T getProgletPane() {
         Component c = null;
         try {
-            c = ProgletEngine.getInstance().getProglet().getPane();
+            c = ProgletEngine.getInstance().getProglet().getProgletPane();
         } catch (Throwable e) {
             c = PanelApplet.getPane();
         }

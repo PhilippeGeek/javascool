@@ -1,4 +1,4 @@
-package org.javascool.proglets.cryptageRSA;
+package org.javascool.proglets.enVoiture;
 
 /** Définit le traducteur de langage pour cette proglet.
  * 
@@ -7,11 +7,7 @@ package org.javascool.proglets.cryptageRSA;
  */
 public class Translator extends org.javascool.core.Translator {
   @Override
-  public String getImports() {
-    return "import java.math.BigInteger;";
-  }
-  @Override
   public String translate(String code) {
-    return code;
+    return code.replaceAll("\\s(addSpot|getClosestSpot|removeSpot|addRoad|removeRoad|isRoad)\\(", " enVoiture.$1(");
   }
 }
