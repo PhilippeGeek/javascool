@@ -6,7 +6,7 @@
 # * verifer que processing met bien le .class dans org/**/proglets
 # * traiter le problème par une regex dans Translator poru avoir une soluce et documenter
 
-dft : tst1
+dft : tst2
 
 ant : 
 	ant prun
@@ -21,6 +21,9 @@ www :
 tst1 :
 	ant javascool-proglets.jar
 	/usr/java/jre1.6.0_11/bin/java -jar dist/javascool-proglets.jar
+
+tst2: 
+	firefox ../sketchbook/enVoiture/applet/index.html 
 
 ################################################################################################################
 
