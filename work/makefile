@@ -4,8 +4,8 @@
 # * Pb avec enVoiture reste vide, pete tout, exemple pas valide ! (repartir d'une JRE propre pour installer opengl)
 
 ant :
-#	ant prun
-	ant javascool-proglets.app
+	ant prun
+#	ant javascool-proglets.app
 
 
 tst : 
