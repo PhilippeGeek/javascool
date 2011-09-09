@@ -79,8 +79,12 @@ public class MainFrame extends JFrame {
                         public void windowClosing(WindowEvent e) {
                           if(isClosable()) {
                             if(MainFrame.this.pane instanceof Applet) {
-                              ((Applet) MainFrame.this.pane).stop();
-                              ((Applet) MainFrame.this.pane).destroy();
+			      try {
+				((Applet) MainFrame.this.pane).stop();
+			      } catch (Throwable e1) { }
+			      try {
+				((Applet) MainFrame.this.pane).destroy();
+			      } catch (Throwable e2) { }
                             }
                             e.getWindow().setVisible(false);
                             e.getWindow().dispose();

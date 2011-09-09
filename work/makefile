@@ -1,7 +1,7 @@
 # vthierry's ongoing tasks
 #
 # Proglets: tester contruction et programme exemples 
-# * tester les proglets en popup 
+# * tester les proglets en popup : close par chgt activite et pas clic
 # * pb : javax/media/opengl/glu/GLUtessellatorCallback enVoiture
 # * voir à ajouter javascool-base.jar au jar de processing pour avoir la compilation sans ./src
 # * verifer que processing met bien le .class dans org/**/proglets
@@ -20,7 +20,7 @@ www :
 	firefox http://code.google.com/p/javascool/issues/list
 
 tst1 :
-	ant clean javascool-proglets.jar
+	ant javascool-proglets.jar
 	/usr/java/jre1.6.0_11/bin/java -jar dist/javascool-proglets.jar
 
 tst2 :
