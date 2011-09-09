@@ -19,9 +19,9 @@
 
 == Chantier en cours: Proglets  ==
 
-  # RC2: (GM1) Mettre en conformité la proglet jeux2D (sans les collisions)
+  # RC2bis: (GM1) Mettre en conformité la proglet jeux2D (sans les collisions)
 
-  # RC2: (TV1) Mise au point proglets processing
+  # RC2bis: (TV1) Mise au point proglet enVoiture
 
 == Chantier en cours: Web ==
   * R.A.S.
