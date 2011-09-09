@@ -9,28 +9,6 @@
 
 ----
 
-= Chantiers en cours =
-
-==Chantier en cours: Javas'Cool core==
- * R.A.S.
-
-== Chantier en cours: Javas'Cool builder ==
- * R.A.S.
-
-== Chantier en cours: Proglets  ==
-
-  # RC2bis: (GM1) Mettre en conformité la proglet jeux2D (sans les collisions)
-
-  # RC2bis: (TV1) Mise au point proglet enVoiture
-
-== Chantier en cours: Web ==
-  * R.A.S.
-
-== Chantier en cours: plateforme de développement ==
-  * R.A.S.
-
-----
-
 = Développements ultérieurs et/ou en réflexion =
 
 Status: 
@@ -41,7 +19,7 @@ Status:
 
 == Javas'Cool Core ==
 
-  * (`*`1) Ajouter un CRTL+F search à l'éditeur
+  * (`*`1) Ajouter un CRTL+F search/replace à l'éditeur
 
   * (`*`1) Création d'un lanceur .exe et .app pour le lancement de jascool [http://www.excelsior-usa.com/articles/java-to-exe.html ref] (sauf si le jnlp peut gérer les pbs de chargement dynamique)
     * http://informagen.com/JarBundler
@@ -58,15 +36,9 @@ Status:
 
 == Javas'Cool Proglets ==
 
-  * (`*`1) Créer une proglet RS232C interface
-
-  * (`*`2) Créer une proglet interface robotique (voir partenariat http://www.pobot.org).
-
-  * (`*`3) Restaurer `AlgoEditor` et about-algo-editor en proglet
+Voir aussi les *proglets en [http://wiki.inria.fr/sciencinfolycee/JavaScool:FaqD%C3%A9veloppement#Quelles_sont_les_proglets_en_cours_de_d.C3.A9veloppement_.3F développement]* et *en [http://wiki.inria.fr/sciencinfolycee/JavaScool:FaqD%C3%A9veloppement#Quelles_sont_les_proglets_en_projet_.3F projet]*.
 
   * (`*`2) Proposer un plugin netbeans
-
-Voir aussi les proglets en [http://wiki.inria.fr/sciencinfolycee/JavaScool:FaqD%C3%A9veloppement#Quelles_sont_les_proglets_en_cours_de_d.C3.A9veloppement_.3F développement] et en [http://wiki.inria.fr/sciencinfolycee/JavaScool:FaqD%C3%A9veloppement#Quelles_sont_les_proglets_en_projet_.3F projet].
 
 == Javas'Cool Web ==
 
