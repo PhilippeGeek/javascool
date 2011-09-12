@@ -5,8 +5,6 @@
 
 ant :
 	ant prun
-#	ant javascool-proglets.app
-
 
 tst : 
 	ant javascool-proglets.jar ; /usr/java/jre1.6.0_11/bin/java -jar dist/javascool-proglets.jar
