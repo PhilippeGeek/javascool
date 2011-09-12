@@ -137,12 +137,12 @@
     </div>Nous avons ainsi <i>structuré</i> notre code.    
   </div>
   <div title="A propos des fonctions que nous connaissons déja"> Nous connaissons déjà : <div class="ul">
-    <div>La fonction <b><r>String</r> <r>readString</r>() ;</b> qui renvoie une chaine de caractère entrée au clavier par l'utilisateur : <div class="ul">
+    <div>La fonction <b><r>readString</r>() ;</b> qui renvoie une chaine de caractère entrée au clavier par l'utilisateur : <div class="ul">
       <div>Cette fonction n'a pas d'argument en entrée (donc il n'y a rien entre les parenthèses), puisque nous n'avons besoin de lui passer aucun paramètre,
       tandis que l'entrée (par l'utilisateur) est <i>externe</i> au programme.</div>
       <div>Cette fonction renvoie une valeur : la chaine lue sur le clavier.</div>
     </div></div>
-    <div>La fonction <b><r>void</r> <r>println</r>(<r>String</r> s);</b> 
+    <div>La fonction <b><r>println</r>();</b> 
       qui imprime une chaine de caractère en sortie pour l'utilisateur : <div class="ul"> 
       <div>Cette fonction a un argument en entrée, la chaine de caratères, notée ici <b>s</b>, qui doit être imprimée.</div>
       <div>Cette fonction ne renvoie aucun résultat en sortie, puisque la sortie est <i>externe</i> au programme (en affichant à l'écran). C'est le mot <r>void</r>, 

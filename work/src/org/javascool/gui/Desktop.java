@@ -5,7 +5,6 @@
  *********************************************************************************/
 package org.javascool.gui;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.net.URL;
 import javax.swing.JFrame;
@@ -182,4 +181,10 @@ public class Desktop {
     public void openBrowserTab(String url, String name) {
         JVSWidgetPanel.getInstance().openWebTab(url, name);
     }
+
+    /** Affiche la console. */
+    public void focusOnConsolePanel() {
+      JVSWidgetPanel.getInstance().focusOnConsolePanel();
+    }
+
 }

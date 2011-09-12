@@ -6,6 +6,7 @@
 
 package org.javascool.macros;
 
+import org.javascool.gui.Desktop;
 import org.javascool.widgets.Console;
 
 /** Cette factory contient des fonctions générales rendues visibles à l'utilisateur de proglets.
@@ -20,7 +21,9 @@ public class Stdout {
   private Stdout() {}
 
   /** Affiche dans la console une chaîne de caractères ou la représentation textuelle d'un objet sur la console.
+   * - Cette fonction ne change pas le focus de javascool.
    * @param string La chaine ou l'objet à afficher sous sa représentation textuelle.
+   * @see #println(String)
    */
   public static void echo(String string) {
     System.out.println(string);
@@ -49,10 +52,13 @@ public class Stdout {
   public static void echo(Object string) {
     echo("" + string);
   }
-  /**
+  /** Affiche dans la console une chaîne de caractères ou la représentation textuelle d'un objet sur la console.
+   * - Cette fonction ramène le focus de javascool sur la console.
+   * @param string La chaine ou l'objet à afficher sous sa représentation textuelle.
    * @see #echo(String)
    */
   public static void println(String string) {
+    Desktop.getInstance().focusOnConsolePanel();
     System.out.println(string);
   }
   /**
