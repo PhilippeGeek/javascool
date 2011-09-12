@@ -118,7 +118,7 @@
         <p><r>println</r>(<v>Réponse 8 = </v> + (equal(<v>toto</v>, <v>titi</v>) <r>||</r> 14 <r>&gt;</r> 13));</p>
       </div> et donner une phrase explicative pour chaque réponse.</div>
     </div>
-    <div class="center">Pour approfondir le sujet,  on peut travailler sur des <l link="../../exosdemaths/doc-files/sujet-appli-booleen.htm" text="mécanismes logiques"/>.</div>
+    <div class="center">Pour approfondir le sujet,  on peut travailler sur des <l link="http://javascool.gforge.inria.fr/documents/sujets-mathinfo/sujet-appli-booleen.htm" text="mécanismes logiques"/>.</div>
     </div>
   </div>
   
