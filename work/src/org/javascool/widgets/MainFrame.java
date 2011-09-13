@@ -45,6 +45,7 @@ public class MainFrame extends JFrame {
     }
   }
   static {
+    System.setProperty("file.encoding", "UTF-8");
     setLookAndFeel();
   }
 

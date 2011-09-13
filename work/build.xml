@@ -290,7 +290,7 @@
     </java>
   </target>
   
-  <target name="clean">
+  <target name="clean">  
     <delete dir="./build/classes"/> 
     <delete dir="./dist/proglets"/> 
     <delete dir="./dist/javadoc"/>  
