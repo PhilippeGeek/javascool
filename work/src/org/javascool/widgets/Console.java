@@ -51,6 +51,7 @@ public class Console extends JPanel {
     outputPane.setContentType("text/plain; charset=utf-8");
     outputPane.setEditable(false);
     // - marche pas car c'est la couleur du document outputPane.setBackground(new Color(200, 200, 200));
+    // pour recuperer le fond de couleur il faut passer à l'html en encapsulant le texte dans <html><body bgcolor="#e0e0e0"><pre>$0</pre></body></html>
     JScrollPane scrolledOutputPane = new JScrollPane(outputPane);
     this.add(scrolledOutputPane, BorderLayout.CENTER);
     // Construit la zone des bouttons
