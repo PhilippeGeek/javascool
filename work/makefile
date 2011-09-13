@@ -2,6 +2,9 @@
 #
 # * Pb avec enVoiture reste vide, pete tout, exemple pas valide ! (repartir d'une JRE propre pour installer opengl)
 
+oub :
+	cd ../web ; ant publish-javascool-proglets
+
 ant :
 	ant prun
 
