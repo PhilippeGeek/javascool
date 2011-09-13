@@ -146,7 +146,7 @@ public class ProgletsBuilder {
                     DialogFrame.setUpdate("Construction de " + name + " 4/4", level += up);
                     build.createHtmlApplet();
                     if (webdoc)
-                        build.javadoc();
+                        build.javadoc(jarDir);
                 }
             }
             // Lancement de la compilation de tous les java des proglets
@@ -286,18 +286,16 @@ public class ProgletsBuilder {
   }
 
     /** Construction de javadoc avec sources en java2html. */
-    private static void javadoc(String name, String srcDir, String apiDir) throws IOException {
+    private static void javadoc(String name, String classPath, String srcDir, String apiDir) throws IOException {
         apiDir = new File(apiDir).getCanonicalPath();
         new File(apiDir).mkdirs();
         String files[] = FileManager.list(srcDir, ".*\\.java$");
         if (files.length > 0) {
             {
                 // Construit l'appel à javadoc
-                String argv = "-quiet\t-classpath\t" + Core.javascoolJar() + "\t-d\t" + apiDir
-		  + "\t-link\thttp://download.oracle.com/javase/6/docs/api"      // Java API
-		        + "\t-link\thttp://javadoc.fifesoft.com/rsyntaxtextarea" // Javascool editor API
-		        + "\t-link\thttp://users.frii.com/~jarvi/rxtx/doc"       // proglet.commSerie RXTX API
-                        + "\t-public\t-author\t-windowtitle\tJava's Cool v4\t-doctitle\tJava's Cool v4\t-version\t-nodeprecated\t-nohelp\t-nonavbar\t-notree\t-charset\tUTF-8";
+                String argv = "-quiet\t-classpath\t" + classPath + "\t-d\t" + apiDir
+		  + "\t-link\thttp://download.oracle.com/javase/6/docs/api"
+		  + "\t-public\t-author\t-windowtitle\tJava's Cool v4\t-doctitle\tJava's Cool v4\t-version\t-nodeprecated\t-nohelp\t-nonavbar\t-notree\t-charset\tUTF-8";
                 for (String f : files) {
                     argv += "\t" + f;
                 }
@@ -469,10 +467,10 @@ public class ProgletsBuilder {
         }
 
         /** Génère la javadoc de la proglet */
-        public void javadoc() {
+        public void javadoc(String classPath) {
             try {
                 log("Création de la javadoc pour " + name, true);
-                ProgletsBuilder.javadoc(name, progletDir, progletDir + File.separator + "api");
+                ProgletsBuilder.javadoc(name, classPath, progletDir, progletDir + File.separator + "api");
             } catch (IOException ex) {                throw new RuntimeException("Erreur lors de la génération de la javadoc");
             }
         }
