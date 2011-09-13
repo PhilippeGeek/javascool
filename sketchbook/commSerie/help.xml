@@ -1,0 +1,20 @@
+<div title="Communication par port série RS232">
+  <p>ATTENTION: CETTE PROGLET EST EN COURS DE CONSTRUCTION/VALIDATION NE PAS UTILISER !!!</p>
+
+  <p>Cette proglet permettra la mise en œuvre d'une IHM utilisant une liaison série de type RS232 dans le cadre de travaux pratiques puis de projet.</p>
+
+  <p>Voir le travail de <l link="http://javascool.gforge.inria.fr/documents/sketchbook/commSerie/SpecProglet.odt" text="spécification"/> pour plus d'informations</p>
+
+  <p>Toutes les instructions disponibles sont documentées <l link="http://javascool.gforge.inria.fr/?page=proglets&amp;action=show&amp;id=commSerie&amp;helpFile=api/org/javascool/proglets/commSerie/SerialInterface.html" text="ici"/></p>
+
+  <p>à suivre . . </p>
+
+
+  <div title="Installation d'une interface série RS2323C"><div class="ul">
+    <p>Sous windows : installer le fichier <l link="http://javascool.gforge.inria.fr/documents/sketchbook/commSerie/lib/rxtxSerial.dll" text="rxtxSerial.dll"/> dans le répertoire <i>Java</i> de la machine, c'est à dire, normalement <c>c:\Program Files\Java\jre6(ou équivalent)\bin</c>.</p>
+    <p>Sous LinuX : installer le fichier <l link="http://javascool.gforge.inria.fr/documents/sketchbook/commSerie/lib/librxtxSerial.so" text="librxtxSerial.so"/> 
+    dans le répertoire <i>Java</i> de la machine, c'est à dire, normalement <c>. /usr/local/java/default(ou équivalent)/lib/i386</c>.</p>
+    <p>Sous MacOS : installer le fichier <l link="http://javascool.gforge.inria.fr/documents/sketchbook/commSerie/lib/librxtxSerial.jnilib" text="librxtxSerial.jnilib"/> dans le répertoire <i>Java</i> de la machine, comme en LinuX.</p>
+  </div> Se faire aider du responsable informatique si besoin. L'utilisation de <l link="http://www.jcontrol.org" text="RXTX"/> neccéssite aussi une jarre Java <c>RXTXcomm.jar</c> qui est intégrée à Javasccool.</div>
+
+</div>

@@ -6,9 +6,10 @@ package org.javascool.widgets;
 
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
-import javax.swing.JEditorPane;
+import javax.swing.JTextArea;
 
 // redirectSystemStreams
 import java.io.OutputStream;
@@ -26,7 +27,7 @@ public class Console extends JPanel {
   private static final long serialVersionUID = 1L;
 
   /** Zone d'affichage */
-  private JEditorPane outputPane;
+  private JTextArea outputPane;
   /** Barre de menu */
   private ToolBar toolbar;
   /** Zone d'affichage du statut. */
@@ -47,11 +48,10 @@ public class Console extends JPanel {
     BorderLayout layout = new BorderLayout();
     this.setLayout(layout);
     // Construit la zone d'affichage
-    outputPane = new JEditorPane();
-    outputPane.setContentType("text/plain; charset=utf-8");
+    outputPane = new JTextArea();
     outputPane.setEditable(false);
-    // - marche pas car c'est la couleur du document outputPane.setBackground(new Color(200, 200, 200));
-    // pour recuperer le fond de couleur il faut passer à l'html en encapsulant le texte dans <html><body bgcolor="#e0e0e0"><pre>$0</pre></body></html>
+    float[] bg = Color.RGBtoHSB(200, 200, 200, null);
+    outputPane.setBackground(Color.getHSBColor(bg[0], bg[1], bg[2]));
     JScrollPane scrolledOutputPane = new JScrollPane(outputPane);
     this.add(scrolledOutputPane, BorderLayout.CENTER);
     // Construit la zone des bouttons
@@ -106,7 +106,7 @@ public class Console extends JPanel {
    * @param text Le texte à afficher.
    */
   public void print(String text) {
-    outputPane.setText(outputPane.getText()+text);
+    outputPane.append(text);
   }
   /** Renvoie le contenu actuel de la console.
    * @return Ce qui affiché dans la console.

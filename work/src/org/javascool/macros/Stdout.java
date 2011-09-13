@@ -26,7 +26,7 @@ public class Stdout {
    * @see #println(String)
    */
   public static void echo(String string) {
-    System.out.println(string);
+      Console.getInstance().print(string+"\n");
   }
   /**
    * @see #echo(String)
@@ -59,7 +59,8 @@ public class Stdout {
    */
   public static void println(String string) {
     Desktop.getInstance().focusOnConsolePanel();
-    System.out.println(string);
+    System.err.println("printing : \""+string+"\"");
+      Console.getInstance().print(string+"\n");
   }
   /**
    * @see #echo(String)

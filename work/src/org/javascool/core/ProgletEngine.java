@@ -15,6 +15,7 @@ import org.javascool.macros.Macros;
 import java.io.File;
 import java.util.Collections;
 import java.util.Comparator;
+import javax.swing.JFrame;
 import org.javascool.Core;
 import org.javascool.tools.FileManager;
 import org.javascool.tools.Pml;
@@ -336,7 +337,11 @@ public class ProgletEngine {
             } else {
                 try {
                     Component pane = (Component) Class.forName("org.javascool.proglets." + pml.getString("name") + ".Panel").newInstance();
-                    pml.set("java-pane", pane);
+                    if (pane instanceof JFrame) {
+                     ((JFrame) pane).setVisible(true);
+                     pml.set("java-pane", null);
+                    } else
+                        pml.set("java-pane", pane);
                     pml.set("java-proglet-pane", pane);
                 } catch (Throwable e) {
                 }
