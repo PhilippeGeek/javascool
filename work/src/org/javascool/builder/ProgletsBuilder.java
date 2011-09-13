@@ -294,7 +294,9 @@ public class ProgletsBuilder {
             {
                 // Construit l'appel à javadoc
                 String argv = "-quiet\t-classpath\t" + Core.javascoolJar() + "\t-d\t" + apiDir
-                        + "\t-link\thttp://download.oracle.com/javase/6/docs/api\t-link\thttp://javadoc.fifesoft.com/rsyntaxtextarea"
+		  + "\t-link\thttp://download.oracle.com/javase/6/docs/api"      // Java API
+		        + "\t-link\thttp://javadoc.fifesoft.com/rsyntaxtextarea" // Javascool editor API
+		        + "\t-link\thttp://users.frii.com/~jarvi/rxtx/doc"       // proglet.commSerie RXTX API
                         + "\t-public\t-author\t-windowtitle\tJava's Cool v4\t-doctitle\tJava's Cool v4\t-version\t-nodeprecated\t-nohelp\t-nonavbar\t-notree\t-charset\tUTF-8";
                 for (String f : files) {
                     argv += "\t" + f;
