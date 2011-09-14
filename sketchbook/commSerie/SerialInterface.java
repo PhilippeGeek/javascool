@@ -88,15 +88,15 @@ public class SerialInterface {
    * @param stop Le nombre de bits de stop : 1 (par défaut), 1.5 ou 2.
    * @return Cet objet permettant la construction <tt>new SerialInterface().setStop(..</tt>.
    */
-  public SerialInterface setStop(float stop) {
+  public SerialInterface setStop(double stop) {
     this.stop = stop;
     return this;
   }
   /** Renvoie le nombre de bits de stop du port série. */
-  public float getStop() {
+  public double getStop() {
     return stop;
   }
-  private float stop = 1;
+  private double stop = 1;
 
   /** Ouvre le port série avec les paramètres actuels. 
    * @return Cet objet permettant la construction <tt>new SerialInterface().set*(.. ). open()</tt>.
@@ -112,7 +112,7 @@ public class SerialInterface {
 	  input = port.getInputStream();
 	  data = new ArrayList<Integer>();
 	  port.setSerialPortParams(rate, size, 
-				   stop == 2f ? SerialPort.STOPBITS_2 : stop == 1.5f ? SerialPort.STOPBITS_1_5 : SerialPort.STOPBITS_1, 
+				   stop == 2.0 ? SerialPort.STOPBITS_2 : stop == 1.5 ? SerialPort.STOPBITS_1_5 : SerialPort.STOPBITS_1, 
 				   parity == 'E' ? SerialPort.PARITY_EVEN : parity == 'O' ? SerialPort.PARITY_ODD : SerialPort.PARITY_NONE);
 	  port.addEventListener(new SerialPortEventListener() {
 	      synchronized public void serialEvent(SerialPortEvent serialEvent) {
@@ -121,7 +121,7 @@ public class SerialInterface {
 		    while (input.available() > 0) 
 		      data.add(input.read());
 		  } catch(Exception e) {
-		    System.out.println("Erreur à la réception d'un caractère sur le port série "+this+" : " + e);
+		    System.out.println("Erreur à la réception d'un caractère sur le port série \n\t"+this+"\n\t : " + e);
 		  }
 		}
 	      }});
@@ -131,7 +131,7 @@ public class SerialInterface {
       throw new IOException("Impossible d'ouvrir un port série de nom :" + name);
     } catch(Exception e) {
       output = null; input = null; data = null; port = null;
-      System.out.println("Erreur à l'ouverture du port série "+this+" : " + e);
+      System.out.println("Erreur à l'ouverture du port série \n\t"+this+"\n\t : " + e);
     }
     return this;
   }
@@ -148,7 +148,7 @@ public class SerialInterface {
       if (port != null) { port.close(); port = null; }
     } catch(Exception e) {
       output = null; input = null; data = null; port = null;
-      System.out.println("Erreur à la fermeture du port série "+this+" : " + e);
+      System.out.println("Erreur à la fermeture du port série \n\t"+this+"\n\t : " + e);
     }
   }
 
@@ -165,11 +165,11 @@ public class SerialInterface {
   public void write(int value){ 
     try {
       if (output == null) 
-	throw new IOException("Impossible décire sur le port série "+this+" qui est fermé ou en erreur");
+	throw new IOException("Port série fermé ou en erreur");
       output.write(value & 0xff);
       output.flush(); 
     } catch(Exception e) {
-      System.out.println("Erreur à l'écriture de '"+value+"' sur le port série "+this+" : " + e);
+      System.out.println("Erreur à l'écriture de '"+value+"' sur le port série \n\t"+this+"\n\t : " + e);
     }
   }
 
@@ -189,7 +189,7 @@ public class SerialInterface {
   /** Renvoie une description des paramètres du port série. */
   public String toString() {
     return "<port name=\""+name+"\" rate=\""+rate+"\" parity=\""+parity+"\" size=\""+size+"\" stop=\""+stop+
-      "\" open=\""+isOpen()+"\"input-buffer-size =\""+(data == null ? 0 : data.size())+"\"/>";
+      "\" open=\""+isOpen()+"\" input-buffer-size =\""+(data == null ? 0 : data.size())+"\"/>";
   }
 
   /** Renvoie la liste des noms de ports séries disponibles. */
@@ -203,7 +203,9 @@ public class SerialInterface {
     return names.toArray(new String[names.size()]);
   }
 
-  /** Renvoie la liste des des noms de ports séries disponibles ce qui teste l'installation des librairies. */
+  /** Renvoie la liste des des noms de ports séries disponibles ce qui teste l'installation des librairies. 
+   * @param usage <tt>java -cp javascool-proglets.jar org.javascool.proglets.commSerie.SerialInterface</tt>
+   */
   public static void main(String usage[]) {
     String names[] =  getPortNames();
     {
