@@ -11,7 +11,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-/** Définit un panneau graphique permettant de piloter un interface série.
+/** Définit un panneau graphique permettant de piloter une interface série.
  * <p><img src="http://javascool.gforge.inria.fr/documents/sketchbook/commSerie/screenshot.png" alt="screenshot"/></p>
  * @see <a href="SerialInterfacePanel.java.html">source code</a>
  * @serial exclude
@@ -20,7 +20,7 @@ public class SerialInterfacePanel extends JPanel {
   private static final long serialVersionUID = 1L;
 
   /** Construit un panneau de contôle pour l'interface série donné.
-   * @param serialInterface Interface série à piloter. Si null, crée un interface série.
+   * @param serialInterface Interface série à piloter. Si null, crée une interface série.
    */
   public SerialInterfacePanel(SerialInterface serialInterface) {
     serial = serialInterface == null ? new SerialInterface() : serialInterface;
