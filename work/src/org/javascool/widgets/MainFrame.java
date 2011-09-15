@@ -45,12 +45,6 @@ public class MainFrame extends JFrame {
     }
   }
   static {
-    // @todo Tentative de regler le pb de l'encoding
-    {
-      System.err.println("Default charset: "+java.nio.charset.Charset.defaultCharset());
-      System.setProperty("file.encoding", "UTF-8");
-      System.err.println("Changed charset: "+java.nio.charset.Charset.defaultCharset());
-    }
     setLookAndFeel();
   }
 

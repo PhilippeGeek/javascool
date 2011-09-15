@@ -130,8 +130,8 @@ public class HtmlDisplay extends JPanel {
    */
   public HtmlDisplay setText(String text) {
     try {
-      return setPage(stringPrefix + URLEncoder.encode(text, "UTF-8"));
-    } catch(java.io.UnsupportedEncodingException e) { throw new IllegalStateException("UTF-8 n'est pas reconnu comme encodage: (" + e + ") c'est un bug Java !");
+      return setPage(stringPrefix + URLEncoder.encode(text, "utf-8"));
+    } catch(java.io.UnsupportedEncodingException e) { throw new IllegalStateException("Encodage non reconnu: (" + e + ") c'est un bug Java !");
     }
   }
   /** Met à jour les boutons selon l'état de la pile. */
@@ -212,8 +212,8 @@ public class HtmlDisplay extends JPanel {
       try {
         if(push)
           urls.push(location);
-        pane.setText(URLDecoder.decode(location.substring(stringPrefix.length()), "UTF-8"));
-      } catch(java.io.UnsupportedEncodingException e) { throw new IllegalStateException("UTF-8 n'est pas reconnu comme encodage: (" + e + ") c'est un bug Java !");
+        pane.setText(URLDecoder.decode(location.substring(stringPrefix.length()), "utf-8"));
+      } catch(java.io.UnsupportedEncodingException e) { throw new IllegalStateException("Encodage non reconnu : (" + e + ") c'est un bug Java !");
       }
     } else if(location.startsWith(editorPrefix)) {  // Affichage dans editeur JavaScool
       org.javascool.gui.Desktop.getInstance().openFile(toURL(location.substring(editorPrefix.length())));

@@ -25,7 +25,7 @@ import java.util.jar.JarEntry;
 import java.util.Enumeration;
 
 /** Met à disposition des fonctions de gestion de fichiers locaux et distants.
- * <p>Lit/Ecrit un contenu textuel local ou distant en tenant compte de l'encodage UTF-8.</p>
+ * <p>Lit/Ecrit un contenu textuel local ou distant en tenant compte de l'encodage local.</p>
  *
  * @see <a href="FileManager.java.html">code source</a>
  * @serial exclude
@@ -36,7 +36,7 @@ public class FileManager {
     private FileManager() {
     }
 
-    /** Lit un contenu textuel local ou distant en tenant compte de l'encodage UTF-8.
+    /** Lit un contenu textuel local ou distant en tenant compte de l'encodage local.
      *
      * @param location Une URL (Universal Resource Location) de la forme: <div id="load-format"><table align="center">
      * <tr><td><tt>http:/<i>path-name</i></tt></td><td>pour aller chercher le contenu sur un site web</td></tr>
@@ -51,7 +51,7 @@ public class FileManager {
      */
     public static String load(String location) {
         try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(Macros.getResourceURL(location, true).openStream(),"UTF-8"), 10240);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(Macros.getResourceURL(location, true).openStream()), 10240);
             StringBuilder buffer = new StringBuilder();
             char chars[] = new char[10240];
             while (true) {
@@ -68,7 +68,7 @@ public class FileManager {
         }
     }
 
-    /** Ecrit un contenu textuel local ou distant en tenant compte de l'encodage UTF-8.
+    /** Ecrit un contenu textuel local ou distant en tenant compte de l'encodage local.
      *
      * @param location @optional<"stdout:"> Une URL (Universal Resource Location) de la forme: <div id="save-format"><table>
      * <tr><td><tt>ftp:/<i>path-name</i></tt></td><td>pour sauver sur un site FTP.</td></tr>
@@ -117,7 +117,7 @@ public class FileManager {
         URL url = new URL(location);
         URLConnection connection = url.openConnection();
         connection.setDoOutput(true);
-        OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream(), "UTF-8");
+        OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
         if (url.getProtocol().equals("mailto")) {
             int i = url.toString().indexOf("?subject=");
             if (i != -1) {
@@ -135,7 +135,7 @@ public class FileManager {
         }
         if (backup && file.exists())
             backup(file);
-        return new OutputStreamWriter(new FileOutputStream(location), "UTF-8");
+        return new OutputStreamWriter(new FileOutputStream(location));
     }
     /** Mécanisme de backup. */
     private static void backup(File file) {

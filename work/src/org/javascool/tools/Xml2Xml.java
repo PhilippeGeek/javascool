@@ -102,7 +102,7 @@ public class Xml2Xml {
   }
 
   /** Convertit une chaîne en HTML en chaîne XHTML.
-   * <p>Elimine les entitées HTML connues (tout n'est pas implémenté) et passe à de l'accentuation UTF-8,
+   * <p>Elimine les entitées HTML connues (tout n'est pas implémenté) et passe à de l'accentuation liée au codage local,
    * élimine les constructions (commentaires, instructions) qui ne sont pas structures logiques XML et
    * ferme les balises pur avoir une syntaxe bien formée.</p>
    * <p>C'est une commande "fragile" au sens où un text HTML mal formé ne sera pas correctement traduit.</p>

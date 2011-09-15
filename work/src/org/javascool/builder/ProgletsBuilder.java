@@ -295,7 +295,7 @@ public class ProgletsBuilder {
                 // Construit l'appel à javadoc
                 String argv = "-quiet\t-classpath\t" + classPath + "\t-d\t" + apiDir
 		  + "\t-link\thttp://download.oracle.com/javase/6/docs/api"
-		  + "\t-public\t-author\t-windowtitle\tJava's Cool v4\t-doctitle\tJava's Cool v4\t-version\t-nodeprecated\t-nohelp\t-nonavbar\t-notree\t-charset\tUTF-8";
+		  + "\t-public\t-author\t-windowtitle\tJava's Cool v4\t-doctitle\tJava's Cool v4\t-version\t-nodeprecated\t-nohelp\t-nonavbar\t-notree\t-charset\tutf-8";
                 for (String f : files) {
                     argv += "\t" + f;
                 }
