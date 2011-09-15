@@ -1,17 +1,8 @@
 package org.javascool.gui;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringWriter;
-import java.io.Writer;
 import java.util.HashMap;
 import java.util.UUID;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
@@ -74,44 +65,6 @@ class JVSFileTabs extends JVSTabs {
      */
     public String open(String url) {
         return this.openFile(new JVSFile(url, true));
-    }
-    // @todo Ou mettre cette fonction
-
-    private String convertStreamToString(InputStream is)
-            throws IOException {
-        if (is != null) {
-            Writer writer = new StringWriter();
-
-            char[] buffer = new char[1024];
-            try {
-                Reader reader = new BufferedReader(
-                        new InputStreamReader(is, "UTF-8"));
-                int n;
-                while ((n = reader.read(buffer)) != -1) {
-                    writer.write(buffer, 0, n);
-                }
-            } finally {
-                is.close();
-            }
-            return writer.toString();
-        } else {
-            return "";
-        }
-    }
-
-    /** Open a new empty Java's cool file in tmp
-     * @param stream The url to the file (used by File())
-     * @return The file's tempory id in editor tabs
-     */
-    public String open(InputStream stream) {
-        String s;
-        try {
-            s = this.openFile(new JVSFile(convertStreamToString(stream)));
-            return s;
-        } catch (IOException ex) {
-            Logger.getLogger(JVSFileTabs.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
     }
 
     /** Open a file

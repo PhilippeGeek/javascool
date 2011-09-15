@@ -79,7 +79,7 @@ public class UserConfig {
         getProperties().setProperty(name, value);
         try {
             new File(getApplicationFolder()).mkdirs();
-            properties.storeToXML(new FileOutputStream(getApplicationFolder() + configFile), null, "UTF-8");
+            properties.storeToXML(new FileOutputStream(getApplicationFolder() + configFile), "JavaS'Cool user configuration");
         } catch (Exception e) {
             throw new RuntimeException("Erreur de la sauvegarde de la configuration de l'application " + applicationName + " dans le fichier " + getApplicationFolder() + configFile);
         }
