@@ -19,6 +19,7 @@ En cas d'échec voir la section "Plus d'informations" en bas de cette page.</p>
 <p>Téléchargez Java's Cool au format <tt>JAR</tt> exécutable <b><a href="javascool-proglets.jar">ici</a></b>, en choisissant l'option «ouvrir avec Java».</p>
     <div class="label2">Mac OS</div>
 <p>Téléchargez Java's Cool au format <tt>JAR</tt> exécutable <b><a href="javascool-proglets.jar">ici</a></b>, en choisissant l'option «ouvrir avec Java».</p>
+<p>Ou utiliser le dossier application <tt>.app</tt> proposé <b><a href="javascool-proglets.app.zip">ici</a></b>.</p>
     <div class="label2">Linux</div>
 	<p>Sous linux, téléchargez Java's Cool au format <tt>JAR</tt> <b><a href="javascool-proglets.jar">ici</a></b>, puis suivez les instructions ci-dessous : 
     <table><tr><td><img src="images/screen1.png" alt="screenshot" style="width: 300px; height: auto;"/></td><td>
