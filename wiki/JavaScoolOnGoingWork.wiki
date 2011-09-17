@@ -27,6 +27,8 @@ Status:
 
   * (`*`3) Implementer le fait qu'on ajoute @proglet:nom-de-la-proglet.
     
+  * (`*`3) Intégrer un installateur des .dll/.so/.jnilib dans le buidler pour les proglets à extensions.
+    
   * (`*`4) Virer le `HtmlDisplay` HTML3 et trouver un bon browser
 
 == Javas'Cool Builder ==
