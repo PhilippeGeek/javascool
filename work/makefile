@@ -1,5 +1,6 @@
 # vthierry's ongoing tasks
 #
+# * Installer java 7 et voir si proglets arrivent 
 # * Sur certaines plateformes eepc les proglets ne sont paas trouvees !!!!
 # * Pb avec enVoiture reste vide, pete tout, exemple pas valide ! (repartir d'une JRE propre pour installer opengl)
 
