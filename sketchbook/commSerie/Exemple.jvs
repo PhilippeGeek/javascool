@@ -1,0 +1,14 @@
+import org.javascool.proglets.commSerie.*;
+
+void main(){
+  // Récupère le panel de la proglet
+  JPanel panel = getPane();
+  // Efface tout ce qui est dans le panel de la proglet	
+  panel.removeAll();	  
+  // Ajoute l'interface de contrôle
+  panel.add("North", new SerialInterfacePanel());
+  // Ajoute l'interface de du convertisseur
+  panel.add("South", new ConvertisseurPanel());
+  // Mise à jour de l'affichage
+  panel.revalidate();
+}
