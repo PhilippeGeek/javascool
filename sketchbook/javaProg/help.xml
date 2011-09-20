@@ -7,9 +7,9 @@
   dont on trouve facilement des <l link="http://download.oracle.com/javase/tutorial/ui/features/components.html" text="exemples illustrés"/> 
   et un <l link="http://java.sun.com/docs/books/tutorial/uiswing" text="tutoriel complet"/>.</p></p>
 
-  <div>Plus précisément la fonction <r>getSwingPane</r> renvoie le panneau Java dans lequel l'interface graphique sera défini, par exemple avec la construction:
+  <div>Plus précisément la fonction <r>getPane</r> renvoie le panneau Java dans lequel l'interface graphique sera défini, par exemple avec la construction:
     <div class="code">
-      <p><r>JLayeredPane</r> pane = <r>getSwingPane()</r>;</p>
+      <p><r>JLayeredPane</r> pane = <r>getPane()</r>;</p>
     </div>
     qui donne à la variable <c>pane</c> la valeur du <l link="http://download.oracle.com/javase/6/docs/api/javax/swing/JLayeredPane.html" text="JLayeredPane"/> 
     où se feront les dessins.</div>

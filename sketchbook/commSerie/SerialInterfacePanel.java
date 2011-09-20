@@ -24,6 +24,7 @@ public class SerialInterfacePanel extends JPanel {
    */
   public SerialInterfacePanel(SerialInterface serialInterface) {
     serial = serialInterface == null ? new SerialInterface() : serialInterface;
+    setBorder(BorderFactory.createTitledBorder("Interface de contrôle d'un port série"));
     setLayout(new BorderLayout());
     add(new JPanel() {
 	private static final long serialVersionUID = 1L;
@@ -152,7 +153,7 @@ public class SerialInterfacePanel extends JPanel {
 	      }});
 	}}, BorderLayout.CENTER);
     // Permet d'afficher les messages de la console dans l'interface.  
-    {
+    if (!org.javascool.widgets.Console.isInstanced()) {
       JPanel c = org.javascool.widgets.Console.getInstance();
       c.setPreferredSize(new Dimension(800, 200));
       add(c, BorderLayout.SOUTH);

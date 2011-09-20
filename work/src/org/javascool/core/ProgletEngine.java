@@ -89,9 +89,17 @@ public class ProgletEngine {
         }
         String javaCode = jvs2java.translate(program);
         // Creation d'un répertoire temporaire
-        File buildDir = FileManager.createTempDir("javac");
-        String javaFile = buildDir + File.separator + jvs2java.getClassName() + ".java";
-        FileManager.save(javaFile, javaCode);
+        String javaFile;
+        try {
+            File buildDir = FileManager.createTempDir("javac");
+            javaFile = buildDir + File.separator + jvs2java.getClassName() + ".java";
+            FileManager.save(javaFile, javaCode);
+            // Si il y a un problème avec le répertoire temporaire on se rabat sur le répertoire local
+        } catch(Exception e) {
+            javaFile = new File(jvs2java.getClassName() + ".java").getAbsolutePath();
+            System.err.println("Sauvegarde locale du fichier : "+ javaFile);
+            FileManager.save(javaFile, javaCode);
+        }
         if (Java2Class.compile(javaFile)) {
             runnable = Java2Class.load(javaFile);
             return true;

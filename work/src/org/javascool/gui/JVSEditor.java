@@ -41,7 +41,7 @@ import org.javascool.widgets.ToolBar;
 class JVSEditor extends JPanel {
 
     private static final long serialVersionUID = 1L;
-    private boolean completion=true;
+    private boolean completion= false;
     /** The editor */
     private RSyntaxTextArea TextPane;
     /** The scroll pane */
@@ -70,17 +70,17 @@ class JVSEditor extends JPanel {
             }
         });
         final JButton completionButton=new JButton();
-        completionButton.setText("Désactiver la completion");
+        completionButton.setText("Activer la complétion");
         completionButton.addActionListener(new ActionListener(){
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(JVSEditor.this.completion){
                     JVSEditor.this.completion=false;
-                    completionButton.setText("Activer la completion");
+                    completionButton.setText("Activer la complétion");
                 } else {
                     JVSEditor.this.completion=true;
-                    completionButton.setText("Désactiver la completion");
+                    completionButton.setText("Désactiver la complétion");
                 }
             }
         });
