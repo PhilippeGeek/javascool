@@ -18,7 +18,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 /**  Interface graphique: actuellement un convertisseur décimal en héxadécimal **/
-public class Panel extends JFrame {
+public class ConvertisseurPanel extends JFrame {
 	
   // Pour saisir la chaîne de caractères
   private JTextField enASCII;
@@ -27,7 +27,7 @@ public class Panel extends JFrame {
   private JTextField enHEx;
 	
   // Le constructeur
-  public Panel () {
+  public ConvertisseurPanel () {
 		
     //Les propriétés de la fenêtre
     this.setTitle("Codes ASCII d'une chaîne de carctères");
