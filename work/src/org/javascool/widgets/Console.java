@@ -43,6 +43,10 @@ public class Console extends JPanel {
       console = new Console();
     return console;
   }
+  /** Renvoie true si la console a déjà été instanciée, false sinon. */
+  public static boolean isInstanced() {
+    return console != null;
+  }
   private static Console console = null;
   private Console() {
     BorderLayout layout = new BorderLayout();

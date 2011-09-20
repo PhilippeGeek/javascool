@@ -113,13 +113,14 @@ public class Java2Class {
    */
   public static Runnable load(String path) {
     try {
-      File javaClass = new File(path);
+      File javaClass = new File(path).getAbsoluteFile();
       URL[] urls = new URL[] { new URL("file:" + javaClass.getParent() + File.separator) };
       Class< ? > j_class = new URLClassLoader(urls).loadClass(javaClass.getName().replaceAll("\\.java", ""));
       Object o = j_class.newInstance();
-      if(!(o instanceof Runnable)) throw new IllegalArgumentException("Erreur: chargement d'une classe qui n'est pas un Runnable");
+      if(!(o instanceof Runnable))
+         throw new IllegalArgumentException("Erreur: la classe de "+javaClass+" qui n'est pas un Runnable");
       return (Runnable) o;
-    } catch(Throwable e) { throw new RuntimeException("Erreur: impossible de charger la class");
+    } catch(Throwable e) { throw new RuntimeException("Erreur: impossible de charger la classe de : "+path);
     }
   }
 }

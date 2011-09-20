@@ -10,8 +10,8 @@ export LD_LIBRARY_PATH=../../documents/sketchbook/commSerie/lib
 
 all :
 	mkdir -p tmp
-	javac -Xlint -d tmp SerialInterfacePanel.java SerialInterface.java
-	java org.javascool.proglets.commSerie.SerialInterfacePanel
+	javac -Xlint -d tmp ConvertisseurPanel.java SerialInterfacePanel.java SerialInterface.java
+	java org.javascool.proglets.commSerie.ConvertisseurPanel
 
 clean :
 	/bin/rm -rf tmp

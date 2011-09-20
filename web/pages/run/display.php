@@ -13,8 +13,11 @@
 
 <div class="display">
 
-<p>Pour lancer Java's Cool, rien à installer, cliquez sur un des liens ci-dessus.</p>
+<p>Pour lancer Java's Cool, rien à installer, il suffit de le télécharger <b><a href="javascool-proglets.jar">ici</a></b>, en choisissant l'option «ouvrir» ou «ouvrir avec Java»:</p>
 <p>Si le lancement échoue, vous devrez probablement <a href="http://www.java.com/fr/download">installer Java<a/> (version au moins 1.6).</p>
+<p>Ci dessous, nous donnons des indicatios pour vous aider si l'installation de votre ordinateur est singulière.</p>
+<p>Si votre système est trop ancien la <a href="http://javascool.gforge.inria.fr/v3">version 3</a> est encore disponible.</p>
+
 <p>En cas d'échec <a href="?page=contact">contactez-nous</a>.</p>
 
 <p>Pour en savoir plus sur l'utilisation de l'interface se reporter à sa <a href="?page=run&action=screenshot">description picturale</a>.

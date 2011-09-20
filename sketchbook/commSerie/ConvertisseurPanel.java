@@ -4,7 +4,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JTextField;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 
@@ -18,8 +17,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 /**  Interface graphique: actuellement un convertisseur décimal en héxadécimal **/
-public class ConvertisseurPanel extends JFrame {
+public class ConvertisseurPanel extends JPanel {
 	
+  private static final long serialVersionUID = 1L;
   // Pour saisir la chaîne de caractères
   private JTextField enASCII;
 	
@@ -28,21 +28,13 @@ public class ConvertisseurPanel extends JFrame {
 	
   // Le constructeur
   public ConvertisseurPanel () {
-		
-    //Les propriétés de la fenêtre
-    this.setTitle("Codes ASCII d'une chaîne de carctères");
-    this.setResizable(true);
-    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    this.setLayout(new BorderLayout());
-		
+    setLayout(new BorderLayout());
+
     //Incrustation du nom dans le bas de la fenêtre
-    String texte = "<html><b><font color=\"#0000FF\">   Démo  </font></b></html>";
+    String texte = "<html><b><font color=\"#0000FF\">   Convertisseur ASCII->héxadécimal  </font></b></html>";
     JLabel lblAuteur = new JLabel(texte, JLabel.RIGHT);
     this.add("South", lblAuteur);
-		
-		
-		
-		
+
     /***                                 Panel des zones de texte                                  **/
 
     JPanel panelHaut = new JPanel();
@@ -75,8 +67,6 @@ public class ConvertisseurPanel extends JFrame {
     enASCII.setPreferredSize(new Dimension(250, 35));
     panelASCII.add(enASCII);
 		
-		
-		
     /***               L'affichage des codes ASCII de la chaîne de caractères                    **/
 
     JPanel panelHEX = new JPanel(new FlowLayout());
@@ -102,9 +92,7 @@ public class ConvertisseurPanel extends JFrame {
     Font font2 = new Font("taille2", Font.BOLD, 14);
     enHEx.setFont(font2);
 		
-		
     /***                                 Panel des Boutons                                     **/
-
 		
     JPanel panelBoutons = new JPanel();
     panelBoutons.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0), BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder (), "")));
@@ -130,30 +118,10 @@ public class ConvertisseurPanel extends JFrame {
 	}
       });
     panelBoutons.add(cmdConvertir);
-		
-		
-    /***                            Avant affichage de la fenêtre                        **/
-		
-    //Taille de la fenêtre : automatique
-    this.pack();
-		
-    //On centre la fenêtre
-    int tex = (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth();
-    int tey = (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-    int tpx = (int)this.getPreferredSize().getWidth();
-    int tpy = (int)this.getPreferredSize().getHeight();
-    this.setLocation(tex/2 - tpx/2, tey/2 - tpy/2);
-		
-    // Pour la rendre visible
-    this.setVisible(true);
-		
-				
   }
-	
 	
   /***         convertit un tableau d'entiers en chaîne de codes Hexa (code ASCII)              **/
 
-	
   static String byteArrayToHexString(byte[] bArray){
     StringBuffer buffer = new StringBuffer();
 	 
@@ -187,9 +155,11 @@ public class ConvertisseurPanel extends JFrame {
 		
   }
 
-  // Lancement en application
-  public static void main(String usage[]) {
-    new Panel();
+  /** Ouvre le panel en application. 
+   * @param usage <tt>java -cp javascool-proglets.jar org.javascool.proglets.commSerie.ConvertisseurPanel</tt>
+   */  
+  public static void main(String[] usage) {
+    new org.javascool.widgets.MainFrame().reset("Codes ASCII héxadécimal d'une chaîne de carctères", 600, 300, new ConvertisseurPanel());
   }
   
 } // fin Panel()

@@ -3,11 +3,17 @@
 
   <p>Cette proglet permettra la mise en œuvre d'une interface utilisant une <l link="http://fr.wikipedia.org/wiki/RS-232" text="liaison série de type RS232"/> dans le cadre de travaux pratiques puis de projet.</p>
 
+  <div class="ul">
+
   <p>Voir le travail de <l link="http://javascool.gforge.inria.fr/documents/sketchbook/commSerie/SpecProglet.odt" text="spécification"/> pour plus d'informations</p>
 
   <p>Toutes les instructions disponibles sont documentées <l link="http://javascool.gforge.inria.fr/?page=proglets&amp;action=show&amp;id=commSerie&amp;helpFile=api/org/javascool/proglets/commSerie/SerialInterface.html" text="ici"/></p>
 
   <p>Une interface de contrôle est disponible <l link="http://javascool.gforge.inria.fr/?page=proglets&amp;action=show&amp;id=commSerie&amp;helpFile=api/org/javascool/proglets/commSerie/SerialInterfacePanel.html" text="ici"/></p>
+
+  <p>Un <l class="editor" link="Exemple.jvs" text="programme exemple"/> permet de tester les éléments proposés</p>
+
+</div>
 
   <p>à suivre . . </p>
 
