@@ -1,5 +1,3 @@
-import org.javascool.proglets.commSerie.*;
-
 void main(){
   // Récupère le panel de la proglet
   JPanel panel = getPane();
