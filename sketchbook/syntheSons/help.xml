@@ -50,8 +50,5 @@
    </div>sont présentés, puis les 1ères notes de quelque chose qui ressemble à la «Lettre à Elise» de L.v.Beethoven est jouée et son spectre affiché et ensuite 
    <div> . . à vous de jouer !</div></div>
 
-   <div>Un autre exempleautre exemple d'utilisation est proposé en démonstration, 
-  à partir d'un <l class="editor" link="pianoJoue.jvs" text="code Jvs"/> réalisé par un enseignant.</div>
-
 <p>Cette «proglet» est un composant logiciel ouvert dont documentation et code-source sont disponibles <l link="api/org/javascool/proglets/syntheSons/package-summary.html" text="ici"/></p>
 </div>

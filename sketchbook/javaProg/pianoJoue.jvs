@@ -14,7 +14,7 @@ import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import org.javascool.SoundBit;
+import org.javascool.proglets.syntheSons.SoundBit;
 
 // Nombre de notes, nom desnotyyes et fréquences des notes
 
@@ -23,7 +23,7 @@ double frequences[] = { 440, 440, 440, 440, 440, 440, 440, 440, 440, 440, 440, 4
 
 // Création des touches de piano
 void drawFingerBoard() {
-  JLayeredPane pane = getSwingPane();
+  JLayeredPane pane = getPane();
   pane.removeAll();
   int pospiano = 20;
   // création des bécares
@@ -54,7 +54,7 @@ ActionListener player = new ActionListener() {
   public void actionPerformed(ActionEvent e) {
     for(int i = 0; i < notes.length; i++)
       if(notes[i].equals(e.getActionCommand())) {
-        println("Oh oh vous jouez un «" + notes[i] + "» à la fréquence de " + frequences[i] + "Hz !");
+        System.out.println("Oh oh vous jouez un «" + notes[i] + "» à la fréquence de " + frequences[i] + "Hz !");
         sound.play(frequences[i]);
       }
   }

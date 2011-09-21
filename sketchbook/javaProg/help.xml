@@ -28,5 +28,8 @@
   à partir d'un <l class="editor" link="elephantEnFolie.jvs" text="code Jvs"/> réalisé avec trois lycéennes du 
   <l link="http://www.civfrance.com" text="Lycée International de Valbonne"/>.</div>
 
+   <div>Un autre exemple d'utilisation est proposé en démonstration, 
+  à partir d'un <l class="editor" link="pianoJoue.jvs" text="code Jvs"/> réalisé par un enseignant (petit piano mono-phonique).</div>
+
 <p>Cette «proglet» est un composant logiciel ouvert dont documentation et code-source sont disponibles <l link="api/org/javascool/proglets/javaProg/package-summary.html" text="ici"/></p>
 </div>
