@@ -22,6 +22,9 @@ Status:
 
   * (`*`1) Ajouter un CRTL+F search/replace à l'éditeur
 
+  * (`*`1) Rendre possible la cŕeation de plusieurs instances de consoles qui visualisent toutes System.out.println et Macros.stdout.prinln
+    * appli à commSerie et ProgletsBuilderPanel
+
   * (`*`1) Création d'un lanceur .exe et .app pour le lancement de jascool [http://www.excelsior-usa.com/articles/java-to-exe.html ref] (sauf si le jnlp peut gérer les pbs de chargement dynamique)
     * http://informagen.com/JarBundler
 
