@@ -1,18 +1,16 @@
 # vthierry's ongoing tasks
 #
-# * Installer java 7 et voir si proglets arrivent 
-# * Redesigner Console pour voir plusieurs fenetres d'affichage : appli à commSerie et ProgletsBuilderPanel
 # * Sur certaines plateformes eepc les proglets ne sont pas trouvees !!!!
 # * Pb avec enVoiture reste vide, pete tout, exemple pas valide ! (repartir d'une JRE propre pour installer opengl)
+
+tst : 
+	ant javascool-proglets.jar ; /usr/java/jre1.6.0_27/bin/java -jar dist/javascool-proglets.jar
 
 ant :
 	ant prun
 
-now0 :
+sos :
 	cd ../web ; ant publish-javascool-proglets
-
-tst : 
-	ant javascool-proglets.jar ; /usr/java/jre1.6.0_11/bin/java -jar dist/javascool-proglets.jar
 
 nbe :
 	netbeans --jdkhome $(JHOME) &

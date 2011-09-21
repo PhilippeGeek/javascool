@@ -1,14 +1,13 @@
 <?php
 include('includes/sal.class.php');
+include('includes/v3_redirections.php');
+if (isset($_GET['page'])) {
+  if (v3_redirections($_GET['page']))
+    exit;
+}
 include('includes/cache_get_contents.php');
 include('includes/wiki_get_contents.php');
 include('includes/html_get_contents.php');
-include('includes/v3_redirections.php');
-
-// If page is defined, test redirections
-if (isset($_GET['page'])) {
-    v3_redirections($_GET['page']);
-}
 ?>
 <!DOCTYPE html>
 <html>

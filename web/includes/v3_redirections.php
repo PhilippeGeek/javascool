@@ -30,7 +30,7 @@ $v3_redirections_v4pages_table = array("api", "contact", "developers", "home", "
 		
 $v3_redirections_prefix_table = array(
 				    "api:" =>  "?page=api",
-				    "doc%3Asketchbook" => "http://wiki.inria.fr/sciencinfolycee/JavaScool:ProgletsProcessing");
+				    "doc%3Asketchbook" => "?page=resources&action=link-processing");
 $v3_redirections_link_table = array(
 			     "Accueil" => "?page=home",
 			     "Menu" => "?page=home",
@@ -48,12 +48,12 @@ $v3_redirections_link_table = array(
 			     "licence"  => "?page=run&action=licence",
 			     "Proglet" =>  "?page=proglets",
 			     "Developpement" => "?page=developers",
-			     "Ressources" => "?page=ressources",
-			     "Activites" => "http://wiki.inria.fr/sciencinfolycee/JavaScool:Activites", 
-			     "Ailleurs" => "http://wiki.inria.fr/sciencinfolycee/JavaScool:Ailleurs", 
-			     "AutresInitiatives" => "http://wiki.inria.fr/sciencinfolycee/JavaScool:AutresInitiatives", 
+			     "Ressources" => "?page=resources",
+			     "Activites" => "?page=proglets",
+			     "Ailleurs" => "?page=home&action=faq-ailleurs",
+			     "AutresInitiatives" => "?page=home&action=faq-autres",
 			     "AutresDeveloppements" => "?page=ressources",
-			     "Cadrage" => "http://wiki.inria.fr/sciencinfolycee/JavaScool:Cadrage",
+			     "Cadrage" => "?page=home&action=faq-cadrage",
 			     "Pepites" => "?page=resources&action=link-pepite",
 			     "Perpites" => "?page=resources&action=link-pepite",
 			     "doc%3A%2Fdocuments%2Fnos-ressources%2Fpepites.html" => "?page=resources&action=link-pepite",
@@ -63,11 +63,11 @@ $v3_redirections_link_table = array(
 			     "TPE-Quizz" => "?page=resources&action=link-quizz", 
 			     "doc%3A%2Fdocuments%2Fspeed-dating-09%2Findex.html" => "?page=resources&action=link-quizz",
 			     "TPE-Sujets" => "?page=resources&action=link-idees-tpe",
-			     "TPE-Accueil" => "http://wiki.inria.fr/sciencinfolycee/JavaScool:TPE-Accueil",
-			     "TPE-Demos" => "http://wiki.inria.fr/sciencinfolycee/JavaScool:TPE-Demos",
-			     "TPE-Exemples" => "http://wiki.inria.fr/sciencinfolycee/JavaScool:TPE-Exemples",
-			     "TPE-Interventions" => "http://wiki.inria.fr/sciencinfolycee/JavaScool:TPE-Interventions",
-			     "TPE-Methode" => "http://wiki.inria.fr/sciencinfolycee/JavaScool:TPE-Methode",
+			     "TPE-Accueil" => "?page=resources&action=link-tpe-accueil",
+			     "TPE-Demos" => "?page=resources&action=link-tpe-demos",
+			     "TPE-Exemples" => "?page=resources&action=link-tpe-exemples",
+			     "TPE-Interventions" => "?page=resources&action=link-interventions",
+			     "TPE-Methode" => "?page=resources&action=link-tpe-methode",
 			     "doc%3Adocuments%2Fquelques-t-p-e%2Faffiche_finale_inria.pdf" => "doc/documents/quelques-t-p-e/affiche_finale_inria.pdf",
 			     "doc%3Adocuments%2Fquelques-t-p-e%2Fquelques-t-p-e.pdf" => "doc/documents/quelques-t-p-e/quelques-t-p-e.pdf",
 			     "doc%3A%2Fsketchbook%2Findex.html" => "?page=resources&action=link-processing",
@@ -78,4 +78,3 @@ $v3_redirections_link_table = array(
 			     "DocJavaScoolBuilder" => "?page=developers&action=doc-javascoolbuilder",
 			     );
 ?>
-
