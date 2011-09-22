@@ -61,7 +61,6 @@ public class ProgletEngine {
         }
         // Définit une proglet "vide" pour lancer l'interface
         if (proglets.isEmpty()) {
-
             for (int i = 0; i < 1; i++) {
                 Proglet p = new Proglet();
                 p.pml.set("name", "Interface");

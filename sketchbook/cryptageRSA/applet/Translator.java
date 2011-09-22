@@ -12,6 +12,6 @@ public class Translator extends org.javascool.core.Translator {
   }
   @Override
   public String translate(String code) {
-    return code.replaceAll("\\s(createKeys|encrypt|decrypt)\\(", " cryptageRSA.$1(");
+    return code.replaceAll("([^a-zA-Z0-9])(createKeys|encrypt|decrypt)\\(", "$1cryptageRSAFunctions.$2(");
   }
 }

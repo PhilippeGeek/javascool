@@ -438,11 +438,11 @@ public void launch_d() {
   d = calculate_d(p, q, e);
 }
 public void translate_m() {
-  BigInteger MessBits = new BigInteger(lastInput.getBytes());
+  BigInteger MessBits = newBigInteger(lastInput.getBytes());
   T3[1].setText(MessBits + " ");
 }
 public void encrypt_m() {
-  BigInteger MessBits = new BigInteger(lastInput.getBytes());
+  BigInteger MessBits = newBigInteger(lastInput.getBytes());
   EncMessBits = encrypt(MessBits, e, n);
   T3[2].setText(EncMessBits + " ");
 }
@@ -539,7 +539,7 @@ public static BigInteger[] createKeys() {
   public static BigInteger encrypt(String m, BigInteger E, BigInteger N) {
     BigInteger EncMessBits = null;
 
-    BigInteger MessBits = new BigInteger(m.getBytes());
+    BigInteger MessBits = newBigInteger(m.getBytes());
     EncMessBits = cryptageRSA.encrypt(MessBits, E, N);
 
     return EncMessBits;
@@ -557,6 +557,15 @@ public static BigInteger[] createKeys() {
 
     return decryptedMessage;
   }
+
+// Construction prot\u00e9g\u00e9e d'un entier
+private static BigInteger newBigInteger(byte[] value) {
+  try {
+    return new BigInteger(value);
+  } catch(Exception e) {
+    return new BigInteger("0");
+  }
+}
   static public void main(String args[]) {
     PApplet.main(new String[] { "--bgcolor=#DFDFDF", "cryptageRSA" });
   }
