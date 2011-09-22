@@ -273,6 +273,7 @@
         <move file="@{file}/../svn.save" tofile="@{file}/.svn"/>
       </sequential>
     </for>
+    <delete dir="./../sketchbook/*/applet/org"/>
   </target>
   
   <target name="run.processing" depends="javascool-base.jar">
