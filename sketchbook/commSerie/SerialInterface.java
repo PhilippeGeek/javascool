@@ -14,6 +14,7 @@ import java.io.InputStream;
 import java.io.IOException;
 import gnu.io.SerialPortEventListener;
 import gnu.io.SerialPortEvent;
+import gnu.io.CommPortOwnershipListener;
 import java.util.ArrayList;
 
 /** Définit les primitives pour s'interfacer avec un port série. 
@@ -107,33 +108,57 @@ public class SerialInterface {
       for(Enumeration<?> list = CommPortIdentifier.getPortIdentifiers(); list.hasMoreElements();) {
 	CommPortIdentifier id = (CommPortIdentifier) list.nextElement();
 	if (id.getPortType() == CommPortIdentifier.PORT_SERIAL && id.getName().equals(name)) {
-	  port = (SerialPort) id.open("serial madness", 2000);
-	  output = port.getOutputStream();
-	  input = port.getInputStream();
-	  data = new ArrayList<Integer>();
-	  port.setSerialPortParams(rate, size, 
-				   stop == 2.0 ? SerialPort.STOPBITS_2 : stop == 1.5 ? SerialPort.STOPBITS_1_5 : SerialPort.STOPBITS_1, 
-				   parity == 'E' ? SerialPort.PARITY_EVEN : parity == 'O' ? SerialPort.PARITY_ODD : SerialPort.PARITY_NONE);
-	  port.addEventListener(new SerialPortEventListener() {
-	      synchronized public void serialEvent(SerialPortEvent serialEvent) {
-		if (serialEvent.getEventType() == SerialPortEvent.DATA_AVAILABLE) { 
-		  try {
-		    while (input.available() > 0) 
-		      data.add(input.read());
-		  } catch(Exception e) {
-		    System.out.println("Erreur à la réception d'un caractère sur le port série \n\t"+this+"\n\t : " + e);
-		  }
-		}
-	      }});
-	  port.notifyOnDataAvailable(true);
+	  open(id);
+	  return this;
 	}
       }
-      throw new IOException("Impossible d'ouvrir un port série de nom :" + name);
+      throw new IOException("Impossible d'ouvrir un port série de nom :" + name+" (il n'existe pas)");
     } catch(Exception e) {
       output = null; input = null; data = null; port = null;
       System.out.println("Erreur à l'ouverture du port série \n\t"+this+"\n\t : " + e);
+      return this;
     }
-    return this;
+  }
+  // Opens on a given port identifier
+  private void open (CommPortIdentifier id) throws Exception { 
+    int timeout = 5000; // milliseconds 
+    port = (SerialPort) id.open("Java'sCool commSerie", timeout);
+    output = port.getOutputStream();
+    input = port.getInputStream();
+    id.addPortOwnershipListener(new CommPortOwnershipListener() { 
+	@Override
+	  public void ownershipChange(int type) {
+	  switch(type) {
+	  case PORT_OWNED:
+	    System.out.println("Notice: le port vient d'être pris par javascool");
+	    break;
+	  case PORT_UNOWNED:
+	    System.out.println("Notice: le port vient d'être relaché par javascool");
+	    break;
+	  case PORT_OWNERSHIP_REQUESTED:
+	    System.out.println("Notice: une demande de prise en main du port par une autre application est émise");
+	    break;
+	  default:
+	    System.out.println("Notice: une demande de prise en main parasite est émise");
+	    break;
+	  }
+	}});
+    data = new ArrayList<Integer>();
+    port.setSerialPortParams(rate, size, 
+			     stop == 2.0 ? SerialPort.STOPBITS_2 : stop == 1.5 ? SerialPort.STOPBITS_1_5 : SerialPort.STOPBITS_1, 
+			     parity == 'E' ? SerialPort.PARITY_EVEN : parity == 'O' ? SerialPort.PARITY_ODD : SerialPort.PARITY_NONE);
+    port.addEventListener(new SerialPortEventListener() {
+	synchronized public void serialEvent(SerialPortEvent serialEvent) {
+	  if (serialEvent.getEventType() == SerialPortEvent.DATA_AVAILABLE) { 
+	    try {
+	      while (input.available() > 0) 
+		data.add(input.read());
+	    } catch(Exception e) {
+	      System.out.println("Erreur à la réception d'un caractère sur le port série \n\t"+this+"\n\t : " + e);
+	    }
+	  }
+	}});
+    port.notifyOnDataAvailable(true);
   }
   private SerialPort port = null;
   private OutputStream output = null;
@@ -197,10 +222,25 @@ public class SerialInterface {
     ArrayList<String> names = new ArrayList<String>();
     for(Enumeration<?> list = CommPortIdentifier.getPortIdentifiers(); list.hasMoreElements();) {
       CommPortIdentifier id =  (CommPortIdentifier) list.nextElement();
+      show(id);
       if (id.getPortType() == CommPortIdentifier.PORT_SERIAL)
 	names.add(id.getName());
     }
     return names.toArray(new String[names.size()]);
+  }
+
+  // Affiche les paramètres du port.
+  private static void show(CommPortIdentifier id) {
+    try {
+      System.out.println("Le port " +
+			 (id.getPortType() == CommPortIdentifier.PORT_SERIAL ? "(série)" :
+			  id.getPortType() == CommPortIdentifier.PORT_PARALLEL ? "(parallèle)" :
+			  "(de type inconnu)") +
+			 " "+id.getName()+" est détecté, "+
+			 " il appartient à "+ id.getCurrentOwner()+ " et est actuellement "+ (id.isCurrentlyOwned() ? "pris" : "non-pris"));
+    } catch(Exception e) {
+      System.out.println("Le port "+ id.getName() + " est détecté mais génère une erreur lors de l'affichage de ses paramètres");
+    }
   }
 
   /** Renvoie la liste des des noms de ports séries disponibles ce qui teste l'installation des librairies. 
