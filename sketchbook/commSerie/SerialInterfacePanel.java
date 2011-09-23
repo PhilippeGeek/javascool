@@ -44,7 +44,7 @@ public class SerialInterfacePanel extends JPanel {
 	  add(new JComboBox(new Integer[] {19200, 9600, 4800, 2400, 1200, 600, 300}) {
 	      private static final long serialVersionUID = 1L;
 	      {
-		setBorder(BorderFactory.createTitledBorder("Débit en b/s"));
+		setBorder(BorderFactory.createTitledBorder("Débit en b./s."));
 		setPreferredSize(new Dimension(120, 70));
 		addActionListener(new ActionListener() {
 		    private static final long serialVersionUID = 1L;
