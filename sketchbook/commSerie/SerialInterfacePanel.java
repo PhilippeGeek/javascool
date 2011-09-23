@@ -33,7 +33,7 @@ public class SerialInterfacePanel extends JPanel {
 	      private static final long serialVersionUID = 1L;
 	      {
 		setBorder(BorderFactory.createTitledBorder("Nom du port"));
-		setPreferredSize(new Dimension(150, 70));
+		setPreferredSize(new Dimension(120, 70));
 		addActionListener(new ActionListener() {
 		    private static final long serialVersionUID = 1L;
 		    @Override
@@ -44,8 +44,8 @@ public class SerialInterfacePanel extends JPanel {
 	  add(new JComboBox(new Integer[] {19200, 9600, 4800, 2400, 1200, 600, 300}) {
 	      private static final long serialVersionUID = 1L;
 	      {
-		setBorder(BorderFactory.createTitledBorder("Débit en bauds"));
-		setPreferredSize(new Dimension(150, 70));
+		setBorder(BorderFactory.createTitledBorder("Débit en b/s"));
+		setPreferredSize(new Dimension(120, 70));
 		addActionListener(new ActionListener() {
 		    private static final long serialVersionUID = 1L;
 		    @Override
@@ -57,7 +57,7 @@ public class SerialInterfacePanel extends JPanel {
 	      private static final long serialVersionUID = 1L;
 	      {
 		setBorder(BorderFactory.createTitledBorder("Bit de parité"));
-		setPreferredSize(new Dimension(150, 70));
+		setPreferredSize(new Dimension(120, 70));
 		addActionListener(new ActionListener() {
 		    private static final long serialVersionUID = 1L;
 		    @Override
@@ -70,7 +70,7 @@ public class SerialInterfacePanel extends JPanel {
 	      private static final long serialVersionUID = 1L;
 	      {
 		setBorder(BorderFactory.createTitledBorder("Taille du mot"));
-		setPreferredSize(new Dimension(150, 70));
+		setPreferredSize(new Dimension(120, 70));
 		addActionListener(new ActionListener() {
 		    private static final long serialVersionUID = 1L;
 		    @Override
@@ -82,7 +82,7 @@ public class SerialInterfacePanel extends JPanel {
 	      private static final long serialVersionUID = 1L;
 	      {
 		setBorder(BorderFactory.createTitledBorder("Bits de stop"));
-		setPreferredSize(new Dimension(150, 70));
+		setPreferredSize(new Dimension(120, 70));
 		addActionListener(new ActionListener() {
 		    private static final long serialVersionUID = 1L;
 		    @Override
@@ -167,6 +167,11 @@ public class SerialInterfacePanel extends JPanel {
   }
   private SerialInterface serial;
   private JTextField write, read;
+
+  /** Renvoie l'interface série, pour pouvoir accéder à ses fonctions. */
+  public SerialInterface getSerialInterface() {
+    return serial;
+  }
 
   /** Renvoie la liste des des noms de ports séries disponibles ce qui teste l'installation des librairies. 
    * @param usage <tt>java -cp javascool-proglets.jar org.javascool.proglets.commSerie.SerialInterfacePanel</tt>
