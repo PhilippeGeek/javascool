@@ -63,14 +63,14 @@ public class JvsBeautifier {
           if((i < f.length - 1) && !(Character.isWhitespace(f[i + 1]) || isOperator(f[i + 1])))
             g += ' ';
         } else if(f[i] == '.') {
-          if((g.length() > 0) && Character.isWhitespace(c0))
+          if(g.length() > 0 && Character.isWhitespace(c0))
             g = g.substring(0, g.length() - 1);
           g += f[i];
           while(i < f.length - 1 && Character.isWhitespace(f[i + 1]))
             i++;
           // Normalize spaces around punctuation
         } else if((f[i] == ',') || (f[i] == ';') || (f[i] == ')')) {
-          if((g.length() > 0) && Character.isWhitespace(c0))
+          if(g.length() > 0 && Character.isWhitespace(c0))
             g = g.substring(0, g.length() - 1);
           g += f[i];
           if((par > 0) && (f[i] != ')'))
@@ -79,14 +79,14 @@ public class JvsBeautifier {
           if((f[i] == ')') && (i < f.length - 1) && (f[i + 1] == '{'))
             g += ' ';
         } else if(f[i] == '(') {
-          if((g.length() > 0) && Character.isWhitespace(c0) && (g.length() > 1) && Character.isLetterOrDigit(g.charAt(g.length() - 2)))
+          if(g.length() > 0 && Character.isWhitespace(c0) && (g.length() > 1) && Character.isLetterOrDigit(g.charAt(g.length() - 2)))
             g = g.substring(0, g.length() - 1);
           g += f[i];
           while(i < f.length - 1 && Character.isWhitespace(f[i + 1]))
             i++;
         } else if(f[i] == '}') {
           for(int n = 0; n < 3; n++)
-            if((g.length() > 0) && Character.isWhitespace(g.charAt(g.length() - 1)))
+            if(g.length() > 0 && Character.isWhitespace(g.charAt(g.length() - 1)))
               g = g.substring(0, g.length() - 1);
           g += f[i];
         } else
@@ -95,7 +95,7 @@ public class JvsBeautifier {
         if((f[i] == '{') || (f[i] == '}') || ((f[i] == ';') && (par == 0))) {
           if(f[i] == '{')
             ln += "   ";
-          if(f[i] == '}')
+          if(ln.length() >= 3 && f[i] == '}')
             ln = ln.substring(0, ln.length() - 3);
           g += ln;
           if(ln.length() == 1)

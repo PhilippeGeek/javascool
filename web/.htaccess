@@ -26,4 +26,5 @@ Redirect permanent "/proglet/doc/sujet-appli-dicho.htm" "http://javascool.gforge
 Redirect permanent "/proglet/doc/sujet-appli-geometry.htm" "http://javascool.gforge.inria.fr/documents/sujets-mathinfo/sujet-appli-geometry.htm"
 Redirect permanent "/proglet/doc/sujet-appli-image.htm" "http://javascool.gforge.inria.fr/index.php?page=proglets&action=show&id=codagePixels&helpFile=./exercice.htm"
 Redirect permanent "/proglet/doc/sujet-appli-imc.htm" "http://javascool.gforge.inria.fr/documents/sujets-mathinfo/sujet-appli-imc.htm" 
+Redirect permanent "/proglet/exosdemaths/doc-files/sujet-about-tableaux.htm" "http://javascool.gforge.inria.fr/documents/sujets-mathinfo/sujet-about-tableaux.htm"
 RedirectMatch permanent "/(proglet/.*\.htm)$" "http://javascool.gforge.inria.fr?page=$1"
