@@ -5,6 +5,7 @@ import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UIManager;
 
 import javax.swing.JFrame;
+import javax.swing.JRootPane;
 import java.applet.Applet;
 import java.awt.Component;
 import java.awt.event.WindowAdapter;
@@ -48,6 +49,21 @@ public class MainFrame extends JFrame {
     setLookAndFeel();
   }
 
+  /** Construit la fenêtre sans boutons de fermeture.
+   * <p>- Doit être appelé avant la méethode reset.</p>
+   * @return Cet objet, permettant de définir la construction <tt>new MainFrame().asPopup().reset(..)</tt>.
+   */
+  public MainFrame asPopup() {
+    // @todo voir sur mac si ca solde le pb du close intempestif
+    if (System.getProperty("os.name").toLowerCase().indexOf("mac") >= 0) {
+      setUndecorated(true);  
+      getRootPane().setWindowDecorationStyle(JRootPane.NONE);
+    } else if (System.getProperty("os.name").toLowerCase().indexOf("win") >= 0){
+      // Si besoin de faire qq chose sous windows
+    }
+    return this;
+  }
+
   /** Construit et ouvre une fenêtre principale pour lancer une application.
    * @param title Le titre de la fenêtre.
    * @param icon L'icône de la fenêtre.
@@ -57,7 +73,8 @@ public class MainFrame extends JFrame {
    * @return Cet objet, permettant de définir la construction <tt>new MainFrame().reset(..)</tt>.
    */
   public MainFrame reset(String title, String icon, int width, int height, Component pane) {
-    setTitle(title);
+    if (title != null)
+      setTitle(title);
     if(System.getProperty("os.name").toUpperCase().contains("MAC")) {
       try {
         System.setProperty("com.apple.mrj.application.apple.menu.about.name", title);
