@@ -331,7 +331,7 @@ public class ProgletEngine {
                         popupframe = (new MainFrame() {
                                 @Override
                             public boolean isClosable() { return false; }
-                        }).reset(getName(), getIcon(), width, height, applet);
+			  }).asPopup().reset(getName(), getIcon(), width, height, applet);
                         pml.set("java-pane", null);
                     }  else {
                         pml.set("java-pane", applet);
