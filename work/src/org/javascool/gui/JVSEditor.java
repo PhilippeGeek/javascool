@@ -124,19 +124,6 @@ class JVSEditor extends JPanel {
                     }
                 });
 
-        textArea.getInputMap().put(copy_key,
-                "copy");
-        textArea.getActionMap().put("copy",
-                new AbstractAction() {
-
-                    private static final long serialVersionUID = 1L;
-
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        getRTextArea().copyAsRtf();
-                    }
-                });
-
         return textArea;
     }
 
