@@ -7,12 +7,11 @@
 <JVMSearchPath>exepath</JVMSearchPath>
 <JVMSearchPath>jview</JVMSearchPath>
 <arguments></arguments>
-<currentDirectory>${EXECUTABLEPATH}</currentDirectory>
 <embeddedJar>true</embeddedJar>
-<executableName>javascool.exe</executableName>
-<iconLocation>src\org\javascool\widgets\icons\logo.png</iconLocation>
+<executableName>..\javascool.exe</executableName>
+<iconLocation>..\src\org\javascool\widgets\icons\logo.png</iconLocation>
 <initialMemoryHeap>-1</initialMemoryHeap>
-<jarLocation>dist\javascool.jar</jarLocation>
+<jarLocation>..\dist\javascool-proglets.jar</jarLocation>
 <mainClassName>org.javascool.Core</mainClassName>
 <maximumMemoryHeap>-1</maximumMemoryHeap>
 <maximumVersion></maximumVersion>

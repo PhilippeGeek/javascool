@@ -26,7 +26,7 @@ class JVSPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
     /** This HashMap say if a file has to be saved */
-    private HashMap<String, Boolean> haveToSave = new HashMap<String, Boolean>();
+    HashMap<String, Boolean> haveToSave = new HashMap<String, Boolean>();
     private Boolean noFileEdited = true;
 
     /** Access to the unique instance of the JVSPanel object. */
