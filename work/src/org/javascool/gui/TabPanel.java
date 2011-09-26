@@ -84,6 +84,9 @@ class TabPanel extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            if(pane.getTabCount()<=1){
+                return;
+            }
             if (confirmClose()) {
                 int i = pane.indexOfTabComponent(TabPanel.this);
                 if (i != -1) {
@@ -100,6 +103,14 @@ class TabPanel extends JPanel {
 
         @Override
         protected void paintComponent(Graphics g) {
+            if(pane.getTabCount()<=1){
+                this.setVisible(false);
+                this.revalidate();
+                return;
+            } else {
+                this.setVisible(true);
+                this.revalidate();
+            }
             super.paintComponent(g);
             Graphics2D g2 = (Graphics2D) g.create();
             // shift the image for pressed buttons
@@ -128,6 +139,9 @@ class TabPanel extends JPanel {
                 } else {
                     return false;
                 }
+            }
+            if(pane.getTabCount()<=1){
+                return false;
             }
             return true;
         }

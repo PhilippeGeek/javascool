@@ -27,7 +27,7 @@ class JVSFileTabs extends JVSTabs {
     /** Store all JVSFile in an HashMap by the fileId */
     private static HashMap<String, JVSFile> files = new HashMap<String, JVSFile>();
     /** Store all fileIds in an HashMap by the tab name */
-    private static HashMap<String, String> fileIds = new HashMap<String, String>();
+    static HashMap<String, String> fileIds = new HashMap<String, String>();
     /** The current compiled file */
     private static String currentCompiledFile = "";
     private static JVSFileTabs desktop;
@@ -143,7 +143,7 @@ class JVSFileTabs extends JVSTabs {
                 JVSFileTabs.fileIds.remove(tab_title);                         // Remove id in the index
                 JVSFileTabs.files.remove(fileId);                         // Remove the file class
                 JVSFileTabs.editors.remove(fileId);                         // Remove the editor
-                JVSPanel.getInstance().haveNotToSave(fileId);
+                JVSPanel.getInstance().haveToSave.remove(fileId);
             } catch (Exception e) {
                 throw new IllegalStateException(e); // Use to debug
             }
