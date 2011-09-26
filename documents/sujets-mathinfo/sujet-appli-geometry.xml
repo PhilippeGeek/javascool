@@ -40,17 +40,17 @@
     <div title="Bien comprendre le code proposé"> Pour être sûr que le code proposé est clair, répondre aux questions suivantes: <div class="ul">
       <div>Comment faudrait il modifier le code pour utiliser le point <v>B</v> = <b>(0.5, -0.5)</b> ?</div>
       <div>Expliquer en une phrase comment se modifient les coordonnées de <b>X</b> et <b>Y</b> du point <v>A</v> quand on: <div class="ul">
-        <div>Clique sur la fenêtre de tracé de la .</div>
-        <div>Manipule les glissoirs en bas de la .</div>
-        <div>Entre une valeur numérique au clavier en bas de la .</div>
+        <div>Clique sur la fenêtre de tracé.</div>
+        <div>Manipule les glissoirs en bas de la fenêtre.</div>
+        <div>Entre une valeur numérique au clavier en bas de la fenêtre.</div>
       </div></div>
       <div>Quel paramètre a permis de tracer les points en jaune et rouge et le segment en bleu ?</div>
       <div>Le programme principal <r>main</r> est, certes, exécuté quand on clique sur le bouton <b>Executer</b> mais . . 
       comment se fait-il que le calcul se mette à jour quand on clique sur la fenêtre de tracé ou manipule les glissoirs ? 
-      Expliquer en une ligne ce qui se passe dans la .</div>
+      Expliquer en une ligne ce qui se passe dans la fenêtre.</div>
     </div></div>
     <div title="A vous de jouer: calculons le symétrique du point A par rapport au point B">
-      Modifier le programme précédent pour calculer non plus milieu de (<v>A</v>, <v>B</v>), mais le point <v>S</v> symétrique de <v>A</v> par rapport à <v>B</v> 
+      Modifier le programme précédent pour calculer non plus <v>I</v> milieu de (<v>A</v>, <v>B</v>), mais le point <v>S</v> symétrique de <v>A</v> par rapport à <v>B</v> 
       et afficher le résultat avec le code modifié.
     </div>
     <div title="A vous de jouer: jouons avec un parallélogramme">
