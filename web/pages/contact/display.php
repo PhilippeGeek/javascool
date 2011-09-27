@@ -78,7 +78,7 @@ Nous sommes à votre écoute&nbsp;! Pour nous contacter:
 <br /><br /><hr />
 
 <table><tr>
-<td><?php showLink('http://www.inria.fr','<img src="images/logo_INRIA.png" alt="INRIA" class="imagelink"/>','external');?></td>
+<td><?php showLink('http://www.inria.fr','<img src="images/logo_INRIA.png" width = "250" alt="INRIA" class="imagelink"/>','external');?></td>
 <td><?php showLink('http://www.unisciel.fr','<img src="images/logo_unisciel.png" alt="Unisciel" class="imagelink"/>','external');?></td>
 <td><?php showLink('http://fuscia.info','<img src="images/logo_fuscia.png" alt="Fuscia" class="imagelink"/>','external');?></td>
 <td><?php showLink('http://unice.fr','<img src="images/logo_unice.gif" alt="INRIA" class="imagelink"/>','external');?></td>
