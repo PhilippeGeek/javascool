@@ -60,7 +60,7 @@
         <p>tab[3] = 59;</p>
       </div>
       Note aussi que l'élément <c>tab[4]</c> n'a pas été initialisé . . c'est à dire que personne n'a donné de valeur à cette case du tableau. 
-      <p>Faire un petit code pour vérifier à quelle valeur Java initialise les valeurs des tabelaux par défaut. Lancer le code plusieurs fois, pour expérimenter.</p>
+      <p>Faire un petit code pour vérifier à quelle valeur Java initialise les valeurs des tableaux par défaut. Lancer le code plusieurs fois, pour expérimenter.</p>
     </div>
     <div title="Appliquer une fonction à un tableau"> Créer la fonction:
       <div class="code">
@@ -76,7 +76,7 @@
       <div class="code">
         <p><r>int</r> table[][] = <r>new</r> <r>int</r>[11][11];</p>
       </div>
-      avec la cable de multiplication, c'est à dire de manière à ce que <c>table[i][j]</c> soit le produit de <c>i</c> par <c>j</c> et écrire le résultat sous forme de table.
+      avec la table de multiplication, c'est à dire de manière à ce que <c>table[i][j]</c> soit le produit de <c>i</c> par <c>j</c> et écrire le résultat sous forme de table.
       <p>On voit ici qu'il est très facile de passer à des tableaux de dimensions quelconques.</p>
     </div> 
     <div title="Aller plus loin: un exemple de jeu avec des tableaux."> 
@@ -91,9 +91,9 @@
     Les données ne sont donc pas "recopiées dans le tableau".</div>
     <div title="Prénoms et significations" id="2"> Tandis que <c>Samia</c> signifie "la noble" , <c>Samiha</c> signifie "la généreuse": 
       plusieurs langues dont l'<l link="http://www.djamila.be/Documents/prenoms.htm" text="arabe"/> et le chinois (<c>Zheng-You</c> signifie "l'ami fidèle")
-      permettent d'assosier une belle qualité morale à un prénom.</div>
+      permettent d'associer une belle qualité morale à un prénom.</div>
     <div title ="Créer et détruire les objets en mémoire" id ="3">Il faut créer un tableau avant de pouvoir l'utiliser, 
       mais en Java pas besoin de se soucier de le détruire quand on ne s'en sert plus: ce sera détecté et géré automatiquement. 
-      D'autres langages comem le <c>C/C++</c> obligent à explicitement détruire les objets qui ne servent plus.</div>
+      D'autres langages comme le <c>C/C++</c> obligent à explicitement détruire les objets qui ne servent plus.</div>
   </div>
 </div>
