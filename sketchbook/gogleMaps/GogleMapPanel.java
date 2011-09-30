@@ -200,7 +200,7 @@ class GogleMapPanel extends JPanel implements ActionListener {
     groupBoutons.add(buttonDFS);
     groupBoutons.add(buttonBFS);
     add(carte = new CartePanel(), BorderLayout.CENTER);
-    add(groupBoutons, BorderLayout.SOUTH);
+    add(groupBoutons, BorderLayout.NORTH);
 
     try {
       ici_bleu = Macros.getIcon("org/javascool/proglets/gogleMaps/ici_bleu.png").getImage();

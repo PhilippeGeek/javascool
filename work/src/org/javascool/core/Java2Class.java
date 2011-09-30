@@ -74,7 +74,7 @@ public class Java2Class {
       // Gestion des erreurs
       for(Diagnostic diagnostic : diagnostics.getDiagnostics()) {
         String javaDiagnostic = diagnostic.getMessage(Locale.FRENCH);
-        String jvsDiagnostic = javaFiles.length == 1 ? javaDiagnostic : javaDiagnostic.split(" ", 2)[1];
+        String jvsDiagnostic = javaFiles.length > 1 ? javaDiagnostic : javaDiagnostic.split(" ", 2)[1];
         if(jvsDiagnostic.equals("not a statement"))
           jvsDiagnostic = "L'instruction n'est pas valide.\n (Il se peut qu'une variable indiquée n'existe pas)";
         else if(jvsDiagnostic.equals("';' expected"))
