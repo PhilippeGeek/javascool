@@ -104,6 +104,7 @@ public class SerialInterface {
    */
   public SerialInterface open() {
     close();
+    data.clear();
     try {
       for(Enumeration<?> list = CommPortIdentifier.getPortIdentifiers(); list.hasMoreElements();) {
 	CommPortIdentifier id = (CommPortIdentifier) list.nextElement();
@@ -114,7 +115,7 @@ public class SerialInterface {
       }
       throw new IOException("Impossible d'ouvrir un port série de nom :" + name+" (il n'existe pas)");
     } catch(Exception e) {
-      output = null; input = null; data = null; port = null;
+      output = null; input = null; port = null;
       System.out.println("Erreur à l'ouverture du port série \n\t"+this+"\n\t : " + e);
       return this;
     }
@@ -143,7 +144,6 @@ public class SerialInterface {
 	    break;
 	  }
 	}});
-    data = new ArrayList<Integer>();
     port.setSerialPortParams(rate, size, 
 			     stop == 2.0 ? SerialPort.STOPBITS_2 : stop == 1.5 ? SerialPort.STOPBITS_1_5 : SerialPort.STOPBITS_1, 
 			     parity == 'E' ? SerialPort.PARITY_EVEN : parity == 'O' ? SerialPort.PARITY_ODD : SerialPort.PARITY_NONE);
@@ -151,8 +151,11 @@ public class SerialInterface {
 	synchronized public void serialEvent(SerialPortEvent serialEvent) {
 	  if (serialEvent.getEventType() == SerialPortEvent.DATA_AVAILABLE) { 
 	    try {
-	      while (input.available() > 0) 
+	      while (input.available() > 0) {
 		data.add(input.read());
+		if (runnable != null)
+		  runnable.run();
+	      }
 	    } catch(Exception e) {
 	      System.out.println("Erreur à la réception d'un caractère sur le port série \n\t"+this+"\n\t : " + e);
 	    }
@@ -163,16 +166,26 @@ public class SerialInterface {
   private SerialPort port = null;
   private OutputStream output = null;
   private InputStream input = null;
-  private ArrayList<Integer> data = null;
+  private Runnable runnable = null;
+  private ArrayList<Integer> data = new ArrayList<Integer>();
+
+  /** Connecte un runnable au port série.
+   * @param reader Un runnable qui est appellé à l'arrivée de chaque caractère en lecture. 
+   * @return Cet objet permettant la construction <tt>new SerialInterface().setRunnable(..</tt>.
+   */
+  public SerialInterface setRunnable(Runnable reader) {
+    runnable = reader;
+    return this;
+  }
 
   /** Ferme le port série. */
   public void close() {
     try {
       if (output != null) { output.close(); output = null; }
-      if (input != null) { input.close(); input = null; data = null; }
+      if (input != null) { input.close(); input = null; }
       if (port != null) { port.close(); port = null; }
     } catch(Exception e) {
-      output = null; input = null; data = null; port = null;
+      output = null; input = null; port = null;
       System.out.println("Erreur à la fermeture du port série \n\t"+this+"\n\t : " + e);
     }
   }
@@ -201,8 +214,8 @@ public class SerialInterface {
   /** Lit un octet sur le port série.
    * @return La valeur de l'octet à lire ou -1 si il n'y a pas d'octet à lire.
    */
-  public int read() {   
-    if (data == null || data.size() == 0) {
+  public int read() { 
+    if (data.size() == 0) {
       return -1;
     } else {
       int value = data.get(0);
@@ -211,10 +224,21 @@ public class SerialInterface {
     }
   }
 
+  /** Ajoute des octets entrée pour simuler une lecture.
+   * @param string Les octets en entrée.
+   */
+  public void addInput(String string) {
+    for(int i = 0; i < string.length(); i++) {
+      data.add((int) string.charAt(i));
+      if (runnable != null)
+	runnable.run();
+    }
+  }
+
   /** Renvoie une description des paramètres du port série. */
   public String toString() {
     return "<port name=\""+name+"\" rate=\""+rate+"\" parity=\""+parity+"\" size=\""+size+"\" stop=\""+stop+
-      "\" open=\""+isOpen()+"\" input-buffer-size =\""+(data == null ? 0 : data.size())+"\"/>";
+      "\" open=\""+isOpen()+"\" input-buffer-size =\""+data.size()+"\"/>";
   }
 
   /** Renvoie la liste des noms de ports séries disponibles. */

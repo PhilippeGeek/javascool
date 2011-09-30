@@ -5,11 +5,14 @@ import java.awt.BorderLayout;
 import javax.swing.BorderFactory;
 import java.awt.Dimension;
 import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.KeyEvent;
 
 /** Définit un panneau graphique permettant de piloter une interface série.
  * <p><img src="http://javascool.gforge.inria.fr/documents/sketchbook/commSerie/screenshot.png" alt="screenshot"/></p>
@@ -91,67 +94,102 @@ public class SerialInterfacePanel extends JPanel {
 		    }});
 	      }});
 	}}, BorderLayout.NORTH);
-    add(new JPanel() { 
+    add(new JButton() {
+	private static final long serialVersionUID = 1L;
+	private static final String open = "OUVRIR le port", close = "FERMER le port";
+	{
+	  setText(open);
+	  addActionListener(new ActionListener() {
+	      private static final long serialVersionUID = 1L;
+	      @Override
+		public void actionPerformed(ActionEvent e) {
+		JButton b = (JButton) e.getSource();
+		if(open.equals(b.getText())) {
+		  b.setText(close);
+		  System.out.println("Opening serial interface : "+serial);
+		  serial.open();
+		} else {
+		  b.setText(open);
+		  serial.close();
+		}
+	      }});
+	}}, BorderLayout.WEST);
+    add(new Box(BoxLayout.X_AXIS) { 
 	private static final long serialVersionUID = 1L;
 	{
-	  add(new JButton("Ouvrir") {
+	  add(new Box(BoxLayout.Y_AXIS) { 
 	      private static final long serialVersionUID = 1L;
 	      {
-		addActionListener(new ActionListener() {
+		add(writeChar = new JTextField(12) {
 		    private static final long serialVersionUID = 1L;
-		    @Override
-		      public void actionPerformed(ActionEvent e) {
-		      JButton b = (JButton) e.getSource();
-		      if("Ouvrir".equals(b.getText())) {
-			b.setText("Fermer");
-			System.out.println("Opening serial interface : "+serial);
-			serial.open();
-		      } else {
-			b.setText("Ouvrir");
-			serial.close();
-		      }
+		    {
+		      setBorder(BorderFactory.createTitledBorder("Envoyer un caractère :"));
+		      addKeyListener(new KeyListener() {
+			private static final long serialVersionUID = 1L;
+			@Override
+			  public void keyPressed(KeyEvent e) { }
+			  public void keyReleased(KeyEvent e) { }
+			  public void keyTyped(KeyEvent e) {
+			    char c = e.getKeyChar();
+			    writeHexa.setText(writeHexa.getText()+" 0x"+Integer.toString((int) c, 16));
+			    serial.write(c);
+			  }
+			});
 		    }});
-	      }});
-	  add(write = new JTextField(24) {
-	      private static final long serialVersionUID = 1L;
-	      {
-		setBorder(BorderFactory.createTitledBorder("Envoyer un octet (héxa):"));
-		addActionListener(new ActionListener() {
+		add(writeHexa = new JTextField(12) {
 		    private static final long serialVersionUID = 1L;
-		    @Override
-		      public void actionPerformed(ActionEvent e) {
-		      try {
-			int b = Integer.parseInt(((JTextField) e.getSource()).getText(), 16);
-			serial.write(b);
-			System.out.println("Sending : '0x"+b+"'");
-		      } catch(NumberFormatException u) {
-			write.setText("Illegal format !");
-		      }
-		    }});
-	      }});
-	  add(new JPanel() {
-	      private static final long serialVersionUID = 1L;
-	      {
-		setBorder(BorderFactory.createTitledBorder("Lire un octet (héxa):"));
-		add(new JButton("Lire :") {
+		    {
+		      setBorder(BorderFactory.createTitledBorder("Code ASCII du caractère :"));
+		      setEditable(false);
+		    }
+		  });
+		add(new JButton("Effacer") {
 		    private static final long serialVersionUID = 1L;
 		    {
 		      addActionListener(new ActionListener() {
 			  private static final long serialVersionUID = 1L;
 			  @Override
-			    public void actionPerformed(ActionEvent e) {
-			    int v = serial.read();
-			    read.setText(v == -1 ? "rien à lire" : "'0x"+Integer.toHexString(v)+"'");
-			  }});
+			  public void actionPerformed(ActionEvent e) {
+			    writeChar.setText("");
+			    writeHexa.setText("");
+			  }
+			});
 		    }});
-		add(read = new JTextField(12) {  
+	      }});
+	  add(new Box(BoxLayout.Y_AXIS) { 
+	      private static final long serialVersionUID = 1L;
+	      {
+		add(readChar = new JTextField(12) {
 		    private static final long serialVersionUID = 1L;
 		    {
+		      setBorder(BorderFactory.createTitledBorder("Caractère reçu :"));
 		      setEditable(false);
-		    }
-		  });
+		    }});
+		add(readHexa = new JTextField(12) {
+		    private static final long serialVersionUID = 1L;
+		    {
+		      setBorder(BorderFactory.createTitledBorder("Code ASCII du caractère :"));
+		      setEditable(false);
+		    }});
+		add(new JButton("Effacer") {
+		    private static final long serialVersionUID = 1L;
+		    {
+		      addActionListener(new ActionListener() {
+			  private static final long serialVersionUID = 1L;
+			  @Override
+			  public void actionPerformed(ActionEvent e) {
+			    readChar.setText("");
+			    readHexa.setText("");
+			  }
+			});
+		    }});
 	      }});
 	}}, BorderLayout.CENTER);
+    serial.setRunnable(new Runnable() { public void run() {
+      char c = (char) serial.read();
+      readChar.setText(readChar.getText()+" "+c);
+      readHexa.setText(readHexa.getText()+" 0x"+Integer.toString(c, 16));
+    }});
     // Permet d'afficher les messages de la console dans l'interface.  
     if (!org.javascool.widgets.Console.isInstanced()) {
       JPanel c = org.javascool.widgets.Console.getInstance();
@@ -166,7 +204,7 @@ public class SerialInterfacePanel extends JPanel {
     this(null);
   }
   private SerialInterface serial;
-  private JTextField write, read;
+  private JTextField writeChar, writeHexa, readChar, readHexa;
 
   /** Renvoie l'interface série, pour pouvoir accéder à ses fonctions. */
   public SerialInterface getSerialInterface() {
@@ -177,7 +215,7 @@ public class SerialInterfacePanel extends JPanel {
    * @param usage <tt>java -cp javascool-proglets.jar org.javascool.proglets.commSerie.SerialInterfacePanel</tt>
    */  
   public static void main(String[] usage) {
-    new org.javascool.widgets.MainFrame().reset("Interface série", 800, 400, new SerialInterfacePanel());
+    new org.javascool.widgets.MainFrame().reset("Interface série", 800, 600, new SerialInterfacePanel());
   }
 }
 

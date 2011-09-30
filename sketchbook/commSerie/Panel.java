@@ -12,5 +12,13 @@ public class Panel extends JPanel {
   private static final long serialVersionUID = 1L;
   public Panel() {
      setLayout(new BorderLayout());
+     removeAll();
   }
+  public void removeAll() {
+    super.removeAll();
+     add(spanel = new SerialInterfacePanel(), BorderLayout.NORTH);
+     serial = spanel.getSerialInterface();
+  }
+  SerialInterfacePanel spanel;
+  SerialInterface serial;
 }

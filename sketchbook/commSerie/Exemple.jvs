@@ -3,15 +3,12 @@ void main(){
   JPanel panel = getPane();
   // Efface tout ce qui est dans le panel de la proglet	
   panel.removeAll();	  
-  // Ajoute l'interface de contrôle
-  SerialInterfacePanel spanel = new SerialInterfacePanel();
-  panel.add("North", spanel);
   // Ajoute l'interface de du convertisseur
   panel.add("South", new ConvertisseurPanel());
   // Mise à jour de l'affichage
   panel.revalidate();
 
   // Accès à l'interface
-  SerialInterface serial = spanel.getSerialInterface();
+  SerialInterface serial = getSerialInterface();
 
 }
