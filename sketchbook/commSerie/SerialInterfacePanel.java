@@ -3,11 +3,13 @@ package org.javascool.proglets.commSerie;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.BorderFactory;
+import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
-import javax.swing.JTextField;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -120,10 +122,9 @@ public class SerialInterfacePanel extends JPanel {
 	  add(new Box(BoxLayout.Y_AXIS) { 
 	      private static final long serialVersionUID = 1L;
 	      {
-		add(writeChar = new JTextField(12) {
+		add(new JScrollPane(writeChar = new JTextArea(1,12) {
 		    private static final long serialVersionUID = 1L;
 		    {
-		      setBorder(BorderFactory.createTitledBorder("Envoyer un caractère :"));
 		      addKeyListener(new KeyListener() {
 			private static final long serialVersionUID = 1L;
 			@Override
@@ -131,16 +132,27 @@ public class SerialInterfacePanel extends JPanel {
 			  public void keyReleased(KeyEvent e) { }
 			  public void keyTyped(KeyEvent e) {
 			    char c = e.getKeyChar();
-			    writeHexa.setText(writeHexa.getText()+" 0x"+Integer.toString((int) c, 16));
+			    writeHexa.setText(writeHexa.getText()+"#"+Integer.toString((int) c, 16));
+			    //serial.addInput("OK"+c);
 			    serial.write(c);
 			  }
 			});
-		    }});
-		add(writeHexa = new JTextField(12) {
+		    }}, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS) {
+		    private static final long serialVersionUID = 1L;
+		    {
+		      setBorder(BorderFactory.createTitledBorder("Envoyer un caractère :"));
+		    }
+		  });
+		add(new JScrollPane(writeHexa = new JTextArea(1,12) {
+		    private static final long serialVersionUID = 1L;
+		    {
+		      setBackground(new Color(200, 200, 200));
+		      setEditable(false);
+		    }
+		  }, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS) {
 		    private static final long serialVersionUID = 1L;
 		    {
 		      setBorder(BorderFactory.createTitledBorder("Code ASCII du caractère :"));
-		      setEditable(false);
 		    }
 		  });
 		add(new JButton("Effacer") {
@@ -159,18 +171,28 @@ public class SerialInterfacePanel extends JPanel {
 	  add(new Box(BoxLayout.Y_AXIS) { 
 	      private static final long serialVersionUID = 1L;
 	      {
-		add(readChar = new JTextField(12) {
+		add(new JScrollPane(readChar = new JTextArea(1,12) {
+		    private static final long serialVersionUID = 1L;
+		    {
+		      setBackground(new Color(200, 200, 200));
+		      setEditable(false);
+		    }}, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS) {
 		    private static final long serialVersionUID = 1L;
 		    {
 		      setBorder(BorderFactory.createTitledBorder("Caractère reçu :"));
+		    }
+		  });
+		add(new JScrollPane(readHexa = new JTextArea(1,12) {
+		    private static final long serialVersionUID = 1L;
+		    {
+		      setBackground(new Color(200, 200, 200));
 		      setEditable(false);
-		    }});
-		add(readHexa = new JTextField(12) {
+		    }}, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS) {
 		    private static final long serialVersionUID = 1L;
 		    {
 		      setBorder(BorderFactory.createTitledBorder("Code ASCII du caractère :"));
-		      setEditable(false);
-		    }});
+		    }
+		  });
 		add(new JButton("Effacer") {
 		    private static final long serialVersionUID = 1L;
 		    {
@@ -185,10 +207,9 @@ public class SerialInterfacePanel extends JPanel {
 		    }});
 	      }});
 	}}, BorderLayout.CENTER);
-    serial.setRunnable(new Runnable() { public void run() {
-      char c = (char) serial.read();
-      readChar.setText(readChar.getText()+" "+c);
-      readHexa.setText(readHexa.getText()+" 0x"+Integer.toString(c, 16));
+    serial.setReader(new SerialInterface.Reader() { public void reading(int c) {
+      readChar.setText(readChar.getText()+((char) c));
+      readHexa.setText(readHexa.getText()+"#"+Integer.toString(c, 16));
     }});
     // Permet d'afficher les messages de la console dans l'interface.  
     if (!org.javascool.widgets.Console.isInstanced()) {
@@ -204,7 +225,7 @@ public class SerialInterfacePanel extends JPanel {
     this(null);
   }
   private SerialInterface serial;
-  private JTextField writeChar, writeHexa, readChar, readHexa;
+  private JTextArea writeChar, writeHexa, readChar, readHexa;
 
   /** Renvoie l'interface série, pour pouvoir accéder à ses fonctions. */
   public SerialInterface getSerialInterface() {

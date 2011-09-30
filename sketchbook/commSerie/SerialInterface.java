@@ -152,9 +152,10 @@ public class SerialInterface {
 	  if (serialEvent.getEventType() == SerialPortEvent.DATA_AVAILABLE) { 
 	    try {
 	      while (input.available() > 0) {
-		data.add(input.read());
-		if (runnable != null)
-		  runnable.run();
+		int c = input.read();
+		data.add(c);
+		if (reader != null)
+		  reader.reading(c);
 	      }
 	    } catch(Exception e) {
 	      System.out.println("Erreur à la réception d'un caractère sur le port série \n\t"+this+"\n\t : " + e);
@@ -166,15 +167,23 @@ public class SerialInterface {
   private SerialPort port = null;
   private OutputStream output = null;
   private InputStream input = null;
-  private Runnable runnable = null;
+  private Reader reader = null;
   private ArrayList<Integer> data = new ArrayList<Integer>();
 
-  /** Connecte un runnable au port série.
-   * @param reader Un runnable qui est appellé à l'arrivée de chaque caractère en lecture. 
-   * @return Cet objet permettant la construction <tt>new SerialInterface().setRunnable(..</tt>.
+  /** Définit un lecteur de caractère. */
+  public interface Reader {
+    /** Routine appellée à l'arrivée de chaque caractère. 
+     * @param Le caractère reçu.
+     */
+    public void reading(int c);
+  }
+
+  /** Connecte un reader au port série.
+   * @param reader Un reader qui est appellé à l'arrivée de chaque caractère en lecture. 
+   * @return Cet objet permettant la construction <tt>new SerialInterface().setReader(..</tt>.
    */
-  public SerialInterface setRunnable(Runnable reader) {
-    runnable = reader;
+  public SerialInterface setReader(Reader reader) {
+    this.reader = reader;
     return this;
   }
 
@@ -228,10 +237,12 @@ public class SerialInterface {
    * @param string Les octets en entrée.
    */
   public void addInput(String string) {
+    System.out.println(">>"+string+" r = "+reader);
     for(int i = 0; i < string.length(); i++) {
-      data.add((int) string.charAt(i));
-      if (runnable != null)
-	runnable.run();
+      int c = (int) string.charAt(i);
+      data.add(c);
+      if (reader != null)
+	reader.reading(c);
     }
   }
 
