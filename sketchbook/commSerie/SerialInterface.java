@@ -151,12 +151,8 @@ public class SerialInterface {
 	synchronized public void serialEvent(SerialPortEvent serialEvent) {
 	  if (serialEvent.getEventType() == SerialPortEvent.DATA_AVAILABLE) { 
 	    try {
-	      while (input.available() > 0) {
-		int c = input.read();
-		data.add(c);
-		if (reader != null)
-		  reader.reading(c);
-	      }
+	      while (input.available() > 0)
+		reading(input.read());
 	    } catch(Exception e) {
 	      System.out.println("Erreur à la réception d'un caractère sur le port série \n\t"+this+"\n\t : " + e);
 	    }
@@ -168,24 +164,8 @@ public class SerialInterface {
   private OutputStream output = null;
   private InputStream input = null;
   private Reader reader = null;
+  private Writer writer = null;
   private ArrayList<Integer> data = new ArrayList<Integer>();
-
-  /** Définit un lecteur de caractère. */
-  public interface Reader {
-    /** Routine appellée à l'arrivée de chaque caractère. 
-     * @param Le caractère reçu.
-     */
-    public void reading(int c);
-  }
-
-  /** Connecte un reader au port série.
-   * @param reader Un reader qui est appellé à l'arrivée de chaque caractère en lecture. 
-   * @return Cet objet permettant la construction <tt>new SerialInterface().setReader(..</tt>.
-   */
-  public SerialInterface setReader(Reader reader) {
-    this.reader = reader;
-    return this;
-  }
 
   /** Ferme le port série. */
   public void close() {
@@ -209,8 +189,10 @@ public class SerialInterface {
   /** Ecrit un octet sur le port série.
    * @param value L'octet à écrire.
    */
-  public void write(int value){ 
+  public void write(int value) { 
     try {
+      if (writer != null)
+	writer.writing(value);
       if (output == null) 
 	throw new IOException("Port série fermé ou en erreur");
       output.write(value & 0xff);
@@ -218,6 +200,52 @@ public class SerialInterface {
     } catch(Exception e) {
       System.out.println("Erreur à l'écriture de '"+value+"' sur le port série \n\t"+this+"\n\t : " + e);
     }
+  }
+
+  /** Ecrit les octets d'une chaîne de caractère sur le port série.
+   * @param value Les octets à écrire. La chaîne ne doit contenir que des caractères ASCII.
+   * @return La valeur true, si la chaîne est bien de l'ASCII, et fausse sinon. Dans ce cas aucun caratère n'est écrit.
+   */
+  public boolean write(String value) { 
+    if (isASCII(value)) {
+      for(char c : value.toCharArray())
+	write((int) c);
+      return true;
+    } else
+      return false;
+  }
+
+  /** Teste si une  chaîne ne contient que des caractères l'ASCII.
+   * @param value La chaîne à tester.
+   * @return La valeur true, si la chaîne est bien de l'ASCII, et fausse sinon. 
+   */
+  public static boolean isASCII(String value) {
+    boolean ok = true;
+    for(char c : value.toCharArray()) {
+      int v = (int) c; 
+      if (c < 0 || 255 < c) {
+	System.out.println("Impossible d'écrire la chaîne \""+value+"\" qui contient le caratère non-ASCII '"+c+"'");
+	ok = false;
+      }
+    }
+    return ok;
+  }
+
+  /** Définit un moniteur des caractères émis. */
+  public interface Writer {
+    /** Routine appellée à l'écriture de chaque caractère. 
+     * @param c Le caractère écrit.
+     */
+    public void writing(int c);
+  }
+
+  /** Connecte un writer au port série.
+   * @param writer Un writer qui est appellé à chaque caratère écrit. 
+   * @return Cet objet permettant la construction <tt>new SerialInterface().setWriter(..</tt>.
+   */
+  public SerialInterface setWriter(Writer writer) {
+    this.writer = writer;
+    return this;
   }
 
   /** Lit un octet sur le port série.
@@ -233,17 +261,47 @@ public class SerialInterface {
     }
   }
 
+  // Lecture de l'octet à son arrivée
+  private void reading(int c) {
+    data.add(c);
+    if (reader != null)
+      reader.reading(c);
+  }
+
+  /** Renvoie tous les octets actuellement dans le buffer.
+   * @return Un tableau avec tous les octets actuellement  dans le buffer.
+   */
+  int[] getChars() {
+    int chars[] = new int[data.size()], i = 0;
+    for(int c : data)
+      chars[i++] = c;
+    return chars;
+  }
+
+  /** Définit un lecteur de caractère. */
+  public interface Reader {
+    /** Routine appellée à l'arrivée de chaque caractère. 
+     * @param c Le caractère reçu.
+     */
+    public void reading(int c);
+  }
+
+  /** Connecte un reader au port série.
+   * @param reader Un reader qui est appellé à l'arrivée de chaque caractère en lecture. 
+   * @return Cet objet permettant la construction <tt>new SerialInterface().setReader(..</tt>.
+   */
+  public SerialInterface setReader(Reader reader) {
+    this.reader = reader;
+    return this;
+  }
+
   /** Ajoute des octets entrée pour simuler une lecture.
    * @param string Les octets en entrée.
    */
-  public void addInput(String string) {
-    System.out.println(">>"+string+" r = "+reader);
-    for(int i = 0; i < string.length(); i++) {
-      int c = (int) string.charAt(i);
-      data.add(c);
-      if (reader != null)
-	reader.reading(c);
-    }
+  public void simulReading(String string) {
+    if (isASCII(string))
+      for(char c : string.toCharArray())
+	reading((int) c);
   }
 
   /** Renvoie une description des paramètres du port série. */

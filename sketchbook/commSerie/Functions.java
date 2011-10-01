@@ -28,13 +28,18 @@ public class Functions {
    * @param string La chaîne à envoyer.
    */
   public static void writeString(String string) {
-    for(int i = 0; i < string.length(); i++)
-      getPane().serial.write((int) string.charAt(0));
+    getPane().serial.write(string);
   }
   /** Reçoit un caractère à travers l'interface. 
    * @return La valeur de l'octet à lire ou -1 si il n'y a pas d'octet à lire.
    */
-  public int readChar() {   
+  public static int readChar() {   
     return getPane().serial.read();
+  }
+  /** Renvoie tous les octets actuellement dans le buffer.
+   * @return Un tableau avec tous les octets actuellement dans le buffer.
+   */
+  public static int[] getChars() {
+    return getPane().serial.getChars();
   }
 }

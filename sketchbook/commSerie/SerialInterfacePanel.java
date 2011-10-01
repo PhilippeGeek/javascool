@@ -132,9 +132,9 @@ public class SerialInterfacePanel extends JPanel {
 			  public void keyReleased(KeyEvent e) { }
 			  public void keyTyped(KeyEvent e) {
 			    char c = e.getKeyChar();
-			    writeHexa.setText(writeHexa.getText()+"#"+Integer.toString((int) c, 16));
-			    //serial.addInput("OK"+c);
+			    external = false;
 			    serial.write(c);
+			    external = true;
 			  }
 			});
 		    }}, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS) {
@@ -211,6 +211,11 @@ public class SerialInterfacePanel extends JPanel {
       readChar.setText(readChar.getText()+((char) c));
       readHexa.setText(readHexa.getText()+"#"+Integer.toString(c, 16));
     }});
+    serial.setWriter(new SerialInterface.Writer() { public void writing(int c) { 
+      if (external)
+	writeChar.setText(writeChar.getText()+((char) c));
+      writeHexa.setText(writeHexa.getText()+"#"+Integer.toString(c, 16));
+    }});
     // Permet d'afficher les messages de la console dans l'interface.  
     if (!org.javascool.widgets.Console.isInstanced()) {
       JPanel c = org.javascool.widgets.Console.getInstance();
@@ -226,6 +231,7 @@ public class SerialInterfacePanel extends JPanel {
   }
   private SerialInterface serial;
   private JTextArea writeChar, writeHexa, readChar, readHexa;
+  private boolean external = true;
 
   /** Renvoie l'interface série, pour pouvoir accéder à ses fonctions. */
   public SerialInterface getSerialInterface() {

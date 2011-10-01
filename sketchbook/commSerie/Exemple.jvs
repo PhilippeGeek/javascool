@@ -8,7 +8,11 @@ void main(){
   // Mise à jour de l'affichage
   panel.revalidate();
 
-  // Accès à l'interface
-  SerialInterface serial = getSerialInterface();
 
+  // Accès aux fonctions de  l'interface
+  writeString("toto");
+    
+  getSerialInterface().simulReading("ok");
+  for(int c : getChars())
+    print("'"+((char) c)+"'");
 }
