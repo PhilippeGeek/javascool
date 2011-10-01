@@ -61,7 +61,7 @@ $v3_redirections_link_table = array(
 			     "doc%3A%2Fdocuments%2Fnos-ressources%2Frevues.html" => "?page=resources&action=link-revues",
 			     "doc%3A%2Fdocuments%2Fquelques-t-p-e%2Findex.html" => "?page=resources&action=link-revues", 
 			     "TPE-Quizz" => "?page=resources&action=link-quizz", 
-			     "TPE-Quizz\"" => "?page=resources&action=link-quizz", 
+			     "TPE-Quizz%22" => "?page=resources&action=link-quizz", 
 			     "doc%3A%2Fdocuments%2Fspeed-dating-09%2Findex.html" => "?page=resources&action=link-quizz",
 			     "TPE-Sujets" => "?page=resources&action=link-idees-tpe",
 			     "TPE-Accueil" => "?page=resources&action=link-tpe-accueil",
