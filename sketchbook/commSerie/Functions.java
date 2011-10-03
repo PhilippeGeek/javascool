@@ -31,6 +31,7 @@ public class Functions {
     getPane().serial.write(string);
   }
   /** Reçoit un caractère à travers l'interface. 
+   * <p>L'octet lu est retiré du buffer de lecture, après l'appel de cette fonction.</p>
    * @return La valeur de l'octet à lire ou -1 si il n'y a pas d'octet à lire.
    */
   public static int readChar() {   

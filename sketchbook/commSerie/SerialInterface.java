@@ -249,6 +249,7 @@ public class SerialInterface {
   }
 
   /** Lit un octet sur le port série.
+   * <p>L'octet lu est retiré du buffer de lecture, après l'appel de cette fonction.</p>
    * @return La valeur de l'octet à lire ou -1 si il n'y a pas d'octet à lire.
    */
   public int read() { 
