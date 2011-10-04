@@ -17,3 +17,7 @@ nbe :
 
 www : 
 	firefox http://code.google.com/p/javascool/wiki/JavaScoolOnGoingWork &
+
+usb :
+	ant javascool-proglets.jar javascool-builder.jar
+	cd dist ; cp javascool-proglets.jar javascool-builder.jar /media/javascool 
