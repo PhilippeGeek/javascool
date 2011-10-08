@@ -26,14 +26,16 @@ public class ErrorCatcher {
    * l'affiche dans une fenêtre séparée afin d'être recueillies et communiquées par l'utilisateur.</p>
    * @param header Un texte entête en HTML expliquant à l'utilisateur quoi faire avec cette sortie d'exception.
    * @param revision Nom et/ou numéro de révision de l'application pour avoir une trace en cas d'erreur.
+   * @param keyword Si différent de null, le message n'est donné à l'utilisateur que si la trace de la pile contient le mot-clé (<tt>org.javascool</tt> par défaut)
    */
-  public static void setUncaughtExceptionAlert(String header, String revision) {
+  public static void setUncaughtExceptionAlert(String header, String revision, String keyword) {
     uncaughtExceptionAlertHeader = header;
+    uncaughtExceptionKeyword = keyword;
     System.setProperty("application.revision", "" + revision);
     Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
                                                 @Override
                                                 public void uncaughtException(Thread t, Throwable e) {
-                                                  String s = "";
+                                                  String s = "", r = "";
                                                   if(uncaughtExceptionAlertOnce <= 1) {
                                                     s += uncaughtExceptionAlertHeader + "\n<hr><pre>";
                                                     for(String p: new String[] { "application.revision", "java.version", "os.name", "os.arch", "os.version" }
@@ -46,9 +48,11 @@ public class ErrorCatcher {
                                                     s += "> count = " + uncaughtExceptionAlertOnce + "\n";
                                                   s += "> stack-trace = «\n";
                                                   for(int i = 0; i < t.getStackTrace().length; i++)
-                                                    s += e.getStackTrace()[i] + (i < t.getStackTrace().length - 1 ? "\n" : "»");
-                                                  s += "</pre><hr>";
-                                                  if(uncaughtExceptionAlertOnce == 0)
+                                                    r += e.getStackTrace()[i] + (i < t.getStackTrace().length - 1 ? "\n" : "»");
+                                                  boolean alert = uncaughtExceptionAlertOnce == 0 && 
+                                                          (uncaughtExceptionKeyword == null || r.indexOf(uncaughtExceptionKeyword) != -1);
+                                                  s += r + "</pre><hr>";
+                                                  if(alert)
                                                     Macros.message(s, true);
 						  System.err.println(s);
                                                   uncaughtExceptionAlertOnce++;
@@ -56,8 +60,12 @@ public class ErrorCatcher {
                                               }
                                               );
   }
+  public static void setUncaughtExceptionAlert(String header, String revision) {
+    setUncaughtExceptionAlert(header, revision, "org.javascool");
+  }
   private static String uncaughtExceptionAlertHeader;
   private static int uncaughtExceptionAlertOnce = 0;
+  private static String uncaughtExceptionKeyword = null;
 
   /** Impose une version minimale de Java.
    * <p>Si la version n'est pas correcte, l'application s'arrête et un téléchargement est proposé.</p>
