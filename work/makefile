@@ -1,7 +1,7 @@
 # vthierry's ongoing tasks
 #
 # * Sur certaines plateformes eepc les proglets ne sont pas trouvees !!!!
-# * Pb avec enVoiture reste vide, pete tout, exemple pas valide ! (repartir d'une JRE propre pour installer opengl)
+# * Pb avec enVoiture reste vide, pete tout, exemple pas valide ! (repartir d'une JRE SUN propre pour installer opengl)
 
 #export JAVA_HOME=/usr/java/default
 
