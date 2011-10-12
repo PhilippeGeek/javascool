@@ -209,12 +209,12 @@ public class SerialInterfacePanel extends JPanel {
 	}}, BorderLayout.CENTER);
     serial.setReader(new SerialInterface.Reader() { public void reading(int c) {
       readChar.setText(readChar.getText()+((char) c));
-      readHexa.setText(readHexa.getText()+"#"+Integer.toString(c, 16));
+      readHexa.setText(readHexa.getText()+" "+Integer.toString(c, 16));
     }});
     serial.setWriter(new SerialInterface.Writer() { public void writing(int c) { 
       if (external)
 	writeChar.setText(writeChar.getText()+((char) c));
-      writeHexa.setText(writeHexa.getText()+"#"+Integer.toString(c, 16));
+      writeHexa.setText(writeHexa.getText()+" "+Integer.toString(c, 16));
     }});
     // Permet d'afficher les messages de la console dans l'interface.  
     if (!org.javascool.widgets.Console.isInstanced()) {
