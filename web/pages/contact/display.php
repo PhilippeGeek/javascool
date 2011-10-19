@@ -24,7 +24,7 @@ Nous sommes à votre écoute&nbsp;! Pour nous contacter:
    </select><input type="submit" value="[Créer le message]" /><input type="hidden" name="Mon-message"/></td></tr>
  </table></form>
 </li></ul>
-<p>ou un <a href="mailto:javascool@googlegroups.com?subject=A%20propos%20de%20qq%20JavaScool" class="external text" rel="nofollow">simple mail</a> voir même au téléphone, au <i>+33 4 9238 7688</i>, si nécessaire.
+<p>ou un <a href="mailto:javascool@googlegroups.com?subject=A%20propos%20de%20qq%20JavaScool" class="external text" rel="nofollow">simple mail</a> à <tt>javascool@googlegroups.com</tt>, voir même au téléphone, au <i>+33 4 9238 7688</i>, si nécessaire.
 
 </p>
 <ul><li> Voici nos réponses à vos premières <a href="http://javascool.gforge.inria.fr?page=Faq" class="external text" rel="nofollow">questions</a>&nbsp;!
