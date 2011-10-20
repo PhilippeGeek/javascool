@@ -14,10 +14,14 @@ public class Panel extends JPanel {
      setLayout(new BorderLayout());
      removeAll();
   }
-  public void removeAll() {
+  public void removeAll(String displayMode) {
     super.removeAll();
-     add(spanel = new SerialInterfacePanel(), BorderLayout.NORTH);
-     serial = spanel.getSerialInterface();
+    if (displayMode.length() > 0) 
+      add(spanel = new SerialInterfacePanel(displayMode), BorderLayout.NORTH);
+    serial = spanel.getSerialInterface();
+  }
+  public void removeAll() {
+    removeAll("CD");
   }
   SerialInterfacePanel spanel;
   SerialInterface serial;
