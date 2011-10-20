@@ -56,7 +56,7 @@ public class IconOutput extends JPanel {
    * @return Cet objet, permettant de définir la construction <tt>new IconOutput().reset(..)</tt>.
    */
   public final IconOutput reset(int width, int height) {
-    if(width * height > 550 * 550) throw new IllegalArgumentException("Image size too big !");
+    if(width > 550 || height > 550 || width * height > 550 * 550) throw new IllegalArgumentException("Image size too big !");
     if(width % 2 == 0)
       width--;
     if(height % 2 == 0)

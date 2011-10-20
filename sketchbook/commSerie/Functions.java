@@ -20,7 +20,18 @@ public class Functions {
   public static Panel getPane() {
     return getProgletPane();
   }
-  /** Renvoie l'interfaace série du panneau d'affichage de la proglet. */
+  /** Initialise le panneau avec le mode d'affichage souhaité. 
+   * @param displayMode Précise si:<ul>
+   *  <li>"C" : le panneau de contrôle des paramètres et d'ouverture/fermeture du port est affiché</li>
+   *  <li>"D" : le panneau de dialogue entrée/sortie avec le port est affiché</li>
+   *  <li>"CD" : les deux panneaux sont affichés (défaut)</li>
+   *  <li>"" : rien n'est affiché.</li>
+   * </ul>
+   */  
+  public static void removeAll(String displayMode) {
+    getPane().removeAll(displayMode);
+  }
+  /** Renvoie l'interface série du panneau d'affichage de la proglet. */
   public static SerialInterface getSerialInterface() {
     return getPane().serial;
   }

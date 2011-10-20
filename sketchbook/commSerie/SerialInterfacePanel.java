@@ -26,196 +26,207 @@ public class SerialInterfacePanel extends JPanel {
 
   /** Construit un panneau de contôle pour l'interface série donné.
    * @param serialInterface Interface série à piloter. Si null, crée une interface série.
+   * @param displayMode Précise si:<ul>
+   *  <li>"C" : le panneau de contrôle des paramètres et d'ouverture/fermeture du port est affiché</li>
+   *  <li>"D" : le panneau de dialogue entrée/sortie avec le port est affiché</li>
+   *  <li>"CD" : les deux panneaux sont affichés (défaut)</li>
+   *  <li>"" : rien n'est affiché.</li>
+   * </ul>
    */
-  public SerialInterfacePanel(SerialInterface serialInterface) {
+  public SerialInterfacePanel(SerialInterface serialInterface, String displayMode) {
     serial = serialInterface == null ? new SerialInterface() : serialInterface;
     setBorder(BorderFactory.createTitledBorder("Interface de contrôle d'un port série"));
     setLayout(new BorderLayout());
-    add(new JPanel() {
-	private static final long serialVersionUID = 1L;
-	{
-	  add(new JComboBox(SerialInterface.getPortNames()) {
-	      private static final long serialVersionUID = 1L;
-	      {
-		setBorder(BorderFactory.createTitledBorder("Nom du port"));
-		setPreferredSize(new Dimension(120, 70));
-		addActionListener(new ActionListener() {
-		    private static final long serialVersionUID = 1L;
-		    @Override
-		      public void actionPerformed(ActionEvent e) {
-		      serial.setName((String) ((JComboBox) e.getSource()).getSelectedItem());
-		    }});
-	      }});
-	  add(new JComboBox(new Integer[] {19200, 9600, 4800, 2400, 1200, 600, 300}) {
-	      private static final long serialVersionUID = 1L;
-	      {
-		setBorder(BorderFactory.createTitledBorder("Débit en b./s."));
-		setPreferredSize(new Dimension(120, 70));
-		addActionListener(new ActionListener() {
-		    private static final long serialVersionUID = 1L;
-		    @Override
-		      public void actionPerformed(ActionEvent e) {
-		      serial.setRate((Integer) ((JComboBox) e.getSource()).getSelectedItem());
-		    }});
-	      }});
-	  add(new JComboBox(new String[] {"aucun", "pair", "impair"}) {
-	      private static final long serialVersionUID = 1L;
-	      {
-		setBorder(BorderFactory.createTitledBorder("Bit de parité"));
-		setPreferredSize(new Dimension(120, 70));
-		addActionListener(new ActionListener() {
-		    private static final long serialVersionUID = 1L;
-		    @Override
-		      public void actionPerformed(ActionEvent e) {
-		      String v = (String) ((JComboBox) e.getSource()).getSelectedItem();
-		      serial.setParity("pair".equals(v) ? 'E' : "impair".equals(v) ? 'O' : 'N');
-		    }});
-	      }});
-	  add(new JComboBox(new Integer[] {8, 7}) {
-	      private static final long serialVersionUID = 1L;
-	      {
-		setBorder(BorderFactory.createTitledBorder("Taille du mot"));
-		setPreferredSize(new Dimension(120, 70));
-		addActionListener(new ActionListener() {
-		    private static final long serialVersionUID = 1L;
-		    @Override
-		      public void actionPerformed(ActionEvent e) {
-		      serial.setSize((Integer) ((JComboBox) e.getSource()).getSelectedItem());
-		    }});
-	      }});
-	  add(new JComboBox(new Double[] {1.0, 1.5, 2.0}) {
-	      private static final long serialVersionUID = 1L;
-	      {
-		setBorder(BorderFactory.createTitledBorder("Bits de stop"));
-		setPreferredSize(new Dimension(120, 70));
-		addActionListener(new ActionListener() {
-		    private static final long serialVersionUID = 1L;
-		    @Override
-		      public void actionPerformed(ActionEvent e) {
-		      serial.setStop((Double) ((JComboBox) e.getSource()).getSelectedItem());
-		    }});
-	      }});
-	}}, BorderLayout.NORTH);
-    add(new JButton() {
-	private static final long serialVersionUID = 1L;
-	private static final String open = "OUVRIR le port", close = "FERMER le port";
-	{
-	  setText(open);
-	  addActionListener(new ActionListener() {
-	      private static final long serialVersionUID = 1L;
-	      @Override
-		public void actionPerformed(ActionEvent e) {
-		JButton b = (JButton) e.getSource();
-		if(open.equals(b.getText())) {
-		  b.setText(close);
-		  System.out.println("Opening serial interface : "+serial);
-		  serial.open();
-		} else {
-		  b.setText(open);
-		  serial.close();
-		}
-	      }});
-	}}, BorderLayout.WEST);
-    add(new Box(BoxLayout.X_AXIS) { 
-	private static final long serialVersionUID = 1L;
-	{
-	  add(new Box(BoxLayout.Y_AXIS) { 
-	      private static final long serialVersionUID = 1L;
-	      {
-		add(new JScrollPane(writeChar = new JTextArea(1,12) {
-		    private static final long serialVersionUID = 1L;
-		    {
-		      addKeyListener(new KeyListener() {
-			private static final long serialVersionUID = 1L;
-			@Override
-			  public void keyPressed(KeyEvent e) { }
-			  public void keyReleased(KeyEvent e) { }
-			  public void keyTyped(KeyEvent e) {
-			    char c = e.getKeyChar();
-			    external = false;
-			    serial.write(c);
-			    external = true;
-			  }
-			});
-		    }}, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS) {
-		    private static final long serialVersionUID = 1L;
-		    {
-		      setBorder(BorderFactory.createTitledBorder("Envoyer un caractère :"));
-		    }
-		  });
-		add(new JScrollPane(writeHexa = new JTextArea(1,12) {
-		    private static final long serialVersionUID = 1L;
-		    {
-		      setBackground(new Color(200, 200, 200));
-		      setEditable(false);
-		    }
-		  }, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS) {
-		    private static final long serialVersionUID = 1L;
-		    {
-		      setBorder(BorderFactory.createTitledBorder("Code ASCII du caractère :"));
-		    }
-		  });
-		add(new JButton("Effacer") {
-		    private static final long serialVersionUID = 1L;
-		    {
-		      addActionListener(new ActionListener() {
-			  private static final long serialVersionUID = 1L;
-			  @Override
-			  public void actionPerformed(ActionEvent e) {
-			    writeChar.setText("");
-			    writeHexa.setText("");
-			  }
-			});
-		    }});
-	      }});
-	  add(new Box(BoxLayout.Y_AXIS) { 
-	      private static final long serialVersionUID = 1L;
-	      {
-		add(new JScrollPane(readChar = new JTextArea(1,12) {
-		    private static final long serialVersionUID = 1L;
-		    {
-		      setBackground(new Color(200, 200, 200));
-		      setEditable(false);
-		    }}, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS) {
-		    private static final long serialVersionUID = 1L;
-		    {
-		      setBorder(BorderFactory.createTitledBorder("Caractère reçu :"));
-		    }
-		  });
-		add(new JScrollPane(readHexa = new JTextArea(1,12) {
-		    private static final long serialVersionUID = 1L;
-		    {
-		      setBackground(new Color(200, 200, 200));
-		      setEditable(false);
-		    }}, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS) {
-		    private static final long serialVersionUID = 1L;
-		    {
-		      setBorder(BorderFactory.createTitledBorder("Code ASCII du caractère :"));
-		    }
-		  });
-		add(new JButton("Effacer") {
-		    private static final long serialVersionUID = 1L;
-		    {
-		      addActionListener(new ActionListener() {
-			  private static final long serialVersionUID = 1L;
-			  @Override
-			  public void actionPerformed(ActionEvent e) {
-			    readChar.setText("");
-			    readHexa.setText("");
-			  }
-			});
-		    }});
-	      }});
-	}}, BorderLayout.CENTER);
-    serial.setReader(new SerialInterface.Reader() { public void reading(int c) {
-      readChar.setText(readChar.getText()+((char) c));
-      readHexa.setText(readHexa.getText()+" "+Integer.toString(c, 16));
-    }});
-    serial.setWriter(new SerialInterface.Writer() { public void writing(int c) { 
-      if (external)
-	writeChar.setText(writeChar.getText()+((char) c));
-      writeHexa.setText(writeHexa.getText()+" "+Integer.toString(c, 16));
-    }});
+    if (0 <= displayMode.indexOf("C"))
+      add(new JPanel() {
+	  private static final long serialVersionUID = 1L;
+	  {
+	    add(new JComboBox(SerialInterface.getPortNames()) {
+		private static final long serialVersionUID = 1L;
+		{
+		  setBorder(BorderFactory.createTitledBorder("Nom du port"));
+		  setPreferredSize(new Dimension(120, 70));
+		  addActionListener(new ActionListener() {
+		      private static final long serialVersionUID = 1L;
+		      @Override
+			public void actionPerformed(ActionEvent e) {
+			serial.setName((String) ((JComboBox) e.getSource()).getSelectedItem());
+		      }});
+		}});
+	    add(new JComboBox(new Integer[] {19200, 9600, 4800, 2400, 1200, 600, 300}) {
+		private static final long serialVersionUID = 1L;
+		{
+		  setBorder(BorderFactory.createTitledBorder("Débit en b./s."));
+		  setPreferredSize(new Dimension(120, 70));
+		  addActionListener(new ActionListener() {
+		      private static final long serialVersionUID = 1L;
+		      @Override
+			public void actionPerformed(ActionEvent e) {
+			serial.setRate((Integer) ((JComboBox) e.getSource()).getSelectedItem());
+		      }});
+		}});
+	    add(new JComboBox(new String[] {"aucun", "pair", "impair"}) {
+		private static final long serialVersionUID = 1L;
+		{
+		  setBorder(BorderFactory.createTitledBorder("Bit de parité"));
+		  setPreferredSize(new Dimension(120, 70));
+		  addActionListener(new ActionListener() {
+		      private static final long serialVersionUID = 1L;
+		      @Override
+			public void actionPerformed(ActionEvent e) {
+			String v = (String) ((JComboBox) e.getSource()).getSelectedItem();
+			serial.setParity("pair".equals(v) ? 'E' : "impair".equals(v) ? 'O' : 'N');
+		      }});
+		}});
+	    add(new JComboBox(new Integer[] {8, 7}) {
+		private static final long serialVersionUID = 1L;
+		{
+		  setBorder(BorderFactory.createTitledBorder("Taille du mot"));
+		  setPreferredSize(new Dimension(120, 70));
+		  addActionListener(new ActionListener() {
+		      private static final long serialVersionUID = 1L;
+		      @Override
+			public void actionPerformed(ActionEvent e) {
+			serial.setSize((Integer) ((JComboBox) e.getSource()).getSelectedItem());
+		      }});
+		}});
+	    add(new JComboBox(new Double[] {1.0, 1.5, 2.0}) {
+		private static final long serialVersionUID = 1L;
+		{
+		  setBorder(BorderFactory.createTitledBorder("Bits de stop"));
+		  setPreferredSize(new Dimension(120, 70));
+		  addActionListener(new ActionListener() {
+		      private static final long serialVersionUID = 1L;
+		      @Override
+			public void actionPerformed(ActionEvent e) {
+			serial.setStop((Double) ((JComboBox) e.getSource()).getSelectedItem());
+		      }});
+		}});
+	    add(new JButton() {
+		private static final long serialVersionUID = 1L;
+		private static final String open = "OUVRIR", close = "FERMER";
+		{
+		  setBorder(BorderFactory.createTitledBorder("O/F le port"));
+		  setPreferredSize(new Dimension(120, 70));
+		  setText(open);
+		  addActionListener(new ActionListener() {
+		      private static final long serialVersionUID = 1L;
+		      @Override
+			public void actionPerformed(ActionEvent e) {
+			JButton b = (JButton) e.getSource();
+			if(open.equals(b.getText())) {
+			  b.setText(close);
+			  System.out.println("Opening serial interface : "+serial);
+			  serial.open();
+			} else {
+			  b.setText(open);
+			  serial.close();
+			}
+		      }});
+		}});
+	  }}, BorderLayout.NORTH);
+    if (0 <= displayMode.indexOf("D")) {
+      add(new Box(BoxLayout.X_AXIS) { 
+	  private static final long serialVersionUID = 1L;
+	  {
+	    add(new Box(BoxLayout.Y_AXIS) { 
+		private static final long serialVersionUID = 1L;
+		{
+		  add(new JScrollPane(writeChar = new JTextArea(1,12) {
+		      private static final long serialVersionUID = 1L;
+		      {
+			addKeyListener(new KeyListener() {
+			    private static final long serialVersionUID = 1L;
+			    @Override
+			      public void keyPressed(KeyEvent e) { }
+			    public void keyReleased(KeyEvent e) { }
+			    public void keyTyped(KeyEvent e) {
+			      char c = e.getKeyChar();
+			      external = false;
+			      serial.write(c);
+			      external = true;
+			    }
+			  });
+		      }}, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS) {
+		      private static final long serialVersionUID = 1L;
+		      {
+			setBorder(BorderFactory.createTitledBorder("Envoyer un caractère :"));
+		      }
+		    });
+		  add(new JScrollPane(writeHexa = new JTextArea(1,12) {
+		      private static final long serialVersionUID = 1L;
+		      {
+			setBackground(new Color(200, 200, 200));
+			setEditable(false);
+		      }
+		    }, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS) {
+		      private static final long serialVersionUID = 1L;
+		      {
+			setBorder(BorderFactory.createTitledBorder("Code ASCII du caractère :"));
+		      }
+		    });
+		  add(new JButton("Effacer") {
+		      private static final long serialVersionUID = 1L;
+		      {
+			addActionListener(new ActionListener() {
+			    private static final long serialVersionUID = 1L;
+			    @Override
+			      public void actionPerformed(ActionEvent e) {
+			      writeChar.setText("");
+			      writeHexa.setText("");
+			    }
+			  });
+		      }});
+		}});
+	    add(new Box(BoxLayout.Y_AXIS) { 
+		private static final long serialVersionUID = 1L;
+		{
+		  add(new JScrollPane(readChar = new JTextArea(1,12) {
+		      private static final long serialVersionUID = 1L;
+		      {
+			setBackground(new Color(200, 200, 200));
+			setEditable(false);
+		      }}, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS) {
+		      private static final long serialVersionUID = 1L;
+		      {
+			setBorder(BorderFactory.createTitledBorder("Caractère reçu :"));
+		      }
+		    });
+		  add(new JScrollPane(readHexa = new JTextArea(1,12) {
+		      private static final long serialVersionUID = 1L;
+		      {
+			setBackground(new Color(200, 200, 200));
+			setEditable(false);
+		      }}, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS) {
+		      private static final long serialVersionUID = 1L;
+		      {
+			setBorder(BorderFactory.createTitledBorder("Code ASCII du caractère :"));
+		      }
+		    });
+		  add(new JButton("Effacer") {
+		      private static final long serialVersionUID = 1L;
+		      {
+			addActionListener(new ActionListener() {
+			    private static final long serialVersionUID = 1L;
+			    @Override
+			      public void actionPerformed(ActionEvent e) {
+			      readChar.setText("");
+			      readHexa.setText("");
+			    }
+			  });
+		      }});
+		}});
+	  }}, BorderLayout.CENTER);
+      serial.setReader(new SerialInterface.Reader() { public void reading(int c) {
+	readChar.setText(readChar.getText()+((char) c));
+	readHexa.setText(readHexa.getText()+" "+Integer.toString(c, 16));
+      }});
+      serial.setWriter(new SerialInterface.Writer() { public void writing(int c) { 
+	if (external)
+	  writeChar.setText(writeChar.getText()+((char) c));
+	writeHexa.setText(writeHexa.getText()+" "+Integer.toString(c, 16));
+      }});
+    }
     // Permet d'afficher les messages de la console dans l'interface.  
     if (!org.javascool.widgets.Console.isInstanced()) {
       JPanel c = org.javascool.widgets.Console.getInstance();
@@ -224,10 +235,22 @@ public class SerialInterfacePanel extends JPanel {
     }  
   }
   /** 
-   * @see #SerialInterfacePanel(SerialInterface)
+   * @see #SerialInterfacePanel(SerialInterface, String)
+   */
+  public SerialInterfacePanel(SerialInterface serial) {
+    this(serial, "CD");
+  }
+  /** 
+   * @see #SerialInterfacePanel(SerialInterface, String)
+   */
+  public SerialInterfacePanel(String displayMode) {
+    this(null, displayMode);
+  }
+  /** 
+   * @see #SerialInterfacePanel(SerialInterface, String)
    */
   public SerialInterfacePanel() {
-    this(null);
+    this(null, "CD");
   }
   private SerialInterface serial;
   private JTextArea writeChar, writeHexa, readChar, readHexa;

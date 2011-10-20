@@ -13,7 +13,9 @@
 
   <p>Une interface de contrôle est disponible <l link="http://javascool.gforge.inria.fr/?page=proglets&amp;action=show&amp;id=commSerie&amp;helpFile=api/org/javascool/proglets/commSerie/SerialInterfacePanel.html" text="ici"/></p>
 
-  <p>Un <l class="editor" link="Exemple.jvs" text="programme exemple"/> permet de tester les éléments proposés</p>
+  <p>Un <l class="editor" link="Exemple.jvs" text="programme exemple"/> permet de tester les éléments proposés.</p>
+
+  <p>Un autre <l class="editor" link="Exemple2.jvs" text="programme exemple"/> montre comment créer un petit IHM de manière fonctionnelle.</p>
 
 </div>
 
