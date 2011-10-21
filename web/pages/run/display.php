@@ -17,7 +17,8 @@
 Il suffit de le télécharger <b><a href="javascool-proglets.jar">ICI</a></b>, en choisissant l'option «Ouvrir» ou «Ouvrir avec Java».
 </td></tr></table><br/></p>
 
-<p>- Si le lancement échoue, vous devrez probablement <a href="http://www.java.com/fr/download">installer Java<a/> (version au moins 1.6).</p>
+<p>- Si le lancement échoue, vous devrez probablement <a href="http://www.java.com/fr/download">installer Java<a/> (version 1.6).</p>
+<p>- Attention si vous utilisez déjà Java 1.7, il y a une petite <a href="#Perte_de_fonctionnalit.C3.A9_quant_aux_messages_de_compilation_avec_java7">perte de fonctionnalité</a>.</p>
 <p>- Ci dessous, nous donnons des indications pour vous aider plus si besoin, sous <a href="#windows">windows</a>, <a href="#macos">Mac OS</a>, et <a href="#linux">Linux</a>.</p>
 <p>- Si votre système est trop ancien la <a href="http://javascool.gforge.inria.fr/v3">version 3</a> est encore disponible.</p>
 

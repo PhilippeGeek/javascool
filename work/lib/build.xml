@@ -2,6 +2,7 @@
   <target name="all" depends="javac.jar,javadoc.jar,jarsigner.jar,jvs2html.jar"/>
 
   <property name="jdk.dir" value="/usr/java/jdk1.6.0_22"/>
+  <!--property name="jdk.dir" value="/usr/java/jdk1.7.0_02"/-->
   <property name="build.dir" value="../../build/lib"/>
 
   <!-- Construction de la library javac.jar où le compilateur java est extrait du tools.jar standard -->
