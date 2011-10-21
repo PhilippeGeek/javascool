@@ -270,11 +270,12 @@ public class ProgletsBuilder {
     // if (!Java2Class.compile(javaFiles, true)) throw new IllegalArgumentException("Erreur de compilation java");
     try {
       // Appel au compilateur en spécifiant le classpath
-      String args[] = new String[javaFiles.length + 2];
+      String args[] = new String[javaFiles.length + 3];
       args[0] = "-cp";
       args[1] = classPath;
+      args[2] = "-Xlint";
       for(int i = 0; i < javaFiles.length; i++)
-	args[i + 2] = javaFiles[i];
+	args[i + 3] = javaFiles[i];
       if (((Integer) Class.forName("com.sun.tools.javac.Main").
 	   getDeclaredMethod("compile", Class.forName("[Ljava.lang.String;")).
 	   invoke(null, (Object) args)) != 0)

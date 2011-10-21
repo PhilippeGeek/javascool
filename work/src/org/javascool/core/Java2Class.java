@@ -6,6 +6,8 @@ package org.javascool.core;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.io.File;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -58,8 +60,12 @@ public class Java2Class {
     if(javaFiles.length == 0)
       return false;
     try {
-      // Initialisation des objets dy compilateur
+      // Initialisation des objets dy compilateur// The compiler tool
       JavaCompiler compiler = ToolProvider.getSystemJavaCompiler(); // The compiler tool
+      if (compiler == null) {
+        System.err.println("Attention !!: le compilateur ne peut être chargé (il est absent du path ou sa version est incorrecte)");
+        throw new IllegalStateException("Attention !!: le compilateur ne peut être chargé (il est absent du path ou sa version est incorrecte)");
+       }
       DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<JavaFileObject>(); // The diagnostic colector
       StandardJavaFileManager fileManager = compiler.getStandardFileManager(null, Locale.FRENCH, null); // The file manager
       // Mise en place des fichiers
@@ -100,10 +106,26 @@ public class Java2Class {
           return false;
       }
       return true;
-    } catch(Throwable e) { 
-      throw new RuntimeException(e + " when compiling !");
+    } catch(Throwable e1) {
+      System.err.println("Notice: Utilisation du mécanisme de compilation de secours");
+       try {
+           String args[] = new String[javaFiles.length +1];
+           args[0] = "-nowarn";
+           System.arraycopy(javaFiles, 0, args, 1, javaFiles.length);
+           StringWriter out = new StringWriter();
+           Class.forName("com.sun.tools.javac.Main").
+                   getDeclaredMethod("compile", Class.forName("[Ljava.lang.String;"), Class.forName("java.io.PrintWriter")).
+                   invoke(null, (Object) args, new PrintWriter(out));
+           String sout = out.toString().trim();
+           if (sout.indexOf("^") != -1) sout = sout.substring(0, sout.indexOf("^") + 1);
+           if (sout.length() > 0) System.out.println(sout);
+           return sout.length() == 0;
+          } catch(Throwable e2) {
+              throw new RuntimeException(e2 + " when compiling !");
+          }
+      }
     }
-  }
+  
   /** Charge dynamiquement une classe Java qui implémente un Runnable, pour son e×écution au cours d'une session.
    * @param path Le chemin vers la classe Java à charger. La classe ne doit pas appartenir à un package, c'est-à-dire au package "default".
    * @return Une instanciation de cette classe Java.

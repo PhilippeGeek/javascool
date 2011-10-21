@@ -145,6 +145,9 @@
   <property name="classpath" value="./lib/autocomplete.jar:./lib/RSyntaxTextArea.jar:lib/jvs2html.jar:lib/javadoc.jar:lib/jarsigner.jar"/>
   
   <target name="classes" depends="svn.revision">
+    <exec os="Linux" executable="which">
+      <arg value="javac"/>
+    </exec>
     <mkdir dir="./build/classes"/>
     <copy file="src/org/javascool/Core.java" tofile="src/org/javascool/Core.java.save" preservelastmodified="true"/>
     <replaceregexp file="src/org/javascool/Core.java" match="[0-9]*(.; *// *@revision)" replace="${svn.revision}\1"/>

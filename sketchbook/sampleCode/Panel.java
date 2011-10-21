@@ -9,6 +9,7 @@ import javax.swing.JLabel;
  * @serial exclude
  */
 public class Panel extends JPanel {
+  private static final long serialVersionUID = 1L;
   // Construction de la proglet
   public Panel() {
     // On crée un label
