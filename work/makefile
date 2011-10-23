@@ -17,6 +17,9 @@ ant :
 nbe :
 	netbeans --jdkhome $(JAVA_HOME) &
 
+sos :
+	cd ../web ; ant publish-jar
+
 www : 
 	firefox http://code.google.com/p/javascool/wiki/JavaScoolOnGoingWork &
 
