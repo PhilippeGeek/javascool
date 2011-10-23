@@ -50,7 +50,7 @@ public class ProgletsBuilder {
      */
     public static String[] getProglets(String[] names) {
         ArrayList<String> proglets = new ArrayList<String>();
-        for (String dir : FileManager.list(System.getProperty("user.dir"))) {
+         for (String dir : FileManager.list(System.getProperty("user.dir"))) {
             if (FileManager.exists(dir + File.separator + "proglet.pml")) {
 	      boolean found = names == null;
 	      if (names != null)
@@ -59,7 +59,7 @@ public class ProgletsBuilder {
 	      if (found)
                 proglets.add(dir);
             }
-        }
+            }
         return proglets.toArray(new String[proglets.size()]);
     }
    /**
@@ -274,8 +274,7 @@ public class ProgletsBuilder {
       args[0] = "-cp";
       args[1] = classPath;
       args[2] = "-Xlint";
-      for(int i = 0; i < javaFiles.length; i++)
-	args[i + 3] = javaFiles[i];
+      System.arraycopy(javaFiles, 0, args, 3, javaFiles.length);
       if (((Integer) Class.forName("com.sun.tools.javac.Main").
 	   getDeclaredMethod("compile", Class.forName("[Ljava.lang.String;")).
 	   invoke(null, (Object) args)) != 0)
@@ -447,7 +446,7 @@ public class ProgletsBuilder {
 					       "output", webdoc ? "web" : "jvs"));
 		} catch (IllegalArgumentException e) {		  throw new IllegalArgumentException("dans " + new File(doc).getName() + " : " + e.getMessage());
 		}
-	      }
+                }
             // Construit les sources exemples en HTML à partir de java2html
             {
                 // Lance java2html

@@ -86,7 +86,7 @@ public class Java2Class {
         else if(jvsDiagnostic.equals("';' expected"))
           jvsDiagnostic = "Un ';' est attendu (il peut manquer, ou une parenthèse être incorrecte, ..)";
         else if(jvsDiagnostic.startsWith("cannot find symbol"))
-          jvsDiagnostic = "Il y a un symbole non-défini cette ligne: " +
+          jvsDiagnostic = "Il y a un symbole non-défini à cette ligne: " +
 	    jvsDiagnostic.replaceFirst("cannot[^:]*:\\s*([^\\n]*)[^:]*:\\s*(.*)", "«$1»");
         else if(jvsDiagnostic.matches(".*\\W*found\\W*:\\W([A-Za-z\\.]*)\\Wrequired:\\W([A-Za-z\\.]*)"))
           jvsDiagnostic = jvsDiagnostic.replaceAll("incompatible\\Wtypes\\W*found\\W*:\\W([A-Za-z\\.]*)\\Wrequired:\\W([A-Za-z\\.]*)",
@@ -109,22 +109,53 @@ public class Java2Class {
     } catch(Throwable e1) {
       System.err.println("Notice: Utilisation du mécanisme de compilation de secours");
        try {
-           String args[] = new String[javaFiles.length +1];
-           args[0] = "-nowarn";
-           System.arraycopy(javaFiles, 0, args, 1, javaFiles.length);
-           StringWriter out = new StringWriter();
-           Class.forName("com.sun.tools.javac.Main").
-                   getDeclaredMethod("compile", Class.forName("[Ljava.lang.String;"), Class.forName("java.io.PrintWriter")).
-                   invoke(null, (Object) args, new PrintWriter(out));
+	 // Appel du compilateur par sa méthode main
+	 String args[] = new String[javaFiles.length +1];
+	 args[0] = "-nowarn";
+	 System.arraycopy(javaFiles, 0, args, 1, javaFiles.length);
+	 StringWriter out = new StringWriter();
+	 Class.forName("com.sun.tools.javac.Main").
+	   getDeclaredMethod("compile", Class.forName("[Ljava.lang.String;"), Class.forName("java.io.PrintWriter")).
+	   invoke(null, (Object) args, new PrintWriter(out));
+	 // Traitement du message de sortie
+	 {
            String sout = out.toString().trim();
+	   // Coupure à la première erreur
            if (sout.indexOf("^") != -1) sout = sout.substring(0, sout.indexOf("^") + 1);
+	   if (javaFiles.length > 1) {
+	     // Remplacement des chemins des sources par leur simple nom
+	     for(String javaFile : javaFiles)
+	       sout = sout.replaceAll((new File(javaFile).getParent()+File.separator).replaceAll("\\\\", "\\\\\\\\"), "\n");
+	     // Explicitation du numéro de ligne
+	     for(String javaFile : javaFiles)
+	       sout = sout.replaceAll("("+new File(javaFile).getName().replaceAll("\\\\", "\\\\\\\\")+"):([0-9])+:", "$1 : erreur de syntaxe ligne $2 :\n ");
+	   } else {
+	     sout = sout.replaceAll("("+new File(javaFiles[0]).getPath().replaceAll("\\\\", "\\\\\\\\")+"):([0-9])+:", "\n Erreur de syntaxe ligne $2 :\n ");
+	   }
+	   // Passage en français des principaux diagnostics
+	   sout = sout.replaceAll("not a statement", 
+				  "L'instruction n'est pas valide.\n (Il se peut qu'une variable indiquée n'existe pas)");
+	   sout = sout.replaceAll("';' expected", 
+				  "Un ';' est attendu (il peut manquer, ou une parenthèse être incorrecte, ..)");
+	   sout = sout.replaceAll("cannot find symbol\\s*symbol\\s*:\\s*([^\\n]*)[^:]*:\\s*(.*)", 
+				  "Il y a un symbole non-défini à cette ligne : «$1»");
+	   sout = sout.replaceAll("illegal start of expression", 
+				  "($0) L'instruction (ou la précédente) est tronquée ou mal écrite");
+	   sout = sout.replaceAll("class, interface, or enum expected", 
+				  "($0) Il y a probablement une erreur dans les accolades (peut-être trop de '}')");
+	   sout = sout.replaceAll("'.class' expected", 
+				  "($0) Il manque des accolades ou des parenthèses pour définir l'instruction");
+	   sout = sout.replaceAll("incompatible\\Wtypes\\W*found\\W*:\\W([A-Za-z\\.]*)\\Wrequired:\\W([A-Za-z\\.]*)",
+				  "Vous avez mis une valeur de type $1 alors qu'il faut une valeur de type $2");
+	   // Impression du message d'erreur si il existe et retour du statut
            if (sout.length() > 0) System.out.println(sout);
-           return sout.length() == 0;
-          } catch(Throwable e2) {
-              throw new RuntimeException(e2 + " when compiling !");
-          }
-      }
+	   return sout.length() == 0;
+	 }
+       } catch(Throwable e2) {
+	 throw new RuntimeException(e2 + " when compiling !");
+       }
     }
+  }
   
   /** Charge dynamiquement une classe Java qui implémente un Runnable, pour son e×écution au cours d'une session.
    * @param path Le chemin vers la classe Java à charger. La classe ne doit pas appartenir à un package, c'est-à-dire au package "default".

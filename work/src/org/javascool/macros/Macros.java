@@ -23,6 +23,7 @@ import javax.swing.JEditorPane;
 import org.javascool.core.ProgletEngine;
 import org.javascool.widgets.Dialog;
 import javax.swing.SwingUtilities;
+import org.javascool.widgets.MainFrame;
 import org.javascool.widgets.PanelApplet;
 
 /** Cette factory contient des fonctions générales rendues visibles à l'utilisateur de proglets.
@@ -104,9 +105,8 @@ public class Macros {
         JEditorPane p = new JEditorPane();
         p.setEditable(false);
         p.setOpaque(false);
-        if (html) {
+        if (html)
             p.setContentType("text/html; charset=utf-8");
-        }
         p.setText(text);
         p.setBackground(new java.awt.Color(200, 200, 200, 0));
         messageDialog = new Dialog();
@@ -114,10 +114,8 @@ public class Macros {
 	messageDialog.setMinimumSize(new Dimension(300, 100));
         messageDialog.add(p);
         messageDialog.add(new JButton("OK") {
-
-            {
-                addActionListener(new ActionListener() {
-
+        {
+           addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         messageDialog.close();

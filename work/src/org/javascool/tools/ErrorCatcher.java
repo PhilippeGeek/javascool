@@ -52,9 +52,9 @@ public class ErrorCatcher {
                                                   boolean alert = uncaughtExceptionAlertOnce == 0 && 
                                                           (uncaughtExceptionKeyword == null || r.indexOf(uncaughtExceptionKeyword) != -1);
                                                   s += r + "</pre><hr>";
+						  System.err.println(s);
                                                   if(alert)
                                                     Macros.message(s, true);
-						  System.err.println(s);
                                                   uncaughtExceptionAlertOnce++;
                                                 }
                                               }
@@ -62,6 +62,17 @@ public class ErrorCatcher {
   }
   public static void setUncaughtExceptionAlert(String header, String revision) {
     setUncaughtExceptionAlert(header, revision, "org.javascool");
+  }
+  /** Ouvre une fenêtre d'alerte avec les paramètres de la détection d'exception intempestive et non prise en compte.
+   */
+  public static void throwsAlert(String message) {
+     String s = "";
+     s += uncaughtExceptionAlertHeader + "\n<hr>"+message+"<pre>";
+     for(String p: new String[] { "application.revision", "java.version", "os.name", "os.arch", "os.version" })
+        s += "> " + p + " = " + System.getProperty(p) + "\n";
+     s += "</pre><hr>";
+     System.err.println(s);
+     Macros.message(s, true);
   }
   private static String uncaughtExceptionAlertHeader;
   private static int uncaughtExceptionAlertOnce = 0;

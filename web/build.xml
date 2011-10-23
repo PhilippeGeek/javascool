@@ -7,7 +7,7 @@
   <target name="usage"><echo level="info">
     ant build          construit les repertoires ./(api|documents|proglets) du site
     ant clean          nettoie les liens temporaires ./(api|documents|proglets) pour le site
-    ant publish        publi les fichiers du site sur http://javascool.gforge.inria.fr
+    ant publish        publie les fichiers du site sur http://javascool.gforge.inria.fr
     ant cache          vide le cache sur le site web
     ant local          affiche une version locale du site (lance apache et ouvre firefox)
     ant lcheck         teste et liste les liens cassés sur le site
@@ -63,14 +63,6 @@
     </exec>
     <exec os="Linux" executable="firefox">
       <arg value="http://javascool.gforge.inria.fr/v4"/>
-    </exec>
-  </target>
-
-  <target name="publish-javascool-proglets" depends="rsync.user.name">
-    <ant dir="../work" target="javascool-proglets.jar"/> 
-    <echo level="info" message="Publishing on ${env.GFORGEUSER}@scm.gforge.inria.fr"/>
-    <exec os="Linux" executable="rsync">
-      <arg line="--rsh='ssh -C' -rl --delete-excluded --exclude .svn/ ../work/dist/javascool-proglets.jar ${env.GFORGEUSER}@scm.gforge.inria.fr:/home/groups/javascool/htdocs/v4"/>
     </exec>
   </target>
 

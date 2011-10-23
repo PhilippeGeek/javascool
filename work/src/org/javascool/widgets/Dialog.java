@@ -37,7 +37,8 @@ public class Dialog extends JDialog {
   public void open(boolean modal) {
     setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
     pack();
-    setLocation((MainFrame.getFrame().getWidth() - getWidth()) / 2, (MainFrame.getFrame().getHeight() - getHeight()) / 2);
+    if (MainFrame.getFrame() != null)
+       setLocation((MainFrame.getFrame().getWidth() - getWidth()) / 2, (MainFrame.getFrame().getHeight() - getHeight()) / 2);
     setVisible(true);
     if (modal && SwingUtilities.isEventDispatchThread())
       throw new IllegalStateException("Impossible d'utiliser un dialogue modal directement d'un événement de l'interface: créer un thread");
