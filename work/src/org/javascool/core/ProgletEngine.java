@@ -17,7 +17,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import javax.swing.JFrame;
 import org.javascool.Core;
-import org.javascool.tools.ErrorCatcher;
 import org.javascool.tools.FileManager;
 import org.javascool.tools.Pml;
 import org.javascool.tools.Invoke;
@@ -60,7 +59,7 @@ public class ProgletEngine {
                      return p1.getName().compareTo(p2.getName());
             }});
         } catch(Exception e) {
-            ErrorCatcher.throwsAlert("Erreur lors de la détection des proglets ("+e+")\n . . vous pouvez quand même utiliser JavaScool");
+	  System.err.println("Erreur lors de la détection des proglets ("+e+" avec "+Core.javascoolJar()+"\n . . vous pouvez quand même utiliser JavaScool");
         }
         // Définit une proglet "vide" pour lancer l'interface
         if (proglets.isEmpty()) {

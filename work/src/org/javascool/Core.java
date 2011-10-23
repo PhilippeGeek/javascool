@@ -46,12 +46,14 @@ public class Core {
    * @return Le chemin du jar
    * @throws RuntimeException lorsque l'application n'a pas été démarré depuis un jar
    */
-  public static String javascoolJar() {
+  public static String javascoolJar()  {
     String jar = "";
-    jar = Macros.getResourceURL("org/javascool/Core.class").toString().replace("%20", " ").replaceFirst("jar:file:([^!]*)!.*", "$1");
+    jar = Macros.getDecoded(Macros.getResourceURL("org/javascool/Core.class")).replaceFirst("jar:file:([^!]*)!.*", "$1");
+    System.err.println("Notice: the javascool jar is "+jar);
     if(jar.endsWith(".jar"))
       return jar;
-    else throw new RuntimeException("Java's cool n'a pas été démarré depuis un Jar");
+    else
+     throw new RuntimeException("Java's cool n'a pas été démarré depuis un Jar");
   }
   /** Lanceur de l'application.
    * @param usage <tt>java -jar javascool.jar</tt>
