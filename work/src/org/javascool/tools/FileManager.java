@@ -5,6 +5,7 @@ package org.javascool.tools;
 
 // Used for URL formation
 import java.net.URL;
+import java.util.Arrays;
 import org.javascool.macros.Macros;
 import java.io.File;
 import java.io.IOException;
@@ -183,6 +184,7 @@ public class FileManager {
      * @return Une énumération des fichiers listés: le path canonique est renvoyé. Si le répertoire ou le jar ne peut être lu, renvoie une liste vide dans erreur.
      *
      * @throws IllegalArgumentException Si l'URL ne peut pas être listée.
+     * @throws RuntimeException Si une erreur d'entrée-sortie s'est produite.
      */
   public static String[] list(String folder, String pattern, int depth) {
         if (folder.matches("(ftp|http|https|jar):.*")) {
@@ -200,7 +202,8 @@ public class FileManager {
                         files.add("jar:" + folder + "!" + file);
                     }
                 }
-            } catch (Exception e) {
+            } catch(IOException e) {
+                throw new IllegalArgumentException(e);
             }
         } else if (new File(folder).isDirectory() && depth >= 0) {
             try {
@@ -212,10 +215,10 @@ public class FileManager {
 		if (depth > 0) {
 		  for (File file : new File(folder).listFiles()) 
 		    if (file.isDirectory()) 
-		      for(String path : list(file.getCanonicalPath(), pattern, depth - 1))
-			files.add(path);
+		      files.addAll(Arrays.asList(list(file.getCanonicalPath(), pattern, depth - 1)));
 		}
-            } catch (Exception e) {
+            } catch(IOException e) {
+                throw new IllegalArgumentException(e);
             }
         }
         return files.toArray(new String[files.size()]);
@@ -225,14 +228,14 @@ public class FileManager {
      * @see #list(String, String, int)
      */
     public static String[] list(String folder, String pattern) {
-    return list(folder, pattern, 0);
+      return list(folder, pattern, 0);
     }
 
 
     /**
      * @see #list(String, String, int)
      */
-    public static String[] list(String folder) {
+    public static String[] list(String folder)  {
       return list(folder, null, 0);
     }
 

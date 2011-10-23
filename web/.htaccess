@@ -16,6 +16,7 @@ Redirect permanent "/proglet/doc/about-prg2nd.htm" "http://javascool.gforge.inri
 Redirect permanent "/proglet/doc/about-proglet-Conva.htm" "http://javascool.gforge.inria.fr/index.php?page=proglets&action=show&id=analogNumerique"
 Redirect permanent "/proglet/doc/about-proglet-Dicho.htm" "http://javascool.gforge.inria.fr/index.php?page=proglets&action=show&id=dichotomie"
 Redirect permanent "/proglet/doc/about-proglet-Konsol.htm" "http://javascool.gforge.inria.fr/index.php?page=proglets&action=show&id=abcdAlgos"
+Redirect permanent "/proglet/doc/about-proglet-Konseol.htm" "http://javascool.gforge.inria.fr/index.php?page=proglets&action=show&id=abcdAlgos"
 Redirect permanent "/proglet/doc/about-proglet-Scope.htm" "http://javascool.gforge.inria.fr/index.php?page=proglets&action=show&id=algoDeMaths"
 Redirect permanent "/proglet/doc/about-proglet-Smiley.htm" "http://javascool.gforge.inria.fr/index.php?page=proglets&action=show&id=codagePixels"
 Redirect permanent "/proglet/doc/about-proglet-Synthe.htm" "http://javascool.gforge.inria.fr/index.php?page=proglets&action=show&id=syntheSons"
