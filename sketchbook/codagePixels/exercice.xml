@@ -21,7 +21,7 @@
         <m>Boucle sur tous les pixels</m>
         <p><r>void</r> filtre() {</p>
         <p><T/><r>for</r>(<r>int</r> j = -<r>getHeight</r>(); j &lt;= <r>getHeight</r>(); j = j + 1) {</p>
-        <p><T/><T/><r>for</r>(<r>int</r> i = -<r>getHeight</r>(); i &lt;= <r>getHeight</r>(); i = i + 1) {</p>
+        <p><T/><T/><r>for</r>(<r>int</r> i = -<r>getWidth</r>(); i &lt;= <r>getWidth</r>(); i = i + 1) {</p>
         <p><T/><T/><T/><r>setPixel</r>(i, j, f(<r>getPixel</r>(i, j)));</p>
         <p><T/><T/>}</p>
         <p><T/>}</p>
@@ -82,7 +82,7 @@
         <m>Boucle sur tous les pixels</m>
         <p><r>void</r> filtre() {</p>
         <p><T/><r>for</r>(<r>int</r> j = -<r>getHeight</r>() + 1; j &lt;= <r>getHeight</r>() - 1; j = j + 1) {</p>
-        <p><T/><T/><r>for</r>(<r>int</r> i = -<r>getHeight</r>() + 1; i &lt;= <r>getHeight</r>() - 1; i = i + 1) {</p>
+        <p><T/><T/><r>for</r>(<r>int</r> i = -<r>getWidth</r>() + 1; i &lt;= <r>getWidth</r>() - 1; i = i + 1) {</p>
         <p><T/><T/><T/>filtrePixel(i, j);</p>
         <p><T/><T/>}</p>
         <p><T/>}</p>
@@ -113,7 +113,7 @@
         <m>Boucle sur tous les pixels</m>
         <p><r>void</r> filtre() {</p>
         <p><T/><r>for</r>(<r>int</r> j = -<r>getHeight</r>() + 1; j &lt;= <r>getHeight</r>() - 1; j = j + 1) {</p>
-        <p><T/><T/><r>for</r>(<r>int</r> i = -<r>getHeight</r>() + 1; i &lt;= <r>getHeight</r>() - 1; i = i + 1) {</p>
+        <p><T/><T/><r>for</r>(<r>int</r> i = -<r>getWidth</r>() + 1; i &lt;= <r>getWidth</r>() - 1; i = i + 1) {</p>
         <p><T/><T/><T/>filtrePixel(i, j);</p>
         <p><T/><T/>}</p>
         <p><T/>}</p>
