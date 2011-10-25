@@ -85,18 +85,48 @@ public class Macros {
         }
     }
 
-    /** Vérifie une assertion et arrête le code si elle est fausse.
-     * @param condition Si la condition n'est pas vérifiée, le code JavaScool va s'arrêter.
-     * @param message Un message s'imprime sur la console pour signaler l'erreur.
-     */
-    public static void assertion(boolean condition, String message) {
-        System.err.println("#" + condition + " : " + message);
-        if (!condition) {
-            System.out.println(message);
-            org.javascool.core.ProgletEngine.getInstance().doStop();
-            Macros.sleep(500);
-        }
+  /** Vérifie une assertion et arrête le code si elle est fausse.
+   * Le diagnoctic apparait sous la forme:
+   *<pre>Arrêt du programme :{
+   *  L'assertion(«<i>message</i>») est fausse.
+   *  Pile d'exécution: {
+   *   <i>fonctions appellées et ligne de code correspondant</i>
+   *  }
+   *  Objet en cause:{
+   *     class = «<i>type de l'objet</i>»
+   *     value = «<i>valeur de l'objet</i>»
+   *  }
+   *}</pre>
+   * @param condition Si la condition n'est pas vérifiée, le code JavaScool va s'arrêter.
+   * @param message Un message s'imprime sur la console pour signaler l'erreur.
+   * @param object Si l'objet n'est pas null, donne des renseignements sur l'objet
+   */
+  public static void assertion(boolean condition, String message, Object object) {
+    System.err.println("#" + condition + " : " + message +" ::"+object);
+    if (!condition) {
+      System.out.println("Arrêt du programme :{\n  L'assertion(«"+message+"») est fausse.\n  Pile d'exécution: {");
+      // Sortie de la pile,
+      // - moins les deux appels getStackTrace() et assertion() et
+      // - moins les trois appels run() du bas de pile qui ont lancés la proglet
+      {
+	StackTraceElement where[] = Thread.currentThread().getStackTrace();
+	for(int i = 2; i < where.length -3; i++)
+	  System.out.println("     "+where[i].toString().replaceAll("JvsToJavaTranslated[0-9]+\\.", "").replaceAll("java:([0-9]+)", "ligne : $1"));
+      }
+      System.out.println("  }");
+      if (object != null)
+	System.out.println("  Objet en cause:{\n    class = «"+object.getClass()+"»\n    value = «"+object+"»\n  }");
+      System.out.println("}");
+      org.javascool.core.ProgletEngine.getInstance().doStop();
+      Macros.sleep(500);
     }
+  }
+    /**
+     * @see #assertion(boolean, String, Object)
+     */
+  public static void assertion(boolean condition, String message) {
+    assertion(condition, message, null);
+  }
 
     /** Affiche un message dans une fenêtre présentée à l'utilisateur.
      * <p>Le message s'affiche sous une forme "copiable" pour que l'utilisateur puisse le copier/coller.</p>

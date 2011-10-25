@@ -76,6 +76,7 @@ $v3_redirections_link_table = array(
 			     "doc%3Adocuments%2Fquelques-t-p-e%2Fquelques-t-p-e.pdf" => "doc/documents/quelques-t-p-e/quelques-t-p-e.pdf",
 			     "doc%3A%2Fsketchbook%2Findex.html" => "?page=resources&action=link-processing",
 			     "api:%3A%2Forg%2Fjavascool%2Fdoc-files%2Fabout-proglets.html" => "?page=resources&action=link-proglets",
+			     "api%20documentation" => "?page=api",
 			     // Il y a parfois des accès à des liens v4 sans prefix ?!?
 			     "InfoAuLycee" => "?page=home&action=faq-infolycee",
 			     "Screenshot" => "?page=run&action=screenshot",
