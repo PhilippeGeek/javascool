@@ -11,6 +11,8 @@ import org.javascool.tools.Pml;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -275,10 +277,15 @@ public class ProgletsBuilder {
       args[1] = classPath;
       args[2] = "-Xlint";
       System.arraycopy(javaFiles, 0, args, 3, javaFiles.length);
-      if (((Integer) Class.forName("com.sun.tools.javac.Main").
-	   getDeclaredMethod("compile", Class.forName("[Ljava.lang.String;")).
-	   invoke(null, (Object) args)) != 0)
-	throw new IllegalArgumentException("Erreur de compilation java");
+      	 StringWriter out = new StringWriter();
+	 Class.forName("com.sun.tools.javac.Main").
+	   getDeclaredMethod("compile", Class.forName("[Ljava.lang.String;"), Class.forName("java.io.PrintWriter")).
+	   invoke(null, (Object) args, new PrintWriter(out));
+         String sout = out.toString().trim();
+         if (sout.length() > 0) {
+           System.out.println("Erreur de compilation java:\n" + sout);
+	   throw new IllegalArgumentException("Erreur de compilation java");
+        }
     } catch(Throwable e) {
       System.err.println("Echec de compilation :"+ e);
 	throw new IllegalArgumentException("Erreur de compilation java");
