@@ -1,0 +1,34 @@
+<div title="Proglet Morpion version réseau">
+  <p>ATTENTION: CETTE PROGLET EST EN COURS DE CONSTRUCTION/VALIDATION NE PAS UTILISER !!!</p>
+
+  <div title="Présentation: jeu de morpion et primitives réseau">
+
+    <p>L'idée est de proposer au niveau de la console "graphique" une grille 3x3 composée de boutons organisés en grille (à l'aide d'un <c>GridLayout</c>). On dispose d'une fonction <c>setGrille()</c> et <c>getGrille()</c> (qui permet donc de disposer du tableau 3x3 mémorisant la grille).</p>
+
+    <p>Au niveau communication TCP/IP on dispose d'une fonction d'initialisation du port (via une "socket"), d'une fonction de lecture, d'une fonction d'écriture et enfin d'une fonction de libération de la connection. Chacune de ses fonctions est déclinée en version serveur et en  version client.</p>
+
+  <div title="Mise en place du jeu de Morpion">On peut prévoir deux versions:<div class="ul">
+    <p>Une version type client/serveur ou un joueur active la version serveur sur un poste et ou le deuxième active la version client.</p>
+    <p>Une version type serveur sur un poste dédié servant à l'initialisation de la connection et deux versions clientes qui passent par le serveur au début du jeu.</p>
+  </div>
+  <p>Remarque: En cas de problèmes éventuels de droits/Firewall sur le réseau, on peut très bien utiliser cette application client/serveur sur un même poste (au moins pour les développements) en utilisant l'adresse localhost 127.0.0.1. On peut aussi raccorder les deux postes à l'aide d'un câble croisé ou d'un mini-switch.</p>
+  <p>Note: ticTacToe qui est le nom anglais pour ce jeu du Morpion.</p>
+</div>
+
+
+<div title="Autre application: créer un mini-chat">On pourra ensuite sur la même base mettre en place une version CHAT avec au niveau de la console "graphique" une zone de saisie du texte et une zone de lecture de la conversation. Et pour cette application on  laisse les élèves manipuler directement les primitives de Java pour la gestion des sockets.</div>
+
+</div>
+
+  <div title="Proglet exemple">
+    Voici le programme minimal qui permet de tester cette proglet:
+    <code>
+    void main() {
+      setGrille(1,1,"X");
+      setGrille(2,2,"O");
+      println(getGrille(1,1));            
+    }
+    </code>
+  </div>
+</div>
+
