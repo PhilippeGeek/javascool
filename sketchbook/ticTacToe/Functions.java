@@ -90,13 +90,9 @@ public class Functions {
   /** Permet d'écrire un message sur le socket server */  
   public static boolean sendMessageSocketServer(String text) {
 
-  try
-  {
-
     predserver.println(text);
-    System.out.println("sendMessageSocketServer = " + str);   // trace locale
+    System.out.println("sendMessageSocketServer = " + text);   // trace locale
 
-  } catch (IOException ioe) { return false; }
   return true;    
   }
   
@@ -139,11 +135,8 @@ public class Functions {
   /** Permet d'envoyer un message via le socket client */  
    public static boolean sendMessageSocketClient(String text) {
 
-  try
-  {  
         predclient.println(text);          // envoi d'un message
-   
-    } catch (IOException ioe) { return false; }
+
   return true; 
   }
   

@@ -22,13 +22,13 @@
 
   <div title="Proglet exemple">
     Voici le programme minimal qui permet de tester cette proglet:
-    <code>
-    void main() {
-      setGrille(1,1,"X");
-      setGrille(2,2,"O");
-      println(getGrille(1,1));            
-    }
-    </code>
+    <div class="code">
+      <p><r>void</r> main() {</p>
+      <p><T/>setGrille(1,1,"X");</p>
+      <p><T/>setGrille(2,2,"O");</p>
+      <p><T/>println(getGrille(1,1));</p>
+      <p>}</p>
+    </div>
   </div>
 </div>
 

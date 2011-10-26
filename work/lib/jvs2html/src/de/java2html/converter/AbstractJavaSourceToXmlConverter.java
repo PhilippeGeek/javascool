@@ -61,7 +61,7 @@ public abstract class AbstractJavaSourceToXmlConverter extends AbstractJavaSourc
       space = " "; // normal space
     }
     else {
-      lineEnd = "<br />";
+      lineEnd = "<br/>";
       space = "&#xA0;";
     }
   }

@@ -136,7 +136,7 @@ public class JavaSource2HTMLConverter extends AbstractJavaSourceConverter {
 
       toHTML(options.getStyleTable(), run, writer);
       if (run.isAtEndOfLine() && iterator.hasNext()) {
-        writer.write("<br />");
+        writer.write("<br/>");
         writer.newLine();
       }
     }
