@@ -17,6 +17,7 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import org.javascool.Core;
+import org.javascool.About;
 
 /** Cette factory contient les mécanismes de construction d'une application Java's Cool avec des proglets.
  *
@@ -162,7 +163,7 @@ public class ProgletsBuilder {
             System.out.println("Compilation des jarres .. ");
             // Création des jarres avec le manifest
             {
-                String version = "Java'sCool v4 on \"" + new Date() + "\" Revision #" + Core.revision;
+                String version = "Java'sCool v4 on \"" + new Date() + "\" Revision #" + About.revision;
                 Pml manifest = new Pml().set("Main-Class", "org.javascool.Core").
                         set("Manifest-version", version).
                         set("Created-By", "inria.fr (javascool.gforge.inria.fr) ©INRIA: CeCILL V2 + CreativeCommons BY-NC-ND V2").
