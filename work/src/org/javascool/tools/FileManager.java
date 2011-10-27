@@ -20,6 +20,7 @@ import java.io.OutputStreamWriter;
 import java.io.FileOutputStream;
 
 // Used for list/exists
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.jar.JarFile;
 import java.util.jar.JarEntry;
@@ -46,13 +47,15 @@ public class FileManager {
      * <tr><td><tt>jar:/<i>jar-path-name</i>!/<i>jar-entry</i></tt></td><td>pour le charger d'une archive
      *  <div>(exemple:<tt>jar:http://javascool.gforge.inria.fr/javascool.jar!/META-INF/MANIFEST.MF</tt>)</div></td></tr>
      * </table></div>
+     * @param utf8 Si la valeur est vraie, force l'encodage en UTF-8 à la lecture. Par défaut (false) utilise l'encodage local.
      *
      * @throws IllegalArgumentException Si l'URL est mal formée.
      * @throws RuntimeException Si une erreur d'entrée-sortie s'est produite.
      */
-    public static String load(String location) {
+    public static String load(String location, boolean utf8) {
         try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(Macros.getResourceURL(location, true).openStream()), 10240);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(Macros.getResourceURL(location, true).openStream(), 
+                        utf8 ? Charset.forName("utf-8") : Charset.defaultCharset()), 10240);
             StringBuilder buffer = new StringBuilder();
             char chars[] = new char[10240];
             while (true) {
@@ -68,7 +71,12 @@ public class FileManager {
             throw new RuntimeException(e + " when loading: " + location);
         }
     }
-
+    /**
+     * * @see #load(String, boolean)
+     */
+     public static String load(String location) {
+        return load(location, false);
+     }
     /** Ecrit un contenu textuel local ou distant en tenant compte de l'encodage local.
      *
      * @param location @optional<"stdout:"> Une URL (Universal Resource Location) de la forme: <div id="save-format"><table>
@@ -80,11 +88,12 @@ public class FileManager {
      * @param string Le texte à sauvegarder.
      * @param backup Si true, dans le cas d'un fichier, crée une sauvegarde d'un fichier existant. Par défaut false.
      * * <p>Le fichier sauvegardé est doté d'un suffixe numérique unique.</p>
+     * @param utf8 Si la valeur est vraie, force l'encodage en UTF-8 à la lecture. Par défaut (false) utilise l'encodage local.
      *
      * @throws IllegalArgumentException Si l'URL est mal formée.
      * @throws RuntimeException Si une erreur d'entrée-sortie s'est produite.
      */
-    public static void save(String location, String string, boolean backup) {
+    public static void save(String location, String string, boolean backup, boolean utf8) {
         if (location.startsWith("stdout:")) {
             System.out.println("\n" + location + " " + string);
             return;
@@ -96,7 +105,7 @@ public class FileManager {
             if (backup && !location.startsWith("file:")) {
                 throw new IllegalArgumentException("Impossible de procéder à un backup pour l'URL «" + location + "»");
             }
-            OutputStreamWriter writer = location.startsWith("file:") ? getFileWriter(location.substring(5), backup) : getUrlWriter(location);
+            OutputStreamWriter writer = location.startsWith("file:") ? getFileWriter(location.substring(5), backup, utf8) : getUrlWriter(location, utf8);
             for (int i = 0; i < string.length(); i++) {
                 writer.write(string.charAt(i));
             }
@@ -107,18 +116,25 @@ public class FileManager {
     }
 
     /**
-     * @see #save(String, String)
+     * @see #save(String, String, boolean, boolean)
+     */
+    public static void save(String location, String string, boolean backup) {
+        save(location, string, backup, false);
+    }
+   /**
+     * @see #save(String, String, boolean, boolean)
      */
     public static void save(String location, String string) {
-        save(location, string, false);
+        save(location, string, false, false);
     }
 
     /** Met en place le writer dans le cas d'une URL. */
-    private static OutputStreamWriter getUrlWriter(String location) throws IOException {
+    private static OutputStreamWriter getUrlWriter(String location, boolean utf8) throws IOException {
         URL url = new URL(location);
         URLConnection connection = url.openConnection();
         connection.setDoOutput(true);
-        OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
+        OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream(), 
+                    utf8 ? Charset.forName("utf-8") : Charset.defaultCharset());
         if (url.getProtocol().equals("mailto")) {
             int i = url.toString().indexOf("?subject=");
             if (i != -1) {
@@ -129,14 +145,14 @@ public class FileManager {
     }
 
     /** Mets en place le writer dans le cas d'un fichier. */
-    private static OutputStreamWriter getFileWriter(String location, boolean backup) throws IOException {
+    private static OutputStreamWriter getFileWriter(String location, boolean backup, boolean utf8) throws IOException {
         File file = new File(location), parent = file.getParentFile();
         if ((parent != null) && (!parent.isDirectory())) {
             parent.mkdirs();
         }
         if (backup && file.exists())
             backup(file);
-        return new OutputStreamWriter(new FileOutputStream(location));
+        return new OutputStreamWriter(new FileOutputStream(location), utf8 ? Charset.forName("utf-8") : Charset.defaultCharset());
     }
     /** Mécanisme de backup. */
     private static void backup(File file) {
