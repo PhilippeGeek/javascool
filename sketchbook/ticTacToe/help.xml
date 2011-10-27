@@ -1,5 +1,4 @@
 <div title="Proglet Morpion version réseau">
-  <p>ATTENTION: CETTE PROGLET EST EN COURS DE CONSTRUCTION/VALIDATION NE PAS UTILISER !!!</p>
 
   <div title="Présentation: jeu de morpion et primitives réseau">
 
@@ -24,8 +23,8 @@
     Voici le programme minimal qui permet de tester cette proglet:
     <div class="code">
       <p><r>void</r> main() {</p>
-      <p><T/>setGrille(1,1,"X");</p>
-      <p><T/>setGrille(2,2,"O");</p>
+      <p><T/>setGrille(1,1,'X');</p>
+      <p><T/>setGrille(2,2,'O');</p>
       <p><T/>println(getGrille(1,1));</p>
       <p>}</p>
     </div>
