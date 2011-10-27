@@ -20,6 +20,9 @@ nbe :
 sos :
 	cd ../web ; ant publish-jar
 
+jbl :
+	ant javascool-builder.jar ; cd ../sketchbook ; java -jar ../work/dist/javascool-builder.jar
+
 www : 
 	firefox http://code.google.com/p/javascool/wiki/JavaScoolOnGoingWork &
 
