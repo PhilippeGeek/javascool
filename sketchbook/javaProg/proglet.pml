@@ -1,3 +1,3 @@
 title="Une proglet pour programmer tout ce que l'on souhaite en Java."
-author="Thierry.Vieville@inria.fr"
+author="Collectif d'auteurs <javascool@googlegroups.com>"
 icon="logo.png"

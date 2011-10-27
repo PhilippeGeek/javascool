@@ -1,4 +1,4 @@
 title="Explorez le domaine de l'algorithmique en maths."
-author="Guillaume Matheron et al <guillaumematheron06@gmail.com>"
+author="Collectif d'auteurs <javascool@googlegroups.com>"
 icon="maths.png"
 

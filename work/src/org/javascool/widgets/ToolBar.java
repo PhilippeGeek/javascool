@@ -108,7 +108,6 @@ public class ToolBar extends JToolBar {
     return addTool(label, null, action, left + (++right));
   }
   /** Ajoute un composant à la barre d'outils.
-   * @param label Nom du composant (ce nom restera invisible). Chaque bouton/item/étiquette doit avoir un nom différent.
    * @param component Le composant à ajouter.
    */
   public void addRightTool(JComponent component) {

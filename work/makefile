@@ -23,6 +23,9 @@ sos :
 jbl :
 	ant javascool-builder.jar ; cd ../sketchbook ; java -jar ../work/dist/javascool-builder.jar
 
+php : 
+	cd ../web ; ant local
+
 www : 
 	firefox http://code.google.com/p/javascool/wiki/JavaScoolOnGoingWork &
 
