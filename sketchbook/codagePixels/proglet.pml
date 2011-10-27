@@ -1,3 +1,3 @@
 title="Utilisée pour les exercices de manipulation des images ou des graphismes 2D."
-author="Collectif d'auteurs <Thierry.Vieville@inria.fr>"
 icon="logo.png"
+author="Collectif d'auteurs <fuscia-accuei@inria.fr>"

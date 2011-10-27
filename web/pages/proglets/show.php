@@ -30,6 +30,9 @@
         echo('<script type="text/javascript">document.write(\'<td class="progletclickable" onClick="gotolocnow(\\\'proglets/'.$id.'/javascool-proglet-' . $id . '.jar\\\')"><span>' . $id . '</span><span class="proglet-image"><img src="'.$icon.'" alt=""/></span></td>\');</script>');
                     echo('<noscript><td class="progletclickable"><a href="proglets/'.$id.'/javascool-proglet-' . $id . '.jar"><span>' . $id . '</span><span class="proglet-image"><img style="border: 0px" src="'.$icon.'" alt=""/></span></a></td></noscript>');
                     ?>
+<td width="200" align="right"><tt><?php 
+echo(ereg_replace('<(http[^>]*)>', "[<a href='\\1'>*</a>]", ereg_replace('<([^>@]*@[^>]*)>', "[<a href='mailto:\\1?subject=a propos javascool'>x</a>]", $pml['author'])));
+?></tt></td>
     </tr>
 </table>
 <br />

@@ -25,6 +25,7 @@ Listen		 1234
 ServerName	 127.0.0.1
 ServerRoot	 "`pwd`/.http.root"
 DocumentRoot	 "`pwd`"
+LoadModule	 alias_module 	`locate mod_alias.so|tail -n 1`
 LoadModule	 mime_module 	`locate mod_mime.so|tail -n 1`
 LoadModule	 php5_module 	`locate libphp5.so |tail -n 1`
 AddHandler	 php5-script	.php

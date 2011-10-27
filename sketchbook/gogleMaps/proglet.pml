@@ -1,3 +1,3 @@
 title="Utilisée pour s'initier à la notion de graphe."
-author="http://www.irisa.fr/celtique/pichardie <David.Pichardie@inria.fr>"
+author="David Picahrdie <David.Pichardie@inria.fr> <http://www.irisa.fr/celtique/pichardie>"
 icon="logo.png"
