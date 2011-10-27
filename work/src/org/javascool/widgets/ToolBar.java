@@ -73,7 +73,7 @@ public class ToolBar extends JToolBar {
     revalidate();
     return button;
   }
-  /** Ajoute un composant à la bare d'outils.
+  /** Ajoute un composant à la barre d'outils.
    * @param label Nom du composant (ce nom restera invisible). Chaque bouton/item/étiquette doit avoir un nom différent.
    * @param component Le composant à ajouter.
    */
@@ -106,6 +106,15 @@ public class ToolBar extends JToolBar {
     if(right == 0)
       add(Box.createHorizontalGlue());
     return addTool(label, null, action, left + (++right));
+  }
+  /** Ajoute un composant à la barre d'outils.
+   * @param label Nom du composant (ce nom restera invisible). Chaque bouton/item/étiquette doit avoir un nom différent.
+   * @param component Le composant à ajouter.
+   */
+  public void addRightTool(JComponent component) {
+     if(right == 0)
+      add(Box.createHorizontalGlue());
+    add(component, left + (++right));
   }
   private int left = 0, right = 0;
 }

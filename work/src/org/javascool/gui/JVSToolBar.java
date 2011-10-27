@@ -1,17 +1,13 @@
 package org.javascool.gui;
 
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import org.javascool.core.ProgletEngine;
 
 import org.javascool.widgets.ToolBar;
 import javax.swing.JButton;
-import javax.swing.JLabel;
-import org.javascool.Core;
+import org.javascool.About;
 import org.javascool.builder.DialogFrame;
 import org.javascool.widgets.StartStopButton;
 import org.javascool.builder.ProgletsBuilder;
-import org.javascool.macros.Macros;
 
 /** La barre d'outils de Java's cool
  * Elle est placée en haut de l'interface. Elle contient les boutons de gestion
@@ -120,31 +116,8 @@ class JVSToolBar extends ToolBar {
                 }
             });
         }
-        JLabel logoLabel = new JLabel(Macros.getIcon("org/javascool/widgets/icons/logo32.png"));
-        logoLabel.addMouseListener(new MouseListener() {
 
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                Core.showAboutMessage();
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-            }
-        });
-        this.add(logoLabel, 0);
+        this.add(About.getAboutMessage(), 0);
     }
     // @ inner-class-variable
     private JButton pbutton;

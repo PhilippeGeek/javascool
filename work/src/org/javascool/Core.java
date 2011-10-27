@@ -14,25 +14,8 @@ import org.javascool.tools.ErrorCatcher;
  * @serial exclude
  */
 public class Core {
-  /** Titre de l'application. */
-  public static final String title = "Java's Cool 4";
-  /** Logode l'application. */
-  public static final String logo = "org/javascool/widgets/icons/logo.png";
   /** Aide de JVS */
   public static final String help = "org/javascool/macros/memo-macros.htm";
-  /** Numéro de révision de l'application.*/
-  public static final String revision = "4.0.869"; // @revision automatiquement mis à jour par ant -f work/build.xml classes
-
-  /** Affiche le message de "about". */
-  public static void showAboutMessage() {
-    Macros.message(title + " ("+revision+") est un logiciel conçu par : <br/><center>"
-                   + "Philippe VIENNE<br/>"
-                   + "Guillaume MATHERON<br/>"
-                   + " et Inria<br/>"
-                   + "</center>"
-		   + "en collaboration avec David Pichardie, Philippe Lucaud, etc.. et le conseil de Robert Cabane<br/><br/>"
-                   + "Il est distribué sous les conditions de la licence CeCILL et GNU GPL V3<br/>", true);
-  }
   /** Mets en place le système d'alerte en cas d'erreur non gérée. */
   static void setUncaughtExceptionAlert() {
     ErrorCatcher.setUncaughtExceptionAlert("<h1>Détection d'une anomalie liée à Java:</h1>\n" +
@@ -40,7 +23,7 @@ public class Core {
                                            "  <li>Copier/Coller tous les éléments de cette fenêtre et</li>\n" +
                                            "  <li>Envoyez les par mail à <b>javascool@googlegroups.com</b> avec toute information utile.</li>" +
                                            " </ul>",
-                                           revision);
+                                           About.revision);
   }
   /** Retrouve le chemin du jar courant.
    * @return Le chemin du jar
@@ -64,7 +47,7 @@ public class Core {
       System.out.println("Usage : java -jar javascool.jar");
       System.exit(0);
     }
-    System.err.println("" + title + " is starting ...");
+    System.err.println("" + About.title + " is starting ...");
     ErrorCatcher.checkJavaVersion(6);
     setUncaughtExceptionAlert();
     Desktop.getInstance().getFrame();

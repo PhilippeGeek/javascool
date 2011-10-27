@@ -8,7 +8,7 @@ package org.javascool.gui;
 import java.io.File;
 import java.net.URL;
 import javax.swing.JFrame;
-import org.javascool.Core;
+import org.javascool.About;
 import org.javascool.core.ProgletEngine;
 import org.javascool.macros.Macros;
 import org.javascool.tools.FileManager;
@@ -47,7 +47,7 @@ public class Desktop {
                 public boolean isClosable() {
                     return org.javascool.gui.Desktop.getInstance().isClosable();
                 }
-            }).reset(Core.title, Core.logo, JVSPanel.getInstance());
+            }).reset(About.title, About.logo, JVSPanel.getInstance());
         }
         return frame;
     }

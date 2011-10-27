@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import org.javascool.About;
 import org.javascool.Build;
 
 /** Définit l'interface graphique pour la construction de proglets.
@@ -52,6 +53,7 @@ public class DialogFrame {
         Console.getInstance().getToolBar().addTool("Progress Bar", jProgressBar = new JProgressBar());
         jProgressBar.setSize(new Dimension(100, 25));
         Console.getInstance().getToolBar().addTool("Status Bar", jLabel = new JLabel());
+        Console.getInstance().getToolBar().addRightTool(About.getAboutMessage());
         setUpdate("", 0);
         new MainFrame().reset("Java's Cool 4 Proglet Buidler", Build.logo, Console.getInstance());
     }
