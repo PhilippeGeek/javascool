@@ -1,3 +1,3 @@
-title="Jeu du Morpion en réseau"
-author="Christophe Béasse <Christophe.Beasse@ac-rennes.fr>"
+title="Jeu du Morpion en rÃ©seau"
+author="Christophe BÃ©asse <Christophe.Beasse@ac-rennes.fr>"
 icon="tictactoe.png"
