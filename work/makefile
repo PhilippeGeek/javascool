@@ -15,7 +15,7 @@ ant :
 	ant prun
 
 nbe :
-	netbeans --jdkhome $(JAVA_HOME) &
+	/usr/java/netbeans-7.0.1/bin/netbeans --jdkhome $(JAVA_HOME) &
 
 sos :
 	cd ../web ; ant publish-jar
