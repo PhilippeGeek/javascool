@@ -80,8 +80,8 @@
     </jar>
   </target>
 
-  <property name="proglets.validated" value="abcdAlgos algoDeMaths analogNumerique codagePixels commSerie cryptageRSA dichotomie exploSonore gogleMaps grapheEtChemins javaProg paintBrush syntheSons tortueLogo"/>
-  <property name="proglets.unvalidated" value="enVoiture jeux2D jeux2D_bak ticTacToe"/>
+  <property name="proglets.validated" value="abcdAlgos algoDeMaths analogNumerique codagePixels commSerie cryptageRSA dichotomie exploSonore gogleMaps grapheEtChemins javaProg paintBrush syntheSons ticTacToe tortueLogo"/>
+  <property name="proglets.unvalidated" value="enVoiture jeux2D jeux2D_bak"/>
 
   <target name="javascool-proglets.jar" depends="javascool-builder.jar">
     <java jar="./dist/javascool-builder.jar" dir="./../sketchbook" fork="true">

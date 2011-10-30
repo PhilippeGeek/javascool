@@ -10,6 +10,7 @@ import java.awt.*;
 /** Définit le panneau graphique de la proglet.
  * @see <a href="Panel.java.html">source code</a>
  * @serial exclude
+ * @author Christophe Béasse <oceank2@gmail.com>
  */
 public class Panel extends JPanel {
 
