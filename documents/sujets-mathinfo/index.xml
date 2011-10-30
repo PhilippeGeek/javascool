@@ -45,16 +45,17 @@
      
   <div title="Quelques sujets «unplugged» (sans ordinateur):"><div class="ul">
      
-    <p><l link="/documents/sujets-mathinfo/dageville-exos-base-deux.html" text="Découvrir le codage binaire"/></p>
+    <p><l link="/documents/sujets-mathinfo/Base_2_Codage_Entiers.doc" text="Découvrir le codage binaire"/>
+    (<l link="/documents/sujets-mathinfo/Base_2_Codage_Entiers.pdf" text="pdf"/>)</p>
 
-    <p><l link="/documents/sujets-mathinfo/lucaud-codage-binaire.odt" text="Activité sur le codage binaire"/> 
-    (<l link="/documents/sujets-mathinfo/lucaud-codage-binaire.pdf" text="pdf"/>)</p>
+    <p><l link="/documents/sujets-mathinfo/Codage_Binaire.doc" text="Activité sur le codage binaire"/> 
+    (<l link="/documents/sujets-mathinfo/Codage_Binaire.pdf" text="pdf"/>)</p>
 
     <p><l link="/documents/sujets-mathinfo/larrieu-codage-binaire.odt" text="Fabriquer un reflet numérique d'un objet"/> 
     (<l link="/documents/sujets-mathinfo/larrieu-codage-binaire.pdf" text="pdf"/>)</p>
 
-    <p><l link="/documents/sujets-mathinfo/larrieu-sujet-ascii.odt" text="Le codage numérique ASCII"/>
-    (<l link="/documents/sujets-mathinfo/larrieu-sujet-ascii.pdf" text="pdf"/>)</p>
+    <p><l link="/documents/sujets-mathinfo/Codage_Texte.doc" text="Le codage ASCII"/> 
+    (<l link="/documents/sujets-mathinfo/Codage_Texte.pdf" text="pdf"/>)</p>
 
     <p><l link="/documents/sujets-mathinfo/larrieu-codage-nombres.odt" text="Codage des nombres"/>
     (<l link="/documents/sujets-mathinfo/larrieu-codage-nombres.pdf" text="pdf"/>)</p>

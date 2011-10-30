@@ -11,7 +11,6 @@ import java.net.*;
  */
 public class Functions {
 
-  private static final int port = 8080;
   private static ServerSocket sserver;
   private static Socket socserver;
   private static BufferedReader plecserver;
@@ -19,34 +18,45 @@ public class Functions {
   private static Socket socketclient;
   private static BufferedReader plecclient;
   private static PrintWriter predclient;
+  private static boolean modeTraceSocket = false;
+  
   
   /** Renvoie l'instance de la proglet. */
   private static Panel getPane() {
     return getProgletPane();
-  }
+  }  
   
   /** Permet de positionner une marque sur la grille du panel de la proglet */
-  public static void setGrille(int i , int j , int flag) {
-    if (flag == 0) {
+  public static void setGrille(int i , int j ,char mark) {
+    if (mark == 'O') {
       getPane().tictac[i][j].setText("O");
       getPane().tictac[i][j].setForeground(Color.BLUE);
-    } else {
+    } else if (mark == 'X'){
       getPane().tictac[i][j].setText("X");
       getPane().tictac[i][j].setForeground(Color.GREEN);    
     }
   }
   
   /** Permet de récupérer la marque sur la grille du panel de la proglet */  
-  public static String getGrille(int i , int j ) {
-    return getPane().tictac[i][j].getText();
+  public static char getGrille(int i , int j ) {
+    return getPane().tictac[i][j].getText().charAt(0);
   } 
     
-  /** Initialisation du socket server (port 8080) */  
-  public static boolean initSocketServer() {
+    
+  /** Initialisation du mode trace  */  
+  public static void setModeTraceSocket(boolean flag) {
+    modeTraceSocket = flag;
+  }    
+  /** Initialisation du socket server  */  
+  public static boolean initSocketServer(int numport) {
 
   try
   {
-        sserver = new ServerSocket(port);
+        if (modeTraceSocket) {
+           System.out.println("[initSocketServer] [port : "+numport+"]");
+           System.out.println("opening port in progress ...");           
+        }
+        sserver = new ServerSocket(numport);
         if (sserver == null) return false;
         
         socserver = sserver.accept();
@@ -63,23 +73,28 @@ public class Functions {
                                 new OutputStreamWriter(socserver.getOutputStream())), 
                              true);
 
-  } catch (IOException ioe) { return false; }
+  } catch (IOException ioe) { 
+     System.out.println("[initSocketServer] Fail to open port : "+numport);
+     System.out.println(ioe.toString()); 
+     return false; 
+  }
+  if (modeTraceSocket) System.out.println("opening port successful !");
   return true;    
   }
   
 
   /** Permet de récupérer un message via le socket server */  
-  public static String getMessageSocketServer() {
+  public static String getMessageViaSocketServer() {
   
   String str;
   try
   {
            str = plecserver.readLine();          // lecture du message
-           System.out.println("getMessageSocketServer = " + str);  
+           if (modeTraceSocket) System.out.println("[getMessageViaSocketServer] : " + str);  
            
 
   } catch (IOException ioe) { 
-      System.out.println("getMessageSocketServer :Erreur lecture socket");
+      System.out.println("[getMessageSocketServer] : Socket read error");
       str = "!ERR"; 
   }
     return str; 
@@ -88,38 +103,46 @@ public class Functions {
 
  
   /** Permet d'écrire un message sur le socket server */  
-  public static boolean sendMessageSocketServer(String text) {
+  public static void sendMessageViaSocketServer(String text) {
 
     predserver.println(text);
-    System.out.println("sendMessageSocketServer = " + text);   // trace locale
-
-  return true;    
+    if (modeTraceSocket) System.out.println("[sendMessageViaSocketServer] : " + text);   
+ 
   }
   
-  /** Fermeture du socket server (port 8080) */  
+  /** Fermeture du socket server  */  
   public static boolean closeSocketServer() {
 
   try
   {
-
     plecserver.close();
     predserver.close();
     socserver.close();
-  } catch (IOException ioe) { return false; }
+  } catch (IOException ioe) {
+    System.out.println("[closeSocketServer] : Fail");
+    System.out.println(ioe.toString());     
+    return false; 
+  }
+  if (modeTraceSocket) System.out.println("[closeSocketServer] : Successful"); 
   return true;    
   }      
   
-  /** Initialisation socket client vers server (port 8080) */  
-   public static boolean initSocketClient(String serverName) {
+  /** Initialisation socket client vers server */  
+   public static boolean initSocketClient(String serverName, int numport) {
 
   try
   {  
-        socketclient = new Socket(serverName, port);
-        if (socketclient == null) return false;       
+    if (modeTraceSocket) {
+      System.out.println("[initSocketClient] : "+serverName+"  port : "+numport);
+      System.out.println("opening port in progress ...");
+    }
+        
+    socketclient = new Socket(serverName, numport);
+    if (socketclient == null) return false;       
          
-        System.out.println("SOCKET = " + socketclient);
+    if (modeTraceSocket) System.out.println("SOCKET = " + socketclient);
 
-        plecclient = new BufferedReader(
+    plecclient = new BufferedReader(
                                new InputStreamReader(socketclient.getInputStream())
                                );
 
@@ -128,43 +151,53 @@ public class Functions {
                                 new OutputStreamWriter(socketclient.getOutputStream())),
                              true);
    
-    } catch (IOException ioe) { return false; }
+  } catch (IOException ioe) { 
+    System.out.println("[initSocketServer] Fail to open port : ("+serverName+") "+numport);
+    System.out.println(ioe.toString()); 
+    return false; 
+  }
+  if (modeTraceSocket) System.out.println("opening port successful !");
   return true; 
   } 
   
   /** Permet d'envoyer un message via le socket client */  
-   public static boolean sendMessageSocketClient(String text) {
+   public static void sendMessageViaSocketClient(String text) {
 
         predclient.println(text);          // envoi d'un message
-
-  return true; 
+        if (modeTraceSocket) System.out.println("sendMessageViaSocketClient : "+text);
+        
   }
   
   /** Permet de lire un message via le socket client */  
-   public static String getMessageSocketClient() {
+   public static String getMessageViaSocketClient() {
 
    String str;
   try
   {  
-      str = plecclient.readLine();  
+      str = plecclient.readLine(); 
+      if (modeTraceSocket) System.out.println("[getMessageViaSocketClient] : "+str);
     } catch (IOException ioe) { 
-     System.out.println("getMessageSocketClient :Erreur lecture socket");
+     System.out.println("[getMessageViaSocketClient] : socket read error");
      str = "!ERR"; 
     }
   return str; 
   }
   
-  /** Permet d'envoyer un message via une socket (port 8080) */  
-   public static boolean closeSocketClient(String text) {
+  /** Fermeture de la socket  client */  
+   public static boolean closeSocketClient() {
 
   try
   {  
     plecclient.close();
     predclient.close();
     socketclient.close();   
-  } catch (IOException ioe) { return false; }
+  } catch (IOException ioe) { 
+    System.out.println("[closeSocketClient] : Fail");
+    System.out.println(ioe.toString()); 
+    return false; 
+  }
+  if (modeTraceSocket) System.out.println("[closeSocketClient] : Successful"); 
   return true; 
-  }         
- 
+  } 
       
 } // class functions
