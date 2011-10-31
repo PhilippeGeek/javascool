@@ -32,7 +32,10 @@
 
   <target name="clean">
     <exec os="Linux" executable="rm">
-      <arg line="-f ./api ./documents ./proglets"/>
+      <arg line="-f ./api ./documents ./proglets"/> 
+    </exec>
+    <exec os="Linux" executable="rm">
+      <arg line="-rf ./.http.root ./.http.cache"/> 
     </exec>
   </target>
 
