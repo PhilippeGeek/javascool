@@ -130,7 +130,7 @@
         <fileset dir="./../sketchbook" includes="**/*"/>
         <fileset dir="./src">
           <include name="**/*"/>
-          <exclude name="org/javascool/Core.java"/>
+          <exclude name="org/javascool/About.java"/>
         </fileset>
       </sourcefiles>
       <targetfiles>
@@ -149,14 +149,14 @@
       <arg value="javac"/>
     </exec>
     <mkdir dir="./build/classes"/>
-    <copy file="src/org/javascool/Core.java" tofile="src/org/javascool/Core.java.save" preservelastmodified="true"/>
-    <replaceregexp file="src/org/javascool/Core.java" match="[0-9]*(.; *// *@revision)" replace="${svn.revision}\1"/>
+    <copy file="src/org/javascool/About.java" tofile="src/org/javascool/About.java.save" preservelastmodified="true"/>
+    <replaceregexp file="src/org/javascool/About.java" match="[0-9]*(.; *// *@revision)" replace="${svn.revision}\1"/>
     <trycatch>
       <try>
         <javac debug="true" debuglevel="lines,vars,source" includeantruntime="false" deprecation="on" encoding="UTF-8" classpath="${classpath}" srcdir="./src" destdir="./build/classes"/>   
       </try>
       <finally>
-        <move tofile="src/org/javascool/Core.java" file="src/org/javascool/Core.java.save" overwrite="true" preservelastmodified="true"/>
+        <move tofile="src/org/javascool/About.java" file="src/org/javascool/About.java.save" overwrite="true" preservelastmodified="true"/>
       </finally>
     </trycatch>
     <java jar="lib/saxon.jar" dir="src/org/javascool/macros" fork="yes">

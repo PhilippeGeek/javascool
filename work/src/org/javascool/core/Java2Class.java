@@ -6,8 +6,10 @@ package org.javascool.core;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -39,7 +41,7 @@ public class Java2Class {
    */
   public static boolean compile(String javaFile, boolean allErrors) {
     String javaFiles[] = { javaFile };
-    return compile(javaFiles);
+    return compile(javaFiles, allErrors);
   }
   /**
    * @see #compile(String, boolean)
@@ -59,101 +61,114 @@ public class Java2Class {
   public static boolean compile(String javaFiles[], boolean allErrors) {
     if(javaFiles.length == 0)
       return false;
+    return compile2(javaFiles, allErrors);
+  }
+
+  // Implementation using the javac compiler api : il n'est plus utilisé (donc plus maintenu !) avec l'arrivée dela jre 76
+  private static boolean compile1(String javaFiles[], boolean allErrors) {
+    // Initialisation des objets dy compilateur// The compiler tool
+    JavaCompiler compiler = ToolProvider.getSystemJavaCompiler(); // The compiler tool
+    if (compiler == null) {
+      System.err.println("Attention !!: le compilateur ne peut être chargé (il est absent du path ou sa version est incorrecte)");
+      throw new IllegalStateException("Attention !!: le compilateur ne peut être chargé (il est absent du path ou sa version est incorrecte)");
+    }
+    DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<JavaFileObject>(); // The diagnostic colector
+    StandardJavaFileManager fileManager = compiler.getStandardFileManager(null, Locale.FRENCH, null); // The file manager
+    // Mise en place des fichiers
+    List<File> sourceFileList = new ArrayList<File>();
+    for(String javaFile : javaFiles)
+      sourceFileList.add(new File(javaFile));
+    Iterable< ? extends JavaFileObject> compilationUnits = fileManager.getJavaFileObjectsFromFiles(sourceFileList);
+    // Lancement de la compilation
+    JavaCompiler.CompilationTask task = compiler.getTask(null, fileManager, diagnostics, null, null, compilationUnits);
+    task.call();
     try {
-      // Initialisation des objets dy compilateur// The compiler tool
-      JavaCompiler compiler = ToolProvider.getSystemJavaCompiler(); // The compiler tool
-      if (compiler == null) {
-        System.err.println("Attention !!: le compilateur ne peut être chargé (il est absent du path ou sa version est incorrecte)");
-        throw new IllegalStateException("Attention !!: le compilateur ne peut être chargé (il est absent du path ou sa version est incorrecte)");
-       }
-      DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<JavaFileObject>(); // The diagnostic colector
-      StandardJavaFileManager fileManager = compiler.getStandardFileManager(null, Locale.FRENCH, null); // The file manager
-      // Mise en place des fichiers
-      List<File> sourceFileList = new ArrayList<File>();
-      for(String javaFile : javaFiles)
-        sourceFileList.add(new File(javaFile));
-      Iterable< ? extends JavaFileObject> compilationUnits = fileManager.getJavaFileObjectsFromFiles(sourceFileList);
-      // Lancement de la compilation
-      JavaCompiler.CompilationTask task = compiler.getTask(null, fileManager, diagnostics, null, null, compilationUnits);
-      task.call();
       fileManager.close();
-      // Gestion des erreurs
-      for(Diagnostic diagnostic : diagnostics.getDiagnostics()) {
-        String javaDiagnostic = diagnostic.getMessage(Locale.FRENCH);
-        String jvsDiagnostic = javaFiles.length > 1 ? javaDiagnostic : javaDiagnostic.split(" ", 2)[1];
-        if(jvsDiagnostic.equals("not a statement"))
-          jvsDiagnostic = "L'instruction n'est pas valide.\n (Il se peut qu'une variable indiquée n'existe pas)";
-        else if(jvsDiagnostic.equals("';' expected"))
-          jvsDiagnostic = "Un ';' est attendu (il peut manquer, ou une parenthèse être incorrecte, ..)";
-        else if(jvsDiagnostic.startsWith("cannot find symbol"))
-          jvsDiagnostic = "Il y a un symbole non-défini à cette ligne: " +
-	    jvsDiagnostic.replaceFirst("cannot[^:]*:\\s*([^\\n]*)[^:]*:\\s*(.*)", "«$1»");
-        else if(jvsDiagnostic.matches(".*\\W*found\\W*:\\W([A-Za-z\\.]*)\\Wrequired:\\W([A-Za-z\\.]*)"))
-          jvsDiagnostic = jvsDiagnostic.replaceAll("incompatible\\Wtypes\\W*found\\W*:\\W([A-Za-z\\.]*)\\Wrequired:\\W([A-Za-z\\.]*)",
-                                                   "Vous avez mis une valeur de type $1 alors qu'il faut une valeur de type $2");
-        else if(jvsDiagnostic.matches("package org\\.javascool\\.proglets\\.[A-Za-z0-9_]+ does not exist"))
-          jvsDiagnostic = jvsDiagnostic.replaceAll("package org\\.javascool\\.proglets\\.([A-Za-z0-9_]+) does not exist",
-                                                   "La proglet $1 n'existe pas");
-        else
-          jvsDiagnostic = "Erreur Java : «" + jvsDiagnostic + "»";
-        int line = (int) diagnostic.getLineNumber();
-        String source = new File(diagnostic.getSource().toString()).getParentFile().getName() + "/" + new File(diagnostic.getSource().toString()).getName();
-        String where = javaFiles.length == 1 ? "" : " de " + source + "";
-        System.out.println("-------------------\nErreur lors de la compilation à la ligne " + line + where + ".\n" + jvsDiagnostic + "\n-------------------");
-        System.err.println("Erreur à la compilation: fichier="+source+" ligne ="+line +" erreur="+javaDiagnostic);
-        // En fait ici on choisit d'arrêter à la 1ère erreur pour pas embrouiller l'apprennant
-        if(diagnostic.getKind().equals(Diagnostic.Kind.ERROR))
-          return false;
+    } catch(IOException e) {
+      System.err.println("Erreur à la fermeture du file-maneger du compilateur : " + e);
+    }
+    // Gestion des erreurs
+    for(Diagnostic diagnostic : diagnostics.getDiagnostics()) {
+      String javaDiagnostic = diagnostic.getMessage(Locale.FRENCH);
+      String jvsDiagnostic = javaFiles.length > 1 ? javaDiagnostic : javaDiagnostic.split(" ", 2)[1];
+      if(jvsDiagnostic.equals("not a statement"))
+	jvsDiagnostic = "L'instruction n'est pas valide.\n (Il se peut qu'une variable indiquée n'existe pas)";
+      else if(jvsDiagnostic.equals("';' expected"))
+	jvsDiagnostic = "Un ';' est attendu (il peut manquer, ou une parenthèse être incorrecte, ..)";
+      else if(jvsDiagnostic.startsWith("cannot find symbol"))
+	jvsDiagnostic = "Il y a un symbole non-défini à cette ligne: " +
+	  jvsDiagnostic.replaceFirst("cannot[^:]*:\\s*([^\\n]*)[^:]*:\\s*(.*)", "«$1»");
+      else if(jvsDiagnostic.matches(".*\\W*found\\W*:\\W([A-Za-z\\.]*)\\Wrequired:\\W([A-Za-z\\.]*)"))
+	jvsDiagnostic = jvsDiagnostic.replaceAll("incompatible\\Wtypes\\W*found\\W*:\\W([A-Za-z\\.]*)\\Wrequired:\\W([A-Za-z\\.]*)",
+						 "Vous avez mis une valeur de type $1 alors qu'il faut une valeur de type $2");
+      else if(jvsDiagnostic.matches("package org\\.javascool\\.proglets\\.[A-Za-z0-9_]+ does not exist"))
+	jvsDiagnostic = jvsDiagnostic.replaceAll("package org\\.javascool\\.proglets\\.([A-Za-z0-9_]+) does not exist",
+						 "La proglet $1 n'existe pas");
+      else
+	jvsDiagnostic = "Erreur Java : «" + jvsDiagnostic + "»";
+      int line = (int) diagnostic.getLineNumber();
+      String source = new File(diagnostic.getSource().toString()).getParentFile().getName() + "/" + new File(diagnostic.getSource().toString()).getName();
+      String where = javaFiles.length == 1 ? "" : " de " + source + "";
+      System.out.println("-------------------\nErreur lors de la compilation à la ligne " + line + where + ".\n" + jvsDiagnostic + "\n-------------------");
+      System.err.println("Erreur à la compilation: fichier="+source+" ligne ="+line +" erreur="+javaDiagnostic);
+      // En fait ici on choisit d'arrêter à la 1ère erreur pour pas embrouiller l'apprennant
+      if(diagnostic.getKind().equals(Diagnostic.Kind.ERROR) && !allErrors)
+	return false;
+    }
+    return true;
+  }
+  
+  private static boolean compile2(String javaFiles[], boolean allErrors) {
+    // Appel du compilateur par sa méthode main
+    String args[] = new String[javaFiles.length +1];
+    args[0] = "-nowarn";
+    System.arraycopy(javaFiles, 0, args, 1, javaFiles.length);
+    StringWriter out = new StringWriter();
+    Method javac;
+    try {
+      javac = Class.forName("com.sun.tools.javac.Main").
+	getDeclaredMethod("compile", Class.forName("[Ljava.lang.String;"), Class.forName("java.io.PrintWriter"));
+    } catch(Exception e) {
+      throw new IllegalStateException("Impossible d'accéder au compilateur javac : "+ e);
+    }   
+    try {
+      javac.invoke(null, (Object) args, new PrintWriter(out));
+    } catch(Exception e) {
+      throw new IllegalStateException("Erreur système lors du lancement du compilateur javac : "+ e);
+    }   
+    // Traitement du message de sortie
+    {
+      String sout = out.toString().trim();
+      // Coupure à la première erreur
+      if (sout.indexOf("^") != -1 && !allErrors) sout = sout.substring(0, sout.indexOf("^") + 1);
+      if (javaFiles.length > 1) {
+	// Remplacement des chemins des sources par leur simple nom
+	for(String javaFile : javaFiles)
+	  sout = sout.replaceAll((new File(javaFile).getParent()+File.separator).replaceAll("\\\\", "\\\\\\\\"), "\n");
+	// Explicitation du numéro de ligne
+	for(String javaFile : javaFiles)
+	  sout = sout.replaceAll("("+new File(javaFile).getName().replaceAll("\\\\", "\\\\\\\\")+"):([0-9])+:", "$1 : erreur de syntaxe ligne $2 :\n ");
+      } else {
+	sout = sout.replaceAll("("+new File(javaFiles[0]).getPath().replaceAll("\\\\", "\\\\\\\\")+"):([0-9])+:", "\n Erreur de syntaxe ligne $2 :\n ");
       }
-      return true;
-    } catch(Throwable e1) {
-      System.err.println("Notice: Utilisation du mécanisme de compilation de secours");
-       try {
-	 // Appel du compilateur par sa méthode main
-	 String args[] = new String[javaFiles.length +1];
-	 args[0] = "-nowarn";
-	 System.arraycopy(javaFiles, 0, args, 1, javaFiles.length);
-	 StringWriter out = new StringWriter();
-	 Class.forName("com.sun.tools.javac.Main").
-	   getDeclaredMethod("compile", Class.forName("[Ljava.lang.String;"), Class.forName("java.io.PrintWriter")).
-	   invoke(null, (Object) args, new PrintWriter(out));
-	 // Traitement du message de sortie
-	 {
-           String sout = out.toString().trim();
-	   // Coupure à la première erreur
-           if (sout.indexOf("^") != -1) sout = sout.substring(0, sout.indexOf("^") + 1);
-	   if (javaFiles.length > 1) {
-	     // Remplacement des chemins des sources par leur simple nom
-	     for(String javaFile : javaFiles)
-	       sout = sout.replaceAll((new File(javaFile).getParent()+File.separator).replaceAll("\\\\", "\\\\\\\\"), "\n");
-	     // Explicitation du numéro de ligne
-	     for(String javaFile : javaFiles)
-	       sout = sout.replaceAll("("+new File(javaFile).getName().replaceAll("\\\\", "\\\\\\\\")+"):([0-9])+:", "$1 : erreur de syntaxe ligne $2 :\n ");
-	   } else {
-	     sout = sout.replaceAll("("+new File(javaFiles[0]).getPath().replaceAll("\\\\", "\\\\\\\\")+"):([0-9])+:", "\n Erreur de syntaxe ligne $2 :\n ");
-	   }
-	   // Passage en français des principaux diagnostics
-	   sout = sout.replaceAll("not a statement", 
-				  "L'instruction n'est pas valide.\n (Il se peut qu'une variable indiquée n'existe pas)");
-	   sout = sout.replaceAll("';' expected", 
-				  "Un ';' est attendu (il peut manquer, ou une parenthèse être incorrecte, ..)");
-	   sout = sout.replaceAll("cannot find symbol\\s*symbol\\s*:\\s*([^\\n]*)[^:]*:\\s*(.*)", 
-				  "Il y a un symbole non-défini à cette ligne : «$1»");
-	   sout = sout.replaceAll("illegal start of expression", 
-				  "($0) L'instruction (ou la précédente) est tronquée ou mal écrite");
-	   sout = sout.replaceAll("class, interface, or enum expected", 
-				  "($0) Il y a probablement une erreur dans les accolades (peut-être trop de '}')");
-	   sout = sout.replaceAll("'.class' expected", 
-				  "($0) Il manque des accolades ou des parenthèses pour définir l'instruction");
-	   sout = sout.replaceAll("incompatible\\Wtypes\\W*found\\W*:\\W([A-Za-z\\.]*)\\Wrequired:\\W([A-Za-z\\.]*)",
-				  "Vous avez mis une valeur de type $1 alors qu'il faut une valeur de type $2");
-	   // Impression du message d'erreur si il existe et retour du statut
-           if (sout.length() > 0) System.out.println(sout);
+      // Passage en français des principaux diagnostics
+      sout = sout.replaceAll("not a statement", 
+			     "L'instruction n'est pas valide.\n (Il se peut qu'une variable indiquée n'existe pas)");
+      sout = sout.replaceAll("';' expected", 
+			     "Un ';' est attendu (il peut manquer, ou une parenthèse être incorrecte, ..)");
+      sout = sout.replaceAll("cannot find symbol\\s*symbol\\s*:\\s*([^\\n]*)[^:]*:\\s*(.*)", 
+			     "Il y a un symbole non-défini à cette ligne : «$1»");
+      sout = sout.replaceAll("illegal start of expression", 
+			     "($0) L'instruction (ou la précédente) est tronquée ou mal écrite");
+      sout = sout.replaceAll("class, interface, or enum expected", 
+			     "($0) Il y a probablement une erreur dans les accolades (peut-être trop de '}')");
+      sout = sout.replaceAll("'.class' expected", 
+			     "($0) Il manque des accolades ou des parenthèses pour définir l'instruction");
+      sout = sout.replaceAll("incompatible\\Wtypes\\W*found\\W*:\\W([A-Za-z\\.]*)\\Wrequired:\\W([A-Za-z\\.]*)",
+			     "Vous avez mis une valeur de type $1 alors qu'il faut une valeur de type $2");
+      // Impression du message d'erreur si il existe et retour du statut
+      if (sout.length() > 0) System.out.println(sout);
 	   return sout.length() == 0;
-	 }
-       } catch(Throwable e2) {
-	 throw new RuntimeException(e2 + " when compiling !");
-       }
     }
   }
   
