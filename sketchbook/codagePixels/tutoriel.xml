@@ -1,5 +1,5 @@
 <div title="Comprendre quelques opérations de manipulation d'images">
-  Commençons par lire <l link="http://interstices.info/reflet-numerique" text="comment sont codées des images"/> puis <l link="sujet-appli-image.htm" text="faisons l'activité"/> proposée. Des explications sont données ci dessous.
+  Commençons par lire <l link="http://interstices.info/reflet-numerique" text="comment sont codées des images"/> puis <l class="newtab" link="exercice.htm" text="faisons l'activité"/> proposée. Des explications sont données ci dessous.
 
   <div title="Manipuler des objets numériques: l'exemple des images."> Le but de cette activité est de regarder quelques opérations que nous pouvons effectuer sur ces objets numériques. Nous considérons ici des images où chaque pixel est  un nombre entre 0% pour le noir (considéré ici comme une absence de couleur) et 100% pour le blanc, donc des images monochromes qui vont de transparent à blanc. Nous allons essayer d'illustrer dans quelle mesure des opérations entre ces images peuvent prendre avoir un sens concret pour nous.</div>
     

@@ -14,7 +14,7 @@
 <p><br /> 
 Nous sommes à votre écoute&nbsp;! Pour nous contacter:
 </p>
-<ul><li> Il suffit de nous envoyer un message <form action="mailto:javascool@googlegroups.com?subject=A propos de JavaScool" method="post" enctype="text/plain"><table align="center">
+<ul><li> Il suffit de nous envoyer un message<sup><a href="#mailto">*</a></sup> <form action="mailto:javascool@googlegroups.com?subject=A propos de JavaScool" method="post" enctype="text/plain"><table align="center">
     <tr><td><select name="Le-sujet">
      <option>Commentaire général, avis, etc.</option>
 
@@ -74,6 +74,9 @@ Nous sommes à votre écoute&nbsp;! Pour nous contacter:
 <p>Vous pouvez accéder directement à notre syst&egrave;me de gestion des t&acirc;ches &agrave; l'adresse suivante : <a href="http://code.google.com/p/javascool/issues/list">http://code.google.com/p/javascool/issues/list</a></p>
 <p>Merci de vos suggestions !</p>
 </div>
+
+<hr /><div><b><a name="mailto">(*)Note</a></b> (formulaire et webmail) : Si ce formulaire ne marche pas (ouverture intempestive d'un mailer alors que vous utilisez un webmail) c'est qu'il vous manque l'extension idoine dans votre navigateur 
+(par exemple l'extension <a href="https://addons.mozilla.org/en-US/firefox/addon/send-mail-in-browser/">send-mail</a> pour <tt>firefox</tt>); c'est une bonne occasion de l'installer.</div>
 
 <br /><br /><hr />
 

@@ -56,5 +56,5 @@
 
    <div>On pourra partir du programme <l class="editor" link="Exemple.jvs" text="exemple donné ici"/>.</div>
   </p>
-<p>Cette «proglet» est un composant logiciel ouvert dont documentation et code-source sont disponibles <l link="api/org/javascool/proglets/paintBrush/package-summary.html" text="ici"/></p>
+<p>Cette «proglet» est un composant logiciel ouvert dont documentation et code-source sont disponibles <l link="http://javascool.gforge.inria.fr/?page=proglets&amp;action=show&amp;id=paintBrush&amp;helpFile=api/org/javascool/proglets/paintBrush/package-summary.html" text="ici"/></p>
 </div>
