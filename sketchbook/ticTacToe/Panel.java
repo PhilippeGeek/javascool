@@ -1,11 +1,9 @@
 package org.javascool.proglets.ticTacToe;
-import static org.javascool.macros.Macros.*;
-import static org.javascool.proglets.ticTacToe.Functions.*;
+
 import javax.swing.JPanel;
-import javax.swing.JLabel;
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
-import java.awt.*;
+import java.awt.Font;
+import java.awt.GridLayout;
 
 /** Définit le panneau graphique de la proglet.
  * @see <a href="Panel.java.html">source code</a>
@@ -20,25 +18,16 @@ public class Panel extends JPanel {
   public Panel() {
     Font f = new Font("Dialog", Font.BOLD, 84);
     setLayout(new GridLayout(3, 3));
-    for (int i = 1 ; i < 4 ; i++) {
-       for (int j = 1 ; j < 4 ; j++){
+    for (int i = 0 ; i < 3 ; i++) {
+       for (int j = 0 ; j < 3 ; j++){
          tictac[i][j] = new JButton(" ");
          tictac[i][j].setEnabled(false);
          tictac[i][j].setFont(f);
          add(tictac[i][j]);
        }
     }
-    
   }
-  // Tableau de bouton permettant de créer la grille de jeu
-
-  public static JButton  tictac[][] = new JButton[4][4];
-
-  
-  /** Démo de la proglet. */
-  public static void start() {
-
-  }
- 
+  /** Tableau de boutons formant la grille 3x3 du jeu de tic-tac-toe. */
+  public static JButton  tictac[][] = new JButton[3][3];
 }
 

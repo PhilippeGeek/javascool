@@ -39,20 +39,11 @@
        toutes les valeurs entre <c>0</c> et <c>255</c> définissant les valeurs de gris,</div>
      </div>permettre de lire/écrire un pixel monochrome dans cette image.
     </div>
-    <div>Un exemple d'utilisation: lors de la démonstration, 
-      le signe de la paix va s'afficher:
+    <div>Un <l link="http://javascool.gforge.inria.fr/?page=proglets&amp;action=show&amp;id=codagePixels&amp;helpFile=api/org/javascool/proglets/codagePixels/Demo.html" text="exemple"/> d'utilisation: lors de la démonstration, le signe de la paix va s'afficher:
       <div class="center"><l class="icon" icon="smiley2.jpg"/></div>
-      ceci, à différentes résolutions 256, 128, 64, 32, 16, 8, 4, 2, 1. Avec une bonne résolution il sera très lisible, puis petit à petit il se réduira à quelques pixels,
-      selon le programme suivant:
-      <div class="code">
-        <p><r>for</r>(<r>int</r> size = 256; size &gt; 0; size /= 2) {</p>
-        <p><T/><r>reset</r>(size, size);</p>
-        <p><T/><r>peace</r>();</p>
-        <p><T/><r>sleep</r>(1000 - size);</p>
-        <p>}</p>
-      </div> où la routine <r>peace</r> trace le signe de la paix et correspond à une fonction à définir.
+      ceci, à différentes résolutions 256, 128, 64, 32, 16, 8, 4, 2, 1. Avec une bonne résolution il sera très lisible, puis petit à petit il se réduira à quelques pixels.
     </div>
   </p>
-  <p>Voici un autre exemple de <l class="editor" link="PurHasard.jvs" text="petit programme"/></p>
-<p>Cette «proglet» est un composant logiciel ouvert dont documentation et code-source sont disponibles <l link="api/org/javascool/proglets/codagePixels/package-summary.html" text="ici"/></p>
+  <p>Voici un autre exemple de <l class="editor" link="PurHasard.jvs" text="petit programme"/>, et <l class="editor" link="Exemple1.jvs" text="celui"/> permettant de démarrer l'exercice.</p>
+<p>Cette «proglet» est un composant logiciel ouvert dont documentation et code-source sont disponibles <l link="http://javascool.gforge.inria.fr/?page=proglets&amp;action=show&amp;id=codagePixels&amp;helpFile=api/org/javascool/proglets/codagePixels/package-summary.html" text="ici"/></p>
 </div>
