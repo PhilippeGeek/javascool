@@ -45,6 +45,7 @@ public class Functions {
       Functions.height = (dim.height - 1) / 2;
     } catch(Exception e) {
       reset(200, 200);
+      System.err.println(e);
       System.out.println("Impossible de charger " + image);
     }
   }
