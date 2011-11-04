@@ -15,6 +15,7 @@ import java.awt.image.BufferedImage;
 import java.awt.Dimension;
 import javax.imageio.ImageIO;
 import java.net.URL;
+import org.javascool.macros.Macros;
 import java.io.IOException;
 
 /** Panneau pour le tracé d'images pixeliques.
@@ -74,7 +75,7 @@ public class IconOutput extends JPanel {
    * @return Cet objet, permettant de définir la construction <tt>new IconOutput().reset(..)</tt>.
    */
   public IconOutput reset(String location) throws IOException {
-    BufferedImage img = ImageIO.read(new URL(location));
+    BufferedImage img = ImageIO.read(Macros.getResourceURL(location));
     if(img != null) {
       reset(img.getWidth(), img.getHeight());
       for(int j = 0, ij = 0; j < height; j++)

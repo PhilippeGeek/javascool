@@ -39,7 +39,7 @@ public class ImageUtils {
     BufferedImage image = null;
     try {
       image = ImageIO.read(Macros.getResourceURL(location));
-    } catch(IOException e) { throw new RuntimeException(e + " when loading: " + location);
+    } catch(IOException e) { throw new RuntimeException(e + " when loading: " + location + " : "+Macros.getResourceURL(location));
     }
     if(image == null) throw new RuntimeException("Unable to load: " + location);
     return image;
