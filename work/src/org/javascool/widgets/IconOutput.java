@@ -120,14 +120,14 @@ public class IconOutput extends JPanel {
   /** Renvoie la valeur d'un pixel.
    * @param x Abscisse du pixel, dans {0, width{.
    * @param y Ordonnée du pixel, dans {0, height{.
-   * @return L'intensite du pixel entre 0 et 255 ou -1 si le pixel n'est pas dans l'image.
+   * @return L'intensite du pixel entre 0 et 255 ou 0 si le pixel n'est pas dans l'image.
    */
   public int getIntensity(int x, int y) {
     if((0 <= x) && (x < width) && (0 <= y) && (y < height)) {
       Color c = image[x + y * width];
       return (c.getRed() + c.getGreen() + c.getBlue()) / 3;
     } else
-      return -1;
+      return 0;
   }
   /**  Renvoie la valeur d'un pixel.
    * @param x Abscisse du pixel, dans {0, width{.
