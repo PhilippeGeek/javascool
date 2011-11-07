@@ -75,15 +75,14 @@
     <div title="Découvrir un code qui filtre les pixels de l'image">
       Considérons le code suivant : <div class="code">
         <m>Fonction appliquée à chaque pixel</m>
-        <p><r>void</r> filtrePixel(<r>int</r> i, <r>int</r> j) {</p>
-        <p><T/><r>int</r> valeur = (<r>getPixel</r>(i, j) + <r>getPixel</r>(i + 1, j)+ <r>getPixel</r>(i, j + 1)+ <r>getPixel</r>(i - 1, j)+ <r>getPixel</r>(i, j - 1)) / 5;</p>
-        <p><T/><r>setPixel</r>(i, j, valeur);</p>
+        <p><r>int</r> filtrePixel(<r>int</r> i, <r>int</r> j) {</p>
+        <p><T/><r>return</r> (<r>getPixel</r>(i, j) + <r>getPixel</r>(i + 1, j)+ <r>getPixel</r>(i, j + 1)+ <r>getPixel</r>(i - 1, j)+ <r>getPixel</r>(i, j - 1)) / 5;</p>
         <p>}</p>
         <m>Boucle sur tous les pixels</m>
         <p><r>void</r> filtre() {</p>
         <p><T/><r>for</r>(<r>int</r> j = -<r>getHeight</r>() + 1; j &lt;= <r>getHeight</r>() - 1; j = j + 1) {</p>
         <p><T/><T/><r>for</r>(<r>int</r> i = -<r>getWidth</r>() + 1; i &lt;= <r>getWidth</r>() - 1; i = i + 1) {</p>
-        <p><T/><T/><T/>filtrePixel(i, j);</p>
+        <p><T/><T/><T/>setPixel(i, j, filtrePixel(i, j));</p>
         <p><T/><T/>}</p>
         <p><T/>}</p>
         <p>}</p>
@@ -106,15 +105,14 @@
     <div title="D'autres filtres d'images">
       Considérons le code suivant, avec une autre fonction de filtre : <div class="code">
         <m>Fonction appliquée à chaque pixel</m>
-        <p><r>void</r> filtrePixel(<r>int</r> i, <r>int</r> j) {</p>
-        <p><T/><r>int</r> valeur = 128 + (<r>getPixel</r>(i, j) - <r>getPixel</r>(i + 1, j));</p>
-        <p><T/><r>setPixel</r>(i, j, valeur);</p>
+        <p><r>int</r> filtrePixel(<r>int</r> i, <r>int</r> j) {</p>
+        <p><T/><r>return</r> 128 + (<r>getPixel</r>(i, j) - <r>getPixel</r>(i + 1, j));</p>
         <p>}</p>
         <m>Boucle sur tous les pixels</m>
         <p><r>void</r> filtre() {</p>
         <p><T/><r>for</r>(<r>int</r> j = -<r>getHeight</r>() + 1; j &lt;= <r>getHeight</r>() - 1; j = j + 1) {</p>
         <p><T/><T/><r>for</r>(<r>int</r> i = -<r>getWidth</r>() + 1; i &lt;= <r>getWidth</r>() - 1; i = i + 1) {</p>
-        <p><T/><T/><T/>filtrePixel(i, j);</p>
+        <p><T/><T/><T/>setPixel(i, j, filtrePixel(i, j));</p>
         <p><T/><T/>}</p>
         <p><T/>}</p>
         <p>}</p>

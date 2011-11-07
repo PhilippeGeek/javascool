@@ -78,7 +78,7 @@ public class Functions {
   /** Lit la valeur d'un pixel de l'image.
    * @param x Abcisse de l'image, comptée à partir du milieu, valeur entre {-width, width}.
    * @param y Ordonnée de l'image, comptée à partir du milieu, valeur entre {-height, height}.
-   * @return Une valeur entre 0 et 255 (0 pour noir, 255 pour blanc);
+   * @return Une valeur entre 0 et 255 (0 pour noir, 255 pour blanc); Renvoie 0 pour les pixels extérieurs à l'image.
    */
   static public int getPixel(int x, int y) {
     return getPane().getIntensity(x + width, y + height);
