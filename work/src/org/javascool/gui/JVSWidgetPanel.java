@@ -39,8 +39,8 @@ class JVSWidgetPanel extends JVSTabs {
      */
     public void setProglet(String name) {
         this.removeAll();
-        this.add("Console", "", org.javascool.widgets.Console.getInstance());
-        Proglet proglet = ProgletEngine.getInstance().getProglet();
+        this.add("Console", "", Console.getInstance());
+        Proglet proglet = ProgletEngine.getInstance().setProglet(name);
         if (proglet.getPane() != null) {
             this.progletTabId = this.add("Proglet " + name, "", proglet.getPane());
         }

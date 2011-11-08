@@ -339,7 +339,6 @@ class JVSPanel extends JPanel {
      * @see org.javascool.core.ProgletEngine
      */
     public void loadProglet(String name) {
-        Proglet proglet = ProgletEngine.getInstance().setProglet(name);
         System.gc();
         this.removeAll();
         JVSToolBar.getInstance().disableDemoButton();
@@ -351,7 +350,7 @@ class JVSPanel extends JPanel {
         JVSCenterPanel.getInstance().setDividerLocation(getWidth() / 2);
         JVSCenterPanel.getInstance().revalidate();
         JVSWidgetPanel.getInstance().setProglet(name);
-        if (proglet.hasDemo()) {
+        if (ProgletEngine.getInstance().getProglet().hasDemo()) {
             JVSToolBar.getInstance().enableDemoButton();
         } else {
             JVSToolBar.getInstance().disableDemoButton();
