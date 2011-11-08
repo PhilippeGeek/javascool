@@ -341,7 +341,7 @@ public class ProgletEngine {
                     pml.set("java-proglet-pane", applet);
                 } catch (Throwable e) {
                     e.printStackTrace();
-                   System.err.println("Upps erreur de chargement d'une proglet processing : "+e);
+                    System.out.println("Upps erreur de chargement d'une proglet processing : "+e);
                 }
             } else {
                 try {
@@ -353,6 +353,8 @@ public class ProgletEngine {
                         pml.set("java-pane", pane);
                     pml.set("java-proglet-pane", pane);
                 } catch (Throwable e) {
+                    e.printStackTrace();
+                    System.out.println("Upps erreur de chargement d'une proglet : "+e);
                 }
             }
             }
