@@ -44,7 +44,7 @@ public class Macros {
     /** Renvoie un nombre entier aléatoire uniformément distribué entre deux valeurs (maximum inclus).
      */
     public static int random(int min, int max) {
-        return (int) Math.floor(min + (0.999 + max - min) * Math.random());
+        return (int) Math.floor(min + (max - min) * Math.random());
     }
 
     /** Renvoie true si deux chaînes de caratères sont égales, faux sinon.
