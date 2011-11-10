@@ -339,6 +339,7 @@ public class ProgletEngine {
                         pml.set("java-pane", applet);
                     }
                     pml.set("java-proglet-pane", applet);
+                } catch(java.lang.ClassNotFoundException e0) {
                 } catch (Throwable e) {
                     e.printStackTrace();
                     System.out.println("Upps erreur de chargement d'une proglet processing : "+e);
@@ -352,6 +353,7 @@ public class ProgletEngine {
                     } else
                         pml.set("java-pane", pane);
                     pml.set("java-proglet-pane", pane);
+                } catch(java.lang.ClassNotFoundException e0) {
                 } catch (Throwable e) {
                     e.printStackTrace();
                     System.out.println("Upps erreur de chargement d'une proglet : "+e);
