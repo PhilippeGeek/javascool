@@ -20,6 +20,8 @@ Status:
 
 == Javas'Cool Core ==
 
+  * (`*`2) Ajouter la possibilité de lancer les programmes jvs en jar
+
   * (`*`1) Ajouter un CRTL+F search/replace à l'éditeur
 
   * (`*`1) Rendre possible la cŕeation de plusieurs instances de consoles qui visualisent toutes System.out.println et Macros.stdout.prinln
