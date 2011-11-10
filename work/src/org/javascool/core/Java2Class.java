@@ -13,6 +13,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Pattern;
 import javax.tools.Diagnostic;
 import javax.tools.DiagnosticCollector;
 import javax.tools.JavaCompiler;
@@ -144,12 +145,12 @@ public class Java2Class {
       if (javaFiles.length > 1) {
 	// Remplacement des chemins des sources par leur simple nom
 	for(String javaFile : javaFiles)
-	  sout = sout.replaceAll((new File(javaFile).getParent()+File.separator).replaceAll("\\\\", "\\\\\\\\"), "\n");
+	  sout = sout.replaceAll(Pattern.quote(new File(javaFile).getParent()+File.separator), "\n");
 	// Explicitation du numéro de ligne
 	for(String javaFile : javaFiles)
-	  sout = sout.replaceAll("("+new File(javaFile).getName().replaceAll("\\\\", "\\\\\\\\")+"):([0-9])+:", "$1 : erreur de syntaxe ligne $2 :\n ");
+	  sout = sout.replaceAll("("+Pattern.quote(new File(javaFile).getName())+"):([0-9])+:", "$1 : erreur de syntaxe ligne $2 :\n ");
       } else {
-	sout = sout.replaceAll("("+new File(javaFiles[0]).getPath().replaceAll("\\\\", "\\\\\\\\")+"):([0-9])+:", "\n Erreur de syntaxe ligne $2 :\n ");
+	sout = sout.replaceAll("("+Pattern.quote(new File(javaFiles[0]).getPath())+"):([0-9])+:", "\n Erreur de syntaxe ligne $2 :\n ");
       }
       // Passage en français des principaux diagnostics
       sout = sout.replaceAll("not a statement", 
@@ -171,7 +172,7 @@ public class Java2Class {
 	   return sout.length() == 0;
     }
   }
-  
+
   /** Charge dynamiquement une classe Java qui implémente un Runnable, pour son e×écution au cours d'une session.
    * @param path Le chemin vers la classe Java à charger. La classe ne doit pas appartenir à un package, c'est-à-dire au package "default".
    * @return Une instanciation de cette classe Java.
