@@ -121,9 +121,11 @@ public class Java2Class {
   
   private static boolean compile2(String javaFiles[], boolean allErrors) {
     // Appel du compilateur par sa méthode main
-    String args[] = new String[javaFiles.length +1];
-    args[0] = "-nowarn";
-    System.arraycopy(javaFiles, 0, args, 1, javaFiles.length);
+    int options = 2;
+    String args[] = new String[options + javaFiles.length];
+    args[0] = "-g";
+    args[1] = "-nowarn";
+    System.arraycopy(javaFiles, 0, args, options, javaFiles.length);
     StringWriter out = new StringWriter();
     Method javac;
     try {
@@ -167,6 +169,9 @@ public class Java2Class {
 			     "($0) Il manque des accolades ou des parenthèses pour définir l'instruction");
       sout = sout.replaceAll("incompatible\\Wtypes\\W*found\\W*:\\W([A-Za-z\\.]*)\\Wrequired:\\W([A-Za-z\\.]*)",
 			     "Vous avez mis une valeur de type $1 alors qu'il faut une valeur de type $2");
+      // Elimination des notes de warning de fin de compilation
+      if (sout.indexOf("Note:") != -1) 
+	sout = sout.substring(0, sout.indexOf("Note:")).trim();
       // Impression du message d'erreur si il existe et retour du statut
       if (sout.length() > 0) System.out.println(sout);
 	   return sout.length() == 0;
