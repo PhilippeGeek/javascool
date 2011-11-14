@@ -1,4 +1,4 @@
-// Un programme proposé par ???, (Pr. Claudine Noblet) du Lycée International de Valbonne
+// Un programme proposé par le Pr. Claudine Noblet du Lycée International de Valbonne
 // qui permet de . . gagner vite quand on connait la dichotomie !!
 void main() {
   println("Veux-tu jouer avec moi ?");

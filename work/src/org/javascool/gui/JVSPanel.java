@@ -9,7 +9,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import org.javascool.core.ProgletEngine;
-import org.javascool.core.ProgletEngine.Proglet;
 import org.javascool.tools.UserConfig;
 
 /** The main panel for Java's cool
@@ -121,6 +120,18 @@ class JVSPanel extends JPanel {
      */
     public boolean saveFile() {
         if (JVSFileTabs.getInstance().saveCurrentFile()) {
+            haveToSave.put(JVSFileTabs.getInstance().getCurrentFileId(), false);
+            return true;
+        }
+        return false;
+    }
+
+    /** Save the current file
+     * @see JVSFileTabs
+     * @see JVSFile
+     */
+    public boolean saveAsFile() {
+        if (JVSFileTabs.getInstance().saveAsCurrentFile()) {
             haveToSave.put(JVSFileTabs.getInstance().getCurrentFileId(), false);
             return true;
         }

@@ -163,6 +163,10 @@ class JVSFileTabs extends JVSTabs {
     public Boolean saveCurrentFile() {
         return this.saveFile(this.getCurrentFileId());             // We just save the file
     }
+    /** Save the current file */
+    public Boolean saveAsCurrentFile() {
+        return this.saveAsFile(this.getCurrentFileId());             // We just save the file
+    }
 
     /** Check if the current file is in tempory memory
      * @return True if is tempory
@@ -199,7 +203,7 @@ class JVSFileTabs extends JVSTabs {
             return true;                   // Return true because file is not opened
         }
         if (JVSFileTabs.files.get(fileId).isTmp()) {
-            return this.saveFilePromptWhere(fileId);
+            return this.saveAsFile(fileId);
         } else {
             JVSFileTabs.files.get(fileId).setCode(JVSFileTabs.editors.get(fileId).getText());                   // Set the editor's text into the object
             JVSFileTabs.files.get(fileId).save();                   // Write data in the file
@@ -212,7 +216,7 @@ class JVSFileTabs extends JVSTabs {
      * @param fileId The id of the file to save
      * @return See saveFile()
      */
-    public Boolean saveFilePromptWhere(String fileId) {
+    public Boolean saveAsFile(String fileId) {
         JFileChooser fc = new JFileChooser();             // We create a file chooser
         try {
         if (System.getProperty("os.name").toLowerCase().contains("nix") || System.getProperty("os.name").toLowerCase().contains("nux")) {
@@ -249,7 +253,7 @@ class JVSFileTabs extends JVSTabs {
                             "Ce fichier est déjà ouvert dans Java's cool, choisisez un nouvelle endroit.",
                             "Erreur d'écriture",
                             JOptionPane.ERROR_MESSAGE);
-                    return this.saveFilePromptWhere(fileId);
+                    return this.saveAsFile(fileId);
                 }
             }
             JVSFileTabs.files.get(fileId).setPath(path);                   // We set the new path
@@ -263,7 +267,7 @@ class JVSFileTabs extends JVSTabs {
                         "Le fichier ne peut pas être écrit ici, choisisez un nouvelle endroit.",
                         "Erreur d'écriture",
                         JOptionPane.ERROR_MESSAGE);
-                return this.saveFilePromptWhere(fileId);
+                return this.saveAsFile(fileId);
             }                  // Write data in the file
         } else {
             return false;                   // If the user is not ok

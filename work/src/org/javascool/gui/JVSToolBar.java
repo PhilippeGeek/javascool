@@ -67,6 +67,13 @@ class JVSToolBar extends ToolBar {
                 JVSPanel.getInstance().saveFile();
             }
         });
+        addTool("Sauver sous", "org/javascool/widgets/icons/save.png", new Runnable() {
+
+            @Override
+            public void run() {
+                JVSPanel.getInstance().saveAsFile();
+            }
+        });
 
         compileButton = addTool("Compiler", "org/javascool/widgets/icons/compile.png", new Runnable() {
 
