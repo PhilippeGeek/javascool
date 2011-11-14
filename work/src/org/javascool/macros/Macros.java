@@ -7,6 +7,7 @@ package org.javascool.macros;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -186,9 +187,19 @@ public class Macros {
      */
     public static void openURL(String location) {
         try {
-            java.awt.Desktop.getDesktop().browse(new java.net.URI(location));
+          if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+            Desktop.getDesktop().browse(new java.net.URI(location));
+            System.err.println("Note: Ouverture de " + location + " dans un navigateur externe");
+          } else {
+              openURL2(location);
+          }
         } catch (Throwable th) {
-            try {
+            openURL2(location);
+        }
+    }
+    // Procédure de secours pour ouvrir une URL
+    private static void openURL2(String location) {
+     System.err.println("Note: Ouverture de " + location + " dans un browser navigateur (methode de secours)");
                 String url = location;
                 String os = System.getProperty("os.name").toLowerCase();
                 Runtime rt = Runtime.getRuntime();
@@ -209,18 +220,12 @@ public class Macros {
                         }
                         rt.exec(new String[]{"sh", "-c", cmd.toString()});
                     } else {
-                        return;
+                        throw new RuntimeException("Erreur (pas d'OS détecté) à l'ouverture dans un navigateur de " + location);
                     }
-                } catch (Exception e) {
-                    return;
-                }
-                return;
             } catch (Exception e) {
-                throw new RuntimeException(e + " when browwing: " + location);
+                throw new RuntimeException("Erreur (" + e + ") à l'ouverture dans un navigateur de " + location);
             }
-        }
     }
-
     /** Renvoie une URL (Universal Resource Location) normalisée, dans le cas du système de fichier local ou d'une ressource.
      * <p>La fonction recherche l'existence du fichier:
      * (i) par rapport au répertoire de base qui est donné,
