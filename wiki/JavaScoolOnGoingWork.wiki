@@ -20,7 +20,7 @@ Status:
 
 == Javas'Cool Core ==
 
-  * (`*`2) Ajouter la possibilité de lancer les programmes jvs en jar
+  * (`*`2) Ajouter la possibilité de lancer les programmes jvs en jar, a travers l'interface save-as *.jar (et aussi *.java)
 
   * (`*`1) Ajouter un CRTL+F search/replace à l'éditeur
 
