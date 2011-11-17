@@ -6,7 +6,6 @@
       ant javacool-base.jar	construit dans ./dist la jarre Javas'Cool Core "apprenant" sans proglet
       ant javacool-builder.jar	construit dans ./dist la jarre Javas'Cool Builder "formateur" pour genérer les progets
       ant javascool-proglets.jar	construit dans ./dist la jarre Javas'Cool Core "apprenant" avec toutes les proglets listées validées
-      ant javascool-proglets.app.zip	construit dans ./dist le lanceur MacOs Javas'Cool Core "apprenant" avec toutes les proglets listées validées
       ant javascool-framework.jar	construit dans ./dist la jarre Javas'Cool Framework contenant les packages macros, tools et widgets (mais sans les icones) pour utiliser les classes javascool dans un autre projet
       ant javadoc			construit dans ./dist/javadoc la javadoc des classes (avec java2html)
       ant webproglets             construit dans ./dist/proglets les éléments pour la mise en ligne web des proglets
@@ -93,22 +92,6 @@
     <move file="./../sketchbook/javascool-proglets.jar" todir="./dist"/>
   </target>
 
-  <target name="javascool-proglets.app.zip" depends="javascool-proglets.jar">
-    <!-- http://informagen.com/JarBundler/Examples.html -->
-    <taskdef name="jarbundler" classname="net.sourceforge.jarbundler.JarBundler" classpath="lib/jarbundler.jar" />
-    <jarbundler dir="dist"
-      name="javascool-proglets"
-      shortname="javascool"
-      signature="javascool"
-      mainclass="org.javascool.Core" 
-      jar="./dist/javascool-proglets.jar"
-      icon="src/org/javascool/widgets/icons/logo.png"
-      jvmversion="1.6+"
-      version="3.0"
-      infostring="Java'sCool, v4"/>
-    <zip destfile="./dist/javascool-proglets.app.zip" basedir="./dist" includes="javascool-proglets.app/**"/>
-  </target>
-  
   <target name="webproglets" depends="javascool-builder.jar">
     <java jar="./dist/javascool-builder.jar" dir="./../sketchbook" fork="true">
       <arg value="-w"/>

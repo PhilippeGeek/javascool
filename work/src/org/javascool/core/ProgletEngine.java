@@ -7,7 +7,6 @@ package org.javascool.core;
 
 import java.applet.Applet;
 import java.awt.Component;
-
 import java.awt.Dimension;
 import java.util.ArrayList;
 import org.javascool.macros.Macros;
@@ -226,7 +225,7 @@ public class ProgletEngine {
          */
         public Proglet load(String location) {
             // Définit les méta-données de la proglet.
-            pml.load(location + "proglet.pml");
+            pml.load(location + "proglet.pml", true);
             pml.set("location", location);
             try {
                 pml.set("name", new File(location).getName());

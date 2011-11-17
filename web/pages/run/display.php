@@ -44,14 +44,12 @@ Il suffit de le télécharger <b><a href="javascool-proglets.jar">ICI</a></b>, e
 
 <hr/><div class="label2"><a name="macos">Mac OS</a></div>
 
-<p>Téléchargez Java's Cool au format <tt>JAR</tt> exécutable <b><a href="javascool-proglets.jar">ici</a></b>, en choisissant l'option «Ouvrir avec Java».</p>
+<p>Téléchargez Java's Cool au format <tt>JAR</tt> xécutable <b><a href="javascool-proglets.jar">ici</a></b>, et l'ouvrir : ce sera immédiat.</p>
 <table border ="1" align="center"><tr><td><img src="images/screen7.png" alt="screenshot"/></td></tr></table>
 
 <p>- Si l'option «Java» n'est pas présente, vous devez probablement <a href="http://www.java.com/fr/download">installer Java<a/> (version au moins 1.6).</p>
 
 <p>- Si votre MAC OS X est un peu ancien, vous pouvez <a href="#Installation_avec_un_Mac_OS_X_un_peu_ancien">activer Java 1.6</a>.</p>
-
-<p>- On peut aussi choisir installer Java's Cool comme une <a href="#Installation_comme_application_MacOS">application MacOS</a> (dossier <tt>.app</tt>).</p>
 
 <hr/><div class="label2"><a name="linux">Linux</a></div>
 
