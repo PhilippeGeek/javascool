@@ -81,6 +81,7 @@ class JVSStartPanel extends JScrollPane {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.add(Box.createVerticalGlue());
         JButton label = new JButton(name, icon);
+        // Affichage du titre dans le charset de l'ordinateur
         label.setToolTipText(title);
         label.setPreferredSize(new Dimension(160, 160));
         label.setVerticalTextPosition(JLabel.BOTTOM);

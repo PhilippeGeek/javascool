@@ -152,16 +152,31 @@ public class Pml {
   /** Initialise la PML en la lisant dans un fichier donné.
    * @param location  L'URL (Universal Resource Location) de chargement de <a href="FileManager.html#load-format">format standard</a>.
    * @param format Le format de lecture parmi les <a href="#input-format">formats supportés</a>, par défaut donné par l'extension du fichier.
+   * @param utf8 Si la valeur est vraie, force l'encodage en UTF-8 à la lecture. Par défaut (false) utilise l'encodage local.
    * @return Cet objet, permettant de définir la construction <tt>Pml pml= new Pml().load(..)</tt>.
    */
-  public final Pml load(String location, String format) {
-    return reset(FileManager.load(location), format);
+  public final Pml load(String location, String format, boolean utf8) {
+    if (format == null)
+        format = location.replaceAll("^.*\\.([A-Za-z]+)$", "$1");
+    return reset(FileManager.load(location, utf8), format);
   }
   /**
-   * @see #load(String, String)
+   * @see #load(String, String, boolean)
+   */
+  public final Pml load(String location, String format) {
+    return load(location, format, false);
+  }
+  /**
+   * @see #load(String, String, boolean)
+   */
+  public final Pml load(String location, boolean utf8) {
+    return load(location, null, false);
+  }
+  /**
+   * @see #load(String, String, boolean)
    */
   public final Pml load(String location) {
-    return load(location, location.replaceAll("^.*\\.([A-Za-z]+)$", "$1"));
+    return load(location, null, false);
   }
   /** Sauve la PML dans un fichier donné.
    * @param location  L'URL (Universal Resource Location) d'écriture de <a href="FileManager.html#save-format">format standard</a>.
