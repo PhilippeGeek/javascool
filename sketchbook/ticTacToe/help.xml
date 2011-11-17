@@ -14,7 +14,7 @@
     Attention, il faut lancer la version serveur en premier, puis la version client. Ici les deux proglets peuvent être lancés sur la même machine.Dans ce cas, il vous faut lancer deux fois la proglet ticTacToe sur l'ordinateur en chargeant dans l'une la version serveur ci-dessous et dans l'autre la version client.</p>
     
          <div class="center"><l class="icon" icon="jeu.png"/></div>
-    
+
 <div title="Code source des programmes de test">
     <div title="Version serveur">
     <div class="code">
