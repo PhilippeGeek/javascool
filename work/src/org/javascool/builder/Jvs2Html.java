@@ -7,7 +7,7 @@ import de.java2html.javasource.JavaSourceType;
 import de.java2html.options.JavaSourceConversionOptions;
 import de.java2html.options.JavaSourceStyleEntry;
 import de.java2html.util.RGB;
-import java.io.File;
+import java.io.File;  
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -40,7 +40,7 @@ public class Jvs2Html {
             options.getStyleTable().put(JavaSourceType.KEYWORD, new JavaSourceStyleEntry(RGB.ORANGE, true, false));
             StringWriter writer = new StringWriter();
             converter.convert(source, options, writer);
-            return writer.toString();
+            return "<pre>"+writer.toString().replace("\n", "").replace("<br/>", "\n").replace("&#160;&#160;&#160;&#160;", "\t") +"</pre>";
         } catch (IOException e) {
             throw new RuntimeException(e + " when converting: «" + code + "»");
         }
