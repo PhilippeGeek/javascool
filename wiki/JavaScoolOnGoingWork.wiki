@@ -41,7 +41,9 @@ Status:
 
 == Javas'Cool Proglets ==
 
-Offrir du panneau de lancement de javascool un outil pour lancer les proglets en ligne a travers leur propre jar
+  * (`*`2) Offrir du panneau de lancement de javascool un outil pour lancer les proglets en ligne a travers leur propre jar
+    * On a toute les proglets en panneau mais si on clique sur celles "non locales" cela les lance en ligne 
+    * C'est une ligne de proglet.pml qui le dit
 
 Voir aussi les *proglets en [http://wiki.inria.fr/sciencinfolycee/JavaScool:FaqD%C3%A9veloppement#Quelles_sont_les_proglets_en_cours_de_d.C3.A9veloppement_.3F développement]* et *en [http://wiki.inria.fr/sciencinfolycee/JavaScool:FaqD%C3%A9veloppement#Quelles_sont_les_proglets_en_projet_.3F projet]*.
 
