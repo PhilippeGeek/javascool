@@ -43,6 +43,7 @@ $v3_redirections_link_table = array(
 			     "contactcontact%22" => "?page=contact",
 			     "cr%c3%a9dits" => "?page=contact&action=credits",
 			     "Cr%c3%a9dits" => "?page=contact&action=credits",
+			     "Cr%25C3%25A9dits" => "?page=contact&action=credits",
 			     "crédits" => "?page=contact&action=credits",
 			     "Crédits" => "?page=contact&action=credits",
 			     "Lancement" => "?page=run",

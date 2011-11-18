@@ -170,7 +170,7 @@ public class Pml {
    * @see #load(String, String, boolean)
    */
   public final Pml load(String location, boolean utf8) {
-    return load(location, null, false);
+    return load(location, null, utf8);
   }
   /**
    * @see #load(String, String, boolean)
