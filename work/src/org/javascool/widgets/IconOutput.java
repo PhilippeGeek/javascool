@@ -14,7 +14,6 @@ import java.util.HashMap;
 import java.awt.image.BufferedImage;
 import java.awt.Dimension;
 import javax.imageio.ImageIO;
-import java.net.URL;
 import org.javascool.macros.Macros;
 import java.io.IOException;
 

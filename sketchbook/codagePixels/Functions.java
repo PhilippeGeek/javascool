@@ -73,7 +73,7 @@ public class Functions {
    * @return Renvoie true si le pixel est dans l'image, false si il est en dehors des limites d el'image.
    */
   static public boolean setPixel(int x, int y, int valeur) {
-    return getPane().set(x + width, y + height, valeur);
+    return getPane().set(x + width, height - y, valeur);
   }
   /** Lit la valeur d'un pixel de l'image.
    * @param x Abcisse de l'image, comptée à partir du milieu, valeur entre {-width, width}.
@@ -81,7 +81,7 @@ public class Functions {
    * @return Une valeur entre 0 et 255 (0 pour noir, 255 pour blanc); Renvoie 0 pour les pixels extérieurs à l'image.
    */
   static public int getPixel(int x, int y) {
-    return getPane().getIntensity(x + width, y + height);
+    return getPane().getIntensity(x + width, height - y);
   }
 }
 
