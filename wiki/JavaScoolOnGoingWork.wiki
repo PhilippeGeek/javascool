@@ -41,6 +41,8 @@ Status:
 
 == Javas'Cool Proglets ==
 
+Offrir du panneau de lancement de javascool un outil pour lancer les proglets en ligne a travers leur propre jar
+
 Voir aussi les *proglets en [http://wiki.inria.fr/sciencinfolycee/JavaScool:FaqD%C3%A9veloppement#Quelles_sont_les_proglets_en_cours_de_d.C3.A9veloppement_.3F développement]* et *en [http://wiki.inria.fr/sciencinfolycee/JavaScool:FaqD%C3%A9veloppement#Quelles_sont_les_proglets_en_projet_.3F projet]*.
 
   * (`*`2) Proposer un plugin netbeans
