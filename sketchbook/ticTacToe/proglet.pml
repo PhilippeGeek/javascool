@@ -1,3 +1,3 @@
-title="Jeu du TicTacToe en réseau"
-author="Christophe Béasse <oceank2@gmail.com>"
+title="Jeu du TicTacToe en rÃ©seau"
+author="Christophe BÃ©asse <oceank2@gmail.com>"
 icon="tictactoe.png"
