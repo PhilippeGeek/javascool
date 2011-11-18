@@ -6,7 +6,7 @@
 *Notre planning*
   * Je 1 Sept au soir : JVS4 RC1 partagée avec les co-développeurs
   * Ve 9 Sept au soir : JVS4 RC2 publiée en version principale sur le site 
-  * Après vacances de la Toussaint : JVs4 RC3 avec améliorations demandées par les utilisateurs
+  * Au vacances de fin d'année: JVs4 RC3 avec améliorations demandées par les utilisateurs
 
 ----
 
@@ -31,7 +31,7 @@ Status:
     
   * (`*`3) Intégrer un installateur des .dll/.so/.jnilib dans le buidler pour les proglets à extensions.
     
-  * (`*`4) Virer le `HtmlDisplay` HTML3 et trouver un bon browser
+  * (`*`4) Virer le `HtmlDisplay` HTML3 et trouver un bon browser, pour les proglets qui en ont besoin (attention à l ataille du jar !!!!)
 
 == Javas'Cool Builder ==
 
