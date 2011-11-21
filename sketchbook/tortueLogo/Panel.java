@@ -38,7 +38,7 @@ public class Panel extends JPanel {
           g.fillRect(i, j, 1, 1);
         }
     if (turtle_shown)
-      g.drawImage(turtle.getImage(), turtle_x, turtle_y, new Color(10, 100, 10), turtle.getImageObserver());
+      g.drawImage(turtle.getImage(), turtle_x, turtle_y, getBackground(), turtle.getImageObserver());
   }
   static final int width = 512, height = 512;
   private Color garden[];

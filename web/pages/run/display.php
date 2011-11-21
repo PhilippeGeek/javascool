@@ -13,7 +13,7 @@
 
 <div class="display">
 
-<p>Pour lancer Java's Cool, rien à installer, ormis Java1.6. <br/><table border="1"><tr><td>
+<p>Pour lancer Java's Cool, rien à installer, ormis Java1.6 ou 1.7. <br/><table border="1"><tr><td>
 Il suffit de le télécharger <b><a href="javascool-proglets.jar">ICI</a></b>, en choisissant l'option «Ouvrir» ou «Ouvrir avec Java».
 </td></tr></table><br/></p>
 

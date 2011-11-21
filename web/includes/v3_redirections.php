@@ -15,8 +15,9 @@ function v3_redirections($page) {
       header("Location: ".$redirect);
       return true;
     }
-  // Proposition de mail si une page bizarre est demandée
-  if (!in_array($page, $v3_redirections_v4pages_table)) {echo "
+  // Envoie de mail si une page bizarre est demandée
+  if (strlen($page) > 0 && !in_array($page, $v3_redirections_v4pages_table)) {
+    echo "
     <h4>Uppss vous être en train de demander une page JavaScool qui n'existe pas (ou plus)</h4>
     <b>N'hésitez pas, si besoin, à nous <a href='mailto:thierry.vieville@inria.fr?subject=broken-link-on-javascool-web ($page)'>contacter</a>, nous allons vous dépanner.</b>
     <hr>";
