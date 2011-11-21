@@ -86,7 +86,7 @@ public class Java2Class {
     try {
       fileManager.close();
     } catch(IOException e) {
-      System.err.println("Erreur à la fermeture du file-maneger du compilateur : " + e);
+      System.err.println("Erreur à la fermeture du file-manager du compilateur : " + e);
     }
     // Gestion des erreurs
     for(Diagnostic diagnostic : diagnostics.getDiagnostics()) {
@@ -150,9 +150,11 @@ public class Java2Class {
 	  sout = sout.replaceAll(Pattern.quote(new File(javaFile).getParent()+File.separator), "\n");
 	// Explicitation du numéro de ligne
 	for(String javaFile : javaFiles)
-	  sout = sout.replaceAll("("+Pattern.quote(new File(javaFile).getName())+"):([0-9])+:", "$1 : erreur de syntaxe ligne $2 :\n ");
+	  sout = sout.replaceAll("("+Pattern.quote(new File(javaFile).getName())+"):([0-9]+):", "$1 : erreur de syntaxe ligne $2 :\n ");
       } else {
-	sout = sout.replaceAll("("+Pattern.quote(new File(javaFiles[0]).getPath())+"):([0-9])+:", "\n Erreur de syntaxe ligne $2 :\n ");
+	sout = sout.replaceAll("("+Pattern.quote(new File(javaFiles[0]).getPath())+"):([0-9]+):", "\n Erreur de syntaxe ligne $2 :\n ");
+        System.out.println(">>"+Pattern.quote(new File(javaFiles[0]).getName()));
+        sout = sout.replaceAll(Pattern.quote(new File(javaFiles[0]).getName()), "");
       }
       // Passage en français des principaux diagnostics
       sout = sout.replaceAll("not a statement", 
