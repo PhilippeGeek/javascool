@@ -35,8 +35,8 @@ RedirectMatch permanent "^/proglet/exosdemaths/doc-files/.*\.htm" "http://javasc
 RedirectMatch permanent "^/proglet/pixelsetcie/doc-files/.*\.htm$" "http://javascool.gforge.inria.fr/?page=proglets\&action=show\&id=codagePixels"
 RedirectMatch permanent "^/proglet/convanalogique/doc-files/.*\.htm$" "http://javascool.gforge.inria.fr/?page=proglets\&action=show\&id=analogNumerique"
 RedirectMatch permanent "^/proglet/javaprog/doc-files/.*\.htm$" "http://javascool.gforge.inria.fr/?page=proglets\&action=show\&id=javaProg"
-RedirectMatch permanent "^/(v.)?/(proglet/.*\.htm)$" "http://javascool.gforge.inria.fr?page=$1/$2"
-RedirectMatch permanent "^/(v.)?/documents/sketchbook/([a-zA-Z][a-zA-Z]*)[/]?$" "http://javascool.gforge.inria.fr/?page=proglets\&action=show\&id=$2"
-RedirectMatch permanent "^/(v.)?/proglets/([a-zA-Z][a-zA-Z]*)[/]?$" "http://javascool.gforge.inria.fr/?page=proglets\&action=show\&id=$2"
+RedirectMatch permanent "^/(v./)?(proglet/.*\.htm)$" "http://javascool.gforge.inria.fr?page=$1/$2"
+RedirectMatch permanent "^/(v./)?documents/sketchbook/([a-zA-Z][a-zA-Z]*)[/]?$" "http://javascool.gforge.inria.fr/?page=proglets\&action=show\&id=$2"
+RedirectMatch permanent "^/(v./)?proglets/([a-zA-Z][a-zA-Z]*)[/]?$" "http://javascool.gforge.inria.fr/?page=proglets\&action=show\&id=$2"
 
 

@@ -3,7 +3,7 @@ import static org.javascool.macros.Macros.*;
 import static org.javascool.proglets.tortueLogo.Functions.*;
 
 import javax.swing.JPanel;
-import javax.swing.JLabel;
+import javax.swing.ImageIcon;
 import java.awt.Dimension;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -23,10 +23,7 @@ public class Panel extends JPanel {
     // Adds the garden
     clear();
     // Adds the turtle
-    turtle = new JLabel();
-    turtle.setIcon(getIcon("org/javascool/proglets/tortueLogo/turtle.gif"));
-    turtle.setBounds(width / 2, height / 2, 42, 35);
-    add(turtle);
+    turtle = getIcon("org/javascool/proglets/tortueLogo/turtle.gif");
   }
   /** Routine interne de tracé, ne pas utiliser.
    *
@@ -40,31 +37,34 @@ public class Panel extends JPanel {
           g.setColor(garden[i + j * width]);
           g.fillRect(i, j, 1, 1);
         }
+    if (turtle_shown)
+      g.drawImage(turtle.getImage(), turtle_x, turtle_y, new Color(10, 100, 10), turtle.getImageObserver());
   }
-  private Color garden[];
-  public JLabel turtle;
   static final int width = 512, height = 512;
-  private boolean hidden = false;
+  private Color garden[];
+  private ImageIcon turtle;
+  private int turtle_x = width/2, turtle_y = height/2; 
+  private boolean turtle_shown = true;
 
   /** Clears the garden. */
   public final void clear() {
     garden = new Color[width * height];
+    repaint(0, 0, getWidth(), getHeight());
   }
   /** Shows the turtle at a given location.
    * @param x Turtle horizontal position, not shown if &lt; 0.
    * @param y Turtle vertical position, not shown if &lt; 0.
    */
   public void show(int x, int y) {
+    repaint(turtle_x - 1, turtle_y - 1, turtle.getIconWidth() + 3, turtle.getIconHeight() + 3);
     if((x < 0) || (y < 0)) {
-      turtle.setVisible(false);
-      hidden = true;
+      turtle_shown = false;
     } else {
-      turtle.setLocation(x, y);
-      if(hidden) {
-        hidden = false;
-        turtle.setVisible(true);
-      }
+      turtle_x = x;
+      turtle_y = y;
+      turtle_shown = true;
     }
+    repaint(turtle_x - 1, turtle_y - 1, turtle.getIconWidth() + 3, turtle.getIconHeight() + 3);
   }
   /** Adds a trace value.
    * @param x Pixel abscissa, in [-1..1].
@@ -73,6 +73,7 @@ public class Panel extends JPanel {
    */
   public void add(int x, int y, Color c) {
     garden[x + y * width] = c;
+    repaint(x - 1, y - 1, 3, 3);
   }
   /** Démo de la proglet. */
   public void start() {
