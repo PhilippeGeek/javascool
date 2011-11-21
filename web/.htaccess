@@ -14,6 +14,7 @@ Redirect permanent "/proglet/doc/sujet-about-functions.htm" "http://javascool.gf
 Redirect permanent "/proglet/doc/sujet-about-while.htm" "http://javascool.gforge.inria.fr/v4/?page=proglets&action=show&id=abcdAlgos&helpFile=./boucles.htm"
 Redirect permanent "/proglet/doc/about-memo.htm" "http://javascool.gforge.inria.fr/documents/sujets-mathinfo/memo-macros.htm"
 Redirect permanent "/proglet/doc/about-bml.htm" "http://javascool.gforge.inria.fr/?page=developers&action=spec-hml"
+Redirect permanent "/proglet/doc/about-bml-path.htm" "http://javascool.gforge.inria.fr/?page=developers&action=spec-hml"
 Redirect permanent "/proglet/doc/about-prg2nd.htm" "http://javascool.gforge.inria.fr/?page=home&action=faq-infolycee"
 Redirect permanent "/proglet/doc/about-proglet-Conva.htm" "http://javascool.gforge.inria.fr/?page=proglets&action=show&id=analogNumerique"
 Redirect permanent "/proglet/doc/about-proglet-Dicho.htm" "http://javascool.gforge.inria.fr/?page=proglets&action=show&id=dichotomie"
