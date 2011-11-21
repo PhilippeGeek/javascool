@@ -33,6 +33,12 @@ public class Stdout {
    */
   public static void echo(int string) {
     echo("" + string);
+  } 
+  /**
+   * @see #echo(String)
+   */
+  public static void echo(char string) {
+    echo("" + string);
   }
   /**
    * @see #echo(String)
@@ -66,6 +72,12 @@ public class Stdout {
    * @see #echo(String)
    */
   public static void println(int i) {
+    println("" + i);
+  }
+  /**
+   * @see #echo(String)
+   */
+  public static void println(char i) {
     println("" + i);
   }
   /**
