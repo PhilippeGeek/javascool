@@ -153,8 +153,7 @@ public class Java2Class {
 	  sout = sout.replaceAll("("+Pattern.quote(new File(javaFile).getName())+"):([0-9]+):", "$1 : erreur de syntaxe ligne $2 :\n ");
       } else {
 	sout = sout.replaceAll("("+Pattern.quote(new File(javaFiles[0]).getPath())+"):([0-9]+):", "\n Erreur de syntaxe ligne $2 :\n ");
-        System.out.println(">>"+Pattern.quote(new File(javaFiles[0]).getName()));
-        sout = sout.replaceAll(Pattern.quote(new File(javaFiles[0]).getName()), "");
+        sout = sout.replaceAll(Pattern.quote(new File(javaFiles[0]).getName().replaceFirst("java$", "")), "");
       }
       // Passage en français des principaux diagnostics
       sout = sout.replaceAll("not a statement", 
