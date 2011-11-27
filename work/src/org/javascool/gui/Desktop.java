@@ -76,7 +76,8 @@ public class Desktop {
             JVSPanel.getInstance().newFile();
             return true;
         } catch (Throwable th) {
-            return false;
+	  System.out.println("Aie impossible de créer un nouveau fichier "+th);
+	  return false;
         }
     }
 
@@ -95,6 +96,7 @@ public class Desktop {
             }
             return true;
         } catch (Throwable th) {
+	  System.out.println("Aie impossible d'ouvrir le fichier "+th);
             return false;
         }
     }
@@ -111,6 +113,7 @@ public class Desktop {
             }
             return openFile(new File(url.toURI()));
         }catch(Exception ex){
+ 	  System.out.println("Aie impossible d'ouvrir le fichier "+ex);
             System.err.println("Error : ");
             ex.printStackTrace(System.err);
             return false;
