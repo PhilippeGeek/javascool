@@ -161,7 +161,7 @@ public class Java2Class {
       sout = sout.replaceAll("';' expected", 
 			     "Un ';' est attendu (il peut manquer, ou une parenthèse être incorrecte, ..)");
       sout = sout.replaceAll("cannot find symbol\\s*symbol\\s*:\\s*([^\\n]*)[^:]*:\\s*(.*)", 
-			     "Il y a un symbole non-défini à cette ligne : «$1»");
+			     "Il y a un symbole non-défini à cette ligne : «$1» (utilisez-vous la bonne proglet ?)");
       sout = sout.replaceAll("illegal start of expression", 
 			     "($0) L'instruction (ou la précédente) est tronquée ou mal écrite");
       sout = sout.replaceAll("class, interface, or enum expected", 
