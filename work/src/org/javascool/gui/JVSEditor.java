@@ -169,12 +169,16 @@ class JVSEditor extends JPanel {
             img = ImageIO.read(ClassLoader.getSystemResourceAsStream("org/javascool/widgets/icons/error.png"));
             icon = new ImageIcon(img);
         } catch (IOException ex1) {
+	  // @todo : ici une erreur passée sous le tapis
+	  System.err.println("Dysfonctionnement innatendu ici "+ex1);
         }
         try {
             getRTextArea().setCaretPosition(getRTextArea().getLineStartOffset(line - 1));
             getScrollPane().getGutter().addLineTrackingIcon(line - 1, icon);
         } catch (BadLocationException ex) {
-            Logger.getLogger(JVSEditor.class.getName()).log(Level.SEVERE, null, ex);
+	  // @todo : ici une erreur géree par le Logger . . 
+	  System.err.println("Dysfonctionnement innatendu ici "+ex);
+	  // Logger.getLogger(JVSEditor.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
