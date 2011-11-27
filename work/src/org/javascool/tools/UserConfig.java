@@ -48,6 +48,7 @@ public class UserConfig {
             try {
                 properties.loadFromXML(new FileInputStream(getApplicationFolder() + configFile));
             } catch (Exception e) {
+                System.err.println("Dysfonctionnement lors la lecture du fichier de configuration" + e);
             }
         }
         return properties;

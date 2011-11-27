@@ -49,16 +49,25 @@ public class ProgletEngine {
             proglets = new ArrayList<Proglet>();
             String javascoolJar = Core.javascoolJar();
             for (String dir : FileManager.list(javascoolJar, "org.javascool.proglets.[^\\.]+.proglet.pml")) {
-                Proglet proglet = new Proglet().load(dir.replaceFirst("jar:[^!]*!(.*)proglet.pml", "$1"));
+                String name = dir.replaceFirst("jar:[^!]*!(.*)proglet.pml", "$1");
+	      try {
+                Proglet proglet = new Proglet().load(name);
                 proglets.add(proglet);
+	      }  catch(Exception e) {
+		System.err.println("Erreur lors de la détection dans le jar de la proglet "+name+" en "+dir+" ("+e+")");
+	      }
             }
-            Collections.sort(proglets, new Comparator<Proglet>() {
-                @Override
-                 public int compare(Proglet p1, Proglet p2) {
-                     return p1.getName().compareTo(p2.getName());
-            }});
-        } catch(Exception e) {
-	  System.err.println("Erreur lors de la détection des proglets ("+e+" avec "+Core.javascoolJar()+"\n . . vous pouvez quand même utiliser JavaScool");
+        } catch(Exception er) {
+	  System.err.println("Erreur lors de la détection des proglets ("+er+" avec "+Core.javascoolJar()+"\n . . vous pouvez quand même utiliser JavaScool");
+	    // @todo Mise en place d'une détection manuelle si la détection automatique a échoué
+	    String names[] = { "abcdAlgos", "algoDeMaths", "analogNumerique", "codagePixels", "commSerie", "cryptageRSA", "dichotomie", "exploSonore", "gogleMaps", "grapheEtChemins", "javaProg", "paintBrush", "syntheSons", "ticTacToe", "tortueLogo"};
+	    for(String name : names) {
+	      try {
+		proglets.add(new Proglet().load(name));
+	      } catch(Exception e) {
+		System.err.println("Erreur lors de la détection manuelle de la proglet "+name+" ("+e+")");
+	      }
+	    }	      
         }
         // Définit une proglet "vide" pour lancer l'interface
         if (proglets.isEmpty()) {
@@ -69,7 +78,13 @@ public class ProgletEngine {
                 p.pml.set("help-location", "org/javascool/macros/memo-macros.htm");
                 proglets.add(p);
             }
-        }
+        }   
+        // Tri des proglets par ordre alphabétique
+            Collections.sort(proglets, new Comparator<Proglet>() {
+                    @Override
+                     public int compare(Proglet p1, Proglet p2) {
+                         return p1.getName().compareTo(p2.getName());
+            }});    
     }
     //
     // [1] Mécanisme de compilation/exécution

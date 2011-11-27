@@ -40,8 +40,11 @@ public class IconOutput extends JPanel {
     g.setPaintMode();
     for(int j = 0; j < height; j++)
       for(int i = 0; i < width; i++) {
-        g.setColor(image[i + j * width]);
-        g.fillRect(i0 + i * dij, j0 + j * dij, dij, dij);
+	int ij = i + j * width;
+	if (0 <= ij && ij < image.length) {
+	  g.setColor(image[ij]);
+	  g.fillRect(i0 + i * dij, j0 + j * dij, dij, dij);
+	}
       }
   }
   private void setBounds() {
@@ -58,11 +61,15 @@ public class IconOutput extends JPanel {
    */
   public final IconOutput reset(int width, int height) {
     if(width > 550 || height > 550 || width * height > 550 * 550) throw new IllegalArgumentException("Image size too big !");
+    if (width <= 0)
+      width = 300;
+    if (height <= 0)
+      height = 300;
     if(width % 2 == 0)
-      width--;
+      width++;
     if(height % 2 == 0)
-      height--;
-    image = new Color[(this.width = (width > 0 ? width : 1)) * (this.height = (height > 0 ? height : 1))];
+      height++;
+    image = new Color[(this.width = width) * (this.height = height)];
     for(int ij = 0; ij < this.width * this.height; ij++)
       image[ij] = Color.WHITE;
     repaint(0, 0, getWidth(), getHeight());

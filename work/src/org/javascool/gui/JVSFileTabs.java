@@ -228,6 +228,7 @@ class JVSFileTabs extends JVSTabs {
             fc.setCurrentDirectory(new File(System.getProperty("home.dir")));
         }
         } catch(Exception e) {
+            // @todo Ici un platrage quand la mise en place du repertoire par defaut echoue 
          System.err.println("Notice: échec de la mise en place du répertoire par défaut: "+ e);
         }
         fc.setApproveButtonText("Enregistrer");
