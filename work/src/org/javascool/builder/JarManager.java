@@ -69,7 +69,8 @@ public class JarManager {
   public static void jarCreate(String jarFile, String mfFile, String srcDir, String[] jarEntries) {
     try {
         ProgletsBuilder.log("Création du jar "+jarFile,true);
-      new File(jarFile).getParentFile().mkdirs();
+     File parent = new File(jarFile).getParentFile();
+     if (parent != null) parent.mkdirs();
       new File(jarFile).delete();
       srcDir = new File(srcDir).getCanonicalPath();
       Manifest manifest = new Manifest(new FileInputStream(mfFile));
@@ -77,7 +78,7 @@ public class JarManager {
       JarOutputStream target = new JarOutputStream(new FileOutputStream(jarFile), manifest);
       copyFileToJar(new File(srcDir), target, new File(srcDir), jarEntries);
       target.close();
-    } catch(Exception ex) { throw new RuntimeException(ex);
+    } catch(Exception ex) { ex.printStackTrace(); throw new RuntimeException(ex);
     }
   }  
   /**
