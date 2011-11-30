@@ -32,7 +32,7 @@ public class Java2Class {
   private Java2Class() {}
 
   /** Compile dans le système de fichier local, un code source Java.
-   * <p>Les fichiers <tt>.class</tt> sont générés dans sur place.</p>
+   * <p>Les fichiers <tt>.class</tt> sont générés sur place.</p>
    * <p>Les erreurs de compilation sont affichées dans la console.</p>
    * @param javaFile Le nom du fichier à compiler. Un tableau de noms de fichiers peut être donné.
    * @param allErrors Renvoie toutes les erreur si true, sinon uniquement la première erreur (par défaut).
