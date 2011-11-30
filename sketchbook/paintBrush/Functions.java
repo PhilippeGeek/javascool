@@ -34,5 +34,6 @@ public class Functions {
 
   public static void setPixel(int x, int y, int col) {
     PaintBrushImage.setPixel(x, y, col);
+    getPane().repaint(0, 0, getPane().getWidth(), getPane().getHeight());
   };
 }
