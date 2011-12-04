@@ -255,6 +255,7 @@ public class CopyView extends Canvas{
 			g = (int)((rgb.intValue() & 0xFF00)>>8); 
 			b = (int)(rgb.intValue() & 0xFF);
 			value = ((Integer)(colors.get(rgb))).intValue();
+			// vthierry patch: change variable from enum to enumeration since enum is now a Java keyword
 			for (Enumeration enumeration = bundledColors.keys() ; (enumeration.hasMoreElements()) && !ok ;) {
 				thisRGB = (Integer)enumeration.nextElement();
 				thisR = (long)((thisRGB.intValue() & 0xFF0000)>>16); 

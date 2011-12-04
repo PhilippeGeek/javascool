@@ -33,6 +33,8 @@ public class ImageChanger extends Applet implements ItemListener{//, ActionListe
 			URL tmpURL = new URL((getDocumentBase().toString()).substring(0,index+1)+"icons/");
 			//System.out.println("url:"+tmpURL);
 	    	orgImage = getImage(tmpURL, "bug.jpg");
+		// vthierry patch: to access image in jar icons path
+		orgImage = getImage(Thread.currentThread().getContextClassLoader().getResource("icons/bug.jpg"));
 			tracker.addImage(orgImage, 0);
 			try { tracker.waitForID(0); }
 			catch(InterruptedException e) {}
@@ -111,6 +113,8 @@ public class ImageChanger extends Applet implements ItemListener{//, ActionListe
 	    int index = (getDocumentBase().toString()).lastIndexOf("/");
 		URL tmpURL = new URL((getDocumentBase().toString()).substring(0,index+1)+"icons/");
 	    orgImage = getImage(tmpURL, imageName);
+	    // vthierry patch: to access image in jar icons path
+	    orgImage = getImage(Thread.currentThread().getContextClassLoader().getResource("icons/"+imageName));
 	    tracker.addImage(orgImage, 0);
 	    try { tracker.waitForID(0); }
 	    catch(InterruptedException ex) {}

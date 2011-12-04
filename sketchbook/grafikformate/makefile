@@ -1,7 +1,18 @@
 all :
 	javac *.java
-	rm -f grafikformate.jar; jar cf grafikformate.jar *.class ; rm -f *.class
+	rm -f grafikformate.jar; jar cf grafikformate.jar *.class icons ; rm -f *.class
 	appletviewer grafikformate.html
+
+zip :
+	rm -rf ../.tmp ../grafikformate.zip ; mkdir -p ../.tmp
+	cd .. ; svn export grafikformate .tmp/grafikformate
+	cd ../.tmp ; zip -9qr ../grafikformate.zip grafikformate
+	rm -rf ../.tmp
+
+pub :
+	firefox https://wiki.inria.fr/sciencinfolycee/Javascoolgrafikformate
+
+
 
 
 #cnv :
