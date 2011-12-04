@@ -131,6 +131,7 @@ class TabPanel extends JPanel {
         private boolean confirmClose() {
             if (pane instanceof JVSFileTabs) {
                 if (!JVSPanel.getInstance().getHasToSave(file)) {
+                    JVSFileTabs.getInstance().closeFile(file);
                     return true;
                 }
                 if (JVSPanel.getInstance().saveFileIdBeforeClose(file) == 1) {

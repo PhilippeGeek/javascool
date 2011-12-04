@@ -4,6 +4,7 @@
 
 package org.javascool;
 
+import javax.swing.UIManager;
 import org.javascool.gui.Desktop;
 import org.javascool.macros.Macros;
 import org.javascool.tools.ErrorCatcher;
@@ -47,6 +48,8 @@ public class Core {
       System.out.println("Usage : java -jar javascool.jar");
       System.exit(0);
     }
+    // Empeche de pouvoir renommer itempestivement des folder
+    UIManager.put("FileChooser.readOnly", Boolean.TRUE);
     System.err.println("" + About.title + " is starting ...");
     ErrorCatcher.checkJavaVersion(6);
     setUncaughtExceptionAlert();
