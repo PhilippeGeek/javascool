@@ -21,7 +21,9 @@ function v3_redirections($page) {
     <h4>Uppss vous être en train de demander une page JavaScool qui n'existe pas (ou plus)</h4>
     <b>N'hésitez pas, si besoin, à nous <a href='mailto:thierry.vieville@inria.fr?subject=broken-link-on-javascool-web ($page)'>contacter</a>, nous allons vous dépanner.</b>
     <hr>";
-    mailto("mailto:thierry.vieville@inria.fr?subject=broken-link-on-javascool-web", "Spurious page=$page, request = ".$_SERVER["REQUEST_URI"]);
+    if (!strncmp("http:", $page, 5) != 0) {
+      mailto("mailto:thierry.vieville@inria.fr?subject=broken-link-on-javascool-web", "Spurious page=$page, request = ".$_SERVER["REQUEST_URI"]);
+    }
     return true;
   }
   return false;
@@ -54,6 +56,7 @@ $v3_redirections_link_table = array(
 			     "Proglet" =>  "?page=proglets",
 			     "Developpement" => "?page=developers",
 			     "Ressources" => "?page=resources",
+			     "glossaire" => "http://interstices.info/jcms/jalios_5358/glossaire-interstices",
 			     "Activites" => "?page=proglets",
 			     "Ailleurs" => "?page=home&action=faq-ailleurs",
 			     "Ailleurs%22" => "?page=home&action=faq-ailleurs",
@@ -67,10 +70,12 @@ $v3_redirections_link_table = array(
 			     "doc%3A%2Fdocuments%2Fnos-ressources%2Frevues.html" => "?page=resources&action=link-revues",
 			     "doc%3A%2Fdocuments%2Fquelques-t-p-e%2Findex.html" => "?page=resources&action=link-revues", 
 			     "TPE-Quizz" => "?page=resources&action=link-quizz", 
+			     "TPE-Quizz\"" => "?page=resources&action=link-quizz", 
 			     "TPE-Quizz%22" => "?page=resources&action=link-quizz", 
 			     "doc%3A%2Fdocuments%2Fspeed-dating-09%2Findex.html" => "?page=resources&action=link-quizz",
 			     "TPE-Sujets" => "?page=resources&action=link-idees-tpe",
 			     "TPE-Accueil" => "?page=resources&action=link-tpe-accueil",
+			     "tpe-accueil" => "?page=resources&action=link-tpe-accueil",
 			     "TPE-Demos" => "?page=resources&action=link-tpe-demos",
 			     "TPE-Exemples" => "?page=resources&action=link-tpe-exemples",
 			     "TPE-Interventions" => "?page=resources&action=link-interventions",
