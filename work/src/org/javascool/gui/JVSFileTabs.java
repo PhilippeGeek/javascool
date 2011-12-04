@@ -139,8 +139,12 @@ class JVSFileTabs extends JVSTabs {
         if (this.getTabId(fileId) != -1) {                // We check if file is opened
             String tab_title = this.getTitleAt(this.getTabId(fileId));                   // Save the tap title (Useful)
             try {
-                this.removeTabAt(this.getTabId(fileId));                         // First remove the tab
-                JVSFileTabs.fileIds.remove(tab_title);                         // Remove id in the index
+                String fileName = "";
+                for(String name : JVSFileTabs.fileIds.keySet())
+                    if (JVSFileTabs.fileIds.get(name).equals(fileId))
+                        fileName = name;
+                 this.removeTabAt(this.getTabId(fileId));                         // First remove the tab
+                JVSFileTabs.fileIds.remove(fileName);                         // Remove id in the index
                 JVSFileTabs.files.remove(fileId);                         // Remove the file class
                 JVSFileTabs.editors.remove(fileId);                         // Remove the editor
                 JVSPanel.getInstance().haveToSave.remove(fileId);
