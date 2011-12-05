@@ -33,7 +33,7 @@ public class InfoView extends Canvas{
 	   		g.setColor(new Color(255,255,190));
 	   		g.fillRect(0,0,d.width,d.height);
 	   		g.setColor(Color.black);
-	   		g.drawString("Hilfe:", 10, 15);
+	   		g.drawString("Aide:", 10, 15);
 	   	 	for(int i=0; i<textVec.size();i++){
 				outText = (String)textVec.elementAt(i);
 				g.drawString(outText, 15, (35+18*i));
