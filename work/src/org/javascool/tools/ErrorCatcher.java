@@ -50,7 +50,8 @@ public class ErrorCatcher {
                                                   for(int i = 0; i < t.getStackTrace().length; i++)
                                                     r += e.getStackTrace()[i] + (i < t.getStackTrace().length - 1 ? "\n" : "»");
                                                   boolean alert = uncaughtExceptionAlertOnce == 0 && 
-                                                          (uncaughtExceptionKeyword == null || r.indexOf(uncaughtExceptionKeyword) != -1);
+                                                          (uncaughtExceptionKeyword == null || r.indexOf(uncaughtExceptionKeyword) != -1) &&
+                                                          (!e.getMessage().equals("java.util.ConcurrentModificationException"));
                                                   s += r + "</pre><hr>";
 						  System.err.println(s);
                                                   if(alert)
