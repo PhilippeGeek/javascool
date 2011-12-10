@@ -35,13 +35,15 @@ public class Core {
    * @throws RuntimeException lorsque l'application n'a pas été démarré depuis un jar
    */
   public static String javascoolJar()  {
+    if (javascoolJar != null)
+      return javascoolJar;
     String url = Macros.getResourceURL("org/javascool/Core.class").toString().replaceFirst("jar:file:([^!]*)!.*", "$1");
     System.err.println("Notice: javascool url is " + url);   
     if(url.endsWith(".jar")) {
       try {
 	String jar = URLDecoder.decode(url, "UTF-8");
 	if (new File(jar).exists())
-	  return jar;
+	  return javascoolJar = jar;
 	// Ici on essaye tous les encodages possibles pour essayer de détecter javascool
 	{
 	  jar = URLDecoder.decode(url, Charset.defaultCharset().name());
@@ -51,7 +53,7 @@ public class Core {
 	    jar = URLDecoder.decode(url, enc);
 	    if (new File(jar).exists()) {
 	      System.err.println("Notice: javascool file " + jar + " correct decoding as "+enc);   
-	      return jar;
+	      return javascoolJar = jar;
 	    } else {
 	      System.err.println("Notice: javascool file " + jar + " wrong decoding as "+enc);   
 	    }
@@ -64,6 +66,7 @@ public class Core {
     } else
       throw new RuntimeException("Java's cool n'a pas été démarré depuis un Jar");
   }
+  private static String javascoolJar = null;
   /** Lanceur de l'application.
    * @param usage <tt>java -jar javascool.jar</tt>
    */
