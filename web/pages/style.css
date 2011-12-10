@@ -402,6 +402,10 @@ table.news td.news-center {
     max-width: 300px;
 }
 
+table.news td.news-trailer {
+    max-width: 150px;
+}
+
 table.home {
     width: 100%;
     height: 600px;
