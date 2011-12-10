@@ -15,9 +15,18 @@
 <div class="home">
     <table class="home"><tr><td class="news">
                 <div class="news">
-                    <table class="news"><tr class="news-top"><td colspan="5" class="news-top"></td></tr><tr class="news-center"><td class="news-left"></td><td class="news-leftborder"></td><td class="news-center">
-                                    <?php echo wiki_get_contents('JavaScool:Actualité'); ?>
-                                </td><td class="news-rightborder"></td><td class="news-right"></td></tr><tr class="news-bottom"><td colspan="5" class="news-bottom"></td></tr></table>
+                    <table class="news">
+<tr class="news-top"><td colspan="5" class="news-top"></td></tr>
+<tr class="news-center"><td class="news-left"></td><td class="news-leftborder"></td>
+  <td class="news-center"><?php echo wiki_get_contents('JavaScool:Actualité'); ?></td>
+<td class="news-rightborder"></td><td class="news-right"></td></tr>
+<tr class="news-bottom"><td colspan="5" class="news-bottom"></td></tr>
+<tr><td></td><td></td><td class="news-trailer"><br/>
+<?php showLink('http://www.inria.fr','<img src="images/logo_INRIA0.png" width = "150" alt="INRIA" class="imagelink"/>','external');?><br/>
+<?php showLink('http://www.unisciel.fr','<img src="images/logo_unisciel.png" width = "150" alt="Unisciel" class="imagelink"/>','external');?><br/>
+<?php showLink('http://fuscia.info','<img src="images/logo_fuscia.png" width = "150" alt="Fuscia" class="imagelink"/>','external');?><br/><br/>
+<?php showLink('http://unice.fr','<img src="images/logo_unice.gif" width = "150" alt="INRIA" class="imagelink"/>','external');?>
+</tr></table>
                 </div>
             </td><td class="main">
                 <div class="main">
