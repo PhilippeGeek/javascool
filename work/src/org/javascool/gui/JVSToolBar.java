@@ -126,7 +126,7 @@ class JVSToolBar extends ToolBar {
        // @todo ici on a mit un platrage car sous Windows XP un java.lang.NoClassDefFoundError: org/javascool/About incomprehensible apparait !!!
        try {
           this.add(About.getAboutMessage(), 0);
-       } catch(Exception e) {
+       } catch(Throwable e) {
           System.err.println("Dysfonctionnement bizarre:" + e);
        }
     }

@@ -59,15 +59,6 @@ public class ProgletEngine {
             }
         } catch(Exception er) {
 	  System.err.println("Erreur lors de la détection des proglets ("+er+" avec "+Core.javascoolJar()+"\n . . vous pouvez quand même utiliser JavaScool");
-	    // @todo Mise en place d'une détection manuelle si la détection automatique a échoué
-	    String names[] = { "abcdAlgos", "algoDeMaths", "analogNumerique", "codagePixels", "commSerie", "cryptageRSA", "dichotomie", "exploSonore", "gogleMaps", "grapheEtChemins", "javaProg", "paintBrush", "syntheSons", "ticTacToe", "tortueLogo"};
-	    for(String name : names) {
-	      try {
-		proglets.add(new Proglet().load(name));
-	      } catch(Exception e) {
-		System.err.println("Erreur lors de la détection manuelle de la proglet "+name+" ("+e+")");
-	      }
-	    }	      
         }
         // Définit une proglet "vide" pour lancer l'interface
         if (proglets.isEmpty()) {

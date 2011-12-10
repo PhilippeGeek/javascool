@@ -15,7 +15,7 @@ public class About {
   public static final String logo = "org/javascool/widgets/icons/logo.png";
 
   /** Numéro de révision de l'application.*/
-  public static final String revision = "4.0.0"; // @revision automatiquement mis à jour par ant -f work/build.xml classes
+  public static final String revision = "4.0.973"; // @revision automatiquement mis à jour par ant -f work/build.xml classes
 
 
   /** Affiche le message de "about". */
@@ -33,7 +33,6 @@ public class About {
   public static JLabel getAboutMessage()  {
         JLabel logoLabel = new JLabel(Macros.getIcon(logo));
         logoLabel.addMouseListener(new MouseAdapter() {
-
             @Override
             public void mouseClicked(MouseEvent e) {
                 showAboutMessage();

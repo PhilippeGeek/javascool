@@ -1,5 +1,7 @@
 # vthierry's ongoing tasks
 
+dft : tst
+
 export JAVA_HOME=/usr/java/jdk1.6.0_22
 #export JAVA_HOME=/usr/java/jdk1.7.0_02
 
@@ -19,7 +21,7 @@ nbe :
 	/usr/java/netbeans-7.0.1/bin/netbeans --jdkhome $(JAVA_HOME) &
 
 sos :
-	cd ../web ; ant publish-jar
+	ant javascool-proglets.jar ; cd ../web ; ant publish-jar
 
 jbl :
 	ant javascool-builder.jar ; cd ../sketchbook ; java -jar ../work/dist/javascool-builder.jar

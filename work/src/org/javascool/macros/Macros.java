@@ -19,9 +19,6 @@ import javax.swing.ImageIcon;
 import java.net.URL;
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.nio.charset.Charset;
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import org.javascool.core.ProgletEngine;
@@ -297,27 +294,12 @@ public class Macros {
     public static URL getResourceURL(String location, boolean reading) {
         return getResourceURL(location, null, reading);
     }
-
     /**
      * @see #getResourceURL(String, String, boolean)
      */
     public static URL getResourceURL(String location) {
         return getResourceURL(location, null, true);
     }
-
-    /** Transforme une URL en forme de chaîne en la décodant.
-     * <p> Usage typique <tt>String url = Macros.getDecoded(Macros.getResourceURL("../.."));</tt></p>
-     * @param url L'URL à décoder.
-     * @return La chaîne décodée
-     */
-    public static String getDecoded(URL url) {
-      try {
-        return  URLDecoder.decode(url.toString(), Charset.defaultCharset().name());
-     }  catch (UnsupportedEncodingException e) {
-      throw new IllegalStateException("The default charset system is unsupported: this is a Java bug !");
-     }
-    }
-
     /** Renvoie le panneau graphique de la proglet courante.
      * @return Le panneau graphique de la proglet courante ou null si il n'est pas défini.
      */
