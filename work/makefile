@@ -26,6 +26,9 @@ sos :
 jbl :
 	ant javascool-builder.jar ; cd ../sketchbook ; java -jar ../work/dist/javascool-builder.jar
 
+pgl :
+	cd ../web ; ant build ; java -jar ../web/proglets/codagePixels/javascool-proglet-codagePixels.jar 
+1
 php : 
 	cd ../web ; ant local
 
