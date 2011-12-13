@@ -76,7 +76,7 @@ public class Console extends JPanel {
   }
   /** Redirige le System.out vers cet affichage */
   private void redirectSystemStreams() {
-      final OutputStream oldOut=System.out;
+      final OutputStream oldOut = System.out;
       OutputStream out = new OutputStream() {
       @Override
       public void write(int b) throws IOException {
