@@ -81,14 +81,18 @@ public class IconOutput extends JPanel {
    * @return Cet objet, permettant de définir la construction <tt>new IconOutput().reset(..)</tt>.
    */
   public IconOutput reset(String location) throws IOException {
-    BufferedImage img = ImageIO.read(Macros.getResourceURL(location));
-    if(img != null) {
-      reset(img.getWidth(), img.getHeight());
-      for(int j = 0, ij = 0; j < height; j++)
-        for(int i = 0; i < width; i++, ij++)
-          image[ij] = new Color(img.getRGB(i, j));
-      return this;
-    } else throw new IOException("Unable to load the image " + location);
+    // Fait 2//3 essais sur l'URL si besoin
+    for (int n = 0; n < 3; n++) {
+      BufferedImage img = ImageIO.read(Macros.getResourceURL(location));
+      if(img != null) {
+	reset(img.getWidth(), img.getHeight());
+	for(int j = 0; j <  img.getHeight(); j++)
+	  for(int i = 0; i < img.getWidth(); i++)
+	    image[i + width * j] = new Color(img.getRGB(i, j));
+	return this;
+      } 
+    }
+    throw new IOException("Unable to load the image " + location);
   }
   /** Renvoie les dimensions de l'image. */
   public Dimension getDimension() {

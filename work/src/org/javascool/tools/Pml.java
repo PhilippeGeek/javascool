@@ -38,8 +38,8 @@ import java.util.Properties;
  * @serial exclude
  */
 public class Pml {
-  // @bean
   private static final long serialVersionUID = 1L;
+  // @bean
   public Pml() {}
 
   private HashMap<String, Object> data = new HashMap<String, Object>();
