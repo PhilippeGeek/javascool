@@ -17,6 +17,7 @@ import java.util.Calendar;
 import javax.swing.ImageIcon;
 
 import org.javascool.tools.Sampler;
+import org.javascool.core.ProgletEngine;
 
 import java.net.URL;
 import java.io.File;
@@ -86,17 +87,21 @@ public class Macros {
     }
 
   /** Excécute une routine à un intervalle régulier.
-   * Exemple d'usage:<pre>
+   * Exemple d'usage (impression de 10 messages à interval d'1 sec. puis arrêt):<pre>
    * sample(1000, new Runnable() { public void run() {
-   *   println("Et de "+count++);
-   *   if (count &gt; 0)
-   *     throw new Exception("Et hop : c'est fini !");
-   * }});</pre>
+   *    if (count &lt; 10) {
+   *      println("Et de "+(++count)+" !");	
+   *    } else throw new RuntimeException("done!"); 
+   *  }
+   *  int count = 0;
+   * });</pre>
+   * <p> Noter que le runnable doit être interrompu par le jet d'une exception, sinon il tournera sans relâche jusqu'à la fermeture de javascool.
    * @param delay Période d'échantillonage en milli-secondes.
    * @param runnable Le code à exécuter à chaque appel.
    */
   public static void sample(int delay, Runnable runnable) {
-    new Sampler().setDelay(delay).setRunnable(runnable).start();
+    Sampler sampler = new Sampler().setDelay(delay).setRunnable(runnable);
+    sampler.start();
   }
 
   /** Vérifie une assertion et arrête le code si elle est fausse.

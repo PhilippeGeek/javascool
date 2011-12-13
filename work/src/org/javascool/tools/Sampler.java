@@ -58,7 +58,7 @@ public class Sampler {
   /** (Re)starts the sampling of the runnable.  */
   public void start() {
     error = null;
-    (new Thread(new Runnable() {
+    (thread = new Thread(new Runnable() {
 	// Loop with a time-period of samplingPeriod
 	public void run() {
 	  try {
@@ -75,8 +75,14 @@ public class Sampler {
 	}
       })).start();
   }
-  // This flags is true during sampling loop
+  // This flag is true during sampling loop
   private boolean loop = false, resume = false;
+
+  /** Returns the iteraton thread.
+   * @return The thread with the periodic sampling or null if not running.
+   */
+  public Thread getThread() { return thread; }
+  private Thread thread = null;
   
   /** Pauses the iteration mechanism. 
    */
@@ -102,7 +108,7 @@ public class Sampler {
   /** Requires the sampling to stop.
    * <div>The current iteration, if any, terminates before stopping.</div>
    */
-  public void stop() { loop = resume = false; }
+  public void stop() { loop = resume = false; thread = null; }
 
   /** Returns the spare-time between two samplings.
    *
