@@ -16,6 +16,8 @@ import java.net.URISyntaxException;
 import java.util.Calendar;
 import javax.swing.ImageIcon;
 
+import org.javascool.tools.Sampler;
+
 import java.net.URL;
 import java.io.File;
 import java.io.IOException;
@@ -82,6 +84,20 @@ public class Macros {
             throw new RuntimeException("Programme arrêté !");
         }
     }
+
+  /** Excécute une routine à un intervalle régulier.
+   * Exemple d'usage:<pre>
+   * sample(1000, new Runnable() { public void run() {
+   *   println("Et de "+count++);
+   *   if (count &gt; 0)
+   *     throw new Exception("Et hop : c'est fini !");
+   * }});</pre>
+   * @param delay Période d'échantillonage en milli-secondes.
+   * @param runnable Le code à exécuter à chaque appel.
+   */
+  public static void sample(int delay, Runnable runnable) {
+    new Sampler().setDelay(delay).setRunnable(runnable).start();
+  }
 
   /** Vérifie une assertion et arrête le code si elle est fausse.
    * Le diagnoctic apparait sous la forme:
