@@ -64,7 +64,7 @@ public class Functions {
    * @return Renvoie true si le pixel est dans l'image, false si il est en dehors des limites d el'image.
    */
   static public boolean setPixel(int x, int y, String color) {
-    return getPane().set(x + width, y + height, color);
+    return getPane().set(x + width, height - y, color);
   }
   /** Change la valeur d'un pixel de l'image.
    * @param x Abcisse de l'image, comptée à partir du milieu, valeur entre {-width, width}.
