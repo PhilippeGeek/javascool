@@ -23,9 +23,4 @@ function html_get_contents_load($file, $base, $path) {
   return $body;
 }
 
-/** Renvoie le path debarassé des «../» et des «./» redondants. */
-function html_get_contents_path($path) {
-  $newpath = ereg_replace("^\./", "",  ereg_replace("[^\./][^/]*/\.\.", "", ereg_replace("(/+|/\./)", "/", "./$path")));
-  return $newpath == $path ? $path : html_get_contents_path($newpath);
-}
 ?>
