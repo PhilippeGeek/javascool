@@ -144,7 +144,7 @@ public class ProgletsBuilder {
                     DialogFrame.setUpdate("Construction de " + name + " 2/4", level += up);
                     build.checkProglet();
                     DialogFrame.setUpdate("Construction de " + name + " 3/4", level += up);
-                    build.convertHdocs(webdoc);
+                    build.convertHdocs(false);
                 if (!build.isprocessing) {
                     DialogFrame.setUpdate("Construction de " + name + " 4/4", level += up);
                     build.createHtmlApplet();
@@ -182,6 +182,8 @@ public class ProgletsBuilder {
                             javascoolPrefix + "proglets" + File.separator + name};
                         String tmpJar = buildDir + File.separator + "javascool-proglet-" + name + ".jar";
                         JarManager.jarCreate(tmpJar, buildDir + "/manifest.jmf", jarDir, jarEntries);
+			// Reconstruction des pages webs en mode web
+			new ProgletBuild(proglet, new File(proglet).getAbsolutePath(), jarDir).convertHdocs(true);
                     }
                 }
                 // Création de l'archive principale
