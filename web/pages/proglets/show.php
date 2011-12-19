@@ -19,7 +19,7 @@
     if (!is_file($icon))
         $icon=$defaulticon;
 
-    $helpFile = isset($_GET['helpFile']) ? html_get_contents_path($_GET['helpFile']) : 'help.htm';
+    $helpFile = isset($_GET['helpFile']) ? html_get_normalized_url($_GET['helpFile']) : 'help.htm';
 ?>
 
 <?php showBrowser(array(array("Java's Cool","index.php"),array("Proglets","index.php?page=proglets"),array($name,""))); ?>

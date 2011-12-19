@@ -1,13 +1,15 @@
 <?php
 include('includes/sal.class.php');
 include('includes/v3_redirections.php');
+include('includes/url_normalize.php');
+include('includes/cache_get_contents.php');
+include('includes/wiki_get_contents.php');
+include('includes/html_get_normalized_url.php');
+include('includes/html_get_contents.php');
 if (isset($_GET['page'])) {
   if (v3_redirections($_GET['page']))
     exit;
 }
-include('includes/cache_get_contents.php');
-include('includes/wiki_get_contents.php');
-include('includes/html_get_contents.php');
 ?>
 <!DOCTYPE html>
 <html>
@@ -356,7 +358,7 @@ include('includes/html_get_contents.php');
             echo ('</td></tr></table><br />');
         }
 
-        $page = (isset($_GET['page'])) ? $_GET['page'] : 'home';
+        $page = html_get_normalized_url(isset($_GET['page']) ? $_GET['page'] : 'home');
         Sal::validatePage($page);
         $action = (isset($_GET['action'])) ? $_GET['action'] : 'display';
         Sal::validateAction($action);
