@@ -117,7 +117,13 @@ public class IconOutput extends JPanel {
     v = v < 0 ? 0 : v > 255 ? 255 : v;
     return set(x, y, new Color(v, v, v));
   }
-  private boolean set(int x, int y, Color c) {
+  /** Définit la valeur d'un pixel.
+   * @param x Abscisse du pixel, dans {0, width{.
+   * @param y Ordonnée du pixel, dans {0, height{.
+   * @param v L'intensité en couleur du pixel.
+   * @return La valeur true si le pixel est dans les limites de l'image, false sinon.
+   */
+  public boolean set(int x, int y, Color c) {
     if((0 <= x) && (x < width) && (0 <= y) && (y < height)) {
       setBounds();
       int ij = x + y * width;
@@ -150,6 +156,18 @@ public class IconOutput extends JPanel {
       return colors.containsKey(c) ? colors.get(c) : c.toString();
     } else
       return "undefined";
+  }
+  /**  Renvoie la valeur d'un pixel.
+   * @param x Abscisse du pixel, dans {0, width{.
+   * @param y Ordonnée du pixel, dans {0, height{.
+   * @return La couleur du pixel ou black si le pixel n'est pas dans l'image.
+   */
+  public Color getPixelColor(int x, int y) {
+    if((0 <= x) && (x < width) && (0 <= y) && (y < height)) {
+      Color c = image[x + y * width];
+      return c;
+    } else
+      return Color.BLACK;
   }
   private Color image[];
   private int width, height, i0, j0, dij;
