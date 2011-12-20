@@ -44,5 +44,6 @@
      <p>}</p>
    </div></div>
   </p>
+  <p> Un autre <l class="editor" link="Triangle_de_sierpinsky.jvs" text="exemple de programme"/> permet de tracer des fractals.</p>
 <p>Cette «proglet» est un composant logiciel ouvert dont documentation et code-source sont disponibles <l link="http://javascool.gforge.inria.fr/?page=proglets&amp;action=show&amp;id=algoDeMaths&amp;helpFile=api/org/javascool/proglets/algoDeMaths/package-summary.html" text="ici"/></p>
 </div>
