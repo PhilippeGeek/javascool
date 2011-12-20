@@ -4,8 +4,8 @@ function html_get_normalized_url($path) {
   $path = urldecode($path);
   while(true) {
     $newpath = ereg_replace("^\./", "", ereg_replace("([:/])[^\.:/][^/:]*/\.\.", "\\1", ereg_replace("(/+|/\./)", "/", $path)));
-    echo "$path -> $newpath\n";
-    if (ereg(":?/?\.\.", $newpath))
+    // echo "$path -> $newpath\n";
+    if (ereg("^:?/?\.\.", $newpath))
       return "";
     if ($newpath == $path)
       return $path;

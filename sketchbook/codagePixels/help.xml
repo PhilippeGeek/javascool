@@ -6,8 +6,8 @@
  <p>
     Cette proglet permet de manipuler une petite image de résolution variable, dont les coordonnées se définissent ainsi:
      <div class="center"><l class="icon" icon="smiley.png"/></div>
-     c'est à dire que l'abscisse (la position horizontale ou largeur, width en anglais) va de <c>-width</c> à <c>+width</c> 
-     et l'ordonnée (la position verticale ou hauteur, height en anglais) va de <c>-height</c> à <c>+height</c>.
+     c'est à dire que l'abscisse (la position horizontale ou largeur, width en anglais) va de <c>-width</c> à <c>+width</c> (de gauche à droite)
+     et l'ordonnée (la position verticale ou hauteur, height en anglais) va de <c>-height</c> à <c>+height</c> (de bas en haut).
      <div>La fonction:<div class="code">
        <p><r>reset</r>(width, height);</p>
      </div>où <b>width</b> et <b>height</b> sont des <r>int</r> permet d'afficher une nouvelle image de largeur et hauteur données tandis que la fonction
@@ -46,4 +46,9 @@
   </p>
   <p>Voici un autre exemple de <l class="editor" link="PurHasard.jvs" text="petit programme"/>, et <l class="editor" link="Exemple1.jvs" text="celui"/> permettant de démarrer l'exercice.</p>
 <p>Cette «proglet» est un composant logiciel ouvert dont documentation et code-source sont disponibles <l link="http://javascool.gforge.inria.fr/?page=proglets&amp;action=show&amp;id=codagePixels&amp;helpFile=api/org/javascool/proglets/codagePixels/package-summary.html" text="ici"/></p>
+
+<div class="notes">
+  <div><b>Note:</b> On utilise ici des coordonnées centrées, mais il est aussi possible d'utiliser des coordonnées "brutes" <c>[0, width[ x [0, height[</c> 
+  (de gauche à droite et de bas en haut) avec cette proglet, comme <l link="http://javascool.gforge.inria.fr/?page=proglets&amp;action=show&amp;id=codagePixels&amp;helpFile=api/org/javascool/proglets/codagePixels/Functions.html#reset(int, int, boolean)" text="documenté ici"/></div>
+</div>
 </div>
