@@ -120,7 +120,7 @@ public class IconOutput extends JPanel {
   /** Définit la valeur d'un pixel.
    * @param x Abscisse du pixel, dans {0, width{.
    * @param y Ordonnée du pixel, dans {0, height{.
-   * @param v L'intensité en couleur du pixel.
+   * @param c L'intensité en couleur du pixel.
    * @return La valeur true si le pixel est dans les limites de l'image, false sinon.
    */
   public boolean set(int x, int y, Color c) {

@@ -39,7 +39,7 @@ public class Functions {
     }
   }  
   /**									
-   * @see reset(int, int, boolean)
+   * @see #reset(int, int, boolean)
    */
   static public void reset(int width, int height) {
     reset(width, height, true);
@@ -70,8 +70,8 @@ public class Functions {
       System.out.println("Impossible de charger " + image);
     }
   }
-  /*
-   * @see load(String, boolean)
+  /**
+   * @see #load(String, boolean)
    *
    */
   static public void load(String image) {
@@ -140,14 +140,11 @@ public class Functions {
   }  /** Lit la valeur couleur d'un pixel de l'image.
    * @param x Abcisse de l'image, comptée à partir du milieu, valeur entre {-width, width}, si l'image est centrée (sinon valeur entre {0, width{).
    * @param y Ordonnée de l'image, comptée à partir du milieu, valeur entre {-height, height}, si l'image est centrée (sinon valeur entre {0, height{).
-   * @return Une valeur entre 0 et 255 (0 pour noir, 255 pour blanc); Renvoie noir pour les pixels extérieurs à l'image.
+   * @return Un tableau avec les trois valeurs rouge (index 0), vert (index 1), bleu (index 2) entre 0 et 255; Renvoie noir pour les pixels extérieurs à l'image.
    */
-  static public Color getPixelColor(int x, int y) { 
-    if (centered) {
-      return getPane().getPixelColor(x + width, height - y);
-    } else {
-      return getPane().getPixelColor(x, y);
-    }
+  static public int[] getPixelColor(int x, int y) { 
+    int rgb = centered ? getPane().getPixelColor(x + width, height - y).getRGB() : getPane().getPixelColor(x, y).getRGB();
+    return new int[] { (rgb >> 16) & 0xFF, (rgb >> 8) & 0xFF, rgb & 0xFF};
   }
 }
 
