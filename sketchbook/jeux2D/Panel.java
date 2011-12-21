@@ -17,10 +17,6 @@ import org.javascool.macros.Macros;
 
 
 
-
-
-
-
 /** Définit le panneau graphique de la proglet «jeux2D»
  *
  * @see <a href="Panel.java.html">code source</a>
