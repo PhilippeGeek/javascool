@@ -48,7 +48,8 @@
 <p>Cette «proglet» est un composant logiciel ouvert dont documentation et code-source sont disponibles <l link="http://javascool.gforge.inria.fr/?page=proglets&amp;action=show&amp;id=codagePixels&amp;helpFile=api/org/javascool/proglets/codagePixels/package-summary.html" text="ici"/></p>
 
 <div class="notes">
-  <div><b>Note:</b> On utilise ici des coordonnées centrées, mais il est aussi possible d'utiliser des coordonnées "brutes" <c>[0, width[ x [0, height[</c> 
+  <div><b>Coordonnées non centrées:</b> On utilise ici des coordonnées centrées, mais il est aussi possible d'utiliser des coordonnées "brutes" <c>[0, width[ x [0, height[</c> 
   (de gauche à droite et de bas en haut) avec cette proglet, comme <l link="http://javascool.gforge.inria.fr/?page=proglets&amp;action=show&amp;id=codagePixels&amp;helpFile=api/org/javascool/proglets/codagePixels/Functions.html#reset(int, int, boolean)" text="documenté ici"/></div>
+  <div><b>Images couleurs:</b> Il est aussi possible d'utiliser des pixels couleurs en spécifiant les valeurs rouge-vert-bleue écrites avec <c><l link="http://javascool.gforge.inria.fr/?page=proglets&amp;action=show&amp;id=codagePixels&amp;helpFile=api/org/javascool/proglets/codagePixels/Functions.html#set(int, int, int, int, int)" text="set(x, y, red, green, blue)"/></c> (ou par leur <c><l link="http://javascool.gforge.inria.fr/?page=proglets&amp;action=show&amp;id=codagePixels&amp;helpFile=api/org/javascool/proglets/codagePixels/Functions.html#set(int, int, String)" text="nom"/></c>) et lues avec <c><l link="http://javascool.gforge.inria.fr/?page=proglets&amp;action=show&amp;id=codagePixels&amp;helpFile=api/org/javascool/proglets/codagePixels/Functions.html#getPixelColor(int, int)" text="int rgb[] = getPixelColor(x, y)"/></c> (la valeur rouge est <c>rgb[0]</c>, bleue <c>rgb[1]</c>, et verte <c>rgb[2]</c>).</div>
 </div>
 </div>
