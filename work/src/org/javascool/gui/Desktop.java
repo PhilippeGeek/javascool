@@ -189,5 +189,9 @@ public class Desktop {
     public void focusOnConsolePanel() {
       JVSWidgetPanel.getInstance().focusOnConsolePanel();
     }
-
+    
+    /** Affiche la console. */
+    public void focusOnProgletPanel() {
+       JVSWidgetPanel.getInstance().focusOnProgletPanel();
+    }
 }
