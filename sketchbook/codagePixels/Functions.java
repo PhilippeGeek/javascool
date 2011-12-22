@@ -37,6 +37,7 @@ public class Functions {
     } else {
       getPane().reset(width, height);
     }
+    org.javascool.gui.Desktop.getInstance().focusOnProgletPanel();
   }  
   /**									
    * @see #reset(int, int, boolean)
@@ -69,6 +70,7 @@ public class Functions {
       System.err.println(e);
       System.out.println("Impossible de charger " + image);
     }
+    org.javascool.gui.Desktop.getInstance().focusOnProgletPanel();
   }
   /**
    * @see #load(String, boolean)
