@@ -111,6 +111,7 @@ public class IconOutput extends JPanel {
     for(int j = 0; j <  img.getHeight(); j++)
       for(int i = 0; i < img.getWidth(); i++)
 	image[i + width * j] = new Color(img.getRGB(i, j));
+    repaint(0, 0, getWidth(), getHeight());
     return this;
   }
   /** Renvoie les dimensions de l'image. */
