@@ -12,6 +12,7 @@ import java.util.HashMap;
 
 // Used to manipulate the image
 import java.awt.image.BufferedImage;
+import java.awt.Graphics2D;
 import java.awt.Dimension;
 import javax.imageio.ImageIO;
 import org.javascool.macros.Macros;
@@ -46,6 +47,19 @@ public class IconOutput extends JPanel {
 	  g.fillRect(i0 + i * dij, j0 + j * dij, dij, dij);
 	}
       }
+    Graphics2D g2d = (Graphics2D) g;
+    paint2D(g2d);
+  }
+  /** Cette routine est appellée à chaque tracé et permet de définir un tracé spécifique au dessus de l'image affichée. 
+   * - Pour utiliser cette foncctionnalité, il faut définir: <pre>
+   * class MyIconInput extends IconInput {
+   *   public void paint2D(Graphics2D g) {
+   *     // Ici ajouter les g.drawLine g.fillOval g.drawRect g.fillRect souhaité.
+   *   }
+   * }</pre>
+   * @param g2d L'environnement graphique 2D à utiliser pour peindre.
+   */
+  public void paint2D(Graphics2D g2d) {
   }
   private void setBounds() {
     int di = width > 0 && getWidth() >= width ? getWidth() / width : 1;
@@ -77,26 +91,41 @@ public class IconOutput extends JPanel {
   }
   /** Initialize l'image à partir d'un fichier.
    * @param location L'URL (Universal Resource Location) de l'image.
-   * @return Les dimensions de l'image.
    * @return Cet objet, permettant de définir la construction <tt>new IconOutput().reset(..)</tt>.
    */
   public IconOutput reset(String location) throws IOException {
     // Fait 2//3 essais sur l'URL si besoin
     for (int n = 0; n < 3; n++) {
       BufferedImage img = ImageIO.read(Macros.getResourceURL(location));
-      if(img != null) {
-	reset(img.getWidth(), img.getHeight());
-	for(int j = 0; j <  img.getHeight(); j++)
-	  for(int i = 0; i < img.getWidth(); i++)
-	    image[i + width * j] = new Color(img.getRGB(i, j));
-	return this;
-      } 
+      if(img != null)
+	return reset(img);
     }
     throw new IOException("Unable to load the image " + location);
+  }
+  /** Initialize l'image à partir d'une image en mémoire.
+   * @param img L'image qui va initialiser le tracé.
+   * @return Cet objet, permettant de définir la construction <tt>new IconOutput().reset(..)</tt>.
+   */
+  public IconOutput reset(BufferedImage img) throws IOException {
+    reset(img.getWidth(), img.getHeight());
+    for(int j = 0; j <  img.getHeight(); j++)
+      for(int i = 0; i < img.getWidth(); i++)
+	image[i + width * j] = new Color(img.getRGB(i, j));
+    return this;
   }
   /** Renvoie les dimensions de l'image. */
   public Dimension getDimension() {
     return new Dimension(width, height);
+  }
+  /** Renvoie une image dans laquelle le contenu de l'affichage est copié.
+   * @return Le contenu de l'affichage sous forme d'image.
+   */
+  public BufferedImage getImage() {
+    BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+    for(int j = 0; j < img.getHeight(); j++)
+      for(int i = 0; i < img.getWidth(); i++)
+	img.setRGB(i, j, image[i + width * j].getRGB());
+    return img;
   }
   /** Définit la valeur d'un pixel.
    * @param x Abscisse du pixel, dans {0, width{.
