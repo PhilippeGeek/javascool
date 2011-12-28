@@ -7,6 +7,7 @@ package org.javascool.tools;
 // Used to report a throwable
 
 // Used to frame a message
+import java.net.URLEncoder;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import org.javascool.macros.Macros;
@@ -56,6 +57,11 @@ public class ErrorCatcher {
 						  System.err.println(s);
                                                   if(alert)
                                                     Macros.message(s, true);
+                                                  try {
+                                                    FileManager.load("http://javascool.gforge.inria.fr/v4/includes/weberroreport.php?report="+URLEncoder.encode(s, "utf-8"));
+                                                  } catch(Exception er) {
+                                                    System.err.println("Impossible de lancer l'alerte à travers le web ("+er+")");
+                                                  }
                                                   uncaughtExceptionAlertOnce++;
                                                 }
                                               }
@@ -63,17 +69,6 @@ public class ErrorCatcher {
   }
   public static void setUncaughtExceptionAlert(String header, String revision) {
     setUncaughtExceptionAlert(header, revision, "org.javascool");
-  }
-  /** Ouvre une fenêtre d'alerte avec les paramètres de la détection d'exception intempestive et non prise en compte.
-   */
-  public static void throwsAlert(String message) {
-     String s = "";
-     s += uncaughtExceptionAlertHeader + "\n<hr>"+message+"<pre>";
-     for(String p: new String[] { "application.revision", "java.version", "os.name", "os.arch", "os.version" })
-        s += "> " + p + " = " + System.getProperty(p) + "\n";
-     s += "</pre><hr>";
-     System.err.println(s);
-     Macros.message(s, true);
   }
   private static String uncaughtExceptionAlertHeader;
   private static int uncaughtExceptionAlertOnce = 0;
