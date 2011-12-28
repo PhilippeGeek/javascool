@@ -67,6 +67,6 @@
 
 <xsl:template match="*">
   <xsl:message>Undefined tag: <xsl:value-of select="name(.)"/> !!</xsl:message>
-</xsl:template>-->
+</xsl:template> -->
 
 </xsl:stylesheet>

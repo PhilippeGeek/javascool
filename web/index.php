@@ -10,6 +10,10 @@ if (isset($_GET['page'])) {
   if (v3_redirections($_GET['page']))
     exit;
 }
+if (isset($_GET['weberroreport'])) {
+  include('pages/developers/weberroreport.php');
+  exit;
+ }
 ?>
 <!DOCTYPE html>
 <html>
