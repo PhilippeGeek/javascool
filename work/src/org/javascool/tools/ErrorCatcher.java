@@ -39,10 +39,13 @@ public class ErrorCatcher {
                                                   String s = "", r = "";
                                                   if(uncaughtExceptionAlertOnce <= 1) {
                                                     s += uncaughtExceptionAlertHeader + "\n<hr><pre>";
-                                                    for(String p: new String[] { "application.revision", "java.version", "os.name", "os.arch", "os.version" }
+                                                    for(String p: new String[] { "application.revision", "java.version", "java.home", "os.name", "os.arch", "os.version", "user.name", "user.home", "user.dir" }
                                                         )
                                                       s += "> " + p + " = " + System.getProperty(p) + "\n";
                                                   }
+                                                  try {
+                                                    s += "> localhost = "+ java.net.InetAddress.getLocalHost() + "\n";
+                                                  } catch(Exception er) {}
                                                   s += "> thread.name = " + t.getName() + "\n";
                                                   s += "> throwable = " + e + "\n";
                                                   if(0 < uncaughtExceptionAlertOnce)
@@ -55,13 +58,13 @@ public class ErrorCatcher {
                                                           (!e.getMessage().equals("java.util.ConcurrentModificationException"));
                                                   s += r + "</pre><hr>";
 						  System.err.println(s);
-                                                  if(alert)
-                                                    Macros.message(s, true);
                                                   try {
-                                                    FileManager.load("http://javascool.gforge.inria.fr/v4/includes/weberroreport.php?report="+URLEncoder.encode(s, "utf-8"));
+                                                    s += FileManager.load("http://javascool.gforge.inria.fr?weberroreport="+URLEncoder.encode(s, "utf-8"));
                                                   } catch(Exception er) {
                                                     System.err.println("Impossible de lancer l'alerte à travers le web ("+er+")");
                                                   }
+                                                  if(alert)
+                                                    Macros.message(s, true);
                                                   uncaughtExceptionAlertOnce++;
                                                 }
                                               }

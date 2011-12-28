@@ -37,7 +37,7 @@ Nous sommes à votre écoute&nbsp;! Pour nous contacter:
 <ul><li> Si le logiciel ne marche pas chez vous, pour mieux vous aider, il est utile de nous préciser&nbsp;: 
 
 </li></ul>
-<p><form action="mailto:Thierry.Vieville@inria.fr,guillaume.quest@gmail.com,philoumailabo@gmail.com?subject=A propos de JavaScool : pb logiciel !" method="post" enctype="text/plain"><table align="center">
+<p><form action="mailto:javascool@googlegroups.com?subject=A propos de JavaScool : pb logiciel !" method="post" enctype="text/plain"><table align="center">
     <tr><td>Le système utilisé :</td><td><select name="systeme">
       <option>------------------------------------------------------</option>
       <option>Linux</option>

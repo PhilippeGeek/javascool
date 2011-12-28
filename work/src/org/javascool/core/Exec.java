@@ -88,7 +88,6 @@ public class Exec {
   }
   /** Démarre un nouveau programme java en place de celui là.
    * @param jar La jarre contenant le programme Java à lancé à la place de celui là.
-   * @param stop Si true arrête le programme courant.
    * @return La valeur true si le programme a pu se lancer, sinon la valeur false.
    */
   public static boolean start(String jar) {
