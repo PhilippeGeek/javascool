@@ -62,8 +62,8 @@ public class IconOutput extends JPanel {
   public void paint2D(Graphics2D g2d) {
   }
   private void setBounds() {
-    int di = width > 0 && getWidth() >= width ? getWidth() / width : 1;
-    int dj = height > 0 && getHeight() >= height ? getHeight() / height : 1;
+    int di = width > 0 && getWidth() >= width && zoom ? getWidth() / width : 1;
+    int dj = height > 0 && getHeight() >= height && zoom ? getHeight() / height : 1;
     dij = di < dj ? di : dj;
     i0 = (getWidth() - width * dij) / 2;
     j0 = (getHeight() - height * dij) / 2;
@@ -71,10 +71,12 @@ public class IconOutput extends JPanel {
   /**  Efface et initialize l'image.
    * @param width Taille horizontale de l'image.
    * @param height Taille verticale de l'image.
+   * @param zoom Ajuste automatiquement la taille de l'image au display si true (par défaut), sinon fixe 1 pixel de l'image à 1 pixel de l'affichage.
    * @return Cet objet, permettant de définir la construction <tt>new IconOutput().reset(..)</tt>.
    */
-  public final IconOutput reset(int width, int height) {
+  public final IconOutput reset(int width, int height, boolean zoom) {
     if(width > 550 || height > 550 || width * height > 550 * 550) throw new IllegalArgumentException("Image size too big !");
+    this.zoom = zoom;
     if (width <= 0)
       width = 300;
     if (height <= 0)
@@ -89,30 +91,50 @@ public class IconOutput extends JPanel {
     repaint(0, 0, getWidth(), getHeight());
     return this;
   }
+  /**
+   * @see #reset(int, int, boolean)
+   */
+  public final IconOutput reset(int width, int height) {
+    return reset(width, height, true);
+  }
   /** Initialize l'image à partir d'un fichier.
    * @param location L'URL (Universal Resource Location) de l'image.
+   * @param zoom Ajuste automatiquement la taille de l'image au display si true (par défaut), sinon fixe 1 pixel de l'image à 1 pixel de l'affichage.
    * @return Cet objet, permettant de définir la construction <tt>new IconOutput().reset(..)</tt>.
    */
-  public IconOutput reset(String location) throws IOException {
+  public IconOutput reset(String location, boolean zoom) throws IOException {
     // Fait 2//3 essais sur l'URL si besoin
     for (int n = 0; n < 3; n++) {
       BufferedImage img = ImageIO.read(Macros.getResourceURL(location));
       if(img != null)
-	return reset(img);
+	return reset(img, zoom);
     }
     throw new IOException("Unable to load the image " + location);
   }
+  /**
+   * @see #reset(String, boolean)
+   */
+  public final IconOutput reset(String location)  throws IOException {
+    return reset(location, true);
+  }
   /** Initialize l'image à partir d'une image en mémoire.
    * @param img L'image qui va initialiser le tracé.
+   * @param zoom Ajuste automatiquement la taille de l'image au display si true (par défaut), sinon fixe 1 pixel de l'image à 1 pixel de l'affichage.
    * @return Cet objet, permettant de définir la construction <tt>new IconOutput().reset(..)</tt>.
    */
-  public IconOutput reset(BufferedImage img) throws IOException {
-    reset(img.getWidth(), img.getHeight());
+  public IconOutput reset(BufferedImage img, boolean zoom) {
+    reset(img.getWidth(), img.getHeight(), zoom);
     for(int j = 0; j <  img.getHeight(); j++)
       for(int i = 0; i < img.getWidth(); i++)
 	image[i + width * j] = new Color(img.getRGB(i, j));
     repaint(0, 0, getWidth(), getHeight());
     return this;
+  }
+  /**
+   * @see #reset(BufferedImage, boolean)
+   */
+  public final IconOutput reset(BufferedImage img) {
+    return reset(img, true);
   }
   /** Renvoie les dimensions de l'image. */
   public Dimension getDimension() {
@@ -201,6 +223,7 @@ public class IconOutput extends JPanel {
   }
   private Color image[];
   private int width, height, i0, j0, dij;
+  boolean zoom = true;
 
   private static HashMap<Color, String> colors = new HashMap<Color, String>();
   private static Color getColor(String color) {
