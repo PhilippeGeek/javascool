@@ -3,6 +3,9 @@
 **************************************************************/
 package org.javascool.core;
 
+// Used to report a throwable
+import java.lang.reflect.InvocationTargetException;
+
 /** Implémente le mécanisme de base de traduction d'un code Jvs en code Java standard.
  * <p>Les erreurs de traduction sont affichées dans la console.</p>
  *
@@ -81,7 +84,7 @@ public class Jvs2Java extends Translator {
       head.append("  public void run() {");
       head.append("   try{ main(); } catch(Throwable e) { ");
       head.append("    if (e.toString().matches(\".*Interrupted.*\"))System.out.println(\"\\n-------------------\\nProggramme arrêté !\\n-------------------\\n\");");
-      head.append("    else System.out.println(\"\\n-------------------\\nErreur lors de l'exécution de la proglet\\n\"+e+\"\\n-------------------\\n\");}");
+      head.append("    else System.out.println(\"\\n-------------------\\nErreur lors de l'exécution de la proglet\\n\"+org.javascool.core.Jvs2Java.report(e)+\"\\n-------------------\\n\");}");
       head.append("}");
     }
     String finalBody = body.toString().
@@ -100,6 +103,22 @@ public class Jvs2Java extends Translator {
   }
   // Counter used to increment the serialVersionUID in order to reload the different versions of the class
   private static int uid = 0;
+
+  /** Rapporte une erreur survenue lors de l'exécution d'un prograamme Jvs.
+   * @param error L'erreur ou exception à rapporter.
+   * @return Le rapport d'erreur.
+   */
+  public static String report(Throwable error) {
+    if(error instanceof InvocationTargetException)
+      return report(error.getCause());
+    String s = error.toString()+"\n";
+    for(int i = 0; i < 4 && i < error.getStackTrace().length; i++) {
+      String s_i = "" + error.getStackTrace()[i];
+      if (s_i.startsWith("JvsToJavaTranslated"))
+	s += s_i.replaceFirst("JvsToJavaTranslated[0-9]*", "") + "\n";
+    }
+    return s;
+  }
 
   /** Lanceur de la conversion Jvs en Java.
    * @param usage <tt>java org.javascool.core.Jvs2Java input-file [output-file]</tt>
