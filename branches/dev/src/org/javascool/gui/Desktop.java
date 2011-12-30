@@ -10,7 +10,7 @@ import java.net.URL;
 import javax.swing.JFrame;
 import org.javascool.About;
 import org.javascool.core.ProgletEngine;
-import org.javascool.gui.editor.JVSFileReferance;
+import org.javascool.gui.editor.JVSFileReference;
 import org.javascool.gui.editor.JVSFileTabs;
 import org.javascool.macros.Macros;
 import org.javascool.tools.FileManager;
@@ -96,7 +96,7 @@ public class Desktop {
             if (file == null) {
                 JVSPanel.getInstance().openFile();
             } else {
-                JVSFileTabs.getInstance().openFile(new JVSFileReferance(file));
+                JVSFileTabs.getInstance().openFile(new JVSFileReference(file));
             }
             return true;
         } catch (Throwable th) {
@@ -112,7 +112,7 @@ public class Desktop {
         try{
             System.err.println(url.getProtocol());
             if(url.getProtocol().equals("jar")){
-            	JVSFileReferance tmpFile=new JVSFileReferance();
+            	JVSFileReference tmpFile=new JVSFileReference();
             	tmpFile.setContent(FileManager.load(url.toExternalForm()));
                 JVSFileTabs.getInstance().openFile(tmpFile);
                 return true;

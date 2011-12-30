@@ -11,8 +11,9 @@ import javax.swing.JPanel;
 import org.javascool.core.ProgletEngine;
 import org.javascool.gui.editor.CompileAction;
 import org.javascool.gui.editor.EditorTabs;
-import org.javascool.gui.editor.JVSFileReferance;
+import org.javascool.gui.editor.JVSFileReference;
 import org.javascool.gui.editor.JVSFileTabs;
+import org.javascool.tools.ErrorCatcher;
 import org.javascool.tools.UserConfig;
 
 /**
@@ -44,12 +45,20 @@ class JVSPanel extends JPanel {
 		this.revalidate();
 	}
 
-	public EditorTabs getEditorTabs() {
+	/** Get the current EditorTabs.
+	 * 
+	 * @return An EditorTabs
+	 * @throws IllegalStateException if no EditorTabs opened in the left part
+	 */
+	public EditorTabs getEditorTabs() throws IllegalStateException {
 		if(JVSCenterPanel.getInstance().getLeftComponent() instanceof EditorTabs)
 			return (EditorTabs) JVSCenterPanel.getInstance().getLeftComponent();
 		throw new IllegalStateException("Left component is not an EditorTabs");
 	}
 
+	/** Close the current proglet.
+	 * 
+	 */
 	public void closeProglet() {
 		if (closeAllFiles()) {
 			this.removeAll();
@@ -72,23 +81,20 @@ class JVSPanel extends JPanel {
 	 * @see JVSFileTabs
 	 */
 	public void newFile() {
-		getEditorTabs().openFile(new JVSFileReferance());
+		getEditorTabs().openFile(new JVSFileReference());
 	}
 
+	/** Contain the current CompileAction. */
 	private CompileAction ca = new CompileAction();
 
-	/**
-	 * Compile file in the editor
-	 * 
-	 * @see JVSFileTabs
+	/** Compile edited file in the editor.
 	 */
 	public void compileFile() {
 		ca.actionPerformed(null);
 	}
 
-	/**
-	 * Open a file Start a file chooser and open selected file
-	 * 
+	/** Open a file. 
+	 * Start a file chooser and open selected file to the current EditorTabs
 	 * @see JFileChooser
 	 * @see JVSFileTabs
 	 */
@@ -104,21 +110,25 @@ class JVSPanel extends JPanel {
 			fc.setCurrentDirectory(new File(System.getProperty("home.dir")));
 		if (fc.showOpenDialog(Desktop.getInstance().getFrame()) == JFileChooser.APPROVE_OPTION) {
 			if (!fc.getSelectedFile().exists()) {
-				Dialog.error("Erreur", "Le fichier indiqué n'existe pas !!!");
+				JOptionPane.showMessageDialog(Desktop.getInstance().getFrame(),
+						"Le fichier indiqué n'existe pas !!!", "Erreur", JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 			UserConfig.getInstance("javascool").setProperty("dir",
 					fc.getSelectedFile().getParentFile().getAbsolutePath());
-			JVSFileReferance jvsfr = new JVSFileReferance(fc.getSelectedFile());
-			getEditorTabs().openFile(jvsfr);
+			JVSFileReference jvsfr = new JVSFileReference(fc.getSelectedFile());
+			try {
+				getEditorTabs().openFile(jvsfr);
+			} catch (IllegalStateException e) {
+				ErrorCatcher.throwsAlert("Un fichier ne peut pas être ouvert sans un EditorTabs");
+			}
 		}
 	}
 
-	/**
-	 * Save the current file
-	 * 
-	 * @see JVSFileTabs
+	/** Save the current file.
+	 * Ask to the user where save the file if is tmp or simple save
 	 * @see JVSFile
+	 * @return true on success or false if the file could not be saved
 	 */
 	public boolean saveFile() {
 		if (getEditorTabs().saveCurrentFile()) {
@@ -127,7 +137,7 @@ class JVSPanel extends JPanel {
 		return false;
 	}
 
-	/**
+	/** Throw to the user a compile error.
 	 * Show a compile error for an human Open a dialog with compile error
 	 * explains and hightlight the error line
 	 * 
@@ -156,10 +166,20 @@ class JVSPanel extends JPanel {
 		return closeAllFiles("Voulez vous vraiment quitter Java's cool ?");
 	}
 
+	/** Ask to user if he want to continue and save files
+	 * Check if all files are saved and if the user wants to continue
+	 * 
+	 * @return True mean that you can continue and false not
+	 */
 	public boolean closeAllFiles() {
 		return closeAllFiles("Voulez vous vraiment continuer ?");
 	}
 
+	/** Ask to user if he want to save files
+	 * Check if all files are saved and if the user wants to continue
+	 * @param messageIfAllFilesAreSaved Message to ask to the user
+	 * @return True mean that you can continue and false not
+	 */
 	public boolean closeAllFiles(String messageIfAllFilesAreSaved) {
 		if (getEditorTabs().isAllFilesSaved()) {
 			int n = JOptionPane.showConfirmDialog(Desktop.getInstance()
@@ -204,6 +224,10 @@ class JVSPanel extends JPanel {
 		}
 	}
 
+	/** Report a runtime bug to user.
+	 * Report a bug to the user without ErrorCatcher. It is used by a proglet to report a bug while execute the user code.
+	 * @param ex The bug to report
+	 */
 	public void reportRuntimeBug(String ex) {
 		StackTraceElement[] stack = Thread.currentThread().getStackTrace();
 		int line = 0;
@@ -218,13 +242,16 @@ class JVSPanel extends JPanel {
 			ca.getCompiledEditor().signalLine(line);
 		}
 		ProgletEngine.getInstance().doStop();
-		Dialog.error("Erreur du logiciel à la ligne " + line, ex);
+		JOptionPane.showMessageDialog(Desktop.getInstance().getFrame(),
+				ex, "Erreur du logiciel à la ligne " + line, JOptionPane.ERROR_MESSAGE);
 	}
 
+	@Deprecated
 	public void reportApplicationBug(String ex) {
 		Dialog.error("Erreur dans Java's Cool", ex);
 	}
 
+	@Deprecated
 	public static class Dialog {
 
 		/** Show a success dialog */

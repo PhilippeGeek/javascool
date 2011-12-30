@@ -53,13 +53,13 @@ public class JVSEditor extends JPanel implements Editor, ClosableComponent {
 	/** The Completion Provider */
 	private JVSAutoCompletionProvider jacp;
 	/** Opened file */
-	private JVSFileReferance file;
+	private JVSFileReference file;
 
 	/* (non-Javadoc)
 	 * @see org.javascool.gui.editor.Editor#getFile()
 	 */
 	@Override
-	public JVSFileReferance getFile() {
+	public JVSFileReference getFile() {
 		return file;
 	}
 
@@ -80,7 +80,7 @@ public class JVSEditor extends JPanel implements Editor, ClosableComponent {
 	 * @see org.javascool.gui.editor.Editor#setFile(org.javascool.gui.editor.JVSFileReferance)
 	 */
 	@Override
-	public void setFile(JVSFileReferance file) {
+	public void setFile(JVSFileReference file) {
 		this.file = file;
 		textPane.setText(file.getContent());
 		firePropertyChange("name", null, getName());
@@ -89,7 +89,7 @@ public class JVSEditor extends JPanel implements Editor, ClosableComponent {
 	/** Create a new JVSEditor
 	 * Common setup
 	 */
-	public JVSEditor(JVSFileReferance file) {
+	public JVSEditor(JVSFileReference file) {
 		super(new BorderLayout());
 		this.file=file;
 		textPane = createTextArea();
@@ -195,8 +195,8 @@ public class JVSEditor extends JPanel implements Editor, ClosableComponent {
 			JFileChooser jfc=new JFileChooser();
 			jfc.setApproveButtonText("Sauvegarder");
 			if(jfc.showSaveDialog(MainFrame.getFrame())==JFileChooser.APPROVE_OPTION){
-				if(!jfc.getSelectedFile().getName().endsWith(JVSFileReferance.SOURCE_EXTENTION)){
-					jfc.setSelectedFile(new File(jfc.getSelectedFile().getParentFile(),jfc.getSelectedFile().getName()+JVSFileReferance.SOURCE_EXTENTION));
+				if(!jfc.getSelectedFile().getName().endsWith(JVSFileReference.SOURCE_EXTENTION)){
+					jfc.setSelectedFile(new File(jfc.getSelectedFile().getParentFile(),jfc.getSelectedFile().getName()+JVSFileReference.SOURCE_EXTENTION));
 				}
 				if(jfc.getSelectedFile().exists()){
 					if(JOptionPane.showConfirmDialog(MainFrame.getFrame(), 

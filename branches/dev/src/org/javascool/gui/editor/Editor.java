@@ -2,11 +2,11 @@ package org.javascool.gui.editor;
 
 public interface Editor {
 
-	public abstract JVSFileReferance getFile();
+	public abstract JVSFileReference getFile();
 
 	public abstract String getName();
 
-	public abstract void setFile(JVSFileReferance file);
+	public abstract void setFile(JVSFileReference file);
 
 	/** Get text into the TextArea
 	 * @return The code

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import org.javascool.tools.FileManager;
 
-public class JVSFileReferance {
+public class JVSFileReference {
 
 	public static final String SOURCE_EXTENTION = ".jvs";
 	public static final String DEFAULT_SOURCE = "void main(){\n\t\n}";
@@ -24,7 +24,7 @@ public class JVSFileReferance {
 	/** It's the name of the file */
 	private String name;
 	
-	public JVSFileReferance(){
+	public JVSFileReference(){
 		this.tmp=true;
 		this.content=DEFAULT_SOURCE;
 		this.originalContent=this.content;
@@ -32,7 +32,7 @@ public class JVSFileReferance {
 		this.name="";
 	}
 	
-	public JVSFileReferance(File file){
+	public JVSFileReference(File file){
 		this();
 		setFile(file);
 	}
@@ -103,11 +103,11 @@ public class JVSFileReferance {
 	
 	@Override
 	public boolean equals(Object o){
-		if(o instanceof JVSFileReferance){
-			if(((JVSFileReferance) o).isTmp()||this.isTmp()){
+		if(o instanceof JVSFileReference){
+			if(((JVSFileReference) o).isTmp()||this.isTmp()){
 				return false;
 			}
-			if(((JVSFileReferance) o).getFile().getAbsolutePath().equals(this.getFile().getAbsolutePath())){
+			if(((JVSFileReference) o).getFile().getAbsolutePath().equals(this.getFile().getAbsolutePath())){
 				return true;
 			} else {
 				return false;
