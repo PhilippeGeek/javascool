@@ -37,17 +37,10 @@ public class Stdin {
     inputDialog = new Dialog();
     inputDialog.setTitle("Java's Cool read");
     inputDialog.add(new JPanel() {
-                      /**
-		 * 
-		 */
-		private static final long serialVersionUID = -5892042920567248401L;
-
-					{
+                      {
                         add(new JLabel(inputQuestion + " "));
                         add(new JTextField(40) {
-							private static final long serialVersionUID = -877837293331380204L;
-
-							{
+                              {
                                 addActionListener(new ActionListener() {
                                                     @Override
                                                     public void actionPerformed(ActionEvent e) {
@@ -170,20 +163,10 @@ public class Stdin {
     inputDialog = new Dialog();
     inputDialog.setTitle("Java's Cool read");
     inputDialog.add(new JPanel() {
-                      /**
-		 * 
-		 */
-		private static final long serialVersionUID = -3550776051477271733L;
-
-					{
+                      {
                         add(new JLabel(inputQuestion + " "));
                         add(new JButton("OUI") {
-                              /**
-							 * 
-							 */
-							private static final long serialVersionUID = 1846013448517515880L;
-
-							{
+                              {
                                 addActionListener(new ActionListener() {
                                                     @Override
                                                     public void actionPerformed(ActionEvent e) {
@@ -196,9 +179,7 @@ public class Stdin {
                             }
                             );
                         add(new JButton("NON") {
-							private static final long serialVersionUID = -5759851092046561872L;
-
-							{
+                              {
                                 addActionListener(new ActionListener() {
                                                     @Override
                                                     public void actionPerformed(ActionEvent e) {

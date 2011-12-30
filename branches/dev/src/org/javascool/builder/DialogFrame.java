@@ -10,8 +10,6 @@ import javax.swing.JPopupMenu;
 import javax.swing.JLabel;
 import javax.swing.JCheckBox;
 import javax.swing.JMenuItem;
-import javax.swing.SwingConstants;
-
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -83,18 +81,13 @@ public class DialogFrame {
 
     private static void startProgletCreatorMenu() {
         JPopupMenu jCreatorMenu = new JPopupMenu();
-        jCreatorMenu.add(new JLabel("Entrer le nom de la proglet à construire:", SwingConstants.LEFT));
+        jCreatorMenu.add(new JLabel("Entrer le nom de la proglet à construire:", JLabel.LEFT));
         jCreatorMenuDir = new JTextField();
         jCreatorMenuDir.setText(System.getProperty("user.dir") + File.separator);
         jCreatorMenuDir.setEditable(false);
         jCreatorMenu.add(new JPanel() {
 
-            /**
-			 * 
-			 */
-			private static final long serialVersionUID = 7283754617940846430L;
-
-			{
+            {
                 add(jCreatorMenuDir);
                 add(jCreatorMenuName = new JTextField(20));
             }

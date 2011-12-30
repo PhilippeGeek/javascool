@@ -1,28 +1,21 @@
 package org.javascool.widgets;
 
-import java.applet.Applet;
-import java.awt.Component;
-import java.awt.Frame;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+// Used to set Win look and feel
+import javax.swing.UIManager.LookAndFeelInfo;
+import javax.swing.UIManager;
 
-import javax.swing.ImageIcon;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JRootPane;
-import javax.swing.UIManager;
-import javax.swing.UIManager.LookAndFeelInfo;
-import javax.swing.WindowConstants;
-
+import java.applet.Applet;
+import java.awt.Component;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import javax.swing.ImageIcon;
 import org.javascool.macros.Macros;
 
 /** Définit une fenêtre principale pour lancer une application. */
 public class MainFrame extends JFrame {
-  /**
-	 * 
-	 */
-	private static final long serialVersionUID = -928171438069261824L;
-private Component pane;
+  private Component pane;
   // @bean
   public MainFrame() {}
 
@@ -37,7 +30,7 @@ private Component pane;
           UIManager.setLookAndFeel(info.getClassName());
           break;
         }
-   } catch(Exception e1) {
+    } catch(Exception e1) {
       String os = System.getProperty("os.name");
       if(os.startsWith("Windows")) {
         try {
@@ -95,7 +88,7 @@ private Component pane;
     add(this.pane = pane);
     if(pane instanceof Applet)
       ((Applet) pane).init();
-    setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+    setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
     addWindowListener(new WindowAdapter() {
                         @Override
                         public void windowClosing(WindowEvent e) {
@@ -107,7 +100,7 @@ private Component pane;
     if((width > 0) && (height > 0))
       setSize(width, height);
     else
-      setExtendedState(Frame.MAXIMIZED_BOTH);
+      setExtendedState(JFrame.MAXIMIZED_BOTH);
     setVisible(true);
     if(pane instanceof Applet)
       ((Applet) pane).start();

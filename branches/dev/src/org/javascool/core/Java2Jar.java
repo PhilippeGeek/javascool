@@ -61,7 +61,7 @@ public class Java2Jar {
       if (!Java2Class.compile(javaFiles, allErrors))
 	return false;
       String mfFile = buildDir + File.separator + "manifest.jmf";
-      new Pml().set("Main-Class", mainClass).
+      Pml manifest = new Pml().set("Main-Class", mainClass).
 	set("Implementation-URL", "http://javascool.gforge.inria.fr").
 	save(mfFile);
       JarManager.jarCreate(jarFile, mfFile, buildDir);

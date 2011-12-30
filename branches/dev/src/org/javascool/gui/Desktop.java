@@ -147,6 +147,11 @@ public class Desktop {
         return JVSPanel.getInstance().saveFile();
     }
 
+    /** Ferme le fichier en cours d'édition. */
+    public void closeFile() {
+        JVSPanel.getInstance().closeFile();
+    }
+
     /** Compile le fichier en cours d'édition. */
     public void compileFile() {
         JVSPanel.getInstance().compileFile();
@@ -191,4 +196,8 @@ public class Desktop {
       JVSWidgetPanel.getInstance().focusOnConsolePanel();
     }
 
+    /** Affiche la console. */
+    public void focusOnProgletPanel() {
+       JVSWidgetPanel.getInstance().focusOnProgletPanel();
+    }
 }
