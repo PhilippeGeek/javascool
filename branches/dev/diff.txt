@@ -1,4 +1,39 @@
 -----------------------------------------
+diff ../../work/src/org/javascool/tools/Xml2Xml.java src/org/javascool/tools/Xml2Xml.java
+55c55,56
+<     } catch(TransformerConfigurationException e) { throw new RuntimeException(e + " when compiling: " + xsl);
+---
+>     } catch(TransformerConfigurationException e) { 
+>       throw new RuntimeException(e + " when compiling: " + xsl);
+-----------------------------------------
+diff ../../work/src/org/javascool/tools/ErrorCatcher.java src/org/javascool/tools/ErrorCatcher.java
+57,58c57,58
+<                                                           (uncaughtExceptionKeyword == null || r.indexOf(uncaughtExceptionKeyword) != -1) &&
+<                                                           (!e.getMessage().equals("java.util.ConcurrentModificationException"));
+---
+> 						    (uncaughtExceptionKeyword == null || r.indexOf(uncaughtExceptionKeyword) != -1) &&
+> 						    (e.toString().indexOf("java.util.ConcurrentModificationException") == -1);
+-----------------------------------------
+diff ../../work/src/org/javascool/builder/DialogFrame.java src/org/javascool/builder/DialogFrame.java
+55a56,62
+>         Console.getInstance().getToolBar().addRightTool("Convertisseur HML",  new Runnable() {
+> 
+>                     @Override
+>                     public void run() {
+> 		      startConvertisseurHML();
+>                     }
+>                 });
+81d87
+< 
+161a168,174
+> 
+>     private static void startConvertisseurHML() {
+>         JPopupMenu jCreatorMenu = new JPopupMenu();
+>         jCreatorMenu.add(new Htm2Hml());
+>         Component parent = Console.getInstance().getToolBar();
+>         jCreatorMenu.show(jCreatorButton, 0, parent.getHeight());
+>     }
+-----------------------------------------
 diff ../../work/src/org/javascool/gui/JVSToolBar.java src/org/javascool/gui/JVSToolBar.java
 3c3
 < import javax.swing.JButton;
@@ -228,15 +263,23 @@ diff ../../work/src/org/javascool/gui/Desktop.java src/org/javascool/gui/Desktop
 ---
 >         return (ToolBar) JVSToolBar.getInstance();
 99c95
-<                 JVSFileTabs.getInstance().openFile(new JVSFileReference(file));
+<                 JVSPanel.getInstance().openFile(new JVSFileReference(file));
 ---
 >                 JVSFileTabs.getInstance().open(file.getAbsolutePath());
+103c99
+<         	System.out.println("Aie impossible d'ouvrir le fichier "+th);
+---
+> 	  System.out.println("Aie impossible d'ouvrir le fichier "+th);
 115,117c111
 <             	JVSFileReference tmpFile=new JVSFileReference();
 <             	tmpFile.setContent(FileManager.load(url.toExternalForm()));
-<                 JVSFileTabs.getInstance().openFile(tmpFile);
+<                 JVSPanel.getInstance().openFile(tmpFile);
 ---
 >                 JVSFileTabs.getInstance().openFile(new JVSFile(FileManager.load(url.toExternalForm())));
+122c116
+<         	System.out.println("Aie impossible d'ouvrir le fichier "+ex);
+---
+>  	  System.out.println("Aie impossible d'ouvrir le fichier "+ex);
 198c192
 < 
 ---
@@ -366,13 +409,13 @@ diff ../../work/src/org/javascool/gui/JVSPanel.java src/org/javascool/gui/JVSPan
 < 			}
 < 			UserConfig.getInstance("javascool").setProperty("dir",
 < 					fc.getSelectedFile().getParentFile().getAbsolutePath());
-< 			JVSFileReference jvsfr = new JVSFileReference(fc.getSelectedFile());
-< 			try {
-< 				getEditorTabs().openFile(jvsfr);
-< 			} catch (IllegalStateException e) {
-< 				ErrorCatcher.throwsAlert("Un fichier ne peut pas être ouvert sans un EditorTabs");
-< 			}
+< 			openFile(new JVSFileReference(fc.getSelectedFile()));
 < 		}
+< 	}
+< 
+< 	/** Open a specified file. */
+< 	public void openFile(JVSFileReference jvsFileReference) {
+< 		getEditorTabs().openFile(jvsFileReference);
 < 	}
 < 
 < 	/** Save the current file.

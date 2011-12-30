@@ -11,6 +11,12 @@ ok :
 ok2 :
 	for f in `find src/org/javascool -name .svn -prune -o \( -name '*.*' \)` ;\
 	 do if [ -f $$f ] ; then g="../../work/$$f" ;\
+           if [ -f $$g ] ; then if [ \! -z "`diff -q $$g $$f`" ] ;\
+           then echo "cp $$g $$f" ;\
+	   fi ; fi ;\
+	 fi ; done ; ok=1
+	for f in `find src/org/javascool -name .svn -prune -o \( -name '*.*' \)` ;\
+	 do if [ -f $$f ] ; then g="../../work/$$f" ;\
            if [ \! -f $$g ] ;\
            then echo "rm $$f # car ajouté" ;\
 	   fi ;\

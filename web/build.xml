@@ -38,6 +38,12 @@
     </exec>
   </target>
 
+  <target name="wpublish" depends="rsync.user.name,cache">
+    <exec os="Linux" executable="rsync">
+      <arg line="--rsh='ssh -C' -rl --delete-excluded --exclude .svn/ pages images includes favicon.ico ${env.GFORGEUSER}@scm.gforge.inria.fr:/home/groups/javascool/htdocs/v4"/>
+    </exec>
+  </target>
+
   <target name="publish" depends="rsync.user.name,cache">
     <echo level="info" message="Publishing on ${env.GFORGEUSER}@scm.gforge.inria.fr"/>
     <exec os="Linux" executable="rsync">
