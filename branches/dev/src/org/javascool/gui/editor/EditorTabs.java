@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 public interface EditorTabs {
 
-	public abstract Editor getEditorForFile(JVSFileReferance file);
+	public abstract Editor getEditorForFile(JVSFileReference file);
 
-	public abstract ArrayList<JVSFileReferance> getOpenedFiles();
+	public abstract ArrayList<JVSFileReference> getOpenedFiles();
 
-	public abstract boolean openFile(JVSFileReferance file);
+	public abstract boolean openFile(JVSFileReference file);
 
 	public abstract boolean saveAllFiles();
 

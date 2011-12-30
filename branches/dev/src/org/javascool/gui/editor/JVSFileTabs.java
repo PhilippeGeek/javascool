@@ -29,7 +29,7 @@ public class JVSFileTabs extends ClosableTabbedPane implements PropertyChangeLis
 	 * @see org.javascool.gui.editor.EditorTabs#getEditorForFile(org.javascool.gui.editor.JVSFileReferance)
 	 */
 	@Override
-	public JVSEditor getEditorForFile(JVSFileReferance file){
+	public JVSEditor getEditorForFile(JVSFileReference file){
 		for(int i=0;i<this.getTabCount();i++)
 			if(this.getComponentAt(i) instanceof JVSEditor)
 				if(file.equals(((Editor) this.getComponentAt(i)).getFile()))
@@ -41,8 +41,8 @@ public class JVSFileTabs extends ClosableTabbedPane implements PropertyChangeLis
 	 * @see org.javascool.gui.editor.EditorTabs#getOpenedFiles()
 	 */
 	@Override
-	public ArrayList<JVSFileReferance> getOpenedFiles(){
-		ArrayList<JVSFileReferance> al=new ArrayList<JVSFileReferance>();
+	public ArrayList<JVSFileReference> getOpenedFiles(){
+		ArrayList<JVSFileReference> al=new ArrayList<JVSFileReference>();
 		for(int i=0;i<this.getTabCount();i++){
 			Component co=this.getComponentAt(i);
 			if(co instanceof JVSEditor)
@@ -55,7 +55,7 @@ public class JVSFileTabs extends ClosableTabbedPane implements PropertyChangeLis
 	 * @see org.javascool.gui.editor.EditorTabs#openFile(org.javascool.gui.editor.JVSFileReferance)
 	 */
 	@Override
-	public boolean openFile(JVSFileReferance file){
+	public boolean openFile(JVSFileReference file){
 		if(getOpenedFiles().contains(file)){
 			setSelectedComponent(getEditorForFile(file));
 			return false;

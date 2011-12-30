@@ -9,6 +9,7 @@ import org.javascool.gui.JVSToolBar;
 import org.javascool.gui.JVSWidgetPanel;
 import org.javascool.widgets.Console;
 
+/** Compile Action for all JVSFileReferance. */
 public class CompileAction extends AbstractAction {
 
 	private static final long serialVersionUID = -6432472821088070514L;

@@ -12,7 +12,9 @@ import java.awt.event.MouseMotionListener;
 
 import javax.swing.*;
 
-
+/** Create a JTabbedPane with closable Tabs
+ * Add components which implements ClosableComponent and they will have a cross to be closed.
+ */
 public class ClosableTabbedPane extends JTabbedPane{
 
 	private static final long serialVersionUID = 2304963236664505495L;
@@ -83,14 +85,10 @@ public class ClosableTabbedPane extends JTabbedPane{
 		private void controlCursor() {
 			if(tabbedPane.getTabCount()>0)
 				if(closeUnderMouse(meX, meY)){
-					tabbedPane.setCursor(new Cursor(Cursor.HAND_CURSOR));	
-					//if(selectedTab > -1)
-					//tabbedPane.setToolTipTextAt(selectedTab, "Close " +tabbedPane.getTitleAt(selectedTab));
+					tabbedPane.setCursor(new Cursor(Cursor.HAND_CURSOR));
 				}
 				else{
 					tabbedPane.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-					//if(selectedTab > -1)
-					//tabbedPane.setToolTipTextAt(selectedTab,"");
 				}	
 		}
 
@@ -157,6 +155,10 @@ public class ClosableTabbedPane extends JTabbedPane{
 
 	}
 
+	/** Say if a tab can be closed.
+	 * By default this function return true but it can be override.
+	 * This is in add of {@link ClosableComponent}.isClosable()
+	 */
 	public boolean tabAboutToClose(int tabIndex) {
 		return true;
 	}
