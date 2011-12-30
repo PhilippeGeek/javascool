@@ -96,11 +96,11 @@ public class Desktop {
             if (file == null) {
                 JVSPanel.getInstance().openFile();
             } else {
-                JVSFileTabs.getInstance().openFile(new JVSFileReference(file));
+                JVSPanel.getInstance().openFile(new JVSFileReference(file));
             }
             return true;
         } catch (Throwable th) {
-	  System.out.println("Aie impossible d'ouvrir le fichier "+th);
+        	System.out.println("Aie impossible d'ouvrir le fichier "+th);
             return false;
         }
     }
@@ -114,12 +114,12 @@ public class Desktop {
             if(url.getProtocol().equals("jar")){
             	JVSFileReference tmpFile=new JVSFileReference();
             	tmpFile.setContent(FileManager.load(url.toExternalForm()));
-                JVSFileTabs.getInstance().openFile(tmpFile);
+                JVSPanel.getInstance().openFile(tmpFile);
                 return true;
             }
             return openFile(new File(url.toURI()));
         }catch(Exception ex){
- 	  System.out.println("Aie impossible d'ouvrir le fichier "+ex);
+        	System.out.println("Aie impossible d'ouvrir le fichier "+ex);
             System.err.println("Error : ");
             ex.printStackTrace(System.err);
             return false;

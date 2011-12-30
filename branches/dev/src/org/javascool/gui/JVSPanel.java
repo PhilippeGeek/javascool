@@ -116,13 +116,13 @@ class JVSPanel extends JPanel {
 			}
 			UserConfig.getInstance("javascool").setProperty("dir",
 					fc.getSelectedFile().getParentFile().getAbsolutePath());
-			JVSFileReference jvsfr = new JVSFileReference(fc.getSelectedFile());
-			try {
-				getEditorTabs().openFile(jvsfr);
-			} catch (IllegalStateException e) {
-				ErrorCatcher.throwsAlert("Un fichier ne peut pas être ouvert sans un EditorTabs");
-			}
+			openFile(new JVSFileReference(fc.getSelectedFile()));
 		}
+	}
+
+	/** Open a specified file. */
+	public void openFile(JVSFileReference jvsFileReference) {
+		getEditorTabs().openFile(jvsFileReference);
 	}
 
 	/** Save the current file.
