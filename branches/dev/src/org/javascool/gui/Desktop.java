@@ -7,11 +7,12 @@ package org.javascool.gui;
 
 import java.io.File;
 import java.net.URL;
+
 import javax.swing.JFrame;
+
 import org.javascool.About;
 import org.javascool.core.ProgletEngine;
-import org.javascool.gui.editor.JVSFileReference;
-import org.javascool.gui.editor.JVSFileTabs;
+import org.javascool.gui.editor.FileReference;
 import org.javascool.macros.Macros;
 import org.javascool.tools.FileManager;
 import org.javascool.widgets.MainFrame;
@@ -96,7 +97,7 @@ public class Desktop {
             if (file == null) {
                 JVSPanel.getInstance().openFile();
             } else {
-                JVSPanel.getInstance().openFile(new JVSFileReference(file));
+                JVSPanel.getInstance().openFile(new FileReference(file));
             }
             return true;
         } catch (Throwable th) {
@@ -112,7 +113,7 @@ public class Desktop {
         try{
             System.err.println(url.getProtocol());
             if(url.getProtocol().equals("jar")){
-            	JVSFileReference tmpFile=new JVSFileReference();
+            	FileReference tmpFile=new FileReference();
             	tmpFile.setContent(FileManager.load(url.toExternalForm()));
                 JVSPanel.getInstance().openFile(tmpFile);
                 return true;
@@ -145,6 +146,13 @@ public class Desktop {
      */
     public boolean saveCurrentFile() {
         return JVSPanel.getInstance().saveFile();
+    }
+    
+    /** Demande à l'utilisateur de sauvegarder le fichier courant.
+     * @return La valeur true si le fichier est bien sauvegardé.
+     */
+    public boolean saveAsCurrentFile() {
+        return JVSPanel.getInstance().saveAsFile();
     }
 
     /** Ferme le fichier en cours d'édition. */

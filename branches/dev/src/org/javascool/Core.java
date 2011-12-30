@@ -4,6 +4,7 @@
 
 package org.javascool;
 
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import org.javascool.macros.Macros;
 import java.io.File;
@@ -81,6 +82,12 @@ public class Core {
     System.err.println("" + About.title + " is starting ...");
     ErrorCatcher.checkJavaVersion(6);
     setUncaughtExceptionAlert();
-    Desktop.getInstance().getFrame();
+    SwingUtilities.invokeLater(new Runnable() {
+		
+		@Override
+		public void run() {
+		    Desktop.getInstance().getFrame();
+		}
+	});
   }
 }

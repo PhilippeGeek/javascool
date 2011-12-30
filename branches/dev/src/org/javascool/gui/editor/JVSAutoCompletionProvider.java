@@ -7,7 +7,7 @@ import org.fife.ui.autocomplete.LanguageAwareCompletionProvider;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.javascool.core.ProgletEngine;
 
-public class JVSAutoCompletionProvider extends AutoCompletion {
+class JVSAutoCompletionProvider extends AutoCompletion {
 
 	public JVSAutoCompletionProvider(RSyntaxTextArea TextPane) {
 		super(createCodeCompletionProvider());
@@ -32,9 +32,9 @@ public class JVSAutoCompletionProvider extends AutoCompletion {
 	public static CompletionProvider createCodeCompletionProvider() {
 		DefaultCompletionProvider cp = new DefaultCompletionProvider();
 		if(!ProgletEngine.getInstance().getProglet().getCompletion().equals("")) {
-			JvsXMLCompletion.readCompletionToProvider(ProgletEngine.getInstance().getProglet().getCompletion(), cp);
+			JVSXMLCompletion.readCompletionToProvider(ProgletEngine.getInstance().getProglet().getCompletion(), cp);
 		}
-		JvsXMLCompletion.readCompletionToProvider("org/javascool/gui/editor/completion-macros.xml", cp);
+		JVSXMLCompletion.readCompletionToProvider("org/javascool/gui/editor/completion-macros.xml", cp);
 		LanguageAwareCompletionProvider lacp = new LanguageAwareCompletionProvider(cp);
 		return lacp;
 	}

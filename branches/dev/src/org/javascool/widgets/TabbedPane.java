@@ -1,4 +1,4 @@
-package org.javascool.gui.editor;
+package org.javascool.widgets;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Component;
@@ -10,15 +10,34 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-import javax.swing.*;
+import javax.swing.ImageIcon;
+import javax.swing.JComponent;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+
+import org.javascool.macros.Macros;
 
 /** Create a JTabbedPane with closable Tabs
  * Add components which implements ClosableComponent and they will have a cross to be closed.
  */
-public class ClosableTabbedPane extends JTabbedPane{
+public class TabbedPane extends JTabbedPane{
 
 	private static final long serialVersionUID = 2304963236664505495L;
+
+	public static final String TAB_CLOSABLE="tab_closable";
+
 	private TabCloseUI closeUI = new TabCloseUI(this);
+
+	private static boolean isComponentClosable(Component component){
+		if(component instanceof JComponent)
+			if(((JComponent) component).getClientProperty(TAB_CLOSABLE)==Boolean.TRUE)
+				return true;
+		return false;
+	}
+
+	public static void setComponentClosable(JComponent component){
+		component.putClientProperty(TAB_CLOSABLE,Boolean.TRUE);
+	}
 
 	public void paint(Graphics g){
 		super.paint(g);
@@ -26,14 +45,14 @@ public class ClosableTabbedPane extends JTabbedPane{
 	}
 
 	public void addTab(String title, Component component) {
-		if(component instanceof ClosableComponent)
+		if(isComponentClosable(component))
 			super.addTab(title+"    ", component);
 		else
 			super.addTab(title, component);
 	}
 
 	public void setTitleAt(int index, String title){
-		if(getComponentAt(index) instanceof ClosableComponent&&((ClosableComponent)getComponentAt(index)).isClosable())
+		if(isComponentClosable(getComponentAt(index))&&getTabCount()>1)
 			title=title+"    ";
 		super.setTitleAt(index, title);
 	}
@@ -44,12 +63,12 @@ public class ClosableTabbedPane extends JTabbedPane{
 	}
 
 	private class TabCloseUI implements MouseListener, MouseMotionListener {
-		private ClosableTabbedPane  tabbedPane;
+		private TabbedPane  tabbedPane;
 		private int closeX = 2 ,closeY = 2, meX = 0, meY = 0;
 		private int selectedTab;
 		private final int  width = 7, height = 7;
 		private Rectangle rectangle = new Rectangle(0,0,width, height);
-		public TabCloseUI(ClosableTabbedPane pane) {
+		public TabCloseUI(TabbedPane pane) {
 
 			tabbedPane = pane;
 			tabbedPane.addMouseMotionListener(this);
@@ -65,7 +84,7 @@ public class ClosableTabbedPane extends JTabbedPane{
 
 		public void mouseReleased(MouseEvent me) {
 			if(closeUnderMouse(me.getX(), me.getY())){
-				boolean isToCloseTab = tabAboutToClose(selectedTab);
+				boolean isToCloseTab = isTabClosable(selectedTab);
 				if (isToCloseTab && selectedTab > -1){			
 					tabbedPane.removeTabAt(selectedTab);
 				}
@@ -102,18 +121,16 @@ public class ClosableTabbedPane extends JTabbedPane{
 
 			int tabCount = tabbedPane.getTabCount();
 			for(int j = 0; j < tabCount; j++)
-				if(tabbedPane.getComponent(j).isShowing()&&tabbedPane.getComponent(j) instanceof ClosableComponent&&((ClosableComponent)tabbedPane.getComponent(j)).isClosable()){			
+				if(isComponentClosable(getComponentAt(j))){			
 					int x = tabbedPane.getBoundsAt(j).x + tabbedPane.getBoundsAt(j).width -width-6;
 					int y = tabbedPane.getBoundsAt(j).y +7;
-					setTitleAt(j, ((ClosableComponent)tabbedPane.getComponent(j)).getFullName());
-					drawClose(g,x,y);
-					break;
-				} else if(tabbedPane.getComponent(j) instanceof ClosableComponent&&!((ClosableComponent)tabbedPane.getComponent(j)).isClosable()){
-					setTitleAt(j, ((ClosableComponent)tabbedPane.getComponent(j)).getFullName());
+					if(tabCount>1){
+						setTitleAt(j, getTabTitleAt(j));
+						drawClose(g,x,y);
+					} else {
+						setTitleAt(j, getTabTitleAt(j));
+					}
 				}
-			if(mouseOverTab(meX, meY)){
-				drawClose(g,closeX,closeY);
-			}
 		}
 
 		private void drawClose(Graphics g, int x, int y) {
@@ -144,7 +161,7 @@ public class ClosableTabbedPane extends JTabbedPane{
 		private boolean mouseOverTab(int x, int y) {
 			int tabCount = tabbedPane.getTabCount();
 			for(int j = 0; j < tabCount; j++)
-				if(tabbedPane.getBoundsAt(j).contains(meX, meY)&&tabbedPane.getComponent(j) instanceof ClosableComponent&&((ClosableComponent)tabbedPane.getComponent(j)).isClosable()){
+				if(tabbedPane.getBoundsAt(j).contains(meX, meY)&&(isComponentClosable(getComponentAt(j)))){
 					selectedTab = j;
 					closeX = tabbedPane.getBoundsAt(j).x + tabbedPane.getBoundsAt(j).width -width-6;
 					closeY = tabbedPane.getBoundsAt(j).y +7;					
@@ -154,12 +171,74 @@ public class ClosableTabbedPane extends JTabbedPane{
 		}
 
 	}
+	
+	/** Add a tab with a JPanel
+	 * @param name The tab name
+	 * @param icon The link to the icon, can be an empty String
+	 * @param panel The JPanel to show into the tab
+	 * @return The new id of your tab
+	 */
+	public String add(String name, String icon, JPanel panel) {
+		return this.add(name, icon, panel, null);
+	}
+	/** Add a tab with an Applet
+	 * @param name The tab name
+	 * @param icon The link to the icon, can be an empty String
+	 * @param panel The Applet to show into the tab
+	 * @return The new id of your tab
+	 */
+	public String add(String name, String icon, Component panel) {
+		if(!icon.equalsIgnoreCase("")) {
+			ImageIcon logo = Macros.getIcon(icon);
+			this.addTab(name, logo, panel);
+		} else
+			this.addTab(name, null, panel);
+		this.revalidate();
+		return name;
+	}
+	/** Add a tab with a JPanel
+	 * @param name The tab name
+	 * @param icon The link to the icon, can be an empty String
+	 * @param panel The JPanel to show into the tab
+	 * @param tooltip An tooltip for the tab
+	 * @return The new id of your tab
+	 */
+	public String add(String name, String icon, JPanel panel, String tooltip) {
+		if(!icon.equalsIgnoreCase("")) {
+			ImageIcon logo = Macros.getIcon(icon);
+			this.addTab(name, logo, panel, tooltip);
+		} else
+			this.addTab(name, null, panel, tooltip);
+		this.revalidate();
+		return name;
+	}
+	/** Get a JPanel
+	 * @param name The id of JPanel
+	 * @return The JPanel
+	 */
+	public JPanel getPanel(String name) {
+		if(getComponentAt(indexOfTab(name)) instanceof JPanel)
+			return (JPanel) getComponentAt(indexOfTab(name));
+		return null;
+	}
+	/** Delete a tab
+	 * @param name The tab id
+	 */
+	public void del(String name) {
+		this.removeTabAt(this.indexOfTab(name));
+	}
+	/** Switch to a tab
+	 * @param name The id of the tab
+	 */
+	public void switchToTab(String name) {
+		this.setSelectedIndex(this.indexOfTab(name));
+	}
 
 	/** Say if a tab can be closed.
 	 * By default this function return true but it can be override.
 	 * This is in add of {@link ClosableComponent}.isClosable()
 	 */
-	public boolean tabAboutToClose(int tabIndex) {
+	public boolean isTabClosable(int tabIndex) {
 		return true;
 	}
 

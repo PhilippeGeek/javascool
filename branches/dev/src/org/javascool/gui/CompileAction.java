@@ -1,12 +1,13 @@
-package org.javascool.gui.editor;
+package org.javascool.gui;
 
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
 import org.javascool.core.ProgletEngine;
-import org.javascool.gui.JVSToolBar;
-import org.javascool.gui.JVSWidgetPanel;
+import org.javascool.gui.editor.EditorKit;
+import org.javascool.gui.editor.FileKit;
+import org.javascool.gui.editor.JVSEditorsPane;
 import org.javascool.widgets.Console;
 
 /** Compile Action for all JVSFileReferance. */
@@ -14,12 +15,12 @@ public class CompileAction extends AbstractAction {
 
 	private static final long serialVersionUID = -6432472821088070514L;
 	
-	private EditorTabs tabs;
+	private FileKit tabs;
 	private boolean success;
-	private Editor compiledEditor;
+	private EditorKit compiledEditor;
 	
 	public CompileAction(){
-		this.tabs=JVSFileTabs.getInstance();
+		this.tabs=JVSEditorsPane.getInstance();
 	}
 
 	@Override
@@ -56,11 +57,11 @@ public class CompileAction extends AbstractAction {
 		this.success = success;
 	}
 
-	public Editor getCompiledEditor() {
+	public EditorKit getCompiledEditor() {
 		return compiledEditor;
 	}
 
-	public void setCompiledEditor(Editor compiledEditor) {
+	public void setCompiledEditor(EditorKit compiledEditor) {
 		this.compiledEditor = compiledEditor;
 	}
 

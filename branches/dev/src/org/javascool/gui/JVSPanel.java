@@ -9,11 +9,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import org.javascool.core.ProgletEngine;
-import org.javascool.gui.editor.CompileAction;
-import org.javascool.gui.editor.EditorTabs;
-import org.javascool.gui.editor.JVSFileReference;
-import org.javascool.gui.editor.JVSFileTabs;
-import org.javascool.tools.ErrorCatcher;
+import org.javascool.gui.editor.FileKit;
+import org.javascool.gui.editor.FileReference;
+import org.javascool.gui.editor.JVSEditorsPane;
 import org.javascool.tools.UserConfig;
 
 /**
@@ -50,9 +48,9 @@ class JVSPanel extends JPanel {
 	 * @return An EditorTabs
 	 * @throws IllegalStateException if no EditorTabs opened in the left part
 	 */
-	public EditorTabs getEditorTabs() throws IllegalStateException {
-		if(JVSCenterPanel.getInstance().getLeftComponent() instanceof EditorTabs)
-			return (EditorTabs) JVSCenterPanel.getInstance().getLeftComponent();
+	public FileKit getEditorTabs() throws IllegalStateException {
+		if(JVSCenterPanel.getInstance().getLeftComponent() instanceof FileKit)
+			return (FileKit) JVSCenterPanel.getInstance().getLeftComponent();
 		throw new IllegalStateException("Left component is not an EditorTabs");
 	}
 
@@ -78,10 +76,10 @@ class JVSPanel extends JPanel {
 	/**
 	 * Open a new file in the editor
 	 * 
-	 * @see JVSFileTabs
+	 * @see JVSEditorsPane
 	 */
 	public void newFile() {
-		getEditorTabs().openFile(new JVSFileReference());
+		getEditorTabs().openFile(new FileReference());
 	}
 
 	/** Contain the current CompileAction. */
@@ -96,7 +94,7 @@ class JVSPanel extends JPanel {
 	/** Open a file. 
 	 * Start a file chooser and open selected file to the current EditorTabs
 	 * @see JFileChooser
-	 * @see JVSFileTabs
+	 * @see JVSEditorsPane
 	 */
 	public void openFile() {
 		JFileChooser fc = new JFileChooser();
@@ -116,12 +114,12 @@ class JVSPanel extends JPanel {
 			}
 			UserConfig.getInstance("javascool").setProperty("dir",
 					fc.getSelectedFile().getParentFile().getAbsolutePath());
-			openFile(new JVSFileReference(fc.getSelectedFile()));
+			openFile(new FileReference(fc.getSelectedFile()));
 		}
 	}
 
 	/** Open a specified file. */
-	public void openFile(JVSFileReference jvsFileReference) {
+	public void openFile(FileReference jvsFileReference) {
 		getEditorTabs().openFile(jvsFileReference);
 	}
 
@@ -135,6 +133,20 @@ class JVSPanel extends JPanel {
 			return true;
 		}
 		return false;
+	}
+	
+	/**
+	 * @see saveFile()
+	 */
+	public boolean saveAsFile() {
+		if (getEditorTabs().saveAsCurrentFile()) {
+			return true;
+		}
+		return false;
+	}
+	
+	public void closeFile() {
+		getEditorTabs().closeCurrentFile();
 	}
 
 	/** Throw to the user a compile error.
@@ -218,7 +230,7 @@ class JVSPanel extends JPanel {
 			} else {
 				JVSToolBar.getInstance().disableDemoButton();
 			}
-			this.newFile();
+			Desktop.getInstance().openNewFile();
 		} catch (Exception e) {
 			throw new RuntimeException("Unable to load proglet " + name, e);
 		}
