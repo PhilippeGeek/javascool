@@ -12,6 +12,7 @@ import java.util.HashMap;
 
 // Used to manipulate the image
 import java.awt.image.BufferedImage;
+import java.awt.Graphics2D;
 import java.awt.Dimension;
 import javax.imageio.ImageIO;
 import org.javascool.macros.Macros;
@@ -46,10 +47,23 @@ public class IconOutput extends JPanel {
 	  g.fillRect(i0 + i * dij, j0 + j * dij, dij, dij);
 	}
       }
+    Graphics2D g2d = (Graphics2D) g;
+    paint2D(g2d);
+  }
+  /** Cette routine est appellée à chaque tracé et permet de définir un tracé spécifique au dessus de l'image affichée. 
+   * - Pour utiliser cette foncctionnalité, il faut définir: <pre>
+   * class MyIconInput extends IconInput {
+   *   public void paint2D(Graphics2D g) {
+   *     // Ici ajouter les g.drawLine g.fillOval g.drawRect g.fillRect souhaité.
+   *   }
+   * }</pre>
+   * @param g2d L'environnement graphique 2D à utiliser pour peindre.
+   */
+  public void paint2D(Graphics2D g2d) {
   }
   private void setBounds() {
-    int di = width > 0 && getWidth() >= width ? getWidth() / width : 1;
-    int dj = height > 0 && getHeight() >= height ? getHeight() / height : 1;
+    int di = width > 0 && getWidth() >= width && zoom ? getWidth() / width : 1;
+    int dj = height > 0 && getHeight() >= height && zoom ? getHeight() / height : 1;
     dij = di < dj ? di : dj;
     i0 = (getWidth() - width * dij) / 2;
     j0 = (getHeight() - height * dij) / 2;
@@ -57,10 +71,12 @@ public class IconOutput extends JPanel {
   /**  Efface et initialize l'image.
    * @param width Taille horizontale de l'image.
    * @param height Taille verticale de l'image.
+   * @param zoom Ajuste automatiquement la taille de l'image au display si true (par défaut), sinon fixe 1 pixel de l'image à 1 pixel de l'affichage.
    * @return Cet objet, permettant de définir la construction <tt>new IconOutput().reset(..)</tt>.
    */
-  public final IconOutput reset(int width, int height) {
+  public final IconOutput reset(int width, int height, boolean zoom) {
     if(width > 550 || height > 550 || width * height > 550 * 550) throw new IllegalArgumentException("Image size too big !");
+    this.zoom = zoom;
     if (width <= 0)
       width = 300;
     if (height <= 0)
@@ -75,24 +91,64 @@ public class IconOutput extends JPanel {
     repaint(0, 0, getWidth(), getHeight());
     return this;
   }
+  /**
+   * @see #reset(int, int, boolean)
+   */
+  public final IconOutput reset(int width, int height) {
+    return reset(width, height, true);
+  }
   /** Initialize l'image à partir d'un fichier.
    * @param location L'URL (Universal Resource Location) de l'image.
-   * @return Les dimensions de l'image.
+   * @param zoom Ajuste automatiquement la taille de l'image au display si true (par défaut), sinon fixe 1 pixel de l'image à 1 pixel de l'affichage.
    * @return Cet objet, permettant de définir la construction <tt>new IconOutput().reset(..)</tt>.
    */
-  public IconOutput reset(String location) throws IOException {
-    BufferedImage img = ImageIO.read(Macros.getResourceURL(location));
-    if(img != null) {
-      reset(img.getWidth(), img.getHeight());
-      for(int j = 0, ij = 0; j < height; j++)
-        for(int i = 0; i < width; i++, ij++)
-          image[ij] = new Color(img.getRGB(i, j));
-      return this;
-    } else throw new IOException("Unable to load the image " + location);
+  public IconOutput reset(String location, boolean zoom) throws IOException {
+    // Fait 2//3 essais sur l'URL si besoin
+    for (int n = 0; n < 3; n++) {
+      BufferedImage img = ImageIO.read(Macros.getResourceURL(location));
+      if(img != null)
+	return reset(img, zoom);
+    }
+    throw new IOException("Unable to load the image " + location);
+  }
+  /**
+   * @see #reset(String, boolean)
+   */
+  public final IconOutput reset(String location)  throws IOException {
+    return reset(location, true);
+  }
+  /** Initialize l'image à partir d'une image en mémoire.
+   * @param img L'image qui va initialiser le tracé.
+   * @param zoom Ajuste automatiquement la taille de l'image au display si true (par défaut), sinon fixe 1 pixel de l'image à 1 pixel de l'affichage.
+   * @return Cet objet, permettant de définir la construction <tt>new IconOutput().reset(..)</tt>.
+   */
+  public IconOutput reset(BufferedImage img, boolean zoom) {
+    reset(img.getWidth(), img.getHeight(), zoom);
+    for(int j = 0; j <  img.getHeight(); j++)
+      for(int i = 0; i < img.getWidth(); i++)
+	image[i + width * j] = new Color(img.getRGB(i, j));
+    repaint(0, 0, getWidth(), getHeight());
+    return this;
+  }
+  /**
+   * @see #reset(BufferedImage, boolean)
+   */
+  public final IconOutput reset(BufferedImage img) {
+    return reset(img, true);
   }
   /** Renvoie les dimensions de l'image. */
   public Dimension getDimension() {
     return new Dimension(width, height);
+  }
+  /** Renvoie une image dans laquelle le contenu de l'affichage est copié.
+   * @return Le contenu de l'affichage sous forme d'image.
+   */
+  public BufferedImage getImage() {
+    BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+    for(int j = 0; j < img.getHeight(); j++)
+      for(int i = 0; i < img.getWidth(); i++)
+	img.setRGB(i, j, image[i + width * j].getRGB());
+    return img;
   }
   /** Définit la valeur d'un pixel.
    * @param x Abscisse du pixel, dans {0, width{.
@@ -113,7 +169,13 @@ public class IconOutput extends JPanel {
     v = v < 0 ? 0 : v > 255 ? 255 : v;
     return set(x, y, new Color(v, v, v));
   }
-  private boolean set(int x, int y, Color c) {
+  /** Définit la valeur d'un pixel.
+   * @param x Abscisse du pixel, dans {0, width{.
+   * @param y Ordonnée du pixel, dans {0, height{.
+   * @param c L'intensité en couleur du pixel.
+   * @return La valeur true si le pixel est dans les limites de l'image, false sinon.
+   */
+  public boolean set(int x, int y, Color c) {
     if((0 <= x) && (x < width) && (0 <= y) && (y < height)) {
       setBounds();
       int ij = x + y * width;
@@ -147,8 +209,21 @@ public class IconOutput extends JPanel {
     } else
       return "undefined";
   }
+  /**  Renvoie la valeur d'un pixel.
+   * @param x Abscisse du pixel, dans {0, width{.
+   * @param y Ordonnée du pixel, dans {0, height{.
+   * @return La couleur du pixel ou black si le pixel n'est pas dans l'image.
+   */
+  public Color getPixelColor(int x, int y) {
+    if((0 <= x) && (x < width) && (0 <= y) && (y < height)) {
+      Color c = image[x + y * width];
+      return c;
+    } else
+      return Color.BLACK;
+  }
   private Color image[];
   private int width, height, i0, j0, dij;
+  boolean zoom = true;
 
   private static HashMap<Color, String> colors = new HashMap<Color, String>();
   private static Color getColor(String color) {

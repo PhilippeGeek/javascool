@@ -136,6 +136,7 @@ public class CurveOutput extends JPanel {
   private int width, height, i0, j0, w0, h0;
 
   private class ReticuleMouseListener implements MouseMotionListener, MouseListener {
+    private static final long serialVersionUID = 1L;
     @Override
     public void mouseDragged(MouseEvent e) {
       paintReticule(getGraphics());

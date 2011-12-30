@@ -4,8 +4,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JDialog;
 import javax.swing.SwingUtilities;
-import javax.swing.WindowConstants;
-
 import org.javascool.macros.Macros;
 
 /** Définit un dialogue en popup qui gère l'aspect modal/non-modal.
@@ -21,11 +19,7 @@ import org.javascool.macros.Macros;
  * }</pre></p>
  */
 public class Dialog extends JDialog {
-  /**
-	 * 
-	 */
-	private static final long serialVersionUID = -3508966264239125706L;
-// @bean
+  // @bean
   public Dialog() {
     super(MainFrame.getFrame());
     addWindowListener(new WindowAdapter() {
@@ -41,7 +35,7 @@ public class Dialog extends JDialog {
    * <p>Il ne faut pas appelé le dialogue en mode modal directement d'un gestionnaire d'événement (bouton, etc..) mais utiliser un Thread.</p>
    */
   public void open(boolean modal) {
-    setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+    setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
     pack();
     if (MainFrame.getFrame() != null)
        setLocation((MainFrame.getFrame().getWidth() - getWidth()) / 2, (MainFrame.getFrame().getHeight() - getHeight()) / 2);

@@ -6,8 +6,6 @@ package org.javascool.widgets;
 
 // Used to encapsulate a proglet
 import javax.swing.JApplet;
-import javax.swing.SwingConstants;
-
 import java.awt.BorderLayout;
 import java.awt.Component;
 import javax.swing.JLabel;
@@ -63,14 +61,12 @@ public class PanelApplet extends JApplet {
       getContentPane().add(pane = (Component) Class.forName(panel).newInstance(), BorderLayout.CENTER);
     } catch(Exception e) {
       System.err.println(e);
-      getContentPane().add(new JLabel("Pas d'applet à montrer.", SwingConstants.CENTER), BorderLayout.CENTER);
+      getContentPane().add(new JLabel("Pas d'applet à montrer.", JLabel.CENTER), BorderLayout.CENTER);
       manualStart = false;
     }
     if(manualStart && Invoke.run(pane, "start", false)) {
-      getContentPane().add(new ToolBar().addTool("Démo de la proglet", "org/javascool/widgets/icons/play.png", new Runnable() { @Override
-	public void run() {
-	(new Thread() { @Override
-	public void run() {
+      getContentPane().add(new ToolBar().addTool("Démo de la proglet", "org/javascool/widgets/icons/play.png", new Runnable() { public void run() {
+	(new Thread() { public void run() {
 	  Invoke.run(pane, "start");
 	}}).start();
       }}), BorderLayout.NORTH);

@@ -54,7 +54,7 @@ public class Jvs2Html {
      */
     public static boolean runDirectory(String srcDir, String destDir) {
         try {
-            new File(srcDir);
+            File src = new File(srcDir);
             File dest = new File(destDir);
             String[] fileList = FileManager.list(srcDir);
             for (String file : fileList) {

@@ -144,7 +144,7 @@ public class ProgletsBuilder {
                     DialogFrame.setUpdate("Construction de " + name + " 2/4", level += up);
                     build.checkProglet();
                     DialogFrame.setUpdate("Construction de " + name + " 3/4", level += up);
-                    build.convertHdocs(webdoc);
+                    build.convertHdocs(false);
                 if (!build.isprocessing) {
                     DialogFrame.setUpdate("Construction de " + name + " 4/4", level += up);
                     build.createHtmlApplet();
@@ -164,7 +164,7 @@ public class ProgletsBuilder {
             // Création des jarres avec le manifest
             {
                 String version = "Java'sCool v4 on \"" + new Date() + "\" Revision #" + About.revision;
-                new Pml().set("Main-Class", "org.javascool.Core").
+                Pml manifest = new Pml().set("Main-Class", "org.javascool.Core").
                         set("Manifest-version", version).
                         set("Created-By", "inria.fr (javascool.gforge.inria.fr) ©INRIA: CeCILL V2 + CreativeCommons BY-NC-ND V2").
                         set("Implementation-URL", "http://javascool.gforge.inria.fr").
@@ -177,11 +177,13 @@ public class ProgletsBuilder {
                         String name = new File(proglet).getName();
                         String javascoolPrefix = "org" + File.separator + "javascool" + File.separator;
                         String jarEntries[] = {
-                            javascoolPrefix + "Core", "org" + File.separator + "fife",
+                            javascoolPrefix + "Core", javascoolPrefix + "About", "org" + File.separator + "fife",
                             javascoolPrefix + "builder", javascoolPrefix + "core", javascoolPrefix + "gui", javascoolPrefix + "macros", javascoolPrefix + "tools", javascoolPrefix + "widgets",
                             javascoolPrefix + "proglets" + File.separator + name};
                         String tmpJar = buildDir + File.separator + "javascool-proglet-" + name + ".jar";
                         JarManager.jarCreate(tmpJar, buildDir + "/manifest.jmf", jarDir, jarEntries);
+			// Reconstruction des pages webs en mode web
+			new ProgletBuild(proglet, new File(proglet).getAbsolutePath(), jarDir).convertHdocs(true);
                     }
                 }
                 // Création de l'archive principale
@@ -281,7 +283,7 @@ public class ProgletsBuilder {
       	 StringWriter out = new StringWriter();
 	 Class.forName("com.sun.tools.javac.Main").
 	   getDeclaredMethod("compile", Class.forName("[Ljava.lang.String;"), Class.forName("java.io.PrintWriter")).
-	   invoke(null, args, new PrintWriter(out));
+	   invoke(null, (Object) args, new PrintWriter(out));
          String sout = out.toString().trim();
          if (sout.length() > 0) {
            System.out.println("Erreur de compilation java:\n" + sout);

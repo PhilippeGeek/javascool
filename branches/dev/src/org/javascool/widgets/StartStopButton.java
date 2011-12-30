@@ -1,12 +1,10 @@
 package org.javascool.widgets;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
+import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import org.javascool.macros.Macros;
 
 /** Définit un bouton de start/stop avec affichage du temps de calcul.
@@ -30,8 +28,7 @@ public abstract class StartStopButton extends JPanel {
                                     @Override
                                     public void actionPerformed(ActionEvent e) {
                                       new Thread(new Runnable() {
-                                                   @Override
-												public void run() {
+                                                   public void run() {
                                                      if(isStarting())
                                                        doStop();
                                                      else

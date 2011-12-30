@@ -7,6 +7,7 @@ package org.javascool.tools;
 // Used to report a throwable
 
 // Used to frame a message
+import java.net.URLEncoder;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import org.javascool.macros.Macros;
@@ -38,10 +39,13 @@ public class ErrorCatcher {
                                                   String s = "", r = "";
                                                   if(uncaughtExceptionAlertOnce <= 1) {
                                                     s += uncaughtExceptionAlertHeader + "\n<hr><pre>";
-                                                    for(String p: new String[] { "application.revision", "java.version", "os.name", "os.arch", "os.version" }
+                                                    for(String p: new String[] { "application.revision", "java.version", "java.home", "os.name", "os.arch", "os.version", "user.name", "user.home", "user.dir" }
                                                         )
                                                       s += "> " + p + " = " + System.getProperty(p) + "\n";
                                                   }
+                                                  try {
+                                                    s += "> localhost = "+ java.net.InetAddress.getLocalHost() + "\n";
+                                                  } catch(Exception er) {}
                                                   s += "> thread.name = " + t.getName() + "\n";
                                                   s += "> throwable = " + e + "\n";
                                                   if(0 < uncaughtExceptionAlertOnce)
@@ -54,6 +58,11 @@ public class ErrorCatcher {
                                                           (!e.getMessage().equals("java.util.ConcurrentModificationException"));
                                                   s += r + "</pre><hr>";
 						  System.err.println(s);
+                                                  try {
+                                                    s += FileManager.load("http://javascool.gforge.inria.fr?weberroreport="+URLEncoder.encode(s, "utf-8"));
+                                                  } catch(Exception er) {
+                                                    System.err.println("Impossible de lancer l'alerte à travers le web ("+er+")");
+                                                  }
                                                   if(alert)
                                                     Macros.message(s, true);
                                                   uncaughtExceptionAlertOnce++;
@@ -63,17 +72,6 @@ public class ErrorCatcher {
   }
   public static void setUncaughtExceptionAlert(String header, String revision) {
     setUncaughtExceptionAlert(header, revision, "org.javascool");
-  }
-  /** Ouvre une fenêtre d'alerte avec les paramètres de la détection d'exception intempestive et non prise en compte.
-   */
-  public static void throwsAlert(String message) {
-     String s = "";
-     s += uncaughtExceptionAlertHeader + "\n<hr>"+message+"<pre>";
-     for(String p: new String[] { "application.revision", "java.version", "os.name", "os.arch", "os.version" })
-        s += "> " + p + " = " + System.getProperty(p) + "\n";
-     s += "</pre><hr>";
-     System.err.println(s);
-     Macros.message(s, true);
   }
   private static String uncaughtExceptionAlertHeader;
   private static int uncaughtExceptionAlertOnce = 0;

@@ -66,8 +66,7 @@ public class Java2Class {
   }
 
   // Implementation using the javac compiler api : il n'est plus utilisé (donc plus maintenu !) avec l'arrivée dela jre 76
-  @SuppressWarnings("unused") 
-private static boolean compile1(String javaFiles[], boolean allErrors) {
+  private static boolean compile1(String javaFiles[], boolean allErrors) {
     // Initialisation des objets dy compilateur// The compiler tool
     JavaCompiler compiler = ToolProvider.getSystemJavaCompiler(); // The compiler tool
     if (compiler == null) {
@@ -90,7 +89,7 @@ private static boolean compile1(String javaFiles[], boolean allErrors) {
       System.err.println("Erreur à la fermeture du file-manager du compilateur : " + e);
     }
     // Gestion des erreurs
-    for(Diagnostic<?> diagnostic : diagnostics.getDiagnostics()) {
+    for(Diagnostic diagnostic : diagnostics.getDiagnostics()) {
       String javaDiagnostic = diagnostic.getMessage(Locale.FRENCH);
       String jvsDiagnostic = javaFiles.length > 1 ? javaDiagnostic : javaDiagnostic.split(" ", 2)[1];
       if(jvsDiagnostic.equals("not a statement"))
@@ -136,7 +135,7 @@ private static boolean compile1(String javaFiles[], boolean allErrors) {
       throw new IllegalStateException("Impossible d'accéder au compilateur javac : "+ e);
     }   
     try {
-      javac.invoke(null, args, new PrintWriter(out));
+      javac.invoke(null, (Object) args, new PrintWriter(out));
     } catch(Exception e) {
       throw new IllegalStateException("Erreur système lors du lancement du compilateur javac : "+ e);
     }   

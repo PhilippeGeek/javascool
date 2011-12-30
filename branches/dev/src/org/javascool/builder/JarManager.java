@@ -17,6 +17,7 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 
+import java.util.Enumeration;
 import java.util.jar.Attributes;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
@@ -39,7 +40,7 @@ public class JarManager {
       ProgletsBuilder.log("Extract files from " + jarFile + " to " + destDir + ((!jarEntry.isEmpty()) ? " which start with " + jarEntry : ""),true);
       JarFile jf = new JarFile(jarFile);
       JarInputStream jip=new JarInputStream(new FileInputStream(jarFile));
-      jf.entries();
+      Enumeration<JarEntry> entries = jf.entries();
       JarEntry je;
       while((je = jip.getNextJarEntry())!=null) {
         if((jarEntry.isEmpty()?true:je.getName().startsWith(jarEntry)) && !je.isDirectory()&&!je.getName().contains("META-INF")) {
@@ -114,6 +115,7 @@ public class JarManager {
       if (skip)
 	return;
     }
+    BufferedInputStream in = null;
     try {
       if(source.isDirectory()) {
         String name = source.getPath().replace(root.getAbsolutePath() + File.separator, "").replace(File.separator, "/");

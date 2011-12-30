@@ -4,10 +4,13 @@
 
 package org.javascool;
 
-import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
-import org.javascool.gui.Desktop;
 import org.javascool.macros.Macros;
+import java.io.File;
+import java.net.URLDecoder;
+import java.nio.charset.Charset;
+import java.io.UnsupportedEncodingException;
+import org.javascool.gui.Desktop;
 import org.javascool.tools.ErrorCatcher;
 
 /** Lanceur de l'application "apprenant" qui permet de manipuler des «proglets».  *
@@ -32,14 +35,38 @@ public class Core {
    * @throws RuntimeException lorsque l'application n'a pas été démarré depuis un jar
    */
   public static String javascoolJar()  {
-    String jar = "";
-    jar = Macros.getDecoded(Macros.getResourceURL("org/javascool/Core.class")).replaceFirst("jar:file:([^!]*)!.*", "$1");
-    System.err.println("Notice: the javascool jar is "+jar);
-    if(jar.endsWith(".jar"))
-      return jar;
-    else
-     throw new RuntimeException("Java's cool n'a pas été démarré depuis un Jar");
+    if (javascoolJar != null)
+      return javascoolJar;
+    String url = Macros.getResourceURL("org/javascool/Core.class").toString().replaceFirst("jar:file:([^!]*)!.*", "$1");
+    System.err.println("Notice: javascool url is " + url);   
+    if(url.endsWith(".jar")) {
+      try {
+	String jar = URLDecoder.decode(url, "UTF-8");
+	if (new File(jar).exists())
+	  return javascoolJar = jar;
+	// Ici on essaye tous les encodages possibles pour essayer de détecter javascool
+	{
+	  jar = URLDecoder.decode(url, Charset.defaultCharset().name());
+	  if (new File(jar).exists())
+	    return jar;
+	  for(String enc : Charset.availableCharsets().keySet()) {
+	    jar = URLDecoder.decode(url, enc);
+	    if (new File(jar).exists()) {
+	      System.err.println("Notice: javascool file " + jar + " correct decoding as "+enc);   
+	      return javascoolJar = jar;
+	    } else {
+	      System.err.println("Notice: javascool file " + jar + " wrong decoding as "+enc);   
+	    }
+	  }
+	  throw new RuntimeException("Il y a un bug d'encoding sur cette plate forme");
+	}
+      } catch (UnsupportedEncodingException ex) {
+	throw new RuntimeException("Spurious defaultCharset: this is a caveat");
+      }
+    } else
+      throw new RuntimeException("Java's cool n'a pas été démarré depuis un Jar");
   }
+  private static String javascoolJar = null;
   /** Lanceur de l'application.
    * @param usage <tt>java -jar javascool.jar</tt>
    */
@@ -54,12 +81,6 @@ public class Core {
     System.err.println("" + About.title + " is starting ...");
     ErrorCatcher.checkJavaVersion(6);
     setUncaughtExceptionAlert();
-    SwingUtilities.invokeLater(new Runnable() {
-		
-		@Override
-		public void run() {
-		    Desktop.getInstance().getFrame();
-		}
-	});
+    Desktop.getInstance().getFrame();
   }
 }

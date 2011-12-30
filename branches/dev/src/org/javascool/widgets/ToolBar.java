@@ -62,7 +62,7 @@ public class ToolBar extends JToolBar {
     button.addActionListener(new ActionListener() {
                                @Override
                                public void actionPerformed(ActionEvent e) {
-                                 actions.get(e.getSource()).run();
+                                 actions.get((AbstractButton) e.getSource()).run();
                                }
                              }
                              );
@@ -89,8 +89,8 @@ public class ToolBar extends JToolBar {
       JComponent c = buttons.get(label);
       remove(c);
       buttons.remove(label);
-      if(c instanceof AbstractButton && actions.containsKey(c))
-        actions.remove(c);
+      if(c instanceof AbstractButton && actions.containsKey((AbstractButton) c))
+        actions.remove((AbstractButton) c);
       setVisible(false);
       revalidate();
       setVisible(true);

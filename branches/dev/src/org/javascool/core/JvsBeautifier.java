@@ -15,7 +15,7 @@ public class JvsBeautifier {
     char f[] = text.trim().replace((char) 160, ' ').toCharArray();
     String g = "", ln = "\n";
     int par = 0;
-    for(int i = 0; i < f.length;) {
+    for(int i = 0, j; i < f.length;) {
       // Escapes /* comments
       if((f[i] == '/') && (i < f.length - 1) && (f[i + 1] == '*')) {
         g += f[i++];
@@ -43,12 +43,12 @@ public class JvsBeautifier {
         g += ln;
         i++;
         // Normalizes spaces
-      }/* else if(Character.isWhitespace(f[i])) {
+      } else if(Character.isWhitespace(f[i])) {
         g += ' ';
         i++;
         while(i < f.length && Character.isWhitespace(f[i]))
           i++;
-      }*/ else {
+      } else {
         char c0 = g.length() == 0 ? ' ' : g.charAt(g.length() - 1);
         // Counts (parenthesies)
         if(f[i] == '(')
@@ -94,14 +94,12 @@ public class JvsBeautifier {
         // Reformats {blocks}
         if((f[i] == '{') || (f[i] == '}') || ((f[i] == ';') && (par == 0))) {
           if(f[i] == '{')
-            ln += "\t";
-          if(f[i] == ';')
-        	  g+=ln;
+            ln += "   ";
           if(ln.length() >= 3 && f[i] == '}')
-            ln = ln.substring(0, ln.length() - 1);
+            ln = ln.substring(0, ln.length() - 3);
           g += ln;
-          /*if(ln.length() == 1)
-            g += "\n";*/
+          if(ln.length() == 1)
+            g += "\n";
           i++;
           while(i < f.length && Character.isWhitespace(f[i]))
             i++;
@@ -111,7 +109,7 @@ public class JvsBeautifier {
     }
     return "\n" + g.
            replaceAll("\\}\\s*else\\s*(\\{|if)", "} else $1").
-           replaceAll("(while|if|for|return)\\s*([^a-z_0-9_])", "$1 $2").trim();
+           replaceAll("(while|if|for|return)\\s*([^a-z_0-9_])", "$1 $2");
   }
   private static boolean isOperator(char c) {
     switch(c) {
