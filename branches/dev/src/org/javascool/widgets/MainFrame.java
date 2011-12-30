@@ -37,9 +37,6 @@ private Component pane;
           UIManager.setLookAndFeel(info.getClassName());
           break;
         }
-    	UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		JDialog.setDefaultLookAndFeelDecorated(true);
-		JFrame.setDefaultLookAndFeelDecorated(true);
    } catch(Exception e1) {
       String os = System.getProperty("os.name");
       if(os.startsWith("Windows")) {
