@@ -79,6 +79,19 @@ public class Functions {
   static public void load(String image) {
     load(image, true);
   }
+  /** Sauvegarde l'image actuellement affichée.
+   * @param location Une URL (Universal Resource Location) cible où stocker l'image.
+   * @return La valeur true si la sauvegarde s'est bien passée et la valeur fausse sinon (un message d'erreur s'affiche dans la console).
+   */
+  static public boolean save(String location) {
+    try {
+      ImageUtils.saveImage(location, getPane().getImage());
+      return true;
+    } catch(Exception e) {
+      System.out.println("Erreur à la sauvegarde de l'image dans '"+location+"' : "+e);
+      return false;
+    }
+  }
   /** Renvoie la demi-largeur de l'image, si elle est centrée (sinon la largeur de l'image). */
   static public int getWidth() {
     return width;

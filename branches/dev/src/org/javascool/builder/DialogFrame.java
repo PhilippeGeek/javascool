@@ -53,6 +53,13 @@ public class DialogFrame {
         Console.getInstance().getToolBar().addTool("Progress Bar", jProgressBar = new JProgressBar());
         jProgressBar.setSize(new Dimension(100, 25));
         Console.getInstance().getToolBar().addTool("Status Bar", jLabel = new JLabel());
+        Console.getInstance().getToolBar().addRightTool("Convertisseur HML",  new Runnable() {
+
+                    @Override
+                    public void run() {
+		      startConvertisseurHML();
+                    }
+                });
         Console.getInstance().getToolBar().addRightTool(About.getAboutMessage());
         setUpdate("", 0);
         new MainFrame().reset("Java's Cool 4 Proglet Buidler", Build.logo, Console.getInstance());
@@ -78,7 +85,6 @@ public class DialogFrame {
     private static JLabel jLabel = null;
     private static JProgressBar jProgressBar = null;
     // Ouvre un menu de sélection des proglets et de lancement de la construction du Jar.
-
     private static void startProgletCreatorMenu() {
         JPopupMenu jCreatorMenu = new JPopupMenu();
         jCreatorMenu.add(new JLabel("Entrer le nom de la proglet à construire:", JLabel.LEFT));
@@ -159,4 +165,11 @@ public class DialogFrame {
     }
     // @ inner-class-variable
     private static JPopupMenu jBuilderMenu = null;
+
+    private static void startConvertisseurHML() {
+        JPopupMenu jCreatorMenu = new JPopupMenu();
+        jCreatorMenu.add(new Htm2Hml());
+        Component parent = Console.getInstance().getToolBar();
+        jCreatorMenu.show(jCreatorButton, 0, parent.getHeight());
+    }
 }

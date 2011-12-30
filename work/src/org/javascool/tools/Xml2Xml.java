@@ -52,7 +52,8 @@ public class Xml2Xml {
         }
         tranformers.put(xsl, tfactory.newTransformer(xslSource));
       }
-    } catch(TransformerConfigurationException e) { throw new RuntimeException(e + " when compiling: " + xsl);
+    } catch(TransformerConfigurationException e) { 
+      throw new RuntimeException(e + " when compiling: " + xsl);
     }
     // Applique la transformation
     try {
