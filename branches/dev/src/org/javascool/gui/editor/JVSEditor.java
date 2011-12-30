@@ -31,13 +31,14 @@ import org.fife.ui.rtextarea.RTextScrollPane;
 import org.javascool.gui.Desktop;
 import org.javascool.tools.FileManager;
 import org.javascool.widgets.MainFrame;
+import org.javascool.widgets.TabbedPane;
 import org.javascool.widgets.ToolBar;
 
 /** Define a JVSEditor
  * Use JVSEditor to edit jvs files, it can be used as a panel
  * @author Philippe VIENNE
  */
-public class JVSEditor extends JPanel implements Editor, ClosableComponent {
+class JVSEditor extends JPanel implements EditorKit{
 
 	private static final long serialVersionUID = 1L;
 	/** Tests if on MacIntosh. */
@@ -53,13 +54,13 @@ public class JVSEditor extends JPanel implements Editor, ClosableComponent {
 	/** The Completion Provider */
 	private JVSAutoCompletionProvider jacp;
 	/** Opened file */
-	private JVSFileReference file;
+	private FileReference file;
 
 	/* (non-Javadoc)
 	 * @see org.javascool.gui.editor.Editor#getFile()
 	 */
 	@Override
-	public JVSFileReference getFile() {
+	public FileReference getFile() {
 		return file;
 	}
 
@@ -80,7 +81,7 @@ public class JVSEditor extends JPanel implements Editor, ClosableComponent {
 	 * @see org.javascool.gui.editor.Editor#setFile(org.javascool.gui.editor.JVSFileReferance)
 	 */
 	@Override
-	public void setFile(JVSFileReference file) {
+	public void setFile(FileReference file) {
 		this.file = file;
 		textPane.setText(file.getContent());
 		firePropertyChange("name", null, getName());
@@ -89,8 +90,9 @@ public class JVSEditor extends JPanel implements Editor, ClosableComponent {
 	/** Create a new JVSEditor
 	 * Common setup
 	 */
-	public JVSEditor(JVSFileReference file) {
+	public JVSEditor(FileReference file) {
 		super(new BorderLayout());
+		TabbedPane.setComponentClosable(this);
 		this.file=file;
 		textPane = createTextArea();
 
@@ -107,7 +109,7 @@ public class JVSEditor extends JPanel implements Editor, ClosableComponent {
 		//toolBar.add(new CompletionSwitchAction(jacp));
 
 		add(toolBar,BorderLayout.NORTH);
-		
+
 		setText(file.getContent());
 	}
 
@@ -192,31 +194,35 @@ public class JVSEditor extends JPanel implements Editor, ClosableComponent {
 	@Override
 	public Boolean save() {
 		if(file.isTmp()){
-			JFileChooser jfc=new JFileChooser();
-			jfc.setApproveButtonText("Sauvegarder");
-			if(jfc.showSaveDialog(MainFrame.getFrame())==JFileChooser.APPROVE_OPTION){
-				if(!jfc.getSelectedFile().getName().endsWith(JVSFileReference.SOURCE_EXTENTION)){
-					jfc.setSelectedFile(new File(jfc.getSelectedFile().getParentFile(),jfc.getSelectedFile().getName()+JVSFileReference.SOURCE_EXTENTION));
-				}
-				if(jfc.getSelectedFile().exists()){
-					if(JOptionPane.showConfirmDialog(MainFrame.getFrame(), 
-							"Êtes vous sûr de vouloir effacer ce fichier ?", 
-							"Confirmation",
-							JOptionPane.YES_NO_OPTION,
-							JOptionPane.ERROR_MESSAGE)
-							!= JOptionPane.OK_OPTION)
-						return save();
-				}
-				FileManager.save(jfc.getSelectedFile().getAbsolutePath(), "", false, true);
-				file.setFile(jfc.getSelectedFile());
-				return save();
-			} else {
-				return false;
-			}
+			return saveAs();
 		} else {
 			file.setContent(getText());
 			setFile(file);
 			return file.save();
+		}
+	}
+
+	public boolean saveAs() {
+		JFileChooser jfc=new JFileChooser();
+		jfc.setApproveButtonText(file.isTmp()?"Sauvegarder":"Sauvegarder sous");
+		if(jfc.showSaveDialog(MainFrame.getFrame())==JFileChooser.APPROVE_OPTION){
+			if(!jfc.getSelectedFile().getName().endsWith(FileReference.SOURCE_EXTENTION)){
+				jfc.setSelectedFile(new File(jfc.getSelectedFile().getParentFile(),jfc.getSelectedFile().getName()+FileReference.SOURCE_EXTENTION));
+			}
+			if(jfc.getSelectedFile().exists()){
+				if(JOptionPane.showConfirmDialog(MainFrame.getFrame(), 
+						"Êtes vous sûr de vouloir effacer ce fichier ?", 
+						"Confirmation",
+						JOptionPane.YES_NO_OPTION,
+						JOptionPane.ERROR_MESSAGE)
+						!= JOptionPane.OK_OPTION)
+					return save();
+			}
+			FileManager.save(jfc.getSelectedFile().getAbsolutePath(), "", false, true);
+			file.setFile(jfc.getSelectedFile());
+			return save();
+		} else {
+			return false;
 		}
 	}
 
@@ -268,22 +274,6 @@ public class JVSEditor extends JPanel implements Editor, ClosableComponent {
 		} catch (BadLocationException ex) {
 			System.err.println("Dysfonctionnement innatendu ici "+ex);
 		}
-	}
-
-	@Override
-	public boolean isClosable() {
-		if(getParent() instanceof JVSFileTabs){
-			JVSFileTabs jtp=(JVSFileTabs)getParent();
-			if(jtp.getTabCount()<2){
-				return false;
-			}
-		}
-		return true;
-	}
-
-	@Override
-	public String getFullName() {
-		return getName();
 	}
 
 

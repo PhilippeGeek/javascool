@@ -6,6 +6,7 @@ import org.javascool.core.ProgletEngine.Proglet;
 import org.javascool.macros.Macros;
 import org.javascool.widgets.Console;
 import org.javascool.widgets.HtmlDisplay;
+import org.javascool.widgets.TabbedPane;
 
 /** Le panneau contenant les widgets
  * Les widgets de Java's cool sont disposés dans des onglets. Certain onglets de
@@ -14,7 +15,7 @@ import org.javascool.widgets.HtmlDisplay;
  * @see org.javascool.widgets.HtmlDisplay
  * @see org.javascool.widgets
  */
-public class JVSWidgetPanel extends JVSTabs {
+public class JVSWidgetPanel extends TabbedPane {
 
 	private static final long serialVersionUID = 1L;
 	private String progletTabId;

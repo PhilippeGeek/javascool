@@ -29,7 +29,7 @@ import org.javascool.widgets.MainFrame;
 public class ProgletEngine {
 
     /** Tables des proglets. */
-    private ArrayList<Proglet> proglets;
+    private ArrayList<Proglet> proglets=new ArrayList<ProgletEngine.Proglet>();
 
     // @static-instance
     /** Crée et/ou renvoie l'unique instance de l'engine.
@@ -44,9 +44,9 @@ public class ProgletEngine {
     private static ProgletEngine engine = null;
 
     private ProgletEngine() {
-        String javascoolJar = Core.javascoolJar();
+        
         // Détection des proglets présentes dans le jar
-        try {
+        try {String javascoolJar = Core.javascoolJar();
             proglets = new ArrayList<Proglet>();
             for (String dir : FileManager.list(javascoolJar, "org.javascool.proglets.[^\\.]+.proglet.pml")) {
                 String name = dir.replaceFirst("jar:[^!]*!(.*)proglet.pml", "$1");
@@ -58,7 +58,7 @@ public class ProgletEngine {
 	      }
             }
         } catch(Exception er) {
-	  System.err.println("Erreur lors de la détection des proglets ("+er+" avec "+javascoolJar+"\n . . vous pouvez quand même utiliser JavaScool");
+	  //System.err.println("Erreur lors de la détection des proglets ("+er+" avec "+javascoolJar+"\n . . vous pouvez quand même utiliser JavaScool");
         }
         // Définit une proglet "vide" pour lancer l'interface
         if (proglets.isEmpty()) {

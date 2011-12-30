@@ -27,7 +27,7 @@ import org.xml.sax.helpers.DefaultHandler;
  *
  * @version 1.0
  */
-class JvsXMLCompletion extends DefaultHandler {
+class JVSXMLCompletion extends DefaultHandler {
 
     /**
      * The completions found after parsing the XML.
@@ -65,7 +65,7 @@ class JvsXMLCompletion extends DefaultHandler {
      * @param provider The provider to get completions for.
      * @see #reset(CompletionProvider)
      */
-    public JvsXMLCompletion(CompletionProvider provider) {
+    public JVSXMLCompletion(CompletionProvider provider) {
         this(provider, null);
     }
 
@@ -79,7 +79,7 @@ class JvsXMLCompletion extends DefaultHandler {
      *        if the XML does not define specific classes for completion types.
      * @see #reset(CompletionProvider)
      */
-    public JvsXMLCompletion(CompletionProvider provider, ClassLoader cl) {
+    public JVSXMLCompletion(CompletionProvider provider, ClassLoader cl) {
         this.provider = provider;
         this.completionCL = cl;
         if (completionCL == null) {
@@ -210,7 +210,7 @@ class JvsXMLCompletion extends DefaultHandler {
     
     public static DefaultCompletionProvider readCompletionToProvider(String file,DefaultCompletionProvider cp){
         SAXParserFactory factory = SAXParserFactory.newInstance();
-        JvsXMLCompletion handler = new JvsXMLCompletion(cp, ClassLoader.getSystemClassLoader());
+        JVSXMLCompletion handler = new JVSXMLCompletion(cp, ClassLoader.getSystemClassLoader());
         BufferedInputStream bin = new BufferedInputStream(ClassLoader.getSystemClassLoader().getResourceAsStream(file));
         try {
             SAXParser saxParser = factory.newSAXParser();

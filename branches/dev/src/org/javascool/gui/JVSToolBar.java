@@ -45,43 +45,43 @@ public class JVSToolBar extends ToolBar {
 
             @Override
             public void run() {
-                JVSPanel.getInstance().closeProglet();
+                Desktop.getInstance().closeProglet();
             }
         });
         addTool("Nouveau fichier", "org/javascool/widgets/icons/new.png", new Runnable() {
 
             @Override
             public void run() {
-                JVSPanel.getInstance().newFile();
+                Desktop.getInstance().openNewFile();
             }
         });
         addTool("Ouvrir un fichier", "org/javascool/widgets/icons/open.png", new Runnable() {
 
             @Override
             public void run() {
-                JVSPanel.getInstance().openFile();
+                Desktop.getInstance().openFile();
             }
         });
         addTool("Sauver", "org/javascool/widgets/icons/save.png", new Runnable() {
 
             @Override
             public void run() {
-                JVSPanel.getInstance().saveFile();
+                Desktop.getInstance().saveCurrentFile();
             }
         });
-        /*addTool("Sauver sous", "org/javascool/widgets/icons/saveas.png", new Runnable() {
+        addTool("Sauver sous", "org/javascool/widgets/icons/saveas.png", new Runnable() {
 
             @Override
             public void run() {
-                JVSPanel.getInstance().saveFile();
+                Desktop.getInstance().saveAsCurrentFile();
             }
-        });*/
+        });
 
         compileButton = addTool("Compiler", "org/javascool/widgets/icons/compile.png", new Runnable() {
 
             @Override
             public void run() {
-                JVSPanel.getInstance().compileFile();
+                Desktop.getInstance().compileFile();
             }
         });
 

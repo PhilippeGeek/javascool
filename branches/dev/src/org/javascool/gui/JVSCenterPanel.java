@@ -2,12 +2,12 @@ package org.javascool.gui;
 
 import javax.swing.JSplitPane;
 
-import org.javascool.gui.editor.JVSFileTabs;
+import org.javascool.gui.editor.JVSEditorsPane;
 
 /** Le double pannau central de Java's cool
  * Le JVSCenterPanel est utilisé pour plaçer correctemment le JVSWidgetPanel à
  * droite et le JVSFileTabs à gauche
- * @see org.javascool.gui.JVSFileTabs
+ * @see org.javascool.gui.JVSEditorsPane
  * @see org.javascool.gui.JVSWidgetPanel
  */
 class JVSCenterPanel extends JSplitPane {
@@ -24,7 +24,7 @@ class JVSCenterPanel extends JSplitPane {
   /** Constructeur de la classe */
   private JVSCenterPanel() {
     super(JSplitPane.HORIZONTAL_SPLIT);
-    this.setLeftComponent(JVSFileTabs.getInstance());
+    this.setLeftComponent(JVSEditorsPane.getInstance());
     this.setRightComponent(JVSWidgetPanel.getInstance());
     this.setVisible(true);
     this.validate();
