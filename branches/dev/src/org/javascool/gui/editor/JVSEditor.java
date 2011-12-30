@@ -106,7 +106,6 @@ class JVSEditor extends JPanel implements EditorKit{
 
 		toolBar=new ToolBar();
 		toolBar.add(new FormatCodeAction(textPane));
-		//toolBar.add(new CompletionSwitchAction(jacp));
 
 		add(toolBar,BorderLayout.NORTH);
 

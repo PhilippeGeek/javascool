@@ -20,12 +20,13 @@ public class CompileAction extends AbstractAction {
 	private EditorKit compiledEditor;
 	
 	public CompileAction(){
-		this.tabs=JVSEditorsPane.getInstance();
+		//this.tabs=JVSEditorsPane.getInstance();
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		try {
+			this.tabs=JVSPanel.getInstance().getEditorTabs();
 			if(tabs.saveCurrentFile()==false){
 				setSuccess(false);
 				return;
