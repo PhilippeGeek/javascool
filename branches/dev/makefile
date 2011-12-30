@@ -3,10 +3,9 @@ ok :
 	for f in `find src/org/javascool -name .svn -prune -o \( -name '*.*' \)` ;\
 	 do if [ -f $$f ] ; then g="../../work/$$f" ;\
            if [ -f $$g ] ; then if [ \! -z "`diff -q $$g $$f`" ] ;\
-           then echo "diff $$g $$f" ;\
-           #if [ -z "`echo $$f | grep '/gui'`" ] ; then diff $$f $$g ; echo ; fi ;\
+           then echo "-----------------------------------------"; echo "diff $$g $$f" ; diff $$f $$g ;\
 	   fi ; fi ;\
-	 fi ; done ; ok=1
+	 fi ; done | tee diff.txt ; ok=1
 
 
 ok2 :
