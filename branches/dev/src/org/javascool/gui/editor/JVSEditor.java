@@ -1,19 +1,15 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.javascool.gui.editor;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Event;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+
+import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
+import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
+import org.fife.ui.rtextarea.Gutter;
+import org.fife.ui.rtextarea.RTextScrollPane;
+
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -24,100 +20,76 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
 
-import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
-import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
-import org.fife.ui.rtextarea.Gutter;
-import org.fife.ui.rtextarea.RTextScrollPane;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Event;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+
 import org.javascool.gui.Desktop;
 import org.javascool.tools.FileManager;
 import org.javascool.widgets.MainFrame;
 import org.javascool.widgets.TabbedPane;
 import org.javascool.widgets.ToolBar;
 
-/** Define a JVSEditor
- * Use JVSEditor to edit jvs files, it can be used as a panel
+/**
+ * Define a JVSEditor Use JVSEditor to edit jvs files, it can be used as a panel
+ * 
  * @author Philippe VIENNE
  */
-class JVSEditor extends JPanel implements EditorKit{
+class JVSEditor extends JPanel implements EditorKit {
 
 	private static final long serialVersionUID = 1L;
+
 	/** Tests if on MacIntosh. */
 	private static boolean isMac() {
 		return System.getProperty("os.name").toUpperCase().contains("MAC");
 	}
+
 	/** The editor */
-	private RSyntaxTextArea textPane;
+	private final RSyntaxTextArea textPane;
 	/** The scroll pane */
-	private RTextScrollPane scrollPane;
+	private final RTextScrollPane scrollPane;
 	/** The ToolBar */
-	private ToolBar toolBar;
+	private final ToolBar toolBar;
 	/** The Completion Provider */
-	private JVSAutoCompletionProvider jacp;
+	private final JVSAutoCompletionProvider jacp;
 	/** Opened file */
 	private FileReference file;
 
-	/* (non-Javadoc)
-	 * @see org.javascool.gui.editor.Editor#getFile()
-	 */
-	@Override
-	public FileReference getFile() {
-		return file;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.javascool.gui.editor.Editor#getName()
-	 */
-	@Override
-	public String getName(){
-		if(file==null)
-			return "Nouveau Fichier";
-		if(file.isTmp())
-			return "Nouveau Fichier";
-		else
-			return file.getName();
-	}
-
-	/* (non-Javadoc)
-	 * @see org.javascool.gui.editor.Editor#setFile(org.javascool.gui.editor.JVSFileReferance)
-	 */
-	@Override
-	public void setFile(FileReference file) {
-		this.file = file;
-		textPane.setText(file.getContent());
-		firePropertyChange("name", null, getName());
-	}
-
-	/** Create a new JVSEditor
-	 * Common setup
+	/**
+	 * Create a new JVSEditor Common setup
 	 */
 	public JVSEditor(FileReference file) {
 		super(new BorderLayout());
 		TabbedPane.setComponentClosable(this);
-		this.file=file;
+		this.file = file;
 		textPane = createTextArea();
 
-		jacp=new JVSAutoCompletionProvider(textPane);
+		jacp = new JVSAutoCompletionProvider(textPane);
 		jacp.setShowDescWindow(true);
 
-		scrollPane=new RTextScrollPane(textPane);
+		scrollPane = new RTextScrollPane(textPane);
 		scrollPane.getGutter().setBorderColor(Color.BLACK);
 
 		add(scrollPane);
 
-		toolBar=new ToolBar();
+		toolBar = new ToolBar();
 		toolBar.add(new FormatCodeAction(textPane));
 
-		add(toolBar,BorderLayout.NORTH);
+		add(toolBar, BorderLayout.NORTH);
 
 		setText(file.getContent());
 	}
 
-	/** TextArea initialization
-	 * Creates the text area for this application.
+	/**
+	 * TextArea initialization Creates the text area for this application.
+	 * 
 	 * @return The text area.
 	 */
 	private RSyntaxTextArea createTextArea() {
-		RSyntaxTextArea textArea = new RSyntaxTextArea();
+		final RSyntaxTextArea textArea = new RSyntaxTextArea();
 		textArea.setCaretPosition(0);
 		textArea.requestFocusInWindow();
 		textArea.setMarkOccurrences(true);
@@ -126,14 +98,14 @@ class JVSEditor extends JPanel implements EditorKit{
 		textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
 
 		KeyStroke key = KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.CTRL_MASK);
-		if (isMac()) {
+		if (JVSEditor.isMac()) {
 			key = KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.META_MASK);
 		}
 		KeyStroke.getKeyStroke(KeyEvent.VK_C, Event.CTRL_MASK);
-		if (isMac()) {
+		if (JVSEditor.isMac()) {
 			KeyStroke.getKeyStroke(KeyEvent.VK_C, Event.META_MASK);
 		}
-		textArea.getInputMap().put(key,"save");
+		textArea.getInputMap().put(key, "save");
 		textArea.getActionMap().put("save", new AbstractAction() {
 
 			private static final long serialVersionUID = 1L;
@@ -144,13 +116,41 @@ class JVSEditor extends JPanel implements EditorKit{
 			}
 		});
 		textArea.getDocument().addDocumentListener(new DocumentListener() {
+			@Override
 			public void changedUpdate(DocumentEvent e) {
 				file.setContent(getText());
 			}
-			public void insertUpdate(DocumentEvent e) {}
-			public void removeUpdate(DocumentEvent e) {}
+
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+			}
 		});
 		return textArea;
+	}
+
+	/**
+	 * @see org.javascool.gui.editor.Editor#getFile()
+	 */
+	@Override
+	public FileReference getFile() {
+		return file;
+	}
+
+	/**
+	 * @see org.javascool.gui.editor.Editor#getName()
+	 */
+	@Override
+	public String getName() {
+		if (file == null)
+			return "Nouveau Fichier";
+		if (file.isTmp())
+			return "Nouveau Fichier";
+		else
+			return file.getName();
 	}
 
 	/** Get the RSyntaxTextArea */
@@ -163,7 +163,7 @@ class JVSEditor extends JPanel implements EditorKit{
 		return scrollPane;
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see org.javascool.gui.editor.Editor#getText()
 	 */
 	@Override
@@ -171,15 +171,15 @@ class JVSEditor extends JPanel implements EditorKit{
 		return textPane.getText();
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see org.javascool.gui.editor.Editor#hasToSave()
 	 */
 	@Override
-	public Boolean hasToSave(){
+	public Boolean hasToSave() {
 		return file.hasToSave();
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see org.javascool.gui.editor.Editor#removeLineSignals()
 	 */
 	@Override
@@ -187,64 +187,79 @@ class JVSEditor extends JPanel implements EditorKit{
 		getScrollPane().getGutter().removeAllTrackingIcons();
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see org.javascool.gui.editor.Editor#save()
 	 */
 	@Override
 	public Boolean save() {
-		if(file.isTmp()){
+		if (file.isTmp())
 			return saveAs();
-		} else {
+		else {
 			file.setContent(getText());
 			setFile(file);
 			return file.save();
 		}
 	}
 
+	/**
+	 * @see org.javascool.gui.editor.Editor#saveAs()
+	 */
+	@Override
 	public boolean saveAs() {
-		JFileChooser jfc=new JFileChooser();
-		jfc.setApproveButtonText(file.isTmp()?"Sauvegarder":"Sauvegarder sous");
-		if(jfc.showSaveDialog(MainFrame.getFrame())==JFileChooser.APPROVE_OPTION){
-			if(!jfc.getSelectedFile().getName().endsWith(FileReference.SOURCE_EXTENTION)){
-				jfc.setSelectedFile(new File(jfc.getSelectedFile().getParentFile(),jfc.getSelectedFile().getName()+FileReference.SOURCE_EXTENTION));
+		final JFileChooser jfc = new JFileChooser();
+		jfc.setApproveButtonText(file.isTmp() ? "Sauvegarder"
+				: "Sauvegarder sous");
+		if (jfc.showSaveDialog(MainFrame.getFrame()) == JFileChooser.APPROVE_OPTION) {
+			if (!jfc.getSelectedFile().getName()
+					.endsWith(FileReference.SOURCE_EXTENTION)) {
+				jfc.setSelectedFile(new File(jfc.getSelectedFile()
+						.getParentFile(), jfc.getSelectedFile().getName()
+						+ FileReference.SOURCE_EXTENTION));
 			}
-			if(jfc.getSelectedFile().exists()){
-				if(JOptionPane.showConfirmDialog(MainFrame.getFrame(), 
-						"Êtes vous sûr de vouloir effacer ce fichier ?", 
-						"Confirmation",
-						JOptionPane.YES_NO_OPTION,
-						JOptionPane.ERROR_MESSAGE)
-						!= JOptionPane.OK_OPTION)
+			if (jfc.getSelectedFile().exists()) {
+				if (JOptionPane.showConfirmDialog(MainFrame.getFrame(),
+						"Êtes vous sûr de vouloir effacer ce fichier ?",
+						"Confirmation", JOptionPane.YES_NO_OPTION,
+						JOptionPane.ERROR_MESSAGE) != JOptionPane.OK_OPTION)
 					return save();
 			}
-			FileManager.save(jfc.getSelectedFile().getAbsolutePath(), "", false, true);
+			FileManager.save(jfc.getSelectedFile().getAbsolutePath(), "",
+					false, true);
 			file.setFile(jfc.getSelectedFile());
 			return save();
-		} else {
+		} else
 			return false;
-		}
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see org.javascool.gui.editor.Editor#saveBeforeClose()
 	 */
 	@Override
 	public boolean saveBeforeClose() {
-		if(!hasToSave())
+		if (!hasToSave())
 			return true;
-		int result = JOptionPane.showConfirmDialog(
-				Desktop.getInstance().getFrame(),
-				"Voulez vous enregistrer " + getName() + " avant de continuer ?");
-		if (result == JOptionPane.YES_OPTION) {
+		final int result = JOptionPane.showConfirmDialog(Desktop.getInstance()
+				.getFrame(), "Voulez vous enregistrer " + getName()
+				+ " avant de continuer ?");
+		if (result == JOptionPane.YES_OPTION)
 			return save();
-		} else if (result == JOptionPane.NO_OPTION) {
+		else if (result == JOptionPane.NO_OPTION)
 			return true;
-		} else {
+		else
 			return false;
-		}
 	}
 
-	/* (non-Javadoc)
+	/**
+	 * @see org.javascool.gui.editor.Editor#setFile(org.javascool.gui.editor.JVSFileReferance)
+	 */
+	@Override
+	public void setFile(FileReference file) {
+		this.file = file;
+		textPane.setText(file.getContent());
+		firePropertyChange("name", null, getName());
+	}
+
+	/**
 	 * @see org.javascool.gui.editor.Editor#setText(java.lang.String)
 	 */
 	@Override
@@ -252,28 +267,30 @@ class JVSEditor extends JPanel implements EditorKit{
 		textPane.setText(text);
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see org.javascool.gui.editor.Editor#signalLine(int)
 	 */
 	@Override
 	public void signalLine(int line) {
-		Gutter gutter = getScrollPane().getGutter();
+		final Gutter gutter = getScrollPane().getGutter();
 		gutter.setBookmarkingEnabled(true);
 		ImageIcon icon = null;
 		BufferedImage img;
 		try {
-			img = ImageIO.read(ClassLoader.getSystemResourceAsStream("org/javascool/widgets/icons/error.png"));
+			img = ImageIO
+					.read(ClassLoader
+							.getSystemResourceAsStream("org/javascool/widgets/icons/error.png"));
 			icon = new ImageIcon(img);
-		} catch (IOException ex1) {
-			System.err.println("Dysfonctionnement innatendu ici "+ex1);
+		} catch (final IOException ex1) {
+			System.err.println("Dysfonctionnement innatendu ici " + ex1);
 		}
 		try {
-			getRTextArea().setCaretPosition(getRTextArea().getLineStartOffset(line - 1));
+			getRTextArea().setCaretPosition(
+					getRTextArea().getLineStartOffset(line - 1));
 			getScrollPane().getGutter().addLineTrackingIcon(line - 1, icon);
-		} catch (BadLocationException ex) {
-			System.err.println("Dysfonctionnement innatendu ici "+ex);
+		} catch (final BadLocationException ex) {
+			System.err.println("Dysfonctionnement innatendu ici " + ex);
 		}
 	}
-
 
 }
