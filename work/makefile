@@ -1,6 +1,6 @@
 # vthierry's ongoing tasks
 
-dft : jbl
+dft : prg
 
 export JAVA_HOME=/usr/java/jdk1.6.0_22
 #export JAVA_HOME=/usr/java/jdk1.7.0_02
@@ -28,6 +28,9 @@ jbl :
 
 pgl :
 	cd ../web ; ant build ; java -jar ../web/proglets/codagePixels/javascool-proglet-codagePixels.jar 
+
+prg :
+	ant javascool-builder.jar ; java -cp dist/javascool-builder.jar org.javascool.builder.Htm2Hml toto.xml
 
 php : 
 	cd ../web ; ant local

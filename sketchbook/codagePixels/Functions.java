@@ -50,12 +50,13 @@ public class Functions {
 
   /** Charge l'image.
    * - La taille de l'image ne doit pas être trop importante (pas plus de 500^2).
-   * @param image Nom de l'URL où se trouve l'image
+   * @param image Nom de l'URL (Universal Resource Location) de ll'URL où se trouve l'image.
+   * <p>Reconnait les formats binaires ".png", ".jpg" et ".gif". Reconnait les fichiers ASCII au format <a href="http://fr.wikipedia.org/wiki/Portable_pixmap">".pbm", ".pgm" et ".ppm"</a> par leur extension.</p>
    * @param centered Si l'image est centrée, la valeur vaut true; si l'image n'est pas centrée la valeur vaut false.
    */
   static public void load(String image, boolean centered) {
     try {
-      getPane().reset(image);
+      getPane().reset(ImageUtils.loadImage(image));
       Dimension dim = getPane().getDimension(); 
       Functions.centered = centered;
       if (centered) {
@@ -81,6 +82,7 @@ public class Functions {
   }
   /** Sauvegarde l'image actuellement affichée.
    * @param location Une URL (Universal Resource Location) cible où stocker l'image.
+   * <p>Reconnait le format de stockage par l'extension. Il est recommandé d'utiliser le format binaire ".pgn". Les formats  ASCIIt <a href="http://fr.wikipedia.org/wiki/Portable_pixmap">".pbm", ".pgm" et ".ppm"</a> sont disponibles aussi.</p> 
    * @return La valeur true si la sauvegarde s'est bien passée et la valeur fausse sinon (un message d'erreur s'affiche dans la console).
    */
   static public boolean save(String location) {
