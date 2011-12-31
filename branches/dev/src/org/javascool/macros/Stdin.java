@@ -104,6 +104,11 @@ public class Stdin {
 			{
 				add(new JLabel(Stdin.inputQuestion + " "));
 				add(new JButton("OUI") {
+					/**
+					 * 
+					 */
+					private static final long serialVersionUID = -8465819727014154894L;
+
 					{
 						addActionListener(new ActionListener() {
 							@Override
@@ -115,6 +120,11 @@ public class Stdin {
 					}
 				});
 				add(new JButton("NON") {
+					/**
+					 * 
+					 */
+					private static final long serialVersionUID = -1889751918846881484L;
+
 					{
 						addActionListener(new ActionListener() {
 							@Override
@@ -263,6 +273,11 @@ public class Stdin {
 			{
 				add(new JLabel(Stdin.inputQuestion + " "));
 				add(new JTextField(40) {
+					/**
+					 * 
+					 */
+					private static final long serialVersionUID = -2542888426785251306L;
+
 					{
 						addActionListener(new ActionListener() {
 							@Override

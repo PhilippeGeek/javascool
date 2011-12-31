@@ -1,5 +1,6 @@
 package org.javascool;
 
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import java.awt.event.MouseAdapter;
@@ -29,7 +30,7 @@ public class About {
 	 * lors de son clic.
 	 */
 	public static JLabel getAboutMessage() {
-		final JLabel logoLabel = new JLabel(Macros.getIcon(About.logo));
+		final JLabel logoLabel = new JLabel(new ImageIcon(Macros.getIcon(About.logo).getImage().getScaledInstance(26,26,  java.awt.Image.SCALE_SMOOTH)));
 		logoLabel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

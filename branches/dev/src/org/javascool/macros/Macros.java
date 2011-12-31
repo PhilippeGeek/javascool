@@ -157,6 +157,7 @@ public class Macros {
 	 * @return Le panneau graphique de la proglet courante ou null si il n'est
 	 *         pas défini.
 	 */
+	@SuppressWarnings("unchecked")
 	public static <T extends Component> T getProgletPane() {
 		Component c = null;
 		try {
