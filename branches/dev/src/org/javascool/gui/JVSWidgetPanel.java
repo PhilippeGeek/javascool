@@ -8,9 +8,11 @@ import org.javascool.widgets.Console;
 import org.javascool.widgets.HtmlDisplay;
 import org.javascool.widgets.TabbedPane;
 
-/** Le panneau contenant les widgets
- * Les widgets de Java's cool sont disposés dans des onglets. Certain onglets de
- * navigation web peuvent être fermés par une croix.
+/**
+ * Le panneau contenant les widgets Les widgets de Java's cool sont disposés
+ * dans des onglets. Certain onglets de navigation web peuvent être fermés par
+ * une croix.
+ * 
  * @see org.javascool.widgets.Console
  * @see org.javascool.widgets.HtmlDisplay
  * @see org.javascool.widgets
@@ -23,10 +25,10 @@ public class JVSWidgetPanel extends TabbedPane {
 	private static JVSWidgetPanel jwp;
 
 	public static JVSWidgetPanel getInstance() {
-		if (jwp == null) {
-			jwp = new JVSWidgetPanel();
+		if (JVSWidgetPanel.jwp == null) {
+			JVSWidgetPanel.jwp = new JVSWidgetPanel();
 		}
-		return jwp;
+		return JVSWidgetPanel.jwp;
 	}
 
 	private JVSWidgetPanel() {
@@ -34,55 +36,63 @@ public class JVSWidgetPanel extends TabbedPane {
 		this.add("Console", "", Console.getInstance());
 	}
 
-	/** Charge les tabs de la proglet
-	 * Charge le tab de la proglet (Panel) et l'HTMLDisplay avec le fichier d'aide.
-	 * @param name Le nom du package de la proglet
-	 */
-	public void setProglet(String name) {
-		this.removeAll();
-		this.add("Console", "", Console.getInstance());
-		Proglet proglet = ProgletEngine.getInstance().setProglet(name);
-		if (proglet.getPane() != null) {
-			this.progletTabId = this.add("Proglet " + name, "", proglet.getPane());
-		}
-		if (proglet.getHelp() != null) {
-			this.add("Aide de la proglet", "", new HtmlDisplay().setPage(Macros.getResourceURL(proglet.getHelp())));
-			this.switchToTab("Aide de la proglet");
-		}
-		HtmlDisplay memo = new HtmlDisplay();
-		memo.setPage(ClassLoader.getSystemResource(Core.help));
-		this.add("Mémo", "", memo);
+	/** Affiche la console */
+	public void focusOnConsolePanel() {
+		setSelectedIndex(this.indexOfTab("Console"));
 	}
 
 	/** Affiche l'onglet de la Proglet si il existe */
 	public void focusOnProgletPanel() {
 		if (progletTabId != null) {
-			this.switchToTab(progletTabId);
+			switchToTab(progletTabId);
 		}
 	}
 
-	/** Affiche la console */
-	public void focusOnConsolePanel() {
-		this.setSelectedIndex(this.indexOfTab("Console"));
-	}
-
-	/** Ouvre un nouvel onglet web
-	 * Ouvre un nouveau HTMLDisplay dans un onglet. Cet onglet peut être fermer à
-	 * l'aide de la croix qui se situe à droite du titre de l'onglet.
-	 * @param url L'url de la page à charger
-	 * @param tabName Le titre du tab à ouvrir
+	/**
+	 * Ouvre un nouvel onglet web Ouvre un nouveau HTMLDisplay dans un onglet.
+	 * Cet onglet peut être fermer à l'aide de la croix qui se situe à droite du
+	 * titre de l'onglet.
+	 * 
+	 * @param url
+	 *            L'url de la page à charger
+	 * @param tabName
+	 *            Le titre du tab à ouvrir
 	 * @see org.javascool.widgets.HtmlDisplay
 	 * @see String
 	 */
 	public void openWebTab(String url, String tabName) {
-		if(this.indexOfTab(tabName)>=0){
-			this.switchToTab(tabName);
+		if (this.indexOfTab(tabName) >= 0) {
+			switchToTab(tabName);
 			return;
 		}
-		HtmlDisplay memo = new HtmlDisplay();
+		final HtmlDisplay memo = new HtmlDisplay();
 		memo.setPage(url);
 		memo.putClientProperty("CLOSABLE", true);
 		this.add(tabName, "", memo);
-		this.setSelectedComponent(memo);
+		setSelectedComponent(memo);
+	}
+
+	/**
+	 * Charge les tabs de la proglet Charge le tab de la proglet (Panel) et
+	 * l'HTMLDisplay avec le fichier d'aide.
+	 * 
+	 * @param name
+	 *            Le nom du package de la proglet
+	 */
+	public void setProglet(String name) {
+		removeAll();
+		this.add("Console", "", Console.getInstance());
+		final Proglet proglet = ProgletEngine.getInstance().setProglet(name);
+		if (proglet.getPane() != null) {
+			progletTabId = this.add("Proglet " + name, "", proglet.getPane());
+		}
+		if (proglet.getHelp() != null) {
+			this.add("Aide de la proglet", "", new HtmlDisplay().setPage(Macros
+					.getResourceURL(proglet.getHelp())));
+			switchToTab("Aide de la proglet");
+		}
+		final HtmlDisplay memo = new HtmlDisplay();
+		memo.setPage(ClassLoader.getSystemResource(Core.help));
+		this.add("Mémo", "", memo);
 	}
 }
