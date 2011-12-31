@@ -29,7 +29,7 @@ public class Htm2Hml extends JPanel {
 	      private static final long serialVersionUID = 1L;
 	      @Override
 		public void actionPerformed(ActionEvent e) {
-		translate();
+		hml.setText(translate(htm.getText()));
 	      }});
 	}});
     add(b, BorderLayout.NORTH);
@@ -43,15 +43,23 @@ public class Htm2Hml extends JPanel {
 	}
       }));
     add(c, BorderLayout.CENTER);
-    // Just to test
-    htm.setText("<div>\n<div><img src='ok.png'></div>\n<hr>\n</div>");
   }
-  private void translate() {
-    hml.setText(Xml2Xml.html2xhtml(htm.getText()));
+
+  private static String translate(String htm) {
+    String hml = Xml2Xml.html2xhtml(htm);
     try {
-      hml.setText(Xml2Xml.run(hml.getText(), FileManager.load("org/javascool/builder/htm2hml.xslt")));
+      hml = Xml2Xml.run(hml, FileManager.load("org/javascool/builder/htm2hml.xslt"));
     } catch(Exception e) {
       System.out.println("Impossible de traduire le HTML en HML: "+e);
     }
+    return hml;
+  }
+  /** Lanceur de la transformation [X]HTML -> HML.
+   * @param usage <tt>java org.javascool.builder.Htm2Hml input-file [output-file]</tt>
+   */
+  public static void main(String[] usage) {
+    // @main
+    if(usage.length > 0)
+      FileManager.save(usage.length > 1 ? usage[1] : "stdout:", translate(FileManager.load(usage[0])));
   }
 }

@@ -1,5 +1,5 @@
 /*******************************************************************************
-* They.Vieville@sophia.inria.fr, Copyright (C) 2010.  All rights reserved. *
+* Thierry.Vieville@sophia.inria.fr, Copyright (C) 2010.  All rights reserved. *
 *******************************************************************************/
 
 package org.javascool.tools;
@@ -132,7 +132,7 @@ public class Xml2Xml {
            replaceAll("<[!?][^>]*>", "").
            replaceAll("&nbsp;", "&#160;").
            // Encapsule les constructions non XML
-           replaceAll("(<(meta|img|hr|br|link)[^>/]*)/?>", "$1/>");
+           replaceAll("(<(meta|img|hr|br|link) [^>]*[^>/]?)>", "$1/>");
   }
   /** Lanceur de la transformation XML -XSLT-> XML.
    * @param usage <tt>java org.javascool.tools.Xml2Xml input-file XSL-file [output-file] [paramName paramValue]</tt>
