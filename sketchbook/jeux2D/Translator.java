@@ -10,7 +10,7 @@ import java.lang.String;
 public class Translator extends org.javascool.core.Translator {
     @Override
   public java.lang.String getImports() {
-    return "import static org.javascool.proglets.jeux2D.*;";
+    return "import org.javascool.proglets.jeux2D.*; import static org.javascool.proglets.jeux2D.*;";
   }
 
     @Override

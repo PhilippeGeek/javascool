@@ -204,7 +204,7 @@ public class Panel extends JApplet {
 
         double vecX = autrePoisson.getX() - poisson.getX();
         double vecY = autrePoisson.getY() - poisson.getY();
-        double vecNorm = (double) (Math.sqrt(vecX * vecX + vecY * vecY));
+        double vecNorm = Math.sqrt(vecX * vecX + vecY * vecY);
         vecX /= vecNorm;
         vecY /= vecNorm;
         vecX *= force;
@@ -213,7 +213,7 @@ public class Panel extends JApplet {
         sommeY = sommeY + vecY;
       }
     }
-    poisson.position(poisson.getX() + (double) (sommeX), poisson.getY() + (double) (sommeY));
+    poisson.position(poisson.getX() + sommeX, poisson.getY() + sommeY);
     for(int i = 0; i < demo_poissons.size(); i++) {
       Oval autrePoisson = (Oval) demo_poissons.get(i);
       if(autrePoisson != poisson) {
@@ -223,7 +223,7 @@ public class Panel extends JApplet {
         double by = autrePoisson.getY();
         double vecABX = bx - ax;
         double vecABY = by - ay;
-        double normAB = (double) Math.sqrt(vecABX * vecABX + vecABY * vecABY);
+        double normAB = Math.sqrt(vecABX * vecABX + vecABY * vecABY);
         if(normAB < 2 * 5) {
           double overlap = 2 * 5 - normAB;
           vecABX /= normAB;
