@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <div title="Proglet Tic-Tac-Toe version réseau">
-
-
+  <p class="margin"> Auteur : Christophe Béasse </p><p></p>
 
 <div title="Présentation: jeu du Tic-Tac-Toe et primitives réseau">
 
