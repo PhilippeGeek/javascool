@@ -31,9 +31,7 @@ public class IconOutput extends JPanel {
     setPreferredSize(new Dimension(550, 550));
     reset(550, 550);
   }
-  /** Routine interne de tracé, ne pas utiliser.
-   *
-   */
+  /** Routine interne de tracé, ne pas utiliser. */
   @Override
   public void paint(Graphics g) {
     super.paint(g);
@@ -77,6 +75,7 @@ public class IconOutput extends JPanel {
   public final IconOutput reset(int width, int height, boolean zoom) {
     if(width > 550 || height > 550 || width * height > 550 * 550) throw new IllegalArgumentException("Image size too big !");
     this.zoom = zoom;
+    /*
     if (width <= 0)
       width = 300;
     if (height <= 0)
@@ -85,6 +84,7 @@ public class IconOutput extends JPanel {
       width++;
     if(height % 2 == 0)
       height++;
+    */
     image = new Color[(this.width = width) * (this.height = height)];
     for(int ij = 0; ij < this.width * this.height; ij++)
       image[ij] = Color.WHITE;

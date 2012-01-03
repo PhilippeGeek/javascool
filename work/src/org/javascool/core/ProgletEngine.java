@@ -128,7 +128,7 @@ public class ProgletEngine {
                         runnable.run();
                         thread = null;
                     } catch (Throwable e) {
-                        System.out.println("Erreur à l'exécution: " + e);
+                        Jvs2Java.report(e);
                     }
                 }
             })).start();

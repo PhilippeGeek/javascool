@@ -50,7 +50,7 @@ public class MainFrame extends JFrame {
   }
 
   /** Construit la fenêtre sans boutons de fermeture.
-   * <p>- Doit être appelé avant la méethode reset.</p>
+   * <p>- Doit être appelé avant la méthode reset.</p>
    * @return Cet objet, permettant de définir la construction <tt>new MainFrame().asPopup().reset(..)</tt>.
    */
   public MainFrame asPopup() {

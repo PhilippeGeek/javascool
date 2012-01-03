@@ -58,15 +58,19 @@ public class ErrorCatcher {
 						    (e.toString().indexOf("java.util.ConcurrentModificationException") == -1);
                                                   s += r + "</pre><hr>";
 						  System.err.println(s);
+                                                  // Ici on détecte si l'erreur vient du programme utilisateur
+                                                  if (r.toString().indexOf("JvsToJavaTranslated") != -1) {
+                                                    org.javascool.core.Jvs2Java.report(e);
+                                                  } else {
                                                   try {
-                                                    s += FileManager.load("http://javascool.gforge.inria.fr?weberroreport="+URLEncoder.encode(s, "utf-8"));
+                                                    FileManager.load("http://javascool.gforge.inria.fr?weberroreport="+URLEncoder.encode(s, "utf-8"));
                                                   } catch(Exception er) {
                                                     System.err.println("Impossible de lancer l'alerte à travers le web ("+er+")");
                                                   }
                                                   if(alert)
                                                     Macros.message(s, true);
                                                   uncaughtExceptionAlertOnce++;
-                                                }
+                                                }}
                                               }
                                               );
   }
