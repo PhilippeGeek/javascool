@@ -128,7 +128,6 @@ public class Functions {
    * <tr><td><tt>mailto:<i>address</i>?subject=<i>subject</i></tt></td><td>pour envoyer un courriel avec le texte en contenu.</td></tr>
    * <tr><td><tt>stdout:/</tt></td><td>pour l'imprimer dans la console.</td></tr>
    * </table></div>
-   * @param image L'image à sauvegarder.
    *
    * @throws IllegalArgumentException Si l'URL est mal formée.
    * @throws RuntimeException Si une erreur d'entrée-sortie s'est produite.
@@ -286,7 +285,7 @@ static public void loadImageToPixMap(int num, int pixMap [][]) {
   
   /** Rogner une image  
    * On dispose de 4 images de travail (1,2,3 ou 4)
-   * @param num1 numéro de l'image à rognenr      
+   * @param num numéro de l'image à rognenr      
    * @param x abscisse de la zone à garder
    * @param y ordonnée de la zone à garder
    * @param w largeur de la zone à garder
@@ -309,7 +308,7 @@ static public void loadImageToPixMap(int num, int pixMap [][]) {
    * @param num numéro de l'image de travail.*    
    * @param x Abcisse de l'image.
    * @param y Ordonnée de l'image.
-   * @param color Couleur: "black" (default), "blue", "cyan", "gray", "green", "magenta", "orange", "pink", "red", "white", "yellow".
+   * @param c Couleur: "black" (default), "blue", "cyan", "gray", "green", "magenta", "orange", "pink", "red", "white", "yellow".
    */  
      
   public static void setPixel(int num, int x, int y, int c) {
@@ -340,7 +339,7 @@ static public void loadImageToPixMap(int num, int pixMap [][]) {
    * @param num numéro de l'image de travail.*    
    * @param x Abcisse de l'image.
    * @param y Ordonnée de l'image.
-   * @param color Couleur: "black" (default), "blue", "cyan", "gray", "green", "magenta", "orange", "pink", "red", "white", "yellow".
+   * @param c Couleur: "black" (default), "blue", "cyan", "gray", "green", "magenta", "orange", "pink", "red", "white", "yellow".
    * @return Renvoie true si le pixel est de la couleur spécifiée
    */ 	
   
@@ -355,7 +354,7 @@ static public void loadImageToPixMap(int num, int pixMap [][]) {
 	}	
   
   /** Renvoie le code coudeur de la couleur spécifiée
-   * @param color Couleur: "black" (default), "blue", "cyan", "gray", "green", "magenta", "orange", "pink", "red", "white", "yellow".
+   * @param c Couleur: "black" (default), "blue", "cyan", "gray", "green", "magenta", "orange", "pink", "red", "white", "yellow".
    * @return Renvoie la valeur int RGB de la couleur spécifiée
    */ 	
   
@@ -443,10 +442,10 @@ static public void loadImageToPixMap(int num, int pixMap [][]) {
           
   /** Tracer d'une chaîne de caractères dans l'images de travail
    * On dispose de 4 images de travail (1,2,3 ou 4) 
-   * @param num numéro de l'image de travail.   
-   * @param xc abscisse coin haut gauche du carré.    
-   * @param yc ordonnée coin haut gauche du carré.   
-   * @param lg longueur côté du carré.  
+   * @param num numéro de l'image de travail. 
+   * @param str message à afficher.       
+   * @param x abscisse coin haut gauche du carré.    
+   * @param y ordonnée coin haut gauche du carré.    
    * @param c  couleur du tracé.        
    */         
     
@@ -645,7 +644,7 @@ public static void showPipImage() {
   /** Trace aléatoirement la forme à détecter dans l'image
    * on travail dans l'image de travail [1]
    * la fonction définit une image de  400 x 400   
-   *  @scenario définit le type de scénario proposé :
+   *  @param scenario définit le type de scénario proposé :
    *         - (1) : détection d'un carré
    *         - (2) : détection d'un cercle
    *         - (3) : détection cercle ou carré

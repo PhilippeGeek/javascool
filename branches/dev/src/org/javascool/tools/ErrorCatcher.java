@@ -122,15 +122,6 @@ public class ErrorCatcher {
 								"java.util.ConcurrentModificationException") == -1;
 				s += r + "</pre><hr>";
 				System.err.println(s);
-				try {
-					s += FileManager
-							.load("http://javascool.gforge.inria.fr?weberroreport="
-									+ URLEncoder.encode(s, "utf-8"));
-				} catch (final Exception er) {
-					System.err
-							.println("Impossible de lancer l'alerte à travers le web ("
-									+ er + ")");
-				}
 				if (alert) {
 					Macros.message(s, true);
 				}
