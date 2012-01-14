@@ -2,7 +2,7 @@ package org.javascool.proglets.jeux2D;
 
 import java.lang.String;
 
-/** Définit la traduction d'un code Jvs en code Java  pour manipuler la proglet «jeuxConverted» (A DÉTRUIRE SI NON UTILISÉ).
+/** Définit la traduction d'un code Jvs en code Java  pour manipuler la proglet «jeux2D» (A DÉTRUIRE SI NON UTILISÉ).
  *
  * @see <a href="Translator.java.html">code source</a>
  * @serial exclude
@@ -10,7 +10,7 @@ import java.lang.String;
 public class Translator extends org.javascool.core.Translator {
     @Override
   public java.lang.String getImports() {
-    return "import org.javascool.proglets.jeux2D.*; import static org.javascool.proglets.jeux2D.*;";
+    return "import org.javascool.proglets.jeux2D.*;";
   }
 
     @Override

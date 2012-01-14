@@ -197,6 +197,7 @@ public class PrivateFunctions implements EventCatcher {
    * It stops the timer and deletes the listeners
    */
   public static void stop() {
+  	System.out.println("STOP");
     GamePanel p = Panel.m_panel;
     p.stop();
     m_exit = true;
