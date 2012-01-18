@@ -18,6 +18,7 @@ public class Functions {
     getPane().inputX.setScale(-Xscale, Xscale, 0.001);
     getPane().inputY.setScale(-Yscale, Yscale, 0.001);
     getPane().scope.reset(0, 0, Xscale, Yscale);
+    getPane().runnable = null;
   }
   /** Initialise le tracé.
    * @param Xmin Echelle minimale horizontale, l'abscisse sera tracée dans [-Xmin, Xmax], par défaut [-1, 1].
@@ -29,6 +30,7 @@ public class Functions {
     getPane().inputX.setScale(Xmin, Xmax, 0.001);
     getPane().inputY.setScale(Ymin, Ymax, 0.001);
     getPane().scope.reset((Xmin + Xmax) / 2, (Ymin + Ymax) / 2, (Xmax - Xmin) / 2, (Ymax - Ymin) / 2);
+    getPane().runnable = null;
   }
   /*
    * @see #reset(double, double, double, double)
@@ -122,5 +124,12 @@ public class Functions {
   /** Renvoie la valeur verticale du réticule. */
   public static double getY() {
     return getPane().inputY.getValue();
+  }
+  /** Définit une portion de code appellée à chaque modification du réticule.
+   * @param runnable La portion de code à appeler, ou null si il n'y en a pas.
+   * @return Cet objet, permettant de définir la construction <tt>new CurveOutput().setRunnable(..)</tt>.
+   */
+  public void setRunnable(Runnable runnable) {
+    getPane().runnable = runnable;
   }
 }

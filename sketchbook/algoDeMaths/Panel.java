@@ -24,6 +24,8 @@ public class Panel extends JPanel {
       public void run() {
         inputX.setValue(scope.getReticuleX());
         inputY.setValue(scope.getReticuleY());
+	if (runnable != null)
+	  runnable.run();
       }
     };
     Runnable run2 = new Runnable() {
@@ -41,4 +43,6 @@ public class Panel extends JPanel {
   public CurveOutput scope;
   /** Entrées de valeurs numériques. */
   public NumberInput inputX, inputY;
+  /** Runnable à appeler. */
+  public Runnable runnable = null;
 }
