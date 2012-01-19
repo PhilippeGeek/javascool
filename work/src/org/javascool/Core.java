@@ -63,8 +63,8 @@ public class Core {
       } catch (UnsupportedEncodingException ex) {
 	throw new RuntimeException("Spurious defaultCharset: this is a caveat");
       }
-    } else
-      throw new RuntimeException("Java's cool n'a pas été démarré depuis un Jar");
+    } else{return "";}
+      //throw new RuntimeException("Java's cool n'a pas été démarré depuis un Jar");
   }
   private static String javascoolJar = null;
   /** Lanceur de l'application.
