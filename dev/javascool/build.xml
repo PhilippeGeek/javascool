@@ -19,17 +19,15 @@
 	<property name="classpath" value="./../../work/lib/jarsigner.jar:./../../work/lib/java2html.jar:./../../work/lib/javac.jar:./../../work/lib/javadoc.jar:./../../work/lib/jvs2html.jar:./../../work/lib/RSyntaxTextArea.jar:./../../work/lib/saxon.jar"/>
 
 	<target name="build">
+		<delete dir="bin"/>
 		<mkdir dir="bin"/>
-		<copy todir="./bin">
-			<fileset dir="./../../work/src" excludes="**/*.java"/>
-			<fileset dir="./src" excludes="**/*.java"/>
-		</copy>
 		<javac srcdir="./../../work/src"
          destdir="./bin"
          classpath="${classpath}"
          debug="on"
 		/>
 		<delete dir="./bin/org/javascool/gui"/>
+		<delete dir="./bin/org/javascool/builder"/>
 		<delete file="./bin/org/javascool/Core.class"/>
 		<delete file="./bin/org/javascool/About.class"/>
 		<javac srcdir="./src"
@@ -37,5 +35,9 @@
          classpath="${classpath}"
          debug="on"
 		/>
+		<copy todir="./bin">
+			<fileset dir="./../../work/src" excludes="**/*.java"/>
+			<fileset dir="./src" excludes="**/*.java"/>
+		</copy>
 	</target>
 </project>
