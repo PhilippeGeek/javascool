@@ -56,19 +56,37 @@ public abstract class StartStopButton extends JPanel {
 		startButton.setIcon(Macros
 				.getIcon("org/javascool/widgets/icons/stop.png"));
 		revalidate();
-		new Thread(new Runnable() {
+		/* BUG FIX : Stop button not change immediately at program 
+		 * stop.
+		 * SOLUTION :
+		 * Use two separate Threads to check running speeder than
+		 * the Timer which get up all seconds, the isRunningThread
+		 * get up all 50 milliseconds.
+		 * AUTHOR : Philippe VIENNE <philoumailabo@gmail.com>
+		 */
+		Thread isRunningThread=new Thread(new Runnable() {
 			@Override
 			public void run() {
-				for (int t = 0; isRunning(); t++) {
-					execTime.setText("  Temps d'exécution : " + t / 60
-							+ " min " + t % 60 + " sec");
-					execTime.revalidate();
-					Macros.sleep(1000);
+				while (isRunning()) {
+					Macros.sleep(50);
 				}
 				doStop();
 			}
-		}).start();
+		});
+		Thread timerThread=new Thread(new Runnable() {
+					@Override
+					public void run() {
+						for (int t = 0; isRunning(); t++) {
+							execTime.setText("  Temps d'exécution : " + t / 60
+									+ " min " + t % 60 + " sec");
+							execTime.revalidate();
+							Macros.sleep(1000);
+						}
+					}
+				});
 		start();
+		isRunningThread.start();
+		timerThread.start();
 	}
 
 	/** Arrêt du programme et du compteur. */

@@ -131,7 +131,18 @@ public class ProgletEngine {
 			javaFile = new File(jvs2java.getClassName() + ".java")
 					.getAbsolutePath();
 			System.err.println("Sauvegarde locale du fichier : " + javaFile);
-			FileManager.save(javaFile, javaCode);
+			try {
+				FileManager.save(javaFile, javaCode);
+				// Si le répertoire courant ne peux pas être écrit
+				// On sauvegarde dans le user.home
+			} catch (Exception e1) {
+				javaFile=new File(System.getProperty("user.home")+jvs2java.getClassName() + ".java").getAbsolutePath();
+				try {
+					FileManager.save(javaFile, javaCode);
+				} catch (Exception e2) {
+					throw new IllegalStateException("No directory writable, please run Java's Cool from a writable directory");
+				}
+			}
 		}
 		if (Java2Class.compile(javaFile)) {
 			runnable = Java2Class.load(javaFile);

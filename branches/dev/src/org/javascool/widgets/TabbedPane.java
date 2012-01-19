@@ -1,12 +1,5 @@
 package org.javascool.widgets;
 
-import javax.swing.ImageIcon;
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
-
-import java.awt.BasicStroke;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Graphics;
@@ -15,6 +8,11 @@ import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+
+import javax.swing.ImageIcon;
+import javax.swing.JComponent;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 
 import org.javascool.macros.Macros;
 
@@ -203,13 +201,13 @@ public class TabbedPane extends JTabbedPane {
 
 	private class TabCloseUI implements MouseListener, MouseMotionListener {
 		private final TabbedPane tabbedPane;
-		private int closeX = 2, closeY = 2, meX = 0, meY = 0;
-		private int selectedTab;
+		private int closeX = 0, closeY = 0, meX = 0, meY = 0;
+		private int selectedTab;		
+		private final ImageIcon img=Macros.getIcon("org/javascool/widgets/icons/close.png");
 		private final int width = 7, height = 7;
 		private final Rectangle rectangle = new Rectangle(0, 0, width, height);
 
 		public TabCloseUI(TabbedPane pane) {
-
 			tabbedPane = pane;
 			tabbedPane.addMouseMotionListener(this);
 			tabbedPane.addMouseListener(this);
@@ -233,27 +231,8 @@ public class TabbedPane extends JTabbedPane {
 		private void drawClose(Graphics g, int x, int y) {
 			if (tabbedPane != null && tabbedPane.getTabCount() > 0) {
 				final Graphics2D g2 = (Graphics2D) g;
-				drawColored(g2, isUnderMouse(x, y) ? Color.RED : Color.WHITE,
-						x, y);
+				g2.drawImage(img.getImage(), x, y, x+width, y+height, 0, 0, img.getIconWidth(), img.getIconHeight(), null);
 			}
-		}
-
-		private void drawColored(Graphics2D g2, Color color, int x, int y) {
-			g2.setStroke(new BasicStroke(4));
-			g2.setColor(Color.BLACK);
-			g2.drawLine(x, y, x + width, y + height);
-			g2.drawLine(x + width, y, x, y + height);
-			g2.setColor(color);
-			g2.setStroke(new BasicStroke(2));
-			g2.drawLine(x, y, x + width, y + height);
-			g2.drawLine(x + width, y, x, y + height);
-
-		}
-
-		private boolean isUnderMouse(int x, int y) {
-			if (Math.abs(x - meX) < width && Math.abs(y - meY) < height)
-				return true;
-			return false;
 		}
 
 		@Override
