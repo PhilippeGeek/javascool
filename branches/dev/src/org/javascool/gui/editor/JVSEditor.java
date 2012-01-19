@@ -37,6 +37,8 @@ import org.javascool.widgets.ToolBar;
  * Define a JVSEditor Use JVSEditor to edit jvs files, it can be used as a panel
  * 
  * @author Philippe VIENNE
+ * @todo Add a print command
+ * @todo Open File with AWT for Mac and/or Windows
  */
 class JVSEditor extends JPanel implements EditorKit {
 

@@ -194,7 +194,7 @@ public class Java2Class {
 			return (Runnable) o;
 		} catch (final Throwable e) {
 			throw new RuntimeException(
-					"Erreur: impossible de charger la classe de : " + path);
+					"Erreur: impossible de charger la classe de : " + path,e);
 		}
 	}
 

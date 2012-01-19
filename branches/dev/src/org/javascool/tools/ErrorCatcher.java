@@ -7,8 +7,6 @@ package org.javascool.tools;
 // Used to report a throwable
 
 // Used to frame a message
-import java.net.URLEncoder;
-
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
