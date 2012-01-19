@@ -72,9 +72,9 @@ public class Core {
 				throw new RuntimeException(
 						"Spurious defaultCharset: this is a caveat");
 			}
-		} else
-			throw new RuntimeException(
-					"Java's cool n'a pas été démarré depuis un Jar");
+		} else{return System.getProperty("user.dir");}
+			//throw new RuntimeException(
+				//	"Java's cool n'a pas été démarré depuis un Jar");
 	}
 
 	/**

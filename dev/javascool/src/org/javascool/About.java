@@ -14,16 +14,12 @@ import org.javascool.macros.Macros;
 public class About {
 
 	/** Titre de l'application. */
-	public static final String title = "Java's Cool 4";
+	public static final String title = "Java's Cool 4.2.β";
 	/** Logode l'application. */
 	public static final String logo = "org/javascool/widgets/icons/logo.png";
 
 	/** Numéro de révision de l'application. */
-	public static final String revision = "4.1.1015"; // @revision
-														// automatiquement mis
-														// à jour par ant -f
-														// work/build.xml
-														// classes
+	public static final String revision = "4.2.beta"; 
 
 	/**
 	 * Renvoie une bouton (sous forme de logo) qui affiche le panneau de about
@@ -52,7 +48,8 @@ public class About {
 						+ " et Inria<br/>"
 						+ "</center>"
 						+ "en collaboration avec David Pichardie, Philippe Lucaud, etc.. et le conseil de Robert Cabane<br/><br/>"
-						+ "Il est distribué sous les conditions de la licence CeCILL et GNU GPL V3<br/>",
+						+ "Il est distribué sous les conditions de la licence CeCILL et GNU GPL V3<br/>" +
+						"ATTENTION CETTE VERSION EST EN BETA TEST",
 				true);
 	}
 }
