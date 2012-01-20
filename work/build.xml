@@ -128,7 +128,7 @@
 
   <property name="classpath" value="./lib/autocomplete.jar:./lib/RSyntaxTextArea.jar:lib/jvs2html.jar:lib/javadoc.jar:lib/jarsigner.jar"/>
   
-  <target name="classes" depends="svn.revision">
+  <target name="classes" depends="clean,svn.revision">
     <exec os="Linux" executable="which">
       <arg value="javac"/>
     </exec>
@@ -325,5 +325,25 @@
   <target name="brun" depends="javascool-builder.jar">
     <java jar="./dist/javascool-builder.jar" dir="./../sketchbook" fork="true"/>
   </target>
+	
+	<target name="javascool-beta.jar" depends="javascool-base.jar">
+		<delete dir="./build/classes/org/javascool/gui/"/> 
+		<delete file="./build/classes/org/javascool/Core.class"/> 
+		<delete file="./build/classes/org/javascool/About.class"/>
+		<javac debug="true" debuglevel="lines,vars,source" includeantruntime="false" encoding="UTF-8" classpath="${classpath}:./dist/javascool-base.jar" srcdir="./../dev/javascool/src/" destdir="./build/classes/"/> 
+		<unzip dest="./build/classes" src="./lib/RSyntaxTextArea.jar"/>
+		<unzip dest="./build/classes" src="./lib/autocomplete.jar"/>
+		<unzip dest="./build/classes" src="./lib/javac.jar"/>
+		<jar destfile="./dist/javascool-beta.jar">
+			<manifest>
+				<attribute name="Main-Class" value="org.javascool.Core"/>
+			</manifest>
+			<fileset dir="./build/classes"/>
+			<fileset dir="./src" includes="org/javascool/widgets/icons/*"/>
+			<fileset dir="./../dev/javascool/src/" includes="org/javascool/gui/editor/*.xml"/>
+			<fileset dir="./src" includes="org/javascool/macros/*.htm"/>
+		</jar>
+		<java jar="./dist/javascool-beta.jar" dir="." fork="true"/>
+	</target>
   
 </project>

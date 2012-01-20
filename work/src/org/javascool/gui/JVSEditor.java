@@ -100,7 +100,7 @@ class JVSEditor extends JPanel {
         // textArea.addHyperlinkListener(this);
         textArea.requestFocusInWindow();
         textArea.setMarkOccurrences(true);
-        textArea.setTextAntiAliasHint("VALUE_TEXT_ANTIALIAS_ON");
+        //textArea.setTextAntiAliasHint("VALUE_TEXT_ANTIALIAS_ON");
         textArea.setText("");
 
         KeyStroke key = KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.CTRL_MASK);
