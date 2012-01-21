@@ -79,7 +79,7 @@
     </jar>
   </target>
 
-  <property name="proglets.validated" value="abcdAlgos algoDeMaths analogNumerique codagePixels commSerie cryptageRSA dichotomie exploSonore gogleMaps grapheEtChemins javaProg paintBrush syntheSons ticTacToe tortueLogo"/>
+  <property name="proglets.validated" value="abcdAlgos algoDeMaths analogNumerique codagePixels commSerie cryptageRSA detectionForme dichotomie exploSonore gogleMaps grapheEtChemins javaProg paintBrush syntheSons ticTacToe tortueLogo"/>
   <property name="proglets.unvalidated" value="enVoiture jeux2D rubik"/>
 
   <target name="javascool-proglets.jar" depends="javascool-builder.jar">

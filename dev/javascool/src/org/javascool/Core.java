@@ -77,6 +77,9 @@ public class Core {
 				//	"Java's cool n'a pas été démarré depuis un Jar");
 	}
 
+  public static String javascoolJarEnc()  {
+    return null;
+  }
 	/**
 	 * Lanceur de l'application.
 	 * 

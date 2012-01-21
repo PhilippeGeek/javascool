@@ -47,11 +47,14 @@ public class Core {
 	// Ici on essaye tous les encodages possibles pour essayer de détecter javascool
 	{
 	  jar = URLDecoder.decode(url, Charset.defaultCharset().name());
-	  if (new File(jar).exists())
+	  if (new File(jar).exists()) {
+           javascoolJarEnc = Charset.defaultCharset().name();
 	    return jar;
+          }
 	  for(String enc : Charset.availableCharsets().keySet()) {
 	    jar = URLDecoder.decode(url, enc);
 	    if (new File(jar).exists()) {
+              javascoolJarEnc = enc;
 	      System.err.println("Notice: javascool file " + jar + " correct decoding as "+enc);   
 	      return javascoolJar = jar;
 	    } else {
@@ -66,7 +69,11 @@ public class Core {
     } else{return "";}
       //throw new RuntimeException("Java's cool n'a pas été démarré depuis un Jar");
   }
-  private static String javascoolJar = null;
+  public static String javascoolJarEnc()  {
+    javascoolJar();
+    return javascoolJarEnc;
+  }
+  private static String javascoolJar = null, javascoolJarEnc = null;
   /** Lanceur de l'application.
    * @param usage <tt>java -jar javascool.jar</tt>
    */

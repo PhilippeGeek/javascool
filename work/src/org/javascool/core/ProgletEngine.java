@@ -101,10 +101,16 @@ public class ProgletEngine {
             javaFile = buildDir + File.separator + jvs2java.getClassName() + ".java";
             FileManager.save(javaFile, javaCode);
             // Si il y a un problème avec le répertoire temporaire on se rabat sur le répertoire local
-        } catch(Exception e) {
-            javaFile = new File(jvs2java.getClassName() + ".java").getAbsolutePath();
-            System.err.println("Sauvegarde locale du fichier : "+ javaFile);
-            FileManager.save(javaFile, javaCode);
+        } catch(Exception e1) {
+            try {
+              javaFile = new File(jvs2java.getClassName() + ".java").getAbsolutePath();
+              System.err.println("Sauvegarde locale du fichier : "+ javaFile);
+              FileManager.save(javaFile, javaCode);
+            // Sinon on signale le problème à l'utilisateur
+            } catch(Exception e2) {
+              System.out.println("Attention ! le répertoire '"+System.getProperty("user.dir") +"' ne peut être utilisé pour sauver de fichiers, \n il faut re-lancer javascool dans un répertoire de travail approprié.");
+              return false;
+            }
         }
         if (Java2Class.compile(javaFile)) {
             runnable = Java2Class.load(javaFile);

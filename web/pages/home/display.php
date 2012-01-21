@@ -22,7 +22,7 @@
 <td class="news-rightborder"></td><td class="news-right"></td></tr>
 <tr class="news-bottom"><td colspan="5" class="news-bottom"></td></tr>
 <tr><td></td><td></td><td class="news-trailer"><br/>
-<!--?php showLink('http://www.inria.fr','<img src="images/logo_INRIA0.png" width = "150" alt="INRIA" class="imagelink"/>','external');?><br/-->
+<?php showLink('http://www.inria.fr','<img src="images/logo_INRIA0.png" width = "150" alt="INRIA" class="imagelink"/>','external');?><br/>
 <?php showLink('http://www.unisciel.fr','<img src="images/logo_unisciel.png" width = "150" alt="Unisciel" class="imagelink"/>','external');?><br/>
 <?php showLink('http://fuscia.info','<img src="images/logo_fuscia.png" width = "150" alt="Fuscia" class="imagelink"/>','external');?><br/><br/>
 <?php showLink('http://unice.fr','<img src="images/logo_unice.gif" width = "150" alt="INRIA" class="imagelink"/>','external');?>
