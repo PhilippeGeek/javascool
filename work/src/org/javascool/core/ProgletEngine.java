@@ -108,13 +108,18 @@ public class ProgletEngine {
               FileManager.save(javaFile, javaCode);
             // Sinon on signale le problème à l'utilisateur
             } catch(Exception e2) {
-              System.out.println("Attention ! le répertoire '"+System.getProperty("user.dir") +"' ne peut être utilisé pour sauver de fichiers, \n il faut re-lancer javascool dans un répertoire de travail approprié.");
+              System.out.println("Attention ! le répertoire '"+System.getProperty("user.dir") +"' ne peut être utilisé pour sauver des fichiers, \n il faut re-lancer javascool dans un répertoire de travail approprié.");
               return false;
             }
         }
         if (Java2Class.compile(javaFile)) {
-            runnable = Java2Class.load(javaFile);
-            return true;
+            try {
+              runnable = Java2Class.load(javaFile);
+              return true; 
+            } catch(Exception e3) {
+              System.out.println("Attention ! le répertoire '"+new File(javaFile).getParent()+"' ne peut être utilisé pour sauver des fichiers, \n il faut re-lancer javascool dans un répertoire de travail approprié.");
+              return false;
+            }
         } else {
             runnable = null;
             return false;
