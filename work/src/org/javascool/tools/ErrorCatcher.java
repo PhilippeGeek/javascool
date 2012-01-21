@@ -39,13 +39,14 @@ public class ErrorCatcher {
                                                   String s = "", r = "";
                                                   if(uncaughtExceptionAlertOnce <= 1) {
                                                     s += uncaughtExceptionAlertHeader + "\n<hr><pre>";
-                                                    for(String p: new String[] { "application.revision", "java.version", "java.home", "os.name", "os.arch", "os.version", "user.name", "user.home", "user.dir" }
+                                                    for(String p: new String[] { "application.revision", "java.version", "java.home", "java.class.path", "os.name", "os.arch", "os.version", "user.name", "user.home", "user.dir" }
                                                         )
                                                       s += "> " + p + " = " + System.getProperty(p) + "\n";
                                                   }
                                                   try {
                                                     s += "> localhost = "+ java.net.InetAddress.getLocalHost() + "\n";
                                                   } catch(Exception er) {}
+                                                  s += "> file.enc = " + org.javascool.Core.javascoolJarEnc() + "\n";
                                                   s += "> thread.name = " + t.getName() + "\n";
                                                   s += "> throwable = " + e + "\n";
                                                   if(0 < uncaughtExceptionAlertOnce)
@@ -53,7 +54,7 @@ public class ErrorCatcher {
                                                   s += "> stack-trace = «\n";
                                                   for(int i = 0; i < t.getStackTrace().length; i++)
                                                     r += e.getStackTrace()[i] + (i < t.getStackTrace().length - 1 ? "\n" : "»");
-                                                  boolean alert = uncaughtExceptionAlertOnce == 0 && 
+                                                  boolean alert = 
 						    (uncaughtExceptionKeyword == null || r.indexOf(uncaughtExceptionKeyword) != -1) &&
 						    (e.toString().indexOf("java.util.ConcurrentModificationException") == -1);
                                                   s += r + "</pre><hr>";
@@ -63,11 +64,12 @@ public class ErrorCatcher {
                                                     org.javascool.core.Jvs2Java.report(e);
                                                   } else {
                                                   try {
-                                                    FileManager.load("http://javascool.gforge.inria.fr?weberroreport="+URLEncoder.encode(s, "utf-8"));
+                                                    if (uncaughtExceptionAlertOnce < 3 && alert)
+                                                      FileManager.load("http://javascool.gforge.inria.fr?weberroreport="+URLEncoder.encode(s, "utf-8"));
                                                   } catch(Exception er) {
                                                     System.err.println("Impossible de lancer l'alerte à travers le web ("+er+")");
                                                   }
-                                                  if(alert)
+                                                  if(uncaughtExceptionAlertOnce == 0 && alert)
                                                     Macros.message(s, true);
                                                   uncaughtExceptionAlertOnce++;
                                                 }}
