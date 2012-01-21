@@ -193,9 +193,10 @@ public class Java2Class {
       Class< ? > j_class = new URLClassLoader(urls).loadClass(javaClass.getName().replaceAll("\\.java", ""));
       Object o = j_class.newInstance();
       if(!(o instanceof Runnable))
-         throw new IllegalArgumentException("Erreur: la classe de "+javaClass+" qui n'est pas un Runnable");
+         throw new IllegalArgumentException("Erreur: la classe de "+javaClass+" n'est pas un Runnable");
       return (Runnable) o;
-    } catch(Throwable e) { throw new RuntimeException("Erreur: impossible de charger la classe de : "+path);
+    } catch(Throwable e) { 
+      throw new RuntimeException("Erreur: impossible de charger la classe de : "+path);
     }
   }
 }
