@@ -161,10 +161,10 @@ public class TabbedPane extends JTabbedPane {
 	}
 
 	/**
-	 * Say if a tab can be closed. By default this function return true but it
-	 * can be override. This is in add of {@link ClosableComponent}.isClosable()
+	 * Précise si le composant peut-être fermé. 
 	 */
 	public boolean isTabClosable(int tabIndex) {
+	  // This is in add of {@link ClosableComponent}.isClosable()
 		return true;
 	}
 
