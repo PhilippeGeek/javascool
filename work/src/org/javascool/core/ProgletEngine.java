@@ -150,12 +150,12 @@ public class ProgletEngine {
      * @param message Message d'erreur affiché à la console. Si null (par défaut) pas de message.
      */
     public void doStop(String message) {
+        if (message != null) {
+            System.out.println("Cause de l'interruption : " + message);
+        }
         if (thread != null) {
             thread.interrupt();
             thread = null;
-        }
-        if (message != null) {
-            System.out.println("Cause de l'interruption : " + message);
         }
     }
 

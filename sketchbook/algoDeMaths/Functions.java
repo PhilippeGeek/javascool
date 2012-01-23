@@ -127,9 +127,8 @@ public class Functions {
   }
   /** Définit une portion de code appellée à chaque modification du réticule.
    * @param runnable La portion de code à appeler, ou null si il n'y en a pas.
-   * @return Cet objet, permettant de définir la construction <tt>new CurveOutput().setRunnable(..)</tt>.
    */
-  public void setRunnable(Runnable runnable) {
+  public static void setRunnable(Runnable runnable) {
     getPane().runnable = runnable;
   }
 }
