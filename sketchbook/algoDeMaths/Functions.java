@@ -19,6 +19,7 @@ public class Functions {
     getPane().inputY.setScale(-Yscale, Yscale, 0.001);
     getPane().scope.reset(0, 0, Xscale, Yscale);
     getPane().runnable = null;
+    org.javascool.gui.Desktop.getInstance().focusOnProgletPanel();
   }
   /** Initialise le tracé.
    * @param Xmin Echelle minimale horizontale, l'abscisse sera tracée dans [-Xmin, Xmax], par défaut [-1, 1].
@@ -31,6 +32,7 @@ public class Functions {
     getPane().inputY.setScale(Ymin, Ymax, 0.001);
     getPane().scope.reset((Xmin + Xmax) / 2, (Ymin + Ymax) / 2, (Xmax - Xmin) / 2, (Ymax - Ymin) / 2);
     getPane().runnable = null;
+    org.javascool.gui.Desktop.getInstance().focusOnProgletPanel();
   }
   /*
    * @see #reset(double, double, double, double)

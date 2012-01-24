@@ -61,6 +61,7 @@ public class CurveOutput extends JPanel {
    */
   @Override
   public void paint(Graphics g) {
+    try {
     width = getWidth();
     height = getHeight();
     i0 = width / 2;
@@ -94,6 +95,7 @@ public class CurveOutput extends JPanel {
       g.drawLine(i, j - 1, i, j + 1);
     }
     paintReticule(g);
+    } catch(java.util.ConcurrentModificationException e) {}
   }
   private void paintReticule(Graphics g) {
     int i = x2i(reticuleX), j = y2j(reticuleY);
@@ -148,7 +150,7 @@ public class CurveOutput extends JPanel {
     public void mouseReleased(MouseEvent e) {
       mouseDragged(e);
       if(runnable != null)
-        runnable.run();
+	new Thread(runnable).start();
     }
     @Override
     public void mouseMoved(MouseEvent e) {}
@@ -232,6 +234,7 @@ public class CurveOutput extends JPanel {
     l.y2 = (y2 - Yoffset) / Yscale;
     l.c = 0 <= c && c < 10 ? colors[c] : Color.BLACK;
     lines.add(l);
+    repaint(0, 0, getWidth(), getHeight());
   }
   /** Trace un cercle.
    * @param x Abscisse du centre, dans [-Xscale+Xoffset..Xscale+Xoffset].
@@ -247,6 +250,7 @@ public class CurveOutput extends JPanel {
     l.h = 2 * r / Yscale;
     l.c = 0 <= c && c < 10 ? colors[c] : Color.BLACK;
     ovals.add(l);
+    repaint(0, 0, getWidth(), getHeight());
   }
   /** Trace une chaîne de caractères.
    * @param x Abscisse du coin en haut à gauche du texte, dans [-Xscale+Xoffset..Xscale+Xoffset].
@@ -261,6 +265,7 @@ public class CurveOutput extends JPanel {
     l.s = s;
     l.c = 0 <= c && c < 10 ? colors[c] : Color.BLACK;
     labels.add(l);
+    repaint(0, 0, getWidth(), getHeight());
   }
   /** Renvoie la position horizontale du réticule. */
   public double getReticuleX() {

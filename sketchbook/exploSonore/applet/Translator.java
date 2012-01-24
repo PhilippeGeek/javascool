@@ -8,6 +8,6 @@ package org.javascool.proglets.exploSonore;
 public class Translator extends org.javascool.core.Translator {
   @Override
   public String translate(String code) {
-    return code.replaceAll("\\s(playSignal|playRecord|playStop)\\(", " exploSonore.$1(");
+    return code.replaceAll("([^a-zA-Z0-9])(playSignal|playRecord|playStop)\\(", "$1exploSonoreFunctions.$2(");
   }
 }

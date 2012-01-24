@@ -89,15 +89,18 @@ static BigInteger encrypt(BigInteger m, BigInteger e, BigInteger n) {
 static BigInteger decrypt(BigInteger c, BigInteger d, BigInteger n) {
   BigInteger m, bitmask;
   m = new BigInteger("0");
-  int i = 0;
-  bitmask = (new BigInteger("2")).pow(n.bitLength()).subtract(new BigInteger("1"));
-  while(c.compareTo(bitmask) == 1) {
-    m = c.and (bitmask).modPow(d, n).shiftLeft(i * (n.bitLength() - 1)).or (m);
-    c = c.shiftRight(n.bitLength());
-    i = i + 1;
+  try {
+    int i = 0;
+    bitmask = (new BigInteger("2")).pow(n.bitLength()).subtract(new BigInteger("1"));
+    while(c.compareTo(bitmask) == 1) {
+      m = c.and (bitmask).modPow(d, n).shiftLeft(i * (n.bitLength() - 1)).or (m);
+      c = c.shiftRight(n.bitLength());
+      i = i + 1;
+    }
+    m = c.modPow(d, n).shiftLeft(i * (n.bitLength() - 1)).or (m);
+  } catch(NullPointerException e) { 
+    System.out.println("Attention à bien définir les paramètres avant d'utiliser la fonction de décrytage !");
   }
-  m = c.modPow(d, n).shiftLeft(i * (n.bitLength() - 1)).or (m);
-
   return m;
 }
 /** Crée une clé privée D et le couple de clé publiques (E, N).
