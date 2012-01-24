@@ -246,7 +246,7 @@ class JVSPanel extends JPanel {
         }
         // Check if a file is not save, if yes we can not close the application
         for (Boolean can_close_r : can_close) {
-            if (can_close_r == false) {
+            if (can_close_r != null && can_close_r == false) {
                 return false;
             }
         }
@@ -313,7 +313,7 @@ class JVSPanel extends JPanel {
         }
         // Check if a file is not save, if yes we can not close the application
         for (Boolean can_close_r : can_close) {
-            if (can_close_r == false) {
+            if (can_close_r != null && can_close_r == false) {
                 return false;
             }
         }

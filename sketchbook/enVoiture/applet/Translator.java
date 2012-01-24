@@ -8,6 +8,6 @@ package org.javascool.proglets.enVoiture;
 public class Translator extends org.javascool.core.Translator {
   @Override
   public String translate(String code) {
-    return code.replaceAll("\\s(addSpot|getClosestSpot|removeSpot|addRoad|removeRoad|isRoad)\\(", " enVoiture.$1(");
+    return code.replaceAll("([^a-zA-Z0-9])(addSpot|getClosestSpot|removeSpot|addRoad|removeRoad|isRoad)\\(", "$1enVoitureFunctions.$2(");
   }
 }

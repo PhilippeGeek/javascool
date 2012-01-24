@@ -332,21 +332,23 @@ public void StopAnySound() {
 }
 // Lance l'analyse spectrale
 public void launchFFT() {
-  fft = new FFT(in.bufferSize(), in.sampleRate());
+  if (in != null) {
+    fft = new FFT(in.bufferSize(), in.sampleRate());
 
-  stroke(0);
+    stroke(0);
 
-  fft.logAverages(60, 6); // /(screen.width/2)); //6 pour screen.width/2
+    fft.logAverages(60, 6); // /(screen.width/2)); //6 pour screen.width/2
 
-  w = width / fft.avgSize();
-  strokeWeight(w);
-  strokeCap(SQUARE);
+    w = width / fft.avgSize();
+    strokeWeight(w);
+    strokeCap(SQUARE);
 
-  background(0);
-  fade = get(0, 0, width, height);  // fade = get(0, 0, 100, 100);
+    background(0);
+    fade = get(0, 0, width, height);  // fade = get(0, 0, 100, 100);
 
-  rWidth = width * 0.99f;
-  rHeight = height * 0.99f;
+    rWidth = width * 0.99f;
+    rHeight = height * 0.99f;
+  }
 }
 /** Trac\u00e9 3D du spectre au fil du temps. */
 public void drawFFT(String n) {

@@ -1,25 +1,25 @@
-// Programme crée par Philippe Lucaud, Lycée Audiberti, Antibes
-// Tracé du http://fr.wikipedia.org/wiki/Triangle_de_Sierpinski
+// Programme cree par Philippe Lucaud, Lycee Audiberti, Antibes
+// Trace du http://fr.wikipedia.org/wiki/Triangle_de_Sierpinski
 // Exercice: modifier ce logiciel pour tracer le tapis de Sierpinski
-//  à partir de: http://fr.wikipedia.org/wiki/Tapis_de_Sierpi%C5%84ski
-// de manière non récursive
+//  a partir de: http://fr.wikipedia.org/wiki/Tapis_de_Sierpi%C5%84ski
+// de maniere non recursive
 void main() {
-  // Calcul de trois nombres aléatoires compris entre 0 et 1
+  // Calcul de trois nombres aleatoires compris entre 0 et 1
   double a = Math.random(), b = Math.random(), c = Math.random();
-  // Calcul des coordonnées du Barycentre du systême (A, a) (B, b) (C, c)
-  // avec A = (0, 0), B = (1, 0), C = (1/2, √3/2) (triangle équilatéral)
+  // Calcul des coordonnees du Barycentre du systeme (A, a) (B, b) (C, c)
+  // avec A = (0, 0), B = (1, 0), C = (1/2, √3/2) (triangle equilateral)
   double x_G = (b + c / 2) / (a + b + c);
   double y_G = (sqrt(3) * c / 2) / (a + b + c);
   clear();
   int N = readInteger("Combien voulez-vous faire d'essais ? ");
-  // Tracé du triangle équilatéral (A, B, C)
+  // Trace du triangle equilateral (A, B, C)
   reset(1.5, 1);
   addLine(0, 0, 1, 0, 4);
   addLine(1, 0, 0.5, sqrt(3) / 2, 6);
   addLine(0.5, sqrt(3) / 2, 0, 0, 6);
-  // Tracé des points du triangle de Sierpinsky
+  // Trace des points du triangle de Sierpinsky
   for (int n = 1; n <= N; n ++) {
-    // Tirage aléatoire 
+    // Tirage aleatoire 
     int k = random(1, 4);
     if (k == 1) {
       double x_I = x_G / 2;
@@ -43,6 +43,6 @@ void main() {
       y_G = y_I;
     }
   }
-  println("done : aller voir le résultat dans la proglet !");
+  println("done : aller voir le resultat dans la proglet !");
 }
 

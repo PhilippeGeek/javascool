@@ -496,15 +496,18 @@ public static BigInteger encrypt(BigInteger m, BigInteger e, BigInteger n) {
 public static BigInteger decrypt(BigInteger c, BigInteger d, BigInteger n) {
   BigInteger m, bitmask;
   m = new BigInteger("0");
-  int i = 0;
-  bitmask = (new BigInteger("2")).pow(n.bitLength()).subtract(new BigInteger("1"));
-  while(c.compareTo(bitmask) == 1) {
-    m = c.and (bitmask).modPow(d, n).shiftLeft(i * (n.bitLength() - 1)).or (m);
-    c = c.shiftRight(n.bitLength());
-    i = i + 1;
+  try {
+    int i = 0;
+    bitmask = (new BigInteger("2")).pow(n.bitLength()).subtract(new BigInteger("1"));
+    while(c.compareTo(bitmask) == 1) {
+      m = c.and (bitmask).modPow(d, n).shiftLeft(i * (n.bitLength() - 1)).or (m);
+      c = c.shiftRight(n.bitLength());
+      i = i + 1;
+    }
+    m = c.modPow(d, n).shiftLeft(i * (n.bitLength() - 1)).or (m);
+  } catch(NullPointerException e) { 
+    System.out.println("Attention \u00e0 bien d\u00e9finir les param\u00e8tres avant d'utiliser la fonction de d\u00e9crytage !");
   }
-  m = c.modPow(d, n).shiftLeft(i * (n.bitLength() - 1)).or (m);
-
   return m;
 }
 /** Cr\u00e9e une cl\u00e9 priv\u00e9e D et le couple de cl\u00e9 publiques (E, N).

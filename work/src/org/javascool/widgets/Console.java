@@ -110,8 +110,17 @@ public class Console extends JPanel {
    * @param text Le texte à afficher.
    */
   public void print(String text) {
+    for (String p : prefixes)  
+        if (text.startsWith(p))
+            return;
     outputPane.append(text);
   }
+  // Messages paarasites supprimés à l'affichage
+  private static final String prefixes[] = {
+   "=== Minim Error ===",
+   "=== Likely buffer underrun in AudioOutput.",
+   "==== JavaSound Minim Error ===="
+  };
   /** Renvoie le contenu actuel de la console.
    * @return Ce qui affiché dans la console.
    */

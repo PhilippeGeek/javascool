@@ -6,7 +6,7 @@ géographiques (longitude,latitude). La proglet fournie aussi une base
 de donnée constituée des coordonnées géographiques des grandes villes
 françaises et de certaines routes entre ces villes. Pour simplifier,
 ces routes sont de simples lignes droites. Un calcul de plus court
-chemin dans ce réseau de routes est aussi fournie.
+chemin dans ce réseau de routes est aussi fourni.
   </p>
 
   <div title="Affichage sur la carte">
@@ -34,7 +34,7 @@ chemin dans ce réseau de routes est aussi fournie.
   </div>
   
   <div title="Données géographiques">
-    La proglet fournie une base de coordonnées géographiques pour les grandes villes de France grâce tables suivantes.
+    La proglet fournie une base de coordonnées géographiques pour les grandes villes de France grâce aux tables suivantes.
     <div class="code">
       <m>Table des latitudes associée à chaque nom de ville.</m>
       <p><r>Map&lt;String,Double></r> <b>latitudes</b>;</p>
@@ -43,7 +43,7 @@ chemin dans ce réseau de routes est aussi fournie.
     </div>
     Nous associons ainsi chaque nom de ville de la base de donnée à une latitude (un nombre au format <r>Double</r>) ainsi qu'à une longitude. 
     Par exemple, l'expression <b>latitudes</b>.<r>get</r>("Paris") renvoie la latitude de Paris et  <b>longitudes</b>.<r>get</r>("Paris") sa longitude.
-    L'ensemble des villes répertoriées peux être obtenu par l'expression <b>latitudes</b>.<r>keySet</r>() de type <r>Set&lt;String></r>. 
+    L'ensemble des villes répertoriées peut être obtenu par l'expression <b>latitudes</b>.<r>keySet</r>() de type <r>Set&lt;String></r>. 
     
 <div>Exemple:
     <div class="code">
