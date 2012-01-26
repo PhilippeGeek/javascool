@@ -7,8 +7,8 @@ export JAVA_HOME=/usr/java/jdk1.6.0_22
 
 export PATH := $(JAVA_HOME)/bin:$(PATH)
 
-export JRE_HOME=/usr/java/jre1.6.0_27
-#export JRE_HOME=/usr/java/jre1.7.0_01
+#export JRE_HOME=/usr/java/jre1.6.0_27
+export JRE_HOME=/usr/java/jre1.7.0_01
 #export JRE_HOME=/usr/java/jdk1.6.0_22
 
 tst : 

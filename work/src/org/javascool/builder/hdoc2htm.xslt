@@ -77,8 +77,15 @@
   <font color="#505000"><xsl:apply-templates/></font>
 </xsl:template>
 
-<xsl:template match="v">
-  <font color="#008000">&quot;<xsl:apply-templates/>&quot;</font>
+<xsl:template match="v"> 
+  <xsl:choose>
+    <xsl:when test="$output = 'jvs'">
+      <font color="#008000">&quot;<xsl:apply-templates/>&quot;</font>
+    </xsl:when>
+    <xsl:otherwise>
+      <font color="#00FF00">&quot;<xsl:apply-templates/>&quot;</font>
+    </xsl:otherwise>
+  </xsl:choose>
 </xsl:template>
 
 <xsl:template match="m">
