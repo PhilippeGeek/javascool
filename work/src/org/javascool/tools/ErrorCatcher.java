@@ -56,7 +56,8 @@ public class ErrorCatcher {
                                                     r += e.getStackTrace()[i] + (i < t.getStackTrace().length - 1 ? "\n" : "»");
                                                   boolean alert = 
 						    (uncaughtExceptionKeyword == null || r.indexOf(uncaughtExceptionKeyword) != -1) &&
-						    (e.toString().indexOf("java.util.ConcurrentModificationException") == -1);
+						    (e.toString().indexOf("java.util.ConcurrentModificationException") == -1) &&
+						    (e.toString().indexOf("com.sun.java.swing.plaf.nimbus.DerivedColor$UIResource cannot be cast to com.sun.java.swing.Painter") == -1);
                                                   s += r + "</pre><hr>";
 						  System.err.println(s);
                                                   // Ici on détecte si l'erreur vient du programme utilisateur
