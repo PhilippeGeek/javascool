@@ -30,7 +30,8 @@ pro :
 	ant processing
 
 pgl :
-	cd ../web ; ant build ; java -jar ../web/proglets/codagePixels/javascool-proglet-codagePixels.jar 
+	cd ../web ; ant build
+	$(JRE_HOME)/bin/java -jar ../web/proglets/codagePixels/javascool-proglet-codagePixels.jar 
 
 prg :
 	ant javascool-builder.jar ; java -cp dist/javascool-builder.jar org.javascool.builder.Htm2Hml toto.xml

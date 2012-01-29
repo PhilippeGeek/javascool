@@ -88,6 +88,7 @@ public class Jvs2Java extends Translator {
       head.append("}");
     }
     String finalBody = body.toString().
+                       //- replaceAll("repeat\\(([^\\)]*)\\)", "/* @repeat */ for(int jvsInternalCounter = 0; jvsInternalCounter < $1; jvsInternalCounter++)").
                        replaceAll("(while.*\\{)", "$1 sleep(1);");
     if(progletTranslator != null)
         finalBody = progletTranslator.translate(finalBody);

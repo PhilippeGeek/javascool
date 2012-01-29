@@ -43,7 +43,7 @@
      <p><T/><r>setPoint</r>(x, -<r>Math.exp</r>(-(x + 1)), 7);</p>
      <p>}</p>
    </div></div>
-   <div>Un autre <l link="JeuSimon.jvs" text="exemple"/> permet de montrer les fonctionnalités avancées (réaction à un clic utilisateur).</div>
+   <div>Un autre <l class="editor" link="JeuSimon.jvs" text="exemple"/> permet de montrer les fonctionnalités avancées (réaction à un clic utilisateur).</div>
   </p>
   <p> Un autre <l class="editor" link="Triangle_de_sierpinsky.jvs" text="exemple de programme"/> permet de tracer des fractals.</p>
 <p>Cette «proglet» est un composant logiciel ouvert dont documentation et code-source sont disponibles <l link="http://javascool.gforge.inria.fr/?page=proglets&amp;action=show&amp;id=algoDeMaths&amp;helpFile=api/org/javascool/proglets/algoDeMaths/package-summary.html" text="ici"/></p>
