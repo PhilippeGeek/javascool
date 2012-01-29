@@ -6,6 +6,9 @@ import javax.swing.JLabel;
 import org.javascool.macros.Macros;
 
 /** Définit le panneau de "about" de javascool et son bouton d'ouverture.
+ *
+ * @see <a href="About.java.html">source code</a>
+ * @serial exclude
  */
 public class About {
 
@@ -15,7 +18,7 @@ public class About {
   public static final String logo = "org/javascool/widgets/icons/logo.png";
 
   /** Numéro de révision de l'application.*/
-  public static final String revision = "4.0.973"; // @revision automatiquement mis à jour par ant -f work/build.xml classes
+  public static final String revision = "4.0.0"; // @revision automatiquement mis à jour par ant -f work/build.xml classes
 
 
   /** Affiche le message de "about". */

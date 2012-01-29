@@ -127,9 +127,9 @@ public class ProgletsBuilder {
                 // Expansion des jars de javascool
                 String javascoolJar = Core.javascoolJar();
                 log("Extraction de Java's cool", true);
-                String libs[] = {"org/javascool", "org/fife", "com/sun/tools/javac", "sun/tools/java", "com/sun/source/tree", "com/sun/source/util"};
+                String libs[] = {"org/javascool", "org/fife", "sun/tools/java", "com/sun/tools/javac",  "com/sun/source/tree", "com/sun/source/util"};
                 for(String lib : libs)
-                  JarManager.jarExtract(javascoolJar, jarDir,lib);
+                  JarManager.jarExtract(javascoolJar, jarDir, lib);
             }
             DialogFrame.setUpdate("Installation 2/2", 20);
             Integer level = 20;
@@ -177,9 +177,14 @@ public class ProgletsBuilder {
                         String name = new File(proglet).getName();
                         String javascoolPrefix = "org" + File.separator + "javascool" + File.separator;
                         String jarEntries[] = {
-                            javascoolPrefix + "Core", javascoolPrefix + "About", "org" + File.separator + "fife",
+                            javascoolPrefix + "Core", 
+                            javascoolPrefix + "About", 
+                            "org" + File.separator + "fife",
+                            "com" + File.separator + "sun",
+                            "sun" + File.separator + "tools",
                             javascoolPrefix + "builder", javascoolPrefix + "core", javascoolPrefix + "gui", javascoolPrefix + "macros", javascoolPrefix + "tools", javascoolPrefix + "widgets",
-                            javascoolPrefix + "proglets" + File.separator + name};
+                            javascoolPrefix + "proglets" + File.separator + name
+                        };
                         String tmpJar = buildDir + File.separator + "javascool-proglet-" + name + ".jar";
                         JarManager.jarCreate(tmpJar, buildDir + "/manifest.jmf", jarDir, jarEntries);
 			// Reconstruction des pages webs en mode web
