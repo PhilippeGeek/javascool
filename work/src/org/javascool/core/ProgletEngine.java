@@ -117,7 +117,7 @@ public class ProgletEngine {
               runnable = Java2Class.load(javaFile);
               return true; 
             } catch(Exception e3) {
-              System.out.println("Attention ! le répertoire '"+new File(javaFile).getParent()+"' ne peut être utilisé pour sauver des fichiers, \n il faut re-lancer javascool dans un répertoire de travail approprié.");
+              System.out.println("Attention ! il y a eu une action externe de netoyyage de fichiers temporraires ou le répertoire '"+new File(javaFile).getParent()+"' ne peut être utilisé pour sauver des fichiers, \n il faut re-lancer javascool dans un répertoire de travail approprié.");
               return false;
             }
         } else {
