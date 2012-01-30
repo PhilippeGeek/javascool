@@ -245,11 +245,13 @@ class JVSPanel extends JPanel {
             i++;
         }
         // Check if a file is not save, if yes we can not close the application
-        for (Boolean can_close_r : can_close) {
+	try {
+	  for (Boolean can_close_r : can_close) {
             if (can_close_r != null && can_close_r == false) {
-                return false;
+	      return false;
             }
-        }
+	  }
+	} catch(NullPointerException e) {}
         // We return true if all is good
         return true;
     }
@@ -312,12 +314,14 @@ class JVSPanel extends JPanel {
             i++;
         }
         // Check if a file is not save, if yes we can not close the application
-        for (Boolean can_close_r : can_close) {
+	try {
+	  for (Boolean can_close_r : can_close) {
             if (can_close_r != null && can_close_r == false) {
-                return false;
+	      return false;
             }
-        }
-        // We return true if all is good
+	  }
+	} catch(NullPointerException e) {}
+	// We return true if all is good
         return true;
     }
 
