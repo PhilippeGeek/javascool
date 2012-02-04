@@ -18,7 +18,8 @@ public class Translator {
   }
   /** Transforme globalement le code pour passer des constructions spécifiques à Jvs à du java standard.
    * <p>Ce sont souvent des expression régulières appliquées à la chaîne, tout est ici de la responsabilité du concepteur de la proglet.</p>
-   * <p>Note: toutes les traductions standard du paassage de Jvs à Java sont automatiquement prises en charges.</p>
+   * <p>Note: toutes les traductions standard du passage de Jvs à Java sont automatiquement prises en charges.</p>   
+   * <p>Les portions de code de la forme <tt>/* <i>code-jvs</i> @&lt;nojavac*</tt><tt>/<i>code-java-derive</ii>/*@nojavac>*</tt><tt>/</tt> issus de pseudo-code retraduit en Java par la méthode translate sont traités pour que seul le <i>code-jvs</i> soit affiché en cas d'erreur de syntaxe.</p>
    * @param code Le code Jvs en entrée.
    * @return Le code transformé en Java pour ce qui est spécifique de cette proglet (par défaut la chaîne en entrée).</p>
    */
