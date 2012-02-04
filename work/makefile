@@ -1,6 +1,6 @@
 # vthierry's ongoing tasks
 
-dft : tst
+dft : prg
 
 export JAVA_HOME=/usr/java/jdk1.6.0_22
 #export JAVA_HOME=/usr/java/jdk1.7.0_02
@@ -33,8 +33,8 @@ pgl :
 	cd ../web ; ant build
 	$(JRE_HOME)/bin/java -jar ../web/proglets/codagePixels/javascool-proglet-codagePixels.jar 
 
-prg :
-	ant javascool-builder.jar ; java -cp dist/javascool-builder.jar org.javascool.builder.Htm2Hml toto.xml
+prg : 
+	ant javascool-proglets.jar ; java -cp dist/javascool-proglets.jar org.javascool.proglets.wwwIOI.Translator
 
 php : 
 	cd ../web ; ant local

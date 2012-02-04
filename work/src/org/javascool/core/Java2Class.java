@@ -34,6 +34,8 @@ public class Java2Class {
   /** Compile dans le système de fichier local, un code source Java.
    * <p>Les fichiers <tt>.class</tt> sont générés sur place.</p>
    * <p>Les erreurs de compilation sont affichées dans la console.</p>
+   * <p>Les erreurs les plus courantes sont reformulées en français.</p>
+   * <p>Les portions de code de la forme <tt>/* <i>code-jvs</i> @&lt;nojavac*</tt><tt>/<i>code-java-derive</ii>/*@nojavac>*</tt><tt>/</tt> issus de pseudo-code retraduit en Java par un <a href="Translator.html">Translator</a> sont traités pour que seul le <i>code-jvs</i> soit affiché en cas d'erreur de syntaxe.</p>
    * @param javaFile Le nom du fichier à compiler. Un tableau de noms de fichiers peut être donné.
    * @param allErrors Renvoie toutes les erreur si true, sinon uniquement la première erreur (par défaut).
    * @return La valeur true en cas de succès, false si il y a des erreurs de compilation.
@@ -155,6 +157,8 @@ public class Java2Class {
 	sout = sout.replaceAll("("+Pattern.quote(new File(javaFiles[0]).getPath())+"):([0-9]+):", "\n Erreur de syntaxe ligne $2 :\n ");
         sout = sout.replaceAll(Pattern.quote(new File(javaFiles[0]).getName().replaceFirst("java$", "")), "");
       }
+      // Escape des constructions dérivée d' un Translator
+      sout = sout.replaceAll("/\\*(.*)@<nojavac.*@nojavac>\\*/", "$1");
       // Passage en français des principaux diagnostics
       sout = sout.replaceAll("not a statement", 
 			     "L'instruction n'est pas valide.\n (Il se peut qu'une variable indiquée n'existe pas)");
