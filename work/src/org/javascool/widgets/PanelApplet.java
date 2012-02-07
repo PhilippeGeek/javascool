@@ -32,7 +32,7 @@ public class PanelApplet extends JApplet {
   /** Definition programmatique des paramètres de l'applet.
    * @param panel Le nom de la classe Java de l'objet graphique à afficher.
    * @param manualStart Invocations manuelles si true des méthodes <tt>start/stop</tt> (par défaut), sinon elles sont invoquées au lancement.
-   * @return Cet objet, permettant de définir la construction <tt>new PanelApllet().reset(..)</tt>.
+   * @return Cet objet, permettant de définir la construction <tt>new PanelApplet().reset(..)</tt>.
    */
   public PanelApplet reset(String panel, boolean manualStart) {
     this.panel = panel;

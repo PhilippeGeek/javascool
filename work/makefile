@@ -1,6 +1,6 @@
 # vthierry's ongoing tasks
 
-dft : tst
+dft : jpr
 
 export JAVA_HOME=/usr/java/jdk1.6.0_22
 #export JAVA_HOME=/usr/java/jdk1.7.0_02
@@ -25,6 +25,10 @@ sos :
 
 jbl :
 	ant javascool-builder.jar ; cd ../sketchbook ; java -jar ../work/dist/javascool-builder.jar
+
+jpr : 
+	javac -cp dist/javascool-proglets.jar Main.java
+	java -cp .:dist/javascool-proglets.jar Main
 
 pro :
 	ant processing
