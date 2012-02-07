@@ -27,8 +27,7 @@ jbl :
 	ant javascool-builder.jar ; cd ../sketchbook ; java -jar ../work/dist/javascool-builder.jar
 
 jpr : 
-	javac -cp dist/javascool-proglets.jar Main.java
-	java -cp .:dist/javascool-proglets.jar Main
+	ant javascool-proglets.jar ; javac -cp dist/javascool-proglets.jar Main.java ; java -cp .:dist/javascool-proglets.jar Main
 
 pro :
 	ant processing
