@@ -48,6 +48,7 @@ public class Console extends JPanel {
     return console != null;
   }
   private static Console console = null;
+
   private Console() {
     BorderLayout layout = new BorderLayout();
     this.setLayout(layout);
@@ -72,7 +73,6 @@ public class Console extends JPanel {
     this.add(toolbar, BorderLayout.NORTH);
     // Finalise l'objet
     redirectSystemStreams();
-    this.setVisible(true);
   }
   /** Redirige le System.out vers cet affichage */
   private void redirectSystemStreams() {
