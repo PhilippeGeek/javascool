@@ -26,21 +26,28 @@ public class Functions {
    * - La taille de l'image ne doit pas être trop importante (pas plus de 500^2).
    * @param width Demi largeur de l'image de taille {-width, width}, si centrée (sinon largeur de l'image)
    * @param height Demi hauteur de l'image de taille {-height, height}, si centrée (sinon hauteur de l'image).
-   * @param centered Si l'image est centrée, la valeur vaut true; si l'image n'est pas centrée la valeur vaut false.
+   * @param centered Si l'image est centrée, la valeur vaut true; si l'image n'est pas centrée la valeur vaut false.  
+   * @param zoom Ajuste automatiquement la taille de l'image au display si true (par défaut), sinon fixe 1 pixel de l'image à 1 pixel de l'affichage.
    */
-  static public void reset(int width, int height, boolean centered) {
+  static public void reset(int width, int height, boolean centered, boolean zoom) {
     Functions.width = width;
     Functions.height = height;
     Functions.centered = centered;
     if (centered) {
-      getPane().reset(2 * width + 1, 2 * height + 1);
+      getPane().reset(2 * width + 1, 2 * height + 1, zoom);
     } else {
-      getPane().reset(width, height);
+      getPane().reset(width, height, zoom);
     }
     org.javascool.gui.Desktop.getInstance().focusOnProgletPanel();
   }  
   /**									
-   * @see #reset(int, int, boolean)
+   * @see #reset(int, int, boolean, boolean)
+   */
+  static public void reset(int width, int height, boolean centered) {
+    reset(width, height, centered, true);
+  }
+  /**									
+   * @see #reset(int, int, boolean, boolean)
    */
   static public void reset(int width, int height) {
     reset(width, height, true);
@@ -53,10 +60,11 @@ public class Functions {
    * @param image Nom de l'URL (Universal Resource Location) de ll'URL où se trouve l'image.
    * <p>Reconnait les formats binaires ".png", ".jpg" et ".gif". Reconnait les fichiers ASCII au format <a href="http://fr.wikipedia.org/wiki/Portable_pixmap">".pbm", ".pgm" et ".ppm"</a> par leur extension.</p>
    * @param centered Si l'image est centrée, la valeur vaut true; si l'image n'est pas centrée la valeur vaut false.
+   * @param zoom Ajuste automatiquement la taille de l'image au display si true (par défaut), sinon fixe 1 pixel de l'image à 1 pixel de l'affichage.
    */
-  static public void load(String image, boolean centered) {
+  static public void load(String image, boolean centered, boolean zoom) {
     try {
-      getPane().reset(ImageUtils.loadImage(image));
+      getPane().reset(ImageUtils.loadImage(image), zoom);
       Dimension dim = getPane().getDimension(); 
       Functions.centered = centered;
       if (centered) {
@@ -74,7 +82,14 @@ public class Functions {
     org.javascool.gui.Desktop.getInstance().focusOnProgletPanel();
   }
   /**
-   * @see #load(String, boolean)
+   * @see #load(String, boolean, boolean)
+   *
+   */
+  static public void load(String image, boolean centered) {
+    load(image, centered, true);
+  }
+  /**
+   * @see #load(String, boolean, boolean)
    *
    */
   static public void load(String image) {
