@@ -35,7 +35,7 @@ public class Java2Class {
    * <p>Les fichiers <tt>.class</tt> sont générés sur place.</p>
    * <p>Les erreurs de compilation sont affichées dans la console.</p>
    * <p>Les erreurs les plus courantes sont reformulées en français.</p>
-   * <p>Les portions de code de la forme <tt>/* <i>code-jvs</i> @&lt;nojavac*</tt><tt>/<i>code-java-derive</ii>/*@nojavac>*</tt><tt>/</tt> issus de pseudo-code retraduit en Java par un <a href="Translator.html">Translator</a> sont traités pour que seul le <i>code-jvs</i> soit affiché en cas d'erreur de syntaxe.</p>
+   * <p>Les portions de code de la forme <tt>/*<i>code-jvs</i> @&lt;nojavac*</tt><tt>/<i>code-java-derive</ii>/*@nojavac>*</tt><tt>/</tt> issus de pseudo-code retraduit en Java par un <a href="Translator.html">Translator</a> sont traités pour que seul le <i>code-jvs</i> soit affiché en cas d'erreur de syntaxe.</p>
    * @param javaFile Le nom du fichier à compiler. Un tableau de noms de fichiers peut être donné.
    * @param allErrors Renvoie toutes les erreur si true, sinon uniquement la première erreur (par défaut).
    * @return La valeur true en cas de succès, false si il y a des erreurs de compilation.
@@ -68,6 +68,7 @@ public class Java2Class {
   }
 
   // Implementation using the javac compiler api : il n'est plus utilisé (donc plus maintenu !) avec l'arrivée dela jre 76
+  // Attention ce code n'est plus à jour il est gardé ici uniquement en arcive !!!!!
   private static boolean compile1(String javaFiles[], boolean allErrors) {
     // Initialisation des objets dy compilateur// The compiler tool
     JavaCompiler compiler = ToolProvider.getSystemJavaCompiler(); // The compiler tool
