@@ -40,7 +40,7 @@ public class Translator {
    * @param offset L'index de départ dans le texte à analyser.
    * @param start Le symbole de parenthèse ouvrante, ou null si non défini.
    * @param stop Le symbole de parenthèse fermante.
-   * @param espace Le symbole d'échappement de la parenthèse fermante, ou null si non défini.
+   * @param escape Le symbole d'échappement de la parenthèse fermante, ou null si non défini.
    * @param recurse Effectue une recherche qui tient compte de parenthèses emboitées, si égal à true.
    * @param code Passe par dessus les commentaires de programme <tt>/* . . *</tt><tt>/</tt> ou <tt>// . . /n</tt> et les chaînes de caractères <tt>" . . "</tt>, si égal à true.
    * @return Renvoie int[2], l'index du premier caratère et un plus l'index du dernier caractères du parenthésage,
