@@ -7,7 +7,7 @@ Pour pouvoir co-développer [http://javascool.gforge.inria.fr JavaScool] il faut
 Il est important de :
   # suivre le flux RSS des [http://code.google.com/feeds/p/javascool/svnchanges/basic commit]
   # suivre la liste des [http://code.google.com/p/javascool/issues/list issues]
-tandis que notre [JavaScoolOnGoingWork todo-list] tient à jour ce que nosu avons en cours.
+tandis que notre [JavaScoolOnGoingWork todo-list] tient à jour ce que nous avons en cours.
 
 Il faut aussi être inscrit sur cette forge en nous [http://javascool.gforge.inria.fr/v4/?page=contact contactant] pour mettre à jour le site web.
 
