@@ -46,5 +46,6 @@
    <div>Un autre <l class="editor" link="JeuSimon.jvs" text="exemple"/> permet de montrer les fonctionnalités avancées (réaction à un clic utilisateur).</div>
   </p>
   <p> Un autre <l class="editor" link="Triangle_de_sierpinsky.jvs" text="exemple de programme"/> permet de tracer des fractals.</p>
+  <p> Un autre <l class="editor" link="JeuDeMorpion.jvs" text="exemple de programme"/> implémente un jeu de morpion . . à améliorer au niveau du jeu de l'ordinateut !.</p>
 <p>Cette «proglet» est un composant logiciel ouvert dont documentation et code-source sont disponibles <l link="http://javascool.gforge.inria.fr/?page=proglets&amp;action=show&amp;id=algoDeMaths&amp;helpFile=api/org/javascool/proglets/algoDeMaths/package-summary.html" text="ici"/></p>
 </div>
