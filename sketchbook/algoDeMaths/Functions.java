@@ -126,6 +126,13 @@ public class Functions {
   /** Renvoie la valeur verticale du réticule. */
   public static double getY() {
     return getPane().inputY.getValue();
+  }  
+  /** Définit la position du réticule.
+   * @param x Abscisse du réticule,  dans [-X, X], par défaut [-1, 1].
+   * @param y Reticule ordinate, dans [-Y, Y], par défaut [-1, 1].
+   */
+  public static void setReticule(double x, double y) {
+    getPane().scope.setReticule(x, y);
   }
   /** Définit une portion de code appellée à chaque modification du réticule.
    * @param runnable La portion de code à appeler, ou null si il n'y en a pas.
