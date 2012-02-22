@@ -47,7 +47,9 @@ public class Translator {
    * <p>tel que <tt>string.substring(index[0], index[1])</tt> corresponde à la chaîne identifiée, sinon</p>
    * <p>la valeur <tt>{-1, offset}</tt> si le parenthésage n'est pas trouvé.</p>
    *
-   * @see scanInstruction scanComments
+   * @see scanInstruction(String, int)
+   * @see scanComments(String, int, boolean)
+   * @see scanSpaces(String, int)
    */
   public static int[] scanConstruct(String string, int offset, String start, String stop, String escape, boolean recurse, boolean code) {
     int index[] = {-1, offset};

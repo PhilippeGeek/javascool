@@ -29,11 +29,11 @@ public class Functions {
   public static void setGrille(int i , int j ,char mark) {
     if (0 < i && i < 4 && 0 < j && j < 4) {
       if (mark == 'O') {
-	getPane().tictac[i+1][j+1].setText("O");
-	getPane().tictac[i+1][j+1].setForeground(Color.BLUE);
+	getPane().tictac[i-1][j-1].setText("O");
+	getPane().tictac[i-1][j-1].setForeground(Color.BLUE);
       } else if (mark == 'X'){
-	getPane().tictac[i+1][j+1].setText("X");
-	getPane().tictac[i+1][j+1].setForeground(Color.GREEN);    
+	getPane().tictac[i-1][j-1].setText("X");
+	getPane().tictac[i-1][j-1].setForeground(Color.GREEN);    
       }
     }
   }
@@ -44,7 +44,7 @@ public class Functions {
    * @return mark La marque du tictactoe soit 'X', soit 'O', soit ' ' si il n'y a pas de marque.
    */  
   public static char getGrille(int i , int j ) {
-    return (0 < i && i < 4 && 0 < j && j < 4) ? getPane().tictac[i+1][j+1].getText().charAt(0) : ' ';
+    return (0 < i && i < 4 && 0 < j && j < 4) ? getPane().tictac[i-1][j-1].getText().charAt(0) : ' ';
   }
 
   /** Remets à zéro le jeu du tic-tac-toe. */
