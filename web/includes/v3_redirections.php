@@ -79,6 +79,7 @@ $v3_redirections_link_table = array(
 			     "TPE-Demos" => "?page=resources&action=link-tpe-demos",
 			     "TPE-Exemples" => "?page=resources&action=link-tpe-exemples",
 			     "TPE-Interventions" => "?page=resources&action=link-interventions",
+			     "Interventions" => "?page=resources&action=link-interventions",
 			     "TPE-Methode" => "?page=resources&action=link-tpe-methode",
 			     "doc%3Adocuments%2Fquelques-t-p-e%2Faffiche_finale_inria.pdf" => "doc/documents/quelques-t-p-e/affiche_finale_inria.pdf",
 			     "doc:documents/quelques-t-p-e/affiche_finale_inria.pdf" => "doc/documents/quelques-t-p-e/affiche_finale_inria.pdf",
