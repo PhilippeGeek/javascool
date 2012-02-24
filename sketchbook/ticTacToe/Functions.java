@@ -24,7 +24,7 @@ public class Functions {
   /** Permet de positionner une marque sur la grille du panel de la proglet 
    * @param i Position horizontale entre 1 et 3.
    * @param j Position verticale entre 1 et 3.
-   * @param mark Marque du tictactoe soit 'X', soit 'O'
+   * @param mark Marque du tictactoe soit 'X', soit 'O', sinon la marque est effacée.
    */
   public static void setGrille(int i , int j ,char mark) {
     if (0 < i && i < 4 && 0 < j && j < 4) {
@@ -34,6 +34,8 @@ public class Functions {
       } else if (mark == 'X'){
 	getPane().tictac[i-1][j-1].setText("X");
 	getPane().tictac[i-1][j-1].setForeground(Color.GREEN);    
+      } else {
+	getPane().tictac[i-1][j-1].setText(" ");
       }
     }
   }
