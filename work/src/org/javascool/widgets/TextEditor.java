@@ -98,6 +98,7 @@ class TextEditor extends JPanel {
   }
 
   /** Ajoute à cet éditeur les complétions définies dans le fichier. 
+   * <p>Les complétions sont déclenchées par Ctrl+Space.</p>
    * @param completions Le nom du fichier contenant la définition des complétions.
    * @return this.
    */
@@ -122,7 +123,6 @@ class TextEditor extends JPanel {
 	  bc.setShortDescription(title);
 	if (doc != null)
 	  bc.setSummary(doc);
-	//- System.out.println("\n1>"+bc+" summary=["+doc+"] code=["+code+"]");
 	completionsProvider.addCompletion(bc);
       }
     }
@@ -143,12 +143,20 @@ class TextEditor extends JPanel {
    * @param text Le texte à éditer.
    */
   public void setText(String text) {
-    textArea.setText(text);
+    textArea.setText(initialText = text);
   }
+
+  /** Teste si le texte a été édité ou si il reste inchangé.
+   * @return Renvoie la valeur true si getText() et la dernière valeur donnée à setText() ne sont pas les mêmes
+   */
+  public boolean isTextChanged() {
+    return !getText().equals(initialText);
+  }
+  private String initialText = "";
 
   /** Marque une ligne du texte avec une icône.
    * @param line Numéro de la ligne du texte.
-   * @param icon Non de l'icône à utiliser.
+   * @param icon Nom de l'icône à utiliser (une icône indiquant une erreur par défaut).
    */
   public void signalLine(int line, String icon) {
     Gutter gutter = scrollPane.getGutter();
