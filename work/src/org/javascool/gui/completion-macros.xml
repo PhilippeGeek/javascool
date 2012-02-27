@@ -119,8 +119,8 @@ Si elle est fausse, le programme s'arrête.</doc>
     </keyword>
     <keyword name="for" title="Boucle sur un bloc d'instruction, avec un compteur">
         <doc>Tant que la valeur de i est plus petite que la valeur de n, exécute le bloc d'instructions. Le code s'exécute donc n fois.</doc>
-        <code><![CDATA[  for(int i = 0; i < n; i++) {
+        <code>   for(int i = 0; i &lt; n; i++) {
     // Code
-  }]]></code>
+  }</code>
     </keyword>
 </keywords>

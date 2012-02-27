@@ -14,7 +14,7 @@ public class JvsBeautifier {
   public static String run(String text) {
     char f[] = text.trim().replace((char) 160, ' ').toCharArray();
     String g = "", ln = "\n";
-    int par = 0;
+    int bra = 0, par = 0;
     for(int i = 0, j; i < f.length;) {
       // Escapes /* comments
       if((f[i] == '/') && (i < f.length - 1) && (f[i + 1] == '*')) {
@@ -93,13 +93,18 @@ public class JvsBeautifier {
           g += f[i];
         // Reformats {blocks}
         if((f[i] == '{') || (f[i] == '}') || ((f[i] == ';') && (par == 0))) {
-          if(f[i] == '{')
+          if(f[i] == '{') {
+	    bra++;
             ln += "   ";
+	  }
+          if(f[i] == '}') 
+	    bra--;
           if(ln.length() >= 3 && f[i] == '}')
             ln = ln.substring(0, ln.length() - 3);
           g += ln;
-          if(ln.length() == 1)
-            g += "\n";
+	  boolean nextIsNotImport = f[i] != ';' || bra > 0 || !text.substring(i+1).matches("\\s*(;\\s*)?import(.|\n)*");
+	  if(ln.length() == 1 && nextIsNotImport)
+	    g += "\n";
           i++;
           while(i < f.length && Character.isWhitespace(f[i]))
             i++;
@@ -111,6 +116,7 @@ public class JvsBeautifier {
            replaceAll("\\}\\s*else\\s*(\\{|if)", "} else $1").
            replaceAll("(while|if|for|return)\\s*([^a-z_0-9_])", "$1 $2");
   }
+  // Detecte si le caractere est un operateur
   private static boolean isOperator(char c) {
     switch(c) {
     case '+':
