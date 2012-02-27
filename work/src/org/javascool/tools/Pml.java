@@ -69,11 +69,11 @@ public class Pml {
    */
   public Pml reset(String value, String format) {
     format = format.toLowerCase();
-    if("xml".equals(format))
-      return reset(Xml2Xml.run(value, xml2pml), "pml");
-    else if("htm".equals(format) || "html".equals(format))
+    if("xml".equals(format)) {
+      return reset(Xml2Xml.run(value, xml2pml).replaceAll("¨", "\\\"").replaceAll("«", "\\{"), "pml");
+    } else if("htm".equals(format) || "html".equals(format)) {
       return reset(Xml2Xml.run(Xml2Xml.html2xhtml(value), xml2pml), "pml");
-    else
+    } else
       reset(value);
     return this;
   }
@@ -231,8 +231,11 @@ public class Pml {
             int ichar0 = ichar;
             // Detects a quoted string taking "{" "}" and \" constructs into account
             if(chars[ichar0] == '"') {
-              while(ichar < chars.length && (ichar == ichar0 || chars[ichar] != '"' || chars[ichar - 1] == '\\'))
-                ichar++;
+              while(ichar < chars.length && (ichar == ichar0 || chars[ichar] != '"' || chars[ichar - 1] == '\\')) {
+		if(chars[ichar] == '\n')
+		  ln++;
+		ichar++;
+	      }
               ichar++;
               int ichar1;
               if((ichar == ichar0 + 3) && ((chars[ichar0 + 1] == '{') || (chars[ichar0 + 1] == '}')))
@@ -390,7 +393,7 @@ public class Pml {
           }
         }
         // Considers the Pml as a list of name=value
-      } else if("=".equals(getToken(1)))
+      } else if("=".equals(getToken(1))) {
         while("=".equals(getToken(1))) {
           String t = getToken(0);
           next(2);
@@ -403,7 +406,7 @@ public class Pml {
           }
         }
       // Considers the Pml as a simple string
-      else {
+      } else {
         pml.setTag(b);
         next(1);
       }
@@ -415,11 +418,15 @@ public class Pml {
   private static String xml2pml =
     "<?xml version='1.0' encoding='utf-8'?>\n"
     + "<xsl:stylesheet xmlns:xsl='http://www.w3.org/1999/XSL/Transform' version='1.0'>\n"
-    + "  <xsl:output method='xml' encoding='utf-8' omit-xml-declaration='yes'/>\n"
+    + "  <xsl:output method='text' encoding='utf-8' omit-xml-declaration='yes'/>\n"
     + "  <xsl:template match='*'>\n"
     + "  {<xsl:value-of select='name(.)'/><xsl:text> </xsl:text>\n"
     + "    <xsl:for-each select='@*'><xsl:value-of select='name(.)'/>=\"<xsl:value-of select=\"translate(., '&quot;','¨')\"/>\"<xsl:text> </xsl:text></xsl:for-each>\n"
-    + "    <xsl:apply-templates/>\n"
+    + "    <xsl:if test='count(*) = 0'>\n"
+    + "      <xsl:apply-templates select='*'/>\n"
+    + "      <xsl:value-of select=\"concat('&quot;', translate(translate(text(), '&quot;','¨'), '{', '«'), '&quot;')\"/>\n"
+    + "    </xsl:if>\n"
+    + "    <xsl:if test='count(*) > 0'><xsl:apply-templates/></xsl:if>\n"
     + "  }</xsl:template>\n"
     + "</xsl:stylesheet>";
 
@@ -427,7 +434,6 @@ public class Pml {
   private static class PlainWriter {
     private StringBuffer string;
     int width, l;
-
     /** Convertit la PML en chaîne.
      * @param pml Le PML à convertir.
      * @param width si width == 0 retourne une chaîne 1D de longueur minimale, sinon retourne une chaîne 2D de la largeur donnée.

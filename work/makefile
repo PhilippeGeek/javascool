@@ -1,3 +1,9 @@
+#
+# Refonte de la 4.2
+#  - valider la completion en regardant les docs en lignes
+#
+
+
 # vthierry's ongoing tasks
 
 dft : tst
@@ -12,7 +18,8 @@ export JRE_HOME=/usr/java/jre1.7.0_01
 #export JRE_HOME=/usr/java/jdk1.6.0_22
 
 tst : 
-	ant javascool-proglets.jar ; $(JRE_HOME)/bin/java -jar dist/javascool-proglets.jar
+	ant javascool-proglets.jar
+	$(JRE_HOME)/bin/java -jar dist/javascool-proglets.jar
 
 ant :
 	ant prun
@@ -37,7 +44,7 @@ pgl :
 	$(JRE_HOME)/bin/java -jar ../web/proglets/codagePixels/javascool-proglet-codagePixels.jar 
 
 prg : 
-	ant javascool-proglets.jar ; java -cp dist/javascool-proglets.jar org.javascool.proglets.wwwIOI.Translator
+	ant javascool-base.jar ; java -cp dist/javascool-base.jar org.javascool.widgets.TextEditor;
 
 php : 
 	cd ../web ; ant local

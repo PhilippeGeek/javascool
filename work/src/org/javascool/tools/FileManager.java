@@ -66,7 +66,6 @@ public class FileManager {
                 buffer.append(chars, 0, l);
             }
             return buffer.toString();
-
         } catch (IOException e) {
             throw new RuntimeException(e + " when loading: " + location);
         }
