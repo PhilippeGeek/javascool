@@ -31,6 +31,7 @@
             <fileset dir="./build/classes"/>
             <fileset dir="./src" includes="org/javascool/widgets/icons/*"/>
             <fileset dir="./src" includes="org/javascool/gui/*.xml"/>
+            <fileset dir="./src" includes="org/javascool/macros/completion-*.xml"/>
             <fileset dir="./src" includes="org/javascool/macros/*.htm"/>
         </jar>
     </target>
