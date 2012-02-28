@@ -8,6 +8,7 @@ import javax.swing.Box;
 import javax.swing.JComponent;
 import javax.swing.AbstractButton;
 import javax.swing.JButton;
+import javax.swing.JPopupMenu;
 import org.javascool.macros.Macros;
 
 /** Définit une barre d'outils avec intégration de la gestion des actions.
@@ -54,6 +55,31 @@ public class ToolBar extends JToolBar {
   public final JButton addTool(String label, Runnable action) {
     return addTool(label, null, action);
   }
+  /** Ajoute un pop-up à la barre d'outil. 
+   * @param label Nom du composant. Chaque bouton/item/étiquette doit avoir un nom différent.
+   * @param icon  Icone du bouton. Si null le bouton est montré sans icone.
+   * @return Le popup ajouté. Il permet de définir un menu ou d'afficher un composant etc...
+   */
+  public final JPopupMenu addTool(String label, String icon) {
+    PopupMenuRunnable p = new PopupMenuRunnable();
+    p.b = addTool(label, icon, p);
+    return p.j;
+  }
+  /**
+   * @see #addTool(String, String)
+   */
+  public final JPopupMenu addTool(String label) {
+    return addTool(label, (String) null);
+  }
+  private class PopupMenuRunnable implements Runnable {
+    JPopupMenu j = new JPopupMenu();
+    JButton b;
+    @Override 
+    public void run() { 
+      j.show(b, 0, ToolBar.this.getHeight());
+    }
+  }
+
   /** Ajoute un bouton à une position précise de la barre d'outil
    * @see #addTool(String, String, Runnable)
    */
@@ -98,7 +124,7 @@ public class ToolBar extends JToolBar {
     }
   }
   /** Ajoute un composant à la droite de la barre d'outil.
-   * @param label Nom du composant (ce nom restera invisible). Chaque bouton/item/étiquette doit avoir un nom différent.
+   * @param label Nom du composant. Chaque bouton/item/étiquette doit avoir un nom différent.
    * @param action Action associée au bouton.
    * @return Le bouton ajouté.
    */
@@ -107,7 +133,17 @@ public class ToolBar extends JToolBar {
       add(Box.createHorizontalGlue());
     return addTool(label, null, action, left + (++right));
   }
-  /** Ajoute un composant à la barre d'outils.
+  /** Ajoute un pop-up à la droite de la barre d'outil. 
+   * @param label Nom du composant. Chaque bouton/item/étiquette doit avoir un nom différent.
+   * @return Le popup ajouté.
+   */
+  public final JPopupMenu addRightTool(String label) {
+    PopupMenuRunnable p = new PopupMenuRunnable();
+    p.b = addRightTool(label, p);
+    return p.j;
+  }
+  // @todo a enlever apres la refonte du proglet-builder
+  /** Ajoute en permanence un composant à la droite de la barre d'outils.
    * @param component Le composant à ajouter.
    */
   public void addRightTool(JComponent component) {

@@ -1,8 +1,10 @@
 #
 # Refonte de la 4.2
-#  - valider la completion en regardant les docs en lignes
-#
-
+#  - TextFileEditor
+#  - separer Proglet de ProgletEngine
+#  - repasser sur les classes et netoyyer
+#  - simplifier la notion de proglet
+#  - creer un ProgletPanel avec executer
 
 # vthierry's ongoing tasks
 
@@ -44,7 +46,7 @@ pgl :
 	$(JRE_HOME)/bin/java -jar ../web/proglets/codagePixels/javascool-proglet-codagePixels.jar 
 
 prg : 
-	ant javascool-base.jar ; java -cp dist/javascool-base.jar org.javascool.widgets.TextEditor;
+	ant javascool-base.jar ; java -cp dist/javascool-base.jar org.javascool.widgets.TextFileEditor;
 
 php : 
 	cd ../web ; ant local

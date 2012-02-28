@@ -1,6 +1,7 @@
 <keywords>
   <keyword 
     name="compare"
+    offset="4"
     title="Compare un nom à celui affiché sur une page">
     <code>int r = compare(name, index);</code>
     <doc>Ouvre le livre à une page d'index 0 à length()-1 et compare le nom à celui affiché sur cette page.
@@ -8,6 +9,7 @@
   </keyword>
   <keyword 
     name="length"
+    offset="4"
     title="Renvoie le nombre de page du livre">
     <code>int l = length();</code>
     <doc>Renvoie le nombre de page du livre dans la variable l.</doc>

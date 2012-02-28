@@ -1,8 +1,9 @@
 <keywords>
   <keyword 
     name="reset"
+    offset="12"
     title="Initialise l'image">
-    <code>createImage(num,width, height);</code>
+    <code>createImage(num, width, height);</code>
     <doc>Initialise l'image de travail num aux dimension width,height.</doc>
   </keyword>
 </keywords>

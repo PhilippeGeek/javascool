@@ -70,7 +70,7 @@ public class Pml {
   public Pml reset(String value, String format) {
     format = format.toLowerCase();
     if("xml".equals(format)) {
-      return reset(Xml2Xml.run(value, xml2pml).replaceAll("¨", "\\\"").replaceAll("«", "\\{"), "pml");
+      return reset(Xml2Xml.run(value, xml2pml).replaceAll("¨", "\\\\\"").replaceAll("«", "\\{"), "pml");
     } else if("htm".equals(format) || "html".equals(format)) {
       return reset(Xml2Xml.run(Xml2Xml.html2xhtml(value), xml2pml), "pml");
     } else

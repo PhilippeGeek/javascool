@@ -78,7 +78,7 @@ public class FileManager {
      }
     /** Ecrit un contenu textuel local ou distant en tenant compte de l'encodage local.
      *
-     * @param location @optional<"stdout:"> Une URL (Universal Resource Location) de la forme: <div id="save-format"><table>
+     * @param location Une URL (Universal Resource Location) de la forme: <div id="save-format"><table>
      * <tr><td><tt>ftp:/<i>path-name</i></tt></td><td>pour sauver sur un site FTP.</td></tr>
      * <tr><td><tt>file:/<i>path-name</i></tt></td><td>pour sauver dans le système de fichier local (le <tt>file:</tt> est optionnel).</td></tr>
      * <tr><td><tt>mailto:<i>address</i>?subject=<i>subject</i></tt></td><td>pour envoyer un courriel avec le texte en contenu.</td></tr>
@@ -113,7 +113,6 @@ public class FileManager {
             throw new RuntimeException(e + " when saving: " + location);
         }
     }
-
     /**
      * @see #save(String, String, boolean, boolean)
      */

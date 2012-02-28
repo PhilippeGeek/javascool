@@ -2,13 +2,15 @@ package org.javascool.widgets;
 
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
-import org.javascool.widgets.ToolBar;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
-import javax.swing.KeyStroke;
-import java.awt.event.KeyEvent;
 import org.fife.ui.rtextarea.RTextScrollPane;
 import org.fife.ui.rtextarea.Gutter;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import javax.swing.AbstractAction;
+import javax.swing.JPopupMenu;
+import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import org.javascool.macros.Macros;
 
 import org.fife.ui.autocomplete.AutoCompletion;
@@ -22,17 +24,31 @@ import org.fife.ui.autocomplete.ShorthandCompletion;
  * @author Philippe Vienne
  */
 class TextEditor extends JPanel {
-
   private static final long serialVersionUID = 1L;
 
-  // Barre de commande du panneau
-  private ToolBar toolBar;
-  // Panneau de l'éditeur
-  private RSyntaxTextArea textArea;
+  /** Barre de commande du panneau. */
+  protected ToolBar toolBar;
+  /** Panneau de l'éditeur. */
+  protected RSyntaxTextArea textArea;
   // Panneau de glissières
   private RTextScrollPane scrollPane;
   // Gestionnaire d'autocomplétion
   DefaultCompletionProvider completionsProvider;
+  /** Tables des raccourcis de l'éditeur. 
+   * - Il faut y ajouter des éléments de la forme:
+   * "&lt;tr>&lt;td>&lt;tt>Ctrl+<i>X</i>&lt;/tt>&lt;/td>&lt;td><i>description du raccourci</i>&lt;/td>&lt;/tr>\n" +
+   */
+  String helpText = 
+    "<tr><td><tt>Ctrl+a</tt></td><td>Sélectionne tout le texte</td></tr>\n" +
+    "<tr><td><tt>Ctrl+c</tt></td><td>Copie du texte sous le curseur</td></tr>\n" +
+    "<tr><td><tt>Ctrl+x</tt></td><td>Coupe du texte sous le curseur</td></tr>\n" +
+    "<tr><td><tt>Ctrl+v</tt></td><td>Colle du texte précédemment copié ou collé</td></tr>\n" +
+    "<tr><td></td><td></td></tr>\n" +
+    "<tr><td><tt>Ctrl+z</tt></td><td>Annule la prédédente commande d'édition</td></tr>\n" +
+    "<tr><td><tt>Ctrl+y</tt></td><td>Rétabli la prédédente commande d'édition</td></tr>\n" +
+    "<tr><td></td><td></td></tr>\n" +
+    "<tr><td><tt>Ctrl+Espace</tt></td><td>Lance l'auto-complétion</td></tr>\n" +
+  "<tr><td></td><td></td></tr>\n";
 
   /** Construit un panneau d'édition. */
   public TextEditor() {
@@ -49,15 +65,6 @@ class TextEditor extends JPanel {
       textArea.requestFocusInWindow();
       textArea.setMarkOccurrences(true);
       textArea.setText("");
-      // Raccourcis 
-      {
-	KeyStroke key = KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.CTRL_MASK);
-	if (isMac())
-	  key = KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.META_MASK);
-	KeyStroke copy_key = KeyStroke.getKeyStroke(KeyEvent.VK_C, KeyEvent.CTRL_MASK);
-	if (isMac())
-	  copy_key = KeyStroke.getKeyStroke(KeyEvent.VK_C, KeyEvent.META_MASK);
-      }
       scrollPane = new RTextScrollPane(textArea, true);
       Gutter gutter = scrollPane.getGutter();
       gutter.setBorderColor(Color.BLUE);
@@ -80,10 +87,15 @@ class TextEditor extends JPanel {
       ac.setAutoActivationDelay(1500);
       ac.setShowDescWindow(true);
     }
-  }
+    // Ajout de l'aide à l'édition
+    {
+      JPopupMenu j=  toolBar.addRightTool("Aide");
+      j.add(new JLabel("<html>\n<b>Commandes d'édition</b><br><table>\n" + helpText + "</table>"));
+    }
+  } 
 
   // Teste si le système est un mac
-  private static boolean isMac() {
+  protected static boolean isMac() {
     return System.getProperty("os.name").toUpperCase().contains("MAC");
   }
 
@@ -103,35 +115,67 @@ class TextEditor extends JPanel {
    * @return this.
    */
   public TextEditor addCompletions(String completions) {
+    // Initialise le menu si il n'est pas définit
+    if (insertions == null)
+      insertions = toolBar.addTool("Auto insertion"); 
     // Lit le fichier d'autocomplétion
     Pml defs = new Pml().load(completions);
+    String title = defs.getString("title");
+    if (title != null)
+      insertions.add(new JLabel("<html><b>"+title+"</b>"));
     // Pour chaque item . . 
     for(int i = 0; i < defs.getCount(); i++) {
       // .. recupère les infos de nom, titre, doc et code
       Pml def = defs.getChild(i);
-      String name = def.getString("name"), title = def.getString("title"), code = null, doc = null;
+      String name = def.getString("name"), desc = def.getString("title"), code = null, doc = null;
       for(int j = 0; j < def.getCount(); j++) {
 	if ("code".equals(def.getChild(j).getTag()) && def.getChild(j).getChild(0) != null && code == null)
-	  code = def.getChild(j).getChild(0).getTag();
+	  code = def.getChild(j).getChild(0).getTag().replaceAll("\\\\\"", "\"");
 	if ("doc".equals(def.getChild(j).getTag()) && def.getChild(j).getChild(0) != null && doc == null)
-	  doc = def.getChild(j).getChild(0).getTag();
+	  doc = def.getChild(j).getChild(0).getTag().replaceAll("\\\\\"", "\"");
       }
       // .. et ajoute la raccourci si il est bien défini
       if (name != null) {
+	// Ajoute le raccourci à l'éditeur
 	BasicCompletion bc = code == null ? new BasicCompletion(completionsProvider, name) : new ShorthandCompletion(completionsProvider, name, code);
-	if (title != null)
-	  bc.setShortDescription(title);
+	if (desc != null)
+	  bc.setShortDescription(desc);
 	if (doc != null)
 	  bc.setSummary(doc);
 	completionsProvider.addCompletion(bc);
+	// Ajoute le raccourci au menu
+	if (code != null) 
+	  insertions.add(new JMenuItem(new InsertAction(name, code, def.getInteger("offset", code.length()))));
       }
     }
     return this;
   }
+  // Definit une action d'insertion de texte 
+  private class InsertAction extends AbstractAction {
+    private static final long serialVersionUID = 1L;
+    public InsertAction(String name, String string, int offset) {
+      super(name);
+      this.string = string;
+      this.offset = offset;
+    }
+    private String string;
+    private int offset;
+    @Override
+    public void actionPerformed(ActionEvent evt) {
+      try {
+        int where = textArea.getCaretPosition();
+        textArea.getDocument().insertString(where, string, null);
+        textArea.setCaretPosition(where + offset);
+      } catch(Exception e) { }
+    }
+  }
+  private JPopupMenu insertions = null;
 
-  /** Remet à zéro toutes les complétions définies pour set éditeur. */
+  /** Remet à zéro toutes les complétions définies pour cet éditeur. */
   void clearCompletions() {
     completionsProvider.clear();
+    toolBar.removeTool("Auto insertion"); 
+    insertions = null;
   }
 
   /** Renvoie le texte actuellement édité. */
@@ -149,7 +193,7 @@ class TextEditor extends JPanel {
   /** Teste si le texte a été édité ou si il reste inchangé.
    * @return Renvoie la valeur true si getText() et la dernière valeur donnée à setText() ne sont pas les mêmes
    */
-  public boolean isTextChanged() {
+  public boolean isTextModified() {
     return !getText().equals(initialText);
   }
   private String initialText = "";
@@ -175,13 +219,5 @@ class TextEditor extends JPanel {
   /** Efface toutes les marques mises sur le code. */
   public void removeLineSignals() {
     scrollPane.getGutter().removeAllTrackingIcons();
-  }
-
-  /** Lanceur du mécanisme d'éditon.
-   * @param usage <tt>java org.javascool.widgets.TextEditor</tt>
-   */
-  public static void main(String[] usage) {
-    if(usage.length == 0)
-      new MainFrame().reset("editor", 800, 600, new TextEditor().setSyntax("jvs").addCompletions("org/javascool/gui/completion-macros.xml"));
   }
 }

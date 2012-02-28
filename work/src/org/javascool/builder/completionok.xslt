@@ -26,7 +26,7 @@
   <xsl:if test="count(@title) = 0"><xsl:call-template name="no-attribute"><xsl:with-param name="name" select="'title'"/></xsl:call-template></xsl:if>
   <xsl:if test="count(code) = 0"><xsl:call-template name="no-element"><xsl:with-param name="name" select="'code'"/></xsl:call-template></xsl:if>
   <xsl:if test="count(doc) = 0"><xsl:call-template name="no-element"><xsl:with-param name="name" select="'doc'"/></xsl:call-template></xsl:if>
-  <xsl:apply-templates select="@*[not (name(.) = 'name' or name(.) = 'title')]" mode="error"/>
+  <xsl:apply-templates select="@*[not (name(.) = 'name' or name(.) = 'title' or name(.) = 'offset')]" mode="error"/>
   <xsl:apply-templates select="*[not (name(.) = 'doc' or name(.) = 'code')]|text()" mode="error"/>
   <xsl:apply-templates/>
 </xsl:template>
