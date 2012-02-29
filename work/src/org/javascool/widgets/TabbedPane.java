@@ -1,51 +1,47 @@
 package org.javascool.widgets;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
+import javax.swing.AbstractButton;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.Icon;
+import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+import javax.swing.plaf.basic.BasicButtonUI;
 import org.javascool.macros.Macros;
 
-/** Propose un JTabbedPane avec des onglets pouvant posséder une croix. 
- * <p>Cette classe fonctionne comme un {@link JTabbedPane}; de plus un composant avec la propriété TAB_CLOSABLE possède une croix qui permet de le fermer.</p>
+/** Propose un container d'objets graphiques avec des onglets pouvant posséder une croix de fermeture. 
+ * @author Philippe Vienne
  */
-class TabbedPane extends JTabbedPane {
+public class TabbedPane extends JTabbedPane {
 
   private static final long serialVersionUID = 1L;
-
-  /** ClientProperty pour un composant fermable. */
-  public static final String TAB_CLOSABLE = "tab_closable";
-
-  // Vérifie si le composant possède une croix pour la fermeture.
-  private static boolean isComponentClosable(Component component) {
-    return component instanceof JComponent && ((JComponent) component).getClientProperty(TabbedPane.TAB_CLOSABLE) == Boolean.TRUE;
-  }
-  /** Indique que ce composant a une croix de fermeture.
-   * @param Le composant à marquer.
-   * @param Si true indique qu'il y a une croix de fermeture (valeur par défaut), sinon false.
-   */
-  public static void setComponentClosable(JComponent component, boolean closable) {
-    component.putClientProperty(TabbedPane.TAB_CLOSABLE, closable ? Boolean.TRUE: Boolean.FALSE);
-  }
 
   /** Ajoute un composant à ce panneau à onglet.
    * @param title Le nom du composant.
    * @param icon Le nom de l'icone de ce composant.
    * @param component Le composant à ajouter.
    * @param tooltip Un petit titre à afficher quand le curseur passe sur l'onglet du composant.
-   * @param closable Si true indique qu'il y a une croix de fermeture (valeur par défaut), sinon false.
-   * <p>Ceci ne fonctionne que si il s'agit d'un composant Swing.</p>
+   * @param closable Si true indique qu'il y a une croix de fermeture, sinon false (valeur par défaut).
    */
   public void addTab(String title, String icon, Component component, String tooltip, boolean closable) {
     addTab(title, Macros.getIcon(icon), component, tooltip, closable);
@@ -54,175 +50,170 @@ class TabbedPane extends JTabbedPane {
    * @see #addTab(String, String, Component, String, boolean)
    */
   public void addTab(String title, Icon icon, Component component, String tooltip, boolean closable) {
-    if (component instanceof JComponent)
-      setComponentClosable((JComponent) component, closable);
-    addTab(getTabbedTitle(component, title), icon, component, tooltip);
+    super.addTab(title, icon, component, tooltip);
+    if (closable)
+      setTabComponentAt(indexOfComponent(component), new TabPanel());
+    setSelectedComponent(component);
   }
   /**
    * @see #addTab(String, String, Component, String, boolean)
    */
   public void addTab(String title, String icon, Component component, String tooltip) {
-    addTab(title, icon, component, tooltip, true);
+    addTab(title, icon, component, tooltip, false);
   }
  /**
    * @see #addTab(String, String, Component, String, boolean)
    */
   @Override
   public void addTab(String title, Icon icon, Component component, String tooltip) {
-    addTab(title, icon, component, tooltip, true);
+    addTab(title, icon, component, tooltip, false);
   }
   /**
    * @see #addTab(String, String, Component, String, boolean)
    */
   public void addTab(String title, String icon, Component component) {
-    addTab(title, icon, component, null, true);
+    addTab(title, icon, component, null, false);
   }
   /**
    * @see #addTab(String, String, Component, String, boolean)
    */
   @Override
   public void addTab(String title, Icon icon, Component component) {
-    addTab(title, icon, component, null, true);
+    addTab(title, icon, component, null, false);
+  }
+  /**
+   * @see #addTab(String, String, Component, String, boolean)
+   */
+  public void addTab(String title, Component component, String tooltip, boolean closable) {
+    addTab(title, (Icon) null, component, tooltip, closable);
+  }
+  /**
+   * @see #addTab(String, String, Component, String, boolean)
+   */
+  public void addTab(String title, Component component, String tooltip) {
+    addTab(title, (Icon) null, component, tooltip, false);
+  }
+  /**
+   * @see #addTab(String, String, Component, String, boolean)
+   */
+  public void addTab(String title, Component component, boolean closable) {
+    addTab(title, (Icon) null, component, null, closable);
   }
   /**
    * @see #addTab(String, String, Component, String, boolean)
    */
   @Override
   public void addTab(String title, Component component) {
-    addTab(title, (Icon) null, component, null, true);
+    addTab(title, (Icon) null, component, null, false);
   }
 
-  // Renvoie un titre formaté pour tenir compte de l'affichage de la crois.
-  private String getTabbedTitle(Component component, String title) {
-    return title.trim() + (isComponentClosable(component) ? "    " : "");
+  /** Procède à la fermeture d'un composant du panneau.
+   * <p>Cette routine doit être surchargée pour (i) effectuer les opérations necéssaires à la fermeture et (ii) autoriser ou non cette fermeture. </p>
+   * <p>La fermeture est autorisée par défaut.</p>
+   * @param index Index du composant dans le panneau.
+   * @return La valeur true si on peut procéder à la fermeture, false sinon.
+   */
+  protected boolean isCloseable(int index) {
+    return true;
   }
-  // Gère les espaces ajoutés au titre pour afficher la croix
-  @Override
-  public String getTitleAt(int index) {
-    return super.getTitleAt(index).trim();
-  }
+
   @Override
   public void setTitleAt(int index, String title) {
-    super.setTitleAt(index, getTabbedTitle(getComponentAt(index), title));
-  }   
-  @Override
-  public int indexOfTab(String title) {
-    return super.indexOfTab(title) != -1 ? super.indexOfTab(title) : super.indexOfTab(title + "    ");
+    super.setTitleAt(index, title);
+    getTabComponentAt(index).invalidate();
   }
 
-  // On ajoute la fonction de traçage des croix
-  @Override
-    public void paint(Graphics g) {
-    super.paint(g);
-    closeUI.paint(g);
-  }
-  // Creation d l'UI destiné à peindre les croix.
-  private final TabCloseUI closeUI = new TabCloseUI(this);
+  // Implementation du composant permettant de gérer la fermeture
+  private class TabPanel extends JPanel {
 
-  // Cette classe implémente la gestion des crois de fermeture des composants tabulés.
-  private class TabCloseUI implements MouseListener, MouseMotionListener {
-    private final TabbedPane tabbedPane;
-    private int closeX = 0, closeY = 0, meX = 0, meY = 0;
-    private int selectedTab = -1;		
-    private final ImageIcon img = Macros.getIcon("org/javascool/widgets/icons/close.png");
-    private final int width = 7, height = 7;
-    private final Rectangle rectangle = new Rectangle(0, 0, width, height);
+    private static final long serialVersionUID = 1L;
 
-    public TabCloseUI(TabbedPane pane) {
-      tabbedPane = pane;
-      tabbedPane.addMouseMotionListener(this);
-      tabbedPane.addMouseListener(this);
-    }
+    public TabPanel() {
+      super(new FlowLayout(FlowLayout.LEFT, 0, 0));
+      setOpaque(false);
 
-    private boolean closeUnderMouse(int x, int y) {
-      rectangle.x = closeX;
-      rectangle.y = closeY;
-      return rectangle.contains(x, y);
-    }
-
-    private void controlCursor() {
-      if (tabbedPane.getTabCount() > 0)
-	if (closeUnderMouse(meX, meY)) {
-	  tabbedPane.setCursor(new Cursor(Cursor.HAND_CURSOR));
-	} else {
-	  tabbedPane.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-	}
-    }
-
-    private void drawClose(Graphics g, int x, int y) {
-      if (tabbedPane != null && tabbedPane.getTabCount() > 0) {
-	final Graphics2D g2 = (Graphics2D) g;
-	g2.drawImage(img.getImage(), x, y, x+width, y+height, 0, 0, img.getIconWidth(), img.getIconHeight(), null);
-      }
-    }
-
-    @Override
-      public void mouseClicked(MouseEvent me) {
-    }
-
-    @Override
-      public void mouseDragged(MouseEvent me) {
-    }
-
-    @Override
-      public void mouseEntered(MouseEvent me) {
-    }
-
-    @Override
-      public void mouseExited(MouseEvent me) {
-    }
-
-    @Override
-      public void mouseMoved(MouseEvent me) {
-      meX = me.getX();
-      meY = me.getY();
-      if (mouseOverTab(meX, meY)) {
-	controlCursor();
-	tabbedPane.repaint();
-      }
-    }
-
-    private boolean mouseOverTab(int x, int y) {
-      final int tabCount = tabbedPane.getTabCount();
-      for (int j = 0; j < tabCount; j++)
-	if (tabbedPane.getBoundsAt(j).contains(meX, meY)
-	    && TabbedPane.isComponentClosable(getComponentAt(j))) {
-	  selectedTab = j;
-	  closeX = tabbedPane.getBoundsAt(j).x
-	    + tabbedPane.getBoundsAt(j).width - width - 6;
-	  closeY = tabbedPane.getBoundsAt(j).y + 7;
-	  return true;
-	}
-      return false;
-    }
-
-    @Override
-      public void mousePressed(MouseEvent me) {
-    }
-
-    @Override
-      public void mouseReleased(MouseEvent me) {
-      if (closeUnderMouse(me.getX(), me.getY())) {
-	if (0 <= selectedTab && TabbedPane.isComponentClosable(getComponentAt(selectedTab)))
-	  tabbedPane.removeTabAt(selectedTab);
-	selectedTab = tabbedPane.getSelectedIndex();
-      }
-    }
-    
-    public void paint(Graphics g) {
-      int tabCount = tabbedPane.getTabCount();
-      for (int j = 0; j < tabCount; j++)
-	if (TabbedPane.isComponentClosable(getComponentAt(j))) {
-	  final int x = tabbedPane.getBoundsAt(j).x
-	    + tabbedPane.getBoundsAt(j).width - width - 6;
-	  final int y = tabbedPane.getBoundsAt(j).y + 7;
-	  if (tabCount > 1) {
-	    setTitleAt(j, getTitleAt(j));
-	    drawClose(g, x, y);
-	  } else {
-	    setTitleAt(j, getTitleAt(j));
+      JLabel label = new JLabel() {
+	  private static final long serialVersionUID = 1L;
+	  
+	  @Override
+          public String getText() {
+	    int i = TabbedPane.this.indexOfTabComponent(TabPanel.this);
+	    return i == -1 ? null : TabbedPane.this.getTitleAt(i);
 	  }
+        };
+      add(label);
+      label.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 5));
+      JButton button = new TabButton();
+      add(button);
+      setBorder(BorderFactory.createEmptyBorder(2, 0, 0, 0));
+    }
+
+    private class TabButton extends JButton implements ActionListener {
+      private static final long serialVersionUID = 1L;
+      
+      public TabButton() {
+	int size = 17;
+	setPreferredSize(new Dimension(size, size));
+	setToolTipText("Fermer cet onglet");
+	setUI(new BasicButtonUI());
+	setContentAreaFilled(false);
+	setFocusable(false);
+	setBorder(BorderFactory.createEtchedBorder());
+	setBorderPainted(false);
+	addMouseListener(buttonMouseListener);
+	setRolloverEnabled(true);
+	addActionListener(this);
+      }
+      
+      @Override
+      public void actionPerformed(ActionEvent e) {
+	int i = TabbedPane.this.indexOfTabComponent(TabPanel.this);
+	if (i != -1 && TabbedPane.this.isCloseable(i)) {
+	  TabbedPane.this.remove(i);
 	}
+      }
+
+      @Override
+      public void updateUI() {
+      }
+
+      @Override
+      protected void paintComponent(Graphics g) {
+	super.paintComponent(g);
+	Graphics2D g2 = (Graphics2D) g.create();
+	if (getModel().isPressed()) {
+	  g2.translate(1, 1);
+	}
+	g2.setStroke(new BasicStroke(2));
+	g2.setColor(Color.BLACK);
+	if (getModel().isRollover()) {
+	  g2.setColor(Color.WHITE);
+	}
+	int delta = 6;
+	g2.drawLine(delta, delta, getWidth() - delta - 1, getHeight() - delta - 1);
+	g2.drawLine(getWidth() - delta - 1, delta, delta, getHeight() - delta - 1);
+	g2.dispose();
+      }
+
+      private MouseListener buttonMouseListener = new MouseAdapter() {
+	  @Override
+	    public void mouseEntered(MouseEvent e) {
+	    Component component = e.getComponent();
+	    if (component instanceof AbstractButton) {
+	      AbstractButton button = (AbstractButton) component;
+	      button.setBorderPainted(false);
+	    }
+	  }
+	  
+	  @Override
+	    public void mouseExited(MouseEvent e) {
+            Component component = e.getComponent();
+            if (component instanceof AbstractButton) {
+	      AbstractButton button = (AbstractButton) component;
+	      button.setBorderPainted(false);
+            }
+	  }
+	};
     }
   }
 }

@@ -191,6 +191,25 @@ public class FileManager {
         }
     }
 
+  /** Renvoie la date de dernière modification d'une URL si elle existe.
+   * @param location Une URL (Universal Resource Location)
+   * @return La valeur du temps de dernière modification, donné en millisecondes depuis le 1er janvier 1970 en temps GMT, ou 0 si la valeur est indéfinie.
+   */
+  public static long getLastModified(String location) {
+    location = Macros.getResourceURL(location).toString();
+    if (location.matches("(ftp|http|https|jar):.*")) {
+      try {
+	return new URL(location).openConnection().getLastModified();
+      } catch (IOException e) {
+	return 0;
+      }
+    } else {
+      if (location.matches("file:.*"))
+	location = location.substring(5);
+      return new File(location).lastModified();
+    }
+  }
+
     /** Renvoie les fichiers d'un répertoire ou d'un jar.
      * @param folder Le nom du répertoire ou du fichier jar (fichier d'extension ".jar").
      * @param pattern Une regex qui définit le type de fichier (ex : <tt>".*\.java"</tt>). Par défaut tous les fichiers.
