@@ -123,6 +123,10 @@ public class ToolBar extends JToolBar {
       revalidate();
     }
   }
+  /** Teste si un composant est sur la barre d'outils. */
+  public boolean hasTool(String label) {
+    return buttons.containsKey(label);
+  }
   /** Ajoute un composant à la droite de la barre d'outil.
    * @param label Nom du composant. Chaque bouton/item/étiquette doit avoir un nom différent.
    * @param action Action associée au bouton.

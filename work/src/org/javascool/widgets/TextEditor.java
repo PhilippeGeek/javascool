@@ -23,7 +23,7 @@ import org.fife.ui.autocomplete.ShorthandCompletion;
 /** Définit un panneau éditeur de texte qui intègre les fonctions de colorisation et de complétion automatique.
  * @author Philippe Vienne
  */
-class TextEditor extends JPanel {
+public class TextEditor extends JPanel {
   private static final long serialVersionUID = 1L;
 
   /** Barre de commande du panneau. */
@@ -101,18 +101,33 @@ class TextEditor extends JPanel {
 
   /** Définit la colorisation de cet éditeur. 
    * @param syntax Nom de la syntaxe : "Java", "Jvs", "None".
-   * @return this.
+   * @return Cet objet, permettant de définir la construction <tt>new TextEditor().setProperty(..)</tt>.
    */
   public TextEditor setSyntax(String syntax) {
-    if ("JVS".equals(syntax.toUpperCase()) || "JAVA".equals(syntax.toUpperCase()))
+    syntax = syntax.toLowerCase();
+    toolBar.removeTool("Reformater le code");
+    clearCompletions();
+    if ("jvs".equals(syntax) || "java".equals(syntax))
       textArea.setSyntaxEditingStyle(org.fife.ui.rsyntaxtextarea.SyntaxConstants.SYNTAX_STYLE_JAVA);
+    if ("jvs".equals(syntax)) {
+      toolBar.addTool("Reformater le code", new Runnable() {
+	  @Override
+            public void run() {
+	    setText(org.javascool.core.JvsBeautifier.run(getText()));
+	  }
+        });
+      addCompletions("org/javascool/macros/completion-langage.xml").
+      addCompletions("org/javascool/macros/completion-stdout.xml").
+      addCompletions("org/javascool/macros/completion-stdin.xml").
+      addCompletions("org/javascool/macros/completion-macros.xml");
+    }
     return this;
   }
 
   /** Ajoute à cet éditeur les complétions définies dans le fichier. 
    * <p>Les complétions sont déclenchées par Ctrl+Space.</p>
    * @param completions Le nom du fichier contenant la définition des complétions.
-   * @return this.
+   * @return Cet objet, permettant de définir la construction <tt>new TextEditor().addCompletions(..)</tt>.
    */
   public TextEditor addCompletions(String completions) {
     // Initialise le menu si il n'est pas définit

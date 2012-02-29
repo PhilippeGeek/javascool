@@ -18,7 +18,7 @@ import org.javascool.tools.UserConfig;
 class JVSFileTabs extends JVSTabs {
     // Empeche de pouvoir renommer itempestivement des folder
     static {
-    UIManager.put("FileChooser.readOnly", Boolean.TRUE);
+      UIManager.put("FileChooser.readOnly", Boolean.TRUE);
     }
 
     private static final long serialVersionUID = 1L;

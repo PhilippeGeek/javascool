@@ -2,6 +2,7 @@
 # Refonte de la 4.2
 #  - TextFileEditor
 #  - separer Proglet de ProgletEngine
+#  - reprendre e creer builder2
 #  - repasser sur les classes et netoyyer
 #  - simplifier la notion de proglet
 #  - creer un ProgletPanel avec executer
@@ -46,7 +47,7 @@ pgl :
 	$(JRE_HOME)/bin/java -jar ../web/proglets/codagePixels/javascool-proglet-codagePixels.jar 
 
 prg : 
-	ant javascool-base.jar ; java -cp dist/javascool-base.jar org.javascool.widgets.TextFileEditor;
+	ant javascool-base.jar ; java -cp dist/javascool-base.jar org.javascool.gui2.TextFilesEditor;
 
 php : 
 	cd ../web ; ant local

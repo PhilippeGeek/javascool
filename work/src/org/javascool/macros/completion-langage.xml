@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <keywords title="Constructions du langage">
+    <keyword name="void main" title="Programme principal">
+      <doc>Construction qui définit le programme principal.</doc>
+      <code>void main() {
+
+}</code>
+    </keyword>
     <keyword name="if" title="Instruction conditionnelle">
         <doc>Vérifie la condition et si elle est vraie, exécute le bloc d'instructions.</doc>
         <code>  if(true) {
