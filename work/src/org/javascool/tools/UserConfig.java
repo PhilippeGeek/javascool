@@ -22,7 +22,9 @@ public class UserConfig {
   }
   private String applicationName;
   
-  /** Renvoie le répertoire standard où stocker les données d'une application. */
+  /** Renvoie le répertoire standard où stocker les données d'une application. 
+   * @return Le répertoire standard où stocker les données d'une application, ou un répertoire temporaire si celui-ci est indéfini.
+   */
   public String getApplicationFolder() {
     String OS = System.getProperty("os.name").toUpperCase();
     if (OS.contains("WIN")) {
@@ -69,7 +71,7 @@ public class UserConfig {
    */
   public UserConfig setProperty(String name, String value) {
     String v = getProperty(name);
-    if ((value == null & v != null) || !value.equals(v)) {
+    if ((value == null && v != null) || !value.equals(v)) {
       properties.setProperty(name, value);
       try {
 	new File(getApplicationFolder()).mkdirs();

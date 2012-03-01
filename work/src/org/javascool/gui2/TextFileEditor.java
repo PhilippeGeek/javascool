@@ -78,25 +78,18 @@ class TextFileEditor extends TextEditor {
   }
   // Récupère le répertoire par défaut de javascool
   private static String getWorkingDir() {
-    try {
-      if (UserConfig.getInstance("javascool").getProperty("dir") != null) {
-	return UserConfig.getInstance("javascool").getProperty("dir");
-      } else if (System.getProperty("os.name").toLowerCase().contains("nix") || System.getProperty("os.name").toLowerCase().contains("nux")) {
-	return System.getProperty("user.dir");
-      } else if (System.getProperty("home.dir") != null) {
-	return System.getProperty("home.dir");
-      } else
-	return null;
-    } catch(Exception e) {
-      System.err.println("Notice: échec de la mise en place du répertoire par défaut: "+ e);
+    if (UserConfig.getInstance("javascool").getProperty("dir") != null) {
+      return UserConfig.getInstance("javascool").getProperty("dir");
+    } else if (System.getProperty("os.name").toLowerCase().contains("nix") || System.getProperty("os.name").toLowerCase().contains("nux")) {
+      return System.getProperty("user.dir");
+    } else if (System.getProperty("home.dir") != null) {
+      return System.getProperty("home.dir");
+    } else
       return null;
-    }
   }
   // Met à jour le répertoire par défaut de javascool
   private static void setWorkingDir(String dir) {
-    try {
-      UserConfig.getInstance("javascool").setProperty("dir", dir);
-    } catch(Exception e) {}
+    UserConfig.getInstance("javascool").setProperty("dir", dir);
   }
 
   /** Charge le texte à partir d'une localisation.
