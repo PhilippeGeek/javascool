@@ -39,6 +39,7 @@ class JVSStartPanel extends JScrollPane {
 
     private JVSStartPanel(JPanel panel) {
         super(panel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+	setMinimumSize(new Dimension(800, 600));
         ToolTipManager.sharedInstance().setInitialDelay(75);
     }
 

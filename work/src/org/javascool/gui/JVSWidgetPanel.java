@@ -4,6 +4,7 @@ import org.javascool.Core;
 import org.javascool.core.ProgletEngine;
 import org.javascool.core.ProgletEngine.Proglet;
 import org.javascool.macros.Macros;
+import javax.swing.JScrollPane;
 import org.javascool.widgets.Console;
 import org.javascool.widgets.HtmlDisplay;
 
@@ -42,7 +43,7 @@ class JVSWidgetPanel extends JVSTabs {
         this.add("Console", "", Console.getInstance());
         Proglet proglet = ProgletEngine.getInstance().setProglet(name);
         if (proglet.getPane() != null) {
-            this.progletTabId = this.add("Proglet " + name, "", proglet.getPane());
+	  this.progletTabId = this.add("Proglet " + name, "", new JScrollPane(proglet.getPane()));
         }
         if (proglet.getHelp() != null) {
             this.add("Aide de la proglet", "", new HtmlDisplay().setPage(Macros.getResourceURL(proglet.getHelp())));
