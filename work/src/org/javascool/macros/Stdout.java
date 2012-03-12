@@ -114,6 +114,12 @@ public class Stdout {
   /**
    * @see #print(String)
    */
+  public static void print(char i) {
+    print("" + i);
+  }
+  /**
+   * @see #print(String)
+   */
   public static void print(double d) {
     print("" + d);
   }
