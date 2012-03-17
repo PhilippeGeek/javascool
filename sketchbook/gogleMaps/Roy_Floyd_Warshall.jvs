@@ -1,0 +1,68 @@
+
+import java.util.HashMap;
+import java.util.Set;
+
+/** Tables de toutes les villes. */
+Set < String > villes = latitudes.keySet();
+
+/** Tables des plus courtes longueurs entre les villes, la valeur est null si il n'y a pas de chemin. */
+HashMap < StringPair, Double > Longueurs = new HashMap < StringPair, Double > ();
+
+/** Renvoie la longueur du chemin de la ville de départ à la ville d'arrivée, ou MAX_VALUE si il y a pas de chemin. */
+double getPathDistance(String depart, String arrivee) { 
+  Double l = Longueurs.get(new StringPair(depart, arrivee)); 
+  return l == null ? Double.MAX_VALUE : l; 
+}
+
+/** Tables de routage qui donne la ville suivante du plus court chemin entre deux villes, la valeur est null si il n'y a pas de chemin. */
+HashMap < StringPair, String > Routage = new HashMap < StringPair, String > ();
+
+/** Renvoie la ville suivante sur le chemin de la ville de départ à la ville d'arrivée, ou null si il y a pas de chemin. */
+String getPathNextNode(String depart, String arrivee) { 
+  String n = Routage.get(new StringPair(depart, arrivee)); 
+  return n == null || voisins.get(depart).contains(n) || n.equals(arrivee) ? n : getPathNextNode(depart, n); 
+}
+
+// Calcule la table des chemins les plus courts.
+{
+  // Initialise la table avec les chemins de longueurs zéro et un.
+  for (String ville : villes) {
+    Longueurs.put(new StringPair(ville, ville), 0.0);
+    Routage.put(new StringPair(ville, ville), ville);
+    for (String voisin : voisins.get(ville)) {
+      Longueurs.put(new StringPair(ville, voisin), getDistance(ville, voisin));
+      Routage.put(new StringPair(ville, voisin), voisin);
+    }
+  }
+  // Calcule ensuite itérativement les chemins de longueur supérieure à un.
+  for (String ville3 : villes) 
+    for (String ville1 : villes) 
+      for (String ville2 : villes) {
+	Double l12 = Longueurs.get(new StringPair(ville1, ville2)), l13 = Longueurs.get(new StringPair(ville1, ville3)), l32 = Longueurs.get(new StringPair(ville3, ville2));
+	if (l13 != null && l32 != null) {
+	  double l = l13 + l32;
+	  if (l12 == null || l < l12) {
+	    Longueurs.put(new StringPair(ville1, ville2), l);
+	    Routage.put(new StringPair(ville1, ville2), ville3);
+	  }
+	}
+      }
+}
+
+// Test de l'algorithme contre la méthode de la proglet.
+void test() {
+  for (String depart : villes) 
+    for (String arrivee : villes) {
+      String ville = depart;
+      for(String etape : plusCourtCheminGogleMap(depart, arrivee)) {
+	if (!etape.equals(ville)) 
+	  throw new IllegalArgumentException("Il y a un bug dans l'algorithme de Roy_Floyd_Warshall!");
+	ville = getPathNextNode(ville, arrivee);
+      }
+    }
+}
+
+void main() {
+  test();
+  println("OK");
+}
