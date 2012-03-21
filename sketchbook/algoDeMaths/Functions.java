@@ -134,7 +134,7 @@ public class Functions {
   public static void setReticule(double x, double y) {
     getPane().scope.setReticule(x, y);
   }
-  /** Définit une portion de code appellée à chaque modification du réticule.
+  /** Définit une portion de code appelée à chaque modification du réticule.
    * @param runnable La portion de code à appeler, ou null si il n'y en a pas.
    */
   public static void setRunnable(Runnable runnable) {

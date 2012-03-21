@@ -1,6 +1,6 @@
 <div title="La «proglet» gogleMap">
   <p class="margin">
-    <p>Cliquer <l class="newtab" link="exercice.htm" text="ici"/> pour faire une activité sur l'algorithme du plus court chemin.</p>
+    <!--p>Cliquer <l class="newtab" link="exercice.htm" text="ici"/> pour faire une activité sur l'algorithme du plus court chemin.</p-->
     <p>Cliquer <l link="http://javascool.gforge.inria.fr/documents/sketchbook/gogleMaps/presentation-des-graphes.pdf" text="ici"/> pour lire le tutoriel.</p>
   </p>
   <p>
