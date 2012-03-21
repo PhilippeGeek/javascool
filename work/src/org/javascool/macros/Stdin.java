@@ -14,6 +14,11 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import org.javascool.widgets.Dialog;
 
+import java.awt.event.MouseListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.KeyEvent;
+
 /** Cette factory contient des fonctions générales rendues visibles à l'utilisateur de proglets.
  * <p>Elle permet de définir des fonctions statiques qui seront utilisées pour faire des programmes élèves.</p>
  * <p>Elle permet aussi avoir quelques fonctions de base lors de la création de nouvelles proglets.</p>
@@ -285,5 +290,56 @@ public class Stdin {
     }
   }
   private static InputBuffer inputBuffer = new InputBuffer();
+
+  /** Définit une portion de code appelée à chaque entrée d'un caractère au clavier.
+   * <p>Les caractères du clavier ne sont détectés que si la souris est sur la fenêtre de la proglet de façon à ce qu'elle est le focus.</p>
+   * <p>Les caractères du clavier et quelques touches de contrôle sont gérés.</p>
+   * @param runnable La portion de code à appeler, ou null pour annuler l'appel à la portion de code précédent.
+   */
+  public static void setKeyListener(Runnable runnable) {
+    if (keyKeyListener != null)
+      Macros.getProgletPane().removeKeyListener(keyKeyListener);
+    if (keyMouseListener != null)
+      Macros.getProgletPane().removeMouseListener(keyMouseListener);
+    if (Macros.getProgletPane() != null && (keyListenerRunnable = runnable) != null) {
+      Macros.getProgletPane().addMouseListener(keyMouseListener = new MouseListener() { 
+	  public void mousePressed(MouseEvent e) { }
+	  public void mouseReleased(MouseEvent e) { }
+	  public void mouseClicked(MouseEvent e) { }
+	  public void mouseEntered(MouseEvent e) { Macros.getProgletPane().requestFocusInWindow(); }
+	  public void mouseExited(MouseEvent e) { }
+	});
+      Macros.getProgletPane().addKeyListener(keyKeyListener = new KeyListener() { 
+	  public void keyPressed(KeyEvent e) { }
+	  public void keyReleased(KeyEvent e) { 
+	    String s = KeyEvent.getKeyText(e.getKeyCode());
+	    if((e.getModifiers() & KeyEvent.CTRL_MASK) != 0) {
+	      lastKey = "Ctrl+"+s;
+	    } else {
+	      int c = e.getKeyChar();
+	      if (32 <= c && c < 127) {
+		lastKey = ""+e.getKeyChar();
+	      } else {
+		if ("Shift".equals(s) || "Ctrl".equals(s))
+		  return;
+		lastKey = s;
+	      }
+	    }
+	    if (keyListenerRunnable != null) 
+	      keyListenerRunnable.run();  
+	  }
+	  public void keyTyped(KeyEvent e) { }
+	});
+    }
+  }
+  /** Renvoie la dernière touche entrée au clavier ou la chaine vide sinon. 
+   * @return Renvoie le caractère associée à la touche si il est défini, sinon une chaîne qui représente le caractère de contrôle,
+   * par exemple 'Left', 'Up, 'Right', 'Down' pour les flèches, 'F1, 'F2', .. pour les touches de fonctions, 'Alt', 'Escape', 'Backspace', 'Enter', 'Page Down', 'Page Up', 'Home', 'end' pour les autres touches, 'Ctrl+A' pour la combinaison de la touche 'Control' et 'A', etc.
+   */
+  public static String getLastKey() { return lastKey; }
+  private static Runnable keyListenerRunnable = null;
+  private static KeyListener keyKeyListener = null;
+  private static String lastKey = "";
+  private static MouseListener keyMouseListener = null;
 }
 

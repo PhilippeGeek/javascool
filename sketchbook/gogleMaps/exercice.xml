@@ -6,12 +6,13 @@
 
   <div title="Apprendre à manipuler des tables associatives">
     <p>Un dictionnaire ou un répertoire téléphonique est une structure de donnée où une clé (le mot dont on cherche une définition ou le nom de la personne dont on cherche le numéro de télephone) est associée à une valeur. Celà diffère d'un tableau qui est uniquement indexé par des nombres entiers 0, 1, etc.</p>
-    <p>Il existe un objet Java, les <c>HashMap</c> qui implémente un tel container et il se maniuple assez facilement:
+    <p>Il existe un objet Java, les <c>HashMap</c> qui implémente un tel container et il se manipule assez facilement:
     <div class="code">
-      <p><r>import java.util.HashMap;
-      import java.util.Set;
+      <p><r>import java.util.HashMap;</r></p>
+      <p><r>import java.util.Set;</r></p>
+    </div></p>
 
-    </code>
+    A SUIVRE !!!
     
 
   </div>
