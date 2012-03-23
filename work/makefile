@@ -9,7 +9,7 @@
 
 # vthierry's ongoing tasks
 
-dft : tst
+dft : jbl
 
 export JAVA_HOME=/usr/java/jdk1.6.0_22
 #export JAVA_HOME=/usr/java/jdk1.7.0_02

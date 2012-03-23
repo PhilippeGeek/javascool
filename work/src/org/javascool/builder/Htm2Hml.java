@@ -21,8 +21,7 @@ public class Htm2Hml extends JPanel {
     setLayout(new BorderLayout());
     JToolBar b = new JToolBar();
     b.setFloatable(false);
-    b.add(new JLabel("Traduction de [X]HTML en HML (coller le HTML à gauche et copié le HML à droite)"));
-    b.add(Box.createHorizontalGlue());
+    b.add(new JLabel("Traduction de [X]HTML en HML (coller le HTML à gauche et copié le HML à droite et cliquer sur le bouton) -> "));
     b.add(new JButton("[Traduire]") {
 	{
 	  addActionListener(new ActionListener() {
@@ -32,6 +31,7 @@ public class Htm2Hml extends JPanel {
 		hml.setText(translate(htm.getText()));
 	      }});
 	}});
+    b.add(Box.createHorizontalGlue());
     add(b, BorderLayout.NORTH);
     JPanel c = new JPanel();
     c.add(new JScrollPane(htm = new JTextArea(40, 64)));
