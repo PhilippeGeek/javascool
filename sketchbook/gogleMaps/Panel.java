@@ -26,6 +26,7 @@ public class Panel extends JPanel {
     Functions.voisins = main.arcs;
     Functions.latitudes = main.latitudes;
     Functions.longitudes = main.longitudes;
+    Functions.villes = main.latitudes.keySet();
   }
   GogleMapPanel main;
 

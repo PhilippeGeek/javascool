@@ -6,6 +6,7 @@ package org.javascool.proglets.gogleMaps;
 
 import java.util.Map;
 import java.util.List;
+import java.util.Set;
 
 import javax.swing.SwingUtilities;
 import org.javascool.macros.Macros;
@@ -74,6 +75,8 @@ public class Functions {
     getPane().main.clearMap();
   }
 
+  /** Table de toutes les villes. */
+  public static Set <String> villes;
   /** Table des latitudes associée à chaque nom de ville. */
   public static Map<String, Double> latitudes;
   /** Table des longitudes associée à chaque nom de ville. */
