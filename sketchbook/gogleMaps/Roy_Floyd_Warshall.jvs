@@ -1,9 +1,4 @@
-
 import java.util.HashMap;
-import java.util.Set;
-
-/** Tables de toutes les villes. */
-Set < String > villes = latitudes.keySet();
 
 /** Tables des plus courtes longueurs entre les villes, la valeur est null si il n'y a pas de chemin. */
 HashMap < StringPair, Double > Longueurs = new HashMap < StringPair, Double > ();
@@ -35,18 +30,13 @@ String getPathNextNode(String depart, String arrivee) {
     }
   }
   // Calcule ensuite itérativement les chemins de longueur supérieure à un.
-  for (String ville3 : villes) 
-    for (String ville1 : villes) 
-      for (String ville2 : villes) {
-	Double l12 = Longueurs.get(new StringPair(ville1, ville2)), l13 = Longueurs.get(new StringPair(ville1, ville3)), l32 = Longueurs.get(new StringPair(ville3, ville2));
-	if (l13 != null && l32 != null) {
-	  double l = l13 + l32;
-	  if (l12 == null || l < l12) {
-	    Longueurs.put(new StringPair(ville1, ville2), l);
-	    Routage.put(new StringPair(ville1, ville2), ville3);
-	  }
-	}
-      }
+  //
+  //
+  //
+  // Oh zut !! Cette partie du code est manquante . . qui saura la compléter ???
+  //
+  //
+  //
 }
 
 // Test de l'algorithme contre la méthode de la proglet.
@@ -55,14 +45,15 @@ void test() {
     for (String arrivee : villes) {
       String ville = depart;
       for(String etape : plusCourtCheminGogleMap(depart, arrivee)) {
-	if (!etape.equals(ville)) 
-	  throw new IllegalArgumentException("Il y a un bug dans l'algorithme de Roy_Floyd_Warshall!");
+	if (!etape.equals(ville))
+	  println(" AH ! Il y a un bug dans l'algorithme de Roy_Floyd_Warshall");
 	ville = getPathNextNode(ville, arrivee);
-      }
+      } 
+      print(".");
     }
+  println("\nOK");
 }
 
 void main() {
   test();
-  println("OK");
 }
