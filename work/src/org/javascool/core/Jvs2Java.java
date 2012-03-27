@@ -3,8 +3,11 @@
 **************************************************************/
 package org.javascool.core;
 
+import java.util.HashSet;
+
 // Used to report a throwable
 import java.lang.reflect.InvocationTargetException;
+import org.javascool.tools.FileManager;
 
 /** Implémente le mécanisme de base de traduction d'un code Jvs en code Java standard.
  * <p>Les erreurs de traduction sont affichées dans la console.</p>
@@ -64,7 +67,21 @@ public class Jvs2Java extends Translator {
           body.append("//").append(line).append("\n");
           if(line.matches("^\\s*package[^;]*;\\s*$"))
             System.out.println("Attention: on ne peut normalement pas définir de package Java en JavaScool\n le programme risque de ne pas s'exécuter correctement");
-        } else
+        } else if (line.matches("^\\s*include[^;]*;\\s*$")) {
+	  String name = line.replaceAll("^\\s*include([^;]*);\\s*$", "$1").trim();
+	  body.append("/* include "+name+"; */ ");
+	  try {
+	    String include = FileManager.load(name+".jvs");
+	    for(String iline : include.split("\n"))
+	      if(iline.matches("^\\s*import[^;]*;\\s*$"))
+		head.append(iline);
+	      else if(!iline.matches("^\\s*package[^;]*;\\s*$"))
+		body.append(iline);
+	  } catch(Exception e) {
+	    body.append(" - Impossible de lire correctement le fichier  inclure !!");
+	  }
+	  body.append("\n");
+	} else
           body.append(line).append("\n");
         i++;
       }

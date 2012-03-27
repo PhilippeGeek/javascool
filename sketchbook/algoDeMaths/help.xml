@@ -4,7 +4,7 @@
   </p>
   <p>
     Cette proglet permet d'afficher des tracés de couleurs différentes.
-    <div>Pour tracer un point de la courbe: <div class="code">
+    <div>Pour tracer un des points de la courbe (qui sont <l class="newtab" link="aboutSetPoint.htm" text="reliés entre-eux pour le tracé"/>): <div class="code">
       <p><r>setPoint</r>(x, y, c);</p>
     </div><div class="ul">
     <div>où <b>x</b> est un <r>double</r>, entre <b>[-1, +1]</b>, abscisse du point de la courbe;</div>
@@ -43,7 +43,7 @@
      <p><T/><r>setPoint</r>(x, -<r>Math.exp</r>(-(x + 1)), 7);</p>
      <p>}</p>
    </div></div>
-   <div>Un autre <l class="editor" link="JeuSimon.jvs" text="exemple"/> permet de montrer les fonctionnalités avancées (réaction à un clic utilisateur).</div>
+   <div>Un autre <l class="editor" link="JeuSimon.jvs" text="exemple"/> permet de montrer les fonctionnalités avancées (réaction à un clic utilisateur avec un <l link="aboutRunnable.htm" text="Runnable"/>).</div>
   </p>
   <p> Un autre <l class="editor" link="Triangle_de_sierpinsky.jvs" text="exemple de programme"/> permet de tracer des fractals.</p>
   <p> Un autre <l class="editor" link="JeuDeMorpion.jvs" text="exemple de programme"/> implémente un jeu de morpion . . à améliorer au niveau du jeu de l'ordinateut !.</p>
