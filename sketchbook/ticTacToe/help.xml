@@ -2,6 +2,8 @@
 <div title="Proglet Tic-Tac-Toe version réseau">
   <p class="margin"> Auteur : Christophe Béasse </p><p></p>
 
+  <p><l link="activity7.htm" text="..."/></p>
+
 <div title="Présentation: jeu du Tic-Tac-Toe et primitives réseau">
 
 <p> On propose ici de réaliser le jeu du "TicTacToe" (version anglaise du morpion qui se joue sur une grille de 3x3 cases) en version réseau à l'aide d'une implémentation type client/serveur utilisant les sockets. On dispose de deux postes (1 poste ou le jeu tourne en mode serveur et 1 autre poste ou le jeu tourne en mode client. Dans le film WarGames (1984), le jeu de Tic-Tac-Toe est utilisé pour apprendre à un ordinateur pris de folie destructrice qu'il existe des jeux auxquels on ne peut pas toujours gagner.</p>
