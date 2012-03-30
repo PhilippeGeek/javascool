@@ -44,8 +44,9 @@
         <div>Que se passe t'il si on choisit <b><r>return</r> x - 255;</b> et pourquoi ?.</div>
         <div>Augmenter ou baisser le <i>contraste</i> d'une image revient à multiplier ou diviser par un gain constant la valeur de chaque pixel : 
         essayez en modifiant la fonction <b>f()</b>.</div>
+        <div>Que se passe t'il si on choisit <b><r>return</r> 0.5 * x;</b> et pourquoi ?.</div>
         <div>Que se passe t'il si on choisit <b><r>return</r> 0 * x;</b> et pourquoi ?.</div>
-        <div>Que se passe t'il si on choisit <b><r>return</r> 100 * x - 128;</b> et pourquoi ?.</div>
+        <div>Que se passe t'il si on choisit <b><r>return</r> 100 * (x - 128);</b> et pourquoi ?.</div>
       </div>
     </div>
     <div title="Ajouter deux images : l'effet de calque"> 
@@ -89,16 +90,16 @@
         <p/>
         <p><r>void main</r>() {</p>
         <p><T/><r>load</r>("http://javascool.gforge.inria.fr/documents/sketchbook/codagePixels/doisneaubuffon.jpg");</p>
-        <p><T/><r>for</r>(<r>int</r> n = 0; n &lt; 2; n = n + 1) {</p>
+        <p><T/><r>for</r>(<r>int</r> n = 0; n &lt; 5; n = n + 1) {</p>
         <p><T/><T/>filtre();</p>
         <p><T/>}</p>
         <p>}</p>
       </div><div class="ul">
-        <div>Le programme principal <r>main</r> charge la photo et appelle la nouvelle fonction <b>filtre</b> deux fois de suite (pour <b>n = 0</b> et <b>n = 1</b>).</div>
+        <div>Le programme principal <r>main</r> charge la photo et appelle la nouvelle fonction <b>filtre</b> cinq fois de suite (pour <b>n = 0</b> et <b>n = 1</b>).</div>
         <div>La nouvelle fonction <b>filtre</b> appelle la fonction <b>filtrePixel</b> sur chaque pixel.</div>
         <div>Expliquez ce que fait cette fonction <b>filtrePixel</b> : entre quelles 5 valeurs calcule t'elle la moyenne (faire un dessin) ?</div>
         <div>Essayez le code : que se passe t'il visuellement ? Pourquoi ce filtre a t'il un tel effet ?</div>
-        <div>Essayez le code en appliquant non pas le filtre <c>2</c> mais <c>10</c> fois, puis  <c>10</c> fois, dans le programme principal : que se passe t'il ?</div>
+        <div>Essayez le code en appliquant non pas le filtre <c>5</c> mais <c>10</c> fois, puis  <c>20</c> fois, dans le programme principal : que se passe t'il ?</div>
         <div>Essayez aussi avec d'autres images de votre choix vues sur internet.</div>
       </div>
     </div>
@@ -123,14 +124,15 @@
         <p>}</p>
       </div><div class="ul">
        <div>Que se passe t'il dans ce cas ? Décrivez ce que vous observez.</div>
-       <div>Pourquoi avoir ajouté <c>128</c> ? Essayez avec les expressions <b>valeur = (<r>getPixel</r>(i, j) - <r>getPixel</r>(i + 1, j));</b> 
-       puis <b>valeur = -(<r>getPixel</r>(i, j) - <r>getPixel</r>(i + 1, j));</b> pour bien comprendre ce qui se passe.</div>
-       <div>Comment observer la même chose avec les contours horizontaux ? Proposez une nouvelle fonction pour ce faire.</div>
-       <div>Essayez la construction <b>valeur = (<r>getPixel</r>(i, j) - <r>getPixel</r>(i + 1, j) - <r>getPixel</r>(i, j + 1));</b> et commentez le résultat.</div>
+       <div>Pourquoi avoir ajouté <c>128</c> ? Essayez avec les expressions <b><r>return</r> (<r>getPixel</r>(i, j) - <r>getPixel</r>(i + 1, j));</b> 
+       puis <b><r>return</r> -(<r>getPixel</r>(i, j) - <r>getPixel</r>(i + 1, j));</b> pour bien comprendre ce qui se passe.</div>
+       <div>En faisant la différence entre deux pixels horizontaux <b><r>getPixel</r>(i, j) - <r>getPixel</r>(i + 1, j)</b> 
+       va t'on plutôt détecter les contours verticaux ou horizontaux de l'image ? Expliquer.</div>
+       <div>Essayez la construction <b><r>return</r> (<r>getPixel</r>(i, j) - <r>getPixel</r>(i + 1, j) - <r>getPixel</r>(i, j + 1));</b> et commentez le résultat.</div>
        <div>Deux questions très subtiles, pour les «cracks» : <div class="ul">
          <div>Avez vous remarqué que la boucle de la fonction <b>filtre()</b> n'a pas les mêmes bornes d'itération pour ces filtres 
          que lors du 1er cas où on tranformait juste l'intensité d'un pixel ? Sauriez-vous dire pourqoi ?</div>
-         <div>Que se passerait-il si on utilisait <b>valeur = 128 + (<r>getPixel</r>(i, j) - <r>getPixel</r>(i - 1, j));</b> : essayez et tentez d'expliquer pourquoi.</div>
+         <div>Que se passerait-il si on utilisait <b><r>return</r> 128 + (<r>getPixel</r>(i, j) - <r>getPixel</r>(i - 1, j));</b> : essayez et tentez d'expliquer pourquoi.</div>
        </div></div>
       </div>
     </div>

@@ -137,13 +137,6 @@ public static void filedump(String nomFichier){
     }catch (IOException e) { 
     }            
   }    
-
-
-  /** Permet de positionner une marque sur la grille du panel de la proglet 
-   * @param i Position horizontale entre 1 et 3.
-   * @param j Position verticale entre 1 et 3.
-   * @param mark Marque du tictactoe soit 'X', soit 'O'
-   */
    
   public static void affiche(String str) {
 	  getPane().textArea.append(str);
