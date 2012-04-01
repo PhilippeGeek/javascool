@@ -95,7 +95,7 @@ public class CurveOutput extends JPanel {
       g.drawLine(i, j - 1, i, j + 1);
     }
     paintReticule(g);
-    } catch(java.util.ConcurrentModificationException e) {}
+    } catch(Exception e) {}
   }
   private void paintReticule(Graphics g) {
     int i = x2i(reticuleX), j = y2j(reticuleY);
