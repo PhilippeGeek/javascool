@@ -15,4 +15,11 @@
 <p>Au niveau de l'interface graphique java on parle d'«écouteur» (listener) basé sur le même principe mais avec deux ingrédients de plus: il n'y a pas qu'un seul run() mais plusieurs selon le type d'événement (par exemple souris qui entre dans la fenêtre ou en sort, clic enfoncé ou relevé, etc..) et la fonction appelée reçoit directement en argument toutes les informations relatives à l'événement (ex: position de la souris, etc.).</p>
 </div></div>
 <div>Bref ce qui est proposé au niveau de javascool c'est le mécanisme Java minimal qui permet d'implémenter ce mécanisme de code réactif à un événement.</div>
+<div title="Arrêter le runnable">
+  <p>Comme le runnable est un code qui tourne, indépendemment du  <c>void main()</c> il est complètement naturel (mais pas forcément souhaitable !) qu'il continue d'être actif (c'est à dire recevoir des événements <i>après</i> la fin de l'exécution du programme). Pour l'arrêter il faut utiliser la commande:
+ <div class="code">
+   <p>setRunnable(<r>null</r>);</p>
+ </div> qui redéfinit le runnable comme <r>null</r>, donc sans effet.</p>
+</div>
+
 </div>
