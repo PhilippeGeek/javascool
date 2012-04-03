@@ -26,24 +26,24 @@ public class Functions {
     RubikAnimator.simpleTurnFace(Face.RIGHT, true);
   }
 
-  public static void top() {
+  public static void up() {
     RubikAnimator.simpleTurnFace(Face.TOP, false);
   }
-  public static void antitop() {
+  public static void antiup() {
     RubikAnimator.simpleTurnFace(Face.TOP, true);
   }
 
-  public static void rear() {
+  public static void back() {
     RubikAnimator.simpleTurnFace(Face.REAR, false);
   }
-  public static void antirear() {
+  public static void antiback() {
     RubikAnimator.simpleTurnFace(Face.REAR, true);
   }
 
-  public static void bottom() {
+  public static void down() {
     RubikAnimator.simpleTurnFace(Face.BOTTOM, false);
   }
-  public static void antibottom() {
+  public static void antidown() {
     RubikAnimator.simpleTurnFace(Face.BOTTOM, true);
   }
   

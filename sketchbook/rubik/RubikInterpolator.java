@@ -8,13 +8,13 @@ class RubikInterpolator {
   private final TransformGroup[][][] groups;
   private final Transform3D baseTransform = new Transform3D();
   private final TransformGroup platform;
-  private final ViewCube cube;
+  //private final ViewCube cube;
   
   
   RubikInterpolator(TransformGroup[][][] targets, TransformGroup platform, ViewCube cube) {
     this.groups = targets;
     this.platform = platform;
-    this.cube = cube;
+    //this.cube = cube;
   }
   
   private final Transform3D transformBuffer = new Transform3D();
@@ -42,7 +42,6 @@ class RubikInterpolator {
   }
   
   public void endFace(Face face) {
-    cube.bringToFront(face);
     face.rotation.transform(baseTransform, 1f);
     platform.setTransform(baseTransform);
   }
@@ -66,7 +65,6 @@ class RubikInterpolator {
   }
 
   public void endRotation(Face face) {
-    cube.rotate(face);
     face.rotation.transform(baseTransform, 1f);
     platform.setTransform(baseTransform);
   }

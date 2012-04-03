@@ -59,6 +59,7 @@ public class RubikAnimator {
 
   public static void bringToFront(Face face, boolean now)
       throws InterruptedException {
+    face.turn(viewCube);
     if (now)
       actions.putFirst(face);
     else
@@ -112,7 +113,7 @@ public class RubikAnimator {
     return groups;
   }
 
-  private static boolean created = false;
+  private static Component panel;
 
   /**
    * Return the main widget of the UI
@@ -123,9 +124,8 @@ public class RubikAnimator {
    */
   public static Component getCube(int fps) {
 
-    if (created)
-      throw new IllegalStateException("Panel already created");
-    created = true;
+    if (panel!=null)
+      return panel;
 
     URL url = RubikAnimator.class.getResource("RubikAnimator.class");
     if (url.getProtocol().equals("jar")) {
@@ -139,7 +139,7 @@ public class RubikAnimator {
       if (libraryPath.length() == 0)
         newPath = path;
       else
-        newPath = libraryPath + pathSeparator + path;
+        newPath = path + pathSeparator + libraryPath;
       System.setProperty("java.library.path", newPath);
     }
     GraphicsConfiguration config = SimpleUniverse.getPreferredConfiguration();
@@ -202,6 +202,7 @@ public class RubikAnimator {
     universe.addBranchGraph(group);
     universe.getViewingPlatform().setNominalViewingTransform();
 
+    panel=canvas;
     return canvas;
   }
 
