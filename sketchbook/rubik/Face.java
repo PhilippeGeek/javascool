@@ -12,6 +12,9 @@ enum Face implements Move {
     public void step(RubikInterpolator interpolator, float f) {
       interpolator.stepFace(this,f);
     }
+    public void turn(ViewCube cube) {
+      cube.antiRotate();
+    }
   },
   FRONT(Rotation.zMinus) {
     @Override
@@ -21,6 +24,9 @@ enum Face implements Move {
     @Override
     public void step(RubikInterpolator interpolator, float f) {
       interpolator.stepFace(this,f);
+    }
+    public void turn(ViewCube cube) {
+      cube.rotate();
     }
   };
   Face() {
@@ -37,5 +43,8 @@ enum Face implements Move {
   @Override
   public void step(RubikInterpolator interpolator, float f) {
     interpolator.stepFace(this, f);
+  }
+  public void turn(ViewCube cube) {
+    cube.bringToFront(this);
   }
 }

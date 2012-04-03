@@ -1,13 +1,17 @@
 package org.javascool.proglets.rubik;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.Box;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JPanel;
+import javax.swing.plaf.ComponentUI;
+import javax.swing.plaf.basic.BasicPanelUI;
 
 public class Panel extends JPanel {
 
@@ -21,23 +25,49 @@ public class Panel extends JPanel {
 
   public Panel() {
     super(new BorderLayout());
+    /*Timer timer = new Timer(1000,new ActionListener() {
+      
+      @Override
+      public void actionPerformed(ActionEvent arg0) {
+        if (isVisible())
+          paintImmediately(0, 0, getWidth(), getHeight());
+      }
+    });
+    timer.start();*/
     setOpaque(false);
+    setUI(UI);
   }
+  
+  private static final ComponentUI UI = new BasicPanelUI() {
+    @Override
+    public void paint(Graphics g, JComponent c) {
+      Panel p = (Panel)c;
+      if (p.inited) {
+        super.paint(g,c);
+        return;
+      }
+      p.inited = true;
+      p.init();
+      p.revalidate();
+      p.repaint();
+    }
+  };
 
-  private boolean inited;
+  boolean inited;
 
   @Override
   protected void paintComponent(Graphics graphics) {
-    if (inited)
-      return;
-    init();
-    revalidate();
-    repaint();
-    inited = true;
+    super.paintComponent(graphics);
+
+  }
+  
+  @Override
+  public Dimension getMinimumSize() {
+    return new Dimension(0,0);
   }
 
   public void init() {
-    super.add(RubikAnimator.getCube(50));
+    add(RubikAnimator.getCube(24));
     Box box = Box.createHorizontalBox();
     add(box, "\u2191", new ActionListener() {
 

@@ -40,10 +40,11 @@ public class ViewCube {
     return position.get(turn);
   }
 
-  void rotate(Face face) {
-    if (face==Face.FRONT)
+  void rotate() {
       move(Face.LEFT,Face.BOTTOM,Face.RIGHT,Face.TOP);
-    else
+  }
+  
+  void antiRotate() {
       move(Face.LEFT,Face.TOP,Face.RIGHT,Face.BOTTOM);
   }
   

@@ -19,7 +19,8 @@ class ActionBehavior extends Behavior {
 
   private final RubikInterpolator rubikInterpolator;
 
-  private final ComponentEvent wakeupEvent;
+  static final int EVENT_ID = ComponentEvent.COMPONENT_MOVED;
+  static final int MS_PER_ACTION = 1000;
 
   private final BlockingQueue<Move> actions;
   // private final ConcurrentLinkedQueue<Move> actionList = new
@@ -27,7 +28,7 @@ class ActionBehavior extends Behavior {
   private final ArrayBlockingQueue<Move> actionList = new ArrayBlockingQueue<Move>(
       1);
   // private Action action;
-  private final Alpha alpha = new Alpha(500);
+  private final Alpha alpha = new Alpha(MS_PER_ACTION);
   private final WakeupCriterion defaultWakeupCriterion;
   private final WakeupCriterion passiveWakeupCriterion;
 
@@ -45,9 +46,7 @@ class ActionBehavior extends Behavior {
     this.actions = actions;
     this.rubikInterpolator = rubikInterpolator;
     this.canvas = canvas;
-    this.wakeupEvent = new ComponentEvent(canvas,
-        ComponentEvent.COMPONENT_MOVED);
-    this.passiveWakeupCriterion = new WakeupOnAWTEvent(wakeupEvent.getID());
+    this.passiveWakeupCriterion = new WakeupOnAWTEvent(EVENT_ID);
   }
 
   @Override
@@ -65,15 +64,18 @@ class ActionBehavior extends Behavior {
           for (;;) {
             if (actions.peek() == null)
               synchronized (alpha) {
-                alpha.setLength(2000);
+                alpha.setLength(MS_PER_ACTION);
               }
             Move a = actions.take();
             actionList.put(a);
             EventQueue.invokeAndWait(new Runnable() {
 
+              
+
               @Override
               public void run() {
-                canvas.dispatchEvent(wakeupEvent);
+                canvas.dispatchEvent(new ComponentEvent(canvas,
+                    EVENT_ID));
               }
             });
           }
@@ -116,7 +118,7 @@ class ActionBehavior extends Behavior {
 
     float status;
     synchronized (alpha) {
-      int length = 2000 / (actions.size() + 1);
+      int length = MS_PER_ACTION / (actions.size() + 1);
       if (length < alpha.getLength())
         alpha.setLength(length);
       status = resume();
