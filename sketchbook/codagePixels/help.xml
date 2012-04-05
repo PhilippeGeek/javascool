@@ -55,6 +55,7 @@
   <div><b>Manipulation d'images sous forme de tableau</b> Voici disponibles <l class="editor" link="MoreImage.jvs" text="quelques routines"/> exemples pour aller plus loin: redimensionner une image, la manipuler en tableau, etc...</div>
   <div><b>Sauvegarde d'images:</b> Il est aussi possible de sauvegarder une image dans un fichier, avec <l link="http://javascool.gforge.inria.fr/?page=proglets&amp;action=show&amp;id=codagePixels&amp;helpFile=api/org/javascool/proglets/codagePixels/Functions.html#save(java.lang.String)" text="save(String)"/>.</div>
   <div><b>Format ASCII:</b> Il est aussi possible de charger/sauvegarder des images en format ASCII <l link="http://fr.wikipedia.org/wiki/Portable_pixmap" text ="PBM, PGM ou PPM"/> pour en analyser le codage (voir <l class="editor" link="Exemple2.jvs" text="ici"/>).</div>
+  <div><b>Détection de clic</b>: On peut détecter un clic utilisateur avec un <l link="../algoDeMaths/aboutRunnable.htm" text="Runnable"/> et récupérer la position dans l'image avec les fonctions <l link="http://javascool.gforge.inria.fr/?page=proglets&amp;action=show&amp;id=codagePixels&amp;helpFile=api/org/javascool/proglets/codagePixels/Functions.html#getX()" text="getX()"/> et <l link="http://javascool.gforge.inria.fr/?page=proglets&amp;action=show&amp;id=codagePixels&amp;helpFile=api/org/javascool/proglets/codagePixels/Functions.html#getY()" text="getY()"/>.</div>
 </div>
 </div>
 
