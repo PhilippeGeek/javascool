@@ -81,7 +81,9 @@ public class CurveOutput extends JPanel {
     }
     for(line l : lines) {
       g.setColor(l.c);
-      g.drawLine(x2i(l.x1), y2j(l.y1), x2i(l.x2), y2j(l.y2));
+      int x1 = x2i(l.x1), y1 = y2j(l.y1), x2 = x2i(l.x2), y2 = y2j(l.y2);
+      if (x1 == x2 && y1 == y2) x2++;
+      g.drawLine(x1, y1, x2, y2);
     }
     for(oval l : ovals) {
       g.setColor(l.c);
@@ -220,6 +222,7 @@ public class CurveOutput extends JPanel {
     repaint(0, 0, getWidth(), getHeight());
   }
   /** Trace une ligne.
+   * <p>Pour tracer un point, tracer une ligne de longueur nulle (<tt>add(x, y, x, y, c);</tt>.</p>
    * @param x1 Abscisse du point, dans [-Xscale+Xoffset..Xscale+Xoffset].
    * @param y1 Ordonnée du point, dans [-Yscale+Yoffset..Yscale+Yoffset].
    * @param x2 Abscisse du point, dans [-Xscale+Xoffset..Xscale+Xoffset].

@@ -104,6 +104,20 @@ public class Functions {
   public static void addLine(double x1, double y1, double x2, double y2) {
     addLine(x1, y1, x2, y2, 0);
   }
+  /** Trace une point.
+   * @param x1 Abcisse du 1er point, dans [-X, X], par défaut [-1, 1].
+   * @param y1 Ordonnée du 1er point, dans [-Y, Y], par défaut [-1, 1].
+   * @param c Numéro de la courbe: 0 (noir, défaut), 1 (brun), 2 (rouge), 3 (orange), 4 (jaune), 5 (vert), 6 (bleu), 7 (violet), 8 (gris), 9 (blanc).
+   */
+  public static void addPoint(double x1, double y1, int c) {
+    getPane().scope.add(x1, y1, x1, y1, c);
+  }
+  /*
+   * @see #addPoint(double, double, int)
+   */
+  public static void addPoint(double x1, double y1) {
+    addPoint(x1, y1, 0);
+  }
   /** Trace un  cercle.
    * @param x Abcisse du centre, dans [-X, X], par défaut [-1, 1].
    * @param y Ordonnée du centre, dans [-Y, Y], par défaut [-1, 1].

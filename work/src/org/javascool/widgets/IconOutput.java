@@ -18,6 +18,11 @@ import javax.imageio.ImageIO;
 import org.javascool.macros.Macros;
 import java.io.IOException;
 
+// Used to define a click
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseEvent;
+
 /** Panneau pour le tracé d'images pixeliques.
  *
  * @see <a href="IconOutput.java.html">source code</a>
@@ -249,4 +254,45 @@ public class IconOutput extends JPanel {
     putColors("white");
     putColors("yellow");
   }
+
+  /** Renvoie la position horizontale du dernier clic de souris dans l'image. */
+  public int getClicX() {
+    return clicX;
+  }
+  /** Renvoie la position verticale du dernier clic de souris dans l'image. */
+  public int getClicY() {
+    return clicY;
+  }
+  private int clicX = 0, clicY = 0;
+  {
+    addMouseListener(new MouseListener() {
+	private static final long serialVersionUID = 1L;
+	@Override
+	public void mouseReleased(MouseEvent e) {
+	  // x = i0 + i * dij, y = j0 + j * dij
+	  clicX = (e.getX() - i0) / dij;
+	  clicY = (e.getY() - j0) / dij;
+	  if(runnable != null)
+	    new Thread(runnable).start();
+	}
+	@Override
+	  public void mousePressed(MouseEvent e) {}
+	@Override
+	  public void mouseClicked(MouseEvent e) {}
+	@Override
+	  public void mouseEntered(MouseEvent e) {}
+	@Override
+	  public void mouseExited(MouseEvent e) {}
+      });
+  }
+
+  /** Définit une portion de code appellée à chaque clic de souris.
+   * @param runnable La portion de code à appeler, ou null si il n'y en a pas.
+   * @return Cet objet, permettant de définir la construction <tt>new CurveOutput().setRunnable(..)</tt>.
+   */
+  public IconOutput setRunnable(Runnable runnable) {
+    this.runnable = runnable;
+    return this;
+  }
+  private Runnable runnable = null;
 }
