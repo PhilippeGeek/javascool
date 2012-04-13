@@ -2,10 +2,7 @@
 # Refonte de la 4.2
 #  - TextFileEditor
 #  - separer Proglet de ProgletEngine
-#  - reprendre e creer builder2
-#  - repasser sur les classes et netoyyer
 #  - simplifier la notion de proglet
-#  - creer un ProgletPanel avec executer
 
 # vthierry's ongoing tasks
 
