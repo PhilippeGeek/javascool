@@ -11,6 +11,7 @@ public class Translator extends org.javascool.core.Translator {
   @Override
   public String getImports() {
     return 
+      "import org.javascool.proglets.syntheSons.InputSoundBit;" + 
       "import org.javascool.proglets.syntheSons.FileSoundBit;" + 
       "import org.javascool.proglets.syntheSons.NotesSoundBit;" + 
       "import org.javascool.proglets.syntheSons.SoundBit;" + 

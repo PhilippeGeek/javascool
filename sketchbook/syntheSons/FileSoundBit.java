@@ -32,7 +32,7 @@ public class FileSoundBit extends SoundBit {
    *
    * @throws RuntimeException if an I/O exception occurs during command execution.
    *
-   * @return This, allowing to use the <tt>SoundBit pml= new SoundBit().reset(..)</tt> construct.
+   * @return This, allowing to use the <tt>SoundBit pml= new FileSoundBit().reset(..)</tt> construct.
    */
   @Override
   public SoundBit reset(String location) {
