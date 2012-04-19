@@ -354,7 +354,7 @@ static public void loadImageToPixMap(int num, int pixMap [][]) {
 	}	
   
   /** Renvoie le code coudeur de la couleur spécifiée
-   * @param c Couleur: "black" (default), "blue", "cyan", "gray", "green", "magenta", "orange", "pink", "red", "white", "yellow".
+   * @param cCouleur: "black" (default), "blue", "cyan", "gray", "green", "magenta", "orange", "pink", "red", "white", "yellow".
    * @return Renvoie la valeur int RGB de la couleur spécifiée
    */ 	
   

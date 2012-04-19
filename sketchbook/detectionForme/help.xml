@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <div title="La «proglet» détectionForme">
-
-  <p class="margin"> Auteur : Christophe Béasse </p><p></p>
-
+<p align="right">Auteur :  Christophe Béasse</p><p></p>
    <p class="margin">
     <p>Cliquer <l class="newtab" link="activite.htm" text="ici"/> pour faire l'activité.</p>
     <p>Cliquer <l class="newtab" link="tutoriel.htm" text="ici"/> pour lire le tutoriel.</p>
