@@ -34,6 +34,8 @@ import org.fife.ui.rtextarea.ToolTipSupplier;
 import org.javascool.core.ProgletEngine;
 import org.javascool.widgets.ToolBar;
 
+import javax.swing.JPopupMenu;
+
 /** Define a JVSEditor
  * Use JVSEditor to edit jvs files, it can be used as a panel
  * @author Philippe VIENNE
@@ -102,6 +104,14 @@ class JVSEditor extends JPanel {
         textArea.setMarkOccurrences(true);
         //textArea.setTextAntiAliasHint("VALUE_TEXT_ANTIALIAS_ON");
         textArea.setText("");
+
+	// Simplifie le menu
+	JPopupMenu popup = textArea.getPopupMenu();
+	for(int i = 0; i < popup.getComponentCount();)
+	  if (popup.getComponent(i) instanceof javax.swing.JMenu)
+	    popup.remove(i);
+	  else
+	    i++;
 
         KeyStroke key = KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.CTRL_MASK);
         if (isMac()) {

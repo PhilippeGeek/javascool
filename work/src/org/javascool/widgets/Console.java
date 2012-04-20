@@ -7,6 +7,7 @@ package org.javascool.widgets;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -55,6 +56,7 @@ public class Console extends JPanel {
     // Construit la zone d'affichage
     outputPane = new JTextArea();
     outputPane.setEditable(false);
+    outputPane.setFont(new Font("Monospaced", Font.PLAIN, 12));
     float[] bg = Color.RGBtoHSB(200, 200, 200, null);
     outputPane.setBackground(Color.getHSBColor(bg[0], bg[1], bg[2]));
     JScrollPane scrolledOutputPane = new JScrollPane(outputPane);
@@ -66,8 +68,19 @@ public class Console extends JPanel {
                       public void run() {
                         clear();
                       }
-                    }
-                    );
+                    });
+    toolbar.addTool("Copier tout", "org/javascool/widgets/icons/copyAll.png", new Runnable() {
+	@Override
+	public void run() {
+	  copyAll();
+	}
+      });
+    toolbar.addTool("Copier sélection", "org/javascool/widgets/icons/copySelection.png", new Runnable() {
+	@Override
+	  public void run() {
+	  copySelection();
+	}
+      });
     toolbar.addSeparator();
     toolbar.addTool("status", status = new JLabel("                                         "));
     this.add(toolbar, BorderLayout.NORTH);
@@ -99,6 +112,15 @@ public class Console extends JPanel {
   /** Efface le contenu de la console. */
   public void clear() {
     outputPane.setText("");
+  }
+  /** Copie le contenu de la console dans le presse-papier. */
+  private void copyAll() {
+    outputPane.selectAll();
+    outputPane.copy();
+  }
+  /** Copie le contenu de la sélection dans le presse-papier. */
+  private void copySelection() {
+    outputPane.copy();
   }
   /** Affiche une information dans la barre de statut.
    * @param text Texte à afficher.
