@@ -1,4 +1,4 @@
-package org.javascool.proglets.txtCode;
+package org.javascool.proglets.txtcode;
 
 import javax.swing.JPanel;
 import javax.swing.JButton;

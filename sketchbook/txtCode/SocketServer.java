@@ -2,7 +2,7 @@
 * Christophe Béasse <oceank2@gmail.com>, Copyright (C) 2011.  All rights reserved. *
 ************************************************************************************/
 
-package org.javascool.proglets.txtCode;
+package org.javascool.proglets.txtcode;
 
 import java.net.ServerSocket;
 import java.net.Socket;

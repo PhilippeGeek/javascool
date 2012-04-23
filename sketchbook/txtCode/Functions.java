@@ -1,12 +1,16 @@
-package org.javascool.proglets.txtCode;
+package org.javascool.proglets.txtcode;
 
 import static org.javascool.macros.Macros.*;
 import java.awt.Color;
 import javax.swing.JTextArea;
 import java.lang.Character;
 import java.net.Socket;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.BufferedOutputStream;
+import java.io.DataOutputStream;
+import java.io.FileOutputStream;
+import java.io.BufferedInputStream;
+import java.io.DataInputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.EOFException;
 import java.io.FileNotFoundException;
@@ -31,31 +35,43 @@ public class Functions {
      org.javascool.gui.Desktop.getInstance().focusOnConsolePanel();  
 }
 
-  private static FileReader fileR = null;
-  private static FileWriter fileW = null;     
+  private static DataInputStream fileR = null;
+  private static DataOutputStream fileW = null;    
   
 
-   
+/**
+* Ouverture du fichier en lecture.
+* @param nomFichier nom du fichier à ouvrir  
+*/   
   public static void openFileReader(String nomFichier) {
     try {  
-            fileR = new FileReader(nomFichier);
+        fileR = new DataInputStream(new BufferedInputStream
+			              (new FileInputStream(nomFichier)));
     }catch (FileNotFoundException e) { 
     }            
   }
-  
+
+/**
+* Lecture du code  suivant dans le fichier. 
+* @return valeur du code lu.
+*/   
   public static int readNextCode() {
     int c = -1;
     
     if (fileR == null)
 	    throw new RuntimeException("Le fichier READER n'est pas ouvert ! ");  
-	    
-    try {
-        c = fileR.read();
+
+    try {	    
+        c = fileR.readUnsignedByte();
     }catch (EOFException e) { 
     }catch (IOException e) { 
     }        	           
     return c;
   }  
+
+/**
+* Fermeture du fichier ouvert en lecture. 
+*/
   
   public static void closeFileReader() {
     try {  
@@ -112,31 +128,50 @@ public static void filedump(String nomFichier){
   
   
   }
-  
+
+/**
+* Ouverture du fichier en Ecriture.
+* @param nomFichier nom du fichier à ouvrir  
+*/ 
   public static void openFileWriter(String nomFichier) {
     try {  
-            fileW = new FileWriter(nomFichier);
+       fileW = new DataOutputStream(new BufferedOutputStream
+			            (new FileOutputStream(nomFichier)));
     }catch (IOException e) { 
     }            
   }
-  
-  public static void writeNextCode(int i) {
+
+/**
+* Ecriture du code suivant dans le fichier ouvert en écriture.
+* @param c code à ecrire  
+*/   
+  public static void writeNextCode(int c) {
     
     if (fileW == null)
 	    throw new RuntimeException("Le fichier WRITER n'est pas ouvert ! ");  
 	    
     try {
-        fileW.write(i);
+        fileW.writeByte(c);
     }catch (IOException e) { 
     }        	           
   }  
   
+/**
+* Fermeture du fichier ouvert en Ecriture. 
+*/   
   public static void closeFileWriter() {
     try {  
             fileW.close();
     }catch (IOException e) { 
     }            
   }    
+
+
+  /** Permet de positionner une marque sur la grille du panel de la proglet 
+   * @param i Position horizontale entre 1 et 3.
+   * @param j Position verticale entre 1 et 3.
+   * @param mark Marque du tictactoe soit 'X', soit 'O'
+   */
    
   public static void affiche(String str) {
 	  getPane().textArea.append(str);
@@ -150,6 +185,22 @@ public static void filedump(String nomFichier){
 	  getPane().textArea.append(Integer.toString(n));
   }  
   
+  public static void afficheCodeAuFormatHex(int c) {
+	  getPane().textArea.append(code2HexStr(c));
+  }
+  
+  public static void afficheCodeAuFormatDec(int c) {
+	  getPane().textArea.append(Integer.toString(c));
+  }  
+  
+  public static void afficheCodeAuFormatBin(int c) {
+	  getPane().textArea.append(Integer.toString(c));
+  }  
+  
+  public static void afficheCarAsciiDeCode(int c) {
+	  getPane().textArea.append(code2CarStr(c));
+  }   
+     
   public static void sautDeLigne() {
 	  getPane().textArea.append("\n");
   }  
@@ -157,7 +208,6 @@ public static void filedump(String nomFichier){
   public static String code2HexStr(int code) {
     if (code < 16) return ("0"+Integer.toHexString(code));
     else return Integer.toHexString(code); 
-  
   }
   
   public static String code2CarStr(int code) {
