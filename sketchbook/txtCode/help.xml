@@ -32,7 +32,7 @@
       <p><T/>openFileReader("nomDuFichier.txt");</p>
       <p><T/>c = readNextCode();</p>        
       <p><T/><r>while</r> (c  != -1) {</p>      
-      <p><T/><T/>affiche(code2CarStr(c));</p>
+      <p><T/><T/>afficheCarAsciiDeCode(c);</p>          
       <p><T/><T/>c = readNextCode();</p>        
       <p><T/>} // End While  </p>
       <p><T/>closeFileReader();</p>           
@@ -60,17 +60,28 @@
   <div class="code" align="left"> <p><r>closeFileWriter</r>()</p></div> <p>  fermeture du fichier.</p>     
 </div>
 
-<div title="Les fonctions sur les codes">
-  <div class="code" align="left"> <p><r>filedump</r>(String nomFichier)</p></div> <p>  affichage d'un dump du fichier spécifié</p>
-  <div class="code" align="left"> <p><r>code2HexStr</r>(int code)</p></div> <p>  Comprendre "code conversion to Hexadecimal string". Fonction renvoyant le code héxadécimal ASCII correspondant, au format string (pour affichage).</p> 
-  <div class="code" align="left"> <p><r>code2CarStr</r>(int code)</p></div> <p>  Comprendre "code conversion to caractere string. Fonction renvoyant le caractère  du code spécifié, au format string (pour affichage).</p>     
+<div title="Fonction de dump du fichier">
+  <div class="code" align="left"> <p><r>filedump</r>(String nomFichier)</p></div> <p>  affichage d'un dump du fichier spécifié</p>    
 </div>
 
 <div title="Les fonctions d'affichage">
-  <div class="code" align="left"> <p><r>affiche</r>(String str)</p></div> <p>  Fonction permettant d'afficher la chaîne spécifiée dans la console. Vous pouvez utiliser le caractère '\n' en fin de chaîne pour générer un saut de ligne.</p>
-  <div class="code" align="left"> <p><r>affiche</r>(char c)</p></div> <p>  Fonction permettant d'afficher le caractère spécifié dans la console</p>  
-  <div class="code" align="left"> <p><r>affiche</r>(int n)</p></div> <p>  Fonction permettant d'afficher la valeur spécifiée dans la console</p>  
+
+  <div class="code" align="left"> <p><r>afficheCodeAuFormatHex</r>(int code)</p></div> <p>  Fonction permettant d'afficher le code spécifié au format hexadécimal</p> 
+  
+  <div class="code" align="left"> <p><r>afficheCodeAuFormatDec</r>(int code)</p></div> <p>  Fonction permettant d'afficher le code spécifié au format décimal.</p> 
+  
+  <div class="code" align="left"> <p><r>afficheCodeAuFormatBin</r>(int code)</p></div> <p>  Fonction permettant d'afficher le code spécifié au format binaire.</p>     
+  
+  <div class="code" align="left"> <p><r>afficheCodeAuFormatCar</r>(int code)</p></div> <p>  Fonction permettant d'afficher le caractère ASCII correspondant au code spécifié.</p> 
+  
+  <div class="code" align="left"> <p><r>affiche</r>(String str)</p></div> <p>  Fonction permettant d'afficher la chaîne spécifiée. Vous pouvez utiliser le caractère '\n' en fin de chaîne pour générer un saut de ligne.</p>
+  
+  <div class="code" align="left"> <p><r>affiche</r>(char c)</p></div> <p>  Fonction permettant d'afficher le caractère spécifié</p>  
+  
+  <div class="code" align="left"> <p><r>affiche</r>(int n)</p></div> <p>  Fonction permettant d'afficher la valeur spécifiée</p>  
+  
   <div class="code" align="left"> <p><r>sautDeLigne</r>()</p></div> <p>  Fonction permettant de passer à la ligne suivante sur la console</p>  
+  
   <div class="code" align="left"> <p><r>resetConsole</r>()</p></div> <p>  Fonction permettant d'effacer le contenu de la console.</p>     
 </div>
 

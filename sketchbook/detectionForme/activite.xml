@@ -74,7 +74,7 @@ Votre mission si vous l'acceptez consiste à écrire un programme permettant de 
 
         <p><T/>for (int x=0; ((x &lt; 400) &amp;&amp; (!find)); x++)</p>  
         <p><T/><T/>for (int y=0; ((y &lt; 400) &amp;&amp; (!find)); y++)</p>                
-        <p><T/><T/><T/>if (isColorPixel(1,x,y,Color.black)) {</p>    
+        <p><T/><T/><T/>if (isPixelColor(1,x,y,Color.black)) {</p>    
         <p><T/><T/><T/><T/>posx = x;</p> 
         <p><T/><T/><T/><T/>posy = y;</p>
         <p><T/><T/><T/><T/>find = true;</p>  

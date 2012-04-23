@@ -18,11 +18,6 @@
 <p><b>Ordonnée</b> (position verticale : axe orienté de bas en haut !) </p>
 <p>Les valeurs vont de <b>0</b> à <b>height</b> (height : hauteur en anglais).</p><p></p>
 
-<p>Chaque pixel de l'image peut être codé avec l'une des couleurs suivantes :</p>
-<p><b>black, blue, cyan, darkGray, gray, green, lightGray</b></p>
-<p><b>magenta, orange, pink, red, white, yellow</b></p><p></p> 
-<p> Pour utiliser ces couleurs vous pouvez faire référence à la constante Color (Color.black, Color.green, etc). Pour cela vous devez ajouter au debut de votre fichier <b> import java.awt.Color </b></p>
-
 <p>Vous avez à votre disposition <b>4</b> images de travail identifiées </p>
 <p>par les numéros <b>1,2,3 et 4</b>.</p>  
   
@@ -66,36 +61,84 @@
      <div class="center"><l class="icon" icon="pip.png"/></div>     
 </div>
 
-<div title="Les fonctions de manipulation d'images">
+<div title="Les fonctions d'informations sur les images">  
+  
+  <div class="code"> <p><r>getImageWidth</r>(num);</p></div>
+  Retourne la largeur (type <r>int</r>) de l'image de travail num <p></p>  
+  
+  <div class="code"> <p><r>getImageHeighth</r>(num);</p></div>
+  Retourne la hauteur (type <r>int</r>) de l'image de travail num <p></p>  
+</div>
+  
+<div title="Les fonctions sur les pixels (niveau I)">
+<p>La couleur de chaque pixel de l'image peut être codé avec l'une des couleurs suivantes :</p>
+<p><b>black, blue, cyan, darkGray, gray, green, lightGray</b></p>
+<p><b>magenta, orange, pink, red, white, yellow</b></p><p></p> 
+<p> Pour utiliser ces couleurs vous pouvez faire référence à la constante Color (Color.black, Color.green, etc). Pour cela vous devez ajouter au debut de votre fichier</p><p> <b> import java.awt.Color; </b></p>
+
+
   <div class="code" align="left"> <p><r>clearImage</r>(num);</p></div>
   Permet de remettre à la couleur "blanc" tous les pixels de l'image de travail <b>num</b>.<p></p>
-       
-  <div class="code"> <p><r>copyImage</r>(num1, num2);</p></div>
-  Cette fonction permet de faire une copie de l'image de travail num1 vers l'image de travail num2.<p></p> 
-  
-  <div class="code"> <p><r>copyImage</r>(num1, num2, x, y, w, h);</p></div>
-  Cette fonction permet de faire une copie d'une partie de l'image de travail num1 vers l'image de travail num2.
-  <p> La partie rectangulaire de l'image est définie par les coordonnées <b>x</b> et <b>y</b>  (de type <r>int</r>)de son coin supérieur gauche et par sa largeur <b>w</b> et sa longueur <b>h</b> (de type <r>int</r>)</p><p></p> 
-  
-  <div class="code"> <p><r>copyImage</r>(num1, num2, borderWidth);</p></div>
-  Cette fonction permet de faire une copie de l'image de travail num1 vers l'image de travail num2. En ajoutant une bordure supplémentaire de largeur <b> borderWidth</b> (de type <r>int</r>). Utile avant de faire appel à la fonction de rotation d'une image<p></p>             
-     
-  <div class="code"> <p><r>cutImage</r>(num1, num2, x, y, w, h);</p></div>
-  Cette fonction permet de prélever (rogner) une partie de l'image de travail num1 et de la recopier vers l'image de travail num2.
-  <p> La partie rectangulaire de l'image est définie par les coordonnées <b>x</b> et <b>y</b>  (de type <r>int</r>)de son coin supérieur gauche et par sa largeur <b>w</b> et sa longueur <b>h</b> (de type <r>int</r>)</p><p></p>   
-  
+
   <div class="code"> <p><r>setPixel</r>(num, x, y, c);</p></div>
-  Initialise le pixel de coordonnées x,y (de type <r>int</r>) de l'image de travail num à la couleur <b>c</b> spécifiée.
-  <p> La couleur peut-être soit un type <r>int</r> soit un type <r>Color</r> (exemple Color.black)</p><p></p> 
+  Initialise le pixel de coordonnées x,y (de type <r>int</r>) de l'image de travail num à la couleur <b>c</b> spécifiée (type <r>Color</r>).
+  <p> (exemple Color.black)</p><p></p> 
+  
+  <div class="code"> <p><r>isPixelColor</r>(num, x, y, c);</p></div>
+  Fonction booléenne renvoyant vrai ou faux suivant que le pixel de coordonnées x,y de type <r>int</r> de l'image de travail num a pour couleur la valeur spécifiée par le paramètre <b>c</b> de type <r>Color</r>.<p></p>  
+  
+</div> 
+
+  
+<div title="Les fonctions sur les pixels (niveau II)">
+
+<p> La couleur d'un pixel est représentée par un entier sur 4 octets ( soit 32 bits) tel que :</p>
+ 
+<p>  AAAAAAAA RRRRRRRR GGGGGGGG BBBBBBBB </p>
+<p>  A: Alpha  R: Red   G: Green   B: Blue </p>
+<p></p><p> Par exemple : </p>
+<p> 00000000 00000000 11111111 00000000</p>
+<p>Correspond à la couleur Vert foncée</p><p></p>
+
+<p>Red, Green et Blue correspondent aux composantes couleurs.</p>
+<p>Alpha correspond à la transparence.</p>
+<p>Une valeur de alpha égale à  0xff (=255) correspond à une opacité totale.</p>
+<p>Une valeur de alpha égale à  0 correspond à une transparence totale.</p>
+  
+<p>Pour mettre la composante alpha à zéro</p>
+<p> codeCouleur = codeCouleur  &amp; 0x00ffffff; </p>
+
+<p>Pour fixer une couleur </p>
+<p>   codeCouleur = (alpha &lt;&lt; 24) | (red &lt;&lt; 16) | (green &lt;&lt; 8) | blue;</p>  
+<p></p>
+
+  <div class="code"> <p><r>setPixel</r>(num, x, y, c);</p></div>
+  Initialise le pixel de coordonnées x,y (de type <r>int</r>) de l'image de travail num à la couleur <b>c</b> spécifiée (type <r>int</r>).<p></p> 
   
   <div class="code"> <p><r>getPixelColor</r>(num, x, y);</p></div>
-  Renvoie au format <r>int</r> la couleur du  pixel de coordonnées x,y (de type <r>int</r>) de l'image de travail num. Pour tester ce code couleur avec une couleur standard vous pouvez utiliser la fonction get CodeCouleur(Color) qui renvoie le code <r>int</r> de la couleur spécifiée (voir ci-dessous).<p></p>
+  Renvoie au format <r>int</r> la couleur du  pixel de coordonnées x,y (de type <r>int</r>) de l'image de travail num.<p></p>
 
   <div class="code"> <p><r>codeCouleur</r>(Color);</p></div>
   Renvoie le code en <r>int</r> de la couleur spécifiée.<p></p>
   
   <div class="code"> <p><r>isPixelColor</r>(num, x, y, c);</p></div>
-  Fonction booléenne renvoyant vrai ou faux suivant que le pixel de coordonnées x,y de type <r>int</r> de l'image de travail num a pour couleur la valeur spécifiée par le paramètre <b>c</b> de type <r>int</r> ou de type <r>Color</r>.<p></p>
+  Fonction booléenne renvoyant vrai ou faux suivant que le pixel de coordonnées x,y de type <r>int</r> de l'image de travail num a pour couleur la valeur spécifiée par le paramètre <b>c</b> de type <r>int</r>.<p></p>  
+
+  <div class="code"> <p><r>getAlpha</r>(code);</p></div>
+  Renvoie au format <r>int</r> la valeur de la composante Alpha comprise entre 0 et 255 de la couleur spécifiée (de type <r>int</r>).<p></p>
+  
+  <div class="code"> <p><r>getRed</r>(code);</p></div>
+  Renvoie au format <r>int</r> la valeur de la composante Red comprise entre 0 et 255 de la couleur spécifiée (de type <r>int</r>).<p></p>
+  
+  <div class="code"> <p><r>getGreen</r>(code);</p></div>
+  Renvoie au format <r>int</r> la valeur de la composante Green comprise entre 0 et 255 de la couleur spécifiée (de type <r>int</r>).<p></p>
+  
+  <div class="code"> <p><r>getBlue</r>(code);</p></div>
+  Renvoie au format <r>int</r> la valeur de la composante Blue comprise entre 0 et 255 de la couleur spécifiée (de type <r>int</r>).<p></p>   
+  
+</div>
+
+<div title="Les fonctions de tracés géométriques">     
   
   <div class="code"> <p><r>drawSegment</r>(num, x1, y1, x2, y2, c);</p></div>
   Trace un segment d'extrémitées (x1,y1) et (x2,y2) (type <r>int</r>) dans l'image de travail num en utilisant une couleur de tracé <b>c</b> de type <r>Color</r>.<p></p>   
@@ -116,12 +159,10 @@
   <div class="code"> <p><r>drawString</r>(num, Str, x, y, c);</p></div>
   Ecrit la chaîne str (type <r>String</r>) à la position x,y (type <r>int</r>) dans l'image de travail num en utilisant une couleur de tracé <b>c</b> de type <r>Color</r>.<p></p>  
   
-  <div class="code"> <p><r>getImageWidth</r>(num);</p></div>
-  Retourne la largeur (type <r>int</r>) de l'image de travail num <p></p>  
-  
-  <div class="code"> <p><r>getImageHeighth</r>(num);</p></div>
-  Retourne la hauteur (type <r>int</r>) de l'image de travail num <p></p>  
-  
+</div> 
+    
+<div title="Les fonctions de manipulations avancées">  
+    
   <div class="code"> <p><r>ConvolveImage</r>(num,mask);</p></div>
   Effectue une convolution de l'image <b>num</b> avec le masque spécifié
  <p>Il peut être utile de recopier préalablement l'image à l'aide de la fonction <b>copyImage(num1,num2,borderwidth)</b></p>  <p></p>  
@@ -143,6 +184,23 @@
      
 </div> 
 
+<div title="Les fonctions de copie d'images">
+       
+  <div class="code"> <p><r>copyImage</r>(num1, num2);</p></div>
+  Cette fonction permet de faire une copie de l'image de travail num1 vers l'image de travail num2.<p></p> 
+  
+  <div class="code"> <p><r>copyImage</r>(num1, num2, x, y, w, h);</p></div>
+  Cette fonction permet de faire une copie d'une partie de l'image de travail num1 vers l'image de travail num2.
+  <p> La partie rectangulaire de l'image est définie par les coordonnées <b>x</b> et <b>y</b>  (de type <r>int</r>)de son coin supérieur gauche et par sa largeur <b>w</b> et sa longueur <b>h</b> (de type <r>int</r>)</p><p></p> 
+  
+  <div class="code"> <p><r>copyImage</r>(num1, num2, borderWidth);</p></div>
+  Cette fonction permet de faire une copie de l'image de travail num1 vers l'image de travail num2. En ajoutant une bordure supplémentaire de largeur <b> borderWidth</b> (de type <r>int</r>). Utile avant de faire appel à la fonction de rotation d'une image<p></p>             
+     
+  <div class="code"> <p><r>cutImage</r>(num1, num2, x, y, w, h);</p></div>
+  Cette fonction permet de prélever (rogner) une partie de l'image de travail num1 et de la recopier vers l'image de travail num2.
+  <p> La partie rectangulaire de l'image est définie par les coordonnées <b>x</b> et <b>y</b>  (de type <r>int</r>)de son coin supérieur gauche et par sa largeur <b>w</b> et sa longueur <b>h</b> (de type <r>int</r>)</p><p></p>   
+  
+</div> 
 
 <div title="Travailler sur les images à partir d'un tableau">
 
@@ -172,6 +230,22 @@
       <p>}</p>
     </div>  
      
+</div>
+
+<div title="Fonctions élémentaires de lecture/Ecriture">  
+<p>Avant toute opération sur le fichier il faut commencer par l'ouvrir en lecture (<c>openFileReader</c>) La fonction (<c>readNextCode()</c>) permet de récupérer les codes du fichiers un par un. Elle retourne le code (type int) du code lu ou la valeur (-1) si la fin du fichier est atteinte. Enfin il est important de ne pas oublier de fermer le fichier (<c>closeFileReader</c>) pour libérer les ressources réservées lors de son traitement. </p>
+</div>
+
+<div title="Les fonctions de lecture de fichier">
+  <div class="code" align="left"> <p><r>openFileReader</r>(String nomFichier)</p></div> <p>  ouverture du fichier en lecture.</p>
+  <div class="code" align="left"> <p><r>readNextCode</r>()</p></div> <p>  Renvoie le prochain code (1 octet de type int) lu dans le fichier et -1 si on est arrivé en fin de fichier.</p> 
+  <div class="code" align="left"> <p><r>closeFileReader</r>()</p></div> <p>  fermeture du fichier.</p>     
+</div> 
+
+<div title="Les fonctions d'écriture de fichier">
+  <div class="code" align="left"> <p><r>openFileWriter</r>(String nomFichier)</p></div> <p>  ouverture du fichier en écriture.</p>
+  <div class="code" align="left"> <p><r>writeNextCode</r>(int code)</p></div> <p>  Ecris dans le fichier le code suivant (1 octet).</p> 
+  <div class="code" align="left"> <p><r>closeFileWriter</r>()</p></div> <p>  fermeture du fichier.</p>     
 </div>
      
 

@@ -7,6 +7,7 @@ package org.javascool.proglets.detectionForme;
 import static org.javascool.macros.Macros.*;
 
 // Used to define the gui
+import org.javascool.macros.Macros;
 import java.awt.Dimension;
 import java.awt.Color;
 import java.awt.RenderingHints; 
@@ -27,8 +28,16 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.io.OutputStream;
 import java.io.File;
-import org.javascool.macros.Macros;
+import java.io.BufferedOutputStream;
+import java.io.DataOutputStream;
+import java.io.FileOutputStream;
+import java.io.BufferedInputStream;
+import java.io.DataInputStream;
+import java.io.FileInputStream;
+import java.io.EOFException;
+import java.io.FileNotFoundException;
 
+  
 /** Définit les fonctions de la proglet qui permettent 
  *  de manipuler les pixels d'une image.
  *
@@ -41,6 +50,9 @@ public class Functions {
   // Les indices d'images utilisés sont 1,2,3,4
   private static BufferedImage [] img = new BufferedImage[5];
   private static Graphics2D []    g2d = new Graphics2D[5];
+  
+  private static DataInputStream fileR = null;
+  private static DataOutputStream fileW = null;  
   
 
   // @factory
@@ -334,6 +346,58 @@ static public void loadImageToPixMap(int num, int pixMap [][]) {
     return img[num].getRGB(x,y);	  
 	}  	
 	
+/**
+* A pixel is represented by a 4-byte (32 bit) integer, like so:
+* 
+*  00000000 00000000 00000000 11111111
+*  ^ Alpha      ^Red          ^Green      ^Blue
+*
+* Alpha, which denotes "transparency". 
+* An alpha value of 0xff (=255) is fully opaque
+* An alpha value of 0 is fully transparent.
+* int color = color & 0x00ffffff; use bitwise & to remove alpha component
+*
+*   pixel = (alpha << 24) | (red << 16) | (green << 8) | blue;
+*/
+
+/**
+* Returns the alpha component in the range 0-255 in the default sRGB space.
+* @param color couleur du pixel (int)  
+* @return the alpha component.
+*/
+ public static int getAlpha(int color) {
+           return (color >> 24) & 0xFF;
+  }
+
+/**
+* Returns the red component in the range 0-255 in the default sRGB space.
+* @param color couleur du pixel (int)  
+* @return the red component.
+*/
+ public static int getRed(int color) {
+           return (color >> 16) & 0xFF;
+  }
+  
+/**
+* Returns the green component in the range 0-255 in the default sRGB space.
+* @param color couleur du pixel (int)    
+* @return the green component.
+*/
+ public static int getGreen(int color) {
+       return (color >> 8) & 0xFF;
+}
+ 
+/**
+* Returns the blue component in the range 0-255 in the default sRGB space.
+* @param color couleur du pixel (int)  
+* @return the blue component.
+*/
+public static int getBlue(int color) {
+     return (color >> 0) & 0xFF;
+}
+	
+	
+	
   /** teste la valeur d'un pixel de l'image de travail.
    * On dispose de 4 images de travail (1,2,3 ou 4)
    * @param num numéro de l'image de travail.*    
@@ -354,7 +418,7 @@ static public void loadImageToPixMap(int num, int pixMap [][]) {
 	}	
   
   /** Renvoie le code coudeur de la couleur spécifiée
-   * @param cCouleur: "black" (default), "blue", "cyan", "gray", "green", "magenta", "orange", "pink", "red", "white", "yellow".
+   * @param c Couleur: "black" (default), "blue", "cyan", "gray", "green", "magenta", "orange", "pink", "red", "white", "yellow".
    * @return Renvoie la valeur int RGB de la couleur spécifiée
    */ 	
   
@@ -588,6 +652,10 @@ public static void showPipImage() {
     Graphics2D g = imgPip.createGraphics();  
     g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, 
                        RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+	  g.setRenderingHint(RenderingHints.KEY_RENDERING,
+	                     RenderingHints.VALUE_RENDER_QUALITY);
+	  g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+	                     RenderingHints.VALUE_ANTIALIAS_ON);                       
     g.setColor(Color.lightGray);  
     g.fillRect(0,0,400,400);  
 
@@ -629,6 +697,88 @@ public static void showPipImage() {
       System.out.println("Impossible de charger Bufferedimage imgPip");
     }
 }  
+
+// ========================================================
+// ==                  Gestion de fichier
+// ======================================================== 
+
+/**
+* Ouverture du fichier en lecture.
+* @param nomFichier nom du fichier à ouvrir  
+*/
+  public static void openFileReader(String nomFichier) {
+    try {  
+        fileR = new DataInputStream(new BufferedInputStream
+			              (new FileInputStream(nomFichier)));
+    }catch (FileNotFoundException e) { 
+    }            
+  }
+  
+/**
+* Lecture du code suivant dans le fichier. 
+* @return valeur suivante lu (type int).
+*/  
+  public static int readNextCode() {
+    int c = -1;
+    
+    if (fileR == null)
+	    throw new RuntimeException("Le fichier READER n'est pas ouvert ! ");  
+	    
+    try {
+        c = fileR.readUnsignedByte();
+    }catch (EOFException e) { 
+    }catch (IOException e) { 
+    }        	           
+    return c;
+  }  
+
+/**
+* Fermeture du fichier ouvert en lecture. 
+*/
+
+  public static void closeFileReader() {
+    try {  
+            fileR.close();
+    }catch (IOException e) { 
+    }            
+  } 
+
+/**
+* Ouverture du fichier en Ecriture.
+* @param nomFichier nom du fichier à ouvrir  
+*/  
+    public static void openFileWriter(String nomFichier) {
+    try {  
+       fileW = new DataOutputStream(new BufferedOutputStream
+			            (new FileOutputStream(nomFichier)));
+    }catch (IOException e) { 
+    }            
+  }
+
+/**
+* Ecriture du code suivant (octet) dans le fichier ouvert en écriture.
+* @param c code à ecrire (type int)  
+*/  
+  public static void writeNextByteCode(int c) {
+     
+    if (fileW == null)
+	    throw new RuntimeException("Le fichier WRITER n'est pas ouvert ! ");  
+	    
+    try {
+        fileW.writeByte(c);
+    }catch (IOException e) { 
+    }        	           
+  }  
+
+/**
+* Fermeture du fichier ouvert en Ecriture. 
+*/  
+  public static void closeFileWriter() {
+    try {  
+            fileW.close();
+    }catch (IOException e) { 
+    }            
+  } 
 
 // ========================================================
 // ==                  Spécifique Activité
@@ -849,6 +999,7 @@ public static void showPipImage() {
       for (int i=0; i<300 ;i++) 
          setPixel(1,xxposx+r.nextInt(xxcote),xxposy+r.nextInt(xxcote),Color.white);               
   }   
+  
      
 // ========================================================
 // ==                  Spécifique Démo

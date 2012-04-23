@@ -22,8 +22,7 @@
       <p><T/>int i,j;</p>
       <p><T/>String str;</p>      
       <p><T/> ....</p>
-      <p><T/>setModeTraceSocket(true);</p>
-      <p><T/>initSocketServer(6000);</p>
+      <p><T/>openSocketServer(6000);</p>
       <p><T/>str=getMessageViaSocketServer();</p>
       <p><T/>.... écriture dans le fichier de reception </p>    
       <p><T/>closeSocketServer();</p> 
@@ -37,8 +36,7 @@
       <p><r>void</r> main() {</p>
       <p><T/>int i,j;</p>
       <p><T/>String str;</p>       
-      <p><T/>setModeTraceSocket(true);</p>
-      <p><T/>initSocketClient("127.0.0.1",6000);</p> 
+      <p><T/>openSocketClient("127.0.0.1",6000);</p> 
       <p><T/> ....</p>
       <p><T/>sendMessageViaSocketClient(str);</p>
         <p><T/> ....</p>
@@ -50,8 +48,8 @@
 
 <div title="Principes de fonctionnement">
     <div class="ul">    
-<p>Une fois lancé, le proglet serveur ouvre un socket sur le port 6000 (<c>initSocketServer</c>) puis il se met en attente d'un bloc de caratère envoyé par le proglet client (<c>getMessageViaSocketServer()</c>).Il ne faut pas oublier de fermer le socket server (<c>closeSocketServer()</c>) pour libérer le port 6000 pour une future utilisation.</p>
-<p>Une fois lancé, le proglet client essaye d'ouvrir un socket (<c>initSocketClient</c>) communiquant via le port 6000 avec le serveur spécifié, ici localhost/127.0.0.1 .Puis il envoie une partie du fichier (<c>sendMessageViaSocketClient("3,3")</c>). Il ne faut pas oublier de fermer le socket Client (<c>closeSocketClient()</c>) pour libérer le port ouvert par le client pour une future utilisation.</p>
+<p>Une fois lancé, le proglet serveur ouvre un socket sur le port 6000 (<c>openSocketServer</c>) puis il se met en attente d'un bloc de caratère envoyé par le proglet client (<c>getMessageViaSocketServer()</c>).Il ne faut pas oublier de fermer le socket server (<c>closeSocketServer()</c>) pour libérer le port 6000 pour une future utilisation.</p>
+<p>Une fois lancé, le proglet client essaye d'ouvrir un socket (<c>openSocketClient</c>) communiquant via le port 6000 avec le serveur spécifié, ici localhost/127.0.0.1 .Puis il envoie une partie du fichier (<c>sendMessageViaSocketClient("3,3")</c>). Il ne faut pas oublier de fermer le socket Client (<c>closeSocketClient()</c>) pour libérer le port ouvert par le client pour une future utilisation.</p>
 </div>
 </div>
 
@@ -69,10 +67,8 @@
 
 <div title="Gestion de la communication réseau via les sockets">
 <p>Au niveau communication TCP/IP on dispose d'une fonction d'initialisation du port (via une "socket"), d'une fonction de lecture, d'une fonction d'écriture et enfin d'une fonction de libération de la connection. Chacune de ses fonctions est déclinée en version serveur et en  version client.</p>
-<div class="code"><p><r>setModeTraceSocket</r>(boolean flag)</p></div>
-<p>Initialisation du mode trace des fonctions de gestion des sockets. Si flag est à true la trace est activée si il est à false elle est désactivée</p>
 
-<div class="code"><p><r>initSocketServer</r>(int numport)</p></div>
+<div class="code"><p><r>openSocketServer</r>(int numport)</p></div>
 <p>Initialisation du socket server, il écoute sur le port spécifié.Cette fonction tourne true si tout c'est bien passé false dans le cas contraire.</p>
 
 <div class="code"><p><r>getMessageViaSocketServer</r>()</p></div>
@@ -85,7 +81,7 @@
 <div class="code"><p><r>closeSocketServer</r>()</p></div>
 <p>Fermeture du socket server. Cette fonction retourne true si tout c'est bien passé false dans le cas contraire.</p>
      
-<div class="code"><p><r>initSocketClient</r>(String serverName, int numport)</p></div>
+<div class="code"><p><r>openSocketClient</r>(String serverName, int numport)</p></div>
 <p>Initialisation socket client vers server spécifié (Nom et numéro de port)
 Cette fonction retourne true si tout c'est bien passé false dans le cas contraire.</p>
 

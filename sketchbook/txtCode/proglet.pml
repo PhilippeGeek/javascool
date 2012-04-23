@@ -1,3 +1,3 @@
 title="txtCode"
-author="Christophe BÃ©asse <oceank2@gmail.com>"
+author="Christophe Béasse <oceank2@gmail.com>"
 icon="dump.png"
