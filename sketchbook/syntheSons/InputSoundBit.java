@@ -6,9 +6,9 @@ package org.javascool.proglets.syntheSons;
 
 // Used to define an audio stream input
 import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Port;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.TargetDataLine;
+import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
 
 
@@ -30,23 +30,26 @@ public class InputSoundBit extends SoundBit {
    */
   public SoundBit reset(double length) {
     buffer = new byte[2 * (int) (SAMPLING * (this.length = length))];
-    if (AudioSystem.isLineSupported(Port.Info.MICROPHONE)) {
+    AudioFormat format = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED,
+					 SAMPLING, // Sample rate in Hz
+					 16, // Sampling bits
+					 1, // Number of channels
+					 2, // Frame size in bytes
+					 SAMPLING, // Frame rate in Hz
+					 false); // Little-endian byte order
+    DataLine.Info info = new DataLine.Info(TargetDataLine.class, format);
+    if (info != null) {
       try {
-        line = (TargetDataLine) AudioSystem.getLine(Port.Info.MICROPHONE);
+        line = (TargetDataLine) AudioSystem.getLine(info);
 	// Data format: 16 bit mono: each frame contains two bytes x one channel = two bytes
-	line.open(new AudioFormat(AudioFormat.Encoding.PCM_SIGNED,
-				  SAMPLING, // Sample rate in Hz
-				  16, // Sampling bits
-				  1, // Number of channels
-				  2, // Frame size in bytes
-				  SAMPLING, // Frame rate in Hz
-				  false)); // Little-endian byte order
-	line.start();
+	line.open(format);
 	new Thread(new Runnable() { public void run() {
-	  int offset = 0;
-	  for(recording = true; offset < buffer.length && recording; offset += 2)
-	    line.read(buffer, offset, 2);
+	  int offset = 0, length = line.getBufferSize() / 5;
+	  line.start();
+	  for(recording = true; offset < buffer.length && recording; offset += length)
+	    line.read(buffer, offset, offset + length < buffer.length ? length : buffer.length - offset);
 	  InputSoundBit.this.length = (int) (0.5 * offset / SAMPLING);
+	  System.err.println("sound input : "+offset+" bytes, "+InputSoundBit.this.length+" sec");
 	  line.stop();
 	  line.close();	  
 	}}).start();
@@ -54,7 +57,7 @@ public class InputSoundBit extends SoundBit {
 	throw new RuntimeException("No microphone available for this audio system ("+e+")");
       }
     } else 
-      throw new RuntimeException("No microphone available for this audio system");
+      throw new RuntimeException("Oh, il ne semble pas y avoir de microphone disponible sur votre système");
     return this;
   }
 
