@@ -463,10 +463,13 @@ class MyPanel extends JPanel implements MouseMotionListener {
     me = this;
   }
   void drawPoint(Graphics g, Point p) {
-    int col_int = image.getPixel(p.x, p.y);
-    ColorPaint col = ColorPaint.colors[col_int];
-    g.setColor(col.getColor());
-    g.fillRect(square * p.x, inverseY(square * p.y) - square, square, square);
+    try {
+      int col_int = image.getPixel(p.x, p.y);
+      ColorPaint col = ColorPaint.colors[col_int];
+      g.setColor(col.getColor());
+      g.fillRect(square * p.x, inverseY(square * p.y) - square, square, square);
+    } catch(ArrayIndexOutOfBoundsException e) {}
+    // Patch pour éviter l ejet d'une exception
   }
   void repaintPoint(Point p) {
     repaint(square * p.x, square * p.y, square + 1, square + 1);
