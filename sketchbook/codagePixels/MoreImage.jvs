@@ -1,5 +1,6 @@
 //
 // Voici quelques routines qui permettent de traiter les images sous forme de tableau
+// Il faut utiliser reset(width, height, false, false) ou load(name, false, false) pour une image non centrée et non zoomée.
 //
 
 // Retourne l'image courante sous forme de tableau monochrome 
