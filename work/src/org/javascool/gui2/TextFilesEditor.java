@@ -33,6 +33,7 @@ class TextFilesEditor extends TabbedPane {
       super.reset(title, width, height, e);
       return this;
     }
+        @Override
     public boolean isClosable() {
       return e == null ? true : e.isCloseable();
     }
@@ -123,6 +124,7 @@ class TextFilesEditor extends TabbedPane {
     }
   }
   
+    @Override
   protected boolean isCloseable(int index) {
     return getSelectedFile(false) != null ? selectedFile.save(true) : true;
   }
