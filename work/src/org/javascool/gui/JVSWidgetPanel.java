@@ -3,8 +3,8 @@ package org.javascool.gui;
 import javax.swing.JScrollPane;
 
 import org.javascool.Core;
+import org.javascool.core.Proglet;
 import org.javascool.core.ProgletEngine;
-import org.javascool.core.ProgletEngine.Proglet;
 import org.javascool.macros.Macros;
 import org.javascool.widgets.Console;
 import org.javascool.widgets.HtmlDisplay;
