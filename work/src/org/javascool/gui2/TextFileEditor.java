@@ -35,6 +35,7 @@ class TextFileEditor extends TextEditor {
   /** Renvoie le nom du fichier définit par la localisation.
    * @return Le nom du fichier (sans extension si celle si est forcée), ou null si indéfini.
    */
+    @Override
   public String getName() {
     String name = location == null ? null : location.replaceAll(".*/", "");
     return name == null ? name : name.replaceFirst("\\.[^.]*$", "");
@@ -215,6 +216,7 @@ class TextFileEditor extends TextEditor {
     save(location, false, false);
   }
 
+    @Override
   public String toString() {
     return "<TextFileEditor location=\""+location+"\" name=\""+getName()+"\"/>";
   }
