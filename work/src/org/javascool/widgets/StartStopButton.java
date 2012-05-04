@@ -1,11 +1,11 @@
 package org.javascool.widgets;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import org.javascool.macros.Macros;
 
@@ -56,15 +56,13 @@ public abstract class StartStopButton extends JPanel {
 		startButton.setIcon(Macros
 				.getIcon("org/javascool/widgets/icons/stop.png"));
 		revalidate();
-		/* BUG FIX : Stop button not change immediately at program 
-		 * stop.
-		 * SOLUTION :
-		 * Use two separate Threads to check running speeder than
-		 * the Timer which get up all seconds, the isRunningThread
-		 * get up all 50 milliseconds.
-		 * AUTHOR : Philippe VIENNE <philoumailabo@gmail.com>
+		/*
+		 * BUG FIX : Stop button not change immediately at program stop.
+		 * SOLUTION : Use two separate Threads to check running speeder than the
+		 * Timer which get up all seconds, the isRunningThread get up all 50
+		 * milliseconds. AUTHOR : Philippe VIENNE <philoumailabo@gmail.com>
 		 */
-		Thread isRunningThread=new Thread(new Runnable() {
+		Thread isRunningThread = new Thread(new Runnable() {
 			@Override
 			public void run() {
 				while (isRunning()) {
@@ -73,17 +71,17 @@ public abstract class StartStopButton extends JPanel {
 				doStop();
 			}
 		});
-		Thread timerThread=new Thread(new Runnable() {
-					@Override
-					public void run() {
-						for (int t = 0; isRunning(); t++) {
-							execTime.setText("  Temps d'exécution : " + t / 60
-									+ " min " + t % 60 + " sec");
-							execTime.revalidate();
-							Macros.sleep(1000);
-						}
-					}
-				});
+		Thread timerThread = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				for (int t = 0; isRunning(); t++) {
+					execTime.setText("  Temps d'exécution : " + t / 60
+							+ " min " + t % 60 + " sec");
+					execTime.revalidate();
+					Macros.sleep(1000);
+				}
+			}
+		});
 		start();
 		isRunningThread.start();
 		timerThread.start();
