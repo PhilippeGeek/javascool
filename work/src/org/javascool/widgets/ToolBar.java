@@ -170,20 +170,29 @@ public class ToolBar extends JToolBar {
 	}
 
 	/**
+	 * @see #addRightTool(String, String, Runnable)
+	 */
+	public JButton addRightTool(String label, Runnable action) {
+		return addRightTool(label, null, action);
+	}
+	
+	/**
 	 * Ajoute un composant à la droite de la barre d'outil.
 	 * 
 	 * @param label
 	 *            Nom du composant. Chaque bouton/item/étiquette doit avoir un
 	 *            nom différent.
+	 * @param icon
+	 *            Icone du bouton. Si null le bouton est montré sans icone.
 	 * @param action
 	 *            Action associée au bouton.
 	 * @return Le bouton ajouté.
 	 */
-	public JButton addRightTool(String label, Runnable action) {
+	public JButton addRightTool(String label, String icon, Runnable action) {
 		if (right == 0) {
 			add(Box.createHorizontalGlue());
 		}
-		return addTool(label, null, action, left + (++right));
+		return addTool(label, icon, action, left + (++right));
 	}
 
 	/**
@@ -201,6 +210,7 @@ public class ToolBar extends JToolBar {
 	}
 
 	// @todo a enlever apres la refonte du proglet-builder
+	// Non, il peut toujours servir
 	/**
 	 * Ajoute en permanence un composant à la droite de la barre d'outils.
 	 * 
@@ -212,6 +222,17 @@ public class ToolBar extends JToolBar {
 			add(Box.createHorizontalGlue());
 		}
 		add(component, left + (++right));
+	}
+	
+	/**
+	 * Ajoute en permanence un composant à la gauche de la barre d'outils.
+	 * 
+	 * @param component
+	 *            Le composant à ajouter.
+	 */
+	public void addLeftTool(JComponent component) {
+		add(component, 0);
+		left++;
 	}
 
 	private int left = 0, right = 0;

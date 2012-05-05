@@ -116,8 +116,15 @@ class TextFilesEditor extends TabbedPane {
 		}
 		return this;
 	}
+	
+	/** Ouvre un nouveau fichier.
+	 * 
+	 */
+	public void openNewFile(){
+		openFile(false);
+	}
 
-	private String extension = null;
+	private String extension = "jvs";
 
 	// Ouvre une nouvelle fenêtre d'édition, vide ou à partir d'un dialogue
 	// utilisateur.
@@ -128,7 +135,7 @@ class TextFilesEditor extends TabbedPane {
 				addTab(file.getName(), file, true);
 			}
 		} else {
-			addTab("Nouveau fichier", file, true);
+			addTab(file.getName(), file, true);
 		}
 		return file;
 	}
@@ -159,15 +166,17 @@ class TextFilesEditor extends TabbedPane {
 	}
 
 	// Sauve le fichier courant.
-	private void saveFile(boolean saveAs) {
+	private boolean saveFile(boolean saveAs) {
+		boolean r=false;
 		if (getSelectedFile(true) != null) {
 			if (saveAs) {
-				selectedFile.saveAs();
+				r=selectedFile.saveAs();
 			} else {
-				selectedFile.save(false);
+				r=selectedFile.save(false);
 			}
 			setTitleAt(getSelectedIndex(), selectedFile.getName());
 		}
+		return r;
 	}
 
 	@Override
@@ -203,6 +212,41 @@ class TextFilesEditor extends TabbedPane {
 			ok &= isCloseable(i);
 		}
 		return ok;
+	}
+	
+	/**
+	 * Vérifie que le fichier courant est compilable.
+	 * 
+	 * @return La valeur vraie si c'est bon, faux sinon.
+	 */
+	public boolean isCompilable() {
+		if(getSelectedFile(false)==null)
+			return false;
+		if(getSelectedFile(false).isTmp())
+			return saveFile(true);
+		return getSelectedFile(false).save(true);
+	}
+	
+	/**
+	 * Efface toutes les lignes mises en valeur dans tous les onglets ouverts
+	 */
+	public void removeLineSignals(){
+		for (int i = 0; i < getTabCount(); i++) {
+			if(!(getComponentAt(i) instanceof TextFileEditor))
+				continue;
+			((TextFileEditor)getComponentAt(i)).removeLineSignals();
+		}
+	}
+	
+	/** Instance de la classe. */
+	private static TextFilesEditor editors;
+	
+	/** Permet d'avoir une instance unique de la classe.*/
+	public static TextFilesEditor getInstance() {
+		if (TextFilesEditor.editors == null) {
+			TextFilesEditor.editors = new TextFilesEditor();
+		}
+		return TextFilesEditor.editors;
 	}
 
 	/**

@@ -16,7 +16,7 @@ import org.javascool.macros.Macros;
 public class About {
 
 	/** Titre de l'application. */
-	public static final String title = "Java's Cool 4";
+	public static String title = "Java's Cool 4";
 	/** Logode l'application. */
 	public static final String logo = "org/javascool/widgets/icons/logo.png";
 
