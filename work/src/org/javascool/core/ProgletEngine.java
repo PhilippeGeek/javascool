@@ -92,8 +92,7 @@ public class ProgletEngine {
 	/**
 	 * Mécanisme de compilation du fichier Jvs.
 	 * 
-	 * @param program
-	 *            Nom du programme à compiler.
+	 * @param program Le code à compiler
 	 * @return La valeur true si la compilation est ok, false sinon.
 	 */
 	public boolean doCompile(String program) {

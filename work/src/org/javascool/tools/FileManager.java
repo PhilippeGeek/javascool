@@ -4,6 +4,7 @@
 package org.javascool.tools;
 
 // Used for URL formation
+import java.awt.FileDialog;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -19,7 +20,10 @@ import java.util.Enumeration;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
+import javax.swing.JFileChooser;
+
 import org.javascool.macros.Macros;
+import org.javascool.widgets.MainFrame;
 
 /**
  * Met à disposition des fonctions de gestion de fichiers locaux et distants.
@@ -384,6 +388,71 @@ public class FileManager {
 			return d;
 		} catch (IOException e) {
 			throw new RuntimeException(e + " when creating temporary directory");
+		}
+	}
+	
+	/** Demande à l'utilisateur d'ouvrir un fichier.
+	 * En fonction du système d'explotation, utilise la meilleur façon de demander à l'utilisateur
+	 * un fichier. Actuellement AWT sous Macet SWING sous les autres.
+	 * @param rep Le répertoir dans lequel se placer, laisser à null si le système doit choisir
+	 * @return l'objet File contenant le fichier ou alors lance une erreur
+	 * @throws java.lang.IllegalStateException Dans le cas ou l'utilisateur annule ou ne choisit pas de fichier
+	 */
+	public static File openFile(String rep){
+		if(UserConfig.getOS().equals(UserConfig.LINUX)
+				|| UserConfig.getOS().equals(UserConfig.WINDOWS)){ // On est sous Windows, Linux ou Solaris
+			JFileChooser fc = new JFileChooser();
+			if (rep != null) {
+				fc.setCurrentDirectory(new File(rep));
+			}
+			fc.setDialogTitle("Ouvrir un fichier");
+			fc.setApproveButtonText("Ouvrir");
+			int returnVal = fc.showOpenDialog(null);
+			if (returnVal == JFileChooser.APPROVE_OPTION) {
+				return fc.getSelectedFile();
+			} else
+				throw new IllegalStateException("User canceled");
+		} else { // On est sous Mac
+			FileDialog fdDialog=new FileDialog(MainFrame.getFrame(), null, FileDialog.LOAD);
+			fdDialog.setDirectory(rep);
+			fdDialog.setVisible(true);
+			if(fdDialog.getFiles().length>0){
+				return (fdDialog.getFiles())[0];
+			}
+			throw new IllegalStateException("User canceled");
+		}
+	}
+	
+	/** Demande à l'utilisateur où sauvegarder un fichier.
+	 * En fonction du système d'explotation, utilise la meilleur façon de demander à l'utilisateur
+	 * où sauvegarder un fichier. Actuellement AWT sous Mac et SWING sous les autres.
+	 * @param saveAs Un drapeau pour déterminer si c'est Enregistrer (false) ou Enregistrer sous (true)
+	 * @param rep Le répertoir dans lequel se placer, laisser à null si le système doit choisir
+	 * @return l'objet File contenant le fichier ou alors lance une erreur
+	 * @throws java.lang.IllegalStateException Dans le cas ou l'utilisateur annule ou ne choisit pas de fichier
+	 */
+	public static File saveFile(boolean saveAs,String rep){
+		if(UserConfig.getOS().equals(UserConfig.LINUX)
+				|| UserConfig.getOS().equals(UserConfig.WINDOWS)){ // On est sous Windows, Linux ou Solaris
+			JFileChooser fc = new JFileChooser();
+			if (rep != null) {
+				fc.setCurrentDirectory(new File(rep));
+			}
+			fc.setDialogTitle("Enregistrer un fichier");
+			fc.setApproveButtonText(saveAs?"Enregistrer sous":"Enregistrer");
+			int returnVal = fc.showOpenDialog(null);
+			if (returnVal == JFileChooser.APPROVE_OPTION) {
+				return fc.getSelectedFile();
+			} else
+				throw new IllegalStateException("User canceled");
+		} else { // On est sous Mac
+			FileDialog fdDialog=new FileDialog(MainFrame.getFrame(), null, FileDialog.SAVE);
+			fdDialog.setDirectory(rep);
+			fdDialog.setVisible(true);
+			if(fdDialog.getFiles().length>0){
+				return (fdDialog.getFiles())[0];
+			}
+			throw new IllegalStateException("User canceled");
 		}
 	}
 }

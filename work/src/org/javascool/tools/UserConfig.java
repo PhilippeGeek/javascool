@@ -133,6 +133,22 @@ public class UserConfig {
 							+ " puis "
 							+ applicationName);
 	}
+	
+	public static String MAC_OSX="mac";
+	public static String LINUX="lin";
+	public static String WINDOWS="win";
+	
+	/** Détecte le système courrant de l'utilisateur.
+	 * @return L'un des drapeau de la classe (MAC_OSX, LINUX, WINDOWS)
+	 */
+	public static String getOS(){
+		String os = System.getProperty("os.name").toLowerCase();
+		if(os.indexOf("win") >= 0)
+			return WINDOWS;
+		if(os.indexOf("mac") >= 0)
+			return MAC_OSX;
+		return LINUX;
+	}
 
 	private static String theApplicationName = null;
 	private static UserConfig userConfig = null;

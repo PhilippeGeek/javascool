@@ -2,7 +2,6 @@ package org.javascool.gui2;
 
 import java.io.File;
 
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
@@ -33,23 +32,33 @@ class TextFileEditor extends TextEditor {
 	public String getFileLocation() {
 		return location;
 	}
+	
+	/** Construit un éditeur de Fichier
+	 * Surcharge la classe
+	 */
+	public TextFileEditor(){
+		super();
+		setName("Nouveau Fichier");
+	}
 
 	private String location = null;
 
 	// Date de dernière modification du fichier
 	private long lastModified = 0;
 
-	/**
-	 * Renvoie le nom du fichier définit par la localisation.
-	 * 
-	 * @return Le nom du fichier (sans extension si celle si est forcée), ou
-	 *         null si indéfini.
-	 */
-	@Override
-	public String getName() {
-		String name = location == null ? null : location.replaceAll(".*/", "");
-		return name == null ? name : name.replaceFirst("\\.[^.]*$", "");
-	}
+	
+	// @todo: Ce n'est pas la meilleur solution
+//	/**
+//	 * Renvoie le nom du fichier définit par la localisation.
+//	 * 
+//	 * @return Le nom du fichier (sans extension si celle si est forcée), ou
+//	 *         null si indéfini.
+//	 */
+//	@Override
+//	public String getName() {
+//		String name = location == null ? "Fichier sans nom" : location.replaceAll(".*/", "");
+//		return name == null ? name : name.replaceFirst("\\.[^.]*$", ""); // @todo: Pourquoi le cacher à l'utilisateur ?
+//	}
 
 	/**
 	 * Définit l'extension du fichier si celle si est forcée.
@@ -58,7 +67,7 @@ class TextFileEditor extends TextEditor {
 	 * </p>
 	 * 
 	 * @param extension
-	 *            Extension du fichier par exemple "java" ou "jvs", ou null
+	 *            Extension du fichier par exemple "java" ou "jvs", ou "txt"
 	 *            (valeur par défaut) pour pas fixer d'extension.
 	 * @return Cet objet, permettant de définir la construction
 	 *         <tt>new TextFileEditor().setExtension(..)</tt>.
@@ -68,7 +77,7 @@ class TextFileEditor extends TextEditor {
 		return this;
 	}
 
-	private String extension = null;
+	private String extension = "txt";
 
 	/**
 	 * Charge le texte à partir d'un fichier local.
@@ -79,6 +88,24 @@ class TextFileEditor extends TextEditor {
 	 * @return La valeur true si le dialogue a abouti, faux si il a échoué
 	 */
 	public boolean load() {
+		try{
+			File f=FileManager.openFile(TextFileEditor.getWorkingDir());
+			TextFileEditor.setWorkingDir(f.getParentFile().getAbsolutePath());
+			try {
+				load(f.getAbsolutePath());
+				setName(f.getName());
+				return true;
+			} catch (Exception e) {
+				JOptionPane
+						.showMessageDialog(
+								null,
+								"Le fichier ne peut pas être lu, il est inaccessible en tant que fichier texte.",
+								"Erreur de lecture", JOptionPane.ERROR_MESSAGE);
+				return false;
+			}
+		}catch(IllegalStateException e){ // L'utilisateur a annulé la demande
+			return false;
+		} /*
 		JFileChooser fc = new JFileChooser();
 		String dir = TextFileEditor.getWorkingDir();
 		if (dir != null) {
@@ -100,7 +127,7 @@ class TextFileEditor extends TextEditor {
 				return false;
 			}
 		} else
-			return false;
+			return false;*/
 	}
 
 	// Récupère le répertoire par défaut de javascool
@@ -179,7 +206,19 @@ class TextFileEditor extends TextEditor {
 	 * @return La valeur true si le dialogue a abouti, faux si il a échoué
 	 */
 	public boolean saveAs() {
-		JFileChooser fc = new JFileChooser();
+		try{
+			File f=FileManager.saveFile(false,TextFileEditor.getWorkingDir());
+			if(!f.getName().endsWith('.'+extension)){
+				f=(new File(f.getAbsolutePath()+'.'+extension));
+			}
+			TextFileEditor.setWorkingDir(f.getParentFile().getAbsolutePath());
+			save(f.getAbsolutePath());
+			setName(f.getName());
+			return true;
+		}catch(IllegalStateException e){ // L'utilisateur a annulé la demande
+			return false;
+		}
+		/*JFileChooser fc = new JFileChooser();
 		String dir = TextFileEditor.getWorkingDir();
 		if (dir != null) {
 			fc.setCurrentDirectory(new File(dir));
@@ -193,7 +232,7 @@ class TextFileEditor extends TextEditor {
 			save(fc.getSelectedFile().getAbsolutePath());
 			return true;
 		} else
-			return false;
+			return false;*/
 	}
 
 	/**
@@ -309,6 +348,13 @@ class TextFileEditor extends TextEditor {
 	 */
 	public void save(String location) {
 		save(location, false, false);
+	}
+	
+	/** Dit si le fichier est temporaire (uniquement en mémoire).
+	 * 
+	 */
+	public boolean isTmp(){
+		return location==null;
 	}
 
 	@Override

@@ -89,7 +89,8 @@ public class Stdout {
 	 * @see #echo(String)
 	 */
 	public static void println(String string) {
-		Desktop.getInstance().focusOnConsolePanel();
+		//Desktop.getInstance().focusOnConsolePanel();
+		org.javascool.gui2.Desktop.getInstance().focusOnConsolePanel();
 		System.err.println("printing : \"" + string + "\"");
 		Console.getInstance().print(string + "\n");
 	}

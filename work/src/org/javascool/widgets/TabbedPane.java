@@ -7,12 +7,16 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.ImageObserver;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
@@ -22,6 +26,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.plaf.basic.BasicButtonUI;
 
+import org.javascool.Core;
 import org.javascool.macros.Macros;
 
 /**
@@ -152,6 +157,13 @@ public class TabbedPane extends JTabbedPane {
 		super.setTitleAt(index, title);
 		getTabComponentAt(index).invalidate();
 	}
+	
+	/** Affiche un onglet donné.
+	 * @param name Le titre de l'onglet
+	 */
+	public void switchToTab(String name) {
+		this.setSelectedIndex(this.indexOfTab(name));
+	}
 
 	// Implementation du composant permettant de gérer la fermeture
 	private class TabPanel extends JPanel {
@@ -214,7 +226,21 @@ public class TabbedPane extends JTabbedPane {
 				if (getModel().isPressed()) {
 					g2.translate(1, 1);
 				}
-				g2.setStroke(new BasicStroke(2));
+				
+				try {
+					g2.drawImage(ImageIO.read(TabbedPane.class.getResourceAsStream("icons/close.png")), 3, 3, g2.getClipBounds().width-3, g2.getClipBounds().height-3, 0, 0, 24, 24,new ImageObserver() {
+						
+						@Override
+						public boolean imageUpdate(Image img, int infoflags, int x, int y,
+								int width, int height) {
+							return false;
+						}
+					});
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				/*g2.setStroke(new BasicStroke(2));
 				g2.setColor(Color.BLACK);
 				if (getModel().isRollover()) {
 					g2.setColor(Color.WHITE);
@@ -223,7 +249,7 @@ public class TabbedPane extends JTabbedPane {
 				g2.drawLine(delta, delta, getWidth() - delta - 1, getHeight()
 						- delta - 1);
 				g2.drawLine(getWidth() - delta - 1, delta, delta, getHeight()
-						- delta - 1);
+						- delta - 1);*/
 				g2.dispose();
 			}
 
