@@ -3,7 +3,7 @@
  * Guillaume.Matheron@sophia.inria.fr, Copyright (C) 2011.  All rights reserved. *
  * Thierry.Vieville@sophia.inria.fr, Copyright (C) 2009.  All rights reserved.   *
  *********************************************************************************/
-package org.javascool.gui2;
+package org.javascool.gui;
 
 import java.awt.Component;
 import java.awt.Container;
@@ -198,5 +198,13 @@ public class Desktop {
 			return false;
 		RunToolbar.getInstance().enableStartStopButton();
 		return true;
+	}
+
+	/** Ouvre un nouveau fichier à partur d'une URL.
+	 * 
+	 * @param url L'adresse du fichier
+	 */
+	public void openFile(URL url) {
+		TextFilesEditor.getInstance().openFile(url);
 	}
 }

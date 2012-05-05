@@ -7,7 +7,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.javascool.Core;
-import org.javascool.builder.JarManager;
+import org.javascool.tools.JarManager;
 import org.javascool.tools.Pml;
 
 /**

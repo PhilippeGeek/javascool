@@ -27,7 +27,7 @@ public class Core {
 	public static final String help = "org/javascool/macros/memo-macros.htm";
 
 	/** Mets en place le système d'alerte en cas d'erreur non gérée. */
-	static void setUncaughtExceptionAlert() {
+	public static void setUncaughtExceptionAlert() {
 		ErrorCatcher
 				.setUncaughtExceptionAlert(
 						"<h1>Détection d'une anomalie liée à Java:</h1>\n"

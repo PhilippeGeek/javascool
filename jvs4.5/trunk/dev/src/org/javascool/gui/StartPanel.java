@@ -1,4 +1,4 @@
-package org.javascool.gui2;
+package org.javascool.gui;
 
 import java.awt.Component;
 import java.awt.Dimension;

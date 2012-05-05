@@ -4,7 +4,7 @@
  * Thierry.Vieville@sophia.inria.fr, Copyright (C) 2009.  All rights reserved.   *
  *********************************************************************************/
 
-package org.javascool.builder;
+package org.javascool.tools;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -46,12 +46,6 @@ public class JarManager {
 	public static void jarExtract(String jarFile, String destDir,
 			String jarEntry) {
 		try {
-			ProgletsBuilder.log("Extract files from "
-					+ jarFile
-					+ " to "
-					+ destDir
-					+ ((!jarEntry.isEmpty()) ? " which start with " + jarEntry
-							: ""), true);
 			JarFile jf = new JarFile(jarFile);
 			JarInputStream jip = new JarInputStream(
 					new FileInputStream(jarFile));
@@ -98,7 +92,6 @@ public class JarManager {
 	public static void jarCreate(String jarFile, String mfFile, String srcDir,
 			String[] jarEntries) {
 		try {
-			ProgletsBuilder.log("Création du jar " + jarFile, true);
 			File parent = new File(jarFile).getParentFile();
 			if (parent != null) {
 				parent.mkdirs();

@@ -25,6 +25,7 @@ import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 import javax.swing.text.Document;
 
+import org.javascool.gui.Desktop;
 import org.javascool.macros.Macros;
 
 /**
@@ -291,7 +292,7 @@ public class HtmlDisplay extends JPanel {
 																	// dans
 																	// editeur
 																	// JavaScool
-			org.javascool.gui.Desktop.getInstance()
+			Desktop.getInstance()
 					.openFile(
 							toURL(location.substring(HtmlDisplay.editorPrefix
 									.length())));
