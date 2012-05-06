@@ -39,8 +39,9 @@ void main() {
       // Le langage permet aussi d'écrire directement:
       // - double quotient = (double) nombre / diviseur;
       // - System.out.printf("Le resultat approché est : %."+precision+"f", quotient);
-    } else
+    } else {
       println("\nVous n'avez pas fait le bon choix: il fallait taper soit 1 soit 2 !");
+    }
     println("\nVoulez-vous faire une nouvelle division? (Oui/Non)");
     String reponse = readString();
     loop = equal(reponse, "oui") || equal(reponse, "Oui");

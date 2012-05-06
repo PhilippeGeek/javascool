@@ -27,10 +27,11 @@ Chiffre[] addition(int taille, Chiffre[] c1, Chiffre[] c2) {
     Chiffre unite = unite(n);
     Chiffre dizaine = dizaine(n);
     res[i] = unite;
-    if(i > 0)
+    if(i > 0) {
       retenue = dizaine;
-    else
+    } else {
       assertion(dizaine == ZERO, "Attention, débordement !");
+    }
   }
   ;
   return res;
@@ -45,10 +46,11 @@ Chiffre[] multiplicationScalaire(int taille, Chiffre scal, Chiffre[] c) {
     Chiffre unite = unite(n);
     Chiffre dizaine = dizaine(n);
     res[i] = unite;
-    if(i > 0)
+    if(i > 0) {
       retenue = dizaine;
-    else
+    } else {
       assertion(dizaine == ZERO, "Attention, débordement !");
+    }
   }
   ;
   return res;
@@ -82,10 +84,11 @@ Chiffre[] soustraction(int taille, Chiffre[] c1, Chiffre[] c2) {
   boolean retenue = false;
   for(int i = taille - 1; i >= 0; i--) {
     NombreA2Chiffres n2;
-    if(retenue)
+    if(retenue) {
       n2 = plus(chiffre(c2[i]), chiffre(UN));
-    else
+    } else {
       n2 = chiffre(c2[i]);
+    }
     NombreA2Chiffres n1 = chiffre(c1[i]);
     if(estPlusPetit(n2, n1)) {
       retenue = false;

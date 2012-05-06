@@ -10,10 +10,11 @@ void main() {
     quelSexe = readString();
   }
   String sexe;
-  if(equal(quelSexe, "un homme"))
+  if(equal(quelSexe, "un homme")) {
     sexe = "M.";
-  else
+  } else {
     sexe = "Mme.";
+  }
   echo("Parfait. Je suis enchanté de faire votre connaissance " + sexe + " " + prenom + " " + nom + ".");
   echo("");
   echo("Est-ce indiscret de vous demander votre âge ?");
@@ -25,14 +26,16 @@ void main() {
   if(equal(indiscret, "non")) {
     echo("Dans ce cas, quel âge avez-vous " + sexe + " " + nom + " ?");
     int age = readInt();
-    if(age <= 30)
+    if(age <= 30) {
       echo("Comme j'aimerais être si jeune !");
-    else if(age <= 60)
+    } else if(age <= 60) {
       echo("Félicitations, vous êtes dans la force de l'âge !");
-    else
+    } else {
       echo("J'aimerais avoir votre expérience !");
-  } else
+    }
+  } else {
     echo("Dommage. Passons à chose dans ce cas.");
+  }
   echo("");
 
   echo("Savez-vous que je suis excellent en calcul mental ?");
@@ -61,7 +64,8 @@ int unGrandNombre() {
     echo("Ah, " + res + " c'est bien petit ! Ne pouvez-vous pas me proposer un nombre un peu plus grand ?");
     res = readInt();
   }
-  if(!premierEssai)
+  if(!premierEssai) {
     echo("C'est mieux");
+  }
   return res;
 }
