@@ -10,7 +10,6 @@ package org.javascool.proglets.paintBrush;
 public class Translator extends org.javascool.core.Translator {
   @Override
   public String getImports() {
-    return 
-      "import org.javascool.proglets.paintBrush.PaintBrushManipImage ;";
+    return "import org.javascool.proglets.paintBrush.PaintBrushManipImage ;";
   }
 }

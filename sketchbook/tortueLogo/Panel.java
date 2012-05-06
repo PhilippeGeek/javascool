@@ -37,13 +37,14 @@ public class Panel extends JPanel {
           g.setColor(garden[i + j * width]);
           g.fillRect(i, j, 1, 1);
         }
-    if (turtle_shown)
+    if(turtle_shown) {
       g.drawImage(turtle.getImage(), turtle_x, turtle_y, getBackground(), turtle.getImageObserver());
+    }
   }
   static final int width = 512, height = 512;
   private Color garden[];
   private ImageIcon turtle;
-  private int turtle_x = width/2, turtle_y = height/2; 
+  private int turtle_x = width / 2, turtle_y = height / 2;
   private boolean turtle_shown = true;
 
   /** Clears the garden. */

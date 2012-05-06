@@ -36,11 +36,12 @@ public class Sprite extends Geometry implements Drawable {
       public int markerRGB = color.getRGB() | 0xFF000000;
       @Override
       public final int filterRGB(int x, int y, int rgb) {
-        if((rgb | 0xFF000000) == markerRGB)
+        if((rgb | 0xFF000000) == markerRGB) {
           // Mark the alpha bits as zero - transparent
           return 0x00FFFFFF & rgb;
-        else
+        } else {
           return rgb;
+        }
       }
     };
     ImageProducer ip = new FilteredImageSource(m_image.getSource(), filter);
@@ -79,21 +80,20 @@ public class Sprite extends Geometry implements Drawable {
     try {
       m_image = ImageIO.read(new File(fileName));
     } catch(IOException e) {
-	try {
-     	      InputStream stream = Macros.getResourceURL(fileName).openStream();
-	      if(stream == null)
-	        org.javascool.core.ProgletEngine.getInstance().doStop("Le fichier " + fileName + " n'extste pas");
-	      else {
-	        try {
-	          m_image = ImageIO.read(stream);
-	        } catch(IOException ex) {
-	          org.javascool.core.ProgletEngine.getInstance().doStop("Le fichier " + fileName + " est illisible");
-	        }
-	      }
-	}
-	catch(IOException e2) {
-	    org.javascool.core.ProgletEngine.getInstance().doStop("Le fichier " + fileName + " est illisible");
-	}
+      try {
+        InputStream stream = Macros.getResourceURL(fileName).openStream();
+        if(stream == null) {
+          org.javascool.core.ProgletEngine.getInstance().doStop("Le fichier " + fileName + " n'extste pas");
+        } else {
+          try {
+            m_image = ImageIO.read(stream);
+          } catch(IOException ex) {
+            org.javascool.core.ProgletEngine.getInstance().doStop("Le fichier " + fileName + " est illisible");
+          }
+        }
+      } catch(IOException e2) {
+        org.javascool.core.ProgletEngine.getInstance().doStop("Le fichier " + fileName + " est illisible");
+      }
     }
   }
   /**
@@ -103,8 +103,9 @@ public class Sprite extends Geometry implements Drawable {
    */
   @Override
   public void draw(Graphics g) {
-    if(m_image != null)
+    if(m_image != null) {
       g.drawImage(m_image, (int) getX(), (int) getY(), (int) getWidth(), (int) getHeight(), null);
+    }
   }
   private static final Logger LOG = Logger.getLogger(Sprite.class.getName());
 }

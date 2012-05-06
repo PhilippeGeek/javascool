@@ -66,10 +66,11 @@ class GogleMapPanel extends JPanel implements ActionListener {
   void drawPoint(Graphics2D g, int x, int y, int indice) {
     // System.out.println("x ="+x+" y="+y+" i="+indice);
     g.drawImage((indice != -1) ? ici_bleu : ici_rouge, x, y, null);
-    if((indice != -1) && (indice < 10))
+    if((indice != -1) && (indice < 10)) {
       g.drawString("" + indice, x + 7, y + 13);
-    else if(indice != -1)
+    } else if(indice != -1) {
       g.drawString("" + indice, x + 4, y + 13);
+    }
     // g.setColor(Color.BLACK);
     // g.fillRect(x+5, y+25, 12,12);
   }
@@ -399,10 +400,11 @@ class PointAAfficher implements Comparable {
   public int compareTo(Object o) {
     PointAAfficher p = (PointAAfficher) o;
     int cmp1 = (int) Math.round(1000 * (p.x - x));
-    if(cmp1 != 0)
+    if(cmp1 != 0) {
       return cmp1;
-    else
+    } else {
       return (int) Math.round(1000 * (p.y - y));
+    }
   }
 }
 

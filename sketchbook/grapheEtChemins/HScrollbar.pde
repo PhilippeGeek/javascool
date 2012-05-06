@@ -25,27 +25,32 @@ class HScrollbar
   }
 
   void update() {
-    if(over())
+    if(over()) {
       newspos = width / 2;  // constrain(mouseX-sheight/2, sposMin, sposMax);
-    else
+    } else {
       newspos = 0;
-    if(abs(newspos - spos) > 1)
+    }
+    if(abs(newspos - spos) > 1) {
       spos = spos + (newspos - spos) / loose;
+    }
   }
   boolean over() {
     if((mouseX > xpos) && (mouseX < xpos + swidth) &&
        (mouseY > ypos) && (mouseY < ypos + sheight))
+    {
       return true;
-    else
+    } else {
       return false;
+    }
   }
   void display() {
     fill(255);
     strokeWeight(0.1);
-    if(over())
+    if(over()) {
       fill(0, 40, 63);
-    else
+    } else {
       fill(255, 150, 0);
+    }
     rect(sheight / 2, ypos, sheight * 5, sheight);
     fill(130);
     textFont(font, 11);

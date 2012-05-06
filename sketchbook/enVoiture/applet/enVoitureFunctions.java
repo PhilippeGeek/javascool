@@ -9,7 +9,6 @@ public class enVoitureFunctions {
   private static enVoiture getPane() {
     return org.javascool.macros.Macros.getProgletPane();
   }
-
   /** Ajoute ou modifie un spot au graphe (modifie dans le cas ou meme nom employé et différentes coordonnées).
    * @param n Nom du spot.
    * @param col Couleur du spot.

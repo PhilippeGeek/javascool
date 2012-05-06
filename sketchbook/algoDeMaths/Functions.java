@@ -140,7 +140,7 @@ public class Functions {
   /** Renvoie la valeur verticale du réticule. */
   public static double getY() {
     return getPane().inputY.getValue();
-  }  
+  }
   /** Définit la position du réticule.
    * @param x Abscisse du réticule,  dans [-X, X], par défaut [-1, 1].
    * @param y Reticule ordinate, dans [-Y, Y], par défaut [-1, 1].

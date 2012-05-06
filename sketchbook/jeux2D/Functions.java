@@ -11,16 +11,16 @@ import java.util.logging.Logger;
 
 public class Functions {
   private static final long serialVersionUID = 1L;
-  
+
   // @factory
   private Functions() {}
+
   /** Renvoie l'instance de la proglet pour accéder à ses éléments.
    * <p> Utilisé dans une construction de type <tt>getPane().appelDeMethode(..)</tt>.</p>
    */
   private static Panel getPane() {
-     return getProgletPane();
+    return getProgletPane();
   }
-
   /**
    * Returns the mouse X position relative to the top-left corner of the
    * proglet panel
@@ -177,26 +177,33 @@ public class Functions {
   }
   public static boolean keyDown(int code) {
     for(int i = 0; i < PrivateFunctions.getFunctionsElementSingleton().m_keysPressed.size(); i++)
-      if(PrivateFunctions.getFunctionsElementSingleton().m_keysPressed.get(i) == code)
+      if(PrivateFunctions.getFunctionsElementSingleton().m_keysPressed.get(i) == code) {
         return true;
+      }
     return false;
   }
   public static boolean collisionCircleToRect(double x1, double y1, double r1, double x2, double y2, double w2, double h2) {
     // if (distance(x1,y1,x2+w2/2,y2+h2/2)>Math.sqrt((w2*w2)/4+(h2*h2)/4)) return false;
     double xc = x1 + r1;
     double yc = y1 + r1;
-    if((yc > y2) && (yc < y2 + h2))
+    if((yc > y2) && (yc < y2 + h2)) {
       return Math.abs(xc - (x2 + w2 / 2)) < r1 + w2 / 2;
-    if((xc > x2) && (xc < x2 + w2))
+    }
+    if((xc > x2) && (xc < x2 + w2)) {
       return Math.abs(yc - (y2 + h2 / 2)) < r1 + h2 / 2;
-    if((yc < y2) && (xc < x2))
+    }
+    if((yc < y2) && (xc < x2)) {
       return distance(xc, yc, x2, y2) < r1;
-    if((yc < y2) && (xc > x2 + w2))
+    }
+    if((yc < y2) && (xc > x2 + w2)) {
       return distance(xc, yc, x2 + w2, y2) < r1;
-    if((yc > y2 + h2) && (xc < x2))
+    }
+    if((yc > y2 + h2) && (xc < x2)) {
       return distance(xc, yc, x2, y2 + h2) < r1;
-    if((yc > y2 + h2) && (xc > x2 + w2))
+    }
+    if((yc > y2 + h2) && (xc > x2 + w2)) {
       return distance(xc, yc, x2 + w2, y2 + h2) < r1;
+    }
     return false;
   }
   /* //FIXME all coll functions */

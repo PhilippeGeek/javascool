@@ -24,8 +24,9 @@ public class Panel extends JPanel {
       public void run() {
         inputX.setValue(scope.getReticuleX());
         inputY.setValue(scope.getReticuleY());
-	if (runnable != null)
-	  runnable.run();
+        if(runnable != null) {
+          runnable.run();
+        }
       }
     };
     Runnable run2 = new Runnable() {

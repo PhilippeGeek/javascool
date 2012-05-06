@@ -9,7 +9,6 @@ public class grapheEtCheminsFunctions {
   private static grapheEtChemins getPane() {
     return org.javascool.macros.Macros.getProgletPane();
   }
-
   /** Ajoute ou modifie les coordonnées d'un noeud du graphe.
    * @param n Nom du noeud.
    * @param x Abcisse du noeud.

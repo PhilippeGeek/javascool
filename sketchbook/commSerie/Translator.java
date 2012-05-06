@@ -10,10 +10,9 @@ package org.javascool.proglets.commSerie;
 public class Translator extends org.javascool.core.Translator {
   @Override
   public String getImports() {
-    return 
-      "import org.javascool.proglets.commSerie.Panel;"+
-      "import org.javascool.proglets.commSerie.ConvertisseurPanel;"+
-      "import org.javascool.proglets.commSerie.SerialInterface;"+
-      "import org.javascool.proglets.commSerie.SerialInterfacePanel;";
+    return "import org.javascool.proglets.commSerie.Panel;" +
+           "import org.javascool.proglets.commSerie.ConvertisseurPanel;" +
+           "import org.javascool.proglets.commSerie.SerialInterface;" +
+           "import org.javascool.proglets.commSerie.SerialInterfacePanel;";
   }
 }

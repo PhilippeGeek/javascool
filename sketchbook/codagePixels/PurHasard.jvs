@@ -1,5 +1,5 @@
 void main() {
-  // On choisit un nombre 
+  // On choisit un nombre
   int N = readInteger("Choisir un nombre");
   // . . et fait "tourner" le générateur aléatoire pour que le résultat change à chaque appel
   for(int n = 0; n < N; n++)

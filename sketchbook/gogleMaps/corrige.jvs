@@ -35,20 +35,22 @@ void afficheToutesRoutesDirectes() {
   for(String depart : voisins.keySet())
     for(String arrivee : voisins.get(depart))
       // Pour �viter de tracer deux fois la m�me route
-      if(depart.compareTo(arrivee) > 0)
+      if(depart.compareTo(arrivee) > 0) {
         afficheRouteDirecte(depart, arrivee, LEGER);
+      }
 }
 // Calcule la distance entre deux villes
 int distance(String ville1, String ville2) {
   verifierVille(ville1);
   verifierVille(ville2);
-  if(voisins.get(ville1).contains(ville2))
+  if(voisins.get(ville1).contains(ville2)) {
     return distanceEuclidienne(longitudes.get(ville1),
                                latitudes.get(ville1),
                                longitudes.get(ville2),
                                latitudes.get(ville2));
-  else
+  } else {
     return maxInteger;
+  }
 }
 // afficher un chemin sur la carte
 void afficherChemin(List<String> chemin) {

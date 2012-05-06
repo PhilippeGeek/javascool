@@ -47,15 +47,15 @@ public class ImageUtils {
     BufferedImage image = null;
     try {
       String format = location.replaceFirst(".*\\.([a-z]+)", "$1").toLowerCase();
-      if ("pbm".equals(format) || "pgm".equals(format) || "ppm".equals(format)) {
-	image = loadImagePxM(location);
+      if("pbm".equals(format) || "pgm".equals(format) || "ppm".equals(format)) {
+        image = loadImagePxM(location);
       } else {
-	image = ImageIO.read(Macros.getResourceURL(location));
+        image = ImageIO.read(Macros.getResourceURL(location));
       }
-    } catch(IOException e) {
-      throw new RuntimeException(e + " when loading: " + location + " : "+Macros.getResourceURL(location));
+    } catch(IOException e) { throw new RuntimeException(e + " when loading: " + location + " : " + Macros.getResourceURL(location));
     }
-    if(image == null) throw new RuntimeException("Unable to load: " + location);
+    if(image == null) { throw new RuntimeException("Unable to load: " + location);
+    }
     return image;
   }
   /** Ecrit une image locale ou distante.
@@ -67,29 +67,28 @@ public class ImageUtils {
    * <tr><td><tt>stdout:/</tt></td><td>pour l'imprimer dans la console.</td></tr>
    * </table></div>
    * @param image L'image à sauvegarder.
-   *  <p>Reconnait le format de stockage par l'extension. Il est recommandé d'utiliser le format binaire ".pgn". Les formats  ASCIIt <a href="http://fr.wikipedia.org/wiki/Portable_pixmap">".pbm", ".pgm" et ".ppm"</a> sont disponibles aussi.</p> 
+   *  <p>Reconnait le format de stockage par l'extension. Il est recommandé d'utiliser le format binaire ".pgn". Les formats  ASCIIt <a href="http://fr.wikipedia.org/wiki/Portable_pixmap">".pbm", ".pgm" et ".ppm"</a> sont disponibles aussi.</p>
    *
    * @throws IllegalArgumentException Si l'URL est mal formée.
    * @throws RuntimeException Si une erreur d'entrée-sortie s'est produite.
    */
   public static void saveImage(String location, BufferedImage image) {
     String format = location.replaceFirst(".*\\.([a-z]+)", "$1").toLowerCase();
-    if ("pbm".equals(format) || "pgm".equals(format) || "ppm".equals(format)) {
+    if("pbm".equals(format) || "pgm".equals(format) || "ppm".equals(format)) {
       saveImagePxM(location, image, format);
     } else {
       location = Macros.getResourceURL(location).toString();
       try {
-	if(location.startsWith("file:"))
-	  ImageIO.write(image, "png", new File(location.substring(5)));
-	else {
-	  URLConnection connection = new URL(location).openConnection();
-	  connection.setDoOutput(true);
-	  OutputStream writer = connection.getOutputStream();
-	  ImageIO.write(image, "png", writer);
-	  writer.close();
-	}
-      } catch(IOException e) {
-	throw new RuntimeException(e + " when saving: " + location);
+        if(location.startsWith("file:")) {
+          ImageIO.write(image, "png", new File(location.substring(5)));
+        } else {
+          URLConnection connection = new URL(location).openConnection();
+          connection.setDoOutput(true);
+          OutputStream writer = connection.getOutputStream();
+          ImageIO.write(image, "png", writer);
+          writer.close();
+        }
+      } catch(IOException e) { throw new RuntimeException(e + " when saving: " + location);
       }
     }
   }
@@ -97,16 +96,16 @@ public class ImageUtils {
   private static void saveImagePxM(String location, BufferedImage image, String format) {
     format = format.toLowerCase();
     // Saves the "magic number"
-    StringBuffer s = new StringBuffer((format.equals("pbm") ? "P1" : format.equals("pgm") ? "P2" : "P3")+"\n");
+    StringBuffer s = new StringBuffer((format.equals("pbm") ? "P1" : format.equals("pgm") ? "P2" : "P3") + "\n");
     // Saves image sizes and bound
     s.append(image.getWidth() + " " + image.getHeight() + (format.equals("pbm") ? "" : format.equals("pgm") ? " 765" : " 255") + "\n");
     // Sets the pixel separator to get line size lower than 70 chars
     String c = image.getWidth() < (format.equals("pbm") ? 35 : format.equals("pgm") ? 17 : 5) ? " " : "\n";
     for(int j = 0; j < image.getHeight(); j++)
       for(int i = 0; i < image.getWidth(); i++) {
-	// Gets the pixel value
-	int rgb = image.getRGB(i, j), r = (rgb >> 16) & 0xFF, g = (rgb >> 8) & 0xFF, b = rgb & 0xFF, v = r + g + b, o = v < 383 ? 0 : 1;
-	s.append((format.equals("pbm") ? "" + b : format.equals("pgm") ? "" + v : "" + r + " " + g + " " + b) + (i < image.getWidth() - 1 ? c : "\n"));
+        // Gets the pixel value
+        int rgb = image.getRGB(i, j), r = (rgb >> 16) & 0xFF, g = (rgb >> 8) & 0xFF, b = rgb & 0xFF, v = r + g + b, o = v < 383 ? 0 : 1;
+        s.append((format.equals("pbm") ? "" + b : format.equals("pgm") ? "" + v : "" + r + " " + g + " " + b) + (i < image.getWidth() - 1 ? c : "\n"));
       }
     FileManager.save(location, s.toString());
   }
@@ -115,25 +114,26 @@ public class ImageUtils {
     try {
       PxMReader reader = new PxMReader(new StringReader(FileManager.load(location)));
       String header = reader.readString();
-      if ("P1".equals(header) || "P2".equals(header) || "P3".equals(header)) {
-	int width = reader.readInteger(), height = reader.readInteger(); 
-	double scale = 255.0 / ("P1".equals(header) ? 1 : reader.readInteger());
-	BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-	for(int j = 0; j < img.getHeight(); j++)
-	  for(int i = 0; i < img.getWidth(); i++) {
-	    int r, g, b;
-	    if ("P3".equals(header)) {
-	      r = reader.readPixel(scale);
-	      g = reader.readPixel(scale);
-	      b = reader.readPixel(scale);
-	    } else {
-	      r = g = b = reader.readPixel(scale);
-	    }
-	  img.setRGB(i, j, r << 16 | g << 8 | b);
-	  }
-	return img;
-      } else
-	return null;
+      if("P1".equals(header) || "P2".equals(header) || "P3".equals(header)) {
+        int width = reader.readInteger(), height = reader.readInteger();
+        double scale = 255.0 / ("P1".equals(header) ? 1 : reader.readInteger());
+        BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        for(int j = 0; j < img.getHeight(); j++)
+          for(int i = 0; i < img.getWidth(); i++) {
+            int r, g, b;
+            if("P3".equals(header)) {
+              r = reader.readPixel(scale);
+              g = reader.readPixel(scale);
+              b = reader.readPixel(scale);
+            } else {
+              r = g = b = reader.readPixel(scale);
+            }
+            img.setRGB(i, j, r << 16 | g << 8 | b);
+          }
+        return img;
+      } else {
+        return null;
+      }
     } catch(Exception e) {
       return null;
     }
@@ -143,34 +143,41 @@ public class ImageUtils {
     /** Creates a PBM/PGM/PPM token readerbthat uses a default-sized input buffer.
      * @param r The reader to use.
      */
-    public PxMReader(Reader r) { this.r = r; }
-    private Reader r; int c = -2;
+    public PxMReader(Reader r) {
+      this.r = r;
+    }
+    private Reader r;
+    int c = -2;
+
     /** Reads a token.
      * @return The next token in the input bufffer.
      * @throws IOException If the file is truncated or an error occurs during reading.
      */
     public String readString() throws IOException {
-      if (c == -2)
-	c = r.read();
+      if(c == -2) {
+        c = r.read();
+      }
       // Skips spaces
-      while(Character.isWhitespace(c))
-	  c = r.read(); 
+      while(Character.isWhitespace(c)) {
+        c = r.read();
+      }
       // Skips comment lines
       while(c == '#') {
-	do {
-	  c = r.read();
-	} while(c != -1 && c != '\n');
-	while(Character.isWhitespace(c))
-	  c = r.read();
+        do {
+          c = r.read();
+        } while(c != -1 && c != '\n');
+        while(Character.isWhitespace(c)) {
+          c = r.read();
+        }
       }
       // Detects end of file
-      if (c == -1) 
-	throw new EOFException();
+      if(c == -1) { throw new EOFException();
+      }
       // Collects a token
       StringBuffer s = new StringBuffer();
       do {
-	s.append((char) c);
-	c = r.read();
+        s.append((char) c);
+        c = r.read();
       } while(c != -1 && !Character.isWhitespace(c));
       return s.toString();
     }
@@ -182,7 +189,7 @@ public class ImageUtils {
     public int readInteger() throws IOException {
       return new Integer(readString());
     }
-   /** Reads a scaled integer value.
+    /** Reads a scaled integer value.
      * @return The next token as a scaled positive integer value between 0 and 255.
      * @throws NumberFormatException In case of a spurious reading.
      * @throws IOException If the file is truncated or an error occurs during reading.

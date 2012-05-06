@@ -21,10 +21,11 @@ public void up(Oval mass) {
       vecy = otherMass.getY() + rad2 - mass.getY() - rad1;
       norm = Math.sqrt(vecx * vecx + vecy * vecy);
       if(norm < rad1 + rad2) {
-        if(mass1 > mass2)
+        if(mass1 > mass2) {
           otherMass.delete();
-        else
+        } else {
           mass.delete();
+        }
       }
       force = ((g * mass1 * mass2) / (norm * norm)) / mass1;
       vecx /= norm;
@@ -36,8 +37,9 @@ public void up(Oval mass) {
       vy += vecy;
       mass.setProperty("vx", vx);
       mass.setProperty("vy", vy);
-      if(mass1 < 150)
+      if(mass1 < 150) {
         mass.position(mass.getX() + vx, mass.getY() + vy);
+      }
       // new Oval(mass.getX()+5,mass.getY()+5,3,3);	//TRACE
     }
 }
@@ -104,5 +106,7 @@ void main() {
   onMousePressed("prepare");
   onMouseReleased("newMass");
   onMouseDown("drawVec");
-  while(true) ;
+  while(true) {
+    ;
+  }
 }

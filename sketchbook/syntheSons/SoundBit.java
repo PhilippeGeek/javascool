@@ -120,22 +120,27 @@ public class SoundBit {
       // Adjust the read size
       byteLength = offset + byteLength > data.length ? data.length - offset : byteLength;
       long nFrame = byteLength / frameSize;
-      if(nFrame > frameLength - framePos)
+      if(nFrame > frameLength - framePos) {
         nFrame = frameLength - framePos;
+      }
       byteLength = (int) nFrame * frameSize;
       // Reads sound samples
       for(int n = 0, i = offset; n < nFrame; n++, i += frameSize) {
         // Gets and converts sample's values: max amplitude is: 2^16-1=65535
         long l = Math.round(32767.0 * (1.0 + get('l', framePos))), r = Math.round(32767.0 * (1.0 + get('r', framePos)));
         framePos++;
-        if(l < 0)
+        if(l < 0) {
           l = 0;
-        if(l > 65535)
+        }
+        if(l > 65535) {
           l = 65535;
-        if(r < 0)
+        }
+        if(r < 0) {
           r = 0;
-        if(r > 65535)
+        }
+        if(r > 65535) {
           r = 65535;
+        }
         // Reports in buffer: this is valid for 16 bit stereo, little endian
         data[i + 0] = (byte) ((l & 0xFF) - 128);
         data[i + 1] = (byte) (((l >>> 8) & 0xFF) - 128);
@@ -157,7 +162,8 @@ public class SoundBit {
     /**  Repositions this stream to the initial position or the position at the time the mark method was last called on this stream. */
     @Override
     public void reset() {
-      if(framePos > frameLimit) throw new IllegalStateException("Mark limit exceeded");
+      if(framePos > frameLimit) { throw new IllegalStateException("Mark limit exceeded");
+      }
       framePos = frameMark;
     }
     /** Marks the current position in this input stream, byteLimit, if positive, being the maximum limit of bytes that can be read before the mark becomes invalid. */
@@ -174,8 +180,9 @@ public class SoundBit {
     /** Skips over and discards byteSize bytes of data (or less, if less data available) from this stream. */
     public void skip(int byteSize) {
       framePos += byteSize / frameSize;
-      if(framePos > frameLength)
+      if(framePos > frameLength) {
         framePos = frameLength;
+      }
     }
     /** Forbidden method: do not use (since frames have not one byte size). */
     @Override
@@ -222,11 +229,13 @@ public class SoundBit {
         int n = 0;
         byte data[] = new byte[size];
         for(long t = 0; t < FRAME_SIZE * stream.getFrameLength(); t += size, n++) {
-          if(period > 0)
+          if(period > 0) {
             sample(n);
+          }
           int s = stream.read(data, 0, size);
-          if(s > 0)
+          if(s > 0) {
             line.write(data, 0, s);
+          }
           Macros.sleep(0);
         }
       }
@@ -252,8 +261,10 @@ public class SoundBit {
      * @param right Right buffer data if any. Set to null for a monophonic sound.
      */
     public DataSoundBit(String name, double[] left, double[] right) {
-      if(left == null) throw new IllegalArgumentException("Undefined left channel data");
-      if((right != null) && (left.length != right.length)) throw new IllegalArgumentException("Left and right channel length differs: " + left.length + " != " + right.length);
+      if(left == null) { throw new IllegalArgumentException("Undefined left channel data");
+      }
+      if((right != null) && (left.length != right.length)) { throw new IllegalArgumentException("Left and right channel length differs: " + left.length + " != " + right.length);
+      }
       this.left = left;
       this.right = right == null ? left : right;
       this.name = name;
@@ -276,7 +287,9 @@ public class SoundBit {
     if(!(((stream.getFormat().getChannels() == 1) || (stream.getFormat().getChannels() == 2)) &&
          (stream.getFormat().getSampleSizeInBits() == 16) &&
          (stream.getFormat().getEncoding() == AudioFormat.Encoding.PCM_SIGNED) &&
-         (stream.getFormat().isBigEndian() == false))) throw new IllegalArgumentException("Bad stream format: " + stream.getFormat().toString());
+         (stream.getFormat().isBigEndian() == false)))
+    { throw new IllegalArgumentException("Bad stream format: " + stream.getFormat().toString());
+    }
   }
   /** Detects sound events.
    * @param frequence Sound event frequence in Hz.
@@ -297,8 +310,9 @@ public class SoundBit {
       if((l <= t) && (n < size)) {
         events[n++] = a;
         l += period;
-        if(a > max)
+        if(a > max) {
           max = a;
+        }
         moy += a;
         var += a * a;
       }
@@ -310,10 +324,11 @@ public class SoundBit {
     // Thresholds events
     double thres = moy + cut * var, nthres = 0;
     for(int k = 0; k < size; k++)
-      if(events[k] < thres)
+      if(events[k] < thres) {
         events[k] = 0;
-      else
+      } else {
         nthres++;
+      }
     // Verboses results
     System.out.println("events(" + frequence + ", " + period + ", " + cut + ") = " + moy + " +- " + var + " < " + max + ", " + nthres + "/" + size + " = " + (100.0 * nthres / size) + "% < " + thres);
     return events;

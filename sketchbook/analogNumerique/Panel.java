@@ -56,10 +56,11 @@ public class Panel extends JPanel {
         // Macros.echo("La valeur est comprise entre " + (min) + " et " + (max - 1));
         int milieu = (min + max) / 2;
         Functions.output(milieu);
-        if(Functions.compare() == 1)
+        if(Functions.compare() == 1) {
           min = milieu;
-        else
+        } else {
           max = milieu;
+        }
         Macros.sleep(1000);
       }
       Functions.output(min);

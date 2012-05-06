@@ -49,10 +49,11 @@ class Point implements Comparable {
   public int compareTo(Object o) {
     Point p = (Point) o;
     int cmp1 = p.x - x;
-    if(cmp1 != 0)
+    if(cmp1 != 0) {
       return cmp1;
-    else
+    } else {
       return p.y - y;
+    }
   }
   public boolean isClosed(Point p) {
     return Math.abs(p.x - x) <= 1 && Math.abs(p.y - y) <= 1;
@@ -164,29 +165,30 @@ class MainPanel extends JPanel implements ActionListener {
   @Override
   public void actionPerformed(ActionEvent e) {
     String action = e.getActionCommand();
-    if(action.equals(button1String))
+    if(action.equals(button1String)) {
       myPanel.updateMode(Mode.DRAW);
-    else if(action.equals(button2String))
+    } else if(action.equals(button2String)) {
       myPanel.updateMode(Mode.RECTANGLE);
-    else if(action.equals(button3String))
+    } else if(action.equals(button3String)) {
       myPanel.updateMode(Mode.ERASE);
-    else if(action.equals(button4String))
+    } else if(action.equals(button4String)) {
       myPanel.updateMode(Mode.FILL);
-    else if(action.equals(button5String))
+    } else if(action.equals(button5String)) {
       myPanel.updateMode(Mode.LINE);
-    else if(action.equals(buttonVersion1String))
+    } else if(action.equals(buttonVersion1String)) {
       myPanel.manipImage = myPanel.demoManipImage;
-    else if(action.equals(buttonVersion2String))
+    } else if(action.equals(buttonVersion2String)) {
       myPanel.manipImage = myPanel.progletManipImage;
-    else if(action.equals(showCodeBoxString)) {
+    } else if(action.equals(showCodeBoxString)) {
       MyPanel.showCode = !MyPanel.showCode;
       myPanel.repaint();
       cPanel.repaint();
     } else if(action.equals(buttonRotateString)) {
       myPanel.manipImage.rotationGauche();
       myPanel.repaint();
-    } else if(action.equals(buttonClearString))
+    } else if(action.equals(buttonClearString)) {
       myPanel.clear();
+    }
   }
 }
 
@@ -292,10 +294,11 @@ class ColorPanel extends JPanel implements MouseMotionListener {
 
   @Override
   public void mouseMoved(MouseEvent e) {
-    if(e.getX() <= 1 + (square + 2) * 2)
+    if(e.getX() <= 1 + (square + 2) * 2) {
       setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-    else
+    } else {
       setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    }
   }
 }
 
@@ -491,8 +494,9 @@ class MyPanel extends JPanel implements MouseMotionListener {
   private void addOtherSquare(int x, int y) {
     Point p = new Point(x / square, y / square);
     manipImage.affichePoint(p.x, p.y, cPanel.current.getIndex());
-    if(!p.isClosed(previous_point))
+    if(!p.isClosed(previous_point)) {
       fillHole(previous_point.x, previous_point.y, p.x, p.y);
+    }
     previous_point = p;
     repaint();
   }
@@ -505,8 +509,9 @@ class MyPanel extends JPanel implements MouseMotionListener {
     int err = dx - dy;
     while(true) {
       manipImage.affichePoint(x0, y0, cPanel.current.getIndex());
-      if((x0 == x1) && (y0 == y1))
+      if((x0 == x1) && (y0 == y1)) {
         return;
+      }
       int e2 = 2 * err;
       if(e2 > -dy) {
         err = err - dy;
@@ -527,8 +532,9 @@ class MyPanel extends JPanel implements MouseMotionListener {
     int err = dx - dy;
     while(true) {
       manipImage.supprimePoint(x0, y0);
-      if((x0 == x1) && (y0 == y1))
+      if((x0 == x1) && (y0 == y1)) {
         return;
+      }
       int e2 = 2 * err;
       if(e2 > -dy) {
         err = err - dy;
@@ -549,8 +555,9 @@ class MyPanel extends JPanel implements MouseMotionListener {
   private void removeOtherSquare(int x, int y) {
     Point p = new Point(x / square, y / square);
     manipImage.supprimePoint(p.x, p.y);
-    if(!p.isClosed(previous_point))
+    if(!p.isClosed(previous_point)) {
       eraseHole(previous_point.x, previous_point.y, p.x, p.y);
+    }
     previous_point = p;
     repaint();
   }
@@ -602,8 +609,9 @@ class MyPanel extends JPanel implements MouseMotionListener {
       g.setColor(Color.WHITE);
       g.fillRect(square * x, inverseY(square * y) - square, square, square);
       g.setColor(lighter(c, 128));
-    } else
+    } else {
       g.setColor(Color.LIGHT_GRAY);
+    }
     g.fillRect(square * x, inverseY(square * y) - square, square, square);
     if(showBase) {
       g.setColor(Color.BLACK);
@@ -623,8 +631,9 @@ class MyPanel extends JPanel implements MouseMotionListener {
     int err = dx - dy;
     while(true) {
       lighterSquare(g, x0, y0);
-      if((x0 == x1) && (y0 == y1))
+      if((x0 == x1) && (y0 == y1)) {
         return;
+      }
       int e2 = 2 * err;
       if(e2 > -dy) {
         err = err - dy;
@@ -656,10 +665,12 @@ class MyPanel extends JPanel implements MouseMotionListener {
     if(mode == Mode.ERASE) {
       for(int i = p.x - 1; i <= p.x + 1 && i < image.maxX(); i++)
         for(int j = p.y - 1; j <= p.y + 1 && j < image.maxY(); j++)
-          if((i >= 0) && (j >= 0))
+          if((i >= 0) && (j >= 0)) {
             lighterSquare(g, i, j);
-    } else
+          }
+    } else {
       lighterSquare(g, p.x, p.y);
+    }
   }
   @Override
   protected void paintComponent(Graphics g) {
@@ -667,16 +678,21 @@ class MyPanel extends JPanel implements MouseMotionListener {
     // g.drawString("text",10,20);
     for(Point p : image.points)
       drawPoint(g, p);
-    if(previous_point != null)
+    if(previous_point != null) {
       draw_point(g, previous_point);
-    if(end_point_rectangle != null)
+    }
+    if(end_point_rectangle != null) {
       draw_rect(g, start_point_rectangle, end_point_rectangle);
-    if((line_start != null) && (line_end != null))
+    }
+    if((line_start != null) && (line_end != null)) {
       draw_line(g, line_start, line_end);
-    if(previous_point != null)
+    }
+    if(previous_point != null) {
       draw_point(g, previous_point);
-    if(MyPanel.showCode)
+    }
+    if(MyPanel.showCode) {
       image.ascii(g);
+    }
   }
 }
 

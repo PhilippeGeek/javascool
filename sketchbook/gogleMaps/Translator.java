@@ -10,7 +10,6 @@ package org.javascool.proglets.gogleMaps;
 public class Translator extends org.javascool.core.Translator {
   @Override
   public String getImports() {
-    return 
-      "import org.javascool.proglets.gogleMaps.*;";
+    return "import org.javascool.proglets.gogleMaps.*;";
   }
 }

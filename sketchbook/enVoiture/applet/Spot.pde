@@ -57,14 +57,15 @@ class Spot extends Vec2D {
   public void draw() {
     // create an axis aligned box and convert to mesh
     TriangleMesh building = new AABB(new Vec3D(), new Vec3D(d1, d2, h)).toMesh();
-    if(f == form[0])
+    if(f == form[0]) {
       building = new AABB(new Vec3D(), new Vec3D(d1, d2, h)).toMesh();
-    else if(f == form[1])
+    } else if(f == form[1]) {
       building = new Cone(new Vec3D(), new Vec3D(10, 10, 150), d1, d2, h).toMesh(10);
-    else if(f == form[2])
+    } else if(f == form[2]) {
       building = new Cone(new Vec3D(), new Vec3D(10, 10, 150), d1, d2, h).toMesh(30);
-    else if(f == form[3])
+    } else if(f == form[3]) {
       building = new Cone(new Vec3D(), new Vec3D(10, 10, 150), d1, d2, h).toMesh(100);
+    }
     /*if(n==listN[0] || n==listN[1]) {
      *  building = new AABB(new Vec3D(), new Vec3D(d1, d2, h)).toMesh();
      *  } else if(n==listN[2]) {

@@ -74,10 +74,12 @@ public class Panel extends JPanel {
    * @return L'index de la page eventuellement corrigé si hors des bornes.
    */
   public final int show(int page) {
-    if(page < 0)
+    if(page < 0) {
       page = 0;
-    if(page >= pays.length)
+    }
+    if(page >= pays.length) {
       page = pays.length - 1;
+    }
     current = page;
     num.setText("" + page);
     name.setText("<html><h2>" + pays[page][0] + "</h2></html>");

@@ -63,8 +63,9 @@ class ManipImageFinal implements PaintBrushManipImage {
     // System.out.println("supprimePoint(image,"+x+","+y+")");
     for(int i = x - 1; i <= x + 1 && i < PaintBrushImage.maxX(); i++)
       for(int j = y - 1; j <= y + 1 && j < PaintBrushImage.maxY(); j++)
-        if((i >= 0) && (j >= 0))
+        if((i >= 0) && (j >= 0)) {
           Functions.setPixel(i, j, 15);
+        }
   }
   // trace une ligne de diagonale (x0,y0) -- (x1,y1)
   @Override
@@ -76,8 +77,9 @@ class ManipImageFinal implements PaintBrushManipImage {
     int err = dx - dy;
     while(true) {
       Functions.setPixel(x0, y0, couleur);
-      if((x0 == x1) && (y0 == y1))
+      if((x0 == x1) && (y0 == y1)) {
         return;
+      }
       int e2 = 2 * err;
       if(e2 > -dy) {
         err = err - dy;
@@ -109,14 +111,18 @@ class ManipImageFinal implements PaintBrushManipImage {
   public void remplir_aux(int x, int y, int ancienne_couleur, int nouvelle_couleur) {
     if(Functions.getPixel(x, y) == ancienne_couleur) {
       Functions.setPixel(x, y, nouvelle_couleur);
-      if(x > 0)
+      if(x > 0) {
         remplir_aux(x - 1, y, ancienne_couleur, nouvelle_couleur);
-      if(y > 0)
+      }
+      if(y > 0) {
         remplir_aux(x, y - 1, ancienne_couleur, nouvelle_couleur);
-      if(x + 1 < PaintBrushImage.maxX())
+      }
+      if(x + 1 < PaintBrushImage.maxX()) {
         remplir_aux(x + 1, y, ancienne_couleur, nouvelle_couleur);
-      if(y + 1 < PaintBrushImage.maxY())
+      }
+      if(y + 1 < PaintBrushImage.maxY()) {
         remplir_aux(x, y + 1, ancienne_couleur, nouvelle_couleur);
+      }
     }
   }
   // pot de peinture : remplir tous les pixels voisins de (x,y) et ayant la mme couleur avec la couleur 128
@@ -124,8 +130,9 @@ class ManipImageFinal implements PaintBrushManipImage {
   public void remplir(int x, int y, int nouvelle_couleur) {
     // System.out.println("remplir(image,"+x+","+y+")");
     int ancienne_couleur = Functions.getPixel(x, y);
-    if(ancienne_couleur != nouvelle_couleur)
+    if(ancienne_couleur != nouvelle_couleur) {
       remplir_aux(x, y, ancienne_couleur, nouvelle_couleur);
+    }
   }
   @Override
   public void rotationGauche() {

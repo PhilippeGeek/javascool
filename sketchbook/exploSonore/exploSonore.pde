@@ -84,12 +84,13 @@ void setup() {
   color buttoncolor;
   color highlight;
   for(int i = 0; i < T1.length; i++) {
-    if(i < 6)
+    if(i < 6) {
       T1[i] = new TextButton(5 + ((i % 4) * 2 * width / 3 / T1.length), height - 100 + 60 *(int (i / 4)), 60 + int (i / 5) *35, 25, color(255), myBlue, myRed, myOr, ListN[i]);
-    else if(i == 6)
+    } else if(i == 6) {
       T1[i] = new TextButton(5 + ((i % 4) * 2 * width / 3 / T1.length) + 60, height - 40, 70, 30, color(255), myRed, myOr, color(0), ListN[i]);
-    else
+    } else {
       T1[i] = new TextButton(5 + ((i % 4) * 2 * width / 3 / T1.length) + width / 2 + 120, height - 155, 60, 25, color(255), color(0), myOr, color(0), ListN[i]);
+    }
   }
   width_ = this.frame.getWidth();
   height_ = this.frame.getHeight();
@@ -104,8 +105,9 @@ void draw() {
     fft.logAverages(60, 6 * width / (640));
     drawFFT("out");                                                 // Trace la FFT
     // drawSignal("out");                                          // Trace le signal temporel
-    if((c) % 2 == 0)
+    if((c) % 2 == 0) {
       drawSignal("out");
+    }
   } else if(record1.sounding) {
     fft = new FFT(player.bufferSize(), player.sampleRate());
 
@@ -136,49 +138,60 @@ void draw() {
 }
 // Un accès rapide aux fonctions via le clavier
 void keyPressed() {
-  if(key == '0')
+  if(key == '0') {
     signal1.setSignal("sinus", 1000, 0.0, true);
+  }
   if(key == '1') {
     signal1.setSignal("sinus", 1000, 0.0, true);
     signal2.setSignal("sinus", 4000, 0.0, true);
   }
-  if(key == '2')
+  if(key == '2') {
     signal1.setSignal("carré", 1000, 0.0, true);
-  if(key == '3')
+  }
+  if(key == '3') {
     signal1.setSignal("scie", 1000, 0.0, true);
-  if(key == '4')
+  }
+  if(key == '4') {
     signal1.setSignal("bruit", 1000, 0.0, true);
-  if(key == 'e')
+  }
+  if(key == 'e') {
     record1.setRecord("org/javascool/proglets/exploSonore/Ahmed_Ex2.wav");
-  if(key == 'f')
+  }
+  if(key == 'f') {
     record1.setFilter("org/javascool/proglets/exploSonore/Ahmed_Ex2.wav", 500);
-  if(key == 's')
+  }
+  if(key == 's') {
     StopAnySound();
+  }
 }
 // Update les états des boutons
 void update(int x, int y) {
-  if(locked == false)
+  if(locked == false) {
     for(int i = 0; i < T1.length; i++)
       T1[i].update();
-  else
+  } else {
     locked = false;
-  if(mousePressed)
+  }
+  if(mousePressed) {
     for(int i = 0; i < T1.length; i++)
       if(T1[i].pressed() && !(T1[i].select)) {
         T1[i].select = true;
-        if(i < 4)
+        if(i < 4) {
           signal1.setSignal(T1[i].value, 1000, 0.0, true);
-        else if(i == 4)
+        } else if(i == 4) {
           record1.setRecord("org/javascool/proglets/exploSonore/Ahmed_Ex2.wav");
-        else if(i == 5) {
+        } else if(i == 5) {
           record1.setRecord("org/javascool/proglets/exploSonore/Ahmed_Ex2.wav");
           record1.applyFilter();
-        } else if(i == 6)
+        } else if(i == 6) {
           StopAnySound();
+        }
         for(int j = 0; j < T1.length - 1; j++)
-          if(!(j == i))
+          if(!(j == i)) {
             T1[j].select = false;
+          }
       }
+  }
 }
 // Fenetre informative
 void myInfo() {
@@ -196,8 +209,9 @@ void myInfo() {
 // Lors de la fermeture du programme, arreter tout outil de Minim
 void stop() {
   out.close();
-  if(count != 0)
+  if(count != 0) {
     record1.ferme();
+  }
   minim.stop();
   super.stop();
 }

@@ -116,12 +116,13 @@ public class PrivateFunctions implements EventCatcher {
   public java.awt.event.KeyListener m_keyListener;
 
   public static boolean classExtends(Class< ? > sub, Class< ? > superClass) {
-    if(sub.getSuperclass() == superClass)
+    if(sub.getSuperclass() == superClass) {
       return true;
-    else if(sub.getSuperclass() == Object.class )
+    } else if(sub.getSuperclass() == Object.class ) {
       return false;
-    else
+    } else {
       return classExtends(sub.getSuperclass(), superClass);
+    }
   }
   /**
    * Calls the specified end-user-defined method, passing as a parameter the specified state.
@@ -139,12 +140,13 @@ public class PrivateFunctions implements EventCatcher {
           if(params == 0) {
             m.invoke(org.javascool.core.ProgletEngine.getInstance().getProgletRunnable());
             found = true;
-          } else if(params == 1)
+          } else if(params == 1) {
             if(m.getParameterTypes()[0] == s.getClass()) {
               m.getParameterTypes()[0].cast(s);
               m.invoke(org.javascool.core.ProgletEngine.getInstance().getProgletRunnable(), m.getParameterTypes()[0].cast(s));
               found = true;
             }
+          }
         }
       }
     } catch(IllegalAccessException ex) {
@@ -174,11 +176,12 @@ public class PrivateFunctions implements EventCatcher {
     try {
       for(int i = 0; i < org.javascool.core.ProgletEngine.getInstance().getProgletRunnable().getClass().getMethods().length; i++) {
         java.lang.reflect.Method m = org.javascool.core.ProgletEngine.getInstance().getProgletRunnable().getClass().getMethods()[i];
-        if(m.getName().equals(method))
+        if(m.getName().equals(method)) {
           if(m.getParameterTypes().length == 0) {
             m.invoke(org.javascool.core.ProgletEngine.getInstance().getProgletRunnable());
             found = true;
           }
+        }
       }
     } catch(IllegalAccessException ex) {
       Logger.getLogger(PrivateFunctions.class.getName()).log(Level.SEVERE, null, ex);
@@ -189,15 +192,16 @@ public class PrivateFunctions implements EventCatcher {
     } catch(SecurityException ex) {
       Logger.getLogger(PrivateFunctions.class.getName()).log(Level.SEVERE, null, ex);
     }
-    if(!found)
+    if(!found) {
       Logger.getLogger(PrivateFunctions.class.getName()).log(Level.SEVERE, null, new Exception("Callback method " + method + " not found"));
+    }
   }
   /**
    * This method is called after the program finishes running by Clock
    * It stops the timer and deletes the listeners
    */
   public static void stop() {
-  	System.out.println("STOP");
+    System.out.println("STOP");
     GamePanel p = Panel.m_panel;
     p.stop();
     m_exit = true;
@@ -248,10 +252,11 @@ public class PrivateFunctions implements EventCatcher {
    */
   public static void callback(java.util.ArrayList<EventListener> functions) {
     for(int i = 0; i < functions.size(); i++) {
-      if((functions.get(i).getObject() == null&& (functions.get(i).getObject().isForMe() || functions.get(i).getAlways())) && !functions.get(i).getObject().isDestroyed())
+      if((functions.get(i).getObject() == null&& (functions.get(i).getObject().isForMe() || functions.get(i).getAlways())) && !functions.get(i).getObject().isDestroyed()) {
         call(functions.get(i).getMethod());
-      else if((functions.get(i).getObject().isForMe() || functions.get(i).getAlways()) && !functions.get(i).getObject().isDestroyed())
+      } else if((functions.get(i).getObject().isForMe() || functions.get(i).getAlways()) && !functions.get(i).getObject().isDestroyed()) {
         call(functions.get(i).getMethod(), functions.get(i).getObject());
+      }
     }
   }
   /**
@@ -308,8 +313,9 @@ public class PrivateFunctions implements EventCatcher {
         double timeMs = System.currentTimeMillis() - m_lastTick;
         double sleepMs = targetTimeMs - timeMs;
         try {
-          if(sleepMs > 0)
+          if(sleepMs > 0) {
             Thread.sleep((int) (sleepMs));
+          }
         } catch(InterruptedException ex) {
           Logger.getLogger(PrivateFunctions.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -334,13 +340,15 @@ public class PrivateFunctions implements EventCatcher {
     @SuppressWarnings("AccessingNonPublicFieldOfAnotherObject")
     private void tick() {
       for(int j = 0; j < 3; j++) {
-        if(getFunctionsElementSingleton().m_mouseDown[j])
+        if(getFunctionsElementSingleton().m_mouseDown[j]) {
           callback(getFunctionsElementSingleton().m_onMouseDown);
-        else
+        } else {
           callback(getFunctionsElementSingleton().m_onMouseUp);
+        }
       }
-      if(!m_singleton.m_keysPressed.isEmpty())
+      if(!m_singleton.m_keysPressed.isEmpty()) {
         callback(getFunctionsElementSingleton().m_onKeyDown);
+      }
       callback(getFunctionsElementSingleton().m_onKeyUp);
 
       callback(getFunctionsElementSingleton().m_onFrame);

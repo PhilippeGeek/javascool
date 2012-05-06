@@ -21,11 +21,11 @@ public class Functions {
   /** Renvoie l'instance de la proglet pour accéder à ses éléments. */
   private static Panel getPane() {
     return Macros.getProgletPane();
-  } 
+  }
   /** Remet l'affichage sur la proglet. */
   static public void reset() {
     org.javascool.gui.Desktop.getInstance().focusOnProgletPanel();
-  }  
+  }
   /** Définit le mécanisme de dessin de l'image à partir d'un codage de l'utilisateur.
    * @param manipImage L'implémentation de dessin à utiliser.
    */
@@ -40,6 +40,7 @@ public class Functions {
   public static int getPixel(int x, int y) {
     return PaintBrushImage.getPixel(x, y);
   };
+
   /** Change la valeur d'un pixel de l'image.
    * @param x Abcisse de l'image, entre 0 et 31 inclut.
    * @param y Ordonnée de l'image, entre 0 et 31 inclut.

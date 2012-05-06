@@ -39,12 +39,13 @@ public class Functions {
     JLabel icon = new JLabel();
     icon.setIcon(getIcon(location));
     icon.setLocation(x, y);
-    if (w > 0 && h > 0)
+    if((w > 0) && (h > 0)) {
       icon.setSize(w, h);
+    }
     getPane().add(icon, new Integer(p), 0);
     return icon;
   }
-  /** 
+  /**
    * @see #showIcon(String, int, int, int, int, int)
    */
   public static JLabel showIcon(String location, int x, int y, int p) {

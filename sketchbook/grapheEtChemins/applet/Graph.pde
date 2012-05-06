@@ -25,11 +25,12 @@ class Graph {
       // removeNode(n);
       // nodes.put(n, new Node(n, x, y));
       Node N_ = (Node) nodes.get(n);
-      if(N_ != null)
+      if(N_ != null) {
         N_.moveTo(x, y);
-    } else
-
+      }
+    } else {
       nodes.put(n, new Node(n, x, y));
+    }
   }
   /** Renvoie l'objet Noeud à partir de son nom.
    * @param n Nom du noeud.
@@ -51,7 +52,7 @@ class Graph {
     float curBest = 9999;
     Node best = (Node) nodes.get(listN[0]);
     String n_ = null;
-    if(nodes.size() != 0)
+    if(nodes.size() != 0) {
       for(String ni_ : (Iterable<String>)nodes.keySet()) {
         Node N_ = (Node) nodes.get(ni_);
 
@@ -62,6 +63,7 @@ class Graph {
           n_ = ni_;
         }
       }
+    }
     // println(" nom: " + best.n + " x " + best.x + " // y " + best.y);
     return n_;
   }
@@ -146,11 +148,12 @@ class Graph {
   void removeLink(String nA, String nB) {
     Node NA_ = (Node) nodes.get(nA);
     Node NB_ = (Node) nodes.get(nB);
-    if((NA_ != null) && (NB_ != null))
+    if((NA_ != null) && (NB_ != null)) {
       if(isLink(nA, nB)) {
         NA_.links.remove(nB);
         NB_.links.remove(nA);
       }
+    }
   }
   /** Affirme si il y a lien entre 2 noeuds.
    * @param nA Premier noeud du lien.
@@ -163,15 +166,18 @@ class Graph {
     if((NA_ != null) && (NB_ != null)) {
       boolean link_ = false;
       for(String ni_ : (Iterable<String>)NA_.links.keySet())
-        if(ni_.equals(nB)) // test si les deux string sont équivalents
+        if(ni_.equals(nB)) { // test si les deux string sont équivalents
           link_ = true;
+        }
       // et inverse aussi!
       for(String ni_ : (Iterable<String>)NB_.links.keySet())
-        if(ni_.equals(nA)) // test si les deux string sont équivalents
+        if(ni_.equals(nA)) { // test si les deux string sont équivalents
           link_ = true;
+        }
       return link_;
-    } else
+    } else {
       return false;
+    }
   }
   /** Donne le poids d'un lien entre deux noeuds.
    * @param nA Premier noeud du lien.
@@ -253,8 +259,9 @@ class Graph {
    * @param nEnd Noeud final.
    */
   void dijkstra(String nStart, String nEnd) {
-    if((nodes.get(nStart) == null) || (nodes.get(nEnd) == null))
+    if((nodes.get(nStart) == null) || (nodes.get(nEnd) == null)) {
       return;
+    }
     path.clear();
     for(String ni_ : (Iterable<String>)nodes.keySet()) {
       Node N_ = (Node) nodes.get(ni_);
@@ -269,8 +276,9 @@ class Graph {
       String nCurrent = (String) opened.remove(0);
       // println("nCurrent: " + nCurrent);
       closed.add(nCurrent);
-      if(nCurrent == nEnd)
+      if(nCurrent == nEnd) {
         break;
+      }
       Node Nc = (Node) nodes.get(nCurrent);
       for(String ni_ : (Iterable<String>)Nc.links.keySet()) {
         // println("ni_: " + ni_);
@@ -313,8 +321,9 @@ class Graph {
   boolean arrayListContains(ArrayList c, String nA) {
     for(int i = 0; i < c.size(); i++) {
       String o = (String) c.get(i);
-      if(o == nA)
+      if(o == nA) {
         return true;
+      }
     }
     return false;
   }

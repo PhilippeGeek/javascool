@@ -125,5 +125,7 @@ void main() {
     mols.add(mol);
   }
   mols.onFrame("seRegrouper", true);
-  while(true) ;
+  while(true) {
+    ;
+  }
 }

@@ -12,10 +12,12 @@ void reset() {
 
   p = new BigInteger(pq_size + 1, prime_certainty, new Random());
   q = new BigInteger(pq_size - 1, prime_certainty, new Random());
-  if(p == null)
+  if(p == null) {
     p = new BigInteger(pq_size + 1, prime_certainty, new Random());
-  if(q == null)
+  }
+  if(q == null) {
     q = new BigInteger(pq_size - 1, prime_certainty, new Random());
+  }
 }
 void calculate_n() {
   // Calculer n = p×q
@@ -98,7 +100,8 @@ static BigInteger decrypt(BigInteger c, BigInteger d, BigInteger n) {
       i = i + 1;
     }
     m = c.modPow(d, n).shiftLeft(i * (n.bitLength() - 1)).or (m);
-  } catch(NullPointerException e) { 
+  }
+  catch(NullPointerException e) {
     System.out.println("Attention à bien définir les paramètres avant d'utiliser la fonction de décrytage !");
   }
   return m;
@@ -108,57 +111,59 @@ static BigInteger decrypt(BigInteger c, BigInteger d, BigInteger n) {
  */
 public static BigInteger[] createKeys() {
   BigInteger[] Keys = new BigInteger[3];
-  
+
   int pqSize = (int) (4 + 6 * Math.random());
   BigInteger p_ = new BigInteger(pqSize + 1, prime_certainty, new Random());
   BigInteger q_ = new BigInteger(pqSize - 1, prime_certainty, new Random());
-  if(p_ == null)
+  if(p_ == null) {
     p_ = new BigInteger(pqSize + 1, prime_certainty, new Random());
-  if(q_ == null)
+  }
+  if(q_ == null) {
     q_ = new BigInteger(pqSize - 1, prime_certainty, new Random());
+  }
   BigInteger n_ = p_.multiply(q_);
   BigInteger e_ = cryptageRSA.generate_e(p_, q_, 16);
   BigInteger d_ = cryptageRSA.calculate_d(p_, q_, e_);
-  
+
   Keys[0] = d_;
   Keys[1] = e_;
   Keys[2] = n_;
-  
+
   return Keys;
 }
-  /** Encrypte un message à l'aide de clés.
-   * @param m Le message à encrypter.
-   * @param E clé publique.
-   * @param N clé publique.
-   * @return Le message encrypté sous forme d'une suite de chiffres.
-   */
-  public static BigInteger encrypt(String m, BigInteger E, BigInteger N) {
-    BigInteger EncMessBits = null;
+/** Encrypte un message à l'aide de clés.
+ * @param m Le message à encrypter.
+ * @param E clé publique.
+ * @param N clé publique.
+ * @return Le message encrypté sous forme d'une suite de chiffres.
+ */
+public static BigInteger encrypt(String m, BigInteger E, BigInteger N) {
+  BigInteger EncMessBits = null;
 
-    BigInteger MessBits = newBigInteger(m.getBytes());
-    EncMessBits = cryptageRSA.encrypt(MessBits, E, N);
+  BigInteger MessBits = newBigInteger(m.getBytes());
+  EncMessBits = cryptageRSA.encrypt(MessBits, E, N);
 
-    return EncMessBits;
-  }
-  /** Décrypte un message à l'aide de clés.
-   * @param m Le message encrypté sous forme de chiffres.
-   * @param k clés, publique et privée.
-   * @return Le message décrypté.
-   */
-  public static String decrypt(BigInteger m, BigInteger[] k) {
-    String decryptedMessage = null;
+  return EncMessBits;
+}
+/** Décrypte un message à l'aide de clés.
+ * @param m Le message encrypté sous forme de chiffres.
+ * @param k clés, publique et privée.
+ * @return Le message décrypté.
+ */
+public static String decrypt(BigInteger m, BigInteger[] k) {
+  String decryptedMessage = null;
 
-    BigInteger DecMessBits = cryptageRSA.decrypt(m, k[0], k[2]);
-    decryptedMessage = new String(DecMessBits.toByteArray());
+  BigInteger DecMessBits = cryptageRSA.decrypt(m, k[0], k[2]);
+  decryptedMessage = new String(DecMessBits.toByteArray());
 
-    return decryptedMessage;
-  }
-
+  return decryptedMessage;
+}
 // Construction protégée d'un entier
 private static BigInteger newBigInteger(byte[] value) {
   try {
     return new BigInteger(value);
-  } catch(Exception e) {
+  }
+  catch(Exception e) {
     return new BigInteger("0");
   }
 }

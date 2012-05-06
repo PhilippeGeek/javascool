@@ -10,10 +10,11 @@ class Button
   boolean select = false;
 
   void update() {
-    if(over())
+    if(over()) {
       currentcolor = highlightcolor;
-    else
+    } else {
       currentcolor = basecolor;
+    }
   }
   boolean pressed() {
     if(over) {
@@ -30,9 +31,11 @@ class Button
   boolean overText(int x, int y, int width, int height) {
     if((mouseX >= x) && (mouseX <= x + width) &&
        (mouseY >= y - height / 2) && (mouseY <= y + height / 2))
+    {
       return true;
-    else
+    } else {
       return false;
+    }
   }
 }
 
@@ -54,13 +57,13 @@ class rectButton extends Button
     if(!(value.equals("null"))) {
       fill(255);
       textFont(pfont);
-      if(value.length() < 45)
+      if(value.length() < 45) {
         text(" " + value.substring(0, value.length()), x, y);
-      else {
+      } else {
         textFont(pfont, 10);
-        if(int (value.length() / 58) == 0)
+        if(int (value.length() / 58) == 0) {
           text(" " + value.substring(0, value.length()), x, y);
-        else {
+        } else {
           int count = 0;
           for(int i = 0; i < int (value.length() / 58); i++) {
             text(" " + value.substring(i * 58, (i + 1) * 58 - 1), x, y + i * 15);
@@ -100,10 +103,11 @@ class TextButton extends Button
     }
   }
   void display() {
-    if(x < width / 2)
+    if(x < width / 2) {
       stroke(153);
-    else
+    } else {
       stroke(190);
+    }
     strokeWeight(0.8);
 
     fill(currentcolor);

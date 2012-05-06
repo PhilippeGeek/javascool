@@ -51,8 +51,9 @@ void draw() {
        "> Fermer l'application: ESC ", topPos * 2, 40);
   hs1.update();
   hs1.display();
-  if(!pathSelect)
+  if(!pathSelect) {
     start = null;
+  }
   // Selection noeud pour recherche lien
   if(firstSelect != null) {
     Node N_ = (Node) myGraph.nodes.get(firstSelect);
@@ -78,7 +79,7 @@ void draw() {
     ellipse(pN.x, pN.y, 30, 30);
     for(String ni_ : (Iterable<String>)myGraph.nodes.keySet()) {
       Node t2 = (Node) myGraph.nodes.get(ni_);
-      if(myGraph.isLink(p, ni_))
+      if(myGraph.isLink(p, ni_)) {
         if(path.indexOf(ni_) > -1) {
           strokeWeight(15);
           stroke(pathC);
@@ -86,6 +87,7 @@ void draw() {
           strokeWeight(1);
           noStroke();
         }
+      }
     }
   }
   // Pour chaque noeud, les liens sont détectés pour les tracer en noir
@@ -131,9 +133,11 @@ void mousePressed() {
       indN++;
     }
   }
-  if(mouseButton == CENTER)
-    if(myGraph.nodes.size() != 0)
+  if(mouseButton == CENTER) {
+    if(myGraph.nodes.size() != 0) {
       firstSelect = myGraph.getClosestNode(mouseX, mouseY);
+    }
+  }
   if(keyPressed) {                                                    // controles par touches clavier
     // Cherche trajet entre noeuds depart et fin
     // A VERIFIER
@@ -146,8 +150,9 @@ void mousePressed() {
 
       end = myGraph.getClosestNode(mouseX, mouseY);
       println("start: " + start + " // end: " + end);
-      if(end != start)
+      if(end != start) {
         myGraph.dijkstra(start, end);
+      }
       start = null;
 
       end = null;
@@ -168,10 +173,11 @@ void mouseReleased() {                                                  // appel
   if(firstSelect != null) {
     secondSelect = myGraph.getClosestNode(mouseX, mouseY);
     if(secondSelect != firstSelect) {
-      if(myGraph.isLink(firstSelect, secondSelect))
+      if(myGraph.isLink(firstSelect, secondSelect)) {
         myGraph.removeLink(firstSelect, secondSelect);
-      else
+      } else {
         myGraph.addLink(firstSelect, secondSelect);
+      }
     }
   }
   firstSelect = null;
@@ -183,8 +189,9 @@ void keyPressed() {
     path.clear();
     for(String ni_ : (Iterable<String>)myGraph.nodes.keySet())
       for(String nj_ : (Iterable<String>)myGraph.nodes.keySet())
-        if(myGraph.isLink(ni_, nj_) && !(ni_.equals(nj_)))
+        if(myGraph.isLink(ni_, nj_) && !(ni_.equals(nj_))) {
           myGraph.removeLink(ni_, nj_);
+        }
   }
   // Déplace un noeud existant
   if(key == 'm') {
@@ -213,18 +220,21 @@ void keyPressed() {
    *  println(myList[0]);
    *  }*/
   // Génère tous les liens possibles entre les noeuds
-  if(key == 'l')
+  if(key == 'l') {
     for(String ni_ : (Iterable<String>)myGraph.nodes.keySet())
       for(String nj_ : (Iterable<String>)myGraph.nodes.keySet())
-        if(myGraph.isLink(ni_, nj_) == false)
+        if(myGraph.isLink(ni_, nj_) == false) {
           myGraph.addLink(ni_, nj_);
+        }
+  }
   // Génère des liens possibles entre les noeuds de manière aléatoire
-  if(key == 'r')
+  if(key == 'r') {
     if(myGraph.nodes.size() == listN.length) {
       for(String ni_ : (Iterable<String>)myGraph.nodes.keySet())
         for(String nj_ : (Iterable<String>)myGraph.nodes.keySet())
-          if(myGraph.isLink(ni_, nj_) && !(ni_.equals(nj_)))
+          if(myGraph.isLink(ni_, nj_) && !(ni_.equals(nj_))) {
             myGraph.removeLink(ni_, nj_);
+          }
       for(String ni_ : (Iterable<String>)myGraph.nodes.keySet()) {
         int done = 0;
         String nk_ = null;
@@ -239,18 +249,18 @@ void keyPressed() {
         }
       }
     }
+  }
   // Montrer ou non les pondérations
   if(key == 'i') {
-    if(info)
-
+    if(info) {
       info = false;
-
-    else
-
+    } else {
       info = true;
+    }
   }
 }
 void keyReleased() {                                                   // appelé a chaque moment qu'une touche est relachee
-  if(key == 'p')
+  if(key == 'p') {
     pathSelect = false;
+  }
 }

@@ -49,10 +49,11 @@ public class Rect extends Geometry implements Drawable {
    */
   @Override
   public void draw(Graphics g) {
-    if(m_solid)
+    if(m_solid) {
       g.fillRect((int) getX(), (int) getY(), (int) getWidth(), (int) getHeight());
-    else
+    } else {
       g.drawRect((int) getX(), (int) getY(), (int) getWidth(), (int) getHeight());
+    }
   }
   private static final Logger LOG = Logger.getLogger(Rect.class.getName());
 }

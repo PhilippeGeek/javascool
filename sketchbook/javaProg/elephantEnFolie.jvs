@@ -95,12 +95,13 @@ void main() {
   }
   // La souris gere les elephants
   getPane().addMouseListener(new MouseAdapter() {
-      public void mouseClicked(MouseEvent e) {
-	// Test si on a clique sur chaque elephant
-	for(int n = 0; n < 4; n++)
-	  if((e.getX() > x[n]) && (e.getX() < x[n] + 100) && (e.getY() > 300) && (e.getY() < 400))
-	    cliqueElephant(n);
-      }
-    }
-			     );
+                               public void mouseClicked(MouseEvent e) {
+                                 // Test si on a clique sur chaque elephant
+                                 for(int n = 0; n < 4; n++)
+                                   if((e.getX() > x[n]) && (e.getX() < x[n] + 100) && (e.getY() > 300) && (e.getY() < 400)) {
+                                     cliqueElephant(n);
+                                   }
+                               }
+                             }
+                             );
 }

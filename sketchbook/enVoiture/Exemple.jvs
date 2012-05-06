@@ -29,8 +29,9 @@ void dump(String what) {
   println("Etat du graphe " + what);
   for(String spot1 : spots)
     for(String spot2 : spots)
-      if(isRoad(spot1, spot2))
+      if(isRoad(spot1, spot2)) {
         println("Les spots " + spot1 + " et " + spot2 + " sont connectés");
+      }
 }
 void main() {
   unbuild();

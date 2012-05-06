@@ -9,7 +9,6 @@ public class exploSonoreFunctions {
   private static exploSonore getPanel() {
     return org.javascool.macros.Macros.getProgletPane();
   }
-
   /** Joue un signal de type choisi.
    * @param c : numero du canal à lancer: 1, 2 ou 3.
    * @param n nom du type: "sinus", "carré", "scie", "bruit".
