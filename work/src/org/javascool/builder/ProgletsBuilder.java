@@ -112,11 +112,11 @@ public class ProgletsBuilder {
           if(!jar.matches(".*" + fileRegexSeparator + "javascool-(builder|proglets).jar")) {
             JarManager.jarExtract(jar, jarDir);
           }
-                 // Expansion des jars des proglets
+        // Expansion des jars des proglets
         for(String proglet : proglets)
           for(String jar : FileManager.list(proglet, ".*\\.jar", 2))
             JarManager.jarExtract(jar, jarDir);
-                     // Expansion des jars de javascool
+        // Expansion des jars de javascool
         String javascoolJar = Core.javascoolJar();
         log("Extraction de Java's cool", true);
         String libs[] = { "org/javascool", "org/fife", "sun/tools/java", "com/sun/tools/javac", "com/sun/source/tree", "com/sun/source/util" };
@@ -295,7 +295,7 @@ public class ProgletsBuilder {
                       + "\t-public\t-author\t-windowtitle\tJava's Cool v4\t-doctitle\tJava's Cool v4\t-version\t-nodeprecated\t-nohelp\t-nonavbar\t-notree\t-charset\tutf-8";
         for(String f : files)
           argv += "\t" + f;
-                 // Lance javadoc
+        // Lance javadoc
         try {
           com.sun.tools.javadoc.Main.execute(argv.split("\t"));
         } catch(Throwable e) { throw new IOException(e);

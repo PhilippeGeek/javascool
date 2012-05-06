@@ -36,6 +36,7 @@ public class FileManager {
   // @factory
 
   private FileManager() {}
+
   /** Lit un contenu textuel local ou distant en tenant compte de l'encodage local.
    *
    * @param location Une URL (Universal Resource Location) de la forme: <div id="load-format"><table align="center">

@@ -40,6 +40,7 @@ public class Macros {
   // @factory
 
   private Macros() {}
+
   /** Renvoie un nombre entier aléatoire uniformément distribué entre deux valeurs (maximum inclus).
    */
   public static int random(int min, int max) {
@@ -99,7 +100,7 @@ public class Macros {
   }
   /** Vérifie une assertion et arrête le code si elle est fausse.
    * Le diagnoctic apparait sous la forme:
-   **<pre>Arrêt du programme :{
+   ***<pre>Arrêt du programme :{
    *  L'assertion(«<i>message</i>») est fausse.
    *  Pile d'exécution: {
    *   <i>fonctions appellées et ligne de code correspondant</i>
@@ -108,7 +109,7 @@ public class Macros {
    *     class = «<i>type de l'objet</i>»
    *     value = «<i>valeur de l'objet</i>»
    *  }
-   **}</pre>
+   ***}</pre>
    * @param condition Si la condition n'est pas vérifiée, le code JavaScool va s'arrêter.
    * @param message Un message s'imprime sur la console pour signaler l'erreur.
    * @param object Si l'objet n'est pas null, donne des renseignements sur l'objet

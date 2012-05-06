@@ -24,6 +24,7 @@ public class Jvs2Html {
   // @factory
 
   private Jvs2Html() {}
+
   /** Convertit une portion de source Java ou JVs en Html colorisé..
    * @param code Le code Java ou Jvs.
    * @return Le code Html généré.
