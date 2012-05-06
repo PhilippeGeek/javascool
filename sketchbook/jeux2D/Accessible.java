@@ -22,19 +22,22 @@ public abstract class Accessible extends LinkedEventGroup {
   // TODO javadoc and update doc
   public void addProperty(String name, Object o) {
     for(StoredProperty s : m_props)
-      if(s.getName().equals(name))
+      if(s.getName().equals(name)) {
         org.javascool.core.ProgletEngine.getInstance().doStop("Impossible de rajouter une propriété nommée " + name + " car une propriété de ce nom existe déjà");
+      }
     m_props.add(new StoredProperty(name, o, o.getClass()));
   }
   public void removeProperty(String name) {
     for(StoredProperty s : m_props)
-      if(s.getName().equals("name"))
+      if(s.getName().equals("name")) {
         m_props.remove(s);
+      }
   }
   public Object getProperty(String name) {
     for(StoredProperty s : m_props)
-      if(s.getName().equals(name))
+      if(s.getName().equals(name)) {
         return s.getType().cast(s.getObject());
+      }
     return null;
   }
   public void setProperty(String name, Object o) {
@@ -45,10 +48,11 @@ public abstract class Accessible extends LinkedEventGroup {
         exists = true;
         prop = s;
       }
-    if(!exists)
+    if(!exists) {
       addProperty(name, o);
-    else
+    } else {
       prop.setObject(o);
+    }
   }
   public void destroy() {
     m_superDestroyed = true;

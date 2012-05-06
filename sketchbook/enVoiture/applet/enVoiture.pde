@@ -57,16 +57,16 @@ void setup() {
   pgl = (PGraphicsOpenGL) g;
   _gl = pgl.gl;
 
-  colors[0] = color(#FF9900);
+  colors[0] = color(# FF9900);
   colors[1] = color(100, 200, 0);
-  colors[2] = color(#FFFF00);
+  colors[2] = color(# FFFF00);
   colors[3] = color(200);
   colors[4] = color(150);
   colors[5] = color(100);
-  colors[6] = color(#0000FF);
+  colors[6] = color(# 0000FF);
   colors[7] = color(0, 0, 100);
-  colors[8] = color(#00FFFF);
-  colors[9] = color(#FF00FF);
+  colors[8] = color(# 00FFFF);
+  colors[9] = color(# FF00FF);
   colors[10] = color(100, 0, 100);
   colors[11] = color(0, 70, 75);
 
@@ -111,8 +111,9 @@ void draw() {
   Vec3D camPos = car.pos.add(camOffset.getRotatedY(car.currTheta + HALF_PI));
   camPos.constrain(mesh.getBoundingBox());
   float y = terrain.getHeightAtPoint(camPos.x, camPos.z);
-  if(!Float.isNaN(y))
+  if(!Float.isNaN(y)) {
     camPos.y = max(camPos.y, y + 100);
+  }
   eyePos.interpolateToSelf(camPos, 0.05f);
   background(0xffaaeeff);
   camera(eyePos.x, eyePos.y, eyePos.z, car.pos.x, car.pos.y, car.pos.z, 0, -1, 0);
@@ -134,8 +135,9 @@ void draw() {
     if(ni_.equals(start) || ni_.equals(end)) {
       strokeWeight(3);
       stroke(255, 0, 0);
-    } else
+    } else {
       noStroke();
+    }
     S_.draw();
   }
   noStroke();
@@ -194,14 +196,15 @@ void draw() {
                stroke(0);
       }
     }
-    if(S_.f == form[0])
+    if(S_.f == form[0]) {
       rect(S_.y2D, S_.x2D, 3, 3);   // inversed otherwise from bottom
-    else if(S_.f == form[1])
+    } else if(S_.f == form[1]) {
       triangle(S_.y2D, S_.x2D, S_.y2D - 4, S_.x2D, S_.y2D, S_.x2D - 4);
-    else if(S_.f == form[2])
+    } else if(S_.f == form[2]) {
       ellipse(S_.y2D, S_.x2D, 3, 3);
-    else if(S_.f == form[3])
+    } else if(S_.f == form[3]) {
       ellipse(S_.y2D, S_.x2D, 3, 3);
+    }
     strokeWeight(1.1);
     stroke(0);
 
@@ -253,8 +256,9 @@ void mousePressed() {
     }
   }
   if(mouseButton == CENTER) {
-    if(myTrip.spots.size() != 0)
+    if(myTrip.spots.size() != 0) {
       firstSelect = myTrip.getClosestSpot(car.x, car.y);
+    }
     println(firstSelect);
   }
 }
@@ -281,14 +285,18 @@ void mouseReleased() {  // appelé a chaque moment que la souris est relachée
 }
 void keyPressed() {
   // Conduit la voiture
-  if(keyCode == UP)
+  if(keyCode == UP) {
     car.accelerate(1);
-  if(keyCode == DOWN)
+  }
+  if(keyCode == DOWN) {
     car.accelerate(-1);
-  if(keyCode == LEFT)
+  }
+  if(keyCode == LEFT) {
     car.steer(0.1f);
-  if(keyCode == RIGHT)
+  }
+  if(keyCode == RIGHT) {
     car.steer(-0.1f);
+  }
   // Zoom +/-
   Vec3D addOn = new Vec3D(0, 10, 10);
   Vec3D subStract = new Vec3D(0, -10, -10);
@@ -304,7 +312,7 @@ void keyPressed() {
     camOffset = newCam;
   }
   // Génère les noeuds de manière aléatoire
-  if(key == 'a')
+  if(key == 'a') {
     for(int i = 0; i < listN.length; i++) { // string array -> length
       int x_, y_;
       float d1_, d2_, h_;
@@ -317,20 +325,23 @@ void keyPressed() {
 
       myTrip.addSpot(listN[i], colors[i], form[(i % 4)], x_, y_, d1_, d2_, h_);
     }
+  }
   // Remise à zero de la distance parcourue, élimine tout lien créé
   if(key == 'd') {
     distance = 0;
     for(String ni_ : (Iterable<String>)myTrip.spots.keySet())
       for(String nj_ : (Iterable<String>)myTrip.spots.keySet())
-        if(myTrip.isLink(ni_, nj_) && !(ni_.equals(nj_)))
+        if(myTrip.isLink(ni_, nj_) && !(ni_.equals(nj_))) {
           myTrip.removeLink(ni_, nj_);
+        }
   }
   // Joue à trouver le plus court chemin entre 2 villes, hors chemin direct évidemment
   if(key == 'p') {
     for(String ni_ : (Iterable<String>)myTrip.spots.keySet())
       for(String nj_ : (Iterable<String>)myTrip.spots.keySet())
-        if(myTrip.isLink(ni_, nj_) == false)
+        if(myTrip.isLink(ni_, nj_) == false) {
           myTrip.addLink(ni_, nj_);
+        }
     distanceC = 0;
     String intermediate = null;
     path.clear();
@@ -338,8 +349,9 @@ void keyPressed() {
       int k = (int) random(listN.length);
       start = listN[k];
       k = (int) random(listN.length);
-      while(listN[k] == start)
+      while(listN[k] == start) {
         k = (int) random(listN.length);
+      }
       end = listN[k];
 
       myTrip.removeLink(start, end);
@@ -355,19 +367,21 @@ void keyPressed() {
     }
     for(String ni_ : (Iterable<String>)myTrip.spots.keySet())
       for(String nj_ : (Iterable<String>)myTrip.spots.keySet())
-        if(myTrip.isLink(ni_, nj_) == true)
+        if(myTrip.isLink(ni_, nj_) == true) {
           myTrip.removeLink(ni_, nj_);
+        }
   }
   // Joue à trouver le plus court chemin entre 2 stations, en visitant obligatoirement 2 stations, sachant une déja donnée
   if(key == 'q') {
     for(String ni_ : (Iterable<String>)myTrip.spots.keySet())
       for(String nj_ : (Iterable<String>)myTrip.spots.keySet())
-        if(myTrip.isLink(ni_, nj_) == false)
+        if(myTrip.isLink(ni_, nj_) == false) {
           myTrip.addLink(ni_, nj_);
+        }
     if(myTrip.spots.size() == listN.length) {
-      if((start == null) || (path.size() == 0))
+      if((start == null) || (path.size() == 0)) {
         println("Rejoue la première étape!");
-      else {
+      } else {
         String interm1 = null, interm2 = null;
         distanceC = 0;
         ArrayList pathTemp = new ArrayList();
@@ -408,19 +422,18 @@ void keyPressed() {
     }
     for(String ni_ : (Iterable<String>)myTrip.spots.keySet())
       for(String nj_ : (Iterable<String>)myTrip.spots.keySet())
-        if(myTrip.isLink(ni_, nj_) == true)
+        if(myTrip.isLink(ni_, nj_) == true) {
           myTrip.removeLink(ni_, nj_);
+        }
     path.clear();
   }
   // Montrer ou non les instructions
   if(key == 'i') {
-    if(info)
-
+    if(info) {
       info = false;
-
-    else
-
+    } else {
       info = true;
+    }
   }
   // Génère tous les liens possibles entre les noeuds
 

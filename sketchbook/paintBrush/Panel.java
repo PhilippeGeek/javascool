@@ -24,8 +24,9 @@ public class Panel extends JPanel {
   void setManipImage(PaintBrushManipImage manipImage) {
     System.out.println("Le mode proglet a été mis à jour pour prendre en compte vos modifications");
     mainPanel.myPanel.progletManipImage = manipImage;
-    if(mainPanel.myPanel.manipImage != mainPanel.myPanel.demoManipImage)
+    if(mainPanel.myPanel.manipImage != mainPanel.myPanel.demoManipImage) {
       mainPanel.myPanel.manipImage = manipImage;
+    }
   }
   private MainPanel mainPanel;
   /** Démo de la proglet. */

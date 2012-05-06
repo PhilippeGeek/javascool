@@ -19,8 +19,9 @@ class Trip {
     if(spots.containsKey(n)) {
       Spot S_ = (Spot) spots.get(n);
       S_.moveTo(x, y, d1, d2, h);
-    } else
+    } else {
       spots.put(n, new Spot(n, col, f, x, y, d1, d2, h));
+    }
   }
   /** Renvoie l'objet Spot à partir de son nom.
    * @param n Nom du spot.
@@ -41,7 +42,7 @@ class Trip {
     float curBest = 9999;
     Spot best = (Spot) spots.get(listN[0]);
     String n_ = null;
-    if(spots.size() != 0)
+    if(spots.size() != 0) {
       for(String ni_ : (Iterable<String>)spots.keySet()) {
         Spot S_ = (Spot) spots.get(ni_);
 
@@ -52,6 +53,7 @@ class Trip {
           n_ = ni_;
         }
       }
+    }
     // println(" nom: " + best.n + " x " + best.x + " // y " + best.y);
     return n_;
   }
@@ -105,11 +107,13 @@ class Trip {
       // String ni_;
       boolean link_ = false;
       for(String ni_ : (Iterable<String>)SA_.links.keySet())
-        if(ni_.equals(nB)) // test si les deux string sont équivalents
+        if(ni_.equals(nB)) { // test si les deux string sont équivalents
           link_ = true;
+        }
       return link_;
-    } else
+    } else {
       return false;
+    }
   }
   /** Donne le poids d'un lien entre deux spots.
    * @param nA Premier spot du lien.
@@ -137,8 +141,9 @@ class Trip {
       double p_ = 0.0;
       p_ = dist(SA_.x, SA_.y, SB_.x, SB_.y) / 100;
       return p_;
-    } else
+    } else {
       return -1;
+    }
   }
   /**  Cherche spot intermédiaire entre sInit et sTarget tel que la distance entre sInit et sTarget soit minimal.
    * @param nInit Spot initial.
@@ -221,8 +226,9 @@ class Trip {
    * @param sEnd Spot final.
    */
   void dijkstra(String sStart, String sEnd) {
-    if((spots.get(sStart) == null) || (spots.get(sEnd) == null))
+    if((spots.get(sStart) == null) || (spots.get(sEnd) == null)) {
       return;
+    }
     path.clear();
     println(" " + sStart + " à " + sEnd);
     for(String ni_ : (Iterable<String>)spots.keySet()) {
@@ -238,8 +244,9 @@ class Trip {
       String nCurrent = (String) opened.remove(0);
       // println("nCurrent: " + nCurrent);
       closed.add(nCurrent);
-      if(nCurrent == sEnd)
+      if(nCurrent == sEnd) {
         break;
+      }
       Spot Sc = (Spot) spots.get(nCurrent);
       for(String ni_ : (Iterable<String>)Sc.links.keySet()) {
         // for(String ni_ : (Iterable<String>) spots.keySet()) {
@@ -289,8 +296,9 @@ class Trip {
   boolean arrayListContains(ArrayList c, String nA) {
     for(int i = 0; i < c.size(); i++) {
       String o = (String) c.get(i);
-      if(o == nA)
+      if(o == nA) {
         return true;
+      }
     }
     return false;
   }

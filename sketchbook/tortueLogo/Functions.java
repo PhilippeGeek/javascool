@@ -19,16 +19,21 @@ public class Functions {
   }
   // Updates the turtle position and draw if required
   private static void update(int x, int y) {
-    if(x < 0)
+    if(x < 0) {
       x = 0;
-    if(x > 511)
+    }
+    if(x > 511) {
       x = 511;
-    if(y < 0)
+    }
+    if(y < 0) {
       y = 0;
-    if(y > 511)
+    }
+    if(y > 511) {
       y = 511;
-    if(pen)
+    }
+    if(pen) {
       draw(Functions.x, x, Functions.y, y);
+    }
     Functions.x = x;
     Functions.y = y;
     getPane().show(x, y);
@@ -36,15 +41,17 @@ public class Functions {
   }
   private static void draw(int x1, int x2, int y1, int y2) {
     if(Math.abs(x1 - x2) > Math.abs(y1 - y2)) {
-      if(x1 < x2)
+      if(x1 < x2) {
         draw_x(x1, x2, y1, y2);
-      else if(x1 > x2)
+      } else if(x1 > x2) {
         draw_x(x2, x1, y2, y1);
+      }
     } else {
-      if(y1 < y2)
+      if(y1 < y2) {
         draw_y(x1, x2, y1, y2);
-      else if(y1 > y2)
+      } else if(y1 > y2) {
         draw_y(x2, x1, y2, y1);
+      }
     }
   }
   private static void draw_x(int x1, int x2, int y1, int y2) {

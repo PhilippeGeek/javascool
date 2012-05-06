@@ -30,22 +30,24 @@ class PaintBrushImage {
     if(!inRange(x, y)) {
       MyPanel.warning("Vous essayer de lire hors du tableau (coordonnées (" + x + "," + y + ")) !");
       return 0;
-    } else
+    } else {
       return image[x][y];
+    }
   };
 
   static boolean inRange(int x, int y) {
     return 0 <= x && x < MyPanel.width && 0 <= y && y < MyPanel.height;
   }
   static void setPixel(int x, int y, int col) {
-    if(!inRange(x, y))
+    if(!inRange(x, y)) {
       MyPanel.warning("Vous essayer d'écrire hors du tableau (coordonnées (" + x + "," + y + ")) !");
-    else {
+    } else {
       image[x][y] = col;
-      if(col == 15)
+      if(col == 15) {
         points.remove(new Point(x, y));
-      else
+      } else {
         points.add(new Point(x, y));
+      }
     }
   }
   static public int maxX() {
@@ -60,20 +62,21 @@ class PaintBrushImage {
     points.clear();
   }
   static String byteToString(int i) {
-    if(i < 10)
+    if(i < 10) {
       return "" + i;
-    else if(i == 10)
+    } else if(i == 10) {
       return "A";
-    else if(i == 11)
+    } else if(i == 11) {
       return "B";
-    else if(i == 12)
+    } else if(i == 12) {
       return "C";
-    else if(i == 13)
+    } else if(i == 13) {
       return "D";
-    else if(i == 14)
+    } else if(i == 14) {
       return "E";
-    else
+    } else {
       return "F";
+    }
   }
   void ascii(Graphics g) {
     Graphics2D g2d = (Graphics2D) g;

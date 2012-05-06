@@ -40,9 +40,10 @@ public class FileSoundBit extends SoundBit {
     if(location.startsWith("midi:")) {
       getMidiNames();
       String midiName = location.substring(5);
-      if(midis.containsKey(midiName))
+      if(midis.containsKey(midiName)) {
         stream = midis.get(midiName);
-      else throw new RuntimeException("undefined midi sound " + midiName);
+      } else { throw new RuntimeException("undefined midi sound " + midiName);
+      }
     } else {
       try {
         stream = AudioSystem.getAudioInputStream(Macros.getResourceURL(location));
@@ -66,8 +67,9 @@ public class FileSoundBit extends SoundBit {
   @Override
   public double get(char channel, long index) {
     int i = (int) index * s + (c == 1 || channel == 'l' ? 0 : 2);
-    if((buffer == null) || (i < 0) || (i >= buffer.length))
+    if((buffer == null) || (i < 0) || (i >= buffer.length)) {
       return 0;
+    }
     int h = buffer[i + 1], l = buffer[i], v = ((128 + h) << 8) | (128 + l);
     return 1 * (v / 32767.0 - 1);
   }
@@ -78,8 +80,7 @@ public class FileSoundBit extends SoundBit {
   private int c, s;
   private byte[] buffer;
   /**/ @Override
-  public void setLength(double length) { 
-    throw new IllegalStateException("Cannot adjust length of buffered sound-bit of name " + getName());
+  public void setLength(double length) { throw new IllegalStateException("Cannot adjust length of buffered sound-bit of name " + getName());
   }
   /** Gets available midi sound names.
    * @return Available midi sound name. Usually "bass2", "bass_drum", "bass", "brass_section", "clarinet", "closed_hi-hat", "crash_cymbal", "distorted_guitar", "epiano", "flute", "grand_piano", "guitar_noise", "guitar", "horn", "melodic_toms", "oboe", "och_strings", "open_hi-hat", "organ", "piano_hammer", "reverse_cymbal", "sax", "side_stick", "snare_drum", "strings", "timpani", "tom", "trombone", "trumpet".

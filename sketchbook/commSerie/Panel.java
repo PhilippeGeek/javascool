@@ -11,13 +11,14 @@ import java.awt.BorderLayout;
 public class Panel extends JPanel {
   private static final long serialVersionUID = 1L;
   public Panel() {
-     setLayout(new BorderLayout());
-     removeAll();
+    setLayout(new BorderLayout());
+    removeAll();
   }
   public void removeAll(String displayMode) {
     super.removeAll();
-    if (displayMode.length() > 0) 
+    if(displayMode.length() > 0) {
       add(spanel = new SerialInterfacePanel(displayMode), BorderLayout.NORTH);
+    }
     serial = spanel.getSerialInterface();
   }
   public void removeAll() {

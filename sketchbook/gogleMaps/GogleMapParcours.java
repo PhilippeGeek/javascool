@@ -38,8 +38,9 @@ class GogleMapParcours {
   static void afficheToutesRoutesDirectes(GogleMapPanel g) {
     for(String depart : g.arcs.keySet())
       for(String arrivee : g.arcs.get(depart))
-        if(depart.compareTo(arrivee) > 0)
+        if(depart.compareTo(arrivee) > 0) {
           afficheRouteDirecte(g, depart, arrivee);
+        }
   }
   static void parcoursRec(GogleMapPanel g, Set<String> vu, String ville1) {
     // Macros.sleep(500);
@@ -49,8 +50,9 @@ class GogleMapParcours {
       afficheVille(g, ville2);
     Macros.sleep(500);
     for(String ville2 : g.arcs.get(ville1))
-      if(!vu.contains(ville2))
+      if(!vu.contains(ville2)) {
         parcoursRec(g, vu, ville2);
+      }
   }
   static void parcoursProfondeur(GogleMapPanel g, String depart) {
     Set<String> vu = new HashSet<String>();
@@ -70,8 +72,9 @@ class GogleMapParcours {
       for(String ville2 : g.arcs.get(ville1))
         if(!vu.contains(ville2)) {
           afficheVille(g, ville2);
-          if(!aVoir.contains(ville2))
+          if(!aVoir.contains(ville2)) {
             aVoir.offer(ville2);
+          }
         }
     }
   }

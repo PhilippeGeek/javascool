@@ -83,29 +83,34 @@ void setup() {
     T1[i] = new TextButton(width / 2 - (space + 160), height / 2 - height / 4 + i *40, 160, 25, color(255), myGreen, myGreenA, ListN1[i]);
   }
   for(int i = 0; i < T2.length; i++) {
-    if(i == 2)
+    if(i == 2) {
       T2[i] = new rectButton(width / 2 + space, height / 2 - height / 4, 200, 25, myRed);
-    else
+    } else {
       T2[i] = new rectButton(((i + 1) % 2) *space + int ((i + 1) / 2) *(width / 2 - (space + 160)) - i *40, height / 2 + height / 20, 160 + i *40, 25, myRed);
+    }
     T2[i].setText(ListN2[i]);
   }
   for(int i = 0; i < T3.length; i++) {
     if(i < 3) {
-      if(i == 0)
+      if(i == 0) {
         T3[i] = new rectButton(width / 2 + space, height / 2 - height / 6 + i *90, width / 2 - (space * 2), 30, myBlue);
-      else
+      } else {
         T3[i] = new rectButton(width / 2 + space, height / 2 - height / 6 + i *90 + int (i / 2) *30, width / 2 - (space * 2), 60, myBlue);
-    } else
+      }
+    } else {
       T3[i] = new rectButton(space, height / 2 - height / 4 + int (i / 2) *30 + i *90, width / 2 - (space * 2), 30 + (i % 2) *30, myBlue);
+    }
   }
   for(int i = 0; i < T4.length; i++) {
-    if(i < 2)
+    if(i < 2) {
       T4[i] = new TextButton(width - (space + 250), height / 2 - height / 6 + 55 + i *120, 250, 25, color(255), myBlue, myBlueA, ListN3[i]);
+    }
     // T4[i] = new rectButton(width/2+100, height/2-height/8 +i*90, width/2-200, 30, myBlue);
-    else if(i == 2)
+    else if(i == 2) {
       T4[i] = new TextButton(width - (space + 250), height / 2 - height / 6 + 115 + i *90, 250, 25, color(255), myRed, myOr, ListN3[i]);
-    else
+    } else {
       T4[i] = new TextButton(width / 2 - (space + 250), height / 2 - height / 6 + 60 + i *90, 250, 25, color(255), myBlue, myBlueA, ListN3[i]);
+    }
     // T4[i] = new rectButton(100, height/2-height/8 +i*90, width/2-200, 30, myBlue);
   }
   for(int i = 0; i < T5.length; i++)
@@ -138,8 +143,9 @@ void draw() {
 }
 void keyPressed() {
   if(!(key == CODED)) {
-    if(lastInput.length() > 62)
+    if(lastInput.length() > 62) {
       lastInput = lastInput.substring(0, 62);
+    }
     if(key == BACKSPACE) {
       if(lastInput.length() > 1) {
         lastInput = lastInput.substring(0, lastInput.length() - 2);
@@ -180,8 +186,9 @@ void keyPressed() {
 void update(int x, int y) {
   for(int i = 0; i < T5.length; i++) {
     T5[i].update();
-    if(T5[i].over)
+    if(T5[i].over) {
       myInfo(ListN4[i], 0 + i * width / 2, 110 - i * 40);
+    }
   }
   if(locked == false) {
     for(int i = 0; i < T1.length; i++)
@@ -189,8 +196,9 @@ void update(int x, int y) {
     for(int i = 0; i < T4.length; i++)
       T4[i].update();
     T6.update();
-  } else
+  } else {
     locked = false;
+  }
   if(mousePressed) {
     // Actions pour génération des clés
     for(int i = 0; i < T1.length; i++) {
@@ -200,14 +208,16 @@ void update(int x, int y) {
           reset();
           T0[i].setText("  P = " + p + "      Q = " + q);
         } else if(i == 1) {
-          if(!(p == A))
+          if(!(p == A)) {
             calculate_n();
+          }
           T0[i].setText("  N = " + n);
         } else if(i == 2) {
-          if(!(p == A))
+          if(!(p == A)) {
             launch_e();
+          }
           T0[i].setText("  E = " + e);
-        } else if(i == 3)
+        } else if(i == 3) {
           if(!(e == A)) {
             launch_d();
             T0[i].setText("  D = " + d);
@@ -215,10 +225,12 @@ void update(int x, int y) {
             T2[1].setText(ListN2[1] + "(" + n + "; " + e + ")");
             T2[2].setText(ListN2[2] + "(" + n + "; " + e + ")");
           }
+        }
       }
       for(int j = 0; j < T1.length - 1; j++)
-        if(!(j == i))
+        if(!(j == i)) {
           T1[j].select = false;
+        }
     }
     // Masquage des infos
     if(T6.pressed()) {
@@ -231,11 +243,12 @@ void update(int x, int y) {
     for(int i = 0; i < T4.length; i++) {
       if(T4[i].pressed()) {
         T4[i].select = true;
-        if(i == 0)
+        if(i == 0) {
           translate_m();
-        else if(i == 1) {
-          if(!(n.equals(A)))
+        } else if(i == 1) {
+          if(!(n.equals(A))) {
             encrypt_m();
+          }
         } else if(i == 2) {
           if(!(n.equals(A))) {
             send_m();
@@ -244,13 +257,16 @@ void update(int x, int y) {
             T2[0].setText(ListN2[0] + "");
             // T3[0].display();
           }
-        } else if(i == 3)
-          if(!(n.equals(A)))
+        } else if(i == 3) {
+          if(!(n.equals(A))) {
             decrypt_m();
+          }
+        }
       }
       for(int j = 0; j < T4.length - 1; j++)
-        if(!(j == i))
+        if(!(j == i)) {
           T4[j].select = false;
+        }
     }
   }
 }

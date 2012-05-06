@@ -1,7 +1,7 @@
 package org.javascool.proglets.enVoiture;
 
 /** Définit le traducteur de langage pour cette proglet.
- * 
+ *
  * @see <a href="Translator.java.html">code source</a>
  * @serial exclude
  */

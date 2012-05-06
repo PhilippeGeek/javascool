@@ -14,7 +14,6 @@ import java.awt.BorderLayout;
  * @author Christophe Béasse <oceank2@gmail.com>
  */
 public class Panel extends JPanel {
-
   private static final long serialVersionUID = 1L;
 
   // Construction de la proglet
@@ -25,11 +24,9 @@ public class Panel extends JPanel {
     textArea.setFont(f);
     textArea.setRows(30);
     textArea.setColumns(80);
-       
+
     add(new JScrollPane(textArea), BorderLayout.CENTER);
-
   }
-
-  public static JTextArea textArea=new JTextArea();
+  public static JTextArea textArea = new JTextArea();
 }
 

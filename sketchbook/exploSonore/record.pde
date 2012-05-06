@@ -19,18 +19,21 @@ class record {
   void setRecord(String path) {
     if(sounding) {
       switchOff();
-      if(filtering)
+      if(filtering) {
         removeFilter();
-    } else if(signal1.sounding)
+      }
+    } else if(signal1.sounding) {
       signal1.switchOff();
+    }
     if(path != null) {
       try {
-      count += 1;
-      player = minim.loadFile(path);
-      changeValue();
-      player.loop();
-      sounding = true;
-      } catch(Exception e) { }
+        count += 1;
+        player = minim.loadFile(path);
+        changeValue();
+        player.loop();
+        sounding = true;
+      }
+      catch(Exception e) {}
     }
   }
   void applyFilter() {
@@ -39,8 +42,9 @@ class record {
         filtering = true;
         player.addEffect(lpf);
         lpf.setFreq(Fc);
-      } else
+      } else {
         removeFilter();
+      }
     }
   }
   /** Applique un filtre avec une fréquence de coupure ajustable sur l'enregistrement de son choix
@@ -50,23 +54,26 @@ class record {
   void setFilter(String path, float Fc_) {
     if(sounding) {
       switchOff();
-      if(filtering)
+      if(filtering) {
         removeFilter();
-    } else if(signal1.sounding)
+      }
+    } else if(signal1.sounding) {
       signal1.switchOff();
+    }
     if(path != null) {
       try {
-      count += 1;
-      player = minim.loadFile(path);
-      changeValue();
-      player.loop();
-      sounding = true;
-      if((Fc_ > 100) && (Fc_ < 10000)) {
-        player.addEffect(lpf);
-        lpf.setFreq(Fc_);
-        filtering = true;
+        count += 1;
+        player = minim.loadFile(path);
+        changeValue();
+        player.loop();
+        sounding = true;
+        if((Fc_ > 100) && (Fc_ < 10000)) {
+          player.addEffect(lpf);
+          lpf.setFreq(Fc_);
+          filtering = true;
+        }
       }
-      } catch(Exception e) { }
+      catch(Exception e) {}
     }
   }
   void removeFilter() {

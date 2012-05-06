@@ -15,16 +15,19 @@ void StopAnySound() {
     signal1.switchOff();
     sig = "null";
   }
-  if(record1.sounding)
+  if(record1.sounding) {
     record1.switchOff();
-  if(signal2.sounding)
+  }
+  if(signal2.sounding) {
     signal2.switchOff();
-  if(signal3.sounding)
+  }
+  if(signal3.sounding) {
     signal3.switchOff();
+  }
 }
 // Lance l'analyse spectrale
 void launchFFT() {
-  if (in != null) {
+  if(in != null) {
     fft = new FFT(in.bufferSize(), in.sampleRate());
 
     stroke(0);
@@ -85,13 +88,13 @@ void drawSignal(String n) {
   stroke(255);
   strokeWeight(1);
   int k;
-  if(n.equals("out"))
+  if(n.equals("out")) {
     k = out.bufferSize();
-  else if(n.equals("player"))
-
+  } else if(n.equals("player")) {
     k = player.bufferSize();
-  else
+  } else {
     k = in.bufferSize();
+  }
   for(int i = 0; i < k - 1; i++) {
     // println("buffer: " + in.bufferSize());
 

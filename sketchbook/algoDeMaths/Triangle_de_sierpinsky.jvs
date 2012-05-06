@@ -1,7 +1,7 @@
 // Programme cree par Philippe Lucaud, Lycee Audiberti, Antibes
 // Trace du http://fr.wikipedia.org/wiki/Triangle_de_Sierpinski
 // Exercice: modifier ce logiciel pour tracer le tapis de Sierpinski
-//  a partir de: http://fr.wikipedia.org/wiki/Tapis_de_Sierpi%C5%84ski
+// a partir de: http://fr.wikipedia.org/wiki/Tapis_de_Sierpi%C5%84ski
 // de maniere non recursive
 void main() {
   // Calcul de trois nombres aleatoires compris entre 0 et 1
@@ -18,31 +18,30 @@ void main() {
   addLine(1, 0, 0.5, sqrt(3) / 2, 6);
   addLine(0.5, sqrt(3) / 2, 0, 0, 6);
   // Trace des points du triangle de Sierpinsky
-  for (int n = 1; n <= N; n ++) {
-    // Tirage aleatoire 
+  for(int n = 1; n <= N; n++) {
+    // Tirage aleatoire
     int k = random(1, 4);
-    if (k == 1) {
+    if(k == 1) {
       double x_I = x_G / 2;
       double y_I = y_G / 2;
-      addString(x_I, y_I,"", 5);
+      addString(x_I, y_I, "", 5);
       x_G = x_I;
       y_G = y_I;
     }
-    if (k == 2) {
+    if(k == 2) {
       double x_I = (x_G + 1) / 2;
       double y_I = y_G / 2;
-      addString(x_I, y_I,"", 5);
+      addString(x_I, y_I, "", 5);
       x_G = x_I;
       y_G = y_I;
     }
-    if (k == 3) {
+    if(k == 3) {
       double x_I = (x_G + 0.5) / 2;
       double y_I = (y_G + sqrt(3) / 2) / 2;
-      addString(x_I, y_I,"", 5);
+      addString(x_I, y_I, "", 5);
       x_G = x_I;
       y_G = y_I;
     }
   }
   println("done : aller voir le resultat dans la proglet !");
 }
-

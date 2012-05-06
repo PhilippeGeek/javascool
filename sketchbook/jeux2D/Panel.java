@@ -15,8 +15,6 @@ import java.util.logging.Logger;
 import org.javascool.widgets.Console;
 import org.javascool.macros.Macros;
 
-
-
 /** Définit le panneau graphique de la proglet «jeux2D»
  *
  * @see <a href="Panel.java.html">code source</a>
@@ -32,7 +30,6 @@ public class Panel extends JApplet {
   public static Panel getPane() {
     return getProgletPane();
   }
-
   // @bean
   public Panel() {
     m_panel = new GamePanel();
@@ -49,8 +46,9 @@ public class Panel extends JApplet {
      */
 
     System.err.println("in Panel.init()");
-    if(PrivateFunctions.m_singleton != null)
+    if(PrivateFunctions.m_singleton != null) {
       stop();
+    }
     PrivateFunctions.m_exit = false;
 
     PrivateFunctions.m_singleton = new PrivateFunctions();
@@ -111,22 +109,24 @@ public class Panel extends JApplet {
         @Override
         public void mousePressed(java.awt.event.MouseEvent evt) {
           PrivateFunctions.callback(PrivateFunctions.m_singleton.m_onMousePressed);
-          if(evt.getButton() == java.awt.event.MouseEvent.BUTTON1)
+          if(evt.getButton() == java.awt.event.MouseEvent.BUTTON1) {
             PrivateFunctions.m_singleton.m_mouseDown[0] = true;
-          else if(evt.getButton() == java.awt.event.MouseEvent.BUTTON2)
+          } else if(evt.getButton() == java.awt.event.MouseEvent.BUTTON2) {
             PrivateFunctions.m_singleton.m_mouseDown[1] = true;
-          else if(evt.getButton() == java.awt.event.MouseEvent.BUTTON3)
+          } else if(evt.getButton() == java.awt.event.MouseEvent.BUTTON3) {
             PrivateFunctions.m_singleton.m_mouseDown[2] = true;
+          }
         }
         @Override
         public void mouseReleased(java.awt.event.MouseEvent evt) {
           PrivateFunctions.callback(PrivateFunctions.m_singleton.m_onMouseReleased);
-          if(evt.getButton() == java.awt.event.MouseEvent.BUTTON1)
+          if(evt.getButton() == java.awt.event.MouseEvent.BUTTON1) {
             PrivateFunctions.m_singleton.m_mouseDown[0] = false;
-          else if(evt.getButton() == java.awt.event.MouseEvent.BUTTON2)
+          } else if(evt.getButton() == java.awt.event.MouseEvent.BUTTON2) {
             PrivateFunctions.m_singleton.m_mouseDown[1] = false;
-          else if(evt.getButton() == java.awt.event.MouseEvent.BUTTON3)
+          } else if(evt.getButton() == java.awt.event.MouseEvent.BUTTON3) {
             PrivateFunctions.m_singleton.m_mouseDown[2] = false;
+          }
         }
       };
       m_panel.addMouseListener(PrivateFunctions.m_singleton.m_mouseListener);
@@ -153,10 +153,11 @@ public class Panel extends JApplet {
         public void mouseWheelMoved(MouseWheelEvent e) {
           double copy = PrivateFunctions.m_singleton.m_mouseWheelPosition;
           PrivateFunctions.m_singleton.m_mouseWheelPosition += e.getWheelRotation();
-          if(copy > PrivateFunctions.m_singleton.m_mouseWheelPosition)
+          if(copy > PrivateFunctions.m_singleton.m_mouseWheelPosition) {
             PrivateFunctions.callback(PrivateFunctions.m_singleton.m_onMouseWheelDown);
-          else
+          } else {
             PrivateFunctions.callback(PrivateFunctions.m_singleton.m_onMouseWheelUp);
+          }
           PrivateFunctions.callback(PrivateFunctions.m_singleton.m_onMouseWheelMoved);
         }
       };
@@ -167,8 +168,9 @@ public class Panel extends JApplet {
         public void keyTyped(KeyEvent e) {}
         @Override
         public void keyPressed(KeyEvent e) {
-          if(e.getKeyChar() == 65635)
+          if(e.getKeyChar() == 65635) {
             return;
+          }
           PrivateFunctions.m_singleton.m_keysPressed.add(e.getKeyCode());
           PrivateFunctions.callback(PrivateFunctions.m_singleton.m_onKeyPressed);
         }
@@ -243,9 +245,10 @@ public class Panel extends JApplet {
       Oval poisson = new Oval(Math.random() * 1000, Math.random() * 1000, 2 * 5, 2 * 5);
       demo_poissons.add(poisson);
     }
-    while(true)
+    while(true) {
       for(int i = 0; i < demo_poissons.size(); i++)
         demo_seRegrouper((Oval) demo_poissons.get(i));
+    }
   }
   @Override
   public void stop() {}

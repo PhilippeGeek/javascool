@@ -64,8 +64,9 @@ public class NotesSoundBit extends SoundBit {
       if(i < freqs.length) {
         double d = freqs[i].f / SAMPLING;
         return freqs[i].a * NotesSoundBit.this.get(channel, channel == 'l' ? (pl += d) : (pr += d));
-      } else
+      } else {
         return 0;
+      }
     }
     private double pl = 0, pr = 0;
   };
@@ -89,11 +90,11 @@ public class NotesSoundBit extends SoundBit {
     int d = 1;
     double a = 0.999;
     for(int i = 0; i < n.length; i++) {
-      if(n[i].matches("[1-9][0-9]*"))
+      if(n[i].matches("[1-9][0-9]*")) {
         d = Integer.valueOf(n[i]);
-      else if(n[i].matches("i0?\\.?[0-9]+"))
+      } else if(n[i].matches("i0?\\.?[0-9]+")) {
         a = Double.valueOf(n[i].matches("[0-9]+") ? "0\\." + n[i] : n[i]);
-      else if(n[i].matches("[a-h][0-8]?[#b]?")) {
+      } else if(n[i].matches("[a-h][0-8]?[#b]?")) {
         double f = getNote(n[i]);
         for(int k = 0; k < d; k++)
           freqs.add(new note(f, a));
@@ -120,9 +121,11 @@ public class NotesSoundBit extends SoundBit {
       new double[] { Math.pow(2, -4), Math.pow(2, -3), Math.pow(2, -2), Math.pow(2, -1), Math.pow(2, 0), Math.pow(2, 1), Math.pow(2, 2), Math.pow(2, 3), Math.pow(2, 4) };
     // Note syntax
     note = note.toLowerCase();
-    if(note.matches("[a-h][#b]?"))
+    if(note.matches("[a-h][#b]?")) {
       return getNote(note.charAt(0) + "4" + (note.length() == 2 ? note.charAt(1) : ""));
-    if(!note.matches("[a-h][0-8][#b]?")) throw new IllegalArgumentException("Bad note format «" + note + "»");
+    }
+    if(!note.matches("[a-h][0-8][#b]?")) { throw new IllegalArgumentException("Bad note format «" + note + "»");
+    }
     // Note frequency derivation
     double f = 440.0 * Tones[(int) note.charAt(0) - (int) 'a'] * Octaves[(int) note.charAt(1) - (int) '0'];
     if(note.length() == 3) {

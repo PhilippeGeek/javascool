@@ -22,10 +22,11 @@ class signal {
    */
   public void setSignal(String n, float f, float a, boolean change) {
     type = n;
-    if(sounding)
+    if(sounding) {
       switchOff();
-    else if(record1.sounding)
+    } else if(record1.sounding) {
       record1.switchOff();
+    }
     this.change = change;
     // Créer un oscillateur sinusoidale avec une fréquence de 1000Hz, une amplitude de 1.0, et une fréquence d'échantillonage callée sur la ligne out
     if(n.equals("sinus")) {
@@ -66,8 +67,9 @@ class signal {
       } else if(type.equals("scie")) {
         saw_.setFreq(frequence);
         saw_.setAmp(volume);
-      } else if(type.equals("bruit"))
+      } else if(type.equals("bruit")) {
         wnoise_.setAmp(volume);
+      }
     }
   }
   /** Affichage de la valeur dans l'interface. */
@@ -76,10 +78,11 @@ class signal {
     fill(0);
     rect(0, height - 175, width / 2, 30);
     fill(myOr);
-    if(type.equals("bruit"))
+    if(type.equals("bruit")) {
       text("Vol.: " + vol + " ", 10, height - 155);
-    else
+    } else {
       text(" Freq.: " + frequence + " Hz  -  Vol.: " + vol + " ", 10, height - 155);
+    }
   }
   /** Arrêt de la sortie sonore. */
   void switchOff() {

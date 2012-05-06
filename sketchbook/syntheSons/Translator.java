@@ -10,12 +10,11 @@ package org.javascool.proglets.syntheSons;
 public class Translator extends org.javascool.core.Translator {
   @Override
   public String getImports() {
-    return 
-      "import org.javascool.proglets.syntheSons.InputSoundBit;" + 
-      "import org.javascool.proglets.syntheSons.FileSoundBit;" + 
-      "import org.javascool.proglets.syntheSons.NotesSoundBit;" + 
-      "import org.javascool.proglets.syntheSons.SoundBit;" + 
-      "import org.javascool.proglets.syntheSons.SoundBitPanel;";
+    return "import org.javascool.proglets.syntheSons.InputSoundBit;" +
+           "import org.javascool.proglets.syntheSons.FileSoundBit;" +
+           "import org.javascool.proglets.syntheSons.NotesSoundBit;" +
+           "import org.javascool.proglets.syntheSons.SoundBit;" +
+           "import org.javascool.proglets.syntheSons.SoundBitPanel;";
   }
   @Override
   public String translate(String code) {

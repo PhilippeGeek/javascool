@@ -7,8 +7,8 @@ void main() {
   sleep(2000);
   println("\n Mettez le tout dans le four allumé pendant 10 minutes puis trempez un couteau dans le gateau.");
   while(!readBoolean("Le couteau sort-il propre ?")) {
-      println(" Laissez le gateau dans le four pendant encore 10 minutes puis trempez un couteau dans le gateau.");
-      sleep(1500);
+    println(" Laissez le gateau dans le four pendant encore 10 minutes puis trempez un couteau dans le gateau.");
+    sleep(1500);
   }
   println("\n Sortez le gateau du four et éteignez-le. Le gateau est prêt.");
 }

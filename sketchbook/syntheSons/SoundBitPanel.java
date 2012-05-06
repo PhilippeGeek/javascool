@@ -81,24 +81,28 @@ public class SoundBitPanel extends JPanel {
     for(int i = m; i <= width - m; i += hsize / 16) {
       g.drawLine(i, height2 - (i == width / 2 ? m : m / 2), i, height2 + (i == width / 2 ? m - 2 : m / 2));
       double f = f0 * Math.pow(f1 / f0, (i - m) / (double) hsize);
-      if(i < width - m)
+      if(i < width - m) {
         g.drawString(Integer.toString((int) f), i + 1, height2 - 1);
+      }
     }
     // Amplitude and phase curves
     for(int i = m, a1 = 0, d1 = 0; i <= width - m; i++) {
       double a = Math.log(1 + 9 * mag[i - m] / mag_max) / Math.log(10);
       int a0 = height2 - m - (int) Math.rint(2 * vsize * a);
-      if(a0 < b + m)
+      if(a0 < b + m) {
         a0 = b + m;
+      }
       g.setColor(Color.RED);
-      if(i > m)
+      if(i > m) {
         g.drawLine(i - 1, a1, i, a0);
+      }
       a1 = a0;
       // Drawing the 1st data samples
       int d0 = height - m - (int) Math.rint(vsize * (0.5 * (1 + (i - m < data.length ? data[i - m] : 0))));
       g.setColor(Color.YELLOW);
-      if(i > m)
+      if(i > m) {
         g.drawLine(i - 1, d1, i, d0);
+      }
       d1 = d0;
     }
     g.setColor(Color.BLACK);
@@ -116,7 +120,8 @@ public class SoundBitPanel extends JPanel {
   private static double[] getData(SoundBit sound, char channel) {
     AudioInputStream stream = sound.getStream();
     SoundBit.checkFormat(stream);
-    if(stream.getFrameLength() > (long) Integer.MAX_VALUE) throw new IllegalArgumentException("Cannot convert huge audio stream to buffer");
+    if(stream.getFrameLength() > (long) Integer.MAX_VALUE) { throw new IllegalArgumentException("Cannot convert huge audio stream to buffer");
+    }
     int length = (int) stream.getFrameLength();
     double data[] = new double[length];
     int n = stream.getFormat().getChannels() * 2, o = stream.getFormat().getChannels() == 1 || channel == 'l' ? 0 : 2;
@@ -135,8 +140,9 @@ public class SoundBitPanel extends JPanel {
   private static complex[] getFFT(double data[]) {
     // Calculates the largest power of two not greater than data length
     int length = (int) Math.pow(2, Math.ceil(Math.log(data.length) / Math.log(2)));
-    if(length == 0)
+    if(length == 0) {
       length = 1;
+    }
     // Builds the complex buffer and computes fft, appkying a Hann's windowing
     complex cdata[] = new complex[length];
     for(int i = 0; i < length; i++)
@@ -156,8 +162,9 @@ public class SoundBitPanel extends JPanel {
   // Implements the Cooley-Tukey FFT algorithm assuming x.length is a power of two
   private static complex[] fft(complex[] x) {
     int n = x.length;
-    if(n == 1)
+    if(n == 1) {
       return new complex[] { x[0] };
+    }
     // Applies FFT on event and odd parts of the signal
     complex e[] = new complex[n / 2], o[] = new complex[n / 2];
     for(int i = 0; i < n / 2; i++) {

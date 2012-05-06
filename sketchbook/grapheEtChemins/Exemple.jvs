@@ -30,8 +30,9 @@ void dump(String what) {
   println("Etat du graphe " + what);
   for(String node1 : nodes)
     for(String node2 : nodes)
-      if(isLink(node1, node2))
+      if(isLink(node1, node2)) {
         println("Les nodes " + node1 + " et " + node2 + " sont connectés avec un poids de " + getLink(node1, node2));
+      }
 }
 void main() {
   unbuild();

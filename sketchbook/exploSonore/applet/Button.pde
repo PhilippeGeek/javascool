@@ -10,12 +10,13 @@ class Button
   boolean select = false;
 
   void update() {
-    if(over())
+    if(over()) {
       currentcolor = highlightcolor;
-    else if(select)
+    } else if(select) {
       currentcolor = selectcolor;
-    else
+    } else {
       currentcolor = basecolor;
+    }
   }
   boolean pressed() {
     if(over) {
@@ -32,9 +33,11 @@ class Button
   boolean overText(int x, int y, int width, int height) {
     if((mouseX >= x) && (mouseX <= x + width) &&
        (mouseY >= y - height / 2) && (mouseY <= y + height / 2))
+    {
       return true;
-    else
+    } else {
       return false;
+    }
   }
 }
 

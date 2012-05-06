@@ -17,8 +17,9 @@ class GogleMapCalculChemins {
       Macros.assertion(g.latitudes.containsKey(ville2), ville2 + " n'est pas une ville connue");
       return g.distanceEuclidienne(g.longitudes.get(ville1), g.latitudes.get(ville1),
                                    g.longitudes.get(ville2), g.latitudes.get(ville2));
-    } else
+    } else {
       return Integer.MAX_VALUE;
+    }
   }
   private static String PlusProche(List<String> groupe, Map<String, Integer> distMap) {
     String res = null;
@@ -48,13 +49,14 @@ class GogleMapCalculChemins {
     Map<String, String> predecesseur = new HashMap<String, String>();
     int nb_ville = aTraite.size();
     for(String ville : aTraite) {
-      if(ville.equals(depart))
+      if(ville.equals(depart)) {
         distanceAuDepart.put(ville, 0);
-      else if(g.arcs.get(ville).contains(depart)) {
+      } else if(g.arcs.get(ville).contains(depart)) {
         distanceAuDepart.put(ville, distance(g, ville, depart));
         predecesseur.put(ville, depart);
-      } else
+      } else {
         distanceAuDepart.put(ville, Integer.MAX_VALUE);
+      }
     }
     aTraite.remove(depart);
     // System.out.println("dist = "+distanceAuDepart);

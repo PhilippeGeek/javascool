@@ -8,22 +8,20 @@ import java.lang.String;
  * @serial exclude
  */
 public class Translator extends org.javascool.core.Translator {
-    @Override
+  @Override
   public java.lang.String getImports() {
     return "import org.javascool.proglets.jeux2D.*;";
   }
-
-    @Override
+  @Override
   public java.lang.String translate(java.lang.String code) {
     String[] lines = code.split("\n");
-    String body="";
+    String body = "";
     for(String line : lines) {
-      line=translateLine(line);
-      body+=line+"\n";
+      line = translateLine(line);
+      body += line + "\n";
     }
     return body;
   }
-
   public java.lang.String translateLine(java.lang.String code) {
     code.replaceAll("(.*[^a-zA-Z0-9_])([a-zA-Z0-9_]+[ \t=]*\\.getProperty[ \t=]*\\()[ \t=]*([a-zA-Z0-9_]+)[ \t=]*,([^)]*\\))(.*)", "$1(($3)$2$4)$5");
     code.replaceAll("\\(int\\)", "(Integer)");

@@ -54,10 +54,12 @@ public class GamePanel extends JPanel {
     BufferedImage backBuffer = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_ARGB);
     // Draw all Drawable
     for(int i = 0; i < m_items.size(); i++) {
-      if(m_items.get(i).isVisible())
+      if(m_items.get(i).isVisible()) {
         backBuffer.getGraphics().setColor(m_items.get(i).initColor());
-      if(m_items.get(i).isVisible())
+      }
+      if(m_items.get(i).isVisible()) {
         m_items.get(i).draw(backBuffer.getGraphics());
+      }
     }
     // Blit !
     g.drawImage(backBuffer, 0, 0, null);
