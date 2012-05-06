@@ -30,8 +30,9 @@ void permute(char[] t, int i, int j) {
 int indexMin(char[] t, int i) {
   int idx = i;
   for(int k = i + 1; k < t.length; k++)
-    if(t[k] < t[idx])
+    if(t[k] < t[idx]) {
       idx = k;
+    }
   return idx;
 }
 void triSelection(char[] t) {

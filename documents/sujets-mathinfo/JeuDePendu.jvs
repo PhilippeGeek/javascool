@@ -14,8 +14,9 @@ void main() {
     // Test si le mot est correct
     int gagne = 1;
     for(int i = 0; i < mot.length(); i++)
-      if(juste[i] == 0)
+      if(juste[i] == 0) {
         gagne = 0;
+      }
     if(gagne == 1) {
       System.out.println("Congratulations! you have won!!\n(restart the game to try another word!)");
       return;
@@ -25,10 +26,11 @@ void main() {
       // On écrit les lettres devinées
       {
         for(int i = 0; i < mot.length(); i++) {
-          if(juste[i] == 1)
+          if(juste[i] == 1) {
             System.out.print(mot.charAt(i));
-          else
+          } else {
             System.out.print("_");
+          }
         }
         System.out.println();
       }
@@ -38,8 +40,9 @@ void main() {
       char c = readString().charAt(0);
       // On met à jour les lettres justes
       for(int i = 0; i < mot.length(); i++)
-        if(mot.charAt(i) == c)
+        if(mot.charAt(i) == c) {
           juste[i] = 1;
+        }
     }
   }
   println("Sorry guy! you have lost!!\n(restart the game to try another word!)");

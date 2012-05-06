@@ -49,8 +49,9 @@ Map<String, Integer> tableDesFrequences(List<String> liste) {
     if(table.containsKey(mot)) {
       int frequence = table.get(mot);
       table.put(mot, frequence + 1);
-    } else
+    } else {
       table.put(mot, 1);
+    }
   }
   return table;
 }
@@ -58,8 +59,9 @@ Map<String, Integer> tableDesFrequences(List<String> liste) {
 int nombreDePages(List<String> liste) {
   int res = 0;
   for(String s : liste)
-    if(equal(s, "<NOUVELLE PAGE>"))
+    if(equal(s, "<NOUVELLE PAGE>")) {
       res++;
+    }
   return res;
 }
 // compte le nombre de mots distincts
@@ -72,10 +74,11 @@ int nombreDeMotsDistincts(List<String> liste) {
 int premiereOccurrence(String mot0, List<String> liste) {
   int i = 0;
   for(String mot : liste) {
-    if(equal(mot, mot0))
+    if(equal(mot, mot0)) {
       return i;
-    else
+    } else {
       i++;
+    }
   }
   ;
   assertion(false, "le mot " + mot0 + " n'est pas dans la liste");
@@ -95,8 +98,9 @@ void lesPlusFrequents(List<String> liste, int N) {
   Map<String, Integer> tableTriee = trierMapParValeursDecroissantes(table);
   int i = 0;
   for(String s : tableTriee.keySet()) {
-    if(i >= N)
+    if(i >= N) {
       break;
+    }
     if(s.length() >= 4) {
       echo(s + " : " + table.get(s));
       i++;
@@ -108,12 +112,13 @@ Map<String, List<Integer> > tableIndex(List<String> liste) {
   Map<String, List<Integer> > table = new HashMap<String, List<Integer> >();
   int page = 1;
   for(String mot : liste) {
-    if(equal(mot, "<NOUVELLE PAGE>"))
+    if(equal(mot, "<NOUVELLE PAGE>")) {
       page++;
-    else if(table.containsKey(mot)) {
+    } else if(table.containsKey(mot)) {
       List<Integer> indexes = table.get(mot);
-      if(!indexes.contains(page))
+      if(!indexes.contains(page)) {
         indexes.add(page);
+      }
     } else {
       List<Integer> indexes = new ArrayList<Integer>();
       indexes.add(page);
@@ -131,8 +136,9 @@ void premiersIndex(List<String> liste, int N) {
   Map<String, List<Integer> > index = tableIndex(liste);
   int i = 0;
   for(String s : tableTriee.keySet()) {
-    if(i >= N)
+    if(i >= N) {
       break;
+    }
     if(s.length() >= 4) {
       System.out.println(s + " : " + index.get(s));
       i++;

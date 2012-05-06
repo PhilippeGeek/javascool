@@ -46,18 +46,20 @@ int nombreDeMots(List<String> liste) {
 int nombreDePages(List<String> liste) {
   int res = 0;
   for(String s : liste)
-    if(equal(s, "<NOUVELLE PAGE>"))
+    if(equal(s, "<NOUVELLE PAGE>")) {
       res++;
+    }
   return res;
 }
 // Calcule la table du nombre d'occurrences de chaque mot
 Map<String, Integer> tableDesFrequences(List<String> liste) {
   Map<String, Integer> table = new HashMap<String, Integer>();
   for(String mot : liste) {
-    if(table.containsKey(mot))
+    if(table.containsKey(mot)) {
       table.put(mot, table.get(mot) + 1);
-    else
+    } else {
       table.put(mot, 1);
+    }
   }
   return table;
 }
@@ -71,10 +73,11 @@ int nombreDeMotsDistincts(List<String> liste) {
 int premiereOccurrence(String mot0, List<String> liste) {
   int i = 0;
   for(String mot : liste) {
-    if(equal(mot, mot0))
+    if(equal(mot, mot0)) {
       return i;
-    else
+    } else {
       i++;
+    }
   }
   ;
   assertion(false, "le mot " + mot0 + " n'est pas dans la liste");
@@ -94,8 +97,9 @@ void lesPlusFrequents(List<String> liste, int N) {
   Map<String, Integer> tableTriee = trierMapParValeursDecroissantes(table);
   int i = 0;
   for(String s : tableTriee.keySet()) {
-    if(i >= N)
+    if(i >= N) {
       return;
+    }
     if((s.length() >= 4) && !equal(s, "<NOUVELLE PAGE>")) {
       echo(s + " : " + table.get(s));
       i++;
@@ -107,13 +111,14 @@ Map<String, List<Integer> > tableIndex(List<String> liste) {
   Map<String, List<Integer> > table = new HashMap<String, List<Integer> >();
   int page = 1;
   for(String mot : liste) {
-    if(equal(mot, "<NOUVELLE PAGE>"))
+    if(equal(mot, "<NOUVELLE PAGE>")) {
       page++;
-    else if(table.containsKey(mot)) {
+    } else if(table.containsKey(mot)) {
       List<Integer> indexes = table.get(mot);
       // Le test d'occurence serait inutile avec une structure Set<String>
-      if(!indexes.contains(page))
+      if(!indexes.contains(page)) {
         indexes.add(page);
+      }
     } else {
       List<Integer> indexes = new ArrayList<Integer>();
       indexes.add(page);
@@ -131,8 +136,9 @@ void premiersIndex(List<String> liste, int N) {
   Map<String, List<Integer> > index = tableIndex(liste);
   int i = 0;
   for(String s : tableTriee.keySet()) {
-    if(i >= N)
+    if(i >= N) {
       break;
+    }
     if((s.length() >= 4) && !equal(s, "<NOUVELLE PAGE>")) {
       echo(s + " : " + index.get(s));
       i++;

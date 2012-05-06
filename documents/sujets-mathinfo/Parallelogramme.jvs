@@ -60,6 +60,7 @@ void main() {
       clear();
       println("Donc ABCD est un carré!");
     }
-  } else
+  } else {
     println("Ce parallélogramme est quelconque");
+  }
 }

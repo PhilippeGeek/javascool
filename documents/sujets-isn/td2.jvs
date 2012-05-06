@@ -4,8 +4,9 @@ void main() {
 
                              // Affiche un point de coordonnées (x,y)
                              public void affichePoint(int x, int y, int couleur) {
-                               if((0 <= x) && (x <= 31) && (0 <= y) && (y <= 31))
+                               if((0 <= x) && (x <= 31) && (0 <= y) && (y <= 31)) {
                                  setPixel(x, y, couleur);
+                               }
                              }
 
                              // Supprime les points sur une zone carrée
@@ -67,15 +68,18 @@ void main() {
                              // pixels voisins de (x,y) et ayant la même couleur
                              public void remplir(int x, int y, int nouvelleCouleur) {
                                int ancienneCouleur = PaintBrush.getPixel(x, y);
-                               if(ancienneCouleur != nouvelleCouleur)
+                               if(ancienneCouleur != nouvelleCouleur) {
                                  remplir_aux(x, y, ancienneCouleur, nouvelleCouleur);
+                               }
                              }
                              void remplir_aux(int x, int y, int ancienneCouleur, int nouvelleCouleur) {
                                assertion(ancienneCouleur != nouvelleCouleur, "Tests couleurs");
-                               if(!((0 <= x) && (x <= 31) && (0 <= y) && (y <= 31)))
+                               if(!((0 <= x) && (x <= 31) && (0 <= y) && (y <= 31))) {
                                  return;
-                               if(getPixel(x, y) != ancienneCouleur)
+                               }
+                               if(getPixel(x, y) != ancienneCouleur) {
                                  return;
+                               }
                                setPixel(x, y, nouvelleCouleur);
 
                                remplir_aux(x - 1, y, ancienneCouleur, nouvelleCouleur);
