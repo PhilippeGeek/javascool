@@ -24,6 +24,7 @@
         <unzip dest="./build/classes" src="./lib/RSyntaxTextArea.jar"/>
         <unzip dest="./build/classes" src="./lib/autocomplete.jar"/>
         <unzip dest="./build/classes" src="./lib/javac.jar"/>
+        <unzip dest="./build/classes" src="./lib/saxon.jar"/>
         <jar destfile="./dist/javascool-base.jar">
             <manifest>
                 <attribute name="Main-Class" value="org.javascool.Core"/>

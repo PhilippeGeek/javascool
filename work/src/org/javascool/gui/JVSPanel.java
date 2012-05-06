@@ -190,7 +190,7 @@ class JVSPanel extends JPanel {
       if(haveToSave.get((String) fileId)) {
         j++;
       }
-         // If user no have dialog to stop close, we create one
+    // If user no have dialog to stop close, we create one
     if(j == 0) {
       final int n = JOptionPane.showConfirmDialog(
         Desktop.getInstance().getFrame(),

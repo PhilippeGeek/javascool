@@ -107,7 +107,7 @@ public class Pml {
    * <li><tt>-name value</tt> définit la valeur d'un paramètre,</li>
    * <li><tt>file</tt> ajoute un élément de type string,</li>
    * <li><tt>- file</tt> ajoute un élément de type string qui commence par un <tt>-</tt>.</li>
-   **</ul> Par exemple: <tt>command -quiet -level 123 input1 input2</tt> definit la PML <tt>{usage quiet=true level=123 input1 inpu2}</tt>.</p>
+   ***</ul> Par exemple: <tt>command -quiet -level 123 input1 input2</tt> definit la PML <tt>{usage quiet=true level=123 input1 inpu2}</tt>.</p>
    * @param usage Les éléments de la ligne de commande.
    * @return Cet objet, permettant de définir la construction <tt>Pml pml= new Pml().reset(..)</tt>.
    */

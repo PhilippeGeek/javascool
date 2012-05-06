@@ -96,20 +96,17 @@ public class Sampler {
   public void pause() {
     resume = false;
   }
-
   /** Resumes the iteration after a pause.
    */
   public void resume() {
     resume = true;
   }
-
   /** Tests if the iteration is paused
    * @return True if the iteration has been paused via <tt>pause()</tt> false if the iteration has been resumed via <tt>resumed()</tt> or never paused.
    */
   public boolean isPaused() {
     return !resume;
   }
-
   /** Returns the runtime-exception thrown by the iteration runnable.
    * @return The runtime-exception thrown by the iteration runnable if any, else null.
    */
@@ -125,7 +122,6 @@ public class Sampler {
     loop = resume = false;
     thread = null;
   }
-
   /** Returns the spare-time between two samplings.
    *
    * @return The last spare-time between two samplings, in milliseconds: <ul>
