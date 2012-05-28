@@ -23,7 +23,8 @@ import org.javascool.macros.Macros;
 /** Panneau pour le tracé d'images pixeliques.
  * 
  * @see <a href="IconOutput.java.html">source code</a>
- * @serial exclude */
+ *  @serial exclude 
+*/
 public class IconOutput extends JPanel {
   private static final long serialVersionUID = 1L;
 
@@ -34,7 +35,8 @@ public class IconOutput extends JPanel {
     reset(550, 550);
   }
 
-  /** Routine interne de tracé, ne pas utiliser. */
+  /**  Routine interne de tracé, ne pas utiliser. 
+*/
   @Override
   public void paint(Graphics g) {
     super.paint(g);
@@ -65,7 +67,8 @@ public class IconOutput extends JPanel {
    * }
    * </pre>
    * 
-   * @param g2d L'environnement graphique 2D à utiliser pour peindre. */
+   *  @param g2d L'environnement graphique 2D à utiliser pour peindre. 
+*/
   public void paint2D(Graphics2D g2d) {
   }
 
@@ -85,7 +88,8 @@ public class IconOutput extends JPanel {
    *        (par défaut), sinon fixe 1 pixel de l'image à 1 pixel de
    *        l'affichage.
    * @return Cet objet, permettant de définir la construction
-   *         <tt>new IconOutput().reset(..)</tt>. */
+   *          <tt>new IconOutput().reset(..)</tt>. 
+*/
   public final IconOutput reset(int width, int height, boolean zoom) {
     if (width > 550 || height > 550 || width * height > 550 * 550) throw new IllegalArgumentException("L'image est trop grande (" + width + ", " + height + ") !");
     this.zoom = zoom;
@@ -101,7 +105,8 @@ public class IconOutput extends JPanel {
     return this;
   }
 
-  /** @see #reset(int, int, boolean) */
+  /**  @see #reset(int, int, boolean) 
+*/
   public final IconOutput reset(int width, int height) {
     return reset(width, height, true);
   }
@@ -113,7 +118,8 @@ public class IconOutput extends JPanel {
    *        (par défaut), sinon fixe 1 pixel de l'image à 1 pixel de
    *        l'affichage.
    * @return Cet objet, permettant de définir la construction
-   *         <tt>new IconOutput().reset(..)</tt>. */
+   *          <tt>new IconOutput().reset(..)</tt>. 
+*/
   public IconOutput reset(String location, boolean zoom) throws IOException {
     // Fait 2//3 essais sur l'URL si besoin
     for (int n = 0; n < 3; n++) {
@@ -123,7 +129,8 @@ public class IconOutput extends JPanel {
     throw new IOException("Unable to load the image " + location);
   }
 
-  /** @see #reset(String, boolean) */
+  /**  @see #reset(String, boolean) 
+*/
   public final IconOutput reset(String location) throws IOException {
     return reset(location, true);
   }
@@ -135,7 +142,8 @@ public class IconOutput extends JPanel {
    *        (par défaut), sinon fixe 1 pixel de l'image à 1 pixel de
    *        l'affichage.
    * @return Cet objet, permettant de définir la construction
-   *         <tt>new IconOutput().reset(..)</tt>. */
+   *          <tt>new IconOutput().reset(..)</tt>. 
+*/
   public IconOutput reset(BufferedImage img, boolean zoom) {
     reset(img.getWidth(), img.getHeight(), zoom);
     for (int j = 0; j < img.getHeight(); j++) {
@@ -147,19 +155,22 @@ public class IconOutput extends JPanel {
     return this;
   }
 
-  /** @see #reset(BufferedImage, boolean) */
+  /**  @see #reset(BufferedImage, boolean) 
+*/
   public final IconOutput reset(BufferedImage img) {
     return reset(img, true);
   }
 
-  /** Renvoie les dimensions de l'image. */
+  /**  Renvoie les dimensions de l'image. 
+*/
   public Dimension getDimension() {
     return new Dimension(width, height);
   }
 
   /** Renvoie une image dans laquelle le contenu de l'affichage est copié.
    * 
-   * @return Le contenu de l'affichage sous forme d'image. */
+   *  @return Le contenu de l'affichage sous forme d'image. 
+*/
   public BufferedImage getImage() {
     BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
     for (int j = 0; j < img.getHeight(); j++) {
@@ -177,7 +188,8 @@ public class IconOutput extends JPanel {
    * @param c Couleur: "black" (default), "blue", "cyan", "gray", "green",
    *        "magenta", "orange", "pink", "red", "white", "yellow".
    * @return La valeur true si le pixel est dans les limites de l'image, false
-   *         sinon. */
+   *          sinon. 
+*/
   public boolean set(int x, int y, String c) {
     return set(x, y, IconOutput.getColor(c));
   }
@@ -188,7 +200,8 @@ public class IconOutput extends JPanel {
    * @param y Ordonnée du pixel, dans {0, height{.
    * @param v L'intensité en niveau de gris du pixel de 0 (noir) à 255 (blanc).
    * @return La valeur true si le pixel est dans les limites de l'image, false
-   *         sinon. */
+   *          sinon. 
+*/
   public boolean set(int x, int y, int v) {
     v = v < 0 ? 0 : v > 255 ? 255 : v;
     return set(x, y, new Color(v, v, v));
@@ -200,7 +213,8 @@ public class IconOutput extends JPanel {
    * @param y Ordonnée du pixel, dans {0, height{.
    * @param c L'intensité en couleur du pixel.
    * @return La valeur true si le pixel est dans les limites de l'image, false
-   *         sinon. */
+   *          sinon. 
+*/
   public boolean set(int x, int y, Color c) {
     if ((0 <= x) && (x < width) && (0 <= y) && (y < height)) {
       setBounds();
@@ -217,7 +231,8 @@ public class IconOutput extends JPanel {
    * @param x Abscisse du pixel, dans {0, width{.
    * @param y Ordonnée du pixel, dans {0, height{.
    * @return L'intensite du pixel entre 0 et 255 ou 0 si le pixel n'est pas dans
-   *         l'image. */
+   *          l'image. 
+*/
   public int getIntensity(int x, int y) {
     if ((0 <= x) && (x < width) && (0 <= y) && (y < height)) {
       Color c = image[x + y * width];
@@ -231,7 +246,8 @@ public class IconOutput extends JPanel {
    * @param x Abscisse du pixel, dans {0, width{.
    * @param y Ordonnée du pixel, dans {0, height{.
    * @return La couleur du pixel ou "undefined" si le pixel n'est pas dans
-   *         l'image. */
+   *          l'image. 
+*/
   public String getColor(int x, int y) {
     if ((0 <= x) && (x < width) && (0 <= y) && (y < height)) {
       Color c = image[x + y * width];
@@ -244,7 +260,8 @@ public class IconOutput extends JPanel {
    * 
    * @param x Abscisse du pixel, dans {0, width{.
    * @param y Ordonnée du pixel, dans {0, height{.
-   * @return La couleur du pixel ou black si le pixel n'est pas dans l'image. */
+   *  @return La couleur du pixel ou black si le pixel n'est pas dans l'image. 
+*/
   public Color getPixelColor(int x, int y) {
     if ((0 <= x) && (x < width) && (0 <= y) && (y < height)) {
       Color c = image[x + y * width];
@@ -285,12 +302,14 @@ public class IconOutput extends JPanel {
     IconOutput.putColors("yellow");
   }
 
-  /** Renvoie la position horizontale du dernier clic de souris dans l'image. */
+  /**  Renvoie la position horizontale du dernier clic de souris dans l'image. 
+*/
   public int getClicX() {
     return clicX;
   }
 
-  /** Renvoie la position verticale du dernier clic de souris dans l'image. */
+  /**  Renvoie la position verticale du dernier clic de souris dans l'image. 
+*/
   public int getClicY() {
     return clicY;
   }
@@ -330,7 +349,8 @@ public class IconOutput extends JPanel {
    * 
    * @param runnable La portion de code à appeler, ou null si il n'y en a pas.
    * @return Cet objet, permettant de définir la construction
-   *         <tt>new CurveOutput().setRunnable(..)</tt>. */
+   *          <tt>new CurveOutput().setRunnable(..)</tt>. 
+*/
   public IconOutput setRunnable(Runnable runnable) {
     this.runnable = runnable;
     return this;

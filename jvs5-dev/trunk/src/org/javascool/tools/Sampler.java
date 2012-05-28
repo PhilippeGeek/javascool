@@ -18,7 +18,8 @@ package org.javascool.tools;
  * overwrite the method with a construct of the form
  * <tt>public void stop() { super.stop(); &lt;specific-code> }</tt></div></li>
  * </ul>
- * </div> */
+ *  </div> 
+*/
 public class Sampler {
   private Runnable runnable;
   private int delay;
@@ -30,7 +31,8 @@ public class Sampler {
   /** Sets the periodic task runnable.
    * 
    * @param runnable The runnable to call periodically.
-   * @return this */
+   *  @return this 
+*/
   public Sampler setRunnable(Runnable runnable) {
     this.runnable = runnable;
     return this;
@@ -39,13 +41,15 @@ public class Sampler {
   /** Sets the periodic task sampling-period.
    * 
    * @param delay The periodic task delay in milli-seconds.
-   * @return this */
+   *  @return this 
+*/
   public Sampler setDelay(int delay) {
     this.delay = delay;
     return this;
   }
 
-  /** (Re)starts the sampling of the runnable. */
+  /**  (Re)starts the sampling of the runnable. 
+*/
   public void start() {
     error = null;
     (thread = new Thread(new Runnable() {
@@ -80,19 +84,22 @@ public class Sampler {
 
   /** Returns the iteraton thread.
    * 
-   * @return The thread with the periodic sampling or null if not running. */
+   *  @return The thread with the periodic sampling or null if not running. 
+*/
   public Thread getThread() {
     return thread;
   }
 
   private Thread thread = null;
 
-  /** Pauses the iteration mechanism. */
+  /**  Pauses the iteration mechanism. 
+*/
   public void pause() {
     resume = false;
   }
 
-  /** Resumes the iteration after a pause. */
+  /**  Resumes the iteration after a pause. 
+*/
   public void resume() {
     resume = true;
   }
@@ -101,7 +108,8 @@ public class Sampler {
    * 
    * @return True if the iteration has been paused via <tt>pause()</tt> false if
    *         the iteration has been resumed via <tt>resumed()</tt> or never
-   *         paused. */
+   *          paused. 
+*/
   public boolean isPaused() {
     return !resume;
   }
@@ -109,7 +117,8 @@ public class Sampler {
   /** Returns the runtime-exception thrown by the iteration runnable.
    * 
    * @return The runtime-exception thrown by the iteration runnable if any, else
-   *         null. */
+   *          null. 
+*/
   public Throwable getThrowable() {
     return error;
   }
@@ -117,7 +126,8 @@ public class Sampler {
   private Throwable error = null;
 
   /** Requires the sampling to stop. <div>The current iteration, if any,
-   * terminates before stopping.</div> */
+   *  terminates before stopping.</div> 
+*/
   public void stop() {
     loop = resume = false;
     thread = null;
@@ -132,7 +142,8 @@ public class Sampler {
    *         completed.</li>
    *         <li>It depends on both the task execution time and other thread
    *         execution times.</li>
-   *         </ul> */
+   *          </ul> 
+*/
   public int getSpareTime() {
     return spareTime;
   }

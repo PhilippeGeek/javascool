@@ -11,22 +11,26 @@ import javax.swing.JPanel;
  * par défault la une RunToolbar et un WidgetPanel contenant les différents
  * médias.
  * 
- * @since 4.5 */
+ *  @since 4.5 
+*/
 public class MediaPanel extends JPanel {
 
   private static final long serialVersionUID = -1720019604962318148L;
 
-  /** Crée un nouveau MediaPanel. */
+  /**  Crée un nouveau MediaPanel. 
+*/
   public MediaPanel() {
     super(new BorderLayout());
     add(RunToolbar.getInstance(), BorderLayout.NORTH);
     add(WidgetPanel.getInstance());
   }
 
-  /** Instance de la classe. */
+  /**  Instance de la classe. 
+*/
   private static MediaPanel panel;
 
-  /** Permet d'avoir une instance unique de la classe. */
+  /**  Permet d'avoir une instance unique de la classe. 
+*/
   public static MediaPanel getInstance() {
     if (MediaPanel.panel == null) {
       MediaPanel.panel = new MediaPanel();

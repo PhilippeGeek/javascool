@@ -16,7 +16,8 @@ import org.javascool.macros.Macros;
 /** Exécute une commande du système d'exploitation.
  * 
  * @see <a href="Exec.java.html">code source</a>
- * @serial exclude */
+ *  @serial exclude 
+*/
 public class Exec {
   // @factory
   private Exec() {
@@ -40,7 +41,8 @@ public class Exec {
    *         de l'exécution.
    * @throws IllegalStateException Si le statut de retour de la commande n'est
    *         pas 0 (donc a un numéro d'erreur) ou si la temporisation est
-   *         dépassée. */
+   *          dépassée. 
+*/
   public static String run(String command, int timeout) {
     try {
       Process process = Exec.exec(command);
@@ -89,7 +91,8 @@ public class Exec {
     }
   }
 
-  /** @see #run(String, int) */
+  /**  @see #run(String, int) 
+*/
   public static String run(String command) {
     return Exec.run(command, 10);
   }
@@ -104,7 +107,8 @@ public class Exec {
    * @param jar La jarre contenant le programme Java à lancé à la place de celui
    *        là.
    * @return La valeur true si le programme a pu se lancer, sinon la valeur
-   *         false. */
+   *          false. 
+*/
   public static boolean start(String jar) {
     try {
       String command = System.getProperty("java.home") + File.separator + "bin" + File.separator + "java\t-jar\t" + Exec.getLocal(jar);

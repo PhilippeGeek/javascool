@@ -19,7 +19,8 @@ import java.util.regex.Pattern;
  * </p>
  * 
  * @see <a href="Java2Class.java.html">code source</a>
- * @serial exclude */
+ *  @serial exclude 
+*/
 public class Java2Class {
   // @factory
   private Java2Class() {
@@ -50,23 +51,27 @@ public class Java2Class {
    * @return La valeur true en cas de succès, false si il y a des erreurs de
    *         compilation.
    * @throws RuntimeException Si une erreur d'entrée-sortie s'est produite lors
-   *         de la compilation. */
+   *          de la compilation. 
+*/
   public static boolean compile(String javaFile, boolean allErrors) {
     String javaFiles[] = { javaFile };
     return Java2Class.compile(javaFiles, allErrors);
   }
 
-  /** @see #compile(String, boolean) */
+  /**  @see #compile(String, boolean) 
+*/
   public static boolean compile(String javaFile) {
     return Java2Class.compile(javaFile, false);
   }
 
-  /** @see #compile(String, boolean) */
+  /**  @see #compile(String, boolean) 
+*/
   public static boolean compile(String javaFiles[]) {
     return Java2Class.compile(javaFiles, false);
   }
 
-  /** @see #compile(String, boolean) */
+  /**  @see #compile(String, boolean) 
+*/
   public static boolean compile(String javaFiles[], boolean allErrors) {
     if (javaFiles.length == 0) return false;
     return Java2Class.compile2(javaFiles, allErrors);
@@ -201,7 +206,8 @@ public class Java2Class {
    * @return Une instanciation de cette classe Java.
    * @throws IllegalArgumentException Si la classe n'est pas un Runnable.
    * @throws RuntimeException Si une erreur d'entrée-sortie s'est produite lors
-   *         du chargement. */
+   *          du chargement. 
+*/
   public static Runnable load(String path) {
     try {
       File javaClass = new File(path).getAbsoluteFile();

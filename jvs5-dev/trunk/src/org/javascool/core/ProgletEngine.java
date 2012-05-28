@@ -16,17 +16,20 @@ import org.javascool.tools.FileManager;
 /** Définit les mécanismes de compilation, exécution, gestion de proglet.
  * 
  * @see <a href="ProgletEngine.java.html">code source</a>
- * @serial exclude */
+ *  @serial exclude 
+*/
 public class ProgletEngine {
 
-  /** Tables des proglets. */
+  /**  Tables des proglets. 
+*/
   private ArrayList<Proglet> proglets;
 
   // @static-instance
   /** Crée et/ou renvoie l'unique instance de l'engine.
    * <p>
    * Une application ne peut définir qu'un seul engine.
-   * </p> */
+   *  </p> 
+*/
   public static ProgletEngine getInstance() {
     if (ProgletEngine.engine == null) {
       ProgletEngine.engine = new ProgletEngine();
@@ -79,7 +82,8 @@ public class ProgletEngine {
   /** Mécanisme de compilation du fichier Jvs.
    * 
    * @param program Le code à compiler
-   * @return La valeur true si la compilation est ok, false sinon. */
+   *  @return La valeur true si la compilation est ok, false sinon. 
+*/
   public boolean doCompile(String program) {
     doStop();
     // Traduction Jvs -> Java puis Java -> Class et chargement de la classe
@@ -123,7 +127,8 @@ public class ProgletEngine {
     }
   }
 
-  /** Mécanisme de lancement du programme compilé. */
+  /**  Mécanisme de lancement du programme compilé. 
+*/
   public void doRun() {
     doStop();
     // Lancement du runnable dans un thread
@@ -146,7 +151,8 @@ public class ProgletEngine {
   /** Mécanisme d'arrêt du programme compilé.
    * 
    * @param message Message d'erreur affiché à la console. Si null (par défaut)
-   *        pas de message. */
+   *         pas de message. 
+*/
   public void doStop(String message) {
     if (message != null) {
       System.out.println("Cause de l'interruption : " + message);
@@ -157,12 +163,14 @@ public class ProgletEngine {
     }
   }
 
-  /** @see #doStop(String) */
+  /**  @see #doStop(String) 
+*/
   public void doStop() {
     doStop(null);
   }
 
-  /** Renvoie true si le programme est en cours. */
+  /**  Renvoie true si le programme est en cours. 
+*/
   public boolean isRunning() {
     return thread != null;
   }
@@ -173,7 +181,8 @@ public class ProgletEngine {
   /** Renvoie le runnable correspondant au programme utilisateur en cours.
    * 
    * @return Le runnable correspondant au programme démarré par doRun() ou null
-   *         si il n'y en a pas. */
+   *          si il n'y en a pas. 
+*/
   public Runnable getProgletRunnable() {
     return runnable;
   }
@@ -187,7 +196,8 @@ public class ProgletEngine {
    * @param proglet Le nom de la proglet.
    * @return La proglet en fonctionnement ou null si la proglet n'existe pas.
    * @throws IllegalArgumentException Si il y a tentative d'utilisation d'une
-   *         proglet indéfinie */
+   *          proglet indéfinie 
+*/
   public Proglet setProglet(String proglet) {
     if (currentProglet != null) {
       currentProglet.stop();
@@ -205,7 +215,8 @@ public class ProgletEngine {
 
   /** Renvoie la proglet demandé.
    * 
-   * @return la proglet ou null sinon. */
+   *  @return la proglet ou null sinon. 
+*/
   public Proglet getProglet(String proglet) {
     for (Proglet p : getProglets()) {
       if (p.getName().equals(proglet)) return p;
@@ -213,7 +224,8 @@ public class ProgletEngine {
     return null;
   }
 
-  /** Renvoie la proglet courante. * @return la proglet courante ou null sinon. */
+  /**  Renvoie la proglet courante. * @return la proglet courante ou null sinon. 
+*/
   public Proglet getProglet() {
     return currentProglet;
   }
@@ -223,14 +235,16 @@ public class ProgletEngine {
   /** Renvoie toutes les proglets actuellement disponibles.
    * 
    * @return Un objet utilisable à travers la construction
-   *         <tt>for(Proglet proglet: getProglets()) { .. / .. }</tt>. */
+   *          <tt>for(Proglet proglet: getProglets()) { .. / .. }</tt>. 
+*/
   public Iterable<Proglet> getProglets() {
     return proglets;
   }
 
   /** Compte le nombre de proglets dans le programme courant
    * 
-   * @return Le nombre de proglets, 0 si il n'y en a pas */
+   *  @return Le nombre de proglets, 0 si il n'y en a pas 
+*/
   public int count() {
     if (this.proglets == null) return 0;
     return proglets.size();

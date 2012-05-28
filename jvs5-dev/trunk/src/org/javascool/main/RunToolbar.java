@@ -8,19 +8,23 @@ import org.javascool.widgets.ToolBar;
 
 /** Barre d'outils pour lancer et arrêter un programme.
  * 
- * @since 4.5 */
+ *  @since 4.5 
+*/
 public class RunToolbar extends ToolBar {
 
   private static final long serialVersionUID = -7160154215237177683L;
 
-  /** Boutons de l'interface. */
+  /**  Boutons de l'interface. 
+*/
   private JButton demoButton;
   private StartStopButton runButton;
 
-  /** Instance de la classe. */
+  /**  Instance de la classe. 
+*/
   private static RunToolbar jvstb;
 
-  /** Permet d'avoir une instance unique de la classe. */
+  /**  Permet d'avoir une instance unique de la classe. 
+*/
   public static RunToolbar getInstance() {
     if (RunToolbar.jvstb == null) {
       RunToolbar.jvstb = new RunToolbar();

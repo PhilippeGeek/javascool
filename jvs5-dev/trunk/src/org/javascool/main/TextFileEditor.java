@@ -12,7 +12,8 @@ import org.javascool.widgets.TextEditor;
 /** Définit un panneau éditeur d'un fichier texte qui intègre les fonctions de
  * colorisation et de complétion automatique.
  * 
- * @author Philippe Vienne */
+ *  @author Philippe Vienne 
+*/
 class TextFileEditor extends TextEditor {
 
   private static final long serialVersionUID = 1L;
@@ -24,12 +25,14 @@ class TextFileEditor extends TextEditor {
 
   /** Renvoie la localisation du fichier.
    * 
-   * @return La localisation du fichier ou null si indéfini. */
+   *  @return La localisation du fichier ou null si indéfini. 
+*/
   public String getFileLocation() {
     return location;
   }
 
-  /** Construit un éditeur de Fichier Surcharge la classe */
+  /**  Construit un éditeur de Fichier Surcharge la classe 
+*/
   public TextFileEditor() {
     super();
     setName("Nouveau Fichier");
@@ -61,7 +64,8 @@ class TextFileEditor extends TextEditor {
    * @param extension Extension du fichier par exemple "java" ou "jvs", ou "txt"
    *        (valeur par défaut) pour pas fixer d'extension.
    * @return Cet objet, permettant de définir la construction
-   *         <tt>new TextFileEditor().setExtension(..)</tt>. */
+   *          <tt>new TextFileEditor().setExtension(..)</tt>. 
+*/
   public TextFileEditor setExtension(String extension) {
     setSyntax(this.extension = extension);
     return this;
@@ -74,7 +78,8 @@ class TextFileEditor extends TextEditor {
    * Lance un dialogue avec l'utilisateur pour choisir le fichier.
    * </p>
    * 
-   * @return La valeur true si le dialogue a abouti, faux si il a échoué */
+   *  @return La valeur true si le dialogue a abouti, faux si il a échoué 
+*/
   public boolean load() {
     try {
       File f = FileManager.openFile(TextFileEditor.getWorkingDir());
@@ -147,13 +152,15 @@ class TextFileEditor extends TextEditor {
    * @param utf8 Si la valeur est vraie, force l'encodage en UTF-8 à la lecture.
    *        Par défaut (false) utilise l'encodage local.
    * @throws IllegalArgumentException Si l'URL est mal formée.
-   * @throws RuntimeException Si une erreur d'entrée-sortie s'est produite. */
+   *  @throws RuntimeException Si une erreur d'entrée-sortie s'est produite. 
+*/
   public void load(String location, boolean utf8) {
     setText(FileManager.load(this.location = location, utf8));
     lastModified = FileManager.getLastModified(location);
   }
 
-  /** @see #load(String, boolean) */
+  /**  @see #load(String, boolean) 
+*/
   public void load(String location) {
     load(location, false);
   }
@@ -163,7 +170,8 @@ class TextFileEditor extends TextEditor {
    * Lance un dialogue avec l'utilisateur pour choisir le fichier.
    * </p>
    * 
-   * @return La valeur true si le dialogue a abouti, faux si il a échoué */
+   *  @return La valeur true si le dialogue a abouti, faux si il a échoué 
+*/
   public boolean saveAs() {
     try {
       File f = FileManager.saveFile(false, TextFileEditor.getWorkingDir());
@@ -194,7 +202,8 @@ class TextFileEditor extends TextEditor {
    * 
    * @param confirm Si true demande à l'utilisateur confirmation avant de
    *        sauver.
-   * @return La valeur true si le dialogue a abouti, faux si il a échoué */
+   *  @return La valeur true si le dialogue a abouti, faux si il a échoué 
+*/
   public boolean save(boolean confirm) {
     if (isTextModified()) {
       if (confirm) {
@@ -256,7 +265,8 @@ class TextFileEditor extends TextEditor {
    * @param utf8 Si la valeur est vraie, force l'encodage en UTF-8 à la lecture.
    *        Par défaut (false) utilise l'encodage local.
    * @throws IllegalArgumentException Si l'URL est mal formée.
-   * @throws RuntimeException Si une erreur d'entrée-sortie s'est produite. */
+   *  @throws RuntimeException Si une erreur d'entrée-sortie s'est produite. 
+*/
   public void save(String location, boolean backup, boolean utf8) {
     if (extension != null) {
       location = location.replaceFirst("\\.[^.]*$", "") + "." + extension;
@@ -272,12 +282,14 @@ class TextFileEditor extends TextEditor {
     save(location, false, false);
   }
 
-  /** @see #save(String, boolean, boolean) */
+  /**  @see #save(String, boolean, boolean) 
+*/
   public void save(String location) {
     save(location, false, false);
   }
 
-  /** Dit si le fichier est temporaire (uniquement en mémoire). */
+  /**  Dit si le fichier est temporaire (uniquement en mémoire). 
+*/
   public boolean isTmp() {
     return location == null;
   }

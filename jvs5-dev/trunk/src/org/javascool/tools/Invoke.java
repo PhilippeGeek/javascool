@@ -3,7 +3,8 @@ package org.javascool.tools;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-/** Invoque une méthode sur un objet Java. */
+/**  Invoque une méthode sur un objet Java. 
+*/
 public class Invoke {
   /** Invoke une méthode sans argument sur un objet.
    * 
@@ -14,7 +15,8 @@ public class Invoke {
    *        simplement son existence.
    * @return La valeur true si la méthode est invocable, false sinon.
    * @throws RuntimeException si la méthode génère une exception lors de son
-   *         appel. */
+   *          appel. 
+*/
   public static boolean run(Object object, String method, boolean run) {
     try {
       Method m = object.getClass().getDeclaredMethod(method);
@@ -29,7 +31,8 @@ public class Invoke {
     return true;
   }
 
-  /** @see #run(Object, String, boolean) */
+  /**  @see #run(Object, String, boolean) 
+*/
   public static boolean run(Object object, String method) {
     return Invoke.run(object, method, true);
   }

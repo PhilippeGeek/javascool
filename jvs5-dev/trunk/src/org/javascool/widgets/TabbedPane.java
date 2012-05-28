@@ -32,7 +32,8 @@ import org.javascool.main.Core;
 /** Propose un container d'objets graphiques avec des onglets pouvant posséder
  * une croix de fermeture.
  * 
- * @author Philippe Vienne */
+ *  @author Philippe Vienne 
+*/
 public class TabbedPane extends JTabbedPane {
 
   private static final long serialVersionUID = 1L;
@@ -45,12 +46,14 @@ public class TabbedPane extends JTabbedPane {
    * @param tooltip Un petit titre à afficher quand le curseur passe sur
    *        l'onglet du composant.
    * @param closable Si true indique qu'il y a une croix de fermeture, sinon
-   *        false (valeur par défaut). */
+   *         false (valeur par défaut). 
+*/
   public void addTab(String title, String icon, Component component, String tooltip, boolean closable) {
     addTab(title, Macros.getIcon(icon), component, tooltip, closable);
   }
 
-  /** @see #addTab(String, String, Component, String, boolean) */
+  /**  @see #addTab(String, String, Component, String, boolean) 
+*/
   public void addTab(String title, Icon icon, Component component, String tooltip, boolean closable) {
     super.addTab(title, icon, component, tooltip);
     if (closable) {
@@ -59,44 +62,52 @@ public class TabbedPane extends JTabbedPane {
     setSelectedComponent(component);
   }
 
-  /** @see #addTab(String, String, Component, String, boolean) */
+  /**  @see #addTab(String, String, Component, String, boolean) 
+*/
   public void addTab(String title, String icon, Component component, String tooltip) {
     addTab(title, icon, component, tooltip, false);
   }
 
-  /** @see #addTab(String, String, Component, String, boolean) */
+  /**  @see #addTab(String, String, Component, String, boolean) 
+*/
   @Override
   public void addTab(String title, Icon icon, Component component, String tooltip) {
     addTab(title, icon, component, tooltip, false);
   }
 
-  /** @see #addTab(String, String, Component, String, boolean) */
+  /**  @see #addTab(String, String, Component, String, boolean) 
+*/
   public void addTab(String title, String icon, Component component) {
     addTab(title, icon, component, null, false);
   }
 
-  /** @see #addTab(String, String, Component, String, boolean) */
+  /**  @see #addTab(String, String, Component, String, boolean) 
+*/
   @Override
   public void addTab(String title, Icon icon, Component component) {
     addTab(title, icon, component, null, false);
   }
 
-  /** @see #addTab(String, String, Component, String, boolean) */
+  /**  @see #addTab(String, String, Component, String, boolean) 
+*/
   public void addTab(String title, Component component, String tooltip, boolean closable) {
     addTab(title, (Icon) null, component, tooltip, closable);
   }
 
-  /** @see #addTab(String, String, Component, String, boolean) */
+  /**  @see #addTab(String, String, Component, String, boolean) 
+*/
   public void addTab(String title, Component component, String tooltip) {
     addTab(title, (Icon) null, component, tooltip, false);
   }
 
-  /** @see #addTab(String, String, Component, String, boolean) */
+  /**  @see #addTab(String, String, Component, String, boolean) 
+*/
   public void addTab(String title, Component component, boolean closable) {
     addTab(title, (Icon) null, component, null, closable);
   }
 
-  /** @see #addTab(String, String, Component, String, boolean) */
+  /**  @see #addTab(String, String, Component, String, boolean) 
+*/
   @Override
   public void addTab(String title, Component component) {
     addTab(title, (Icon) null, component, null, false);
@@ -112,7 +123,8 @@ public class TabbedPane extends JTabbedPane {
    * </p>
    * 
    * @param index Index du composant dans le panneau.
-   * @return La valeur true si on peut procéder à la fermeture, false sinon. */
+   *  @return La valeur true si on peut procéder à la fermeture, false sinon. 
+*/
   protected boolean isCloseable(int index) {
     return true;
   }
@@ -125,7 +137,8 @@ public class TabbedPane extends JTabbedPane {
 
   /** Affiche un onglet donné.
    * 
-   * @param name Le titre de l'onglet */
+   *  @param name Le titre de l'onglet 
+*/
   public void switchToTab(String name) {
     this.setSelectedIndex(this.indexOfTab(name));
   }

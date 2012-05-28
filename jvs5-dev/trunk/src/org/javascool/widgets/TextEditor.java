@@ -24,13 +24,16 @@ import org.javascool.tools.Pml;
 /** Définit un panneau éditeur de texte qui intègre les fonctions de colorisation
  * et de complétion automatique.
  * 
- * @author Philippe Vienne */
+ *  @author Philippe Vienne 
+*/
 public class TextEditor extends JPanel {
   private static final long serialVersionUID = 1L;
 
-  /** Barre de commande du panneau. */
+  /**  Barre de commande du panneau. 
+*/
   protected ToolBar toolBar;
-  /** Panneau de l'éditeur. */
+  /**  Panneau de l'éditeur. 
+*/
   protected RSyntaxTextArea textArea;
   // Panneau de glissières
   private RTextScrollPane scrollPane;
@@ -39,11 +42,13 @@ public class TextEditor extends JPanel {
   /** Tables des raccourcis de l'éditeur. - Il faut y ajouter des éléments de la
    * forme:
    * "&lt;tr>&lt;td>&lt;tt>Ctrl+<i>X</i>&lt;/tt>&lt;/td>&lt;td><i>description du raccourci</i>&lt;/td>&lt;/tr>\n"
-   * + */
+   *  + 
+*/
   String helpText = "<tr><td><tt>Ctrl+a</tt></td><td>Sélectionne tout le texte</td></tr>\n" + "<tr><td><tt>Ctrl+c</tt></td><td>Copie du texte sous le curseur</td></tr>\n" + "<tr><td><tt>Ctrl+x</tt></td><td>Coupe du texte sous le curseur</td></tr>\n" + "<tr><td><tt>Ctrl+v</tt></td><td>Colle du texte précédemment copié ou collé</td></tr>\n" + "<tr><td></td><td></td></tr>\n" + "<tr><td><tt>Ctrl+z</tt></td><td>Annule la prédédente commande d'édition</td></tr>\n"
       + "<tr><td><tt>Ctrl+y</tt></td><td>Rétabli la prédédente commande d'édition</td></tr>\n" + "<tr><td></td><td></td></tr>\n" + "<tr><td><tt>Ctrl+Espace</tt></td><td>Lance l'auto-complétion</td></tr>\n" + "<tr><td></td><td></td></tr>\n";
 
-  /** Construit un panneau d'édition. */
+  /**  Construit un panneau d'édition. 
+*/
   public TextEditor() {
     setLayout(new BorderLayout());
     // Creation de la barre de commande
@@ -97,7 +102,8 @@ public class TextEditor extends JPanel {
    * 
    * @param syntax Nom de la syntaxe : "Java", "Jvs", "None".
    * @return Cet objet, permettant de définir la construction
-   *         <tt>new TextEditor().setProperty(..)</tt>. */
+   *          <tt>new TextEditor().setProperty(..)</tt>. 
+*/
   public TextEditor setSyntax(String syntax) {
     syntax = syntax.toLowerCase();
     toolBar.removeTool("Reformater le code");
@@ -125,7 +131,8 @@ public class TextEditor extends JPanel {
    * @param completions Le nom du fichier contenant la définition des
    *        complétions.
    * @return Cet objet, permettant de définir la construction
-   *         <tt>new TextEditor().addCompletions(..)</tt>. */
+   *          <tt>new TextEditor().addCompletions(..)</tt>. 
+*/
   public TextEditor addCompletions(String completions) {
     // Initialise le menu si il n'est pas définit
     if (insertions == null) {
@@ -196,21 +203,24 @@ public class TextEditor extends JPanel {
 
   private JPopupMenu insertions = null;
 
-  /** Remet à zéro toutes les complétions définies pour cet éditeur. */
+  /**  Remet à zéro toutes les complétions définies pour cet éditeur. 
+*/
   void clearCompletions() {
     completionsProvider.clear();
     toolBar.removeTool("Auto insertion");
     insertions = null;
   }
 
-  /** Renvoie le texte actuellement édité. */
+  /**  Renvoie le texte actuellement édité. 
+*/
   public String getText() {
     return textArea.getText();
   }
 
   /** Initialise le texte à éditer.
    * 
-   * @param text Le texte à éditer. */
+   *  @param text Le texte à éditer. 
+*/
   public void setText(String text) {
     textArea.setText(initialText = text);
   }
@@ -218,7 +228,8 @@ public class TextEditor extends JPanel {
   /** Teste si le texte a été édité ou si il reste inchangé.
    * 
    * @return Renvoie la valeur true si getText() et la dernière valeur donnée à
-   *         setText() ne sont pas les mêmes */
+   *          setText() ne sont pas les mêmes 
+*/
   public boolean isTextModified() {
     return !getText().equals(initialText);
   }
@@ -229,7 +240,8 @@ public class TextEditor extends JPanel {
    * 
    * @param line Numéro de la ligne du texte.
    * @param icon Nom de l'icône à utiliser (une icône indiquant une erreur par
-   *        défaut). */
+   *         défaut). 
+*/
   public void signalLine(int line, String icon) {
     Gutter gutter = scrollPane.getGutter();
     gutter.setBookmarkingEnabled(true);
@@ -240,12 +252,14 @@ public class TextEditor extends JPanel {
     }
   }
 
-  /** @see #signalLine(int, String) */
+  /**  @see #signalLine(int, String) 
+*/
   public void signalLine(int line) {
     signalLine(line, null);
   }
 
-  /** Efface toutes les marques mises sur le code. */
+  /**  Efface toutes les marques mises sur le code. 
+*/
   public void removeLineSignals() {
     scrollPane.getGutter().removeAllTrackingIcons();
   }

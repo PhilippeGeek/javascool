@@ -9,7 +9,8 @@ public class BetaCore extends Core {
 
   /** Lanceur de l'application JavaScool Beta.
    * 
-   * @param usage <tt>java -jar javascool.jar</tt> */
+   *  @param usage <tt>java -jar javascool.jar</tt> 
+*/
   public static void main(String[] usage) {
     if ((usage.length > 0) && (usage[0].equals("-h") || usage[0].equals("-help") || usage[0].equals("--help"))) {
       System.out.println("Java's Cool Core - lance l'interface pour travailler avec les proglets");

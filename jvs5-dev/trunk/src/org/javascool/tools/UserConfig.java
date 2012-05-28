@@ -7,6 +7,8 @@ import java.io.File;
 
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 /** Permet de stocker des informations dans un fichier de configuration de l'utilisateur.
  * 
@@ -26,7 +28,8 @@ public class UserConfig {
   /** Renvoie le répertoire standard où stocker les données d'une application.
    * 
    * @return Le répertoire standard où stocker les données d'une application, ou
-   *         un répertoire temporaire si celui-ci est indéfini. */
+   *          un répertoire temporaire si celui-ci est indéfini. 
+*/
   public String getApplicationFolder() {
     String OS = System.getProperty("os.name").toUpperCase();
     if (OS.contains("WIN")) return System.getenv("APPDATA") + "\\" + applicationName + "\\";
@@ -55,8 +58,14 @@ public class UserConfig {
       FileManager.save(getConfigurationFileLocation(), conf.toJSONString());
     }
     try{
+      JSONParser jp=new JSONParser();
       String configuration=FileManager.load(getConfigurationFileLocation(), true);
-      properties=(JSONObject)JSONValue.parse(configuration);
+      properties=(JSONObject)jp.parse(configuration);
+    }catch(ParseException pe){
+      System.err.println("Impossible de lire le fichier de configuration, il peut être corrompu. Debug : ");
+      System.out.println("Position: " + pe.getPosition());
+      System.out.println(pe);
+      properties=new JSONObject();
     }catch(Exception e){
       System.err.println("Impossible de lire le fichier de configuration, il peut être corrompu. Debug : ");
       e.printStackTrace(System.err);
@@ -68,13 +77,15 @@ public class UserConfig {
    * 
    * @param name Nom de la propriété.
    * @param value Valeur par défaut.
-   * @return La valeur de la propriété, si elle définie, sinon null. */
+   *  @return La valeur de la propriété, si elle définie, sinon null. 
+*/
   public String getProperty(String name, String value) {
     loadConfiguration();
     return properties.get(name)!=null?((String)properties.get(name)):(value!=null?value:null);
   }
 
-  /** @see #getProperty(String, String) */
+  /**  @see #getProperty(String, String) 
+*/
   public String getProperty(String name) {
     return getProperty(name, null);
   }
@@ -102,7 +113,8 @@ public class UserConfig {
   /** Crée et/ou renvoie l'unique instance de l'objet.
    * <p>
    * Une application ne peut définir qu'un seul objet de configuration.
-   * </p> */
+   *  </p> 
+*/
   public static UserConfig getInstance(String applicationName) {
     if (UserConfig.userConfig == null) return UserConfig.userConfig = new UserConfig(UserConfig.theApplicationName = applicationName);
     else if (UserConfig.theApplicationName.equals(applicationName)) return UserConfig.userConfig;

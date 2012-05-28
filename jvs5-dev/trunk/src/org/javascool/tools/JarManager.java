@@ -24,7 +24,8 @@ import java.util.jar.Manifest;
 import org.javascool.tools.FileManager;
 
 /** Met à disposition des fonctions de gestion de jar et répertoires de
- * déploiement. */
+ *  déploiement. 
+*/
 public class JarManager {
   // @factory
   private JarManager() {
@@ -35,7 +36,8 @@ public class JarManager {
    * @param jarFile Jarre dont on extrait les fichiers.
    * @param destDir Dossier où on déploie les fichiers.
    * @param jarEntry Racine des sous-dossiers à extraire. Si null extrait tout
-   *        les fichiers. */
+   *         les fichiers. 
+*/
   public static void jarExtract(String jarFile, String destDir, String jarEntry) {
     try {
       JarFile jf = new JarFile(jarFile);
@@ -56,7 +58,8 @@ public class JarManager {
     }
   }
 
-  /** @see #jarExtract(String, String, String) */
+  /**  @see #jarExtract(String, String, String) 
+*/
   public static void jarExtract(String jarFile, String destDir) {
     JarManager.jarExtract(jarFile, destDir, "");
   }
@@ -67,7 +70,8 @@ public class JarManager {
    * @param mfFile Fichier de manifeste (obligatoire).
    * @param srcDir Dossier source avec les fichiers à mettre en jarre.
    * @param jarEntries Racine des sous-dossiers à extraire. Si null extrait tout
-   *        les fichiers. */
+   *         les fichiers. 
+*/
   public static void jarCreate(String jarFile, String mfFile, String srcDir, String[] jarEntries) {
     try {
       File parent = new File(jarFile).getParentFile();
@@ -87,7 +91,8 @@ public class JarManager {
     }
   }
 
-  /** @see #jarCreate(String, String, String, String[]) */
+  /**  @see #jarCreate(String, String, String, String[]) 
+*/
   public static void jarCreate(String jarFile, String mfFile, String srcDir) {
     JarManager.jarCreate(jarFile, mfFile, srcDir, null);
   }
@@ -95,7 +100,8 @@ public class JarManager {
   /** Copie un répertoire/fichier dans un autre en oubliant les svn.
    * 
    * @param srcDir Dossier source.
-   * @param dstDir Dossier cible. */
+   *  @param dstDir Dossier cible. 
+*/
   public static void copyFiles(String srcDir, String dstDir) throws IOException {
     if (new File(srcDir).isDirectory()) {
       if (!new File(srcDir).getName().equals(".svn")) {
@@ -171,7 +177,8 @@ public class JarManager {
   /** Détruit récursivement un fichier ou répertoire. *
    * <p>
    * Irréversible: à utiliser avec la plus grande prudence.
-   * </p> */
+   *  </p> 
+*/
   public static void rmDir(File dir) {
     if (dir.isDirectory()) {
       for (File f : dir.listFiles()) {

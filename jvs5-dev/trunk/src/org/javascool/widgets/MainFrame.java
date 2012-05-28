@@ -16,7 +16,8 @@ import javax.swing.WindowConstants;
 
 import org.javascool.macros.Macros;
 
-/** Définit une fenêtre principale pour lancer une application. */
+/**  Définit une fenêtre principale pour lancer une application. 
+*/
 public class MainFrame extends JFrame {
   /**
 	 * 
@@ -28,10 +29,12 @@ public class MainFrame extends JFrame {
   public MainFrame() {
   }
 
-  /** Compte des fenêtres ouvertes pour gérer le exit. */
+  /**  Compte des fenêtres ouvertes pour gérer le exit. 
+*/
   private static int frameCount = 0;
 
-  /** Définit le look and feel de l'application. */
+  /**  Définit le look and feel de l'application. 
+*/
   static void setLookAndFeel() {
     try {
       for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels())
@@ -66,7 +69,8 @@ public class MainFrame extends JFrame {
    * </p>
    * 
    * @return Cet objet, permettant de définir la construction
-   *         <tt>new MainFrame().asPopup().reset(..)</tt>. */
+   *          <tt>new MainFrame().asPopup().reset(..)</tt>. 
+*/
   public MainFrame asPopup() {
     // @todo voir sur mac si ca solde le pb du close intempestif
     if (System.getProperty("os.name").toLowerCase().indexOf("mac") >= 0) {
@@ -86,7 +90,8 @@ public class MainFrame extends JFrame {
    * @param height Hauteur de la fenêtre. Si 0 on prend tout l'écran.
    * @param pane Le composant graphique à afficher.
    * @return Cet objet, permettant de définir la construction
-   *         <tt>new MainFrame().reset(..)</tt>. */
+   *          <tt>new MainFrame().reset(..)</tt>. 
+*/
   public MainFrame reset(String title, String icon, int width, int height, Component pane) {
     if (title != null) {
       setTitle(title);
@@ -131,34 +136,40 @@ public class MainFrame extends JFrame {
     return this;
   }
 
-  /** @see #reset(String, String, int, int, Component) */
+  /**  @see #reset(String, String, int, int, Component) 
+*/
   public MainFrame reset(String title, int width, int height, Component pane) {
     return reset(title, null, width, height, pane);
   }
 
-  /** @see #reset(String, String, int, int, Component) */
+  /**  @see #reset(String, String, int, int, Component) 
+*/
   public MainFrame reset(String title, String icon, Component pane) {
     return reset(title, icon, 0, 0, pane);
   }
 
-  /** @see #reset(String, String, int, int, Component) */
+  /**  @see #reset(String, String, int, int, Component) 
+*/
   public MainFrame reset(String title, Component pane) {
     return reset(title, null, 0, 0, pane);
   }
 
-  /** @see #reset(String, String, int, int, Component) */
+  /**  @see #reset(String, String, int, int, Component) 
+*/
   public MainFrame reset(int width, int height, Component pane) {
     return reset(pane.getClass().toString(), null, width, height, pane);
   }
 
-  /** @see #reset(String, String, int, int, Component) */
+  /**  @see #reset(String, String, int, int, Component) 
+*/
   public MainFrame reset(Component pane) {
     return reset(pane.getClass().toString(), null, 0, 0, pane);
   }
 
   /** Ferme la fenêtre principale à partir du programme.
    * 
-   * @param force Si true ferme la fenêter même si isClosable() renvoie false. */
+   *  @param force Si true ferme la fenêter même si isClosable() renvoie false. 
+*/
   public void close(boolean force) {
     if (force || isClosable()) {
       if (MainFrame.this.pane instanceof Applet) {
@@ -180,7 +191,8 @@ public class MainFrame extends JFrame {
     }
   }
 
-  /** @see #close(boolean) */
+  /**  @see #close(boolean) 
+*/
   public void close() {
     close(false);
   }
@@ -188,14 +200,16 @@ public class MainFrame extends JFrame {
   /** Détermine si la fenêtre principale peut-être fermée.
    * 
    * @return La valeur true si la fenêtre principale peut-être fermée, sinon
-   *         false. */
+   *          false. 
+*/
   public boolean isClosable() {
     return true;
   }
 
   /** Renvoie la frame principale ouverte.
    * 
-   * @return La frame principale ouverte comme parent des dialogues modaux. */
+   *  @return La frame principale ouverte comme parent des dialogues modaux. 
+*/
   public static JFrame getFrame() {
     return MainFrame.firstFrame;
   }

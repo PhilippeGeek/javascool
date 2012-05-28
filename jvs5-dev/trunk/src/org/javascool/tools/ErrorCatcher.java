@@ -17,7 +17,8 @@ import org.javascool.macros.Macros;
 /** Détecte et rapporte de manière optimisée des erreurs lors de l'exécution.
  * 
  * @see <a href="ErrorCatcher.java.html">code source</a>
- * @serial exclude */
+ *  @serial exclude 
+*/
 public class ErrorCatcher {
   // @factory
   private ErrorCatcher() {
@@ -38,7 +39,8 @@ public class ErrorCatcher {
    *        une trace en cas d'erreur.
    * @param keyword Si différent de null, le message n'est donné à l'utilisateur
    *        que si la trace de la pile contient le mot-clé (
-   *        <tt>org.javascool</tt> par défaut) */
+   *         <tt>org.javascool</tt> par défaut) 
+*/
   public static void setUncaughtExceptionAlert(String header, String revision, String keyword) {
     ErrorCatcher.uncaughtExceptionAlertHeader = header;
     ErrorCatcher.uncaughtExceptionKeyword = keyword;
@@ -104,7 +106,8 @@ public class ErrorCatcher {
    * téléchargement est proposé.
    * </p>
    * 
-   * @param version Version de Java 5 pour 1.5, 6 pour 1.6. */
+   *  @param version Version de Java 5 pour 1.5, 6 pour 1.6. 
+*/
   public static void checkJavaVersion(int version) {
     if (new Integer(System.getProperty("java.version").substring(2, 3)) < version) {
       if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(new JFrame(), "<html>Vous n'avez pas une version suffisante de Java<br>" + "cette application requiert Java 1." + version + " ou plus.<br>" + "Voulez vous être redirigé vers le site de téléchargement ?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE)) {

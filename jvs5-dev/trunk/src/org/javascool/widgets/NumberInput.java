@@ -20,7 +20,8 @@ import javax.swing.JTextField;
 /** Panneau pour l'entrée de valeurs numériques.
  * 
  * @see <a href="NumberInput.java.html">source code</a>
- * @serial exclude */
+ *  @serial exclude 
+*/
 public class NumberInput extends JPanel {
   private static final long serialVersionUID = 1L;
 
@@ -90,7 +91,8 @@ public class NumberInput extends JPanel {
    * 
    * @param name Nom du paramètre.
    * @return Cet objet, permettant de définir la construction
-   *         <tt>new NumberInput().setScale(..)</tt>. */
+   *          <tt>new NumberInput().setScale(..)</tt>. 
+*/
   public final NumberInput setText(String name) {
     setBorder(BorderFactory.createTitledBorder(name));
     return this;
@@ -102,7 +104,8 @@ public class NumberInput extends JPanel {
    * @param max Valeur maximale à entrer. 100 par défaut.
    * @param step Précision de la valeur à entrer. 1 par défaut.
    * @return Cet objet, permettant de définir la construction
-   *         <tt>new NumberInput().setScale(..)</tt>. */
+   *          <tt>new NumberInput().setScale(..)</tt>. 
+*/
   public final NumberInput setScale(double min, double max, double step) {
     this.min = min;
     this.max = max;
@@ -110,17 +113,20 @@ public class NumberInput extends JPanel {
     return this;
   }
 
-  /** @see #setScale(double, double, double) */
+  /**  @see #setScale(double, double, double) 
+*/
   public final NumberInput setScale() {
     return setScale(0, 100, 1);
   }
 
-  /** Renvoie la valeur numérique. */
+  /**  Renvoie la valeur numérique. 
+*/
   public double getValue() {
     return value;
   }
 
-  /** Définit la valeur numérique. */
+  /**  Définit la valeur numérique. 
+*/
   public void setValue(double value) {
     set(value, ' ');
   }
@@ -129,7 +135,8 @@ public class NumberInput extends JPanel {
    * 
    * @param runnable La portion de code à appeler, ou null si il n'y en a pas.
    * @return Cet objet, permettant de définir la construction
-   *         <tt>new NumberInput().setRunnable(..)</tt>. */
+   *          <tt>new NumberInput().setRunnable(..)</tt>. 
+*/
   public NumberInput setRunnable(Runnable runnable) {
     this.runnable = runnable;
     return this;

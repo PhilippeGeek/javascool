@@ -12,7 +12,8 @@ import org.javascool.widgets.ToolBar;
 /** Définit un panneau éditeur de plusieurs fichiers texte qui intègre les
  * fonctions de colorisation et de complétion automatique.
  * 
- * @author Philippe Vienne */
+ *  @author Philippe Vienne 
+*/
 class TextFilesEditor extends TabbedPane {
 
   private static final long serialVersionUID = 1L;
@@ -24,7 +25,8 @@ class TextFilesEditor extends TabbedPane {
    * @param height Hauteur de la fenêtre. Si 0 on prend tout l'écran.
    * @param extension Extension des fichiers par exemple "java" ou "jvs", ou
    *        null (valeur par défaut) pour pas fixer d'extension
-   * @return La fenêtre principale qui a été ouverte. */
+   *  @return La fenêtre principale qui a été ouverte. 
+*/
   public static MainFrame newTextFilesEditor(String title, int width, int height, String extension) {
     return new MainEditorFrame().reset(title, width, height, new TextFilesEditor().setExtension(extension));
   }
@@ -54,7 +56,8 @@ class TextFilesEditor extends TabbedPane {
 
   /** Ajoute à une barre de menu les boutons de contrôle de ce panneau.
    * 
-   * @param toolbar La barre de menu à utiliser. */
+   *  @param toolbar La barre de menu à utiliser. 
+*/
   public void addTools(ToolBar toolbar) {
     toolbar.addTool("Nouveau fichier", "org/javascool/widgets/icons/new.png", new Runnable() {
       @Override
@@ -87,7 +90,8 @@ class TextFilesEditor extends TabbedPane {
    * @param extension Extension des fichiers par exemple "java" ou "jvs", ou
    *        null (valeur par défaut) pour pas fixer d'extension.
    * @return Cet objet, permettant de définir la construction
-   *         <tt>new TextFilesEditor().setExtension(..)</tt>. */
+   *          <tt>new TextFilesEditor().setExtension(..)</tt>. 
+*/
   public TextFilesEditor setExtension(String extension) {
     this.extension = extension;
     if ("jvs".equals(extension)) {
@@ -97,7 +101,8 @@ class TextFilesEditor extends TabbedPane {
     return this;
   }
 
-  /** Ouvre un nouveau fichier. */
+  /**  Ouvre un nouveau fichier. 
+*/
   public void openNewFile() {
     openFile(false);
   }
@@ -168,7 +173,8 @@ class TextFilesEditor extends TabbedPane {
 
   /** Ferme tous les fichiers.
    * 
-   * @return La valeur vraie si les dialogues ont abouti, faux sinon. */
+   *  @return La valeur vraie si les dialogues ont abouti, faux sinon. 
+*/
   public boolean isCloseable() {
     boolean ok = true;
     for (int i = 0; ok && i < getTabCount(); i++) {
@@ -179,14 +185,16 @@ class TextFilesEditor extends TabbedPane {
 
   /** Vérifie que le fichier courant est compilable.
    * 
-   * @return La valeur vraie si c'est bon, faux sinon. */
+   *  @return La valeur vraie si c'est bon, faux sinon. 
+*/
   public boolean isCompilable() {
     if (getSelectedFile(false) == null) return false;
     if (getSelectedFile(false).isTmp()) return saveFile(true);
     return getSelectedFile(false).save(true);
   }
 
-  /** Efface toutes les lignes mises en valeur dans tous les onglets ouverts */
+  /**  Efface toutes les lignes mises en valeur dans tous les onglets ouverts 
+*/
   public void removeLineSignals() {
     for (int i = 0; i < getTabCount(); i++) {
       if (!(getComponentAt(i) instanceof TextFileEditor)) continue;
@@ -194,10 +202,12 @@ class TextFilesEditor extends TabbedPane {
     }
   }
 
-  /** Instance de la classe. */
+  /**  Instance de la classe. 
+*/
   private static TextFilesEditor editors;
 
-  /** Permet d'avoir une instance unique de la classe. */
+  /**  Permet d'avoir une instance unique de la classe. 
+*/
   public static TextFilesEditor getInstance() {
     if (TextFilesEditor.editors == null) {
       TextFilesEditor.editors = new TextFilesEditor();
@@ -207,7 +217,8 @@ class TextFilesEditor extends TabbedPane {
 
   /** Lanceur du mécanisme d'éditon.
    * 
-   * @param usage <tt>java org.javascool.gui2.TextFilesEditor</tt> */
+   *  @param usage <tt>java org.javascool.gui2.TextFilesEditor</tt> 
+*/
   public static void main(String[] usage) {
     TextFilesEditor.newTextFilesEditor("editor", 800, 600, "jvs");
   }

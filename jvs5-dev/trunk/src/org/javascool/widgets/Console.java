@@ -23,15 +23,19 @@ import org.javascool.tools.FileManager;
  * 
  * @author Philippe Vienne
  * @see <a href="Console.java.html">code source</a>
- * @serial exclude */
+ *  @serial exclude 
+*/
 public class Console extends JPanel {
   private static final long serialVersionUID = 1L;
 
-  /** Zone d'affichage */
+  /**  Zone d'affichage 
+*/
   private JTextArea outputPane;
-  /** Barre de menu */
+  /**  Barre de menu 
+*/
   private ToolBar toolbar;
-  /** Zone d'affichage du statut. */
+  /**  Zone d'affichage du statut. 
+*/
   private JLabel status;
 
   // @static-instance
@@ -39,7 +43,8 @@ public class Console extends JPanel {
   /** Crée et/ou renvoie l'unique instance de console.
    * <p>
    * Une application ne peut définir qu'une seule console.
-   * </p> */
+   *  </p> 
+*/
   public static Console getInstance() {
     if (Console.console == null) {
       Console.console = new Console();
@@ -47,7 +52,8 @@ public class Console extends JPanel {
     return Console.console;
   }
 
-  /** Renvoie true si la console a déjà été instanciée, false sinon. */
+  /**  Renvoie true si la console a déjà été instanciée, false sinon. 
+*/
   public static boolean isInstanced() {
     return Console.console != null;
   }
@@ -92,7 +98,8 @@ public class Console extends JPanel {
     redirectSystemStreams();
   }
 
-  /** Redirige le System.out vers cet affichage */
+  /**  Redirige le System.out vers cet affichage 
+*/
   private void redirectSystemStreams() {
     final OutputStream oldOut = System.out;
     OutputStream out = new OutputStream() {
@@ -117,32 +124,37 @@ public class Console extends JPanel {
     System.setOut(new PrintStream(out, true));
   }
 
-  /** Efface le contenu de la console. */
+  /**  Efface le contenu de la console. 
+*/
   public void clear() {
     outputPane.setText("");
   }
 
-  /** Copie le contenu de la console dans le presse-papier. */
+  /**  Copie le contenu de la console dans le presse-papier. 
+*/
   private void copyAll() {
     outputPane.selectAll();
     outputPane.copy();
   }
 
-  /** Copie le contenu de la sélection dans le presse-papier. */
+  /**  Copie le contenu de la sélection dans le presse-papier. 
+*/
   private void copySelection() {
     outputPane.copy();
   }
 
   /** Affiche une information dans la barre de statut.
    * 
-   * @param text Texte à afficher. */
+   *  @param text Texte à afficher. 
+*/
   public void show(String text) {
     status.setText(text);
   }
 
   /** Affiche du texte dans la console.
    * 
-   * @param text Le texte à afficher. */
+   *  @param text Le texte à afficher. 
+*/
   public void print(String text) {
     for (String p : Console.prefixes)
       if (text.startsWith(p)) return;
@@ -154,14 +166,16 @@ public class Console extends JPanel {
 
   /** Renvoie le contenu actuel de la console.
    * 
-   * @return Ce qui affiché dans la console. */
+   *  @return Ce qui affiché dans la console. 
+*/
   public String getText() {
     return outputPane.getText();
   }
 
   /** Renvoie la barre de menu de la console pour ajouter des éléments.
    * 
-   * @return La barre de menu de la console. */
+   *  @return La barre de menu de la console. 
+*/
   public ToolBar getToolBar() {
     return toolbar;
   }
@@ -169,7 +183,8 @@ public class Console extends JPanel {
   /** Sauve ce qui est présentement écrit dans la console dans un fichierL.
    * 
    * @param location La localisation (chemin du fichier ou localisation
-   *        internet) où sauver le texte. */
+   *         internet) où sauver le texte. 
+*/
   public void saveConsoleOutput(String location) {
     FileManager.save(location, getText());
   }
