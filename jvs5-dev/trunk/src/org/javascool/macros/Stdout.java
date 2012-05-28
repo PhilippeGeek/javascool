@@ -21,7 +21,8 @@ import org.javascool.widgets.Console;
  * </p>
  * 
  * @see <a href="Stdout.java.html">code source</a>
- * @serial exclude */
+ *  @serial exclude 
+*/
 public class Stdout {
   // @factory
   private Stdout() {
@@ -33,32 +34,38 @@ public class Stdout {
    * 
    * @param string La chaine ou l'objet à afficher sous sa représentation
    *        textuelle.
-   * @see #println(String) */
+   *  @see #println(String) 
+*/
   public static void echo(String string) {
     Console.getInstance().print(string + "\n");
   }
 
-  /** @see #echo(String) */
+  /**  @see #echo(String) 
+*/
   public static void echo(int string) {
     Stdout.echo("" + string);
   }
 
-  /** @see #echo(String) */
+  /**  @see #echo(String) 
+*/
   public static void echo(char string) {
     Stdout.echo("" + string);
   }
 
-  /** @see #echo(String) */
+  /**  @see #echo(String) 
+*/
   public static void echo(double string) {
     Stdout.echo("" + string);
   }
 
-  /** @see #echo(String) */
+  /**  @see #echo(String) 
+*/
   public static void echo(boolean string) {
     Stdout.echo("" + string);
   }
 
-  /** @see #echo(String) */
+  /**  @see #echo(String) 
+*/
   public static void echo(Object string) {
     Stdout.echo("" + string);
   }
@@ -69,7 +76,8 @@ public class Stdout {
    * 
    * @param string La chaine ou l'objet à afficher sous sa représentation
    *        textuelle.
-   * @see #echo(String) */
+   *  @see #echo(String) 
+*/
   public static void println(String string) {
     //Desktop.getInstance().focusOnConsolePanel();
     org.javascool.main.Desktop.getInstance().focusOnConsolePanel();
@@ -77,27 +85,32 @@ public class Stdout {
     Console.getInstance().print(string + "\n");
   }
 
-  /** @see #echo(String) */
+  /**  @see #echo(String) 
+*/
   public static void println(int i) {
     Stdout.println("" + i);
   }
 
-  /** @see #echo(String) */
+  /**  @see #echo(String) 
+*/
   public static void println(char i) {
     Stdout.println("" + i);
   }
 
-  /** @see #echo(String) */
+  /**  @see #echo(String) 
+*/
   public static void println(double d) {
     Stdout.println("" + d);
   }
 
-  /** @see #echo(String) */
+  /**  @see #echo(String) 
+*/
   public static void println(boolean b) {
     Stdout.println("" + b);
   }
 
-  /** @see #echo(String) */
+  /**  @see #echo(String) 
+*/
   public static void println(Object o) {
     Stdout.println("" + o);
   }
@@ -106,38 +119,45 @@ public class Stdout {
    * textuelle d'un objet sur la console sans retour à la ligne.
    * 
    * @param string La chaine ou l'objet à afficher sous sa représentation
-   *        textuelle. */
+   *         textuelle. 
+*/
   public static void print(String string) {
     System.out.print(string);
     System.out.flush();
   }
 
-  /** @see #print(String) */
+  /**  @see #print(String) 
+*/
   public static void print(int i) {
     Stdout.print("" + i);
   }
 
-  /** @see #print(String) */
+  /**  @see #print(String) 
+*/
   public static void print(char i) {
     Stdout.print("" + i);
   }
 
-  /** @see #print(String) */
+  /**  @see #print(String) 
+*/
   public static void print(double d) {
     Stdout.print("" + d);
   }
 
-  /** @see #print(String) */
+  /**  @see #print(String) 
+*/
   public static void print(boolean b) {
     Stdout.print("" + b);
   }
 
-  /** @see #print(String) */
+  /**  @see #print(String) 
+*/
   public static void print(Object o) {
     Stdout.print("" + o);
   }
 
-  /** Efface tout ce qui est écrit dans la console. */
+  /**  Efface tout ce qui est écrit dans la console. 
+*/
   public static void clear() {
     Console.getInstance().clear();
   }
@@ -145,7 +165,8 @@ public class Stdout {
   /** Sauve ce qui est présentement écrit dans la console dans un fichier.
    * 
    * @param location La localisation (chemin du fichier ou localisation
-   *        internet) où sauver le texte. */
+   *         internet) où sauver le texte. 
+*/
   public static void saveConsoleOutput(String location) {
     Console.getInstance().saveConsoleOutput(location);
   }

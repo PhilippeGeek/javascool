@@ -15,7 +15,8 @@ import org.javascool.tools.FileManager;
  * </p>
  * 
  * @see <a href="Jvs2Java.java.html">source code</a>
- * @serial exclude */
+ *  @serial exclude 
+ */
 public class Jvs2Java extends Translator {
   // @bean
   public Jvs2Java() {
@@ -28,7 +29,8 @@ public class Jvs2Java extends Translator {
    *        proglet donnée.
    * @return Cet objet, permettant de définir la construction
    *         <tt>Jvs2Java translator = new Jvs2Java().setProgletTranslator(..)</tt>
-   *         . */
+   *          . 
+   */
   public Jvs2Java setProgletTranslator(Translator progletTranslator) {
     // @bean-parameter(Translator, progletTranslator, w);
     this.progletTranslator = progletTranslator;
@@ -43,7 +45,8 @@ public class Jvs2Java extends Translator {
    * @param progletPackageName Le nom complet du package de la proglet.
    * @return Cet objet, permettant de définir la construction
    *         <tt>Jvs2Java translator = new Jvs2Java().setProgletPackageName(..)</tt>
-   *         . */
+   *          . 
+   */
   public Jvs2Java setProgletPackageName(String progletPackageName) {
     // @bean-parameter(String, progletPackageName, w);
     this.progletPackageName = progletPackageName;
@@ -80,7 +83,7 @@ public class Jvs2Java extends Translator {
           }
         } else if (line.matches("^\\s*include[^;]*;\\s*$")) {
           String name = line.replaceAll("^\\s*include([^;]*);\\s*$", "$1").trim();
-          body.append("/* include " + name + "; */ ");
+          body.append("/*  include " + name + ";*/ ");
           try {
             String include = FileManager.load(name + ".jvs");
             for (String iline : include.split("\n"))
@@ -126,7 +129,8 @@ public class Jvs2Java extends Translator {
     return head.toString() + finalBody + "}";
   }
 
-  /** Renvoie le nom de la dernière classe Java générée lors de la traduction. */
+  /**  Renvoie le nom de la dernière classe Java générée lors de la traduction. 
+   */
   public String getClassName() {
     return "JvsToJavaTranslated" + Jvs2Java.uid;
   }
@@ -138,7 +142,8 @@ public class Jvs2Java extends Translator {
   /** Rapporte une erreur survenue lors de l'exécution d'un prograamme Jvs.
    * 
    * @param error L'erreur ou exception à rapporter.
-   * @return Le rapport d'erreur. */
+   *  @return Le rapport d'erreur. 
+   */
   public static String report(Throwable error) {
     if (error instanceof InvocationTargetException) return Jvs2Java.report(error.getCause());
     String s = error.toString() + "\n";
@@ -154,7 +159,8 @@ public class Jvs2Java extends Translator {
   /** Lanceur de la conversion Jvs en Java.
    * 
    * @param usage
-   *        <tt>java org.javascool.core.Jvs2Java input-file [output-file]</tt> */
+   *         <tt>java org.javascool.core.Jvs2Java input-file [output-file]</tt> 
+   */
   public static void main(String[] usage) {
     // @main
     if (usage.length > 0) {

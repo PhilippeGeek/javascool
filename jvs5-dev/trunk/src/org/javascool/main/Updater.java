@@ -22,19 +22,22 @@ import org.json.simple.parser.ParseException;
 
 /** Mise à jour automatique de Java's cool et des proglets.
  * 
- * @author Philippe VIENNE */
+ *  @author Philippe VIENNE 
+*/
 public class Updater {
 
   private final String updateServer = "http://jvs-update/";
 
   private JSONArray packageToUpgrade = new JSONArray();
 
-  /** Instance unique de la classe. */
+  /**  Instance unique de la classe. 
+*/
   private static Updater instance;
 
   /** Permet d'obtenir la classe unique.
    * 
-   * @return L'instance publique de cette classe */
+   *  @return L'instance publique de cette classe 
+*/
   public static Updater getInstance() {
     if (instance == null) instance = new Updater();
     return instance;
@@ -47,7 +50,8 @@ public class Updater {
   /** Demande au serveur s'il y a de nouvelles versions.
    * 
    * @return vrai dans le cas ou une ou plus de mise à jours est disponible,
-   *         faux dans les autres cas */
+   *          faux dans les autres cas 
+*/
   public boolean hasNewVersions() {
     if (!isConnectedToInternet()) return false;
     try {
@@ -78,7 +82,8 @@ public class Updater {
    * mis à jours, il le présente alors comme un téléchargement de Java's Cool.
    * Cela est définit par un update timestamp à 0.
    * 
-   * @return vrai dans le cas ou l'utilisateur veux mettre à jours, faux sinon. */
+   *  @return vrai dans le cas ou l'utilisateur veux mettre à jours, faux sinon. 
+*/
   public boolean askIfWeUpgrade() {
     MainFrame.getFrame(); // Call to main frame to set Look and Feel
     String m = "";
@@ -99,7 +104,8 @@ public class Updater {
    * résultat est ensuite stocké dans une variable pour éviter l'attente du
    * Timeout à chaque appel de la fonction.
    * 
-   * @return */
+   *  @return 
+*/
   public boolean isConnectedToInternet() {
     if (isConnected != -1) return isConnected == 1 ? true : false;
     try {
@@ -117,7 +123,8 @@ public class Updater {
 
   /** Fonction de lancement de l'Updater.
    * 
-   * @param args Les arguments de lançement de l'application */
+   *  @param args Les arguments de lançement de l'application 
+*/
   public static void main(String[] args) {
     //System.out.println("Connected : "+getInstance().isConnectedToInternet());
     if (getInstance().hasNewVersions() && getInstance().askIfWeUpgrade()) {
@@ -127,7 +134,8 @@ public class Updater {
     Updater.getInstance().runJavaSCool(new String[0]);
   }
 
-  /** Télécharge et installe les mises à jours. */
+  /**  Télécharge et installe les mises à jours. 
+*/
   public void upgrade() {
     if (!isConnectedToInternet()) return;
     File jarLocationStorage = new File(UserConfig.getInstance("javascool").getApplicationFolder(), "jar");
@@ -150,7 +158,8 @@ public class Updater {
 
   /** Liste les Jar à mettre dans le classpath.
    * 
-   * @return Le classpath */
+   *  @return Le classpath 
+*/
   public String getClassPath() {
     String cp = "";
     File jarLocationStorage = new File(UserConfig.getInstance("javascool").getApplicationFolder(), "jar");
@@ -164,7 +173,8 @@ public class Updater {
     return cp;
   }
 
-  /** Lance Java's Cool. */
+  /**  Lance Java's Cool. 
+*/
   public void runJavaSCool(String[] args) {
     String arg = "";
     for (String s : args) {

@@ -24,7 +24,8 @@ import org.javascool.macros.Macros;
  * dans le jar sous la forme d'un panneau d'icones avec le nom des proglets
  * respectives.
  * 
- * @see org.javascool.core.ProgletEngine */
+ *  @see org.javascool.core.ProgletEngine 
+*/
 class StartPanel extends JScrollPane {
 
   private static final long serialVersionUID = 1L;
@@ -46,7 +47,8 @@ class StartPanel extends JScrollPane {
   /** Dessine le JPanel en listant les proglets
    * 
    * @see ProgletEngine
-   * @return Le JPanel dessiné */
+   *  @return Le JPanel dessiné 
+*/
   private static JPanel shortcutPanel() {
     JPanel shortcuts = new JPanel();
     int i = ProgletEngine.getInstance().count();
@@ -57,7 +59,8 @@ class StartPanel extends JScrollPane {
     return shortcuts;
   }
 
-  /** Cette classe permet de lançer une Proglet */
+  /**  Cette classe permet de lançer une Proglet 
+*/
   private static class ProgletLoader implements Runnable {
 
     private String proglet;
@@ -72,7 +75,8 @@ class StartPanel extends JScrollPane {
     }
   }
 
-  /** Créer un pannel avec un bouton capâble de lançer la Proglet */
+  /**  Créer un pannel avec un bouton capâble de lançer la Proglet 
+*/
   private static JPanel createShortcut(ImageIcon icon, String name, String title, final Runnable start) {
     JPanel panel = new JPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));

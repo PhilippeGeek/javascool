@@ -15,12 +15,14 @@ import org.javascool.widgets.TabbedPane;
  * 
  * @see org.javascool.widgets.Console
  * @see org.javascool.widgets.HtmlDisplay
- * @see org.javascool.widgets */
+ *  @see org.javascool.widgets 
+*/
 class WidgetPanel extends TabbedPane {
 
   private static final long serialVersionUID = 1L;
   private String progletTabId;
-  /** Instance du JVSWidgetPanel */
+  /**  Instance du JVSWidgetPanel 
+*/
   private static WidgetPanel jwp;
 
   public static WidgetPanel getInstance() {
@@ -38,7 +40,8 @@ class WidgetPanel extends TabbedPane {
   /** Charge les tabs de la proglet Charge le tab de la proglet (Panel) et
    * l'HTMLDisplay avec le fichier d'aide.
    * 
-   * @param name Le nom du package de la proglet */
+   *  @param name Le nom du package de la proglet 
+*/
   public void setProglet(String name) {
     this.removeAll();
     this.addTab("Console", "", Console.getInstance());
@@ -56,7 +59,8 @@ class WidgetPanel extends TabbedPane {
     this.addTab("Mémo", "", memo);
   }
 
-  /** Affiche l'onglet de la Proglet si il existe */
+  /**  Affiche l'onglet de la Proglet si il existe 
+*/
   public void focusOnProgletPanel() {
     if (progletTabId != null) {
       this.switchToTab(progletTabId);
@@ -64,7 +68,8 @@ class WidgetPanel extends TabbedPane {
       this.focusOnConsolePanel();
   }
 
-  /** Affiche la console */
+  /**  Affiche la console 
+*/
   public void focusOnConsolePanel() {
     this.setSelectedIndex(this.indexOfTab("Console"));
   }
@@ -76,7 +81,8 @@ class WidgetPanel extends TabbedPane {
    * @param url L'url de la page à charger
    * @param tabName Le titre du tab à ouvrir
    * @see org.javascool.widgets.HtmlDisplay
-   * @see String */
+   *  @see String 
+*/
   public void openWebTab(String url, String tabName) {
     if (this.indexOfTab(tabName) >= 0) {
       this.switchToTab(tabName);

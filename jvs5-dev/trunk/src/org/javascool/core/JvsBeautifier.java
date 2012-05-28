@@ -4,7 +4,8 @@
 
 package org.javascool.core;
 
-/** Normalise la mise en page d'un source Jvs. */
+/**  Normalise la mise en page d'un source Jvs. 
+*/
 public class JvsBeautifier {
   /** Reformate un morceau de code Jvs.
    * <p>
@@ -13,7 +14,8 @@ public class JvsBeautifier {
    * </p>
    * 
    * @param text Le source à reformate.
-   * @return Le source reformaté. */
+   *  @return Le source reformaté. 
+*/
   public static String run(String text) {
     char f[] = text.trim().replace((char) 160, ' ').toCharArray();
     String g = "", ln = "\n";

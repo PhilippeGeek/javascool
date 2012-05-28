@@ -19,7 +19,8 @@ import org.javascool.widgets.ToolBar;
 /** Définit les functions d'interaction avec l'interface graphique de JavaScool.
  * 
  * @see <a href="Desktop.java.html">code source</a>
- * @serial exclude */
+ *  @serial exclude 
+ */
 public class Desktop {
 
   // @static-instance
@@ -27,7 +28,8 @@ public class Desktop {
   /** Crée et/ou renvoie l'unique instance du desktop.
    * <p>
    * Une application ne peut définir qu'un seul desktop.
-   * </p> */
+   *  </p> 
+   */
   public static Desktop getInstance() {
     if (Desktop.desktop == null) {
       Desktop.desktop = new Desktop();
@@ -41,15 +43,16 @@ public class Desktop {
     MainFrame.getFrame();
   }
 
-  /** Renvoie la fenêtre racine de l'interface graphique. */
+  /**  Renvoie la fenêtre racine de l'interface graphique. 
+   */
   public JFrame getFrame() {
     if (frame == null) {
       mainPanel = StartPanel.getInstance();
       frame = (new MainFrame() {
 
         /**
-				 * 
-				 */
+         * 
+         */
         private static final long serialVersionUID = 1727893520791296658L;
 
         @Override
@@ -65,7 +68,8 @@ public class Desktop {
 
   private Container mainPanel;
 
-  /** Retourne la bare d'outils de Java's cool */
+  /**  Retourne la bare d'outils de Java's cool 
+   */
   public ToolBar getToolBar() {
     return EditToolbar.getInstance();
   }
@@ -73,7 +77,8 @@ public class Desktop {
   /** Demande la fermeture du desktop à la fin du programme.
    * 
    * @return La valeur true si le desktop peut être fermé sans dommage pour
-   *         l'utilisateur, sinon la valeur fausse. */
+   *          l'utilisateur, sinon la valeur fausse. 
+   */
   public boolean isClosable() {
     boolean close = TextFilesEditor.getInstance().isCloseable();
     if (close && ProgletEngine.getInstance().getProglet() != null) {
@@ -83,7 +88,8 @@ public class Desktop {
   }
 
   /** Ferme la proglet en cours d'édition. La fonction vérifie auparavent si tous
-   * les fichiers ont bien été sauvegardés */
+   *  les fichiers ont bien été sauvegardés 
+   */
   public void closeProglet() {
     if (!TextFilesEditor.getInstance().isCloseable()) return;
     if (ProgletEngine.getInstance().getProglet() != null) ProgletEngine.getInstance().getProglet().stop();
@@ -92,7 +98,8 @@ public class Desktop {
 
   /** Change le contenu de la fenêtre principale.
    * 
-   * @param comp Le composant à mettre en place */
+   *  @param comp Le composant à mettre en place 
+   */
   private void setCurrentComponent(Component comp) {
     frame.getContentPane().removeAll();
     frame.getContentPane().add(comp);
@@ -105,7 +112,8 @@ public class Desktop {
    * 
    * @param proglet Le nom de code de la Proglet
    * @return True si tous les fichier ont été sauvegardé et la proglet
-   *         sauvegardé */
+   *          sauvegardé 
+   */
   public boolean openProglet(String proglet) {
     if (!TextFilesEditor.getInstance().isCloseable()) return false;
     System.gc();
@@ -129,22 +137,26 @@ public class Desktop {
    * JVSWidgetPanel, cet onglet peut être fermé
    * 
    * @param url L'adresse à ouvrir sous forme de chaîne de caractères ou d'URL.
-   * @param name Le titre du nouvel onglet */
+   *  @param name Le titre du nouvel onglet 
+   */
   public void openBrowserTab(URL url, String name) {
     openBrowserTab(url.toString(), name);
   }
 
-  /** @see #openBrowserTab(URL, String) */
+  /**  @see #openBrowserTab(URL, String) 
+   */
   public void openBrowserTab(String url, String name) {
     WidgetPanel.getInstance().openWebTab(url, name);
   }
 
-  /** Affiche la console. */
+  /**  Affiche la console. 
+   */
   public void focusOnConsolePanel() {
     WidgetPanel.getInstance().focusOnConsolePanel();
   }
 
-  /** Affiche la console. */
+  /**  Affiche la console. 
+   */
   public void focusOnProgletPanel() {
     WidgetPanel.getInstance().focusOnProgletPanel();
   }
@@ -163,26 +175,29 @@ public class Desktop {
    * <li>Activer les boutons de lançement du programme</li>
    * </ul>
    * 
-   * @return Vrai en cas de compilation réussie, faux dans tout cas contraire. */
+   *  @return Vrai en cas de compilation réussie, faux dans tout cas contraire. 
+   */
   public boolean compileFile() {
     RunToolbar.getInstance().disableStartStopButton(); // On désactive les bouttons de lançement du précédent programme
-    /** Les onglets d'éditeur actifs. */
+    /**  Les onglets d'éditeur actifs. 
+     */
     TextFilesEditor ed = TextFilesEditor.getInstance();
     if (!(ed.getSelectedComponent() instanceof TextFileEditor)) // On vérifie s'il y a un fichier ouvert
-    return false;
+      return false;
     TextFileEditor currentEditor = (TextFileEditor) ed.getSelectedComponent();
     if (!ed.isCompilable()) // On sauvegarde le fichier courant
-    return false;
+      return false;
     ed.removeLineSignals(); // On enlève les repère actifs dans tous les fichiers ouverts
     if (!ProgletEngine.getInstance().doCompile(currentEditor.getText())) // On compile
-    return false;
+      return false;
     RunToolbar.getInstance().enableStartStopButton();
     return true;
   }
 
   /** Ouvre un nouveau fichier à partur d'une URL.
    * 
-   * @param url L'adresse du fichier */
+   *  @param url L'adresse du fichier 
+   */
   public void openFile(URL url) {
     TextFilesEditor.getInstance().openFile(url);
   }

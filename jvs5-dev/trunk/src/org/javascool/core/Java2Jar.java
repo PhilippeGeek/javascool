@@ -14,7 +14,8 @@ import org.javascool.tools.Pml;
  * Jar obtenu.
  * 
  * @see <a href="Java2Jar.java.html">code source</a>
- * @serial exclude */
+ *  @serial exclude 
+*/
 public class Java2Jar {
   // @factory
   private Java2Jar() {
@@ -37,23 +38,27 @@ public class Java2Jar {
    * @return La valeur true en cas de succès, false si il y a des erreurs de
    *         compilation.
    * @throws RuntimeException Si une erreur d'entrée-sortie s'est produite lors
-   *         de la compilation. */
+   *          de la compilation. 
+*/
   public static boolean compile(String jarFile, String mainClass, String javaFile, boolean allErrors) {
     String javaFiles[] = { javaFile };
     return Java2Jar.compile(jarFile, mainClass, javaFiles, allErrors);
   }
 
-  /** @see #compile(String, String, String, boolean) */
+  /**  @see #compile(String, String, String, boolean) 
+*/
   public static boolean compile(String jarFile, String mainClass, String javaFile) {
     return Java2Jar.compile(jarFile, mainClass, javaFile, false);
   }
 
-  /** @see #compile(String, String, String, boolean) */
+  /**  @see #compile(String, String, String, boolean) 
+*/
   public static boolean compile(String jarFile, String mainClass, String javaFiles[]) {
     return Java2Jar.compile(jarFile, mainClass, javaFiles, false);
   }
 
-  /** @see #compile(String, String, String, boolean) */
+  /**  @see #compile(String, String, String, boolean) 
+*/
   public static boolean compile(String jarFile, String mainClass, String javaFiles[], boolean allErrors) {
     try {
       String buildDir = ".build";
@@ -79,7 +84,8 @@ public class Java2Jar {
   /** Lanceur de la conversion Jvs en Java.
    * 
    * @param usage
-   *        <tt>java org.javascool.core.Java2Jar main-file [input-file(s) ..] [output-file]</tt> */
+   *         <tt>java org.javascool.core.Java2Jar main-file [input-file(s) ..] [output-file]</tt> 
+*/
   public static void main(String[] usage) {
     // @main
     if (usage.length > 1) {

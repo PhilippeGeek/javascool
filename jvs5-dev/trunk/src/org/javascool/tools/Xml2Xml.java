@@ -22,7 +22,8 @@ import javax.xml.transform.stream.StreamSource;
  * </p>
  * 
  * @see <a href="Xml2Xml.java.html">code source</a>
- * @serial exclude */
+ *  @serial exclude 
+*/
 public class Xml2Xml {
   // @factory
   private Xml2Xml() {
@@ -44,7 +45,8 @@ public class Xml2Xml {
    *        n'y a pas de paramètres.
    * @return La chaîne en sortie.
    * @throws IllegalArgumentException Si une erreur de syntaxe est détecté.
-   * @throws RuntimeException Si une erreur d'entrée-sortie s'est produite. */
+   *  @throws RuntimeException Si une erreur d'entrée-sortie s'est produite. 
+*/
   public static String run(String xml, String xsl, Properties params) {
     // Compile la tranformation XSLT dans le cache des XSLT
     try {
@@ -85,12 +87,14 @@ public class Xml2Xml {
     }
   }
 
-  /** @see #run(String, String, Properties) */
+  /**  @see #run(String, String, Properties) 
+*/
   public static String run(String xml, String xsl) {
     return Xml2Xml.run(xml, xsl, null);
   }
 
-  /** @see #run(String, String, Properties) */
+  /**  @see #run(String, String, Properties) 
+*/
   public static String run(String xml, String xsl, String paramName, String paramValue) {
     Properties params = new Properties();
     params.setProperty(paramName, paramValue);
@@ -124,7 +128,8 @@ public class Xml2Xml {
    * </p>
    * 
    * @param htm La chaîne HTML en entrée.
-   * @return La chaîne XML en sortie. */
+   *  @return La chaîne XML en sortie. 
+*/
   public static String html2xhtml(String htm) {
     return htm. // Elimine les accentuation HTML
         replaceAll("&agrave;", "à").replaceAll("&acirc;", "â").replaceAll("&eacute;", "é").replaceAll("&egrave;", "è").replaceAll("&euml;", "ë").replaceAll("&ecirc;", "ê").replaceAll("&iuml;", "ï").replaceAll("&icirc;", "î").replaceAll("&ouml;", "ö").replaceAll("&ocirc;", "ô").replaceAll("&ldquo;", "&#8220;").replaceAll("&rdquo;", "&#8221;").replaceAll("&laquo;", "&#171;").replaceAll("&raquo;", "&#172;;").replaceAll("&ugrave;", "ù").replaceAll("&ccedil;", "ç").
@@ -137,7 +142,8 @@ public class Xml2Xml {
   /** Lanceur de la transformation XML -XSLT-> XML.
    * 
    * @param usage
-   *        <tt>java org.javascool.tools.Xml2Xml input-file XSL-file [output-file] [paramName paramValue]</tt> */
+   *         <tt>java org.javascool.tools.Xml2Xml input-file XSL-file [output-file] [paramName paramValue]</tt> 
+*/
   public static void main(String[] usage) {
     // @main
     if (usage.length == 5) {

@@ -66,20 +66,26 @@ import org.javascool.main.Desktop;
  * ce qui permet de définir des URI dépendant de l'application.</li> </ul></div>
  * 
  * @see <a href="HtmlDisplay.java.html">source code</a>
- * @serial exclude */
+ *  @serial exclude 
+*/
 public class HtmlDisplay extends JPanel {
   private static final long serialVersionUID = 1L;
 
-  /** Le panneau d'affichage du texte. */
+  /**  Le panneau d'affichage du texte. 
+*/
   private JEditorPane pane;
-  /** Les bottons de navigation. */
+  /**  Les bottons de navigation. 
+*/
   private JButton home, prev, next;
 
-  /** Définit le préfix pour une chaîne. */
+  /**  Définit le préfix pour une chaîne. 
+*/
   static private final String stringPrefix = "http://string?";
-  /** Définit le préfix pour une ouverture dans l'éditeur. */
+  /**  Définit le préfix pour une ouverture dans l'éditeur. 
+*/
   static private final String editorPrefix = "http://editor?";
-  /** Définit le préfix pour une ouverture dans un onglet. */
+  /**  Définit le préfix pour une ouverture dans un onglet. 
+*/
   static private final String newtabPrefix = "http://newtab?";
 
   // @bean
@@ -135,7 +141,8 @@ public class HtmlDisplay extends JPanel {
    * 
    * @param location L'URL de la page à afficher.
    * @return Cet objet, permettant de définir la construction
-   *         <tt>new HtmlDisplay().setPage(..)</tt>. */
+   *          <tt>new HtmlDisplay().setPage(..)</tt>. 
+*/
   public HtmlDisplay setPage(String location) {
     update(location, true);
     return this;
@@ -150,7 +157,8 @@ public class HtmlDisplay extends JPanel {
    * 
    * @param text Le texte à afficher.
    * @return Cet objet, permettant de définir la construction
-   *         <tt>new HtmlDisplay().setText(..)</tt>. */
+   *          <tt>new HtmlDisplay().setText(..)</tt>. 
+*/
   public HtmlDisplay setText(String text) {
     try {
       return setPage(HtmlDisplay.stringPrefix + URLEncoder.encode(text, "utf-8"));
@@ -159,20 +167,24 @@ public class HtmlDisplay extends JPanel {
     }
   }
 
-  /** Met à jour les boutons selon l'état de la pile. */
+  /**  Met à jour les boutons selon l'état de la pile. 
+*/
   private void updateButtons() {
     home.setEnabled(urls.hasHome());
     prev.setEnabled(urls.hasPrev());
     next.setEnabled(urls.hasNext());
   }
 
-  /** Définit une pile d'URL avec le mécanisme de home/prev/next. */
+  /**  Définit une pile d'URL avec le mécanisme de home/prev/next. 
+*/
   private class URLStack extends ArrayList<Object> {
     private static final long serialVersionUID = 1L;
-    /** Index courant dans la pile. */
+    /**  Index courant dans la pile. 
+*/
     private int current = -1;
 
-    /** Ajoute un élément dans la pile. */
+    /**  Ajoute un élément dans la pile. 
+*/
     public void push(Object url) {
       current++;
       while (current < size()) {
@@ -238,12 +250,14 @@ public class HtmlDisplay extends JPanel {
    * 
    * @param location L'URL à traiter.
    * @return Cette méthode doit retourner true si l'URL à été traité et false si
-   *         l'URL n'a pas été reconnu ou traité. */
+   *          l'URL n'a pas été reconnu ou traité. 
+*/
   public boolean doBrowse(String location) {
     return false;
   }
 
-  /** Gestion des URLs externes par le navigateur du système. */
+  /**  Gestion des URLs externes par le navigateur du système. 
+*/
   private void browse(String location) {
     try {
       java.awt.Desktop.getDesktop().browse(new java.net.URI(location));
@@ -252,7 +266,8 @@ public class HtmlDisplay extends JPanel {
     }
   }
 
-  /** Mécanisme de gestion des URL. */
+  /**  Mécanisme de gestion des URL. 
+*/
   private void update(String location, boolean push) {
     // Gestion des contenus textuels
     if (location.startsWith(HtmlDisplay.stringPrefix)) { // Affichage de

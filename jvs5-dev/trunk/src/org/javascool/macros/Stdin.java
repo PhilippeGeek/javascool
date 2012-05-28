@@ -33,7 +33,8 @@ import org.javascool.widgets.Dialog;
  * </p>
  * 
  * @see <a href="Stdin.java.html">code source</a>
- * @serial exclude */
+ *  @serial exclude 
+*/
 public class Stdin {
   // @factory
   private Stdin() {
@@ -42,7 +43,8 @@ public class Stdin {
   /** Lit une chaîne de caractère dans une fenêtre présentée à l'utilisateur.
    * 
    * @param question Une invite qui décrit la valeur à entrer (optionel).
-   * @return La chaîne lue. */
+   *  @return La chaîne lue. 
+*/
   public static String readString(String question) {
     if (Stdin.inputBuffer.isPopable()) return Stdin.inputBuffer.popString();
     Stdin.inputQuestion = question;
@@ -82,7 +84,8 @@ public class Stdin {
   private static Dialog inputDialog;
   private static String inputQuestion, inputString;
 
-  /** @see #readString(String) */
+  /**  @see #readString(String) 
+*/
   public static String readString() {
     return Stdin.readString("Entrez une chaîne :");
   }
@@ -90,7 +93,8 @@ public class Stdin {
   /** Lit un nombre entier dans une fenêtre présentée à l'utilisateur.
    * 
    * @param question Une invite qui décrit la valeur à entrer (optionel).
-   * @return La valeur lue. */
+   *  @return La valeur lue. 
+*/
   public static int readInteger(String question) {
     if (Stdin.inputBuffer.isPopable()) return Stdin.inputBuffer.popInteger();
     String s = Stdin.readString(question);
@@ -105,17 +109,20 @@ public class Stdin {
     }
   }
 
-  /** @see #readInteger(String) */
+  /**  @see #readInteger(String) 
+*/
   public static int readInteger() {
     return Stdin.readInteger("Entrez un nombre entier : ");
   }
 
-  /** @see #readInteger(String) */
+  /**  @see #readInteger(String) 
+*/
   public static int readInt(String question) {
     return Stdin.readInteger(question);
   }
 
-  /** @see #readInteger(String) */
+  /**  @see #readInteger(String) 
+*/
   public static int readInt() {
     return Stdin.readInteger();
   }
@@ -123,7 +130,8 @@ public class Stdin {
   /** Lit un nombre décimal dans une fenêtre présentée à l'utilisateur.
    * 
    * @param question Une invite qui décrit la valeur à entrer (optionel).
-   * @return La valeur lue. */
+   *  @return La valeur lue. 
+*/
   public static double readDecimal(String question) {
     if (Stdin.inputBuffer.isPopable()) return Stdin.inputBuffer.popDecimal();
     String s = Stdin.readString(question);
@@ -138,27 +146,32 @@ public class Stdin {
     }
   }
 
-  /** @see #readDecimal(String) */
+  /**  @see #readDecimal(String) 
+*/
   public static double readDecimal() {
     return Stdin.readDecimal("Entrez un nombre décimal : ");
   }
 
-  /** @see #readDecimal(String) */
+  /**  @see #readDecimal(String) 
+*/
   public static double readDouble(String question) {
     return Stdin.readDecimal(question);
   }
 
-  /** @see #readDecimal(String) */
+  /**  @see #readDecimal(String) 
+*/
   public static double readDouble() {
     return Stdin.readDecimal();
   }
 
-  /** @see #readDecimal(String) */
+  /**  @see #readDecimal(String) 
+*/
   public static double readFloat(String question) {
     return Stdin.readDecimal(question);
   }
 
-  /** @see #readDecimal(String) */
+  /**  @see #readDecimal(String) 
+*/
   public static double readFloat() {
     return Stdin.readDecimal();
   }
@@ -166,7 +179,8 @@ public class Stdin {
   /** Lit une valeur booléenne dans une fenêtre présentée à l'utilisateur.
    * 
    * @param question Une invite qui décrit la valeur à entrer (optionel).
-   * @return La valeur lue. */
+   *  @return La valeur lue. 
+*/
   public static boolean readBoolean(String question) {
     if (Stdin.inputBuffer.isPopable()) return Stdin.inputBuffer.popBoolean();
     Stdin.inputQuestion = question;
@@ -219,17 +233,20 @@ public class Stdin {
     return "OUI".equals(Stdin.inputString);
   }
 
-  /** @see #readBoolean(String) */
+  /**  @see #readBoolean(String) 
+*/
   public static boolean readBoolean() {
     return Stdin.readBoolean("Entrez une valeur booléenne (oui/non) : ");
   }
 
-  /** @see #readBoolean(String) */
+  /**  @see #readBoolean(String) 
+*/
   public static Boolean readBool(String question) {
     return Stdin.readBoolean(question);
   }
 
-  /** @see #readBoolean(String) */
+  /**  @see #readBoolean(String) 
+*/
   public static Boolean readBool() {
     return Stdin.readBoolean();
   }
@@ -237,7 +254,8 @@ public class Stdin {
   /** Charge une chaine de caractère pour que son contenu serve d'entrée à la
    * console.
    * 
-   * @param string La chaine de caractère à ajouter. */
+   *  @param string La chaine de caractère à ajouter. 
+*/
   public static void addConsoleInput(String string) {
     Stdin.inputBuffer.add(string);
   }
@@ -246,26 +264,30 @@ public class Stdin {
    * console.
    * 
    * @param location La localisation (chemin du fichier ou localisation
-   *        internet) d'où charger le texte. */
+   *         internet) d'où charger le texte. 
+*/
   public static void loadConsoleInput(String location) {
     Stdin.addConsoleInput(org.javascool.tools.FileManager.load(location));
   }
 
   /** Définit une zone tampon qui permet de substituer un fichier aux lectures au
-   * clavier. */
+   *  clavier. 
+*/
   private static class InputBuffer {
     String inputs = new String();
 
     /** Ajoute une chaîne en substitution d'une lecture au clavier.
      * 
-     * @param string Le texte à ajouter. */
+     *  @param string Le texte à ajouter. 
+*/
     public void add(String string) {
       inputs += string.trim() + "\n";
     }
 
     /** Teste si il y une chaîne disponible.
      * 
-     * @return La valeur true si il y une entrée disponible. */
+     *  @return La valeur true si il y une entrée disponible. 
+*/
     public boolean isPopable() {
       return inputs.length() > 0;
     }
@@ -273,7 +295,8 @@ public class Stdin {
     /** Récupére une chaîne en substitution d'une lecture au clavier.
      * 
      * @return Le texte suivant à considérer. Ou la chaîne vide si le tampon est
-     *         vide. */
+     *          vide. 
+*/
     public String popString() {
       Macros.sleep(500);
       int i = inputs.indexOf("\n");
@@ -285,7 +308,8 @@ public class Stdin {
         return "";
     }
 
-    /** @see #popString(String) */
+    /**  @see #popString(String) 
+*/
     public int popInteger() {
       try {
         return Integer.decode(popString());
@@ -294,7 +318,8 @@ public class Stdin {
       }
     }
 
-    /** @see #popString(String) */
+    /**  @see #popString(String) 
+*/
     public double popDecimal() {
       try {
         return Double.parseDouble(popString());
@@ -303,7 +328,8 @@ public class Stdin {
       }
     }
 
-    /** @see #popString(String) */
+    /**  @see #popString(String) 
+*/
     public boolean popBoolean() {
       // Renvoie vrai si [t]rue [y]es [v]rai [o]ui 1
       return popString().toLowerCase().matches("[tyvo1].*");
@@ -323,7 +349,8 @@ public class Stdin {
    * </p>
    * 
    * @param runnable La portion de code à appeler, ou null pour annuler l'appel
-   *        à la portion de code précédent. */
+   *         à la portion de code précédent. 
+*/
   public static void setKeyListener(Runnable runnable) {
     if (Stdin.keyKeyListener != null) {
       Macros.getProgletPane().removeKeyListener(Stdin.keyKeyListener);
@@ -392,7 +419,8 @@ public class Stdin {
    *         'Left', 'Up, 'Right', 'Down' pour les flèches, 'F1, 'F2', .. pour
    *         les touches de fonctions, 'Alt', 'Escape', 'Backspace', 'Enter',
    *         'Page Down', 'Page Up', 'Home', 'end' pour les autres touches,
-   *         'Ctrl+A' pour la combinaison de la touche 'Control' et 'A', etc. */
+   *          'Ctrl+A' pour la combinaison de la touche 'Control' et 'A', etc. 
+*/
   public static String getLastKey() {
     return Stdin.lastKey;
   }

@@ -17,7 +17,8 @@ import org.javascool.macros.Macros;
  * 
  * @author Philippe Vienne
  * @see <a href="ToolBar.java.html">code source</a>
- * @serial exclude */
+ *  @serial exclude 
+*/
 public class ToolBar extends JToolBar {
   private static final long serialVersionUID = 1L;
 
@@ -26,12 +27,15 @@ public class ToolBar extends JToolBar {
     setFloatable(false);
   }
 
-  /** Table des boutons indexés par leurs noms. */
+  /**  Table des boutons indexés par leurs noms. 
+*/
   private HashMap<String, JComponent> buttons = new HashMap<String, JComponent>();
-  /** Table des actions associées au bouton. */
+  /**  Table des actions associées au bouton. 
+*/
   private HashMap<AbstractButton, Runnable> actions = new HashMap<AbstractButton, Runnable>();
 
-  /** Initialize la barre de boutons et efface tous les élements. */
+  /**  Initialize la barre de boutons et efface tous les élements. 
+*/
   @Override
   public void removeAll() {
     left = right = 0;
@@ -50,12 +54,14 @@ public class ToolBar extends JToolBar {
    *        différent.
    * @param icon Icone du bouton. Si null le bouton est montré sans icone.
    * @param action Action associée au bouton.
-   * @return Le bouton ajouté. */
+   *  @return Le bouton ajouté. 
+*/
   public final JButton addTool(String label, String icon, Runnable action) {
     return addTool(label, icon, action, left++);
   }
 
-  /** @see #addTool(String, String, Runnable) */
+  /**  @see #addTool(String, String, Runnable) 
+*/
   public final JButton addTool(String label, Runnable action) {
     return addTool(label, null, action);
   }
@@ -66,14 +72,16 @@ public class ToolBar extends JToolBar {
    *        nom différent.
    * @param icon Icone du bouton. Si null le bouton est montré sans icone.
    * @return Le popup ajouté. Il permet de définir un menu ou d'afficher un
-   *         composant etc... */
+   *          composant etc... 
+*/
   public final JPopupMenu addTool(String label, String icon) {
     PopupMenuRunnable p = new PopupMenuRunnable();
     p.b = addTool(label, icon, p);
     return p.j;
   }
 
-  /** @see #addTool(String, String) */
+  /**  @see #addTool(String, String) 
+*/
   public final JPopupMenu addTool(String label) {
     return addTool(label, (String) null);
   }
@@ -90,7 +98,8 @@ public class ToolBar extends JToolBar {
 
   /** Ajoute un bouton à une position précise de la barre d'outil
    * 
-   * @see #addTool(String, String, Runnable) */
+   *  @see #addTool(String, String, Runnable) 
+*/
   private JButton addTool(String label, String icon, Runnable action, int where) {
     JButton button = icon == null ? new JButton(label) : new JButton(label, Macros.getIcon(icon));
     button.addActionListener(new ActionListener() {
@@ -111,7 +120,8 @@ public class ToolBar extends JToolBar {
    * 
    * @param label Nom du composant (ce nom restera invisible). Chaque
    *        bouton/item/étiquette doit avoir un nom différent.
-   * @param component Le composant à ajouter. */
+   *  @param component Le composant à ajouter. 
+*/
   public void addTool(String label, JComponent component) {
     add(component, left++);
     if (buttons.containsKey(label)) throw new IllegalArgumentException("Chaque bouton/item/étiquette doit avoir un nom différent, mais le bouton «" + label + "» est en doublon");
@@ -119,7 +129,8 @@ public class ToolBar extends JToolBar {
     revalidate();
   }
 
-  /** Efface un composant de la barre d'outils. */
+  /**  Efface un composant de la barre d'outils. 
+*/
   public void removeTool(String label) {
     if (buttons.containsKey(label)) {
       JComponent c = buttons.get(label);
@@ -135,12 +146,14 @@ public class ToolBar extends JToolBar {
     }
   }
 
-  /** Teste si un composant est sur la barre d'outils. */
+  /**  Teste si un composant est sur la barre d'outils. 
+*/
   public boolean hasTool(String label) {
     return buttons.containsKey(label);
   }
 
-  /** @see #addRightTool(String, String, Runnable) */
+  /**  @see #addRightTool(String, String, Runnable) 
+*/
   public JButton addRightTool(String label, Runnable action) {
     return addRightTool(label, null, action);
   }
@@ -151,7 +164,8 @@ public class ToolBar extends JToolBar {
    *        nom différent.
    * @param icon Icone du bouton. Si null le bouton est montré sans icone.
    * @param action Action associée au bouton.
-   * @return Le bouton ajouté. */
+   *  @return Le bouton ajouté. 
+*/
   public JButton addRightTool(String label, String icon, Runnable action) {
     if (right == 0) {
       add(Box.createHorizontalGlue());
@@ -163,7 +177,8 @@ public class ToolBar extends JToolBar {
    * 
    * @param label Nom du composant. Chaque bouton/item/étiquette doit avoir un
    *        nom différent.
-   * @return Le popup ajouté. */
+   *  @return Le popup ajouté. 
+*/
   public final JPopupMenu addRightTool(String label) {
     PopupMenuRunnable p = new PopupMenuRunnable();
     p.b = addRightTool(label, p);
@@ -174,7 +189,8 @@ public class ToolBar extends JToolBar {
   // Non, il peut toujours servir
   /** Ajoute en permanence un composant à la droite de la barre d'outils.
    * 
-   * @param component Le composant à ajouter. */
+   *  @param component Le composant à ajouter. 
+*/
   public void addRightTool(JComponent component) {
     if (right == 0) {
       add(Box.createHorizontalGlue());
@@ -184,7 +200,8 @@ public class ToolBar extends JToolBar {
 
   /** Ajoute en permanence un composant à la gauche de la barre d'outils.
    * 
-   * @param component Le composant à ajouter. */
+   *  @param component Le composant à ajouter. 
+*/
   public void addLeftTool(JComponent component) {
     add(component, 0);
     left++;

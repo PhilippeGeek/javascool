@@ -32,7 +32,8 @@ import org.javascool.widgets.MainFrame;
  * </p>
  * 
  * @see <a href="FileManager.java.html">code source</a>
- * @serial exclude */
+ *  @serial exclude 
+*/
 public class FileManager {
   // @factory
 
@@ -69,7 +70,8 @@ public class FileManager {
    * @param utf8 Si la valeur est vraie, force l'encodage en UTF-8 à la lecture.
    *        Par défaut (false) utilise l'encodage local.
    * @throws IllegalArgumentException Si l'URL est mal formée.
-   * @throws RuntimeException Si une erreur d'entrée-sortie s'est produite. */
+   *  @throws RuntimeException Si une erreur d'entrée-sortie s'est produite. 
+*/
   public static String load(String location, boolean utf8) {
     try {
       BufferedReader reader = new BufferedReader(new InputStreamReader(Macros.getResourceURL(location, true).openStream(), utf8 ? Charset.forName("utf-8") : Charset.defaultCharset()), 10240);
@@ -88,7 +90,8 @@ public class FileManager {
     }
   }
 
-  /** * @see #load(String, boolean) */
+  /**  * @see #load(String, boolean) 
+*/
   public static String load(String location) {
     return FileManager.load(location, false);
   }
@@ -127,7 +130,8 @@ public class FileManager {
    * @param utf8 Si la valeur est vraie, force l'encodage en UTF-8 à la lecture.
    *        Par défaut (false) utilise l'encodage local.
    * @throws IllegalArgumentException Si l'URL est mal formée.
-   * @throws RuntimeException Si une erreur d'entrée-sortie s'est produite. */
+   *  @throws RuntimeException Si une erreur d'entrée-sortie s'est produite. 
+*/
   public static void save(String location, String string, boolean backup, boolean utf8) {
     if (location.startsWith("stdout:")) {
       System.out.println("\n" + location + " " + string);
@@ -149,17 +153,20 @@ public class FileManager {
     }
   }
 
-  /** @see #save(String, String, boolean, boolean) */
+  /**  @see #save(String, String, boolean, boolean) 
+*/
   public static void save(String location, String string, boolean backup) {
     FileManager.save(location, string, backup, false);
   }
 
-  /** @see #save(String, String, boolean, boolean) */
+  /**  @see #save(String, String, boolean, boolean) 
+*/
   public static void save(String location, String string) {
     FileManager.save(location, string, false, false);
   }
 
-  /** Met en place le writer dans le cas d'une URL. */
+  /**  Met en place le writer dans le cas d'une URL. 
+*/
   private static OutputStreamWriter getUrlWriter(String location, boolean utf8) throws IOException {
     URL url = new URL(location);
     URLConnection connection = url.openConnection();
@@ -174,7 +181,8 @@ public class FileManager {
     return writer;
   }
 
-  /** Mets en place le writer dans le cas d'un fichier. */
+  /**  Mets en place le writer dans le cas d'un fichier. 
+*/
   private static OutputStreamWriter getFileWriter(String location, boolean backup, boolean utf8) throws IOException {
     File file = new File(location), parent = file.getParentFile();
     if ((parent != null) && (!parent.isDirectory())) {
@@ -186,7 +194,8 @@ public class FileManager {
     return new OutputStreamWriter(new FileOutputStream(location), utf8 ? Charset.forName("utf-8") : Charset.defaultCharset());
   }
 
-  /** Mécanisme de backup. */
+  /**  Mécanisme de backup. 
+*/
   private static void backup(File file) {
     File backup = new File(file.getAbsolutePath() + "~");
     if (backup.exists()) {
@@ -198,7 +207,8 @@ public class FileManager {
   /** Détecte si une URL existe.
    * 
    * @param location Une URL (Universal Resource Location).
-   * @return Renvoie true si l'URL existe et est lisible, false sinon. */
+   *  @return Renvoie true si l'URL existe et est lisible, false sinon. 
+*/
   public static boolean exists(String location) {
     if (location.matches("(ftp|http|https|jar):.*")) {
       try {
@@ -214,7 +224,8 @@ public class FileManager {
     }
   }
 
-  /** @see #exists(String) */
+  /**  @see #exists(String) 
+*/
   public static boolean exists(URL location) {
     try {
       location.openStream().close();
@@ -229,7 +240,8 @@ public class FileManager {
    * @param location Une URL (Universal Resource Location)
    * @return La valeur du temps de dernière modification, donné en millisecondes
    *         depuis le 1er janvier 1970 en temps GMT, ou 0 si la valeur est
-   *         indéfinie. */
+   *          indéfinie. 
+*/
   public static long getLastModified(String location) {
     location = Macros.getResourceURL(location).toString();
     if (location.matches("(ftp|http|https|jar):.*")) {
@@ -258,7 +270,8 @@ public class FileManager {
    *         Si le répertoire ou le jar ne peut être lu, renvoie une liste vide
    *         dans erreur.
    * @throws IllegalArgumentException Si l'URL ne peut pas être listée.
-   * @throws RuntimeException Si une erreur d'entrée-sortie s'est produite. */
+   *  @throws RuntimeException Si une erreur d'entrée-sortie s'est produite. 
+*/
   public static String[] list(String folder, String pattern, int depth) {
     if (folder.matches("(ftp|http|https|jar):.*")) throw new IllegalArgumentException("Impossible de lister le contenu d'un URL de ce type: " + folder);
     if (folder.matches("file:.*")) {
@@ -296,12 +309,14 @@ public class FileManager {
     return files.toArray(new String[files.size()]);
   }
 
-  /** @see #list(String, String, int) */
+  /**  @see #list(String, String, int) 
+*/
   public static String[] list(String folder, String pattern) {
     return FileManager.list(folder, pattern, 0);
   }
 
-  /** @see #list(String, String, int) */
+  /**  @see #list(String, String, int) 
+*/
   public static String[] list(String folder) {
     return FileManager.list(folder, null, 0);
   }
@@ -309,7 +324,8 @@ public class FileManager {
   /** Crée un répertoire temporaire dans le répertoire temporaire de la machine.
    * 
    * @param prefix Prefix du répertoire.
-   * @throws RuntimeException Si une erreur d'entrée-sortie s'est produite. */
+   *  @throws RuntimeException Si une erreur d'entrée-sortie s'est produite. 
+*/
   public static File createTempDir(String prefix) {
     try {
       File d = File.createTempFile(prefix, "");
@@ -329,7 +345,8 @@ public class FileManager {
    *        doit choisir
    * @return l'objet File contenant le fichier ou alors lance une erreur
    * @throws java.lang.IllegalStateException Dans le cas ou l'utilisateur annule
-   *         ou ne choisit pas de fichier */
+   *          ou ne choisit pas de fichier 
+*/
   public static File openFile(String rep) {
     if (UserConfig.getOS().equals(UserConfig.LINUX) || UserConfig.getOS().equals(UserConfig.WINDOWS)) { // On est sous Windows, Linux ou Solaris
       JFileChooser fc = new JFileChooser();
@@ -364,7 +381,8 @@ public class FileManager {
    *        doit choisir
    * @return l'objet File contenant le fichier ou alors lance une erreur
    * @throws java.lang.IllegalStateException Dans le cas ou l'utilisateur annule
-   *         ou ne choisit pas de fichier */
+   *          ou ne choisit pas de fichier 
+*/
   public static File saveFile(boolean saveAs, String rep) {
     if (UserConfig.getOS().equals(UserConfig.LINUX) || UserConfig.getOS().equals(UserConfig.WINDOWS)) { // On est sous Windows, Linux ou Solaris
       JFileChooser fc = new JFileChooser();

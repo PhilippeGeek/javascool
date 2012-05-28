@@ -35,7 +35,8 @@ import org.javascool.tools.Invoke;
  * </ul>
  * 
  * @see <a href="PanelApplet.java.html">source code</a>
- * @serial exclude */
+ *  @serial exclude 
+*/
 public class PanelApplet extends JApplet {
   private static final long serialVersionUID = 1L;
 
@@ -46,14 +47,16 @@ public class PanelApplet extends JApplet {
    *        <tt>start/stop</tt> (par défaut), sinon elles sont invoquées au
    *        lancement.
    * @return Cet objet, permettant de définir la construction
-   *         <tt>new PanelApplet().reset(..)</tt>. */
+   *          <tt>new PanelApplet().reset(..)</tt>. 
+*/
   public PanelApplet reset(String panel, boolean manualStart) {
     this.panel = panel;
     this.manualStart = manualStart;
     return this;
   }
 
-  /** @see #reset(String, boolean) */
+  /**  @see #reset(String, boolean) 
+*/
   public PanelApplet reset(String panel) {
     return reset(panel, true);
   }
@@ -116,7 +119,8 @@ public class PanelApplet extends JApplet {
   /** Renvoie le panneau graphique de la proglet courante.
    * 
    * @return Le panneau graphique de la proglet courante ou null si il n'est pas
-   *         défini. */
+   *          défini. 
+*/
   public static Component getPane() {
     return PanelApplet.pane;
   }
@@ -130,7 +134,8 @@ public class PanelApplet extends JApplet {
    * 
    * @param usage
    *        <tt>java org.javascool.widgets.PanelApplet nom-complet-qualifé-de-l-objet-graphique</tt>
-   *        . */
+   *         . 
+*/
   public static void main(String[] usage) {
     // @main
     if (usage.length > 0) {

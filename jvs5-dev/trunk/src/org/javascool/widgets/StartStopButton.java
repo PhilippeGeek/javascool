@@ -13,12 +13,15 @@ import org.javascool.macros.Macros;
  * 
  * @author Philippe Vienne
  * @see <a href="StartStopButton.java.html">code source</a>
- * @serial exclude */
+ *  @serial exclude 
+*/
 public abstract class StartStopButton extends JPanel {
   private static final long serialVersionUID = 1L;
-  /** Le bouton de start/stop . */
+  /**  Le bouton de start/stop . 
+*/
   private JButton startButton;
-  /** L'affichage du temps d'exécution. */
+  /**  L'affichage du temps d'exécution. 
+*/
   private JLabel execTime;
 
   // @bean
@@ -44,7 +47,8 @@ public abstract class StartStopButton extends JPanel {
     doStop();
   }
 
-  /** Lancement du programme et du compteur. */
+  /**  Lancement du programme et du compteur. 
+*/
   private void doStart() {
     if (isRunning()) {
       stop();
@@ -83,7 +87,8 @@ public abstract class StartStopButton extends JPanel {
     timerThread.start();
   }
 
-  /** Arrêt du programme et du compteur. */
+  /**  Arrêt du programme et du compteur. 
+*/
   private void doStop() {
     if (isRunning()) {
       stop();
@@ -97,19 +102,23 @@ public abstract class StartStopButton extends JPanel {
    * est terminé.
    * <p>
    * Par défaut l'indicateur est celui de l'appel à la méthode <tt>stop</tt>.
-   * </p> */
+   *  </p> 
+*/
   public boolean isRunning() {
     return isStarting();
   }
 
-  /** Indique que l'interface à affiché le lancement. */
+  /**  Indique que l'interface à affiché le lancement. 
+*/
   private boolean isStarting() {
     return "Arrêter".equals(startButton.getText());
   }
 
-  /** Cette méthode est appelée au lancement demandé par l'utilisateur. */
+  /**  Cette méthode est appelée au lancement demandé par l'utilisateur. 
+*/
   abstract public void start();
 
-  /** Cette méthode est appelée à l'arrêt demandé par l'utilisateur. */
+  /**  Cette méthode est appelée à l'arrêt demandé par l'utilisateur. 
+*/
   abstract public void stop();
 }

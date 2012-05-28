@@ -7,7 +7,8 @@ package org.javascool.core;
  * </p>
  * 
  * @see <a href="Translator.java.html">code source</a>
- * @serial exclude */
+ *  @serial exclude 
+*/
 public class Translator {
   /** Renvoie les déclarations d'import spécifiques à cette proglet.
    * <p>
@@ -23,7 +24,8 @@ public class Translator {
    * macros de JavaScool etc.. sont automatiquement prises en charge.
    * </p>
    * 
-   * @return Renvoie les imports en syntaxe Java (par défaut la chaîne vide). */
+   *  @return Renvoie les imports en syntaxe Java (par défaut la chaîne vide). 
+*/
   public String getImports() {
     return "";
   }
@@ -47,7 +49,8 @@ public class Translator {
    * 
    * @param code Le code Jvs en entrée.
    * @return Le code transformé en Java pour ce qui est spécifique de cette
-   *         proglet (par défaut la chaîne en entrée).</p> */
+   *          proglet (par défaut la chaîne en entrée).</p> 
+*/
   public String translate(String code) {
     return code;
   }
@@ -89,7 +92,8 @@ public class Translator {
    *         </p>
    * @see #scanInstruction(String, int)
    * @see #scanComments(String, int, boolean)
-   * @see #scanSpaces(String, int) */
+   *  @see #scanSpaces(String, int) 
+*/
   public static int[] scanConstruct(String string, int offset, String start, String stop, String escape, boolean recurse, boolean code) {
     int index[] = { -1, offset };
     if (0 <= offset && offset < string.length() && stop != null) {
@@ -139,7 +143,8 @@ public class Translator {
    *         <p>
    *         la valeur <tt>{-1, offset}</tt> si le parenthésage n'est pas
    *         trouvé.
-   *         </p> */
+   *          </p> 
+*/
   public static int[] scanInstruction(String string, int offset) {
     int index[] = Translator.scanConstruct(string, offset, "{", "}", null, true, true);
     if (index[0] == -1) {
@@ -160,7 +165,8 @@ public class Translator {
    * @param next Incrémente l'offset en l'absence de structure à scanner, si
    *        égal à true.
    * @return L'index qui suit le texte éliminé, donc la valeur de l'offset (ou
-   *         offset plus un si incémente) si il n'y en a pas. */
+   *          offset plus un si incémente) si il n'y en a pas. 
+*/
   public static int scanComments(String string, int offset, boolean next) {
     int offset0 = offset;
     for (boolean loop = true; loop;) {
@@ -179,7 +185,8 @@ public class Translator {
    * @param string Le contenu du texte à analyser.
    * @param offset L'index de départ dans le texte à analyser.
    * @return L'index qui suit les espaces, donc la valeur de l'offset si il n'y
-   *         en a pas. */
+   *          en a pas. 
+*/
   public static int scanSpaces(String string, int offset) {
     for (; offset < string.length() && Character.isWhitespace(string.charAt(offset)); offset++) {
       ;

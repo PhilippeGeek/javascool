@@ -15,7 +15,8 @@ import org.javascool.widgets.MainFrame;
 
 public class Proglet {
 
-  /** Méta-données de la proglet. */
+  /**  Méta-données de la proglet. 
+*/
   public Pml pml = new Pml();
 
   /** Définit une proglet à partir d'un répertoire donné.
@@ -24,7 +25,8 @@ public class Proglet {
    *        proglet.
    * @throws IllegalArgumentException Si l'URL est mal formée.
    * @return Cet objet, permettant de définir la construction
-   *         <tt>new Proglet().load(..)</tt>. */
+   *          <tt>new Proglet().load(..)</tt>. 
+*/
   public Proglet load(String location) {
     // Définit les méta-données de la proglet.
     pml.load(location + "proglet.pml", true);
@@ -65,14 +67,16 @@ public class Proglet {
 
   /** Renvoie le nom de la proglet.
    * 
-   * @return Le nom de la proglet. */
+   *  @return Le nom de la proglet. 
+*/
   public String getName() {
     return pml.getString("name");
   }
 
   /** Renvoie le titre de la proglet.
    * 
-   * @return Le titre de la proglet. */
+   *  @return Le titre de la proglet. 
+*/
   public String getTitle() {
     return pml.getString("title");
   }
@@ -80,33 +84,38 @@ public class Proglet {
   /** Renvoie l'icone de la proglet.
    * 
    * @return Le nom de l'URL de l'icone de la proglet, ou l'icone par defaut
-   *         sinon. */
+   *          sinon. 
+*/
   public String getIcon() {
     return pml.getString("icon-location");
   }
 
   /** Renvoie la documentation de la proglet.
    * 
-   * @return L'URL de la documentation de la proglet. */
+   *  @return L'URL de la documentation de la proglet. 
+*/
   public String getHelp() {
     return pml.getString("help-location");
   }
 
   /** Renvoie l'url du fichier de completion de la proglet.
    * 
-   * @return L'URL de l'xml de completion de la proglet. */
+   *  @return L'URL de l'xml de completion de la proglet. 
+*/
   public String getCompletion() {
     return pml.getString("completion", "");
   }
 
-  /** Indique si la proglet définit des fonctions statiques pour l'utilisateur. */
+  /**  Indique si la proglet définit des fonctions statiques pour l'utilisateur. 
+*/
   public boolean hasFunctions() {
     return pml.getBoolean("has-functions");
   }
 
   /** Renvoie, si il existe, le panneau graphique à insérer dans javascool.
    * 
-   * @return Le panneau graphique de la proglet si il existe, sinon null. */
+   *  @return Le panneau graphique de la proglet si il existe, sinon null. 
+*/
   public Component getPane() {
     setPane();
     return (Component) pml.getObject("java-pane");
@@ -114,7 +123,8 @@ public class Proglet {
 
   /** Renvoie, si il existe, le panneau graphique de la proglet.
    * 
-   * @return Le panneau graphique de la proglet si il existe, sinon null. */
+   *  @return Le panneau graphique de la proglet si il existe, sinon null. 
+*/
   public Component getProgletPane() {
     setPane();
     return (Component) pml.getObject("java-proglet-pane");
@@ -176,12 +186,14 @@ public class Proglet {
 
   /** Renvoie, si il existe, le translateur de code de la proglet.
    * 
-   * @return Le translateur de code de la proglet si il existe, sinon null. */
+   *  @return Le translateur de code de la proglet si il existe, sinon null. 
+*/
   public Translator getTranslator() {
     return (Translator) pml.getObject("jvs-translator");
   }
 
-  /** Indique si la proglet a une démo pour l'utilisateur. */
+  /**  Indique si la proglet a une démo pour l'utilisateur. 
+*/
   public boolean hasDemo() {
     return getPane() != null && Invoke.run(getPane(), "start", false);
   }
@@ -189,7 +201,8 @@ public class Proglet {
   /** Lance la démo de la proglet.
    * 
    * @throws RuntimeException si la méthode génère une exception lors de son
-   *         appel. */
+   *          appel. 
+*/
   public void doDemo() {
     if (hasDemo()) {
       (new Thread() {
@@ -204,12 +217,14 @@ public class Proglet {
 
   /** Indique si la proglet est une proglet processing.
    * 
-   * @return La valeur true si cette applet est développée en processing. */
+   *  @return La valeur true si cette applet est développée en processing. 
+*/
   public boolean isProcessing() {
     return pml.getBoolean("processing");
   }
 
-  /** Démarre la proglet. */
+  /**  Démarre la proglet. 
+*/
   public void start() {
     if (popupframe != null) {
       popupframe.setVisible(true);
@@ -223,7 +238,8 @@ public class Proglet {
     }
   }
 
-  /** Arrête la proglet. */
+  /**  Arrête la proglet. 
+*/
   public void stop() {
     try {
       if (getPane() != null && getPane() instanceof Applet) {

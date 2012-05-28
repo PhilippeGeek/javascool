@@ -34,7 +34,8 @@ import org.javascool.macros.Macros;
  * }
  * </pre>
  * 
- * </p> */
+ *  </p> 
+*/
 public class Dialog extends JDialog {
   /**
 	 * 
@@ -60,7 +61,8 @@ public class Dialog extends JDialog {
    *        <p>
    *        Il ne faut pas appelé le dialogue en mode modal directement d'un
    *        gestionnaire d'événement (bouton, etc..) mais utiliser un Thread.
-   *        </p> */
+   *         </p> 
+*/
   public void open(boolean modal) {
     setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     pack();
@@ -76,14 +78,16 @@ public class Dialog extends JDialog {
   }
 
   /** Routine à appeler quand le dialogue à été achevé pour continuer le
-   * programme. */
+   *  programme. 
+*/
   public void close() {
     dispose();
     pending = false;
   }
 
   /** Teste si le dialogue est en cours ou achevé. return La valeur true si le
-   * dialogue est en cours, sinon false. */
+   *  dialogue est en cours, sinon false. 
+*/
   public boolean isOpen() {
     return pending;
   }

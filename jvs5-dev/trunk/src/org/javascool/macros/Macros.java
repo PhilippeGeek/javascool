@@ -39,7 +39,8 @@ import org.javascool.widgets.PanelApplet;
  * </p>
  * 
  * @see <a href="Macros.java.html">code source</a>
- * @serial exclude */
+ *  @serial exclude 
+*/
 public class Macros {
   // @factory
 
@@ -47,7 +48,8 @@ public class Macros {
   }
 
   /** Renvoie un nombre entier aléatoire uniformément distribué entre deux
-   * valeurs (maximum inclus). */
+   *  valeurs (maximum inclus). 
+*/
   public static int random(int min, int max) {
     return (int) Math.floor(min + (max - min) * Math.random());
   }
@@ -55,7 +57,8 @@ public class Macros {
   /** Renvoie true si deux chaînes de caratères sont égales, faux sinon.
    * 
    * @param string1 L'une des chaînes à comparer.
-   * @param string2 L'autre des chaînes à comparer. */
+   *  @param string2 L'autre des chaînes à comparer. 
+*/
   public static boolean equal(String string1, String string2) {
     return string1.equals(string2);
   }
@@ -64,7 +67,8 @@ public class Macros {
    * 
    * @return Renvoie la différence, en millisecondes, entre le temps actuel et
    *         celui du 1 Janvier 2000, minuit, en utilisant le temps universel
-   *         coordonné. */
+   *          coordonné. 
+*/
   public static double now() {
     return System.currentTimeMillis() - Macros.offset;
   }
@@ -79,7 +83,8 @@ public class Macros {
 
   /** Temporise une durée fixée. Cela permet aussi de mettre à jour l'affichage.
    * 
-   * @param delay Durée d'attente en milli-secondes. */
+   *  @param delay Durée d'attente en milli-secondes. 
+*/
   public static void sleep(int delay) {
     try {
       if (delay > 0) {
@@ -112,7 +117,8 @@ public class Macros {
    * sinon il tournera sans relâche jusqu'à la fermeture de javascool.
    * 
    * @param delay Période d'échantillonage en milli-secondes.
-   * @param runnable Le code à exécuter à chaque appel. */
+   *  @param runnable Le code à exécuter à chaque appel. 
+*/
   public static void sample(int delay, Runnable runnable) {
     Sampler sampler = new Sampler().setDelay(delay).setRunnable(runnable);
     sampler.start();
@@ -138,7 +144,8 @@ public class Macros {
    *        s'arrêter.
    * @param message Un message s'imprime sur la console pour signaler l'erreur.
    * @param object Si l'objet n'est pas null, donne des renseignements sur
-   *        l'objet */
+   *         l'objet 
+*/
   public static void assertion(boolean condition, String message, Object object) {
     System.err.println("#" + condition + " : " + message + " ::" + object);
     if (!condition) {
@@ -163,7 +170,8 @@ public class Macros {
     }
   }
 
-  /** @see #assertion(boolean, String, Object) */
+  /**  @see #assertion(boolean, String, Object) 
+*/
   public static void assertion(boolean condition, String message) {
     Macros.assertion(condition, message, null);
   }
@@ -176,7 +184,8 @@ public class Macros {
    * 
    * @param text Le message à afficher.
    * @param html Mettre à true si le texte est en HTML, false sinon (valeur par
-   *        défaut) */
+   *         défaut) 
+*/
   public static void message(String text, boolean html) {
     JEditorPane p = new JEditorPane();
     p.setEditable(false);
@@ -210,7 +219,8 @@ public class Macros {
 
   private static Dialog messageDialog;
 
-  /** @see #message(String, boolean) */
+  /**  @see #message(String, boolean) 
+*/
   public static void message(String text) {
     Macros.message(text, false);
   }
@@ -219,7 +229,8 @@ public class Macros {
    * 
    * @param path Emplacement de l'icone, par exemple
    *        <tt>"org/javascool/widget/icons/play.png"</tt>
-   * @return L'icone chargée ou null si elle n'existe pas. */
+   *  @return L'icone chargée ou null si elle n'existe pas. 
+*/
   public static ImageIcon getIcon(String path) {
     URL icon = Macros.getResourceURL(path); // Thread.currentThread().getContextClassLoader().getResource(path);
     if (icon == null) {
@@ -232,7 +243,8 @@ public class Macros {
    * 
    * @param location L'URL à afficher.
    * @throws IllegalArgumentException Si l'URL est mal formée.
-   * @throws RuntimeException Si une erreur d'entrée-sortie s'est produite. */
+   *  @throws RuntimeException Si une erreur d'entrée-sortie s'est produite. 
+*/
   public static void openURL(String location) {
     try {
       if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
@@ -290,7 +302,8 @@ public class Macros {
    *        null.
    * @param reading Précise si nous sommes en lecture (true) ou écriture
    *        (false). Par défaut en lecture.
-   * @throws IllegalArgumentException Si l'URL est mal formée. */
+   *  @throws IllegalArgumentException Si l'URL est mal formée. 
+*/
   public static URL getResourceURL(String location, String base, boolean reading) {
     if (base != null) {
       location = base + "/" + location;
@@ -326,17 +339,20 @@ public class Macros {
     }
   }
 
-  /** @see #getResourceURL(String, String, boolean) */
+  /**  @see #getResourceURL(String, String, boolean) 
+*/
   public static URL getResourceURL(String location, String base) {
     return Macros.getResourceURL(location, base, true);
   }
 
-  /** @see #getResourceURL(String, String, boolean) */
+  /**  @see #getResourceURL(String, String, boolean) 
+*/
   public static URL getResourceURL(String location, boolean reading) {
     return Macros.getResourceURL(location, null, reading);
   }
 
-  /** @see #getResourceURL(String, String, boolean) */
+  /**  @see #getResourceURL(String, String, boolean) 
+*/
   public static URL getResourceURL(String location) {
     return Macros.getResourceURL(location, null, true);
   }
@@ -344,7 +360,8 @@ public class Macros {
   /** Renvoie le panneau graphique de la proglet courante.
    * 
    * @return Le panneau graphique de la proglet courante ou null si il n'est pas
-   *         défini. */
+   *          défini. 
+*/
   @SuppressWarnings("unchecked")
   // On évite l'erreur de Cast du compilateur
   public static <T extends Component> T getProgletPane() {

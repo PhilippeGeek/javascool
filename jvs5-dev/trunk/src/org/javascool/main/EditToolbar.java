@@ -6,15 +6,18 @@ import org.javascool.widgets.ToolBar;
 
 /** La barre d'outil de l'ide.
  * 
- * @since 4.5 */
+ *  @since 4.5 
+*/
 public class EditToolbar extends ToolBar {
 
   private static final long serialVersionUID = -2921512429946718150L;
 
-  /** Instance de la classe. */
+  /**  Instance de la classe. 
+*/
   private static EditToolbar jvstb;
 
-  /** Permet d'avoir une instance unique de la classe. */
+  /**  Permet d'avoir une instance unique de la classe. 
+*/
   public static EditToolbar getInstance() {
     if (EditToolbar.jvstb == null) {
       EditToolbar.jvstb = new EditToolbar();
@@ -22,7 +25,8 @@ public class EditToolbar extends ToolBar {
     return EditToolbar.jvstb;
   }
 
-  /** Boutons de compilation. */
+  /**  Boutons de compilation. 
+*/
   private JButton compileButton;
 
   public EditToolbar() {

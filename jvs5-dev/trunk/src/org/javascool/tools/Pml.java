@@ -55,7 +55,8 @@ import java.util.regex.Pattern;
  * </p>
  * 
  * @see <a href="Pml.java.html">source code</a>
- * @serial exclude */
+ *  @serial exclude 
+*/
 public class Pml {
   // @bean
   public Pml() {
@@ -68,7 +69,8 @@ public class Pml {
    * @param value La chaîne de syntaxe
    *        <tt>"{tag name = value .. element .. }"</tt>.
    * @return Cet objet, permettant de définir la construction
-   *         <tt>Pml pml= new Pml().reset(..)</tt>. */
+   *          <tt>Pml pml= new Pml().reset(..)</tt>. 
+*/
   public Pml reset(String value) {
     // Initializes the Pml
     data = new HashMap<String, Object>();
@@ -94,7 +96,8 @@ public class Pml {
    *        </ul>
    *        </div>
    * @return Cet objet, permettant de définir la construction
-   *         <tt>Pml pml= new Pml().reset(..)</tt>. */
+   *          <tt>Pml pml= new Pml().reset(..)</tt>. 
+*/
   public Pml reset(String value, String format) {
     format = format.toLowerCase();
     if ("xml".equals(format)) return reset(Xml2Xml.run(value, Pml.xml2pml).replaceAll("¨", "\\\\\"").replaceAll("«", "\\{"), "pml");
@@ -109,7 +112,8 @@ public class Pml {
    * 
    * @param pml Le PML à copier.
    * @return Cet objet, permettant de définir la construction
-   *         <tt>Pml pml= new Pml().reset(..)</tt>. */
+   *          <tt>Pml pml= new Pml().reset(..)</tt>. 
+*/
   public Pml reset(Pml pml) {
     // Initializes the Pml
     data = new HashMap<String, Object>();
@@ -155,7 +159,8 @@ public class Pml {
    * 
    * @param usage Les éléments de la ligne de commande.
    * @return Cet objet, permettant de définir la construction
-   *         <tt>Pml pml= new Pml().reset(..)</tt>. */
+   *          <tt>Pml pml= new Pml().reset(..)</tt>. 
+*/
   public Pml reset(String[] usage) {
     reset("{usage}");
     for (int i = 0; i < usage.length; i++) {
@@ -194,7 +199,8 @@ public class Pml {
    *        éléments.</li>
    *        </ul>
    *        </div>
-   * @return La chaîne qui représente la PML. */
+   *  @return La chaîne qui représente la PML. 
+*/
   public String toString(String format) {
     format = format.toLowerCase();
     return "xml".equals(format) ? new XmlWriter().toString(this) : "raw".equals(format) ? new PlainWriter().toString(this, 0) : "php".equals(format) ? new PhpWriter().toString(this) : "jmf".equals(format) ? new JmfWriter().toString(this) : new PlainWriter().toString(this, 180);
@@ -215,7 +221,8 @@ public class Pml {
    * @param utf8 Si la valeur est vraie, force l'encodage en UTF-8 à la lecture.
    *        Par défaut (false) utilise l'encodage local.
    * @return Cet objet, permettant de définir la construction
-   *         <tt>Pml pml= new Pml().load(..)</tt>. */
+   *          <tt>Pml pml= new Pml().load(..)</tt>. 
+*/
   public final Pml load(String location, String format, boolean utf8) {
     if (format == null) {
       format = location.replaceAll("^.*\\.([A-Za-z]+)$", "$1");
@@ -223,17 +230,20 @@ public class Pml {
     return reset(FileManager.load(location, utf8), format);
   }
 
-  /** @see #load(String, String, boolean) */
+  /**  @see #load(String, String, boolean) 
+*/
   public final Pml load(String location, String format) {
     return load(location, format, false);
   }
 
-  /** @see #load(String, String, boolean) */
+  /**  @see #load(String, String, boolean) 
+*/
   public final Pml load(String location, boolean utf8) {
     return load(location, null, utf8);
   }
 
-  /** @see #load(String, String, boolean) */
+  /**  @see #load(String, String, boolean) 
+*/
   public final Pml load(String location) {
     return load(location, null, false);
   }
@@ -246,21 +256,25 @@ public class Pml {
    *        href="#output-format">formats supportés</a>, par défaut donné par
    *        l'extension du fichier.
    * @return Cet objet, permettant de définir la construction
-   *         <tt>Pml pml= new Pml().save(..)</tt>. */
+   *          <tt>Pml pml= new Pml().save(..)</tt>. 
+*/
   public final Pml save(String location, String format) {
     FileManager.save(location, toString(format) + "\n");
     return this;
   }
 
-  /** @see #save(String, String) */
+  /**  @see #save(String, String) 
+*/
   public final Pml save(String location) {
     return save(location, location.replaceAll("^.*\\.([A-Za-z]+)$", "$1"));
   }
 
   /** Definit l'analyseur lexical qui lit la chaîne mot à mot en normlisant les
-   * espaces et en titant le caractère '"'. */
+   *  espaces et en titant le caractère '"'. 
+*/
   protected static class TokenReader {
-    /** Definit un élément lexical. */
+    /**  Definit un élément lexical. 
+*/
     private static class token {
       String string;
       int line;
@@ -279,7 +293,8 @@ public class Pml {
     ArrayList<token> tokens;
     int itoken;
 
-    /** Initialise le lecteur. */
+    /**  Initialise le lecteur. 
+*/
     public TokenReader reset(String string) {
       // Initializes the buffer
       tokens = new ArrayList<token>();
@@ -384,25 +399,29 @@ public class Pml {
      * 
      * @param next Si 0 renvoie l'élément courant. Si 1 renvoie l'élément à
      *        suivre, etc..
-     * @return L'élément ou '}' à l afin du fichier. */
+     *  @return L'élément ou '}' à l afin du fichier. 
+*/
     public String getToken(int next) {
       String current = itoken + next < tokens.size() ? tokens.get(itoken + next).string : "}";
       return current;
     }
 
-    /** Teste si il y reste des éléments. */
+    /**  Teste si il y reste des éléments. 
+*/
     public boolean isNext() {
       return itoken < tokens.size();
     }
 
     /** Avance à un élément suivant.
      * 
-     * @param next Si 1 avance d'un élément, etc.. */
+     *  @param next Si 1 avance d'un élément, etc.. 
+*/
     public void next(int next) {
       itoken += next;
     }
 
-    /** Renvoie la fin de la chaîne. */
+    /**  Renvoie la fin de la chaîne. 
+*/
     public String trailer() {
       String t = "";
       while (itoken < tokens.size()) {
@@ -411,7 +430,8 @@ public class Pml {
       return t.trim();
     }
 
-    /** Teste une condition de syntaxe. */
+    /**  Teste une condition de syntaxe. 
+*/
     public void check(boolean ok, String message) {
       if (!ok) {
         System.out.println("Erreur de syntaxe \"" + message + "\", ligne " + (itoken < tokens.size() ? "" + tokens.get(itoken).line + " vers \"" + getToken(0) + "\"" : "finale"));
@@ -428,9 +448,11 @@ public class Pml {
     }
   }
 
-  /** Définit un lecteur de PML. */
+  /**  Définit un lecteur de PML. 
+*/
   private static class PmlReader extends TokenReader {
-    /** Lit la chaîne et en affecte les valeurs du PML. */
+    /**  Lit la chaîne et en affecte les valeurs du PML. 
+*/
     public void read(String string, Pml pml) {
       reset(string);
       // Parses the string
@@ -444,7 +466,8 @@ public class Pml {
       }
     }
 
-    /** Effectue l'analyse syntaxique récursive. */
+    /**  Effectue l'analyse syntaxique récursive. 
+*/
     private Pml parse(Pml pml) {
       String b = getToken(0);
       // Parses a { } Pml construct
@@ -503,11 +526,13 @@ public class Pml {
     }
   }
 
-  /** Définit le convertisseur de XML en PML. */
+  /**  Définit le convertisseur de XML en PML. 
+*/
   private static String xml2pml = "<?xml version='1.0' encoding='utf-8'?>\n" + "<xsl:stylesheet xmlns:xsl='http://www.w3.org/1999/XSL/Transform' version='1.0'>\n" + "  <xsl:output method='text' encoding='utf-8' omit-xml-declaration='yes'/>\n" + "  <xsl:template match='*'>\n" + "  {<xsl:value-of select='name(.)'/><xsl:text> </xsl:text>\n" + "    <xsl:for-each select='@*'><xsl:value-of select='name(.)'/>=\"<xsl:value-of select=\"translate(., '&quot;','¨')\"/>\"<xsl:text> </xsl:text></xsl:for-each>\n"
       + "    <xsl:if test='count(*) = 0'>\n" + "      <xsl:apply-templates select='*'/>\n" + "      <xsl:value-of select=\"concat('&quot;', translate(translate(text(), '&quot;','¨'), '{', '«'), '&quot;')\"/>\n" + "    </xsl:if>\n" + "    <xsl:if test='count(*) > 0'><xsl:apply-templates/></xsl:if>\n" + "  }</xsl:template>\n" + "</xsl:stylesheet>";
 
-  /** Définit le convertisseur de PML en chaîne de caractères. */
+  /**  Définit le convertisseur de PML en chaîne de caractères. 
+*/
   private static class PlainWriter {
     private StringBuffer string;
     int width, l;
@@ -517,7 +542,8 @@ public class Pml {
      * @param pml Le PML à convertir.
      * @param width si width == 0 retourne une chaîne 1D de longueur minimale,
      *        sinon retourne une chaîne 2D de la largeur donnée.
-     * @return La chaîne générée. */
+     *  @return La chaîne générée. 
+*/
     public String toString(Pml pml, int width) {
       if (pml == null) return "null";
       // Initializes the variables
@@ -597,17 +623,20 @@ public class Pml {
       l += word.length();
     }
 
-    /** Retourne la chaîne en tenant compte des "{" "}" et \". */
+    /**  Retourne la chaîne en tenant compte des "{" "}" et \". 
+*/
     private static String quote(String string) {
       return string == null ? "null" : string.matches("[a-zA-Z_][a-zA-Z0-9_]*") || "\"{\"".equals(string) || "\"}\"".equals(string) ? string : "\"" + string.replaceAll("\\\\", "\\\\\\\\").replaceAll("\"", "\\\\\"") + "\"";
     }
   }
 
-  /** Définit le convertisseur de PML en XMl. */
+  /**  Définit le convertisseur de PML en XMl. 
+*/
   private static class XmlWriter {
     private StringBuffer string;
 
-    /** Convertit la PML en chaîne XML 1D. */
+    /**  Convertit la PML en chaîne XML 1D. 
+*/
     public String toString(Pml pml) {
       string = new StringBuffer();
       if (pml == null) return "<null/>";
@@ -636,11 +665,13 @@ public class Pml {
     }
   }
 
-  /** Définit le convertisseur de PML en PHP. */
+  /**  Définit le convertisseur de PML en PHP. 
+*/
   private static class PhpWriter {
     private StringBuffer string;
 
-    /** Convertit la PML en tableau PHP. */
+    /**  Convertit la PML en tableau PHP. 
+*/
     public String toString(Pml pml) {
       string = new StringBuffer();
       if (pml == null) return "<?php $pml = array(); ?>";
@@ -661,7 +692,8 @@ public class Pml {
       return string.toString();
     }
 
-    /** Prends en compte les \". */
+    /**  Prends en compte les \". 
+*/
     private static String quote(String string) {
       return "\"" + string.replaceAll("\\\\", "\\\\\\\\").replaceAll("\"", "\\\\\"") + "\"";
     }
@@ -671,11 +703,13 @@ public class Pml {
     }
   }
 
-  /** Définit le convertisseur de PML en JMF. */
+  /**  Définit le convertisseur de PML en JMF. 
+*/
   private static class JmfWriter {
     private StringBuffer string;
 
-    /** Convertit la PML en fichier JMF. */
+    /**  Convertit la PML en fichier JMF. 
+*/
     public String toString(Pml pml) {
       string = new StringBuffer();
       if (pml == null) return "";
@@ -687,7 +721,8 @@ public class Pml {
       return string.toString();
     }
 
-    /** Elimine les \n. */
+    /**  Elimine les \n. 
+*/
     private static String quote(String string) {
       return string.replaceAll("\n", " ");
     }
@@ -713,7 +748,8 @@ public class Pml {
   /** Renvoie le type de ce PML.
    * 
    * @return The tag définit lors de l'initialisation, sinon le nom de la classe
-   *         du PML. */
+   *          du PML. 
+*/
   public final String getTag() {
     return tag;
   }
@@ -728,7 +764,8 @@ public class Pml {
   /** Renvoie le parent du PML si défini.
    * 
    * @return Si ce PML est un sous-partie d'un PML renvoie son parent, sinon
-   *         renvoie null. */
+   *          renvoie null. 
+*/
   public final Pml getParent() {
     return parent;
   }
@@ -748,12 +785,14 @@ public class Pml {
    * 
    * @param name Le nom de l'attribut ou l'index de l'élément (sous forme de
    *        chaîne ou d'entier).
-   * @return True si le paramètre est défini, false sinon. */
+   *  @return True si le paramètre est défini, false sinon. 
+*/
   public final boolean isDefined(String name) {
     return data.containsKey(name);
   }
 
-  /** @see #isDefined(String) */
+  /**  @see #isDefined(String) 
+*/
   public final boolean isDefined(int index) {
     return isDefined(Integer.toString(index));
   }
@@ -762,13 +801,15 @@ public class Pml {
    * 
    * @param name Le nom de l'attribut ou l'index de l'élément (sous forme de
    *        chaîne ou d'entier).
-   * @return La valeur du paramètre, ou null si indéfini. */
+   *  @return La valeur du paramètre, ou null si indéfini. 
+*/
   public Pml getChild(String name) {
     Object o = data.get(name);
     return o == null ? null : o instanceof Pml ? (Pml) o : new Pml().reset("{\"" + o.toString() + "\"}");
   }
 
-  /** @see #getChild(String) */
+  /**  @see #getChild(String) 
+*/
   public final Pml getChild(int index) {
     return getChild(Integer.toString(index));
   }
@@ -777,12 +818,14 @@ public class Pml {
    * 
    * @param name Le nom de l'attribut ou l'index de l'élément (sous forme de
    *        chaîne ou d'entier).
-   * @return La valeur du paramètre, ou null si indéfini en tant que paramètre. */
+   *  @return La valeur du paramètre, ou null si indéfini en tant que paramètre. 
+*/
   public Object getObject(String name) {
     return data.get(name);
   }
 
-  /** @see #getObject(String) */
+  /**  @see #getObject(String) 
+*/
   public final Object getObject(int index) {
     return getObject(Integer.toString(index));
   }
@@ -793,7 +836,8 @@ public class Pml {
    * @param name Le nom de l'attribut ou l'index de l'élément (sous forme de
    *        chaîne ou d'entier).
    * @param value La valeur par défaut, sinon "".
-   * @return La valeur de ce paramètre, si défini, sinon sa valeur par défaut. */
+   *  @return La valeur de ce paramètre, si défini, sinon sa valeur par défaut. 
+*/
   public final String getString(String name, String value) {
     if (data.get(name) == null) return "";
     String v = data.get(name).toString();
@@ -806,17 +850,20 @@ public class Pml {
     return v != null ? v : value != null ? value : "";
   }
 
-  /** @see #getString(String, String) */
+  /**  @see #getString(String, String) 
+*/
   public final String getString(int index, String value) {
     return getString(Integer.toString(index), value);
   }
 
-  /** @see #getString(String, String) */
+  /**  @see #getString(String, String) 
+*/
   public final String getString(String name) {
     return getString(name, null);
   }
 
-  /** @see #getString(String, String) */
+  /**  @see #getString(String, String) 
+*/
   public final String getString(int index) {
     return getString(index, null);
   }
@@ -826,7 +873,8 @@ public class Pml {
    * @param name Le nom de l'attribut ou l'index de l'élément (sous forme de
    *        chaîne ou d'entier).
    * @param value La valeur par défaut, sinon "0".
-   * @return La valeur de ce paramètre, si défini, sinon sa valeur par défaut. */
+   *  @return La valeur de ce paramètre, si défini, sinon sa valeur par défaut. 
+*/
   public final double getDecimal(String name, double value) {
     try {
       return Double.parseDouble(getString(name));
@@ -835,17 +883,20 @@ public class Pml {
     }
   }
 
-  /** @see #getDecimal(String, double) */
+  /**  @see #getDecimal(String, double) 
+*/
   public final double getDecimal(int index, double value) {
     return getDecimal(Integer.toString(index), value);
   }
 
-  /** @see #getDecimal(String, double) */
+  /**  @see #getDecimal(String, double) 
+*/
   public final double getDecimal(String name) {
     return getDecimal(name, 0);
   }
 
-  /** @see #getDecimal(String, double) */
+  /**  @see #getDecimal(String, double) 
+*/
   public final double getDecimal(int index) {
     return getDecimal(index, 0);
   }
@@ -855,7 +906,8 @@ public class Pml {
    * @param name Le nom de l'attribut ou l'index de l'élément (sous forme de
    *        chaîne ou d'entier).
    * @param value La valeur par défaut, sinon "0".
-   * @return La valeur de ce paramètre, si défini, sinon sa valeur par défaut. */
+   *  @return La valeur de ce paramètre, si défini, sinon sa valeur par défaut. 
+*/
   public final int getInteger(String name, int value) {
     try {
       return Integer.parseInt(getString(name));
@@ -864,17 +916,20 @@ public class Pml {
     }
   }
 
-  /** @see #getInteger(String, int) */
+  /**  @see #getInteger(String, int) 
+*/
   public final int getInteger(int index, int value) {
     return getInteger(Integer.toString(index), value);
   }
 
-  /** @see #getInteger(String, int) */
+  /**  @see #getInteger(String, int) 
+*/
   public final int getInteger(String name) {
     return getInteger(name, 0);
   }
 
-  /** @see #getInteger(String, int) */
+  /**  @see #getInteger(String, int) 
+*/
   public final int getInteger(int index) {
     return getInteger(index, 0);
   }
@@ -885,7 +940,8 @@ public class Pml {
    *        chaîne ou d'entier).
    * @param value La valeur par défaut, sinon false.
    * @return La valeur true ou false si le paramètre est égal à "true" ou
-   *         "false" indépendamment de la casse, la valeur par défaut sinon.int */
+   *          "false" indépendamment de la casse, la valeur par défaut sinon.int 
+*/
   public final boolean getBoolean(String name, boolean value) {
     String v = getString(name);
     if (v != null) {
@@ -895,17 +951,20 @@ public class Pml {
     return value;
   }
 
-  /** @see #getBoolean(String, boolean) */
+  /**  @see #getBoolean(String, boolean) 
+*/
   public final boolean getBoolean(int index, boolean value) {
     return getBoolean(Integer.toString(index), value);
   }
 
-  /** @see #getBoolean(String, boolean) */
+  /**  @see #getBoolean(String, boolean) 
+*/
   public final boolean getBoolean(String name) {
     return getBoolean(name, false);
   }
 
-  /** @see #getBoolean(String, boolean) */
+  /**  @see #getBoolean(String, boolean) 
+*/
   public final boolean getBoolean(int index) {
     return getBoolean(index, false);
   }
@@ -917,7 +976,8 @@ public class Pml {
    * @param value La valeur du paramètre (en tant que PML, object Java, entier,
    *        décimal ou entier). Si null efface la valeur précédente.
    * @return Cet objet, permettant de définir la construction
-   *         <tt>Pml pml= new Pml().set(..)</tt>. */
+   *          <tt>Pml pml= new Pml().set(..)</tt>. 
+*/
   public Pml set(String name, Object value) {
     // Deletes the attribute value
     if (value == null) {
@@ -946,12 +1006,14 @@ public class Pml {
     return this;
   }
 
-  /** @see #set(String, Object) */
+  /**  @see #set(String, Object) 
+*/
   public final Pml set(int index, Object value) {
     return set(Integer.toString(index), value);
   }
 
-  /** @see #set(String, Object) */
+  /**  @see #set(String, Object) 
+*/
   public final Pml set(String name, String value) {
     if (value == null) return set(name, (Object) null);
     else {
@@ -961,37 +1023,44 @@ public class Pml {
     }
   }
 
-  /** @see #set(String, Object) */
+  /**  @see #set(String, Object) 
+*/
   public final Pml set(int index, String value) {
     return set(Integer.toString(index), value);
   }
 
-  /** @see #set(String, Object) */
+  /**  @see #set(String, Object) 
+*/
   public final Pml set(String name, double value) {
     return set(name, Double.toString(value));
   }
 
-  /** @see #set(String, Object) */
+  /**  @see #set(String, Object) 
+*/
   public final Pml set(int index, double value) {
     return set(Integer.toString(index), value);
   }
 
-  /** @see #set(String, Object) */
+  /**  @see #set(String, Object) 
+*/
   public final Pml set(String name, int value) {
     return set(name, Integer.toString(value));
   }
 
-  /** @see #set(String, Object) */
+  /**  @see #set(String, Object) 
+*/
   public final Pml set(int index, int value) {
     return set(Integer.toString(index), value);
   }
 
-  /** @see #set(String, Object) */
+  /**  @see #set(String, Object) 
+*/
   public final Pml set(String name, boolean value) {
     return set(name, value ? "true" : "false");
   }
 
-  /** @see #set(String, Object) */
+  /**  @see #set(String, Object) 
+*/
   public final Pml set(int index, boolean value) {
     return set(Integer.toString(index), value);
   }
@@ -1004,12 +1073,14 @@ public class Pml {
    * @param name Le nom de l'attribut ou l'index de l'élément (sous forme de
    *        chaîne ou d'entier).
    * @return Cet objet, permettant de définir la construction
-   *         <tt>Pml pml= new Pml().del(..)</tt>. */
+   *          <tt>Pml pml= new Pml().del(..)</tt>. 
+*/
   public Pml del(String name) {
     return set(name, (Pml) null);
   }
 
-  /** @see #del(String) */
+  /**  @see #del(String) 
+*/
   public final Pml del(int index) {
     return set(Integer.toString(index), (Pml) null);
   }
@@ -1022,7 +1093,8 @@ public class Pml {
    * @param value La valeur du paramètre (en tant que PML, entier, décimal ou
    *        entier).
    * @return Cet objet, permettant de définir la construction
-   *         <tt>Pml pml= new Pml().add(..)</tt>. */
+   *          <tt>Pml pml= new Pml().add(..)</tt>. 
+*/
   public final Pml add(Pml value) {
     int c = getCount();
     set(c, value);
@@ -1030,19 +1102,22 @@ public class Pml {
     return this;
   }
 
-  /** @see #add(String) */
+  /**  @see #add(String) 
+*/
   public final Pml add(String value) {
     Pml v = new Pml();
     v.reset(value);
     return add(v);
   }
 
-  /** @see #add(String) */
+  /**  @see #add(String) 
+*/
   public final Pml add(double value) {
     return add(Double.toString(value));
   }
 
-  /** @see #add(String) */
+  /**  @see #add(String) 
+*/
   public final Pml add(int value) {
     return add(Integer.toString(value));
   }
@@ -1051,7 +1126,8 @@ public class Pml {
    * 
    * @param pml La structure dont on copie les paramètres
    * @return Cet objet, permettant de définir la construction
-   *         <tt>Pml pml= new Pml().set(..)</tt>. */
+   *          <tt>Pml pml= new Pml().set(..)</tt>. 
+*/
   public final Pml set(Pml pml) {
     for (String name : pml.attributes()) {
       set(name, pml.getObject(name));
@@ -1062,7 +1138,8 @@ public class Pml {
     return this;
   }
 
-  /** @see #set(Pml) */
+  /**  @see #set(Pml) 
+*/
   public final Pml set(Properties pml) {
     for (String name : pml.stringPropertyNames()) {
       set(name, pml.getProperty(name));
@@ -1073,7 +1150,8 @@ public class Pml {
   /** Renvoie le nombre d'éléments de ce PML.
    * 
    * @return Le nombre d'éléments (indépendamment des attributs), les éléments
-   *         null étant éliminés */
+   *          null étant éliminés 
+*/
   public int getCount() {
     if (count < 0) {
       count = 0;
@@ -1090,7 +1168,8 @@ public class Pml {
   /** Renvoie le nombre de paramètres de ce PML.
    * 
    * @return Le nombre d'attributs et d'éléments. Si 0, ce PML correspond
-   *         uniquement à une chaîne: son tag. */
+   *          uniquement à une chaîne: son tag. 
+*/
   public int getSize() {
     return data.size();
   }
@@ -1105,7 +1184,8 @@ public class Pml {
    * - Les éléments sont énumérés avec une construction de la forme:
    * <tt>for(int n = 0; n &lt; pml.getCount(); n++) { Pml value = pml.getChild(n); .. }</tt>
    * .
-   * </p> */
+   *  </p> 
+*/
   public final Iterable<String> attributes() {
     return new Iterable<String>() {
       @Override
@@ -1154,7 +1234,8 @@ public class Pml {
   /** Renvoie les paramètres de cette PML sous forme de Properties.
    * 
    * @return Une structure Properties contenant attributs et éléments sous forme
-   *         de chaîne de caractère. */
+   *          de chaîne de caractère. 
+*/
   public final Properties toProperties() {
     Properties properties = new Properties();
     for (String name : attributes()) {
@@ -1169,7 +1250,8 @@ public class Pml {
   /** Lanceur du mécanisme de vérification/conversion d'une PML.
    * 
    * @param usage
-   *        <tt>java org.javascool.tools.Pml input-file [output-file.(pml|xml|php|jmf)]</tt> */
+   *         <tt>java org.javascool.tools.Pml input-file [output-file.(pml|xml|php|jmf)]</tt> 
+*/
   public static void main(String[] usage) {
     if (usage.length > 0) {
       new Pml().load(usage[0]).save(usage.length > 1 ? usage[1] : "stdout:", (usage.length > 1 && usage[1].matches(".*\\.(pml|php|xml|jmf)")) ? usage[1].replaceFirst(".*\\.", "") : "pml");
