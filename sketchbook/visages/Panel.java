@@ -29,7 +29,7 @@ import java.awt.Color;
 import org.javascool.widgets.NumberInput;
 import org.javascool.macros.Macros;
 
-/** Définit une proglet javascool qui permet d'implémenter un programme de reconnaissance de visage.
+/** DÃ©finit une proglet javascool qui permet d'implÃ©menter un programme de reconnaissance de visage.
  *
  * @see <a href="Panel.java.html">code source</a>
  * @serial exclude
@@ -136,7 +136,7 @@ private static final long serialVersionUID = 1L;
 			affichelabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 			affichelabel2.setOpaque(true);
 			affichelabel2.setBackground(Color.YELLOW);
-		       affichelabel2.setText("Puis calcul de la différence entre chaque visage et le visage moyen pour obtenir les visages normalisés.");
+		       affichelabel2.setText("Puis calcul de la diffÃ©rence entre chaque visage et le visage moyen pour obtenir les visages normalisÃ©s.");
 		       affichette.add(affichelabel2);
 		       
 		       affiche affiche_fleche=new affiche();
@@ -168,7 +168,7 @@ private static final long serialVersionUID = 1L;
  	   	      	affiche.setBackground(Color.YELLOW);
  	    		 	    		 
  	    	 affiche.setnom_image(chemin+"image_normalisee"+p+".jpg");
- 	     	affiche.settexte("visage normé"+p);
+ 	     	affiche.settexte("visage normÃ©"+p);
  	      	affichette.add(affiche);}}
 		       
 		if (n ==5){
@@ -207,7 +207,7 @@ private static final long serialVersionUID = 1L;
 			         affiche affiche_fleche=new affiche();
 				affiche_fleche.setBackground(Color.YELLOW);
 			        affiche_fleche.setnom_image(chemin+"fleche_bas.jpg");
-			        affiche_fleche.settexte("Reconstruction des images initiales à partir  de leurs composantes principales et des  visages propres.");
+			        affiche_fleche.settexte("Reconstruction des images initiales Ã  partir  de leurs composantes principales et des  visages propres.");
 			        affichette.add(affiche_fleche, new GridBagConstraints (0, 0, 1, 1, 0, 0,GridBagConstraints.CENTER,GridBagConstraints.CENTER, new Insets (0,0,0,0), 0, 0));
 			        
 	

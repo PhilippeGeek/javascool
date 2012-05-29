@@ -32,7 +32,7 @@
       <p><T/>openFileReader("nomDuFichier.txt");</p>
       <p><T/>c = readNextCode();</p>        
       <p><T/><r>while</r> (c  != -1) {</p>      
-      <p><T/><T/>afficheCarAsciiDeCode(c);</p>          
+      <p><T/><T/>afficheCodeAuFormatCar(c);</p>          
       <p><T/><T/>c = readNextCode();</p>        
       <p><T/>} // End While  </p>
       <p><T/>closeFileReader();</p>           
