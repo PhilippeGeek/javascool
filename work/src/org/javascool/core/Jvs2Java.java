@@ -47,10 +47,10 @@ public class Jvs2Java extends Translator {
     // Ici on ajoute
     if(!text.replaceAll("[ \n\r\t]+", " ").matches(".*void[ ]+main[ ]*\\([ ]*\\).*")) {
       if(text.replaceAll("[ \n\r\t]+", " ").matches(".*main[ ]*\\([ ]*\\).*")) {
-        System.out.println("Attention: il faut mettre \"void\" devant \"main()\" pour que le programme puisque se compiler");
+        System.out.println("Attention: il faut mettre \"void\" devant \"main()\" pour que le programme puisse se compiler");
         text = text.replaceFirst("main[ ]*\\([ ]*\\)", "void main()");
       } else {
-        System.out.println("Attention: il faut un block \"void main()\" pour que le programme puisque se compiler");
+        System.out.println("Attention: il faut un block \"void main()\" pour que le programme puisse se compiler");
         text = "\nvoid main() {\n" + text + "\n}\n";
       }
     }

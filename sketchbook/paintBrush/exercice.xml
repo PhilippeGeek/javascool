@@ -29,7 +29,7 @@ forme et la rotation d'images.
        Passer ensuite en mode proglet, les fonctionnalités précédentes ne
        fonctionnent plus ! Vous devez vous même programmer ces
        fonctionnalités. Il faut pour cela recopier le squelette de
-       programme <l link="Exemple.jvs.html" text="suivant"/>
+       programme <l class="editor" link="Exemple.jvs" text="suivant"/>
        et compléter chaque fonction.
      </p>
      <p>
