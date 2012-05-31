@@ -6,10 +6,10 @@
 
 package org.javascool.macros;
 
-import org.javascool.main.Desktop;
 import org.javascool.widgets.Console;
 
-/** Cette factory contient des fonctions générales rendues visibles à
+/**
+ * Cette factory contient des fonctions générales rendues visibles à
  * l'utilisateur de proglets.
  * <p>
  * Elle permet de définir des fonctions statiques qui seront utilisées pour
@@ -21,153 +21,145 @@ import org.javascool.widgets.Console;
  * </p>
  * 
  * @see <a href="Stdout.java.html">code source</a>
- *  @serial exclude 
-*/
+ * @serial exclude
+ */
 public class Stdout {
-  // @factory
-  private Stdout() {
-  }
+    // @factory
+    private Stdout() {
+    }
 
-  /** Affiche dans la console une chaîne de caractères ou la représentation
-   * textuelle d'un objet sur la console. - Cette fonction ne change pas le
-   * focus de javascool.
-   * 
-   * @param string La chaine ou l'objet à afficher sous sa représentation
-   *        textuelle.
-   *  @see #println(String) 
-*/
-  public static void echo(String string) {
-    Console.getInstance().print(string + "\n");
-  }
+    /**
+     * Affiche dans la console une chaîne de caractères ou la représentation
+     * textuelle d'un objet sur la console. - Cette fonction ne change pas le
+     * focus de javascool.
+     * 
+     * @param string
+     *            La chaine ou l'objet à afficher sous sa représentation
+     *            textuelle.
+     * @see #println(String)
+     */
+    public static void echo(String string) {
+	Console.getInstance().print(string + "\n");
+    }
 
-  /**  @see #echo(String) 
-*/
-  public static void echo(int string) {
-    Stdout.echo("" + string);
-  }
+    /** @see #echo(String) */
+    public static void echo(int string) {
+	Stdout.echo("" + string);
+    }
 
-  /**  @see #echo(String) 
-*/
-  public static void echo(char string) {
-    Stdout.echo("" + string);
-  }
+    /** @see #echo(String) */
+    public static void echo(char string) {
+	Stdout.echo("" + string);
+    }
 
-  /**  @see #echo(String) 
-*/
-  public static void echo(double string) {
-    Stdout.echo("" + string);
-  }
+    /** @see #echo(String) */
+    public static void echo(double string) {
+	Stdout.echo("" + string);
+    }
 
-  /**  @see #echo(String) 
-*/
-  public static void echo(boolean string) {
-    Stdout.echo("" + string);
-  }
+    /** @see #echo(String) */
+    public static void echo(boolean string) {
+	Stdout.echo("" + string);
+    }
 
-  /**  @see #echo(String) 
-*/
-  public static void echo(Object string) {
-    Stdout.echo("" + string);
-  }
+    /** @see #echo(String) */
+    public static void echo(Object string) {
+	Stdout.echo("" + string);
+    }
 
-  /** Affiche dans la console une chaîne de caractères ou la représentation
-   * textuelle d'un objet sur la console. - Cette fonction ramène le focus de
-   * javascool sur la console.
-   * 
-   * @param string La chaine ou l'objet à afficher sous sa représentation
-   *        textuelle.
-   *  @see #echo(String) 
-*/
-  public static void println(String string) {
-    //Desktop.getInstance().focusOnConsolePanel();
-    org.javascool.main.Desktop.getInstance().focusOnConsolePanel();
-    System.err.println("printing : \"" + string + "\"");
-    Console.getInstance().print(string + "\n");
-  }
+    /**
+     * Affiche dans la console une chaîne de caractères ou la représentation
+     * textuelle d'un objet sur la console. - Cette fonction ramène le focus de
+     * javascool sur la console.
+     * 
+     * @param string
+     *            La chaine ou l'objet à afficher sous sa représentation
+     *            textuelle.
+     * @see #echo(String)
+     */
+    public static void println(String string) {
+	// Desktop.getInstance().focusOnConsolePanel();
+	org.javascool.main.Desktop.getInstance().focusOnConsolePanel();
+	System.err.println("printing : \"" + string + "\"");
+	Console.getInstance().print(string + "\n");
+    }
 
-  /**  @see #echo(String) 
-*/
-  public static void println(int i) {
-    Stdout.println("" + i);
-  }
+    /** @see #echo(String) */
+    public static void println(int i) {
+	Stdout.println("" + i);
+    }
 
-  /**  @see #echo(String) 
-*/
-  public static void println(char i) {
-    Stdout.println("" + i);
-  }
+    /** @see #echo(String) */
+    public static void println(char i) {
+	Stdout.println("" + i);
+    }
 
-  /**  @see #echo(String) 
-*/
-  public static void println(double d) {
-    Stdout.println("" + d);
-  }
+    /** @see #echo(String) */
+    public static void println(double d) {
+	Stdout.println("" + d);
+    }
 
-  /**  @see #echo(String) 
-*/
-  public static void println(boolean b) {
-    Stdout.println("" + b);
-  }
+    /** @see #echo(String) */
+    public static void println(boolean b) {
+	Stdout.println("" + b);
+    }
 
-  /**  @see #echo(String) 
-*/
-  public static void println(Object o) {
-    Stdout.println("" + o);
-  }
+    /** @see #echo(String) */
+    public static void println(Object o) {
+	Stdout.println("" + o);
+    }
 
-  /** Affiche dans la console une chaîne de caractères ou la représentation
-   * textuelle d'un objet sur la console sans retour à la ligne.
-   * 
-   * @param string La chaine ou l'objet à afficher sous sa représentation
-   *         textuelle. 
-*/
-  public static void print(String string) {
-    System.out.print(string);
-    System.out.flush();
-  }
+    /**
+     * Affiche dans la console une chaîne de caractères ou la représentation
+     * textuelle d'un objet sur la console sans retour à la ligne.
+     * 
+     * @param string
+     *            La chaine ou l'objet à afficher sous sa représentation
+     *            textuelle.
+     */
+    public static void print(String string) {
+	System.out.print(string);
+	System.out.flush();
+    }
 
-  /**  @see #print(String) 
-*/
-  public static void print(int i) {
-    Stdout.print("" + i);
-  }
+    /** @see #print(String) */
+    public static void print(int i) {
+	Stdout.print("" + i);
+    }
 
-  /**  @see #print(String) 
-*/
-  public static void print(char i) {
-    Stdout.print("" + i);
-  }
+    /** @see #print(String) */
+    public static void print(char i) {
+	Stdout.print("" + i);
+    }
 
-  /**  @see #print(String) 
-*/
-  public static void print(double d) {
-    Stdout.print("" + d);
-  }
+    /** @see #print(String) */
+    public static void print(double d) {
+	Stdout.print("" + d);
+    }
 
-  /**  @see #print(String) 
-*/
-  public static void print(boolean b) {
-    Stdout.print("" + b);
-  }
+    /** @see #print(String) */
+    public static void print(boolean b) {
+	Stdout.print("" + b);
+    }
 
-  /**  @see #print(String) 
-*/
-  public static void print(Object o) {
-    Stdout.print("" + o);
-  }
+    /** @see #print(String) */
+    public static void print(Object o) {
+	Stdout.print("" + o);
+    }
 
-  /**  Efface tout ce qui est écrit dans la console. 
-*/
-  public static void clear() {
-    Console.getInstance().clear();
-  }
+    /** Efface tout ce qui est écrit dans la console. */
+    public static void clear() {
+	Console.getInstance().clear();
+    }
 
-  /** Sauve ce qui est présentement écrit dans la console dans un fichier.
-   * 
-   * @param location La localisation (chemin du fichier ou localisation
-   *         internet) où sauver le texte. 
-*/
-  public static void saveConsoleOutput(String location) {
-    Console.getInstance().saveConsoleOutput(location);
-  }
+    /**
+     * Sauve ce qui est présentement écrit dans la console dans un fichier.
+     * 
+     * @param location
+     *            La localisation (chemin du fichier ou localisation internet)
+     *            où sauver le texte.
+     */
+    public static void saveConsoleOutput(String location) {
+	Console.getInstance().saveConsoleOutput(location);
+    }
 }
