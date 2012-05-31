@@ -50,6 +50,10 @@
        <p><T/>n = n + 1;</p>
        <p>}</p>
    </div></div></div>
+  <div title="Compteur">
+    <p><b><r>for</r> (<r>int</r> n = 0; n < N; n++) { BlocD'Instructions }</b></p>
+    <div>permet de faire une boucle où la variable <c>n</c> va de 0 à <c>N</c> exclus.
+   </div></div>
    <div title="Déclaration de fonction">
      <p><b>TypeDuResultat NomDeLaFonction (TypeParametre1 NomParametre1, ...) { BlocD'Instructions }</b></p> 
      <div title="Exemple:"><div class="code">
