@@ -21,5 +21,16 @@
    <p>setRunnable(<r>null</r>);</p>
  </div> qui redéfinit le runnable comme <r>null</r>, donc sans effet.</p>
 </div>
-
+<div title="Un exemple de code"> (merci à François Passebon)
+ <div class="code">
+   <m>Définition d'un runnable</m>
+   <p><r>setRunnable</r>(<r>new Runnable</r>() {<r>run</r>() {</p>
+   <p><T/>println(<s>Oh on a cliquer dans l'image au pixel (</s> + getX() + <s>, </s> + getX() +<s>)</s>);</p>
+   <p>}});</p>
+   <m>Création d'une image vide pour tester le runnable</m>
+   <p><r>void main</r>() {</p>
+   <p><T/>reset(100, 100, false, true);</p>
+   <p>}</p>
+ </div>
+</div>
 </div>
