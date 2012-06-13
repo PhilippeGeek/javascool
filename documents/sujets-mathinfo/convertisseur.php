@@ -21,21 +21,21 @@ static $char;
 ?><html>
 <head>
 <title>Convertisseur ASCII/binaire/hexa</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <META NAME="description" CONTENT="Utilitaire en ligne pour convertir ASCII/ANSI, HEX, Binary, Base64, etc.">
-<META NAME="keywords" CONTENT="convertisseur,binaire,hexadécimal,binary encoder, binary decoder, binary translator, binary tools, binary converter, hexadecimal encoder/decoder, base 64">
+<META NAME="keywords" CONTENT="convertisseur,binaire,hexadÃ©cimal,binary encoder, binary decoder, binary translator, binary tools, binary converter, hexadecimal encoder/decoder, base 64">
 <style>
 body { 
-size: 12pt;
-font-family:verdana,arial,helvetica,sans;
+size: 11pt;
+font-family:arial,helvetica,sans;
+text-align: center;
 }
 
 textarea {
-padding: 3px;
 margin: 4px;
 }
 
-h1 {
+h2 {
 text-align: center;
 }
 
@@ -51,22 +51,21 @@ text-align: center;
 </style>
 </head>
 <body>
-<h1>CONVERTISSEUR</h1>
-<b>Attention :</b><br> 
-Cet utilitaire code et décode des caractères
-<a target="more" href="http://fr.wikipedia.org/wiki/ASCII">ASCII</a> ainsi que des caractères étendus selon le codage
-<a target="more" href="http://fr.wikipedia.org/wiki/Windows-1252">ANSI</a>.<br>
-Le code ASCII ne couvre que les caractères de numéros 0 à 127.<br />
+<h2>Convertisseur</h2>
+Cet utilitaire code et dÃ©code des caractÃ¨res
+<a target="parent" href="http://fr.wikipedia.org/wiki/ASCII">ASCII</a> ainsi que des caractÃ¨res Ã©tendus selon le codage
+<a target="parent" href="http://fr.wikipedia.org/wiki/Windows-1252">ANSI</a>.<br>
+Le code ASCII proprement dit ne couvre que les caractÃ¨res de numÃ©ros 0 Ã  127.<br />
 
-<table border=0 cellspacing=0 cellpadding=10>
+<table border=0 cellspacing=8 cellpadding=0 align="center">
 <tr>
 
 <!-- ASCII -->
 <form method="POST" action="http://igmaths.infos.st/outils/convertisseur.php">
 <td align=center valign=top>
 
-<b>[ <a target="more" href="http://fr.wikipedia.org/wiki/Ascii">TEXTE</a> ]</b><br>
-<textarea cols=32 rows=15 wrap="virtual" name="ascii" class="ff"><?php
+<b>[ <a target="parent" href="http://fr.wikipedia.org/wiki/Ascii">TEXTE</a> ]</b><br>
+<textarea cols=34 rows=10 wrap="virtual" name="ascii" class="ff"><?php
 
 set_magic_quotes_runtime(0);
 foreach($_POST as $key=>$val){ $$key = stripslashes($val); }
@@ -109,8 +108,8 @@ echo htmlentities($ascii);
 
 <!-- BINAIRE -->
 <form method="POST"><td align=center valign=top>
-<b>[ <a target="more" href="http://fr.wikipedia.org/wiki/Code_binaire"><acronym title="Binaire">BINAIRE</acronym></a> ]</b><br>
-<textarea cols=32 rows=15 wrap="virtual" name="binary" class="ff"><?php
+<b>[ <a target="parent" href="http://fr.wikipedia.org/wiki/Code_binaire"><acronym title="Binaire">BINAIRE</acronym></a> ]</b><br>
+<textarea cols=34 rows=10 wrap="virtual" name="binary" class="ff"><?php
 
 if($binary != "") echo $binary;
 else if($ascii != "") {
@@ -124,14 +123,14 @@ echo " ".str_repeat("0", 8-strlen($val)).$val;
 ?>
 </textarea>
 <br>
-<input type="submit" class="btn" value="DÉCODE">
+<input type="submit" class="btn" value="DÃ‰CODE">
 </td></form>
 
 <!-- HEXA -->
 <form method="POST"><td align=center valign=top>
 
-<b>[ <a target="more" href="http://fr.wikipedia.org/wiki/Hexad%C3%A9cimal"><acronym title="Hexadécimal">HEXA</acronym></a> ]</b><br>
-<textarea cols=32 rows=15 wrap="virtual" name="hex" class="ff"><?php
+<b>[ <a target="parent" href="http://fr.wikipedia.org/wiki/Hexad%C3%A9cimal"><acronym title="HexadÃ©cimal">HEXA</acronym></a> ]</b><br>
+<textarea cols=34 rows=10 wrap="virtual" name="hex" class="ff"><?php
 
 if($hex != "") echo $hex;
 else if($ascii != "") {
@@ -144,14 +143,14 @@ for($i = 1; $i < strlen($ascii); $i = $i + 1) {
 }
 ?></textarea>
 <br>
-<input type="submit" class="btn" value="DÉCODE">
+<input type="submit" class="btn" value="DÃ‰CODE">
 </td></form></tr>
 
 <!--BASE 64-->
 <form method="POST"><tr><td align=center valign=top>
 
-<b>[ <a target="more" href="http://fr.wikipedia.org/wiki/Base64">BASE64</a> ]</b><br>
-<textarea cols=32 rows=15 wrap="virtual" name="b64" class="ff"><?php
+<b>[ <a target="parent" href="http://fr.wikipedia.org/wiki/Base64">BASE64</a> ]</b><br>
+<textarea cols=34 rows=10 wrap="virtual" name="b64" class="ff"><?php
 if($b64 != "") echo $b64;
 else if($ascii != "") {
 echo base64_encode($ascii);
@@ -159,30 +158,34 @@ echo base64_encode($ascii);
 ?>
 </textarea>
 <br>
-<input type="submit" class="btn" value="DÉCODE">
+<input type="submit" class="btn" value="DÃ‰CODE">
 </td></form>
 
 <!--CHAR-->
 <form method="POST"><td align=center valign=top>
 
-<b>[ <a target="more" href="http://fr.wikipedia.org/wiki/ASCII">ASCII Décimal </a> ]</b><br>
-<textarea cols=32 rows=15 wrap="virtual" name="char" class="ff"><?php
+<b>[ <a target="parent" href="http://fr.wikipedia.org/wiki/ASCII">ASCII DÃ©cimal </a> ]</b><br>
+<textarea cols=34 rows=10 wrap="virtual" name="char" class="ff"><?php
 if($char != "") echo $char;
 else if($ascii != "") {
-echo ord(substr($ascii, 0, 1));
-for($i = 1; $i < strlen($ascii); $i = $i + 1)
-echo " ".ord(substr($ascii, $i, 1));
+for($i = 0; $i < strlen($ascii); $i = $i + 1)
+	{
+	$nb = ord(substr($ascii, $i, 1));
+	if($nb<100) 
+		echo "0".$nb." ";
+		else
+		echo $nb." ";
+}
 }
 ?></textarea>
 <br>
-<input type="submit" class="btn" value="DÉCODE">
+<input type="submit" class="btn" value="DÃ‰CODE">
 </td></form>
 
-<td align=center valign=top>
-<br>
-Le code-source de cette page est disponible auprès de Paul Schou à 
-<a target="more" href="http://home.paulschou.net/tools/xlate/source.php">cette adresse</a>.<br>
-L'idée originale est due à Nick Ciske, voir <a target="more" href="http://nickciske.com/binary">http://nickciske.com/binary</a>.
+<td align=center valign=center width="40em">
+Le code-source originel de cette page est disponible auprÃ¨s de Paul Schou Ã  
+<a target="parent" href="http://home.paulschou.net/tools/xlate/source.php">cette adresse</a>.<br>
+L'idÃ©e initiale est due Ã  Nick Ciske, voir <a target="parent" href="http://nickciske.com/binary">http://nickciske.com/binary</a>.
 </td></tr></table>
 </body>
 </html>
