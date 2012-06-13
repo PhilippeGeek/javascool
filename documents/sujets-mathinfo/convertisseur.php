@@ -53,8 +53,8 @@ text-align: center;
 <body>
 <h2>Convertisseur</h2>
 Cet utilitaire code et décode des caractères
-<a target="parent" href="http://fr.wikipedia.org/wiki/ASCII">ASCII</a> ainsi que des caractères étendus selon le codage
-<a target="parent" href="http://fr.wikipedia.org/wiki/Windows-1252">ANSI</a>.<br>
+<a target="more" href="http://fr.wikipedia.org/wiki/ASCII">ASCII</a> ainsi que des caractères étendus selon le codage
+<a target="more" href="http://fr.wikipedia.org/wiki/Windows-1252">ANSI</a>.<br>
 Le code ASCII proprement dit ne couvre que les caractères de numéros 0 à 127.<br />
 
 <table border=0 cellspacing=8 cellpadding=0 align="center">
@@ -64,7 +64,7 @@ Le code ASCII proprement dit ne couvre que les caractères de numéros 0 à 127.
 <form method="POST" action="http://igmaths.infos.st/outils/convertisseur.php">
 <td align=center valign=top>
 
-<b>[ <a target="parent" href="http://fr.wikipedia.org/wiki/Ascii">TEXTE</a> ]</b><br>
+<b>[ <a target="more" href="http://fr.wikipedia.org/wiki/Ascii">TEXTE</a> ]</b><br>
 <textarea cols=34 rows=10 wrap="virtual" name="ascii" class="ff"><?php
 
 set_magic_quotes_runtime(0);
@@ -108,7 +108,7 @@ echo htmlentities($ascii);
 
 <!-- BINAIRE -->
 <form method="POST"><td align=center valign=top>
-<b>[ <a target="parent" href="http://fr.wikipedia.org/wiki/Code_binaire"><acronym title="Binaire">BINAIRE</acronym></a> ]</b><br>
+<b>[ <a target="more" href="http://fr.wikipedia.org/wiki/Code_binaire"><acronym title="Binaire">BINAIRE</acronym></a> ]</b><br>
 <textarea cols=34 rows=10 wrap="virtual" name="binary" class="ff"><?php
 
 if($binary != "") echo $binary;
@@ -129,7 +129,7 @@ echo " ".str_repeat("0", 8-strlen($val)).$val;
 <!-- HEXA -->
 <form method="POST"><td align=center valign=top>
 
-<b>[ <a target="parent" href="http://fr.wikipedia.org/wiki/Hexad%C3%A9cimal"><acronym title="Hexadécimal">HEXA</acronym></a> ]</b><br>
+<b>[ <a target="more" href="http://fr.wikipedia.org/wiki/Hexad%C3%A9cimal"><acronym title="Hexadécimal">HEXA</acronym></a> ]</b><br>
 <textarea cols=34 rows=10 wrap="virtual" name="hex" class="ff"><?php
 
 if($hex != "") echo $hex;
@@ -149,7 +149,7 @@ for($i = 1; $i < strlen($ascii); $i = $i + 1) {
 <!--BASE 64-->
 <form method="POST"><tr><td align=center valign=top>
 
-<b>[ <a target="parent" href="http://fr.wikipedia.org/wiki/Base64">BASE64</a> ]</b><br>
+<b>[ <a target="more" href="http://fr.wikipedia.org/wiki/Base64">BASE64</a> ]</b><br>
 <textarea cols=34 rows=10 wrap="virtual" name="b64" class="ff"><?php
 if($b64 != "") echo $b64;
 else if($ascii != "") {
@@ -164,7 +164,7 @@ echo base64_encode($ascii);
 <!--CHAR-->
 <form method="POST"><td align=center valign=top>
 
-<b>[ <a target="parent" href="http://fr.wikipedia.org/wiki/ASCII">ASCII Décimal </a> ]</b><br>
+<b>[ <a target="more" href="http://fr.wikipedia.org/wiki/ASCII">ASCII Décimal </a> ]</b><br>
 <textarea cols=34 rows=10 wrap="virtual" name="char" class="ff"><?php
 if($char != "") echo $char;
 else if($ascii != "") {
@@ -184,8 +184,8 @@ for($i = 0; $i < strlen($ascii); $i = $i + 1)
 
 <td align=center valign=center width="40em">
 Le code-source originel de cette page est disponible auprès de Paul Schou à 
-<a target="parent" href="http://home.paulschou.net/tools/xlate/source.php">cette adresse</a>.<br>
-L'idée initiale est due à Nick Ciske, voir <a target="parent" href="http://nickciske.com/binary">http://nickciske.com/binary</a>.
+<a target="more" href="http://home.paulschou.net/tools/xlate/source.php">cette adresse</a>.<br>
+L'idée initiale est due à Nick Ciske, voir <a target="more" href="http://nickciske.com/binary">http://nickciske.com/binary</a>.
 </td></tr></table>
 </body>
 </html>
