@@ -8,19 +8,18 @@
 
 dft : tst
 
-#export JAVA_HOME=/usr/java/jdk1.6.0_22
+export JAVA_HOME=/usr/java/jdk1.6.0_25
 #export JAVA_HOME=/usr/java/jdk1.7.0_02
-export JAVA_HOME=/usr
+
 
 export PATH := $(JAVA_HOME)/bin:$(PATH)
 
-#export JRE_HOME=/usr/java/jre1.6.0_27
-#export JRE_HOME=/usr/java/jre1.7.0_01
-#export JRE_HOME=/usr/java/jdk1.6.0_22
-export JRE_HOME=/usr
+export JRE_HOME=/usr/java/jre1.7.0_05
+#export JRE_HOME=$(JDK_HOME)/jre
+
 
 tst : 
-	#ant javascool-proglets.jar
+	ant javascool-proglets.jar
 	$(JRE_HOME)/bin/java -jar dist/javascool-proglets.jar
 
 ant :
