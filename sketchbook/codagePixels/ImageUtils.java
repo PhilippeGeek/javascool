@@ -113,7 +113,7 @@ public class ImageUtils {
   private static BufferedImage loadImagePxM(String location) {
     try {
       PxMReader reader = new PxMReader(new StringReader(FileManager.load(location)));
-      String header = reader.readString();
+      String header = reader.readString(false);
       if("P1".equals(header) || "P2".equals(header) || "P3".equals(header)) {
         int width = reader.readInteger(), height = reader.readInteger();
         double scale = 255.0 / ("P1".equals(header) ? 1 : reader.readInteger());
@@ -122,11 +122,11 @@ public class ImageUtils {
           for(int i = 0; i < img.getWidth(); i++) {
             int r, g, b;
             if("P3".equals(header)) {
-              r = reader.readPixel(scale);
-              g = reader.readPixel(scale);
-              b = reader.readPixel(scale);
+              r = reader.readPixel(scale, false);
+              g = reader.readPixel(scale, false);
+              b = reader.readPixel(scale, false);
             } else {
-              r = g = b = reader.readPixel(scale);
+              r = g = b = reader.readPixel(scale, "P1".equals(header));
             }
             img.setRGB(i, j, r << 16 | g << 8 | b);
           }
@@ -135,6 +135,7 @@ public class ImageUtils {
         return null;
       }
     } catch(Exception e) {
+      System.err.println("Erreur de format lors de la lecture de "+location+" : "+e);
       return null;
     }
   }
@@ -153,7 +154,7 @@ public class ImageUtils {
      * @return The next token in the input bufffer.
      * @throws IOException If the file is truncated or an error occurs during reading.
      */
-    public String readString() throws IOException {
+    public String readString(boolean binary) throws IOException {
       if(c == -2) {
         c = r.read();
       }
@@ -176,9 +177,9 @@ public class ImageUtils {
       // Collects a token
       StringBuffer s = new StringBuffer();
       do {
-        s.append((char) c);
-        c = r.read();
-      } while(c != -1 && !Character.isWhitespace(c));
+	s.append((char) c);
+	c = r.read();
+      } while(c != -1 && (!binary) && (!Character.isWhitespace(c)));
       return s.toString();
     }
     /** Reads a integer value.
@@ -187,15 +188,17 @@ public class ImageUtils {
      * @throws IOException If the file is truncated or an error occurs during reading.
      */
     public int readInteger() throws IOException {
-      return new Integer(readString());
+      return new Integer(readString(false));
     }
     /** Reads a scaled integer value.
+     * @param scale The pixel scale value
+     * @param binary If true consider one byte value
      * @return The next token as a scaled positive integer value between 0 and 255.
      * @throws NumberFormatException In case of a spurious reading.
      * @throws IOException If the file is truncated or an error occurs during reading.
      */
-    public int readPixel(double scale) throws IOException {
-      int v = (int) Math.rint(scale * new Double(readString()));
+    public int readPixel(double scale, boolean binary) throws IOException {
+      int v = (int) Math.rint(scale * new Double(readString(binary)));
       return v < 0 ? 0 : 255 < v ? 255 : v;
     }
   }
