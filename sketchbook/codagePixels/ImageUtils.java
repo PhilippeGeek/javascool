@@ -105,7 +105,7 @@ public class ImageUtils {
       for(int i = 0; i < image.getWidth(); i++) {
         // Gets the pixel value
         int rgb = image.getRGB(i, j), r = (rgb >> 16) & 0xFF, g = (rgb >> 8) & 0xFF, b = rgb & 0xFF, v = r + g + b, o = v < 383 ? 0 : 1;
-        s.append((format.equals("pbm") ? "" + b : format.equals("pgm") ? "" + v : "" + r + " " + g + " " + b) + (i < image.getWidth() - 1 ? c : "\n"));
+        s.append((format.equals("pbm") ? "" + (b > 0 ? 1 : 0) : format.equals("pgm") ? "" + v : "" + r + " " + g + " " + b) + (i < image.getWidth() - 1 ? c : "\n"));
       }
     FileManager.save(location, s.toString());
   }
@@ -125,8 +125,10 @@ public class ImageUtils {
               r = reader.readPixel(scale, false);
               g = reader.readPixel(scale, false);
               b = reader.readPixel(scale, false);
+            } else if ("P1".equals(header)) {
+              r = g = b = 255 - reader.readPixel(scale, true);
             } else {
-              r = g = b = reader.readPixel(scale, "P1".equals(header));
+              r = g = b = reader.readPixel(scale, false);
             }
             img.setRGB(i, j, r << 16 | g << 8 | b);
           }
