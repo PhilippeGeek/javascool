@@ -18,8 +18,10 @@
 
   <div title="Installation d'une interface série RS2323C"><div class="ul">
     <p>Sous windows : installer le fichier <l link="http://javascool.gforge.inria.fr/documents/sketchbook/commSerie/lib/rxtxSerial.dll" text="rxtxSerial.dll"/> dans le répertoire <i>Java</i> de la machine, c'est à dire, normalement <c>c:\Program Files\Java\jre6(ou équivalent)\bin</c>.</p>
-    <p>Sous LinuX : installer le fichier <l link="http://javascool.gforge.inria.fr/documents/sketchbook/commSerie/lib/librxtxSerial.so" text="librxtxSerial.so"/> 
+    <p>Sous LinuX 32bits : installer le fichier <l link="http://javascool.gforge.inria.fr/documents/sketchbook/commSerie/lib/librxtxSerial.so" text="librxtxSerial.so"/> 
     dans le répertoire <i>Java</i> de la machine, c'est à dire, normalement <c>. /usr/local/java/default(ou équivalent)/lib/i386</c>.</p>
+    <p>Sous LinuX 64bits : installer le fichier <l link="http://javascool.gforge.inria.fr/documents/sketchbook/commSerie/lib/amd64/librxtxSerial.so" text="librxtxSerial.so"/> 
+    dans le répertoire <i>Java</i> de la machine, c'est à dire, normalement <c>. /usr/local/java/default(ou équivalent)/lib/amd64</c>.</p>
     <p>Sous MacOS : installer le fichier <l link="http://javascool.gforge.inria.fr/documents/sketchbook/commSerie/lib/librxtxSerial.jnilib" text="librxtxSerial.jnilib"/> dans le répertoire <i>Java</i> de la machine, comme en LinuX.</p>
   </div> Se faire aider du responsable informatique si besoin. L'utilisation de <l link="http://www.jcontrol.org" text="RXTX"/> neccéssite aussi une jarre Java <c>RXTXcomm.jar</c> qui est intégrée à Javasccool.</div>
 
