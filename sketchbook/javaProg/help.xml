@@ -1,5 +1,5 @@
 <div title="La «proglet» javaProg">
-    Cette proglet permet de simuler de programmer toutes sortes d'applet en utilisant la syntaxe Java ordinaire.
+    Cette proglet permet de simuler la programmation de toutes sortes d'applets en utilisant la syntaxe Java ordinaire.
 
   <p>On peut utiliser toute l'<l link="http://java.sun.com/javase/6/docs/api/overview-summary.html" text="API Java"/> et 
   l'<l link="http://javascool.gforge.inria.fr/index.php?page=api" text="API JavaScool"/>. 
