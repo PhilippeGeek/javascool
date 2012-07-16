@@ -22,14 +22,18 @@ public class MainFrame extends JFrame {
   /** Compte des fenêtres ouvertes pour gérer le exit. */
   private static int frameCount = 0;
 
+  /** Flag définissant l'utilisation de Nimbus. */
+  public static final boolean withNimbus = true;
+
   /** Définit le look and feel de l'application. */
   static void setLookAndFeel() {
     try {
-      for(LookAndFeelInfo info : UIManager.getInstalledLookAndFeels())
-        if("Nimbus".equals(info.getName())) {
-          UIManager.setLookAndFeel(info.getClassName());
-          break;
-        }
+      if (withNimbus)
+	for(LookAndFeelInfo info : UIManager.getInstalledLookAndFeels())
+	  if("Nimbus".equals(info.getName())) {
+	    UIManager.setLookAndFeel(info.getClassName());
+	    break;
+	  }
     } catch(Exception e1) {
       String os = System.getProperty("os.name");
       if(os.startsWith("Windows")) {
