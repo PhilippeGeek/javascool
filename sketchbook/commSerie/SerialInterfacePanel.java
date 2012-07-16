@@ -45,7 +45,7 @@ public class SerialInterfacePanel extends JPanel {
                     private static final long serialVersionUID = 1L;
                     {
                       setBorder(BorderFactory.createTitledBorder("Nom du port"));
-                      setPreferredSize(new Dimension(120, 70));
+                      setPreferredSize(new Dimension(100, 70));
                       addActionListener(new ActionListener() {
                                           private static final long serialVersionUID = 1L;
                                           @Override
@@ -62,7 +62,7 @@ public class SerialInterfacePanel extends JPanel {
                     private static final long serialVersionUID = 1L;
                     {
                       setBorder(BorderFactory.createTitledBorder("Débit en b./s."));
-                      setPreferredSize(new Dimension(120, 70));
+                      setPreferredSize(new Dimension(100, 70));
                       addActionListener(new ActionListener() {
                                           private static final long serialVersionUID = 1L;
                                           @Override
@@ -79,7 +79,7 @@ public class SerialInterfacePanel extends JPanel {
                     private static final long serialVersionUID = 1L;
                     {
                       setBorder(BorderFactory.createTitledBorder("Bit de parité"));
-                      setPreferredSize(new Dimension(120, 70));
+                      setPreferredSize(new Dimension(100, 70));
                       addActionListener(new ActionListener() {
                                           private static final long serialVersionUID = 1L;
                                           @Override
@@ -97,7 +97,7 @@ public class SerialInterfacePanel extends JPanel {
                     private static final long serialVersionUID = 1L;
                     {
                       setBorder(BorderFactory.createTitledBorder("Taille du mot"));
-                      setPreferredSize(new Dimension(120, 70));
+                      setPreferredSize(new Dimension(100, 70));
                       addActionListener(new ActionListener() {
                                           private static final long serialVersionUID = 1L;
                                           @Override
@@ -114,7 +114,7 @@ public class SerialInterfacePanel extends JPanel {
                     private static final long serialVersionUID = 1L;
                     {
                       setBorder(BorderFactory.createTitledBorder("Bits de stop"));
-                      setPreferredSize(new Dimension(120, 70));
+                      setPreferredSize(new Dimension(100, 70));
                       addActionListener(new ActionListener() {
                                           private static final long serialVersionUID = 1L;
                                           @Override
@@ -131,7 +131,7 @@ public class SerialInterfacePanel extends JPanel {
                     private static final String open = "OUVRIR", close = "FERMER";
                     {
                       setBorder(BorderFactory.createTitledBorder("O/F le port"));
-                      setPreferredSize(new Dimension(120, 70));
+                      setPreferredSize(new Dimension(100, 70));
                       setText(open);
                       addActionListener(new ActionListener() {
                                           private static final long serialVersionUID = 1L;
@@ -162,7 +162,7 @@ public class SerialInterfacePanel extends JPanel {
               add(new Box(BoxLayout.Y_AXIS) {
                     private static final long serialVersionUID = 1L;
                     {
-                      add(new JScrollPane(writeChar = new JTextArea(1, 12) {
+                      add(new JScrollPane(writeChar = new JTextArea(1, 8) {
                                             private static final long serialVersionUID = 1L;
                                             {
                                               addKeyListener(new KeyListener() {
@@ -186,7 +186,7 @@ public class SerialInterfacePanel extends JPanel {
                             }
                           }
                           );
-                      add(new JScrollPane(writeHexa = new JTextArea(1, 12) {
+                      add(new JScrollPane(writeHexa = new JTextArea(1, 8) {
                                             private static final long serialVersionUID = 1L;
                                             {
                                               setBackground(new Color(200, 200, 200));
@@ -220,7 +220,7 @@ public class SerialInterfacePanel extends JPanel {
               add(new Box(BoxLayout.Y_AXIS) {
                     private static final long serialVersionUID = 1L;
                     {
-                      add(new JScrollPane(readChar = new JTextArea(1, 12) {
+                      add(new JScrollPane(readChar = new JTextArea(1, 8) {
                                             private static final long serialVersionUID = 1L;
                                             {
                                               setBackground(new Color(200, 200, 200));
@@ -233,7 +233,7 @@ public class SerialInterfacePanel extends JPanel {
                             }
                           }
                           );
-                      add(new JScrollPane(readHexa = new JTextArea(1, 12) {
+                      add(new JScrollPane(readHexa = new JTextArea(1, 8) {
                                             private static final long serialVersionUID = 1L;
                                             {
                                               setBackground(new Color(200, 200, 200));
@@ -286,7 +286,7 @@ public class SerialInterfacePanel extends JPanel {
     // Permet d'afficher les messages de la console dans l'interface.
     if(!org.javascool.widgets.Console.isInstanced()) {
       JPanel c = org.javascool.widgets.Console.getInstance();
-      c.setPreferredSize(new Dimension(800, 200));
+      c.setPreferredSize(new Dimension(600, 200));
       add(c, BorderLayout.SOUTH);
     }
   }
