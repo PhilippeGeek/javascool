@@ -18,6 +18,8 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
+import javax.swing.event.CaretListener;
+import javax.swing.event.CaretEvent;
 
 /** Cette factory contient des fonctions générales rendues visibles à l'utilisateur de proglets.
  * <p>Elle permet de définir des fonctions statiques qui seront utilisées pour faire des programmes élèves.</p>
@@ -35,10 +37,15 @@ public class Stdin {
    * @return La chaîne lue.
    */
   public static String readString(String question) {
+    return readString(question, '\n');
+  }
+  // Lit une chaîne de caractère jusqu'au '\n' (readLine), ' ' (readWord), ou '\0' (readChar) selon le separator.
+  public static String readString(String question, char separator) {
     if(inputBuffer.isPopable()) {
-      return inputBuffer.popString();
+      return inputBuffer.popString(separator);
     }
     inputQuestion = question;
+    inputSeparator = separator;
     inputString = null;
     inputDialog = new Dialog();
     inputDialog.setTitle("Java's Cool read");
@@ -55,8 +62,21 @@ public class Stdin {
                                                     }
                                                   }
                                                   );
+				addCaretListener(new CaretListener()  {
+				    @Override
+				    public void caretUpdate(CaretEvent e) {
+				      inputString = ((JTextField) e.getSource()).getText();
+				      if(inputSeparator == '\0') {
+					inputDialog.close();
+				      } else if (inputSeparator == ' ' && Character.isWhitespace(inputString.charAt(inputString.length()-1))) {
+					inputString = inputString.substring(0, inputString.length()-1);
+					inputDialog.close();
+				      }
+				    }
+				  }
+						 );
                               }
-                            }
+			  }
                             );
                       }
                     }
@@ -65,13 +85,39 @@ public class Stdin {
     return inputString == null ? "" : inputString;
   }
   private static Dialog inputDialog;
+  private static char inputSeparator;
   private static String inputQuestion, inputString;
-
   /**
    * @see #readString(String)
    */
   public static String readString() {
     return readString("Entrez une chaîne :");
+  }
+  /** Lit une chaîne de caractère sans espace dans une fenêtre présentée à l'utilisateur.
+   * @param question Une invite qui décrit la valeur à entrer (optionel).
+   * @return La chaîne lue.
+   */
+  public static String readWord(String question) {
+    return readString(question, ' ');
+  }
+  /**
+   * @see #readWord(String)
+   */
+  public static String readWord() {
+    return readWord("Entrez une chaîne sans espace :");
+  }
+  /** Lit une chaîne de caractère d'un caractère dans une fenêtre présentée à l'utilisateur.
+   * @param question Une invite qui décrit la valeur à entrer (optionel).
+   * @return La chaîne lue.
+   */
+  public static char readChar(String question) {
+    return readString(question, '\0').charAt(0);
+  }
+  /**
+   * @see #readChar(String)
+   */
+  public static char readChar() {
+    return readChar("Entrez une chaîne sans espace :");
   }
   /** Lit un nombre entier dans une fenêtre présentée à l'utilisateur.
    * @param question Une invite qui décrit la valeur à entrer (optionel).
@@ -81,7 +127,7 @@ public class Stdin {
     if(inputBuffer.isPopable()) {
       return inputBuffer.popInteger();
     }
-    String s = readString(question);
+    String s = readString(question, ' ');
     try {
       return Integer.decode(s);
     } catch(Exception e) {
@@ -120,7 +166,7 @@ public class Stdin {
     if(inputBuffer.isPopable()) {
       return inputBuffer.popDecimal();
     }
-    String s = readString(question);
+    String s = readString(question, ' ');
     try {
       return Double.parseDouble(s);
     } catch(Exception e) {
@@ -228,6 +274,11 @@ public class Stdin {
   public static Boolean readBool() {
     return readBoolean();
   }
+  /** Vide le contenu qui sert d'entrée à la console.
+   */
+  public static void clearConsoleInput() {
+    inputBuffer.clear();
+  }
   /** Charge une chaine de caractère pour que son contenu serve d'entrée à la console.
    * @param string La chaine de caractère à ajouter.
    */
@@ -238,6 +289,7 @@ public class Stdin {
    * @param location La localisation (chemin du fichier ou localisation internet) d'où charger le texte.
    */
   public static void loadConsoleInput(String location) {
+    clearConsoleInput();
     addConsoleInput(org.javascool.tools.FileManager.load(location));
   }
   /** Définit une zone tampon qui permet de substituer un fichier aux lectures au clavier. */
@@ -250,6 +302,10 @@ public class Stdin {
     public void add(String string) {
       inputs += string.trim() + "\n";
     }
+    /** Vide la zone tampon. */
+    public void clear() {
+      inputs = "";
+    }
     /** Teste si il y une chaîne disponible.
      * @return La valeur true si il y une entrée disponible.
      */
@@ -257,45 +313,69 @@ public class Stdin {
       return inputs.length() > 0;
     }
     /** Récupére une chaîne en substitution d'une lecture au clavier.
+     * @param separator Lit une chaîne de caractère jusqu'au '\n' (readLine), ' ' (readWord), ou '\0' (readChar) selon le separator.
      * @return Le texte suivant à considérer. Ou la chaîne vide si le tampon est vide.
      */
-    public String popString() {
+    public String popString(char separator) {
       Macros.sleep(500);
-      int i = inputs.indexOf("\n");
+      int i = separator == '\0' ? 1 : inputs.indexOf('\n');
+      if (separator == ' ') {
+	int i1 = inputs.indexOf(' ');
+	if (i1 != -1 && (i == -1 || i1 < i))
+	  i = i1;
+      }
       if(i != -1) {
         String input = inputs.substring(0, i);
-        inputs = inputs.substring(i + 1);
+        inputs = inputs.substring(separator == '\0' ? i : i + 1);
         return input;
       } else {
         return "";
       }
     }
     /**
-     * @see #popString(String)
+     * @see #popString(char)
+     */
+    public String popString() {
+      return popString('\n');
+    }
+     /**
+     * @see #popString(char)
+     */
+    public String popWord() {
+      return popString(' ');
+    }
+     /**
+     * @see #popString(char)
+     */
+    public String popChar() {
+      return popString('\0');
+    }
+    /**
+     * @see #popString(char)
      */
     public int popInteger() {
       try {
-        return Integer.decode(popString());
+        return Integer.decode(popString(' '));
       } catch(Exception e) {
         return 0;
       }
     }
     /**
-     * @see #popString(String)
+     * @see #popString(char)
      */
     public double popDecimal() {
       try {
-        return Double.parseDouble(popString());
+        return Double.parseDouble(popString(' '));
       } catch(Exception e) {
         return 0;
       }
     }
     /**
-     * @see #popString(String)
+     * @see #popString(char)
      */
     public boolean popBoolean() {
       // Renvoie vrai si [t]rue [y]es [v]rai [o]ui 1
-      return popString().toLowerCase().matches("[tyvo1].*");
+      return popString(' ').toLowerCase().matches("[tyvo1].*");
     }
   }
   private static InputBuffer inputBuffer = new InputBuffer();
