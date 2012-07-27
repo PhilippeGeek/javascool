@@ -46,6 +46,7 @@
     </div>
   </p>
   <p>Voici un autre exemple de <l class="editor" link="PurHasard.jvs" text="petit programme"/>, et <l class="editor" link="Exemple1.jvs" text="celui"/> permettant de démarrer l'exercice.</p>
+  <p>Voici deux exemples de programmes élèves de tracé d'une <l class="editor" link="un-chinois-qui-court.jvs" text="petite animation"/> et d'une <l class="editor" link="allumons-les-fenetres.jvs" text="autre animation"/>.</p>
 <p>Cette «proglet» est un composant logiciel ouvert dont documentation et code-source sont disponibles <l link="http://javascool.gforge.inria.fr/?page=proglets&amp;action=show&amp;id=codagePixels&amp;helpFile=api/org/javascool/proglets/codagePixels/package-summary.html" text="ici"/></p>
 
 <div class="notes">
@@ -58,5 +59,3 @@
   <div><b>Détection de clic</b>: On peut détecter un clic utilisateur avec un <l link="../algoDeMaths/aboutRunnable.htm" text="Runnable"/> et récupérer la position dans l'image avec les fonctions <l link="http://javascool.gforge.inria.fr/?page=proglets&amp;action=show&amp;id=codagePixels&amp;helpFile=api/org/javascool/proglets/codagePixels/Functions.html#getX()" text="getX()"/> et <l link="http://javascool.gforge.inria.fr/?page=proglets&amp;action=show&amp;id=codagePixels&amp;helpFile=api/org/javascool/proglets/codagePixels/Functions.html#getY()" text="getY()"/>.</div>
 </div>
 </div>
-
-
