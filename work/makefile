@@ -1,8 +1,3 @@
-#
-# Refonte de la 4.2
-#  - TextFileEditor
-#  - separer Proglet de ProgletEngine
-#  - simplifier la notion de proglet
 
 # vthierry's ongoing tasks, . . 
 
