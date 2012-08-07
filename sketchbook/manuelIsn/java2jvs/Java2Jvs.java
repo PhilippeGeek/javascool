@@ -14,10 +14,17 @@ public class Java2Jvs {
    * @return Le texte Jvs.
    */
   public static String translate(String javaText) {
+    // Elimine les mots clés obsolètes dans le conexte Jvs
+    javaText = javaText.replaceAll("public\\s", " ");
+    javaText = javaText.replaceAll("static\\s", " ");
     // Desencapsule la construction "class * {"
-    int i0 = javaText.indexOf("public")
-    javaText = javaText.replace("", "void main()");
-    javaText = javaText.replace("public static void main(String[] args)", "void main()");
+    int i0 = javaText.indexOf("class"), i1 = i0 == -1 ? -1 : javaText.indexOf("{", i0), i2 = javaText.lastIndexOf("}");
+    if (i0 != -1 && i1 != -1 && i2 != -1) 
+      javaText = javaText.substring(0, i0) + javaText.substring(i1+1, i2);
+    // Modifie la syntaxe du void main()
+    javaText = javaText.replace("void main(String[] args)", "void main()");
+    // Parse les fonctions de la librairie Isn
+    javaText = javaText.replaceAll("Isn\\.([a-zA-Z]+)", "$1");
     return javaText;
   }
 
