@@ -1,11 +1,10 @@
 class Repertoire {
-
-  public static void main (String [] args) {
-    String [] nom, tel;
+  public static void main(String[] args) {
+    String[] nom, tel;
     int i;
     String s;
-    nom = new String [10];
-    tel = new String [10];
+    nom = new String[10];
+    tel = new String[10];
     // Remplissage du répertoire
     nom[0] = "Alice";
     tel[0] = "0606060606";
@@ -30,9 +29,13 @@ class Repertoire {
     // Recherche du numéro associé au nom s
     s = Isn.readString();
     i = 0;
-    while (i < 10 && !Isn.stringEqual(s,nom[i])) {
-      i = i + 1;}
-    if (i < 10) {
-      System.out.println(tel[i]);}
-    else {
-      System.out.println("Inconnu");}}}
+    while(i < 10 && !Isn.stringEqual(s, nom[i])) {
+      i = i + 1;
+    }
+    if(i < 10) {
+      System.out.println(tel[i]);
+    } else {
+      System.out.println("Inconnu");
+    }
+  }
+}

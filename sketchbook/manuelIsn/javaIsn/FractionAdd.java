@@ -1,15 +1,16 @@
 class FractionAdd {
-
-  public static void main (String [] args) {
-    int a,b,c,d;
+  public static void main(String[] args) {
+    int a, b, c, d;
     a = Isn.readInt();
     b = Isn.readInt();
     c = Isn.readInt();
     d = Isn.readInt();
-    if (b == 0 || d == 0)
+    if((b == 0) || (d == 0)) {
       System.out.println("Dénominateur nul interdit !");
-    else {
+    } else {
       System.out.println(a * d + c * b);
-      System.out.println(b * d);}}}
-
+      System.out.println(b * d);
+    }
+  }
+}
 

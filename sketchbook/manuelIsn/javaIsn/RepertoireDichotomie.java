@@ -1,11 +1,10 @@
 class RepertoireDichotomie {
-
-  public static void main (String [] args) {
-    String [] nom, tel;
-    int i,j,k;
+  public static void main(String[] args) {
+    String[] nom, tel;
+    int i, j, k;
     String s;
-    nom = new String [10];
-    tel = new String [10];
+    nom = new String[10];
+    tel = new String[10];
     nom[0] = "Alice";
     tel[0] = "0606060606";
     nom[1] = "Bob";
@@ -30,17 +29,23 @@ class RepertoireDichotomie {
     s = Isn.readString();
     i = 0;
     j = 9;
-    while (i < j) {
-      k = (i + j) / 2; 
-      if (Isn.stringEqual(s,nom[k])) {
-        i = k; 
-        j = k;}
-      else {
-        if (Isn.stringAlph(s,nom[k])) {
-          j = k-1;}
-        else {
-          i = k+1;}}}
-    if (Isn.stringEqual(s,nom[i])) {
-      System.out.println(tel[i]);}
-    else {
-      System.out.println("Inconnu");}}}
+    while(i < j) {
+      k = (i + j) / 2;
+      if(Isn.stringEqual(s, nom[k])) {
+        i = k;
+        j = k;
+      } else {
+        if(Isn.stringAlph(s, nom[k])) {
+          j = k - 1;
+        } else {
+          i = k + 1;
+        }
+      }
+    }
+    if(Isn.stringEqual(s, nom[i])) {
+      System.out.println(tel[i]);
+    } else {
+      System.out.println("Inconnu");
+    }
+  }
+}

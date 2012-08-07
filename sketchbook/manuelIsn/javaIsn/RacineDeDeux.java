@@ -1,14 +1,15 @@
 class RacineDeDeux {
-
-  public static void main (String [] args) {
+  public static void main(String[] args) {
     int n;
     double epsilon, racine, racineprec;
-    n = Isn.readInt ();
-    epsilon = Math.pow(10,-n);
+    n = Isn.readInt();
+    epsilon = Math.pow(10, -n);
     racine = 1.0;
     racineprec = 2.0;
-    while (Math.abs(racine - racineprec) > epsilon) {
+    while(Math.abs(racine - racineprec) > epsilon) {
       racineprec = racine;
-      racine = 1.0 / (2.0 + racineprec);}
-    System.out.println(racine + 1.0);}}
-         
+      racine = 1.0 / (2.0 + racineprec);
+    }
+    System.out.println(racine + 1.0);
+  }
+}
