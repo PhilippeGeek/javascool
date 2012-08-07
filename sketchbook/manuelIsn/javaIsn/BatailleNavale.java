@@ -1,6 +1,5 @@
 class BatailleNavale {
-
-  public static void main (String [] args) {
+  public static void main(String[] args) {
     int a;
     int b;
     int x;
@@ -10,12 +9,15 @@ class BatailleNavale {
     System.out.println("À vous de jouer");
     x = Isn.readInt();
     y = Isn.readInt();
-    if (x == a && y == b) {
-      System.out.println("Coulé");}
-    else { 
-      if (x == a || y == b) {
-        System.out.println("En vue");}
-      else { 
-        System.out.println("À l'eau");}}}}
-
+    if((x == a) && (y == b)) {
+      System.out.println("Coulé");
+    } else {
+      if((x == a) || (y == b)) {
+        System.out.println("En vue");
+      } else {
+        System.out.println("À l'eau");
+      }
+    }
+  }
+}
 

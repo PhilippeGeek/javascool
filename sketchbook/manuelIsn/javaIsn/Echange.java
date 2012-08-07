@@ -1,17 +1,18 @@
 class Echange {
+  static int a, b;
 
-  static int a,b;
-
-  static void echange (int x, int y) {
-    int z; 
+  static void echange(int x, int y) {
+    int z;
     z = x;
     x = y;
-    y = z;}
-
-  public static void main (String [] args) {
+    y = z;
+  }
+  public static void main(String[] args) {
     a = 4;
     b = 7;
-    echange(a,b);
+    echange(a, b);
     System.out.print(a);
     System.out.print("   ");
-    System.out.println(b);}}
+    System.out.println(b);
+  }
+}

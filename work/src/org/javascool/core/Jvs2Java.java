@@ -4,6 +4,7 @@
 package org.javascool.core;
 
 import java.util.HashSet;
+import  org.javascool.tools.FileManager;
 
 // Used to report a throwable
 import java.lang.reflect.InvocationTargetException;
@@ -114,10 +115,11 @@ public class Jvs2Java extends Translator {
     if(progletTranslator != null) {
       finalBody = progletTranslator.translate(finalBody);
     }
-    System.err.println(
-      "\n-------------------\nCode java généré\n-------------------\n" +
-      head.toString().replaceAll("([{;])", "$1\n") + "\n" + finalBody + "}" +
-      "\n----------------------------------------------------------\n");
+    if (false)
+      System.err.println(
+			 "\n-------------------\nCode java généré\n-------------------\n" +
+			 head.toString().replaceAll("([{;])", "$1\n") + "\n" + finalBody + "}" +
+			 "\n----------------------------------------------------------\n");
     return head.toString() + finalBody + "}";
   }
   /** Renvoie le nom de la dernière classe Java générée lors de la traduction. */
@@ -145,12 +147,15 @@ public class Jvs2Java extends Translator {
     return s;
   }
   /** Lanceur de la conversion Jvs en Java.
-   * @param usage <tt>java org.javascool.core.Jvs2Java input-file [output-file]</tt>
+   * @param usage <tt>java org.javascool.core.Jvs2Java [proglet-name] input-file [output-file]</tt>
    */
   public static void main(String[] usage) {
     // @main
     if(usage.length > 0) {
-      org.javascool.tools.FileManager.save(usage.length > 1 ? usage[1] : "stdout:", new Jvs2Java().translate(org.javascool.tools.FileManager.load(usage[0])));
+      if (usage.length == 3)
+	FileManager.save(usage.length > 1 ? usage[2] : "stdout:", new Jvs2Java().setProgletPackageName(usage[0]).translate(FileManager.load(usage[1])));
+      else
+	FileManager.save(usage.length > 1 ? usage[1] : "stdout:", new Jvs2Java().translate(FileManager.load(usage[0])));
     }
   }
 }

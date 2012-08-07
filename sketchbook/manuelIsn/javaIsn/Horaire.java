@@ -1,11 +1,10 @@
 class Horaire {
-
-  static void TirerUnTrait () {
+  static void TirerUnTrait() {
     System.out.println();
     System.out.println("-----------------------------------------------");
-    System.out.println();}
-
-  public static void main (String [] args) {
+    System.out.println();
+  }
+  public static void main(String[] args) {
     System.out.print("Le vol en direction de ");
     System.out.print("Tokyo");
     System.out.print(" décolera à ");
@@ -22,4 +21,6 @@ class Horaire {
     System.out.print("Toulouse");
     System.out.print(" décolera à ");
     System.out.print("9h45");
-    TirerUnTrait();}}
+    TirerUnTrait();
+  }
+}

@@ -1,12 +1,11 @@
 class Addition {
-
-  public static void main (String [] args) {
-    boolean [] n, p, r;
+  public static void main(String[] args) {
+    boolean[] n, p, r;
     int i;
-    boolean a,b,c;
-    n = new boolean [10];
-    p = new boolean [10];
-    r = new boolean [11];
+    boolean a, b, c;
+    n = new boolean[10];
+    p = new boolean[10];
+    r = new boolean[11];
     n[0] = true;
     n[1] = true;
     n[2] = true;
@@ -28,30 +27,39 @@ class Addition {
     p[8] = false;
     p[9] = false;
     c = false;
-    for (i = 0; i <= 9; i = i + 1) {
+    for(i = 0; i <= 9; i = i + 1) {
       a = n[i];
       b = p[i];
-      r[i] = (a && !b && !c) || (!a && b && !c) || (!a && !b && c) 
-          || (a && b && c);
-      c = (a && b) || (b && c) || (a && c);}
+      r[i] = (a && !b && !c) || (!a && b && !c) || (!a && !b && c)
+             || (a && b && c);
+      c = (a && b) || (b && c) || (a && c);
+    }
     r[10] = c;
-    System.out.print(" "); 
-    for (i = 0; i <= 9; i = i + 1) {
-      if (n[9-i]) {
-        System.out.print("1");} 
-      else {
-        System.out.print("0");}}
+    System.out.print(" ");
+    for(i = 0; i <= 9; i = i + 1) {
+      if(n[9 - i]) {
+        System.out.print("1");
+      } else {
+        System.out.print("0");
+      }
+    }
     System.out.println();
-    System.out.print(" "); 
-    for (i = 0; i <= 9; i = i + 1) {
-      if (p[9-i]) {
-        System.out.print("1");} 
-      else {
-        System.out.print("0");}}
+    System.out.print(" ");
+    for(i = 0; i <= 9; i = i + 1) {
+      if(p[9 - i]) {
+        System.out.print("1");
+      } else {
+        System.out.print("0");
+      }
+    }
     System.out.println();
-    for (i = 0; i <= 10; i = i + 1) {
-      if (r[10-i]) {
-        System.out.print("1");} 
-      else {
-        System.out.print("0");}}
-    System.out.println();}}
+    for(i = 0; i <= 10; i = i + 1) {
+      if(r[10 - i]) {
+        System.out.print("1");
+      } else {
+        System.out.print("0");
+      }
+    }
+    System.out.println();
+  }
+}
