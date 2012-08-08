@@ -6,20 +6,26 @@ EOF
 exit
 fi
 
+# Calcul des path
+
+pushd `dirname $0` > /dev/null 
+ jvs="`pwd`/../work/dist/javascool-builder.jar" ; jsx="`pwd`/../work/lib/saxon.jar" ; xslt="`pwd`/../work/jsrc/builder/hdoc2htm.xslt" 
+popd > /dev/null
+
 # Copie en miroir des fichiers vers la cible
 
-if [ "$1" = "-e" ] ; then shift ; mv $2 /tmp/$2-$$ ; fi
-if [ \! -d "$1" ] ; then echo "Erreur : la location source $1 n'est pas un répertoire, bye." ; fi
-if [ -f "$2" ] ; then echo "Erreur : la location cible $2 existe déjà, bye." ; fi
-if [ -d ".svn" ] ; then svn export $1 $2 ; else cp -r $1 $2 ; fi
+if [ "$1" = "-e" ] ; then shift ; if [ -d "$2" ] ; then mv $2 /tmp/`basename $2`-$$ ; fi ; fi
+if [ \! -d "$1" ] ; then echo "Erreur : la location source $1 n'est pas un répertoire, bye." ; exit -1 ; fi
+if [ -d "$2" ] ; then echo "Erreur : la location cible $2 existe déjà, bye." ; exit -1 ; fi
+if [ -d ".svn" ] ; then svn -q export $1 $2 ; else cp -r $1 $2 ; fi
 cd $2
 
 # Translation des fichiers
 
-java="java -cp `diname $0`/../work/dist/javascool-proglets.jar"
+if [ -f proglet.pml ] ; then java -cp $jvs org.javascool.tools.Pml proglet.pml proglet.json ; rm proglet.pml ; else echo "Erreur : y'a pas de proglet.pml !" ; fi
 
-if [ \! -f "proglet.pml" ] ; then echo "Erreur : ce n'est pas un répertoire de proglet ou la conversion est déjà faite, bye." ; fi
-$java org.javascool.tools.Pml proglet.pml proglet.json
+if [ -f completion.xml ] ; then java -cp $jvs org.javascool.tools.Pml completion.xml completion.json ; rm completion.xml ; fi
 
-for f in *.xml ; do n=`echo $ | sed s'/.xml$//'` ; $java org.javascool.tools.Xml2Xml $n.xml ../work/jsrc/builder/hdoc2htm.xslt $n.html ; done
+for f in *.xml ; do n=`echo $f | sed s'/.xml$//'` ; java -jar $jsx -o $n.html $n.xml $xslt ; rm $f ; done
 
+# That's all !

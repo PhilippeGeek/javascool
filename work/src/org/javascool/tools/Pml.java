@@ -607,34 +607,32 @@ public class Pml {
   private static class JsonWriter {
     private StringBuffer string;
 
-    /** Convertit la PML en tableau PHP. */
+    /** Convertit la PML en chaine Json. */
     public String toString(Pml pml) {
-      string = new StringBuffer();
       if(pml == null) {
         return " {} ";
       } else if (pml.getSize() == 0) {
-	string.append(quote(pml));
-      } else if (pml.getSize() == pml.getCount()) {
-	string.append(" [\n");
+	return quote(pml.getTag());
+      } else if (pml.getSize() == pml.getCount() && pml.getCount() > 1) {
+	String s = "[\n";
 	for(int n = 0; n < pml.getCount(); n++)
-          string.append(" , ").append(toString(pml.getChild(n)));
-	string.append("] \n");
+          s += (n == 0 ? "" : " , ") + toString(pml.getChild(n));
+	return s + "]\n";
       } else {
-	string.append(" { \"tag\" :").append(quote(pml.getTag())).append("\n");
-        for(String name : pml.attributes())
-          string.append(", ").append(quote(name)).append(" : ").append(quote(pml.getChild(name))).append("\n");
-        for(int n = 0; n < pml.getCount(); n++)
-          string.append(", ").append(quote(""+n)).append(quote(pml.getChild(n))).append("\n");
-	string.append("} \n");
+	String s = "{ \"tag\" : " + quote(pml.getTag()) + "\n";
+        for(String name : pml.attributes()) 
+	  s += ", " + quote(name) + " : " + toString(pml.getChild(name)) + "\n";
+	for(int n = 0; n < pml.getCount(); n++)
+	  if (pml.getChild(n).getSize() == pml.getChild(n).getCount() && pml.getChild(n).getCount() == 1)
+	    s += ", " + quote(pml.getChild(n).getTag()) + " : " + toString(pml.getChild(n).getChild(0)) + "\n";
+	  else
+	    s += ", " + quote(""+n) + " : " + toString(pml.getChild(n)) + "\n";
+	return s + "}\n";
       }
-      return string.toString().replaceAll("\n+", "\n");
     }
     /** Prends en compte les \". */
     private static String quote(String string) {
       return "\"" + string.replaceAll("\\\\", "\\\\\\\\").replaceAll("\"", "\\\\\"") + "\"";
-    }
-    private static String quote(Pml pml) {
-      return quote(pml.getSize() == 0 ? pml.getTag() : pml.toString());
     }
   }
 
