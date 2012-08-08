@@ -1,0 +1,12 @@
+double divisionDecimale(int dividende, int diviseur) {
+  double quotient;
+  if(diviseur == 0) {
+    quotient = Double.POSITIVE_INFINITY;
+  } else {
+    quotient = ((double) dividende) / ((double) diviseur);
+  }
+  return quotient;
+}
+void main() {
+  System.out.println(divisionDecimale(2, 3));
+}

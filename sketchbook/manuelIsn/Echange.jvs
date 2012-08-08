@@ -1,0 +1,16 @@
+int a, b;
+
+void echange(int x, int y) {
+  int z;
+  z = x;
+  x = y;
+  y = z;
+}
+void main() {
+  a = 4;
+  b = 7;
+  echange(a, b);
+  System.out.print(a);
+  System.out.print("   ");
+  System.out.println(b);
+}
