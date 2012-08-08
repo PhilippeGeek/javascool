@@ -11,8 +11,8 @@ void main() {
     n = n + 1;
   }
   if(n > longueur - 3) {
-    System.out.println("pas de oui");
+    println("pas de oui");
   } else {
-    System.out.println(n);
+    println(n);
   }
 }

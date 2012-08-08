@@ -68,7 +68,8 @@ public class Stdin {
 				      inputString = ((JTextField) e.getSource()).getText();
 				      if(inputSeparator == '\0') {
 					inputDialog.close();
-				      } else if (inputSeparator == ' ' && Character.isWhitespace(inputString.charAt(inputString.length()-1))) {
+				      } else if (inputSeparator == ' ' && inputString.length() > 0 && 
+						 Character.isWhitespace(inputString.charAt(inputString.length()-1))) {
 					inputString = inputString.substring(0, inputString.length()-1);
 					inputDialog.close();
 				      }
@@ -117,6 +118,18 @@ public class Stdin {
    * @see #readChar(String)
    */
   public static char readChar() {
+    return readChar("Entrez une chaîne sans espace :");
+  }
+  /**
+   * @see #readChar(String)
+   */
+  public static char readCharacter(String question) {
+    return readString(question, '\0').charAt(0);
+  }
+  /**
+   * @see #readChar(String)
+   */
+  public static char readCharacter() {
     return readChar("Entrez une chaîne sans espace :");
   }
   /** Lit un nombre entier dans une fenêtre présentée à l'utilisateur.

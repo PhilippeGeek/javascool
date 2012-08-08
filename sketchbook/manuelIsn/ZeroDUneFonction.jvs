@@ -12,5 +12,5 @@ void main() {
     }
     m = (a + b) / 2;
   }
-  System.out.println(m);
+  println(m);
 }

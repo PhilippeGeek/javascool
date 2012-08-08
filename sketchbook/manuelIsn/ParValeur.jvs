@@ -3,8 +3,8 @@ int i;
 int h(int j) {
   int k;
   j = j + 1;
-  System.out.println(i);
-  System.out.println(j);
+  println(i);
+  println(j);
   k = j + i;
   i = 5;
   return k;
@@ -13,9 +13,9 @@ void main() {
   int m, n;
   m = 1;
   i = 10;
-  System.out.println(m);
+  println(m);
   n = h(m);
-  System.out.println(m);
-  System.out.println(n);
-  System.out.println(i);
+  println(m);
+  println(n);
+  println(i);
 }

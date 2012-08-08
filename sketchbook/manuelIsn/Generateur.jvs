@@ -19,5 +19,5 @@ void main() {
   periode = 7;
   origine(8);
   for(i = 1; i <= periode; i = i + 1)
-    System.out.println(hasard());
+    println(hasard());
 }

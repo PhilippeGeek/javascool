@@ -20,7 +20,7 @@ void main() {
   pseudoOk = false;
   // On redemande un pseudo tant qu'il n'est pas correct
   while(!pseudoOk) {
-    System.out.println("Entrer votre pseudo :");
+    println("Entrer votre pseudo :");
     pseudo = readString();
     pseudoOk = true;
     // On vérifie que chaque caractère du pseudo est autorisé

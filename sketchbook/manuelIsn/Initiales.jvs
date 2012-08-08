@@ -2,10 +2,10 @@ void main() {
   String nom;
   int i;
   nom = readString();
-  System.out.print(stringNth(nom, 0));
+  print(stringNth(nom, 0));
   for(i = 0; i <= stringLength(nom) - 2; i = i + 1)
     if(stringEqual(" ", stringNth(nom, i))) {
-      System.out.print(stringNth(nom, i + 1));
+      print(stringNth(nom, i + 1));
     }
-  System.out.println();
+  println();
 }

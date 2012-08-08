@@ -44,5 +44,5 @@ void main() {
   String n;
   initialise();
   n = readString();
-  System.out.println(recherche(n));
+  println(recherche(n));
 }

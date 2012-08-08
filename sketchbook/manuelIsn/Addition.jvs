@@ -34,30 +34,30 @@ void main() {
     c = (a && b) || (b && c) || (a && c);
   }
   r[10] = c;
-  System.out.print(" ");
+  print(" ");
   for(i = 0; i <= 9; i = i + 1) {
     if(n[9 - i]) {
-      System.out.print("1");
+      print("1");
     } else {
-      System.out.print("0");
+      print("0");
     }
   }
-  System.out.println();
-  System.out.print(" ");
+  println();
+  print(" ");
   for(i = 0; i <= 9; i = i + 1) {
     if(p[9 - i]) {
-      System.out.print("1");
+      print("1");
     } else {
-      System.out.print("0");
+      print("0");
     }
   }
-  System.out.println();
+  println();
   for(i = 0; i <= 10; i = i + 1) {
     if(r[10 - i]) {
-      System.out.print("1");
+      print("1");
     } else {
-      System.out.print("0");
+      print("0");
     }
   }
-  System.out.println();
+  println();
 }

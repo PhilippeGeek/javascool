@@ -1,10 +1,10 @@
 void main() {
   double ht, ttc, taux;
-  System.out.println("Quel est le prix hors taxes ?");
+  println("Quel est le prix hors taxes ?");
   ht = readDouble();
-  System.out.println("Quel est le taux de TVA ?");
+  println("Quel est le taux de TVA ?");
   taux = readDouble();
   ttc = ht + ht * taux / 100;
-  System.out.print("Le prix toutes taxes comprises est ");
-  System.out.println(ttc);
+  print("Le prix toutes taxes comprises est ");
+  println(ttc);
 }

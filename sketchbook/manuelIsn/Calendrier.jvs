@@ -7,9 +7,9 @@ void main() {
       nbj = 30 + (mois + (mois / 8)) % 2;
     }
     for(jour = 1; jour <= nbj; jour = jour + 1) {
-      System.out.print(jour);
-      System.out.print(" / ");
-      System.out.println(mois);
+      print(jour);
+      print(" / ");
+      println(mois);
     }
   }
 }

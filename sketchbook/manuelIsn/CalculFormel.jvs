@@ -10,20 +10,20 @@ void main() {
   t[0] = 3;
   // Affichage de la fonction
   for(i = 0; i <= 3; i = i + 1) {
-    System.out.print(t[i]);
-    System.out.print(" ");
+    print(t[i]);
+    print(" ");
     if(i != 0) {
-      System.out.print("x");
+      print("x");
       if(i != 1) {
-        System.out.print("^");
-        System.out.print(i);
+        print("^");
+        print(i);
       }
     }
     if(i != 3) {
-      System.out.print(" + ");
+      print(" + ");
     }
   }
-  System.out.println();
+  println();
 
   // Calcul et affichage de sa valeur
   x = 5;
@@ -33,25 +33,25 @@ void main() {
     y = y + t[i] * c;
     c = c * x;
   }
-  System.out.println(y);
+  println(y);
   // Calcul de sa dérivée
   for(i = 0; i <= 2; i = i + 1)
     u[i] = t[i + 1] * (i + 1);
   u[3] = 0;
   // Affichage de sa dérivée
   for(i = 0; i <= 3; i = i + 1) {
-    System.out.print(u[i]);
-    System.out.print(" ");
+    print(u[i]);
+    print(" ");
     if(i != 0) {
-      System.out.print("x");
+      print("x");
       if(i != 1) {
-        System.out.print("^");
-        System.out.print(i);
+        print("^");
+        print(i);
       }
     }
     if(i != 3) {
-      System.out.print(" + ");
+      print(" + ");
     }
   }
-  System.out.println();
+  println();
 }

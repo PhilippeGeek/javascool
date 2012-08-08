@@ -7,5 +7,5 @@ void main() {
     x = x / 2;
     n = n + 1;
   }
-  System.out.println(n);
+  println(n);
 }

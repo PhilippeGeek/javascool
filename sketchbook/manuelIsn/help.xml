@@ -5,7 +5,7 @@
   </p>
   <p>
     Sur cette page se trouvent la plupart des versions javascool des programmes du livre «Informatique et sciences du numérique - Spécialité ISN en terminale S», voir la page de <l link="https://who.rocq.inria.fr/Gilles.Dowek/Isn" text="ressources du manuel"/> pour plus d'informations, des exemples dans d'autres langages etc.
-  Tous les sources sont disponibles dans ce <l link="" text="fichier zip"/>.
+  Tous ces sources sont aussi disponibles dans ce <l link="http://javascool.gforge.inria.fr/proglets/manuelIsn/IsnJvsExamples.zip" text="fichier zip"/>.
   </p>
 </div><div title="Chapitre 1">
 
@@ -130,5 +130,7 @@
 <div><l class="editor" link="./TriFusion.jvs" text="TriFusion"/></div>
 
 </div><div title="Coquilles"> La liste des coquilles connues est <a href = "coquilles.html">ici</a>. Aidez vous à les éliminer en envoyant une courrier à <tt>gilles.dowek</tt> at <tt>inria.fr</tt>.</div>
+
+<div title="Mécanisme d'utilisation des routines Isn en javascool"> <p>Cette «proglet» est un composant logiciel ouvert dont documentation et code-source sont disponibles <l link="http://javascool.gforge.inria.fr/?page=proglets&amp;action=show&amp;id=manuelIsn&amp;helpFile=api/org/javascool/proglets/manuelIsn/package-summary.html" text="ici"/>. La <l link="http://javascool.gforge.inria.fr/proglets/manuelIsn/java2jvs/Java2Jvs.java.txt" text="routine de conversion"/> de Java en Jvs est simplissime.</p></div>
 
 </div>

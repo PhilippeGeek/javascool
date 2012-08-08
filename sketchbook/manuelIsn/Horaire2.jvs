@@ -1,11 +1,11 @@
 void annoncerUnVol(String v, String h) {
-  System.out.print("Le vol en direction de ");
-  System.out.print(v);
-  System.out.print(" décolera à ");
-  System.out.print(h);
-  System.out.println();
-  System.out.println("-----------------------------------------------");
-  System.out.println();
+  print("Le vol en direction de ");
+  print(v);
+  print(" décolera à ");
+  print(h);
+  println();
+  println("-----------------------------------------------");
+  println();
 }
 void main() {
   annoncerUnVol("Tokyo", "9h00");
