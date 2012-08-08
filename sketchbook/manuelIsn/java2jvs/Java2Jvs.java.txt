@@ -23,7 +23,7 @@ public class Java2Jvs {
     if (i0 != -1 && i1 != -1 && i2 != -1) 
       javaText = javaText.substring(0, i0) + javaText.substring(i1+1, i2);
     // Modifie la syntaxe du void main()
-    javaText = javaText.replace("void main(String[] args)", "void main()");
+    javaText = javaText.replaceFirst("void\\smain\\([^\\)]*\\)", "void main()");
     // Enlève le suffixe des fonctions Isn
     javaText = javaText.replaceAll("Isn\\.([a-zA-Z]+)", "$1");
     return javaText;

@@ -1,0 +1,12 @@
+int a;
+
+void f(int x) {
+  System.out.println(2 * x);
+  a = 2 * x;
+}
+void main() {
+  int n;
+  a = 3;
+  n = 4;
+  f(a + n);
+}

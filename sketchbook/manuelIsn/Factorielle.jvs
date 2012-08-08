@@ -1,0 +1,8 @@
+void main() {
+  int n, i, f;
+  n = readInt();
+  f = 1;
+  for(i = 1; i <= n; i = i + 1)
+    f = f * i;
+  System.out.println(f);
+}

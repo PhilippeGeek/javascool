@@ -1,0 +1,10 @@
+int quotient(int dividende, int diviseur) {
+  if(dividende < diviseur) {
+    return 0;
+  } else {
+    return 1 + quotient(dividende - diviseur, diviseur);
+  }
+}
+void main() {
+  System.out.println(quotient(17, 3));
+}
