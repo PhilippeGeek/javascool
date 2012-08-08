@@ -1,13 +1,13 @@
 void TirerUnTrait() {
-  System.out.println();
-  System.out.println("-----------------------------------------------");
-  System.out.println();
+  println();
+  println("-----------------------------------------------");
+  println();
 }
 void annoncerUnVol(String v, String h) {
-  System.out.print("Le vol en direction de ");
-  System.out.print(v);
-  System.out.print(" décolera à ");
-  System.out.print(h);
+  print("Le vol en direction de ");
+  print(v);
+  print(" décolera à ");
+  print(h);
   TirerUnTrait();
 }
 void main() {

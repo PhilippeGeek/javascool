@@ -4,8 +4,8 @@ void main() {
   for(i = 0; i <= 15; i = i + 1)
     tab[i] = (int) Math.floor(Math.random() * 1000);
   for(i = 0; i <= 15; i = i + 1)
-    System.out.print(tab[i] + " ");
-  System.out.println();
+    print(tab[i] + " ");
+  println();
   for(i = 0; i <= 14; i = i + 1) {
     k = i + 1;
     for(j = i + 2; j <= 15; j = j + 1)
@@ -17,6 +17,6 @@ void main() {
     tab[k] = z;
   }
   for(i = 0; i <= 15; i = i + 1)
-    System.out.print(tab[i] + " ");
-  System.out.println();
+    print(tab[i] + " ");
+  println();
 }

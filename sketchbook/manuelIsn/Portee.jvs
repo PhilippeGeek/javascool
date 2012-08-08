@@ -10,5 +10,5 @@ void main() {
   double t;
   y = 4;
   t = 1 / (double) y;
-  System.out.println(v(t));
+  println(v(t));
 }

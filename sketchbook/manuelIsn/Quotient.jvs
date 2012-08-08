@@ -6,5 +6,5 @@ int quotient(int dividende, int diviseur) {
   }
 }
 void main() {
-  System.out.println(quotient(17, 3));
+  println(quotient(17, 3));
 }

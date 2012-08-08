@@ -6,5 +6,5 @@ void main() {
   if(principale > Math.PI) {
     principale = principale - 2 * Math.PI;
   }
-  System.out.println(principale);
+  println(principale);
 }

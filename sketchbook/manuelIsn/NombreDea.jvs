@@ -8,5 +8,5 @@ int nombreDea(String s) {
   return n;
 }
 void main() {
-  System.out.println(nombreDea("abracadabra"));
+  println(nombreDea("abracadabra"));
 }

@@ -58,6 +58,12 @@ public class Stdout {
   public static void echo(Object string) {
     echo("" + string);
   }
+  /**
+   * @see #echo(String)
+   */
+  public static void echo() {
+    echo("");
+  }
   /** Affiche dans la console une chaîne de caractères ou la représentation textuelle d'un objet sur la console.
    * - Cette fonction ramène le focus de javascool sur la console.
    * @param string La chaine ou l'objet à afficher sous sa représentation textuelle.
@@ -97,6 +103,12 @@ public class Stdout {
    */
   public static void println(Object o) {
     println("" + o);
+  }
+  /**
+   * @see #echo(String)
+   */
+  public static void println() {
+    println("");
   }
   /** Affiche dans la console une chaîne de caractères ou la représentation textuelle d'un objet sur la console sans retour à la ligne.
    * @param string La chaine ou l'objet à afficher sous sa représentation textuelle.

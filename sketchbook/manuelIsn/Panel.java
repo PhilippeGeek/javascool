@@ -22,10 +22,7 @@ import java.util.ArrayList;
 public class Panel extends JComponent {
   private static final long serialVersionUID = 1L;
   // @bean
-  public Panel() {
-   setOpaque(true);
-   setBackground(Color.WHITE);
-  }
+  public Panel() {}
   // Définit une forme géométrique colorée
   private class ColorShape { Shape shape; Color foreground, background; }
   // Liste des formes géométriques
@@ -49,6 +46,9 @@ public class Panel extends JComponent {
   /** Routine interne de tracé, ne pas utiliser. */
   @Override
   public void paint(Graphics g) {
+    super.paint(g);
+    g.setColor(Color.WHITE);
+    g.fillRect(0, 0, getWidth(), getHeight());
     try {
       for(ColorShape s : shapes) {
 	if(s.background != null) {

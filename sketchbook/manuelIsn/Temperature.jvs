@@ -6,5 +6,5 @@ void main() {
     temperature = readDouble();
     somme = somme + temperature;
   }
-  System.out.println(somme / 7.0);
+  println(somme / 7.0);
 }

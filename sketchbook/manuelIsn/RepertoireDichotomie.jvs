@@ -42,8 +42,8 @@ void main() {
     }
   }
   if(stringEqual(s, nom[i])) {
-    System.out.println(tel[i]);
+    println(tel[i]);
   } else {
-    System.out.println("Inconnu");
+    println("Inconnu");
   }
 }

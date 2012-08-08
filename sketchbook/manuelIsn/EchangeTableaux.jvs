@@ -12,7 +12,7 @@ void main() {
   b = new int[1];
   b[0] = 7;
   echange(a, b);
-  System.out.print(a[0]);
-  System.out.print("   ");
-  System.out.println(b[0]);
+  print(a[0]);
+  print("   ");
+  println(b[0]);
 }

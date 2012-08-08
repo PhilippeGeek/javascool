@@ -10,7 +10,7 @@ void main() {
   a = 4;
   b = 7;
   echange(a, b);
-  System.out.print(a);
-  System.out.print("   ");
-  System.out.println(b);
+  print(a);
+  print("   ");
+  println(b);
 }

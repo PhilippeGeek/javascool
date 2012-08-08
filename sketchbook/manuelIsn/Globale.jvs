@@ -1,7 +1,7 @@
 int a;
 
 void f(int x) {
-  System.out.println(2 * x);
+  println(2 * x);
   a = 2 * x;
 }
 void main() {

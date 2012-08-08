@@ -8,5 +8,5 @@ double divisionDecimale(int dividende, int diviseur) {
   return quotient;
 }
 void main() {
-  System.out.println(divisionDecimale(2, 3));
+  println(divisionDecimale(2, 3));
 }

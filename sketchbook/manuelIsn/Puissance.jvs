@@ -6,5 +6,5 @@ int puissance(int n) {
   }
 }
 void main() {
-  System.out.println(puissance(10));
+  println(puissance(10));
 }

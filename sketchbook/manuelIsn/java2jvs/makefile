@@ -33,5 +33,6 @@ cmp :
 
 clean :
 	rm -rf *.class Java2Jvs.java JvsToJavaTranslated1.java
+	find .. -name '*~' -exec rm {} \;
 
 

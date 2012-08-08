@@ -5,39 +5,39 @@ void main() {
   poids = readInt();
   if(stringEqual(type, "verte")) {
     if(poids <= 20) {
-      System.out.println(0.57);
+      println(0.57);
     } else {
       if(poids <= 50) {
-        System.out.println(0.95);
+        println(0.95);
       } else {
         if(poids <= 100) {
-          System.out.println(1.40);
+          println(1.40);
         }
       }
     }
   } else {
     if(stringEqual(type, "prioritaire")) {
       if(poids <= 20) {
-        System.out.println(0.60);
+        println(0.60);
       } else {
         if(poids <= 50) {
-          System.out.println(1.00);
+          println(1.00);
         } else {
           if(poids <= 100) {
-            System.out.println(1.45);
+            println(1.45);
           }
         }
       }
     } else {
       if(stringEqual(type, "ecopli")) {
         if(poids <= 20) {
-          System.out.println(0.55);
+          println(0.55);
         } else {
           if(poids <= 50) {
-            System.out.println(0.78);
+            println(0.78);
           } else {
             if(poids <= 100) {
-              System.out.println(1.00);
+              println(1.00);
             }
           }
         }

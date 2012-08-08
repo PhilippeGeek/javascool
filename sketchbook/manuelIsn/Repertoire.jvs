@@ -32,8 +32,8 @@ void main() {
     i = i + 1;
   }
   if(i < 10) {
-    System.out.println(tel[i]);
+    println(tel[i]);
   } else {
-    System.out.println("Inconnu");
+    println("Inconnu");
   }
 }

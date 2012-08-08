@@ -9,5 +9,5 @@ void main() {
     racineprec = racine;
     racine = 1.0 / (2.0 + racineprec);
   }
-  System.out.println(racine + 1.0);
+  println(racine + 1.0);
 }

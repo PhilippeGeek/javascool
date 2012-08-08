@@ -5,9 +5,9 @@ void main() {
   c = readInt();
   d = readInt();
   if((b == 0) || (d == 0)) {
-    System.out.println("Dénominateur nul interdit !");
+    println("Dénominateur nul interdit !");
   } else {
-    System.out.println(a * c);
-    System.out.println(b * d);
+    println(a * c);
+    println(b * d);
   }
 }
