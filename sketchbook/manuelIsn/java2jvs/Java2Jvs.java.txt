@@ -1,3 +1,4 @@
+
 import org.javascool.tools.FileManager;
 
 /** Définit le mécanisme de traduction d'un code Java utilisant la classe Isn en Jvs.
@@ -10,20 +11,20 @@ public class Java2Jvs {
   private Java2Jvs() {}
 
   /** Traduit un texte Java en Jvs.
-   * @param javaText Le texte Java
+   * @param javaText Le texte Java qui a été remis en page au préalable (espaces standards etc...)
    * @return Le texte Jvs.
    */
   public static String translate(String javaText) {
     // Elimine les mots clés obsolètes dans le conexte Jvs
     javaText = javaText.replaceAll("public\\s", " ");
     javaText = javaText.replaceAll("static\\s", " ");
-    // Desencapsule la construction "class * {"
+    // Désencapsule la construction "class * {"
     int i0 = javaText.indexOf("class"), i1 = i0 == -1 ? -1 : javaText.indexOf("{", i0), i2 = javaText.lastIndexOf("}");
     if (i0 != -1 && i1 != -1 && i2 != -1) 
       javaText = javaText.substring(0, i0) + javaText.substring(i1+1, i2);
     // Modifie la syntaxe du void main()
     javaText = javaText.replace("void main(String[] args)", "void main()");
-    // Parse les fonctions de la librairie Isn
+    // Enlève le suffixe des fonctions Isn
     javaText = javaText.replaceAll("Isn\\.([a-zA-Z]+)", "$1");
     return javaText;
   }
