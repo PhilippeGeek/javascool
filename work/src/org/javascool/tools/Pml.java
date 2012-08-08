@@ -136,6 +136,7 @@ public class Pml {
    * en réduisant les tag et attributs à des nom XML valides et en considérant les PML sans attribut ni élément comme des chaînes.<li>
    * <li>"PHP" Retourne un élément de code PHP de la forme:<tt>&lt;php $tag = array("_tag" = getTag(), . . "name" => "value", . . , "element");?></tt>.</li>
    * <li>"JMF" Retourne un format de fichier de manifeste de JAR de la forme: <tt> name : value \n .. </tt> en omettant le tag et les éléments.</li>
+   * <li>"JSON" Retourne un format de syntaxe <a href="http://www.json.org">Json</a>.
    * </ul></div>
    * @return La chaîne qui représente la PML.
    */
@@ -144,6 +145,7 @@ public class Pml {
     return "xml".equals(format) ? new XmlWriter().toString(this)
            : "raw".equals(format) ? new PlainWriter().toString(this, 0)
            : "php".equals(format) ? new PhpWriter().toString(this)
+           : "json".equals(format) ? new JsonWriter().toString(this)
            : "jmf".equals(format) ? new JmfWriter().toString(this)
            : new PlainWriter().toString(this, 180);
   }
@@ -591,6 +593,41 @@ public class Pml {
         string.append("); ?>");
       }
       return string.toString();
+    }
+    /** Prends en compte les \". */
+    private static String quote(String string) {
+      return "\"" + string.replaceAll("\\\\", "\\\\\\\\").replaceAll("\"", "\\\\\"") + "\"";
+    }
+    private static String quote(Pml pml) {
+      return quote(pml.getSize() == 0 ? pml.getTag() : pml.toString());
+    }
+  }
+
+  /**  Définit le convertisseur de PML en Json. */
+  private static class JsonWriter {
+    private StringBuffer string;
+
+    /** Convertit la PML en tableau PHP. */
+    public String toString(Pml pml) {
+      string = new StringBuffer();
+      if(pml == null) {
+        return " {} ";
+      } else if (pml.getSize() == 0) {
+	string.append(quote(pml));
+      } else if (pml.getSize() == pml.getCount()) {
+	string.append(" [\n");
+	for(int n = 0; n < pml.getCount(); n++)
+          string.append(" , ").append(toString(pml.getChild(n)));
+	string.append("] \n");
+      } else {
+	string.append(" { \"tag\" :").append(quote(pml.getTag())).append("\n");
+        for(String name : pml.attributes())
+          string.append(", ").append(quote(name)).append(" : ").append(quote(pml.getChild(name))).append("\n");
+        for(int n = 0; n < pml.getCount(); n++)
+          string.append(", ").append(quote(""+n)).append(quote(pml.getChild(n))).append("\n");
+	string.append("} \n");
+      }
+      return string.toString().replaceAll("\n+", "\n");
     }
     /** Prends en compte les \". */
     private static String quote(String string) {
@@ -1067,11 +1104,11 @@ public class Pml {
     return properties;
   }
   /** Lanceur du mécanisme de vérification/conversion d'une PML.
-   * @param usage <tt>java org.javascool.tools.Pml input-file [output-file.(pml|xml|php|jmf)]</tt>
+   * @param usage <tt>java org.javascool.tools.Pml input-file [output-file.(pml|xml|php|json|jmf)]</tt>
    */
   public static void main(String[] usage) {
     if(usage.length > 0) {
-      new Pml().load(usage[0]).save(usage.length > 1 ? usage[1] : "stdout:", (usage.length > 1 && usage[1].matches(".*\\.(pml|php|xml|jmf)")) ? usage[1].replaceFirst(".*\\.", "") : "pml");
+      new Pml().load(usage[0]).save(usage.length > 1 ? usage[1] : "stdout:", (usage.length > 1 && usage[1].matches(".*\\.(pml|php|xml|json|jmf)")) ? usage[1].replaceFirst(".*\\.", "") : "pml");
     }
   }
 }
