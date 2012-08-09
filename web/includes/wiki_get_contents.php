@@ -7,7 +7,7 @@ function wiki_get_contents($name) {
 function wiki_get_contents_load($name) {
   global $wiki_get_contents_redirections;
   // Recuperation de la page sur le wiki
-  $text = file_get_contents('http://wiki.inria.fr/sciencinfolycee/'.$name.'?printable=yes&action=render');  
+  $text = file_get_contents('https://wiki.inria.fr/sciencinfolycee/'.$name.'?printable=yes&action=render');  
   // Remplace tous les liens entre pages par des pages vues du site
   foreach($wiki_get_contents_redirections as $wiki => $php) 
     $text = ereg_replace("href=\"http[s]?://wiki.inria.fr/sciencinfolycee/$wiki\"", "class=\"internal\" href=\"$php\"", $text);
