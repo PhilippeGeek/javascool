@@ -92,19 +92,31 @@ public class JarManager {
   /** Copie un répertoire/fichier dans un autre en oubliant les svn.
    * @param srcDir Dossier source.
    * @param dstDir Dossier cible.
+   * @param recurse Si true (valeur par défaut) copie les sous-répertoires.
    */
-  public static void copyFiles(String srcDir, String dstDir) throws IOException {
+  public static void copyFiles(String srcDir, String dstDir, boolean recurse) throws IOException {
     if(new File(srcDir).isDirectory()) {
       if(!new File(srcDir).getName().equals(".svn")) {
         for(String s : FileManager.list(srcDir)) {
           String d = dstDir + File.separator + new File(s).getAbsoluteFile().getName();
-          copyFiles(s, d);
+	  if (recurse)
+	    copyFiles(s, d, true);
+	  else if (!new File(s).isDirectory())
+	    copyFile(s, d);
         }
       }
-    } else {
-      new File(dstDir).getParentFile().mkdirs();
-      copyStream(new FileInputStream(srcDir), new FileOutputStream(dstDir));
-    }
+    } else
+      copyFile(srcDir, dstDir);
+  }
+  /**
+   * #@see copyFiles(String, String, String)
+   */
+  public static void copyFiles(String srcDir, String dstDir) throws IOException {
+    copyFiles(srcDir, dstDir, true);
+  }
+  private static void copyFile(String srcFile, String dstDir) throws IOException {
+    new File(dstDir).getParentFile().mkdirs();
+    copyStream(new FileInputStream(srcFile), new FileOutputStream(dstDir));
   }
   // Ajoute un stream a un jar
   private static void copyFileToJar(File source, JarOutputStream target, File root, String[] jarEntries) throws IOException {

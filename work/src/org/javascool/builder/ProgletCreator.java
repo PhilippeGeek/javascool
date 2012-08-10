@@ -10,7 +10,6 @@ import java.io.File;
 import org.javascool.tools.FileManager;
 
 /** Cette factory contient les mécanismes de construction d'une nouvelle proglet.
- * <h1>Ebauche non finalisée: ce mécanisme est au stade d'ébauche.</h1>
  * @see <a href="ProgletCreator.java.html">code source</a>
  * @serial exclude
  */
