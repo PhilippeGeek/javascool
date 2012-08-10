@@ -22,7 +22,7 @@ function v3_redirections($page) {
     <b>N'hésitez pas, si besoin, à nous <a href='mailto:thierry.vieville@inria.fr?subject=broken-link-on-javascool-web ($page)'>contacter</a>, nous allons vous dépanner.</b>
     <hr>";
     if (!strncmp("http:", $page, 5) != 0) {
-      mailto("mailto:thierry.vieville@inria.fr?subject=broken-link-on-javascool-web", "Spurious page=$page, request = ".$_SERVER["REQUEST_URI"]);
+      // mailto("mailto:thierry.vieville@inria.fr?subject=broken-link-on-javascool-web", "Spurious page=$page, request = ".$_SERVER["REQUEST_URI"]);
     }
     return true;
   }
