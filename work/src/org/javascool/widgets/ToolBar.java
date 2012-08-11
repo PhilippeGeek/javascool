@@ -28,6 +28,11 @@ public class ToolBar extends JToolBar {
   /** Table des actions associées au bouton. */
   private HashMap<AbstractButton, Runnable> actions = new HashMap<AbstractButton, Runnable>();
 
+  /** Renvoie un des objets de la barre. */
+  public JComponent getTool(String label) {
+    return buttons.get(label);
+  }
+
   /** Initialize la barre de boutons et efface tous les élements. */
   @Override
   public void removeAll() {

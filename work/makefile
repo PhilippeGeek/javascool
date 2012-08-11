@@ -1,7 +1,8 @@
 
 # vthierry's ongoing tasks, . . 
 
-dft : mig
+dft : 
+	ant javascool-proglets.jar
 
 export JAVA_HOME=/usr/java/jdk1.6.0_25
 #export JAVA_HOME=/usr/java/jdk1.7.0_02
@@ -13,7 +14,7 @@ export JRE_HOME=/usr/java/jre1.7.0_05
 
 mig :
 	ant javascool-proglets.jar
-	$(MAKE) -C ../mig5
+	./lib/jvs4tojvs5.sh
 
 tst : 
 	ant javascool-proglets.jar
