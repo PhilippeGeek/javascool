@@ -50,6 +50,7 @@ public class UserConfig {
         if(new File(getApplicationFolder() + "configuration.xml").exists()) {
           properties.loadFromXML(new FileInputStream(getApplicationFolder() + "configuration.xml"));
         }
+	//System.err.println(applicationName + " config loaded : "+properties);
       } catch(Throwable e) {
         System.err.println("Dysfonctionnement lors la lecture du fichier de configuration de " + applicationName + " : " + e);
       }
@@ -66,20 +67,21 @@ public class UserConfig {
 
   /** Ecrit une propriété liée à cette application.
    * @param name Nom de la propriété.
-   * @param value Valeur de la propriété.
+   * @param value Valeur de la propriété. La valeur <tt>null</tt> efface la propriété.
    * @return Cet objet, permettant de définir la construction <tt>UserConfig.getInstance(..).setProperty(..)</tt>.
    */
   public UserConfig setProperty(String name, String value) {
     String v = getProperty(name);
-    if((value == null&& v != null) || !value.equals(v)) {
+    if((value == null && v != null) || !value.equals(v)) {
       properties.setProperty(name, value);
       try {
         new File(getApplicationFolder()).mkdirs();
-        properties.storeToXML(new FileOutputStream(getApplicationFolder() + "configuration.xml"), "JavaS'Cool user configuration");
+        properties.storeToXML(new FileOutputStream(getApplicationFolder() + "configuration.xml"), applicationName + " user configuration");
       } catch(Exception e) {
         System.err.println("Dysfonctionnement lors l'écriture du fichier de configuration de " + applicationName + " : " + e);
       }
     }
+    //System.err.println(applicationName + " config saved : "+properties);
     return this;
   }
   /** Crée et/ou renvoie l'unique instance de l'objet.
@@ -90,7 +92,8 @@ public class UserConfig {
       return userConfig = new UserConfig(theApplicationName = applicationName);
     } else if(theApplicationName.equals(applicationName)) {
       return userConfig;
-    } else { throw new IllegalArgumentException("Appel incohérent à la configuration de l'application avec deux noms différents " + theApplicationName + " puis " + applicationName);
+    } else { 
+      throw new IllegalArgumentException("Appel incohérent à la configuration de l'application avec deux noms différents " + theApplicationName + " puis " + applicationName);
     }
   }
   private static String theApplicationName = null;
