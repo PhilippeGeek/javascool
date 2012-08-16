@@ -49,7 +49,8 @@ public class PanelApplet extends JApplet {
   private boolean manualStart = true;
   @Override
   public void init() {
-    if(pane != null) { throw new IllegalStateException("Impossible d'instancier deux PanelApplet dans une application");
+    if(pane != null) { 
+      throw new IllegalStateException("Impossible d'instancier deux PanelApplet dans une application");
     }
     try {
       if(panel == null) {
@@ -81,7 +82,7 @@ public class PanelApplet extends JApplet {
   }
   @Override
   public void destroy() {
-    Invoke.run(pane, "init");
+    Invoke.run(pane, "destroy");
   }
   @Override
   public void start() {
