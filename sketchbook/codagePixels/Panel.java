@@ -16,7 +16,7 @@ public class Panel extends IconOutput {
   // @bean
   public Panel() {}
   /** Démo de la proglet. */
-  public void start() {
+  public void run() {
     Demo.start();
   }
 }

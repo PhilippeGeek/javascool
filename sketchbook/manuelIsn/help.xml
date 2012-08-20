@@ -91,9 +91,7 @@
 
 </div><div title="Chapitre 11">
 
-<div><l class="editor" link="./RepertoireFichier.jvs" text="RepertoireFichier"/></div>
-
-<div><l class="newtab" link="./repertoire.txt" text="repertoire.txt"/></div>
+<div><l class="editor" link="./RepertoireFichier.jvs" text="RepertoireFichier"/>(<l class="newtab" link="./repertoire.txt" text="repertoire.txt"/>)</div>
 
 </div><div title="Chapitre 12">
 
@@ -113,9 +111,9 @@
 
 <div><l class="editor" link="./BotticelliFichier.jvs" text="BotticelliFichier"/></div>
 
-<div><l class="editor" link="./Contraste.jvs" text="Contraste"/></div>
+<div><l class="editor" link="./Contraste.jvs" text="Contraste"/> (<l link="https://who.rocq.inria.fr/Gilles.Dowek/Isn/joconde.ppm" text="joconde.ppm"/>)</div>
 
-<div><l link="./FusionImages.jvs" text="FusionImages"/></div>
+<div><l link="./FusionImages.jvs" text="FusionImages"/> (<l link="https://who.rocq.inria.fr/Gilles.Dowek/Isn/maison1.pgm" text="maison1.pgm"/>, <l link="https://who.rocq.inria.fr/Gilles.Dowek/Isn/maison2.pgm" text="maison2.pgm"/>)</div>
 
 </div><div title="Chapitre 20">
 

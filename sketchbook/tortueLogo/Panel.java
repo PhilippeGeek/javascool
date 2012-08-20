@@ -77,7 +77,7 @@ public class Panel extends JPanel {
     repaint(x - 1, y - 1, 3, 3);
   }
   /** Démo de la proglet. */
-  public void start() {
+  public void run() {
     clear_all();
     pen_up();
     int t = 0;

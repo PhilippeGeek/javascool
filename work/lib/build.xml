@@ -3,7 +3,7 @@
 
   <!--property name="jdk.dir" value="/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64"/-->
   <property name="jdk.dir" value="/usr/java/jdk1.6.0_25"/>
-  <!--property name="jdk.dir" value="/usr/java/jdk1.7.0_02"/-->
+  <property name="jdk7.dir" value="/usr/java/jdk1.7.0_06"/>
   <property name="build.dir" value="../../build/lib"/>
 
   <!-- Construction de la library javac.jar où le compilateur java est extrait du tools.jar standard -->
@@ -14,12 +14,26 @@
     <jar destfile="./javac.jar" basedir="${build.dir}" includes="com/sun/tools/javac/**,sun/tools/java/**,com/sun/source/tree/**,com/sun/source/util/**"/>
     <delete dir="${build.dir}"/>
   </target>
+  <target name="javac7.jar"> 
+    <delete file="./javac7.jar"/>
+    <mkdir dir="${build.dir}"/>
+    <unzip dest="${build.dir}" src="${jdk7.dir}/lib/tools.jar"/>
+    <jar destfile="./javac7.jar" basedir="${build.dir}" includes="com/sun/tools/javac/**,sun/tools/java/**,com/sun/source/tree/**,com/sun/source/util/**"/>
+    <delete dir="${build.dir}"/>
+  </target>
   <!-- Construction de la library javadoc.jar où javadoc est extrait du tools.jar standard -->
   <target name="javadoc.jar"> 
-    <delete file="javadoc.jar"/>
+  <delete file="./javadoc.jar"/>
     <mkdir dir="${build.dir}"/>
     <unzip dest="${build.dir}" src="${jdk.dir}/lib/tools.jar"/>
     <jar destfile="./javadoc.jar" basedir="${build.dir}" includes="com/sun/tools/javadoc/**,com/sun/javadoc/**,com/sun/tools/doclets/**"/>
+    <delete dir="${build.dir}"/>
+  </target>
+  <target name="javadoc7.jar"> 
+  <delete file="./javadoc7.jar"/>
+    <mkdir dir="${build.dir}"/>
+    <unzip dest="${build.dir}" src="${jdk7.dir}/lib/tools.jar"/>
+    <jar destfile="./javadoc7.jar" basedir="${build.dir}" includes="com/sun/tools/javadoc/**,com/sun/javadoc/**,com/sun/tools/doclets/**"/>
     <delete dir="${build.dir}"/>
   </target>
   <!-- Construction de la library jarsigner.jar où jarsigner est extrait du tools.jar standard -->

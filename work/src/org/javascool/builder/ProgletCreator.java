@@ -91,7 +91,7 @@ public class ProgletCreator {
     "  }\n" +
     "\n" +
     "  /** Démo de la proglet. */\n" +
-    "  public void start() {\n" +
+    "  public void run() {\n" +
     "  // @" + "todo Définir ici le code de démo de la proglet.\n" +
     "  }\n" +
     "\n" +

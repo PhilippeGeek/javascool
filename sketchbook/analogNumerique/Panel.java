@@ -48,7 +48,7 @@ public class Panel extends JPanel {
   /** Etiquette du comparateur et de la sortie. */
   public JLabel out, cmp;
   /** Démo de la proglet. */
-  public void start() {
+  public void run() {
     // Méthode dichotomique
     {
       int min = 0, max = 1024;

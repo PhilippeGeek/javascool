@@ -21,7 +21,7 @@ public class Panel extends JPanel {
   JLabel label;
 
   /** Démo de la proglet. */
-  public void start() {
+  public void run() {
     // On boucle pour 10 clignotements entre oui et non
     for(int i = 0; i < 10; i++) {
       // Si i modulo 2 == 0, donc si i est pair, on affiche OUI, sinon NON.
