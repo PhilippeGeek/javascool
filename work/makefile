@@ -1,8 +1,8 @@
 
 # vthierry's ongoing tasks, . . 
 
-dft : 
-	ant javascool-proglets.jar
+dft : www
+#	ant javascool-proglets.jar
 
 export JAVA_HOME=/usr/java/jdk1.6.0_25
 #export JAVA_HOME=/usr/java/jdk1.7.0_02
@@ -11,6 +11,9 @@ export PATH := $(JAVA_HOME)/bin:$(PATH)
 
 export JRE_HOME=/usr/java/jre1.7.0_05
 #export JRE_HOME=$(JDK_HOME)/jre
+
+www :
+	cd .. ; ant web
 
 mig :
 	ant javascool-proglets.jar
@@ -47,9 +50,6 @@ prg :
 
 php : 
 	cd ../web ; ant local
-
-www : 
-	firefox http://code.google.com/p/javascool/wiki/JavaScoolOnGoingWork &
 
 usb :
 	ant javascool-proglets.jar javascool-builder.jar

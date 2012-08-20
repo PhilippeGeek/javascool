@@ -374,7 +374,7 @@ public class ProgletEngine {
     /** Indique si la proglet a une démo pour l'utilisateur.
      */
     public boolean hasDemo() {
-      return getPane() != null&& Invoke.run(getPane(), "start", false);
+      return getPane() != null && Invoke.run(getPane(), "run", false);
     }
     /** Lance la démo de la proglet.
      * @throws RuntimeException si la méthode génère une exception lors de son appel.
@@ -384,7 +384,7 @@ public class ProgletEngine {
         (new Thread() {
            @Override
            public void run() {
-             Invoke.run(getPane(), "start");
+             Invoke.run(getPane(), "run");
            }
          }
         ).start();

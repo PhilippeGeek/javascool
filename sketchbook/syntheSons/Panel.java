@@ -24,7 +24,7 @@ public class Panel extends SoundBitPanel {
     sound.reset("16 A");
   }
   /** Démo de la proglet. */
-  public void start() {
+  public void run() {
     test(new SoundBit() {
            @Override
            public double get(char c, double t) {
