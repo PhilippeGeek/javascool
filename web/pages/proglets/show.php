@@ -37,7 +37,7 @@ echo(ereg_replace('<(http[^>]*)>', "[<a href='\\1'>*</a>]", ereg_replace('<([^>@
 </table>
 <br />
 
-<?php showButton(array('Voir la d&eacute;monstration','?page=proglets&action=demo&id='.$id)); ?>
+<!--?php showButton(array('Voir la d&eacute;monstration','?page=proglets&action=demo&id='.$id)); ?-->
 <div class="news">
     <table class="news">
         <tr class="news-top">

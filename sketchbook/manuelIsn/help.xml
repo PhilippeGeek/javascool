@@ -127,6 +127,8 @@
 
 <div><l class="editor" link="./TriFusion.jvs" text="TriFusion"/></div>
 
+<div><l class="editor" link="./TriFusionRecursif.jvs" text="TriFusionRecursif"/></div>
+
 </div><div title="Coquilles"> La liste des coquilles connues est <a href = "coquilles.html">ici</a>. Aidez vous à les éliminer en envoyant une courrier à <tt>gilles.dowek</tt> at <tt>inria.fr</tt>.</div>
 
 <div title="Mécanisme d'utilisation des routines Isn en javascool"> <p>Cette «proglet» est un composant logiciel ouvert dont documentation et code-source sont disponibles <l link="http://javascool.gforge.inria.fr/?page=proglets&amp;action=show&amp;id=manuelIsn&amp;helpFile=api/org/javascool/proglets/manuelIsn/package-summary.html" text="ici"/>. La <l link="http://javascool.gforge.inria.fr/proglets/manuelIsn/java2jvs/Java2Jvs.java.txt" text="routine de conversion"/> de Java en Jvs est simplissime.</p></div>
