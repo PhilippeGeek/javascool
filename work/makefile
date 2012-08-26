@@ -14,13 +14,18 @@ export JRE_HOME=/usr/java/jre1.7.0_05
 www :
 	cd .. ; ant web
 
-mig :
+jvs :
 	ant javascool-proglets.jar
-	./lib/jvs4tojvs5.sh
 
 tst : 
 	ant javascool-proglets.jar
 	$(JRE_HOME)/bin/java -jar dist/javascool-proglets.jar
+
+mig :
+	ant javascool-proglets.jar
+	./lib/jvs4tojvs5.sh
+
+#################################################
 
 ant :
 	ant prun

@@ -405,12 +405,14 @@ public class Stdin {
     if(keyMouseListener != null) {
       Macros.getProgletPane().removeMouseListener(keyMouseListener);
     }
-    if(Macros.getProgletPane() != null&& (keyListenerRunnable = runnable) != null) {
+    if(Macros.getProgletPane() != null && (keyListenerRunnable = runnable) != null) { 
+      Macros.getProgletPane().setFocusable(true);
       Macros.getProgletPane().addMouseListener(keyMouseListener = new MouseListener() {
                                                  public void mousePressed(MouseEvent e) {}
                                                  public void mouseReleased(MouseEvent e) {}
                                                  public void mouseClicked(MouseEvent e) {}
                                                  public void mouseEntered(MouseEvent e) {
+                                                   Macros.getProgletPane().requestFocus();
                                                    Macros.getProgletPane().requestFocusInWindow();
                                                  }
                                                  public void mouseExited(MouseEvent e) {}

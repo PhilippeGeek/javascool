@@ -1,0 +1,63 @@
+// Les fonctions Java pour faire le jeu
+import javax.swing.JLabel;
+
+// L'objet mobile du jeu
+JLabel mobile;
+int mobile_position_horizontale = 0, mobile_vitesse_horizontale = 0, mobile_position_verticale = 0, mobile_vitesse_verticale = 0;
+
+// Voilà la mécanique mise en place par Philippe et cie pour que ça marche . . 
+void main() {   
+  // Mise en place de l'écran
+  getPane().removeAll();
+  getPane().setOpaque(true);
+  getPane().setBackground(java.awt.Color.WHITE);
+  // Création du mobile
+  {
+    mobile = showIcon("elephant2.gif", 
+		      mobile_position_horizontale, mobile_position_verticale, 100, 100, 3);
+  }
+  // Gestion de la dynamique du jeu
+  {
+    // Changement de la vitesse avec les touches du clavier
+    setKeyListener(new Runnable() { public void run() {
+      int mobile_acceleration = 10;
+      if ("Left".equals(getLastKey()))
+	mobile_vitesse_horizontale -= mobile_acceleration;
+      if ("Right".equals(getLastKey()))
+	mobile_vitesse_horizontale += mobile_acceleration;
+      if ("Up".equals(getLastKey()))
+	mobile_vitesse_verticale -= mobile_acceleration;
+      if ("Down".equals(getLastKey()))
+	mobile_vitesse_verticale += mobile_acceleration;
+    }});
+    // Dynamique du mobile
+    sample(200, new Runnable() { public void run() {
+      // Ici on fait tomber le mobile vers le bas en le freinant horizontalement
+       int mobile_deceleration = 2;
+      if (abs(mobile_vitesse_horizontale) > 0)
+	mobile_vitesse_horizontale -= mobile_deceleration;
+      if (mobile_vitesse_verticale < 10)
+	mobile_vitesse_verticale += mobile_deceleration;
+      mobile_position_horizontale += mobile_vitesse_horizontale;
+      mobile_position_verticale += mobile_vitesse_verticale;
+      // Ici on fait attention que le mobile ne dépasse pas les limites
+      if (mobile.getX() > getPane().getWidth() - mobile.getWidth()) {
+	mobile_position_horizontale = getPane().getWidth() - mobile.getWidth();
+	mobile_vitesse_horizontale = 0;
+      }
+      if (mobile.getY() > getPane().getHeight() - mobile.getHeight()) {
+	mobile_position_verticale = getPane().getHeight() - mobile.getHeight();
+	mobile_vitesse_verticale = 0;
+      }
+      if (mobile.getX() < 1) {
+	mobile_position_horizontale = 1;
+	mobile_vitesse_horizontale = 0;
+      }
+      if (mobile.getY() < mobile.getHeight()) {
+	mobile_position_verticale = mobile.getHeight();
+	mobile_vitesse_verticale = 0;
+      }
+      mobile.setLocation(mobile_position_horizontale, mobile_position_verticale);
+    }});
+  }
+}

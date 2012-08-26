@@ -268,22 +268,31 @@ public class Macros {
         location = location.substring(5);
       }
       if(reading) {
-        File file = new File(location);
-        if(file.exists()) {
-          return new URL("file:" + file.getCanonicalPath());
-        }
-        file = new File(System.getProperty("user.dir"), location);
-        if(file.exists()) {
-          return new URL("file:" + file.getCanonicalPath());
-        }
-        file = new File(System.getProperty("user.home"), location);
-        if(file.exists()) {
-          return new URL("file:" + file.getCanonicalPath());
-        }
-        URL url = Thread.currentThread().getContextClassLoader().getResource(location);
-        if(url != null) {
-          return url;
-        }
+	File file;
+	try {
+	  file = new File(location);
+	  if(file.exists()) {
+	    return new URL("file:" + file.getCanonicalPath());
+	  }
+	} catch(Throwable e) {}
+	try {
+	  file = new File(System.getProperty("user.dir"), location);
+	  if(file.exists()) {
+	    return new URL("file:" + file.getCanonicalPath());
+	  }
+	} catch(Throwable e) {}
+	try {
+	  file = new File(System.getProperty("user.home"), location);
+	  if(file.exists()) {
+	    return new URL("file:" + file.getCanonicalPath());
+	  }
+	} catch(Throwable e) {}
+	try {
+	  URL url = Thread.currentThread().getContextClassLoader().getResource(location);
+	  if(url != null) {
+	    return url;
+	  }
+	} catch(Throwable e) {}
       }
       return new URL("file:" + location);
     } catch(IOException e) { throw new IllegalArgumentException(e + " : " + location + " is a malformed URL");
