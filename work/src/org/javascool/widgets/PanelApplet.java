@@ -15,6 +15,7 @@ import org.javascool.tools.Invoke;
  * <p>Permet de wrapper un objet graphique dans une page HTML avec une construction de la forme
  * <div><tt>&lt;applet code="org.javascool.widgets.PanelApplet" archive="les-classes-java.jar" width="560" height="720"></tt></div>
  * <div><tt>&lt;param name="panel" value="nom-complet-qualifé-de-l-objet-graphique"/></tt></div>
+ * <div><tt>&lt;param name="program" value="nom-complet-qualifé-du-runnable"/></tt></div>
  * <div><tt>&lt;param name="manual-start" value="true-ou-false"/></tt></div>
  * <div><tt>&lt;/applet></tt></div>
  * </p>
@@ -31,21 +32,23 @@ public class PanelApplet extends JApplet {
 
   /** Definition programmatique des paramètres de l'applet.
    * @param panel Le nom de la classe Java de l'objet graphique à afficher.
+   * @param program Le nom du programme de démo à lancer.
    * @param manualStart Invocations manuelles si true des méthodes <tt>start/stop</tt> (par défaut), sinon elles sont invoquées au lancement.
    * @return Cet objet, permettant de définir la construction <tt>new PanelApplet().reset(..)</tt>.
    */
-  public PanelApplet reset(String panel, boolean manualStart) {
+  public PanelApplet reset(String panel, String program, boolean manualStart) {
     this.panel = panel;
+    this.program = program;
     this.manualStart = manualStart;
     return this;
   }
   /**
-   * @see #reset(String, boolean)
+   * @see #reset(String, String, boolean)
    */
-  public PanelApplet reset(String panel) {
-    return reset(panel, true);
+  public PanelApplet reset(String panel, String program) {
+    return reset(panel, program, true);
   }
-  private String panel = null;
+  private String panel = null, program = null;
   private boolean manualStart = true;
   @Override
   public void init() {
@@ -55,8 +58,12 @@ public class PanelApplet extends JApplet {
     try {
       if(panel == null) {
         panel = getParameter("panel");
-        manualStart = getParameter("manualStart") == null || getParameter("manualStart").toLowerCase().equals("true");
+        program = getParameter("program");
+        manualStart = getParameter("manual-start") == null || getParameter("manual-start").toLowerCase().equals("true");
       }
+    } catch(Exception e) {}
+    try {
+      runnable = (Runnable) Class.forName(program).newInstance();
     } catch(Exception e) {}
     try {
       getContentPane().add(pane = (Component) Class.forName(panel).newInstance(), BorderLayout.CENTER);
@@ -65,12 +72,14 @@ public class PanelApplet extends JApplet {
       getContentPane().add(new JLabel("Pas d'applet à montrer.", JLabel.CENTER), BorderLayout.CENTER);
       manualStart = false;
     }
-    if(manualStart && Invoke.run(pane, "start", false)) {
+    if(manualStart && (Invoke.run(pane, "run", false) || runnable != null)) {
       getContentPane().add(new ToolBar().addTool("Démo de la proglet", "org/javascool/widgets/icons/play.png", new Runnable() {
                                                    public void run() {
                                                      (new Thread() {
                                                         public void run() {
-                                                          Invoke.run(pane, "start");
+                                                          Invoke.run(pane, "run");
+							  if (runnable != null)
+							    runnable.run();
                                                         }
                                                       }
                                                      ).start();
@@ -86,8 +95,16 @@ public class PanelApplet extends JApplet {
   }
   @Override
   public void start() {
+    setFocusable(true);
+    requestFocus();
     if(!manualStart) {
       Invoke.run(pane, "start");
+      if (runnable != null) {
+	(new Thread() {
+	  public void run() {
+	    runnable.run();
+	  }}).start();
+      }
     }
   }
   @Override
@@ -106,14 +123,15 @@ public class PanelApplet extends JApplet {
     MainFrame.setLookAndFeel();
   }
   private static Component pane = null;
+  private static Runnable runnable = null;
 
   /** Lanceur dans une fenêtre principale d'une objet graphique.
-   * @param usage <tt>java org.javascool.widgets.PanelApplet nom-complet-qualifé-de-l-objet-graphique</tt>.
+   * @param usage <tt>java org.javascool.widgets.PanelApplet nom-complet-qualifé-de-l-objet-graphique nom-complet-qualifé-du-runnable</tt>.
    */
   public static void main(String[] usage) {
     // @main
     if(usage.length > 0) {
-      new MainFrame().reset(new PanelApplet().reset(usage[0]));
+      new MainFrame().reset(new PanelApplet().reset(usage[0], usage.length == 2 ? usage[1] : usage[0]));
     }
   }
 }
