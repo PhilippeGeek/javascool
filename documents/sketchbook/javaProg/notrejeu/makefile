@@ -1,5 +1,5 @@
 
-dft : run
+dft : www
 
 www : ./notrejeu.html
 	firefox $^
@@ -9,6 +9,3 @@ run : ./notrejeu.jar
 
 ./%.html ./%.jar : %.jvs
 	../../../../work/lib/jvs2jar.sh $*.jvs
-
-
-
