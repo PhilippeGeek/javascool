@@ -11,9 +11,16 @@ void main() {
   getPane().removeAll();
   getPane().setOpaque(true);
   getPane().setBackground(java.awt.Color.WHITE);
+  // Affichage des obstacles 
+  {
+    int largeur = getPane().getWidth(), hauteur = getPane().getHeight();
+    System.err.println("("+largeur+", "+hauteur+")");
+    showIcon("images/Nenuphar200x200.png", largeur / 4 - 100, (3 * hauteur) / 4 - 100, 200, 200, 4);
+    showIcon("images/Nenuphar200x200.png", (3 * largeur) / 4 - 100, (3 * hauteur) / 4 - 100, 200, 200, 4);
+  }
   // Création du mobile
   {
-    mobile = showIcon("elephant2.gif", 
+    mobile = showIcon("images/Abeille-100x100.png", 
 		      mobile_position_horizontale, mobile_position_verticale, 100, 100, 3);
   }
   // Gestion de la dynamique du jeu
