@@ -23,7 +23,7 @@ public class MainFrame extends JFrame {
   private static int frameCount = 0;
 
   /** Flag définissant l'utilisation de Nimbus. */
-  public static final boolean withNimbus = true;
+  public static final boolean withNimbus = false;
 
   /** Définit le look and feel de l'application. */
   static void setLookAndFeel() {

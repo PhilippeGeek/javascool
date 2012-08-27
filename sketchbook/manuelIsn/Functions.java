@@ -15,6 +15,14 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
+// tracé de texte
+import java.awt.font.FontRenderContext;
+import java.awt.font.GlyphVector;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Shape;
+import java.awt.geom.Area;
+import java.awt.geom.AffineTransform;
 
 /** Définit les fonctions de la proglet qui permettent de faire les exercices Isn.
  *
@@ -218,5 +226,17 @@ public class Functions {
   /** Remplit un cercle de centre (cx, cy) de rayon r avec la couleur RGB = (c1, c2, c3). */
   public static void paintCircle(double cx, double cy, double r, int c1, int c2, int c3) {
     getPane().add(new Ellipse2D.Double(cx - r, cy - r, 2 * r, 2 * r), new Color(c1, c2, c3), new Color(c1, c2, c3));
+  }
+  /** Écrit un texte au point (x, y) avec une fonte de taille size et la couleur RGB = (c1, c2, c3). */
+  public static Rectangle2D drawText(String text, double x, double y, int size, int c1, int c2, int c3) {
+    FontRenderContext ctx = new FontRenderContext(null, true, true);
+    Font font = new Font(Font.SANS_SERIF, Font.PLAIN,size);
+    GlyphVector vector = font.createGlyphVector(ctx, text);
+    Color color = new Color(c1, c2, c3);
+    Shape shape = vector.getOutline();
+    Area area = new Area(shape);
+    area = area.createTransformedArea(AffineTransform.getTranslateInstance(x, y));
+    getPane().add(area, color, color);
+    return area.getBounds2D();
   }
 }
