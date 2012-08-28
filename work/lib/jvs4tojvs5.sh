@@ -1,3 +1,10 @@
+#
+# To do liste:
+#   Faire un diff avant de propager les source java
+#   Les liens pointent vers des fichiers htm alors qu'ils sont tous en html.
+#   Les fichiers sont enrobé de bootstrap, cela est inutile et impose un lourd calcule pour retrouver le vrai contenu de la page à afficher dans le WebPage.
+#
+
 echo 'Convertir les fichiers de proglets de jvs4 en jvs5'
 
 cd `dirname $0`/../../

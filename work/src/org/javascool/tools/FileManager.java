@@ -53,19 +53,47 @@ public class FileManager {
    */
   public static String load(String location, boolean utf8) {
     try {
-      BufferedReader reader = new BufferedReader(new InputStreamReader(Macros.getResourceURL(location, true).openStream(),
+      loadReader = new BufferedReader(new InputStreamReader(Macros.getResourceURL(location, true).openStream(),
                                                                        utf8 ? Charset.forName("utf-8") : Charset.defaultCharset()), 10240);
-      StringBuilder buffer = new StringBuilder();
-      char chars[] = new char[10240];
+      loadBuffer = new StringBuilder();
+      // Boucle de lecture avec surveillance du blocage sur le read
       while(true) {
-        int l = reader.read(chars);
-        if(l == -1) {
-          break;
-        }
-        buffer.append(chars, 0, l);
+	loadLength = -1;
+	loadError = null;
+	Thread readingThread = new Thread(new Runnable() { public void run() {
+	  char chars[] = new char[10240];
+	  try {
+	    loadLength = loadReader.read(chars);
+	  } catch(IOException e) {
+	    loadError = e;
+	  }
+	  if(loadLength > 0) 
+	    loadBuffer.append(chars, 0, loadLength);
+	  else
+	    loadLength = 0;
+	}});
+	readingThread.start();
+	// Chien de garde en attente de la lecture
+	final int maximalReadingDelay = 2000; // milli-seconds
+	int readingDelay;
+	for(readingDelay = 0; loadLength == -1 && readingDelay < maximalReadingDelay; readingDelay++) {
+	  try { Thread.sleep(1); } catch(Exception e) {}
+	}
+	if (loadLength == -1) {
+	  readingThread.interrupt();
+	  throw new IOException("Reading is blocking");
+	}
+	if (loadError != null)
+	  throw loadError;
+	if (loadLength == 0)
+	  break;
+	if (loadVerbose && readingDelay > 1) 
+	  System.err.println("Notice: reading "+location+", "+loadLength+" chars in "+readingDelay+" ms");
       }
-      return buffer.toString();
-    } catch(IOException e) { throw new RuntimeException(e + " when loading: " + location);
+      loadReader.close();
+      return loadBuffer.toString();
+    } catch(IOException e) {
+      throw new RuntimeException(e + " when loading: " + location);
     }
   }
   /**
@@ -74,6 +102,12 @@ public class FileManager {
   public static String load(String location) {
     return load(location, false);
   }
+  private static BufferedReader loadReader;
+  private static StringBuilder loadBuffer;
+  private static IOException loadError;
+  private static int loadLength;
+  private static boolean loadVerbose = true;
+
   /** Ecrit un contenu textuel local ou distant en tenant compte de l'encodage local.
    *
    * @param location Une URL (Universal Resource Location) de la forme: <div id="save-format"><table>
