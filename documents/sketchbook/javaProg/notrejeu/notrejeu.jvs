@@ -1,9 +1,15 @@
 // Les fonctions Java pour faire le jeu
 import javax.swing.JLabel;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 // L'objet mobile du jeu
 JLabel mobile;
 int mobile_position_horizontale = 0, mobile_vitesse_horizontale = 0, mobile_position_verticale = 0, mobile_vitesse_verticale = 0;
+
+void click(int x, int y) {
+  System.out.println("("+x+"< "+y+")");
+}
 
 // Voilà la mécanique mise en place par Philippe et cie pour que ça marche . . 
 void main() {   
@@ -15,13 +21,20 @@ void main() {
   {
     int largeur = getPane().getWidth(), hauteur = getPane().getHeight();
     System.err.println("("+largeur+", "+hauteur+")");
-    showIcon("images/Nenuphar200x200.png", largeur / 4 - 100, (3 * hauteur) / 4 - 100, 200, 200, 4);
-    showIcon("images/Nenuphar200x200.png", (3 * largeur) / 4 - 100, (3 * hauteur) / 4 - 100, 200, 200, 4);
+    showIcon("Nenuphar200x200.png", largeur / 4 - 100, (3 * hauteur) / 4 - 100, 200, 200, 4);
+    showIcon("Nenuphar200x200.png", (3 * largeur) / 4 - 100, (3 * hauteur) / 4 - 100, 200, 200, 4);
   }
   // Création du mobile
   {
-    mobile = showIcon("images/Abeille-100x100.png", 
+    mobile = showIcon("Abeille-100x100.png", 
 		      mobile_position_horizontale, mobile_position_verticale, 100, 100, 3);
+  }
+  // Mise en place d'un détecteur de clic de souris
+  {
+    getPane().addMouseListener(new MouseAdapter() {
+	public void mouseClicked(MouseEvent e) {
+	  click(e.getX(), e.getY());
+	}});
   }
   // Gestion de la dynamique du jeu
   {
