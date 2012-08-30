@@ -3,12 +3,32 @@ import javax.swing.JLabel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+void afficher_logo() {
+  // Tire au hasard un des cinq logos
+  int n = random(0, 5);
+  String logo = "logo-original.jpg";
+  if (n < 1)
+    logo = "logo-blanc-violet.jpg";
+  else if (n < 2) 
+    logo = "logo-bleu-turquoise.jpg";
+  else if (n < 3) 
+    logo = "logo-bleu.jpg";
+  else if (n < 4) 
+    logo = "logo-jaune.jpg";
+  // Affiche le logo en haut à gauche et à droite
+  showIcon(logo, 0, 0, 150, 150, 1);
+  showIcon(logo, getPane().getWidth() - 150, 0, 150, 150, 1);
+}
+
+void explosion() {
+}
+
 // L'objet mobile du jeu
 JLabel mobile;
 int mobile_position_horizontale = 0, mobile_vitesse_horizontale = 0, mobile_position_verticale = 0, mobile_vitesse_verticale = 0;
 
 void click(int x, int y) {
-  System.out.println("("+x+"< "+y+")");
+  System.out.println("("+x+" - "+y+")");
 }
 
 // Voilà la mécanique mise en place par Philippe et cie pour que ça marche . . 
@@ -52,6 +72,8 @@ void main() {
     }});
     // Dynamique du mobile
     sample(200, new Runnable() { public void run() {
+      // Ici on affiche le logo
+      afficher_logo();
       // Ici on fait tomber le mobile vers le bas en le freinant horizontalement
        int mobile_deceleration = 2;
       if (abs(mobile_vitesse_horizontale) > 0)

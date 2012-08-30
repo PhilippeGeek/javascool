@@ -1,5 +1,5 @@
 
-dft : pub
+dft : run
 
 www : ./notrejeu.html
 	firefox $^
