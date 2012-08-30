@@ -37,12 +37,13 @@ void main() {
   getPane().removeAll();
   getPane().setOpaque(true);
   getPane().setBackground(java.awt.Color.WHITE);
-  // Affichage des obstacles 
+  // Affichage des objets fixes
   {
     int largeur = getPane().getWidth(), hauteur = getPane().getHeight();
-    System.err.println("("+largeur+", "+hauteur+")");
-    showIcon("Nenuphar200x200.png", largeur / 4 - 100, (3 * hauteur) / 4 - 100, 200, 200, 4);
-    showIcon("Nenuphar200x200.png", (3 * largeur) / 4 - 100, (3 * hauteur) / 4 - 100, 200, 200, 4);
+    showIcon("titre-du-jeu.jpg", largeur / 2 - 274 / 2, 20, 274, 81, 1);
+    showIcon("Nenuphar200x200.png", largeur / 5 - 100, (3 * hauteur) / 4 - 100, 200, 200, 4);
+    showIcon("Nenuphar200x200.png", largeur - largeur / 5 - 100, (3 * hauteur) / 4 - 100, 200, 200, 4);
+    showIcon("trou-poubelle.png", largeur / 2 - 100, hauteur - 200, 200, 200, 4);
   }
   // Création du mobile
   {
