@@ -143,6 +143,8 @@ public class Java2Class {
     // Traitement du message de sortie
     {
       String sout = out.toString().trim();
+      if (sout.length() > 0)
+	System.err.println("Notice: Java compilation message : "+sout);
       // Coupure à la première erreur
       if((sout.indexOf("^") != -1) && !allErrors) {
         sout = sout.substring(0, sout.indexOf("^") + 1);
