@@ -131,7 +131,7 @@ public class PanelApplet extends JApplet {
   public static void main(String[] usage) {
     // @main
     if(usage.length > 0) {
-      new MainFrame().reset(new PanelApplet().reset(usage[0], usage.length == 2 ? usage[1] : usage[0]));
+      new MainFrame().reset(usage[0], 800, 600, new PanelApplet().reset(usage[0], usage.length == 2 ? usage[1] : usage[0]));
     }
   }
 }
