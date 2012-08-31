@@ -17,7 +17,7 @@ jvs_name=`basename $1 | sed 's/\.jvs$//'` ; cd `dirname $1`
 echo "build `pwd` / $jvs_name.{zip|jar|html}"
 
 # Nettoyage préalable
-/bin/rm -rf tmp-$$ ./$jvs_name.jar ./$jvs_name.html ./$jvs_name.zip ; mkdir tmp-$$
+/bin/rm -rf *~ tmp-$$ ./$jvs_name.jar ./$jvs_name.html ./$jvs_name.zip ; mkdir tmp-$$
 
 # Création de l'archive des sources
 zip -9q ./$jvs_name.zip *.*
