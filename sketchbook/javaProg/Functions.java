@@ -7,6 +7,7 @@ package org.javascool.proglets.javaProg;
 import static org.javascool.macros.Macros.*;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
+import javax.swing.ImageIcon;
 
 /** Définit les fonctions de la proglet qui permet d'utiliser toute les classes des swings.
  *
@@ -37,10 +38,13 @@ public class Functions {
    */
   public static JLabel showIcon(String location, int x, int y, int w, int h, int p) {
     JLabel icon = new JLabel();
-    icon.setIcon(getIcon(location));
+    ImageIcon image = getIcon(location);
+    icon.setIcon(image);
     icon.setLocation(x, y);
     if((w > 0) && (h > 0)) {
       icon.setSize(w, h);
+    } else {
+      icon.setSize(image.getIconWidth(), image.getIconHeight());
     }
     getPane().add(icon, new Integer(p), 0);
     return icon;
