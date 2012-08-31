@@ -8,8 +8,10 @@
   </style>
   <link href="./assets/pygments.css" rel="stylesheet">
   <link href="./assets/bootstrap/css/bootstrap.css" rel="stylesheet">
-  <link href="./assets/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
-</head><body style="background-color:#FFFFFF;">
+  <link href="./assets/bootstrap/css/bootstrap-responsive.css" rel="stylesheet"> 
+  <link href="./assets/google-code-prettify/prettify.css" type="text/css" rel="stylesheet"/>
+  <script type="text/javascript" src="./assets/google-code-prettify/prettify.js"></script>
+</head><body style="background-color:#FFFFFF;" onload="prettyPrint()">
 <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container">
@@ -31,7 +33,8 @@
 <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=xa-5040d001207fbc52"></script>
 <!-- AddThis Button END -->
           </li>
-          <li><a href="./notrejeu.zip">Les fichiers sources</a></li>
+          <li><a href="./notrejeu.jvs.htm">Le programme</a></li>
+          <li><a href="./notrejeu.zip">Les fichiers</a></li>
           <li><a href="mailto:?subject=éclate toi aussi avec notre petit jeu «BAHHZ»&body=http://www-sop.inria.fr/science-participative/bahhz">Partager le lien</a></li>
         </ul>
       </div>
