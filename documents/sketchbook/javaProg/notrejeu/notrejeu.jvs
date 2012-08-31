@@ -4,6 +4,7 @@
 
 // Nos objets graphique sont des étiquettes java
 import javax.swing.JLabel;
+// affichés avec : showIcon("non-de-l'image", position_horizontale, position_verticale, taille_horizontale, taille_verticale, profondeur) 
 
 // Au début du jeu on affiche notre logo et le titre du jeu
 void show_banner() {  
@@ -12,43 +13,35 @@ void show_banner() {
   left_logo = showIcon("logo-original.jpg", 0, 0, 150, 150, 1);
   right_logo = showIcon("logo-original.jpg", getPane().getWidth() - 150, 0, 150, 150, 1);
 }
+// . . les deux logos sont définis ici :
 JLabel left_logo, right_logo;
 // . . puis affiche les obstacles à choisir.
 void show_menu() {
   show_banner();
   showIcon("choisir-un-obstacle.png", getPane().getWidth() / 2 - 400 / 2, getPane().getHeight() / 4, 400, 45, 1);
   for(int n = 0; n < obstacles.length; n++)
-    showIcon(obstacles[n], (getPane().getWidth() * (n + 1)) / (obstacles.length + 2), getPane().getHeight() / 2, 150, 200, 1);
-  // Ici on affiche un petit mode d'empli 
-  {
-    JLabel manual = new JLabel("Puis, pour jouer, utiliser les flèches du clavier pour déplacer l'abeille . .");
-    manual.setSize(getPane().getHeight(), 40);
-    manual.setLocation(20, getPane().getHeight() - 40);
-    getPane().add(manual, new Integer(1), 0);
-  }
+    showIcon(obstacles[n], (getPane().getWidth() * n) / (obstacles.length + 1), getPane().getHeight() / 2, getPane().getWidth() / obstacles.length, 200, 1);
+  // Ici on affiche un petit mode d'emploi 
+  showText("Puis, pour jouer, utiliser les flèches du clavier pour déplacer l'abeille . .", 20, getPane().getHeight() - 40, 1);
 }
 String obstacles[] = { 
   "obstacle-arbre.png", "obstacle-cheval.png", "obstacle-mouton.png", "obstacle-mur-marron.png", "obstacle-mur-vert.png", "obstacle-nenuphar.png"
 };
-// . . et on choisit l'obstacle selon le clic de souris
-void click_menu(int x, int y) {
-  // Si le clic se fait dans la bande des images des obstacles
-  if (getPane().getHeight() / 2 < y && y < getPane().getHeight() / 2 + 200) {
-    int n = ((obstacles.length + 2) * x / getPane().getWidth()) - 1;
-    show_game(obstacles[0 <= n && n < obstacles.length ? n : obstacles.length - 1]);
-  }
-}
+int colors[] = {
+  0x88FF88, 0xFFFF88, 0x8F8FFF, 0x8888FF, 0x888F8F, 0x88FFFFF
+};
 
 // Au lancement du jeu on réaffiche banière et obstacles, un des trous au hasard . . et le mobile
-void show_game(String obstacle) {
+void show_game(int obstacle) {
   show_banner();
-  left_obstacle = showIcon(obstacle, getPane().getWidth() / 5 - 100, (3 * getPane().getHeight()) / 4 - 100, 200, 200, 4);
-  right_obstacle = showIcon(obstacle, getPane().getWidth() - getPane().getWidth() / 5 - 100, (3 * getPane().getHeight()) / 4 - 100, 200, 200, 3);
-  middle_whole = showIcon(trous[random(0, trous.length)], getPane().getWidth() / 2 - 100, getPane().getHeight() - 200, 200, 200, 3);    
+  getPane().setBackground(new java.awt.Color(colors[obstacle]));
+  left_obstacle = showIcon(obstacles[obstacle], getPane().getWidth() / 5 - 100, (3 * getPane().getHeight()) / 4 - 100, 200, 200, 3);
+  right_obstacle = showIcon(obstacles[obstacle], getPane().getWidth() - getPane().getWidth() / 5 - 100, (3 * getPane().getHeight()) / 4 - 100, 200, 200, 3);
+  middle_whole = showIcon(trous[random(0, trous.length)], getPane().getWidth() / 2 - 100, getPane().getHeight() - 100, 200, 100, 5);    
   mobile = showIcon("abeille.png", mobile_position_horizontale, mobile_position_verticale, 100, 100, 4);
   mobile_position_horizontale = mobile_vitesse_horizontale = mobile_position_verticale = mobile_vitesse_verticale = 0;
   // . . avec de la musique !
-  //org.javascool.proglets.syntheSons.FileSoundBit.play("clbustos.wav");
+  org.javascool.proglets.syntheSons.FileSoundBit.play("clbustos.wav");
 }
 JLabel left_obstacle, right_obstacle, middle_whole, mobile;
 String trous[] = { 
@@ -73,22 +66,21 @@ void blow_obstacle(JLabel icon) {
   }
 }
 
-// Au game-over on remplit l'écran de game-over
+// Au game-over on remplit l'écran de "game-over"
 void show_game_over() {
   clean_all();
-  for(int n = 1000; n >= 0; n -= 10) {
-    sleep(n);
+  for(int n = 0, t = 1000; n < 200; n++) {
+    sleep(t);
+    if (t > 200) t = (int) (0.9 * t);
     showIcon("game-over.png", random(0, getPane().getWidth() - 224 / 2), random(0, getPane().getHeight() - 48 / 2), 224, 48, 1);
   }
 }
 
 // Ici on nettoir etout l'écran et le jeu
 void clean_all() {
-  getPane().setOpaque(true);
-  getPane().setBackground(java.awt.Color.WHITE);
-  getPane().removeAll();
   left_logo = right_logo = left_obstacle = right_obstacle = middle_whole = mobile = null; 
-  getPane().revalidate();
+  getPane().removeAll();
+  getPane().setBackground(java.awt.Color.WHITE);
 }
 
 // Voilà la mécanique mise en place par Philippe et cie pour que ça marche . . 
@@ -99,14 +91,15 @@ void main() {
   // Gestion de la dynamique du jeu
   {
     // Mise en place d'un détecteur de clic de souris
-    getPane().addMouseListener(new java.awt.event.MouseAdapter() {
-	public void mouseClicked(java.awt.event.MouseEvent e) {
-	  System.out.println("> mouse-click at ("+e.getX()+", "+e.getY()+")");
-	  click_menu(e.getX(), e.getY());
-	}});
+    setMouseListener(new Runnable() { public void run() {
+      // Si le clic se fait dans la bande des images des obstacles, on lance le jeu
+      if (getPane().getHeight() / 2 < getClicY() && getClicY() < getPane().getHeight() / 2 + 200) {
+	int n = ((obstacles.length + 1) * getClicX() / getPane().getWidth());
+	show_game(0 <= n && n < obstacles.length ? n : obstacles.length - 1);
+      }}});
     // Changement de la vitesse avec les touches du clavier
     setKeyListener(new Runnable() { public void run() {
-      System.out.println("> key-click is '"+getLastKey()+"'");
+      //- System.out.println("> key-click is '"+getLastKey()+"'");
       if (mobile != null) {
 	int mobile_acceleration = 10;
 	if ("Left".equals(getLastKey()))
@@ -161,8 +154,9 @@ void main() {
 	  right_obstacle = null;
 	}
 	// Si le mobile passe devant le trou c'est le game-over
-	if (abs(mobile.getX() - middle_whole.getX()) < 100 && abs(mobile.getY() - middle_whole.getY()) < 100) {
+	if (abs(mobile.getX() - middle_whole.getX()) < 100 && abs(mobile.getY() - middle_whole.getY()) < 50) {
 	  show_game_over();
+	  throw new RuntimeException("game over !");
 	}
       }
     }});
