@@ -7,8 +7,7 @@ import javax.swing.JLabel;
 
 // Au début du jeu on affiche notre logo et le titre du jeu
 void show_banner() {  
-  getPane().removeAll();
-  left_obstacle = right_obstacle = middle_whole = mobile = null;
+  clean_all();
   showIcon("titre-du-jeu.jpg", getPane().getWidth() / 2 - 274 / 2, 20, 274, 81, 1);
   left_logo = showIcon("logo-original.jpg", 0, 0, 150, 150, 1);
   right_logo = showIcon("logo-original.jpg", getPane().getWidth() - 150, 0, 150, 150, 1);
@@ -17,9 +16,16 @@ JLabel left_logo, right_logo;
 // . . puis affiche les obstacles à choisir.
 void show_menu() {
   show_banner();
-  showIcon("choisit-un-obstacle.png", getPane().getWidth() / 2 - 400 / 2, getPane().getHeight() / 4, 400, 45, 1);
+  showIcon("choisir-un-obstacle.png", getPane().getWidth() / 2 - 400 / 2, getPane().getHeight() / 4, 400, 45, 1);
   for(int n = 0; n < obstacles.length; n++)
     showIcon(obstacles[n], (getPane().getWidth() * (n + 1)) / (obstacles.length + 2), getPane().getHeight() / 2, 150, 200, 1);
+  // Ici on affiche un petit mode d'empli 
+  {
+    JLabel manual = new JLabel("Puis, pour jouer, utiliser les flèches du clavier pour déplacer l'abeille . .");
+    manual.setSize(getPane().getHeight(), 40);
+    manual.setLocation(20, getPane().getHeight() - 40);
+    getPane().add(manual, new Integer(1), 0);
+  }
 }
 String obstacles[] = { 
   "obstacle-arbre.png", "obstacle-cheval.png", "obstacle-mouton.png", "obstacle-mur-marron.png", "obstacle-mur-vert.png", "obstacle-nenuphar.png"
@@ -37,9 +43,9 @@ void click_menu(int x, int y) {
 void show_game(String obstacle) {
   show_banner();
   left_obstacle = showIcon(obstacle, getPane().getWidth() / 5 - 100, (3 * getPane().getHeight()) / 4 - 100, 200, 200, 4);
-  right_obstacle = showIcon(obstacle, getPane().getWidth() - getPane().getWidth() / 5 - 100, (3 * getPane().getHeight()) / 4 - 100, 200, 200, 4);
-  middle_whole = showIcon(trous[random(0, trous.length)], getPane().getWidth() / 2 - 100, getPane().getHeight() - 200, 200, 200, 4);    
-  mobile = showIcon("abeille.png", mobile_position_horizontale, mobile_position_verticale, 100, 100, 3);
+  right_obstacle = showIcon(obstacle, getPane().getWidth() - getPane().getWidth() / 5 - 100, (3 * getPane().getHeight()) / 4 - 100, 200, 200, 3);
+  middle_whole = showIcon(trous[random(0, trous.length)], getPane().getWidth() / 2 - 100, getPane().getHeight() - 200, 200, 200, 3);    
+  mobile = showIcon("abeille.png", mobile_position_horizontale, mobile_position_verticale, 100, 100, 4);
   mobile_position_horizontale = mobile_vitesse_horizontale = mobile_position_verticale = mobile_vitesse_verticale = 0;
   // . . avec de la musique !
   //org.javascool.proglets.syntheSons.FileSoundBit.play("clbustos.wav");
@@ -69,18 +75,26 @@ void blow_obstacle(JLabel icon) {
 
 // Au game-over on remplit l'écran de game-over
 void show_game_over() {
-  getPane().removeAll();
+  clean_all();
   for(int n = 1000; n >= 0; n -= 10) {
-    showIcon("game-over.png", random(0, getPane().getWidth() - 224 / 2), random(0, getPane().getHeight() - 48 / 2), 224, 48, 1);
     sleep(n);
+    showIcon("game-over.png", random(0, getPane().getWidth() - 224 / 2), random(0, getPane().getHeight() - 48 / 2), 224, 48, 1);
   }
+}
+
+// Ici on nettoir etout l'écran et le jeu
+void clean_all() {
+  getPane().setOpaque(true);
+  getPane().setBackground(java.awt.Color.WHITE);
+  getPane().removeAll();
+  left_logo = right_logo = left_obstacle = right_obstacle = middle_whole = mobile = null; 
+  getPane().revalidate();
 }
 
 // Voilà la mécanique mise en place par Philippe et cie pour que ça marche . . 
 void main() {   
   // Mise en place de l'écran de jeu
-  getPane().setOpaque(true);
-  getPane().setBackground(java.awt.Color.WHITE);
+  clean_all();
   show_menu();
   // Gestion de la dynamique du jeu
   {
