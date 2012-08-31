@@ -186,7 +186,7 @@ public class Functions {
   public static int getY() {
     return centered ? height - getPane().getClicY() : getPane().getClicY();
   }
-  /** Définit une portion de code appelée à chaque modification du réticule.
+  /** Définit une portion de code appelée à chaque clic de souris.
    * @param runnable La portion de code à appeler, ou null si il n'y en a pas.
    */
   public static void setRunnable(Runnable runnable) {

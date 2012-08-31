@@ -87,7 +87,7 @@ void show_game(int obstacle) {
   mobile = showIcon("abeille.png", mobile_position_horizontale, mobile_position_verticale, 100, 100, 4);
   mobile_position_horizontale = mobile_vitesse_horizontale = mobile_position_verticale = mobile_vitesse_verticale = 0;
   // . . avec de la musique !
-  org.javascool.proglets.syntheSons.FileSoundBit.play("clbustos.wav");
+  org.javascool.proglets.syntheSons.FileSoundBit.play("http://www-sop.inria.fr/science-participative/bahhz/clbustos.wav");
 }
 JLabel left_obstacle, right_obstacle, middle_whole, mobile;
 String trous[] = { 
@@ -122,7 +122,7 @@ void show_game_over() {
   }
 }
 
-// Ici on nettoir etout l'écran et le jeu
+// Ici on nettoie l'écran du jeu
 void clean_all() {
   left_logo = right_logo = left_obstacle = right_obstacle = middle_whole = mobile = null; 
   getPane().removeAll();
