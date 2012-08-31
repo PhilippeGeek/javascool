@@ -20,11 +20,16 @@ void afficher_logo() {
   showIcon(logo, getPane().getWidth() - 150, 0, 150, 150, 1);
 }
 
-void explosion() {
+void explosion(JLabel icon) {
+  sleep(2000);
+  for(int n = 1; n <= 30; n++) {
+    icon.setIcon(getIcon("boum-frame-"+n+".gif"));
+    sleep(150);
+  }
 }
 
 // L'objet mobile du jeu
-JLabel mobile;
+JLabel mobile, right;
 int mobile_position_horizontale = 0, mobile_vitesse_horizontale = 0, mobile_position_verticale = 0, mobile_vitesse_verticale = 0;
 
 void click(int x, int y) {
@@ -42,8 +47,11 @@ void main() {
     int largeur = getPane().getWidth(), hauteur = getPane().getHeight();
     showIcon("titre-du-jeu.jpg", largeur / 2 - 274 / 2, 20, 274, 81, 1);
     showIcon("Nenuphar200x200.png", largeur / 5 - 100, (3 * hauteur) / 4 - 100, 200, 200, 4);
-    showIcon("Nenuphar200x200.png", largeur - largeur / 5 - 100, (3 * hauteur) / 4 - 100, 200, 200, 4);
+    right = showIcon("Nenuphar200x200.png", largeur - largeur / 5 - 100, (3 * hauteur) / 4 - 100, 200, 200, 4);
     showIcon("trou-poubelle.png", largeur / 2 - 100, hauteur - 200, 200, 200, 4);
+    new Thread(new Runnable() {public void run() {
+      explosion(right);
+    }}).start();
   }
   // Création du mobile
   {
