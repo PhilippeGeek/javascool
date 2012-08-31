@@ -15,6 +15,6 @@ public class Panel extends JLayeredPane {
   private static final long serialVersionUID = 1L;
 
   // @bean
-  public Panel() {}
+  public Panel() { setOpaque(true); }
 }
 

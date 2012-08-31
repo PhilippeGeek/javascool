@@ -7,6 +7,8 @@ package org.javascool.proglets.syntheSons;
 // Used to define an audio stream file
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+
 import java.io.IOException;
 
 // Used to read an audio file
@@ -113,13 +115,20 @@ public class FileSoundBit extends SoundBit {
    */
   public static void play(String location) {
     play_location = location;
-    new Thread(new Runnable() {
-                 @Override
-                 public void run() {
-                   new FileSoundBit().reset(play_location).play();
-                 }
-               }
-               ).start();
+    new Thread(new Runnable() { 
+	@Override 
+	public void run() {
+	  // new FileSoundBit().reset(play_location).play(); not used to play files with other formats
+	  try {
+	    Clip clip = AudioSystem.getClip();
+	    AudioInputStream inputStream = AudioSystem.getAudioInputStream(Macros.getResourceURL(play_location));
+	    clip.open(inputStream);
+	    clip.start(); 
+	  } catch (Exception e) {
+	     throw new RuntimeException(e.toString());
+	  }
+	}
+      }).start();
   }
   private static String play_location;
 }
