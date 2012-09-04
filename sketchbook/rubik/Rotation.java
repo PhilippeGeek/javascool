@@ -6,38 +6,37 @@ enum Rotation {
   xPlus {
     @Override
     void setTransformBuffer(float alpha) {
-      transformBuffer.rotX(Math.PI / 2 * alpha);
+      transformBuffer.rotX(Math.PI/2*alpha);
     }
-  }, xMinus {
+  },xMinus {
     @Override
     void setTransformBuffer(float alpha) {
-      transformBuffer.rotX(-Math.PI / 2 * alpha);
-      ;
+      transformBuffer.rotX(-Math.PI/2*alpha);;
     }
-  }, yPlus {
+  },yPlus {
     @Override
     void setTransformBuffer(float alpha) {
-      transformBuffer.rotY(Math.PI / 2 * alpha);
+      transformBuffer.rotY(Math.PI/2*alpha);
     }
-  }, yMinus {
+  },yMinus {
     @Override
     void setTransformBuffer(float alpha) {
-      transformBuffer.rotY(-Math.PI / 2 * alpha);
+      transformBuffer.rotY(-Math.PI/2*alpha);
     }
-  }, zPlus {
+  },zPlus {
     @Override
     void setTransformBuffer(float alpha) {
-      transformBuffer.rotZ(Math.PI / 2 * alpha);
+      transformBuffer.rotZ(Math.PI/2*alpha);
     }
-  }, zMinus {
+  },zMinus {
     @Override
     void setTransformBuffer(float alpha) {
-      transformBuffer.rotZ(-Math.PI / 2 * alpha);
+      transformBuffer.rotZ(-Math.PI/2*alpha);
     }
   };
   void transform(Transform3D transform, float alpha) {
     setTransformBuffer(alpha);
-    transform.mul(transformBuffer, transform);
+    transform.mul(transformBuffer,transform);
   }
   abstract void setTransformBuffer(float alpha);
   final Transform3D transformBuffer = new Transform3D();
