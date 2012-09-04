@@ -106,7 +106,7 @@ public class FileManager {
   private static StringBuilder loadBuffer;
   private static IOException loadError;
   private static int loadLength;
-  private static boolean loadVerbose = true;
+  private static boolean loadVerbose = false;
 
   /** Ecrit un contenu textuel local ou distant en tenant compte de l'encodage local.
    *

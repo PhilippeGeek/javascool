@@ -23,73 +23,87 @@ import com.sun.j3d.utils.universe.Viewer;
 import com.sun.j3d.utils.universe.ViewingPlatform;
 
 public class RubikAnimator {
+
   private static LinkedBlockingDeque<Move> actions = new LinkedBlockingDeque<Move>();
   private static ViewCube viewCube = new ViewCube();
 
   public static void randomMove() throws InterruptedException {
     actions.put(Action.random());
   }
+  
   public static void simpleRandomMove() {
     try {
       randomMove();
-    } catch(InterruptedException e) { throw new IllegalStateException("Main thread interrupted");
+    } catch (InterruptedException e) {
+      throw new IllegalStateException("Main thread interrupted");
     }
   }
+  
   /* Instructs UI to rotate a face of the cube */
   public static void turnFace(Face face, boolean direct)
-  throws InterruptedException {
+      throws InterruptedException {
     Action action = viewCube.getAction(face);
-    if(!direct) {
+    if (!direct)
       action = action.opposite();
-    }
     actions.put(action);
   }
+
   /* Instructs UI to rotate a face of the cube */
   public static void simpleTurnFace(Face face, boolean direct) {
     try {
       turnFace(face, direct);
-    } catch(InterruptedException e) { throw new IllegalStateException("Main thread interrupted");
+    } catch (InterruptedException e) {
+      throw new IllegalStateException("Main thread interrupted");
     }
   }
+
   public static void bringToFront(Face face, boolean now)
-  throws InterruptedException {
+      throws InterruptedException {
     face.turn(viewCube);
-    if(now) {
+    if (now)
       actions.putFirst(face);
-    } else {
+    else
       actions.put(face);
-    }
   }
+
   /* Instructs UI to rotate the cube to view it from a another angle */
   static void simpleBringToFront(Face face, boolean now) {
     try {
       bringToFront(face, now);
-    } catch(InterruptedException e) { throw new IllegalStateException("Main thread interrupted");
+    } catch (InterruptedException e) {
+      throw new IllegalStateException("Main thread interrupted");
     }
   }
+
   public static void simpleAntiRotate(boolean now) {
     try {
       RubikAnimator.antiRotate(now);
-    } catch(InterruptedException e) { throw new IllegalStateException("Main thread interrupted");
+    } catch (InterruptedException e) {
+      throw new IllegalStateException("Main thread interrupted");
     }
   }
+
   public static void antiRotate(boolean now) throws InterruptedException {
     bringToFront(Face.REAR, now);
   }
+
   public static void simpleRotate(boolean now) {
     try {
       RubikAnimator.rotate(now);
-    } catch(InterruptedException e) { throw new IllegalStateException("Main thread interrupted");
+    } catch (InterruptedException e) {
+      throw new IllegalStateException("Main thread interrupted");
     }
   }
+
   public static void rotate(boolean now) throws InterruptedException {
     bringToFront(Face.FRONT, now);
   }
+
   private static TransformGroup[][][] getCubes(Group parent) {
     TransformGroup[][][] groups = new TransformGroup[2][2][2];
-    for(int x = 0; x <= 1; x++)
-      for(int y = 0; y <= 1; y++)
-        for(int z = 0; z <= 1; z++) {
+    for (int x = 0; x <= 1; x++)
+      for (int y = 0; y <= 1; y++)
+        for (int z = 0; z <= 1; z++) {
           TransformGroup transf = new TransformGroup();
           groups[x][y][z] = transf;
           parent.addChild(transf);
@@ -98,33 +112,34 @@ public class RubikAnimator {
         }
     return groups;
   }
+
   private static Component panel;
 
   /**
    * Return the main widget of the UI
-   *
+   * 
    * @param fps
    *          the displayed frame per second (0 for the fastest)
    * @return
    */
   public static Component getCube(int fps) {
-    if(panel != null) {
+
+    if (panel!=null)
       return panel;
-    }
+
     URL url = RubikAnimator.class.getResource("RubikAnimator.class");
-    if(url.getProtocol().equals("jar")) {
-      String path = url.getPath();
-      path = path.substring(path.indexOf(':') + 1, path.indexOf('!'));
-      path = path.substring(0, path.lastIndexOf('/'));
+    if (url.getProtocol().equals("jar")) {
+      String path=url.getPath();
+      path=path.substring(path.indexOf(':')+1, path.indexOf('!'));
+      path=path.substring(0,path.lastIndexOf('/'));
 
       String libraryPath = System.getProperty("java.library.path");
       String newPath;
       String pathSeparator = System.getProperty("path.separator");
-      if(libraryPath.length() == 0) {
+      if (libraryPath.length() == 0)
         newPath = path;
-      } else {
+      else
         newPath = path + pathSeparator + libraryPath;
-      }
       System.setProperty("java.library.path", newPath);
     }
     GraphicsConfiguration config = SimpleUniverse.getPreferredConfiguration();
@@ -139,7 +154,7 @@ public class RubikAnimator {
     SimpleUniverse universe = new SimpleUniverse(viewingPlatform, viewer);
     BranchGroup group = new BranchGroup();
     Transform3D tr = new Transform3DBuilder().rotX(Math.PI / 6)
-                     .rotY(Math.PI / 6).scale(0.1).getTransform();
+        .rotY(Math.PI / 6).scale(0.1).getTransform();
     TransformGroup globtransf = new TransformGroup(tr);
 
     TransformGroup subGroup = new TransformGroup(); // groupe to change view;
@@ -148,8 +163,7 @@ public class RubikAnimator {
     globtransf.addChild(subGroup);
 
     BoundingSphere bound = new BoundingSphere(new Point3d(new double[] { 0, 0,
-                                                                         0 }
-                                                          ), 40.0);
+        0 }), 40.0);
 
     AmbientLight light = new AmbientLight(new Color3f(0.4F, 0.4F, 0.4F));
     light.setInfluencingBounds(bound);
@@ -157,7 +171,7 @@ public class RubikAnimator {
 
     {
       PointLight dLight = new PointLight(new Color3f(0.06F, 0.06F, 0.1F),
-                                         new Point3f(4.0f, 4.0f, 4.0f), new Point3f(0f, 0f, 0.1f));
+          new Point3f(4.0f, 4.0f, 4.0f), new Point3f(0f, 0f, 0.1f));
       dLight.setInfluencingBounds(bound);
       globtransf.addChild(dLight);
     }
@@ -173,9 +187,9 @@ public class RubikAnimator {
     // RubikInterpolator interpolator = new
     // RubikInterpolator(fps,msDelay/((float)msDelay+msPerMove*args.length),alpha,transfs,args);
     RubikInterpolator interpolator = new RubikInterpolator(transfs, subGroup,
-                                                           viewCube);
+        viewCube);
     ActionBehavior behavior = new ActionBehavior(interpolator, fps, canvas,
-                                                 actions);
+        actions);
     behavior.setSchedulingBounds(bound);
     globtransf.addChild(behavior);
 
@@ -188,7 +202,8 @@ public class RubikAnimator {
     universe.addBranchGraph(group);
     universe.getViewingPlatform().setNominalViewingTransform();
 
-    panel = canvas;
+    panel=canvas;
     return canvas;
   }
+
 }

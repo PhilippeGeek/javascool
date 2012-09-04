@@ -8,7 +8,7 @@ export JAVA_HOME=/usr/java/jdk1.6.0_25
 
 export PATH := $(JAVA_HOME)/bin:$(PATH)
 
-export JRE_HOME=/usr/java/jre1.7.0_05
+export JRE_HOME=/usr/java/jre1.7.0_07
 #export JRE_HOME=$(JDK_HOME)/jre
 
 www :

@@ -3,6 +3,7 @@ package org.javascool.proglets.rubik;
 import javax.media.j3d.Transform3D;
 import javax.vecmath.Vector3d;
 
+
 class Transform3DBuilder {
   Transform3D transform = new Transform3D();
   Transform3DBuilder rotX(double angle) {
@@ -16,9 +17,10 @@ class Transform3DBuilder {
     return this;
   }
   Transform3DBuilder antimul(Transform3D tr) {
-    transform.mul(tr, transform);
+    transform.mul(tr,transform);
     return this;
   }
+  
   Transform3DBuilder rotY(double angle) {
     Transform3D rot = new Transform3D();
     rot.rotY(angle);
@@ -37,13 +39,14 @@ class Transform3DBuilder {
     transform.mul(rot);
     return this;
   }
-  Transform3DBuilder translate(double x, double y, double z) {
+  Transform3DBuilder translate(double x,double y,double z) {
     Transform3D rot = new Transform3D();
-    rot.setTranslation(new Vector3d(x, y, z));
+    rot.setTranslation(new Vector3d(x,y,z));
     transform.mul(rot);
     return this;
   }
   Transform3D getTransform() {
     return new Transform3D(transform);
   }
+  
 }
