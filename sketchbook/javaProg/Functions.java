@@ -64,7 +64,7 @@ public class Functions {
     return showIcon(location, x, y, 0, 0, p);
   }
   /** Crée et montre un texte sur le display en (x,y) à la profondeur p.
-   * @param texte Le texte à montrer.
+   * @param text Le texte à montrer.
    * @param x Abcisse du coin inférieur gauche de l'image.
    * @param y Ordonnée du coin inférieur gauche de l'image.
    * @param p Profondeur du tracé de 1 le plus "profond" avec des valeurs plus grandes pour les plans de devant.
