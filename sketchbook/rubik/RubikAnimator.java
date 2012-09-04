@@ -120,7 +120,6 @@ public class RubikAnimator {
    * 
    * @param fps
    *          the displayed frame per second (0 for the fastest)
-   * @return
    */
   public static Component getCube(int fps) {
 
