@@ -10,7 +10,7 @@ run : ./notrejeu.jar
 	echo '<script>location.replace("apropos.htm");</script>' > $@
 
 ./%.html ./%.jar ./%.zip : %.jvs 
-	$(MAKE) -C /user/vthierry/home/Work/culsci/jvs4/work jvs
+#	$(MAKE) -C /user/vthierry/home/Work/culsci/jvs4/work jvs
 	../../../../work/lib/jvs2jar.sh $*.jvs
 	zip $*.jar -dq clbustos.wav ; zip $*.zip -dq clbustos.wav
 

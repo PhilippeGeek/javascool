@@ -34,7 +34,7 @@
 <!-- AddThis Button END -->
           </li>
           <li><a href="./notrejeu.jvs.htm">Le programme</a></li>
-          <li><a href="./notrejeu.zip">Les fichiers</a></li>
+          <li><a href="./notrejeu.zip">Téléchargement du Jeu</a></li>
           <li><a href="mailto:?subject=éclate toi aussi avec notre petit jeu «BAHHZ»&body=http://www-sop.inria.fr/science-participative/bahhz">Partager le lien</a></li>
         </ul>
       </div>
@@ -66,9 +66,9 @@ void show_menu() {
   show_banner();
   showIcon("choisir-un-obstacle.png", getPane().getWidth() / 2 - 400 / 2, getPane().getHeight() / 4, 400, 45, 1);
   for(int n = 0; n < obstacles.length; n++)
-    showIcon(obstacles[n], (getPane().getWidth() * n) / (obstacles.length + 1), getPane().getHeight() / 2, getPane().getWidth() / obstacles.length, 200, 1);
+    showIcon(obstacles[n], (getPane().getWidth() * n) / (obstacles.length + 1), getPane().getHeight() / 2, 150, 150, 1);
   // Ici on affiche un petit mode d'emploi 
-  showText("Puis, pour jouer, utiliser les flèches du clavier pour déplacer l'abeille . .", 20, getPane().getHeight() - 40, 1);
+  showText("Puis, pour jouer, cliquer dans la partie moitiée haute du jeu (gauche/droite et haut/bas) pour déplacer l'abeille . .", 20, getPane().getHeight() - 40, 1);
 }
 String obstacles[] = { 
   "obstacle-arbre.png", "obstacle-cheval.png", "obstacle-mouton.png", "obstacle-mur-marron.png", "obstacle-mur-vert.png", "obstacle-nenuphar.png"
@@ -81,8 +81,8 @@ int colors[] = {
 void show_game(int obstacle) {
   show_banner();
   getPane().setBackground(new java.awt.Color(colors[obstacle]));
-  left_obstacle = showIcon(obstacles[obstacle], getPane().getWidth() / 5 - 100, (3 * getPane().getHeight()) / 4 - 100, 200, 200, 3);
-  right_obstacle = showIcon(obstacles[obstacle], getPane().getWidth() - getPane().getWidth() / 5 - 100, (3 * getPane().getHeight()) / 4 - 100, 200, 200, 3);
+  left_obstacle = showIcon(obstacles[obstacle], getPane().getWidth() / 5 - 100, (3 * getPane().getHeight()) / 4 - 100, 150, 150, 3);
+  right_obstacle = showIcon(obstacles[obstacle], getPane().getWidth() - getPane().getWidth() / 5 - 100, (3 * getPane().getHeight()) / 4 - 100, 150, 150, 3);
   middle_whole = showIcon(trous[random(0, trous.length)], getPane().getWidth() / 2 - 100, getPane().getHeight() - 100, 200, 100, 5);    
   mobile = showIcon("abeille.png", mobile_position_horizontale, mobile_position_verticale, 100, 100, 4);
   mobile_position_horizontale = mobile_vitesse_horizontale = mobile_position_verticale = mobile_vitesse_verticale = 0;
@@ -106,10 +106,7 @@ String logos[] = {
 };
 // . . et on définit comment faire exploser les obstacles
 void blow_obstacle(JLabel icon) {
-  for(int n = 1; n <= 30; n++) {
-    icon.setIcon(getIcon("boum-frame-"+n+".gif"));
-    sleep(150);
-  }
+  icon.setIcon(getIcon("explode.gif"));
 }
 
 // Au game-over on remplit l'écran de "game-over"
@@ -142,21 +139,23 @@ void main() {
       if (getPane().getHeight() / 2 < getClicY() && getClicY() < getPane().getHeight() / 2 + 200) {
 	int n = ((obstacles.length + 1) * getClicX() / getPane().getWidth());
 	show_game(0 <= n && n < obstacles.length ? n : obstacles.length - 1);
-      }}});
+      }
+      // Ici on peut piloter la souris avec des clics
+      if (getPane().getHeight() / 2 > getClicY()) {
+	if (getClicX() < getPane().getWidth() / 2)
+	  move_mobile("Left");
+	else 
+	  move_mobile("Right");  
+	if ((3 * getPane().getHeight()) / 4 > getClicY())
+	  move_mobile("Up");
+	else
+	  move_mobile("Down");  
+      }
+    }});
     // Changement de la vitesse avec les touches du clavier
     setKeyListener(new Runnable() { public void run() {
       //- System.out.println("> key-click is '"+getLastKey()+"'");
-      if (mobile != null) {
-	int mobile_acceleration = 10;
-	if ("Left".equals(getLastKey()))
-	  mobile_vitesse_horizontale -= mobile_acceleration;
-	if ("Right".equals(getLastKey()))
-	  mobile_vitesse_horizontale += mobile_acceleration;
-	if ("Up".equals(getLastKey()))
-	  mobile_vitesse_verticale -= mobile_acceleration;
-	if ("Down".equals(getLastKey()))
-	  mobile_vitesse_verticale += mobile_acceleration;
-      }
+      move_mobile(getLastKey());
     }});
     // Dynamique du mobile
     sample(200, new Runnable() { public void run() {
@@ -191,11 +190,11 @@ void main() {
 	}
 	mobile.setLocation(mobile_position_horizontale, mobile_position_verticale);
 	// Si le mobile passe devant un des obstacles il le fait exploser
-	if (left_obstacle != null && abs(mobile.getX() - left_obstacle.getX()) < 100 && abs(mobile.getY() - left_obstacle.getY()) < 100) {
+	if (left_obstacle != null && abs(mobile.getX() - left_obstacle.getX()) < 50 && abs(mobile.getY() - left_obstacle.getY()) < 50) {
 	  blow_obstacle(left_obstacle);
 	  left_obstacle = null;
 	}
-	if (right_obstacle != null && abs(mobile.getX() - right_obstacle.getX()) < 100 && abs(mobile.getY() - right_obstacle.getY()) < 100) {
+	if (right_obstacle != null && abs(mobile.getX() - right_obstacle.getX()) < 50 && abs(mobile.getY() - right_obstacle.getY()) < 50) {
 	  blow_obstacle(right_obstacle);
 	  right_obstacle = null;
 	}
@@ -206,6 +205,20 @@ void main() {
 	}
       }
     }});
+  }
+}
+// Ici on définit comment bouger le mobile
+void move_mobile(String where) {
+  if (mobile != null) {
+    int mobile_acceleration = 10;
+    if ("Left".equals(where))
+      mobile_vitesse_horizontale -= mobile_acceleration;
+    if ("Right".equals(where))
+      mobile_vitesse_horizontale += mobile_acceleration;
+    if ("Up".equals(where))
+      mobile_vitesse_verticale -= mobile_acceleration;
+    if ("Down".equals(where))
+      mobile_vitesse_verticale += mobile_acceleration;
   }
 }
 int mobile_position_horizontale = 0, mobile_vitesse_horizontale = 0, mobile_position_verticale = 0, mobile_vitesse_verticale = 0;
