@@ -1,6 +1,6 @@
-dft : pub
+dft : wun
 
-www : ./index.html
+wun : ./index.html
 	firefox $^
 
 run : ./notrejeu.jar
