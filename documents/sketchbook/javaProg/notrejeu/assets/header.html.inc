@@ -34,7 +34,7 @@
 <!-- AddThis Button END -->
           </li>
           <li><a href="./notrejeu.jvs.htm">Le programme</a></li>
-          <li><a href="./notrejeu.zip">Les fichiers</a></li>
+          <li><a href="./notrejeu.zip">Téléchargement du Jeu</a></li>
           <li><a href="mailto:?subject=éclate toi aussi avec notre petit jeu «BAHHZ»&body=http://www-sop.inria.fr/science-participative/bahhz">Partager le lien</a></li>
         </ul>
       </div>
