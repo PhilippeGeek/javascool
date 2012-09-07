@@ -46,4 +46,6 @@ void main() {
     for(i = 0; i <= l - 1; i = i + 1)
       printlnToFile(f2, t1[i][j]);
   closeOut(f2);
+
+  showImage("jocondenoiretblanc.pgm");
 }

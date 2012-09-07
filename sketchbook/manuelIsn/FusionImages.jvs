@@ -81,4 +81,6 @@ void main() {
     for(i = 0; i <= largeur3 - 1; i = i + 1)
       printlnToFile(f3, gris3[i][j]);
   closeOut(f3);
+
+  showImage("maisons.pgm");
 }

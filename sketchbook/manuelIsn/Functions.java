@@ -239,4 +239,8 @@ public class Functions {
     getPane().add(area, color, color);
     return area.getBounds2D();
   }
+  /** Affiche une image stockée dans le fichier à la location donnée. */
+  public static void showImage(String location) {
+    getPane().reset(location);
+  }
 }
