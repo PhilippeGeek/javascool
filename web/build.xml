@@ -66,6 +66,10 @@
       <arg value="${env.GFORGEUSER}@scm.gforge.inria.fr"/>
       <arg value="sh -c 'cd /home/groups/javascool/htdocs/v4 ; cat .htindex.php &gt; index.php ; rm .htindex.php'"/>
     </exec>
+    <exec os="Linux" executable="ssh">
+      <arg value="${env.GFORGEUSER}@scm.gforge.inria.fr"/>
+      <arg value="sh -c 'cd /home/groups/javascool/htdocs ; chgrp -fR javascool . ; chmod -fR ug+wr . ; find . -type d -exec chmod g+s {} \;'"/>
+    </exec>
     <exec os="Linux" executable="firefox">
       <arg value="http://javascool.gforge.inria.fr/v4"/>
     </exec>
