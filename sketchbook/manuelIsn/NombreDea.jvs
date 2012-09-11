@@ -1,3 +1,4 @@
+//  Ces programmes sont sous licence CeCILL-B V1.
 int nombreDea(String s) {
   int i, n;
   n = 0;

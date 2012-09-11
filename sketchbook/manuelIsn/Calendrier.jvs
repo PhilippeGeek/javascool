@@ -1,3 +1,4 @@
+//  Ces programmes sont sous licence CeCILL-B V1.
 void main() {
   int mois, jour, nbj;
   for(mois = 1; mois <= 12; mois = mois + 1) {

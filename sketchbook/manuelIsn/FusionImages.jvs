@@ -1,3 +1,4 @@
+//  Ces programmes sont sous licence CeCILL-B V1.
 void main() {
   int i, j, largeur1, hauteur1, largeur2, hauteur2, largeur3, hauteur3,
       valeur1, valeur2, max1, max2, max3;

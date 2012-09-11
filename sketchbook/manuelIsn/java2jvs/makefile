@@ -35,4 +35,9 @@ clean :
 	rm -rf *.class Java2Jvs.java JvsToJavaTranslated1.java
 	find .. -name '*~' -exec rm {} \;
 
+# Ajout de la licence
+
+copyright :
+	cd .. ; for f in *.java *.jvs ; do grep -v "CeCILL-B" < $$f > $$f~ ; (echo "//  Ces programmes sont sous licence CeCILL-B V1." ; cat $$f~) > $$f ; done
+
 

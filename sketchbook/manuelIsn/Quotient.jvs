@@ -1,3 +1,4 @@
+//  Ces programmes sont sous licence CeCILL-B V1.
 int quotient(int dividende, int diviseur) {
   if(dividende < diviseur) {
     return 0;

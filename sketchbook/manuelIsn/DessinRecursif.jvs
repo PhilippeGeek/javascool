@@ -1,3 +1,4 @@
+//  Ces programmes sont sous licence CeCILL-B V1.
 // Définition des directions
 int gauche = 0;
 int droite = 1;

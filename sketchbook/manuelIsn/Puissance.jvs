@@ -1,3 +1,4 @@
+//  Ces programmes sont sous licence CeCILL-B V1.
 int puissance(int n) {
   if(n == 0) {
     return 1;
