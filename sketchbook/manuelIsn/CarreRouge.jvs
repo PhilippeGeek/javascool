@@ -1,3 +1,4 @@
+//  Ces programmes sont sous licence CeCILL-B V1.
 void main() {
   int x, y;
   initDrawing("Carré rouge", 10, 10, 400, 400);

@@ -1,3 +1,4 @@
+//  Ces programmes sont sous licence CeCILL-B V1.
 // Dans cette fonction "lettre" est censé ne contenir
 // qu'un seul caractère.
 // On vérifie si ce caractère apparaît dans la chaîne "mot"

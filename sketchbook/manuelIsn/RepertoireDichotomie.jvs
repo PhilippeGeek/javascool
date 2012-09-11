@@ -1,3 +1,4 @@
+//  Ces programmes sont sous licence CeCILL-B V1.
 void main() {
   String[] nom, tel;
   int i, j, k;

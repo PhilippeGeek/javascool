@@ -1,3 +1,4 @@
+//  Ces programmes sont sous licence CeCILL-B V1.
 
 void fusion (int[] tab, int x, int n, int y, int p, int tab1 [], int i) {
   if (x <= n && (y > p  || tab[x] < tab[y])) {
