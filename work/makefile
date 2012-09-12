@@ -1,5 +1,5 @@
 
-# vthierry's ongoing tasks, . . 
+# vthierry's ongoing tasks, . . .
 
 dft : tst
 
