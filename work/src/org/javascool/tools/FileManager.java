@@ -53,6 +53,20 @@ public class FileManager {
    */
   public static String load(String location, boolean utf8) {
     try {
+      BufferedReader reader = new BufferedReader(new InputStreamReader(Macros.getResourceURL(location, true).openStream(),
+								       utf8 ? Charset.forName("utf-8") : Charset.defaultCharset()), 10240);
+      StringBuilder buffer = new StringBuilder();
+      char chars[] = new char[10240];
+      while (true) {
+	int l = reader.read(chars);
+	if (l == -1) {
+	  break;
+	}
+	buffer.append(chars, 0, l);
+      }
+      return buffer.toString();
+      /*
+
       loadReader = new BufferedReader(new InputStreamReader(Macros.getResourceURL(location, true).openStream(),
                                                                        utf8 ? Charset.forName("utf-8") : Charset.defaultCharset()), 10240);
       loadBuffer = new StringBuilder();
@@ -92,6 +106,7 @@ public class FileManager {
       }
       loadReader.close();
       return loadBuffer.toString();
+      */
     } catch(IOException e) {
       throw new RuntimeException(e + " when loading: " + location);
     }
