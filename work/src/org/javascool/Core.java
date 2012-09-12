@@ -85,8 +85,9 @@ public class Core {
       System.out.println("Usage : java -jar javascool.jar");
       System.exit(0);
     }
-    // Empeche de pouvoir renommer itempestivement des folder
-    UIManager.put("FileChooser.readOnly", Boolean.TRUE);
+    // Empeche de pouvoir renommer itempestivement des folder, attention un problème sous Mac avec la jvs7
+    if (!System.getProperty("os.name").toLowerCase().startsWith("mac"))
+      UIManager.put("FileChooser.readOnly", Boolean.TRUE);
     System.err.println("" + About.title + " is starting ...");
     ErrorCatcher.checkJavaVersion(6);
     setUncaughtExceptionAlert();
