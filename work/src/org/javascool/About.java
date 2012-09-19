@@ -17,7 +17,7 @@ public class About {
   public static final String logo = "org/javascool/widgets/icons/logo.png";
 
   /** Numéro de révision de l'application.*/
-  public static final String revision = "4.0.1192"; // @revision automatiquement mis à jour par ant -f work/build.xml classes
+  public static final String revision = "4.0.1214"; // @revision automatiquement mis à jour par ant -f work/build.xml classes
 
   /** Affiche le message de "about". */
   public static void showAboutMessage() {
