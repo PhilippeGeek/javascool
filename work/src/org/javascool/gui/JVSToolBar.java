@@ -121,6 +121,8 @@ class JVSToolBar extends ToolBar {
                              );
     }
     this.add(About.getAboutMessage(), 0);
+    revalidate();
+    repaint();
   }
   // @ inner-class-variable
   private JButton pbutton;
