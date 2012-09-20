@@ -42,6 +42,7 @@ class JVSPanel extends JPanel {
     setLayout(new BorderLayout());
     add(JVSStartPanel.getInstance());
     this.revalidate();
+    this.repaint();
   }
   public void closeProglet() {
     if(closeAllFiles()) {
@@ -334,8 +335,11 @@ class JVSPanel extends JPanel {
   public void loadProglet(String name) {
     System.gc();
     this.removeAll();
-    JVSToolBar.getInstance().disableDemoButton();
     this.revalidate();
+    this.repaint();
+    this.setVisible(false);
+    this.setVisible(true);
+    JVSToolBar.getInstance().disableDemoButton();
     this.add(JVSToolBar.getInstance(), BorderLayout.NORTH);
     this.add(JVSCenterPanel.getInstance(), BorderLayout.CENTER);
     this.revalidate();
