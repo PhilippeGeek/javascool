@@ -177,7 +177,7 @@ public class Stdin {
       if(s.equals("")) {
         return 0;
       }
-      return readInteger(question);
+      return readLong(question);
     }
   }
   /**
