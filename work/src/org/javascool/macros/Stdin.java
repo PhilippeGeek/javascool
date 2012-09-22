@@ -159,6 +159,33 @@ public class Stdin {
   public static int readInteger() {
     return readInteger("Entrez un nombre entier : ");
   }
+  /** Lit un nombre entier de taille Long (2^36-1) dans une fenêtre présenté à l'utilisateur.
+   * @param question Une invite qui décrit la valeur à entrer (optionel).
+   * @return La valeur lue.
+   */
+  public static long readLong(String question) {
+    if(inputBuffer.isPopable()) {
+      return inputBuffer.popInteger();
+    }
+    String s = readString(question, ' ');
+    try {
+      return Long.decode(s);
+    } catch(Exception e) {
+      if(!question.endsWith(" (Merci d'entrer un nombre entier)")) {
+        question = question + " (Merci d'entrer un nombre entier)";
+      }
+      if(s.equals("")) {
+        return 0;
+      }
+      return readInteger(question);
+    }
+  }
+  /**
+   * @see #readInteger(String)
+   */
+  public static long readLong() {
+    return readLong("Entrez un nombre entier : ");
+  }
   /**
    * @see #readInteger(String)
    */
