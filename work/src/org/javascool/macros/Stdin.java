@@ -159,13 +159,25 @@ public class Stdin {
   public static int readInteger() {
     return readInteger("Entrez un nombre entier : ");
   }
-  /** Lit un nombre entier de taille Long (2^36-1) dans une fenêtre présenté à l'utilisateur.
+  /**
+   * @see #readInteger(String)
+   */
+  public static int readInt(String question) {
+    return readInteger(question);
+  }
+  /**
+   * @see #readInteger(String)
+   */
+  public static int readInt() {
+    return readInteger();
+  }
+  /** Lit un nombre entier en double précision dans une fenêtre présentée à l'utilisateur.
    * @param question Une invite qui décrit la valeur à entrer (optionel).
    * @return La valeur lue.
    */
   public static long readLong(String question) {
     if(inputBuffer.isPopable()) {
-      return inputBuffer.popInteger();
+      return inputBuffer.popLong();
     }
     String s = readString(question, ' ');
     try {
@@ -181,22 +193,10 @@ public class Stdin {
     }
   }
   /**
-   * @see #readInteger(String)
+   * @see #readLong(String)
    */
   public static long readLong() {
     return readLong("Entrez un nombre entier : ");
-  }
-  /**
-   * @see #readInteger(String)
-   */
-  public static int readInt(String question) {
-    return readInteger(question);
-  }
-  /**
-   * @see #readInteger(String)
-   */
-  public static int readInt() {
-    return readInteger();
   }
   /** Lit un nombre décimal dans une fenêtre présentée à l'utilisateur.
    * @param question Une invite qui décrit la valeur à entrer (optionel).
@@ -396,6 +396,16 @@ public class Stdin {
     public int popInteger() {
       try {
         return Integer.decode(popString(' '));
+      } catch(Exception e) {
+        return 0;
+      }
+    }
+    /**
+     * @see #popString(char)
+     */
+    public long popLong() {
+      try {
+        return Long.decode(popString(' '));
       } catch(Exception e) {
         return 0;
       }
