@@ -66,7 +66,7 @@
   <div class="code"> <p><r>getImageWidth</r>(num);</p></div>
   Retourne la largeur (type <r>int</r>) de l'image de travail num <p></p>  
   
-  <div class="code"> <p><r>getImageHeighth</r>(num);</p></div>
+  <div class="code"> <p><r>getImageHeight</r>(num);</p></div>
   Retourne la hauteur (type <r>int</r>) de l'image de travail num <p></p>  
 </div>
   

@@ -14,7 +14,7 @@ Votre mission si vous l'acceptez consiste à écrire un programme permettant de 
      <div class="code">
         <p><r>void</r> main(){</p>
         <m>Creation de l'image de travail n°1 avec la forme a detecter</m>        
-        <p>createRandomShapeImage(1);</p>
+        <p>createRandomShapeImage(2);</p>
         <p><T/>	showImage(1); </p>
         <p></p>        
         <m>ICI l'appel à vos fonctions de detection</m> 
@@ -26,36 +26,37 @@ Votre mission si vous l'acceptez consiste à écrire un programme permettant de 
 <p>Une fois votre fonction de détection terminée vous pouvez faire appel à la fonction <b>checkRandomShape</b> pour tester vos résultats de détection</p>   
 
   <div class="code" align="left"> <p><r>checkRandomShape</r>(typeShape,posxShape,posyShape,taille,angle);</p></div><p></p>
-<p><b>typeShape</b> type de forme détectée <b>String</b> ("square" ou "circle")</p> 
+<p><b>typeShape</b> type de forme détectée <b>String</b> ("point" ou "square" ou "circle")</p> 
 <p><b>posxShape</b> abscisse du coin haut gauche du carré englobant de la forme</p> 
 <p><b>posyShape</b> ordonnée du coin haut gauche du carré englobant de la forme</p> 
-<p><b>taillelargeur</b> du carré englobant</p>
-<p><b>angle</b>  angle de la rotation subit par la forme</p><p></p>
+<p><b>taillelargeur</b> du carré englobant (Valeur de 1 attendue pour la détection du point)</p>
+<p><b>angle</b>  angle de la rotation subit par la forme (Valeur de 0 attendue pour la détection du point)</p><p></p>
 
 <p><u>Remarque :</u></p>  
-<p>L'appel à createRandomShapeImage(1) avec la valeur 1 en paramètre permet de générer une forme carré pleine dans l'image.</p> 
+<p>L'appel à createRandomShapeImage(2) avec la valeur 2 en paramètre permet de générer une forme carré pleine dans l'image.</p> 
 </div>
 
   <div title="Missions suivantes">
 <p>Une fois que vous aurez développé la fonction permettant de détecter le carré dans l'image, vous pourrez vous pencher sur les autres cas, générés là encore à l'aide de la fonction createRandomShape(s), où <b>s</b> de type <r>int</r> permet de sélectionner le scénario voulu suivant les valeurs : "</p><p></p>   
 
-<p>- <b>(1)</b> : détection d'un carré.</p>
-<p>- <b>(2)</b> : détection d'un cercle.</p>
-<p>- <b>(3)</b> : détection cercle ou carré.</p>
-<p>- <b>(4)</b> : détection d'un carré + rotation.</p>
-<p>- <b>(5)</b> : détection d'un carré + rotation + bruit léger.</p>
-<p>- <b>(6)</b> : détection d'un cercle + bruit léger.</p>                            
-<p>- <b>(7)</b> : détection carré ou cercle + rotation.</p>
-<p>- <b>(8)</b> : détection carré ou cercle + rotation + bruit.</p> 
-<p>- <b>(9)</b> : détection d'un carré + rotation + bruit fort.</p>
-<p>- <b>(10)</b> : détection d'un cercle + bruit fort.</p>                            
-<p>- <b>(11)</b> : détection carré ou cercle + rotation + bruit fort.</p>   
+<p>- <b>(1)</b> : détection d'un pixel.</p>
+<p>- <b>(2)</b> : détection d'un carré.</p>
+<p>- <b>(3)</b> : détection d'un cercle.</p>
+<p>- <b>(4)</b> : détection cercle ou carré.</p>
+<p>- <b>(5)</b> : détection d'un carré + rotation.</p>
+<p>- <b>(6)</b> : détection d'un carré + rotation + bruit léger.</p>
+<p>- <b>(7)</b> : détection d'un cercle + bruit léger.</p>                            
+<p>- <b>(8)</b> : détection carré ou cercle + rotation.</p>
+<p>- <b>(9)</b> : détection carré ou cercle + rotation + bruit.</p> 
+<p>- <b>(10)</b> : détection d'un carré + rotation + bruit fort.</p>
+<p>- <b>(11)</b> : détection d'un cercle + bruit fort.</p>                            
+<p>- <b>(12)</b> : détection carré ou cercle + rotation + bruit fort.</p>   
 </div>
 
 
 
 <div title="Un exemple de détection">     
-<p>Le programme ci-dessous fait appel à la fonction createRandomPixelImage() qui créé une image blanche de 400x400 avec un unique pixel noir. Le but est de détecter la position de ce pixel et de l'entourer avec un cercle vert.</p>   
+<p>Le programme ci-dessous fait appel à la fonction createRandomShapeImage(1); qui créé une image blanche de 400x400 avec un unique pixel noir. Le but est de détecter la position de ce pixel et de l'entourer avec un cercle vert.</p>   
 
 <p> Voici une première solution possible :</p><p></p>
      <div class="code">
@@ -63,11 +64,11 @@ Votre mission si vous l'acceptez consiste à écrire un programme permettant de 
         <p><r>void</r> main(){</p>
         <p></p>
         <m>attention l'image fait 400x400</m> 
-        <p><r>int</r>  int posx = 0;</p>
-        <p><r>int</r>  int posy = 0;</p>
+        <p><r>int</r>  posx = 0;</p>
+        <p><r>int</r>  posy = 0;</p>
         <p><r>boolean</r> find = false;</p>                                       
         <m>Creation de l'image de travail n°1 avec le point a detecter</m>        
-        <p><T/>createRandomPixelImage();</p>
+        <p><T/>createRandomShapeImage(1);</p>
 
         <p><T/>showImage(1); </p>
         <p><T/>sleep(800); </p>               
@@ -83,6 +84,7 @@ Votre mission si vous l'acceptez consiste à écrire un programme permettant de 
         <p><T/>System.out.println("posy : "+posy);</p>    
         <p><T/>drawRect(1,posx-3,posy-3,6,6,Color.green);</p>                                          
         <p><T/>	showImage(1); </p>
+        checkRandomShape("point",posx,posy,1,0);
         <p></p> 
         <p>}</p>                
         </div>
@@ -98,11 +100,11 @@ Votre mission si vous l'acceptez consiste à écrire un programme permettant de 
         <m>attention l'image fait 400x400</m> 
         <p><r>int</r> [][] pixMap= new int[400][400];</p>
         <p><r>int</r> CodeBlack = codeCouleur(Color.black);</p> 
-        <p><r>int</r>  int posx = 0;</p>
-        <p><r>int</r>  int posy = 0;</p>
+        <p><r>int</r>  posx = 0;</p>
+        <p><r>int</r>  posy = 0;</p>
         <p><r>boolean</r> find = false;</p>                                       
         <m>Creation de l'image de travail n°1 avec le point a detecter</m>        
-        <p><T/>createRandomPixelImage();</p>
+        <p><T/>createRandomShapeImage(1);</p>
 
         <p><T/>showImage(1); </p>
         <p><T/>sleep(800); </p>    
@@ -120,6 +122,7 @@ Votre mission si vous l'acceptez consiste à écrire un programme permettant de 
         <p><T/>System.out.println("posy : "+posy);</p>    
         <p><T/>drawRect(1,posx-3,posy-3,6,6,Color.green);</p>                                          
         <p><T/>showImage(1); </p>        
+        <p><T/>checkRandomShape("point",posx,posy,1,0);</p>        
         <m>On fait une copie de travail</m>
         <p><T/>copyImage(1,2); </p>
         <p><T/>drawRect(2,posx-3,posy-3,6,6,Color.green); </p>
