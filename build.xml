@@ -6,6 +6,7 @@
     ant jrun	compile et demarre Java's cool sans les proglets
     ant prun	compile et demarre Java's cool avec les proglets
     ant web	construit et publie tout le site web 
+    ant clean   nettoie les fichiers temporaires
   </echo></target>
 
   <target name="svn">
@@ -23,6 +24,10 @@
   <target name="web">
     <ant dir="./web" target="build"/>
     <ant dir="./web" target="publish"/>
+  </target>
+
+  <target name="clean">
+    <ant dir="./work" target="clean"/>
   </target>
 
 </project>
