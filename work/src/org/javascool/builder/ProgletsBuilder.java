@@ -427,7 +427,7 @@ public class ProgletsBuilder {
             // Conversion des pages hdoc pour le web
             FileManager.save(doc.replaceFirst("\\.xml", "\\.htm"),
                              Xml2Xml.run(FileManager.load(doc, true),
-                                         FileManager.load(jarDest + "/org/javascool/builder/hdoc2htm.xslt".replace("/", File.separator)),
+                                         FileManager.load(jarDest + "/org/javascool/builder/hdoc2htm.xslt".replace("/", File.separator),true),
                                          "output", webdoc ? "web" : "jvs"), false, true);
           } catch(IllegalArgumentException e) { throw new IllegalArgumentException("dans " + new File(doc).getName() + " : " + e.getMessage());
           }

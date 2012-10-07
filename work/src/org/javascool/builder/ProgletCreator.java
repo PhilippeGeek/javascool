@@ -38,12 +38,12 @@ public class ProgletCreator {
       String tail = new File(location).exists() ? "un fichier existe à cet emplacement" : "il doit être interdit de créer le répertoire ici";
       System.out.println("Impossible de créer le répertoire «" + location + "» de la proglet, " + tail);
     }
-    FileManager.save(location + File.separator + "proglet.pml", progletPattern.replaceAll("@name", name), true);
-    FileManager.save(location + File.separator + "help.xml", helpPattern.replaceAll("@name", name), true);
-    FileManager.save(location + File.separator + "Panel.java", panelPattern.replaceAll("@name", name), true);
-    FileManager.save(location + File.separator + "Functions.java", functionsPattern.replaceAll("@name", name), true);
-    FileManager.save(location + File.separator + "completion.xml", completionPattern.replaceAll("@name", name), true);
-    FileManager.save(location + File.separator + "Translator.java", translatorPattern.replaceAll("@name", name), true);
+    FileManager.save(location + File.separator + "proglet.pml", progletPattern.replaceAll("@name", name), true, true);
+    FileManager.save(location + File.separator + "help.xml", helpPattern.replaceAll("@name", name), true, true);
+    FileManager.save(location + File.separator + "Panel.java", panelPattern.replaceAll("@name", name), true, true);
+    FileManager.save(location + File.separator + "Functions.java", functionsPattern.replaceAll("@name", name), true, true);
+    FileManager.save(location + File.separator + "completion.xml", completionPattern.replaceAll("@name", name), true, true);
+    FileManager.save(location + File.separator + "Translator.java", translatorPattern.replaceAll("@name", name), true, true);
     System.out.println("La proglet «" + name + "» est crée dans " + location);
     return true;
   }
