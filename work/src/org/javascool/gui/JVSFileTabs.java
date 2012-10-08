@@ -223,7 +223,7 @@ class JVSFileTabs extends JVSTabs {
     }
     fc.setApproveButtonText("Enregistrer");
     fc.setDialogTitle("Enregistrer");
-    int returnVal = fc.showOpenDialog(this.getParent());                 // Get the return value of user choice
+    int returnVal = fc.showSaveDialog(this.getParent());                 // Get the return value of user choice
     if(returnVal == JFileChooser.APPROVE_OPTION) {                     // Check if user is ok to save the file
       String path = fc.getSelectedFile().getAbsolutePath();                         // Get the path which has been choosed by the user
       String name = fc.getSelectedFile().getName();
