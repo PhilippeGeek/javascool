@@ -102,14 +102,22 @@ public class Functions {
   }
   /** Lit un entier à partir d'un fichier. */
   public static int readIntFromFile(Scanner s) {
-    synchronized (readMonitor) {
-      return s.nextInt();
+    synchronized (readMonitor) {  
+      try {
+	return s.nextInt();
+      } catch(Exception e) {
+	return 0;
+      }
     }
   }
   /** Lit un nombre décimal à partir d'un fichier. */
   public static double readDoubleFromChar(Scanner s) {
-    synchronized (readMonitor) { 
-      return s.nextDouble();
+    synchronized (readMonitor) {  
+      try {
+	return s.nextDouble();
+      } catch(Exception e) {
+	return 0;
+      }
     }
   }
 
@@ -126,11 +134,14 @@ public class Functions {
     String r, eoln;
     r = "";
     eoln = System.getProperty("line.separator");
-    do {
+    for(int n = 0; n < 1024; n++) {
       r = r + readCharacterFromFile(s);
-    } while(!r.endsWith(eoln));
+      if (r.endsWith(eoln))
+	break;
+    }
     return r.substring(0, r.length() - eoln.length());
   }
+
   /** Ouvre un fichier en écriture. */
   public static OutputStreamWriter openOut(String name) {
     try {
@@ -151,12 +162,14 @@ public class Functions {
   }
   /** Ecrit un passage à la ligne dans un fichier. */
   public static void printlnToFile(OutputStreamWriter s) {
-    try { s.write(System.getProperty("line.separator"));
+    try { 
+      s.write(System.getProperty("line.separator"));
     } catch(java.io.IOException e) {}
   }
   /** Ecrit un passage une chaîne dans un fichier. */
   public static void printToFile(OutputStreamWriter s, String n) {
-    try { s.write(n);
+    try { 
+      s.write(n);
     } catch(java.io.IOException e) {}
   }
   /** Ecrit un passage une chaîne et un passage à la ligne dans un fichier. */
