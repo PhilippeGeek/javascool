@@ -244,23 +244,7 @@
   </target>
   
   <target name="processing"> 
-    <for param="file">
-      <path>
-        <dirset dir="./../sketchbook" includes="*/applet"/>
-      </path>
-      <sequential> 
-        <move file="@{file}/.svn" tofile="@{file}/../svn.save"/>
-      </sequential>
-    </for>
     <antcall target="run.processing"/>
-    <for param="file">
-      <path>
-        <dirset dir="./../sketchbook" includes="*/applet"/>
-      </path>
-      <sequential> 
-        <move file="@{file}/../svn.save" tofile="@{file}/.svn"/>
-      </sequential>
-    </for>
     <delete dir="./../sketchbook/*/applet/org"/>
   </target>
   
