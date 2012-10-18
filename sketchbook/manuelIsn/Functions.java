@@ -101,46 +101,30 @@ public class Functions {
     s.close();
   }
   /** Lit un entier à partir d'un fichier. */
-  public static int readIntFromFile(Scanner s) {
-    synchronized (readMonitor) {  
-      try {
-	return s.nextInt();
-      } catch(Exception e) {
-	return 0;
-      }
-    }
-  }
+  public static int readIntFromFile (Scanner s) {
+    synchronized (readMonitor) {
+      return s.nextInt();}}
+
   /** Lit un nombre décimal à partir d'un fichier. */
   public static double readDoubleFromChar(Scanner s) {
-    synchronized (readMonitor) {  
-      try {
-	return s.nextDouble();
-      } catch(Exception e) {
-	return 0;
-      }
-    }
-  }
+    synchronized (readMonitor) {return s.nextDouble();}}
 
   private static final java.util.regex.Pattern DOT = java.util.regex.Pattern.compile(".", java.util.regex.Pattern.DOTALL);
 
   /** Lit un caratère à partir d'un fichier. */
   public static String readCharacterFromFile(Scanner s) {
     synchronized (readMonitor) {
-      return String.valueOf(s.findWithinHorizon(DOT, 1).charAt(0));
-    }
-  }
+      return String.valueOf(s.findWithinHorizon(DOT,1).charAt(0));}}
+
   /** Lit un chaîne à partir d'un fichier. */
   public static String readStringFromFile(Scanner s) {
     String r, eoln;
     r = "";
     eoln = System.getProperty("line.separator");
-    for(int n = 0; n < 1024; n++) {
-      r = r + readCharacterFromFile(s);
-      if (r.endsWith(eoln))
-	break;
-    }
-    return r.substring(0, r.length() - eoln.length());
-  }
+    do {
+      r = r + readCharacterFromFile(s);}
+    while (!r.endsWith(eoln));
+    return r.substring(0,r.length()-eoln.length());} 
 
   /** Ouvre un fichier en écriture. */
   public static OutputStreamWriter openOut(String name) {
