@@ -66,6 +66,7 @@ public class IconOutput extends JPanel {
   private void setBounds() {
     int di = width > 0 && getWidth() >= width && zoom ? getWidth() / width : 1;
     int dj = height > 0 && getHeight() >= height && zoom ? getHeight() / height : 1;
+    if (dij < 1) dij = 1;
     dij = di < dj ? di : dj;
     i0 = (getWidth() - width * dij) / 2;
     j0 = (getHeight() - height * dij) / 2;
