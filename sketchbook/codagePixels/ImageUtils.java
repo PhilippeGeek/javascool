@@ -21,8 +21,8 @@ import java.io.StringReader;
 import java.io.IOException;
 import java.io.EOFException;
 
-/** Définit comment lire/ecire une imaage.
- *
+/** Définit comment lire/ecire une image.
+ * <p>Utilise les fonctions de <a href="http://docs.oracle.com/javase/6/docs/api/javax/imageio/ImageIO.html">javax.imageio.ImageIO</a>.</p>
  * @see <a href="ImageUtils.java.html">code source</a>
  * @serial exclude
  */

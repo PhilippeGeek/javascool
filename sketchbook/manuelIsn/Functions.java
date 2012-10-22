@@ -116,15 +116,19 @@ public class Functions {
     synchronized (readMonitor) {
       return String.valueOf(s.findWithinHorizon(DOT,1).charAt(0));}}
 
+  private static final java.util.regex.Pattern EOLN = java.util.regex.Pattern.compile(".*?(?:\r(?!\n)|\n|\r\n)");
+  private static final java.util.regex.Pattern ALL = java.util.regex.Pattern.compile(".*+");
+
   /** Lit un chaîne à partir d'un fichier. */
-  public static String readStringFromFile(Scanner s) {
-    String r, eoln;
-    r = "";
-    eoln = System.getProperty("line.separator");
-    do {
-      r = r + readCharacterFromFile(s);}
-    while (!r.endsWith(eoln));
-    return r.substring(0,r.length()-eoln.length());} 
+  public static String readStringFromFile (Scanner s) {
+    String r = s.findWithinHorizon(EOLN,0);
+    if (r == null)
+      return s.findWithinHorizon(ALL,0);
+    if (r.length() == 1)
+      return "";
+    int pos=r.charAt(r.length()-2) == '\r' ? r.length()-2 : r.length()-1;  
+    return r.substring(0,pos);
+  }
 
   /** Ouvre un fichier en écriture. */
   public static OutputStreamWriter openOut(String name) {
