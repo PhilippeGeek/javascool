@@ -43,6 +43,11 @@ public class CurveOutput extends JPanel {
     Color c;
   }
   private ArrayList<oval> ovals = new ArrayList<oval>();
+  private static class block {
+    double x, y, w, h;
+    Color c_f, c_b;
+  }
+  private ArrayList<block> blocks = new ArrayList<block>();
   private static class label {
     double x, y;
     String s;
@@ -90,6 +95,14 @@ public class CurveOutput extends JPanel {
       for(oval l : ovals) {
         g.setColor(l.c);
         g.drawOval(x2i(l.x), y2j(l.y), x2w(l.w), y2h(l.h));
+      }
+      for(block l : blocks) {
+        g.setColor(l.c_f);
+        g.fillRect(x2i(l.x), y2j(l.y), x2w(l.w), y2h(l.h));
+	if (l.c_b != l.c_f) {
+	  g.setColor(l.c_b);
+	  g.drawRect(x2i(l.x), y2j(l.y), x2w(l.w), y2h(l.h));
+	}
       }
       for(label l : labels) {
         int i = x2i(l.x), j = y2j(l.y);
@@ -186,6 +199,7 @@ public class CurveOutput extends JPanel {
       curves.add(new ArrayList<point>());
     lines = new ArrayList<line>();
     ovals = new ArrayList<oval>();
+    blocks = new ArrayList<block>();
     labels = new ArrayList<label>();
     repaint(0, 0, getWidth(), getHeight());
     return this;
@@ -257,6 +271,26 @@ public class CurveOutput extends JPanel {
     l.h = 2 * r / Yscale;
     l.c = 0 <= c && c < 10 ? colors[c] : Color.BLACK;
     ovals.add(l);
+    repaint(0, 0, getWidth(), getHeight());
+  }
+  /** Trace un block rectangulaire.
+   * <p>Pour tracer un point, tracer une ligne de longueur nulle (<tt>add(x, y, x, y, c);</tt>.</p>
+   * @param x Abscisse du point supérieur gauche, dans [-Xscale+Xoffset..Xscale+Xoffset].
+   * @param y Ordonnée du point supérieur gauche, dans [-Yscale+Yoffset..Yscale+Yoffset].
+   * @param w Largeur du block.
+   * @param h Hauteur du block.
+   * @param c_f Couleur du fond du tracé, <a href="#colors">dans {0, 9}</a>.
+   * @param c_b Couleur du bord du tracé, <a href="#colors">dans {0, 9}</a>, -1 si pas de tracé du bord.
+   */
+  public void add(double x, double y, double w, double h, int c_f, int c_b) {
+    block l = new block();
+    l.x = (x - Xoffset) / Xscale;
+    l.y = (y + h - Yoffset) / Yscale;
+    l.w = w / Xscale;
+    l.h = h / Yscale;
+    l.c_f = 0 <= c_f && c_f < 10 ? colors[c_f] : Color.BLACK;
+    l.c_b = 0 <= c_b && c_b < 10 ? colors[c_b] : l.c_f;
+    blocks.add(l);
     repaint(0, 0, getWidth(), getHeight());
   }
   /** Trace une chaîne de caractères.
