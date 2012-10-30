@@ -88,6 +88,22 @@ public class Functions {
   public static void addRectangle(double xmin, double ymin, double xmax, double ymax) {
     addRectangle(xmin, ymin, xmax, ymax, 0);
   }
+  /** Trace un block rectangulaire.
+   * @param xmin Abcisse inférieure gauche, dans [-X, X], par défaut [-1, 1].
+   * @param ymin Ordonnée inférieure gauche, dans [-Y, Y], par défaut [-1, 1].
+   * @param xmax Abcisse supérieure droite, dans [-X, X], par défaut [-1, 1].
+   * @param ymax Ordonnée supérieure droite, dans [-Y, Y], par défaut [-1, 1].
+   * @param c Numéro de la couleur du block: 0 (noir, défaut), 1 (brun), 2 (rouge), 3 (orange), 4 (jaune), 5 (vert), 6 (bleu), 7 (violet), 8 (gris), 9 (blanc).
+   */
+  public static void addBlock(double xmin, double ymin, double xmax, double ymax, int c) {
+    getPane().scope.add(xmin, ymin, xmax - xmin, ymax - ymin, c, -1);
+  }
+  /*
+   * @see #addBlock(double, double, double, double, int)
+   */
+  public static void addBlock(double xmin, double ymin, double xmax, double ymax) {
+    addBlock(xmin, ymin, xmax, ymax, 0);
+  }
   /** Trace une ligne.
    * @param x1 Abcisse du 1er point, dans [-X, X], par défaut [-1, 1].
    * @param y1 Ordonnée du 1er point, dans [-Y, Y], par défaut [-1, 1].
