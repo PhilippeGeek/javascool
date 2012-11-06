@@ -16,6 +16,8 @@ import javax.swing.JTextArea;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+
 import org.javascool.tools.FileManager;
 
 /** Définit une zone d'affichage qui permet de recevoir les messages de la console.
@@ -102,7 +104,7 @@ public class Console extends JPanel {
       }
       @Override
       public void write(byte[] b, int off, int len) throws IOException {
-        print(new String(b, off, len));
+        print(new String(b, off, len, "UTF-8"));
         oldOut.write(b, off, len);
       }
       @Override
@@ -111,7 +113,9 @@ public class Console extends JPanel {
         oldOut.write(b);
       }
     };
-    System.setOut(new PrintStream(out, true));
+    try{
+      System.setOut(new PrintStream(out, true,"UTF-8"));
+    } catch (UnsupportedEncodingException e) {;}
   }
   /** Efface le contenu de la console. */
   public void clear() {
