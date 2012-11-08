@@ -41,6 +41,15 @@ public class JvsBeautifier {
         if(i < f.length) {
           g += f[i++];
         }
+        // Escapes ' chars
+      } else if(f[i] == '\'') {
+        g += f[i++];
+        while(i < f.length && f[i] != '\'' && f[i] != '\n') {
+          g += f[i++];
+        }
+        if(i < f.length) {
+          g += f[i++];
+        }
         // Escapes @ pragma
       } else if(f[i] == '@') {
         while(i < f.length && f[i] != '\n') {
