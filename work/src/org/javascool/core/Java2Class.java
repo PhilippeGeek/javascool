@@ -124,12 +124,10 @@ public class Java2Class {
   }
   private static boolean compile2(String javaFiles[], boolean allErrors) {
     // Appel du compilateur par sa méthode main
-    int options = 4;
+    int options = 2;
     String args[] = new String[options + javaFiles.length];
     args[0] = "-g";
     args[1] = "-nowarn";
-    args[2] = "-encoding";
-    args[3] = "utf8";
     System.arraycopy(javaFiles, 0, args, options, javaFiles.length);
     StringWriter out = new StringWriter();
     Method javac;
