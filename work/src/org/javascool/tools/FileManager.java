@@ -115,7 +115,7 @@ public class FileManager {
    * * @see #load(String, boolean)
    */
   public static String load(String location) {
-    return load(location, true);
+    return load(location, false);
   }
   private static BufferedReader loadReader;
   private static StringBuilder loadBuffer;
@@ -168,7 +168,7 @@ public class FileManager {
    * @see #save(String, String, boolean, boolean)
    */
   public static void save(String location, String string) {
-    save(location, string, false, true);
+    save(location, string, false, false);
   }
   /** Met en place le writer dans le cas d'une URL. */
   private static OutputStreamWriter getUrlWriter(String location, boolean utf8) throws IOException {
