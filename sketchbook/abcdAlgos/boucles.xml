@@ -93,7 +93,7 @@
       <b>r = 1 + 1 / r</b> initialisée avec <b>r = 1</b>. Ecrire une boucle qui part de <b>r = 1</b> et calcule 30 fois <b>r = 1 + 1 / r</b> en imprimant
       à chaque fois <b>r</b> (par exemple avec l'instruction <b><r>println</r>(<v>r = </v> + r);</b> et commenter le résultat. 
       Comparer avec les valeurs du nombre d'or connues par ailleurs.</div>
-      <div>Avec votre professeur (ou quelqu'un pour vous aider si besoin) calculer les 100 premières décimales de <l link="http://fr.wikipedia.org/wiki/Pi#M.C3.A9thode_d.E2.80.99Archim.C3.A8de" text="PI"/> par la méthode d'Archimède.</div>
+      <div>Avec votre professeur (ou quelqu'un pour vous aider si besoin) essayer de calculer les 10 premières décimales de <l link="http://fr.wikipedia.org/wiki/Pi#M.C3.A9thode_d.E2.80.99Archim.C3.A8de" text="PI"/> par la méthode d'Archimède, et discuter le résultat.</div>
     </div></div>
     <div title="D'autres formes de boucles"> Les langages informatiques proposent d'autres formes de boucles<l class="note" link="1"/>, 
     qui sont équivalentes à la construction <r>while</r> apprise ici, mais peuvent être plus pratiques à utiliser. En voici un exemple <div class="ul">
