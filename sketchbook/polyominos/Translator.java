@@ -14,7 +14,6 @@ package org.javascool.proglets.polyominos;
 /*
  * Définit la traduction d'un code Jvs en code Java
  * pour manipuler la proglet « polyominos »
- * À DÉTRUIRE SI NON UTILISÉ
  *
  * @see <a href="Translator.java.html">code source</a>
  * @serial exclude
@@ -22,7 +21,11 @@ package org.javascool.proglets.polyominos;
 public class Translator extends org.javascool.core.Translator {
     @Override
 	public String getImports() {
-	return "import org.dnsalias.avon.polyominos.* ;";
+	return "import org.dnsalias.avon.polyominos.*; "
+	    + "import java.util.*; "
+	    + "import java.lang.Math.*; "
+	    + "import java.math.*; "
+	    ;
     }
     
     @Override
