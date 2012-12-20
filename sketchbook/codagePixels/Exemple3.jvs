@@ -1,0 +1,49 @@
+// Le code joint dessine un détail du célèbre ensemble de Mandelbrot
+// Jean-Francois Kentzel  <Jean-Franc.Kentzel@ac-toulouse.fr>
+
+// Nombres de pixels :
+int N_x = 200, N_y = 200;
+// Nombre d'itérations
+int maxIter = 30; // plus c'est grand plus on se rapproche du vrai Mandelbrot
+
+// On calcule avec des  x et y réels mais il faut penser à un nombre complexe z = x + i y
+// Coordonnées de la fenêtre :
+double x_min = -1.5, x_max = -1.35;
+double y_min = -0.1, y_max = 0.1;
+// Largeur d'un pixel :
+double A = (x_max - x_min) / (2 * N_x), B = (y_max - y_min) / (2 * N_y);
+
+void main() {
+  // Initialisations :
+  double c_x = 0;
+  double c_y = 0;
+  double z_x = 0;
+  double z_y = 0;
+  int k = 0;
+  reset(250, 240);
+  // Boucle sur l'image
+  for(int i = -N_x; i <= N_x; i++) {
+    c_x = x_min + (N_x + i) * A; // c'est la partie réelle du nombre qu'on teste
+    for(int j = -N_y; j <= N_y; j++) {
+      k = 0;
+      z_x = 0;
+      z_y = 0;
+      c_y = y_min + (N_y + j) * B; // c'est sa partie imaginaire
+      // On peut prouver que si |z|>2 il y a divergence tant que |z|<2, on itère avec z----->z^2+c*/
+      for(;z_x * z_x + z_y * z_y < 4 && k < maxIter;) {
+	z_x = z_x * z_x - z_y * z_y + c_x;
+	z_y = 2 * z_x * z_y + c_y;
+	k = k + 1;
+      }
+      // Ici si k == maxIter+1, on déclare que c est dans Mandelbrot (faux si maxIter est trop petit!)
+      //  et on colore le pixel i-j qui représente c en noir.
+      // Sinon on le colorie suivant k = la "date" de sortie du disque de convergence
+      if((z_x * z_x + z_y * z_y > 4) && (k < maxIter + 1)) {
+	setPixel(i, j, 15 * k % 255, (200 + 15 * k) % 255, 15 * k % 255);
+      } else { 
+	setPixel(i, j, 0, 0, 0);
+      }
+    }
+  }
+}
+

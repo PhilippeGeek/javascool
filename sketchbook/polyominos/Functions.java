@@ -17,7 +17,7 @@ public class Functions {
 
     /**
      * @see http://javascool.gforge.inria.fr/index.php?page=developers&action=doc-proglets
-     * @return « l'instance de la proglet »
+     * @return l'instance de la proglet
      */
     private static Panel getPane() {
         return org.javascool.macros.Macros.getProgletPane();
