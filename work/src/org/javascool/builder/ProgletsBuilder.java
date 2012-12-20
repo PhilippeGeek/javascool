@@ -173,6 +173,7 @@ public class ProgletsBuilder {
             String jarEntries[] = {
               javascoolPrefix + "Core",
               javascoolPrefix + "About",
+              "org" + File.separator + "dnsalias",
               "org" + File.separator + "fife",
               "com" + File.separator + "sun",
               "sun" + File.separator + "tools",
@@ -371,7 +372,8 @@ public class ProgletsBuilder {
       try {
         new File(progletDir).mkdirs();
         JarManager.copyFiles(progletSrc, progletDir);
-      } catch(IOException ex) { throw new RuntimeException("Erreur lors de la copie des fichiers de " + name, ex);
+      } catch(IOException ex) { 
+	throw new RuntimeException("Erreur lors de la copie des fichiers de " + name, ex);
       }
       // Efface les répertoires applet et les jar dans la cible
       {
