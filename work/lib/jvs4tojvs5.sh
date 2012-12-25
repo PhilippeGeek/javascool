@@ -1,13 +1,8 @@
 #
 # Note
-#   Lancer ce script à partir de make -C .. mig 
-#   Ne plus propager les sources java
+#  Ce script n'est plus  jour
 #
-# To do liste:
-#   propager les source java
-#   Les liens pointent vers des fichiers htm alors qu'ils sont tous en html.
-#   Les fichiers sont enrobé de bootstrap, cela est inutile et impose un lourd calcule pour retrouver le vrai contenu de la page à afficher dans le WebPage.
-#
+exit
 
 echo 'Convertir les fichiers de proglets de jvs4 en jvs5'
 
