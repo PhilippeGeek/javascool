@@ -1,0 +1,51 @@
+// Code proposé par Jean-Francois Kentzel <Jean-Franc.Kentzel@ac-toulouse.fr>
+
+//  Ensemble de Julia de constante c = c_x+i*c_y
+// constante ajoutée à chaque pas :
+double c_x =-0.77;   double c_y =0.1;
+// Nombres de pixels (voir aide de la proglet)
+int N_x = 256;   int N_y = 256;
+int maxIter = 550;
+// Coordonnées de la fenêtre :
+double u=2;
+double x_min =-1.6 ;   double x_max =1.5;
+double y_min =-2;    double y_max =2;
+// Taille des graduations :
+double A=(x_max - x_min) / (2 * N_x);
+double B=(y_max - y_min) / (2 * N_y); 
+ 
+// Initialisation de la suite :
+double z_x = 0;   double z_y = 0;   int k = 0;
+double a=0;double b=0;// ne serviront qu'à bien itérer la suite
+void main() {
+  reset(250, 240);
+  
+  for (int i = - N_x; i <= N_x; i ++) for (int j = - N_y; j <= N_y; j ++) {
+    {k=0;      	
+      z_x =x_min+(N_x+i)*A;
+      z_y = y_min+ (N_y+j)*B;  
+      for(;z_x * z_x + z_y * z_y < 4 && k < maxIter;)
+	// là on a remplacé while (condition) par for(;condition;), entourloupe Javascool incompréhensible
+	// pour le profane qui tape ces lignes.
+	// Du coup, ça va environ 1000 fois plus vite. Merci Thierry Vieville !
+	{
+	  a=z_x;b=z_y;
+	  z_x = a*a-b*b + c_x;
+	  z_y = 2 * a*b + c_y;
+	  k = k + 1;
+	}         
+      if (k==maxIter)setPixel(i, j, 0,0, 0);
+      else setPixel(i, j, (15000- 10*k) % 255, (100000-15 * k) % 255, 15 * k % 255);
+         
+    }
+  }   
+  // Définition d'un runnable servant à repérer des régions :
+  setRunnable(new Runnable( ) { public void run() {
+    println((double)(x_min+(N_x+(double)getX())*A));println(A);
+    println("Oh! On a cliqué dans l'image en (" + (double)(x_min+(N_x+(double)getX())*A) + ", " + (double)(y_min+ (N_y+(double)getY())*B )+ ")");
+    int r=getPixelColor(getX(),getY())[0];int g=getPixelColor(getX(),getY())[1];
+    int b=getPixelColor(getX(),getY())[2];
+    println("où on a les couleurs : red = "+r+" green = "+g+" blue = "+b);
+  }});
+}
+
