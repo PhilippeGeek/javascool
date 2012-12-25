@@ -47,7 +47,11 @@
   </p>
   <p>Voici un autre exemple de <l class="editor" link="PurHasard.jvs" text="petit programme"/>, et <l class="editor" link="Exemple1.jvs" text="celui"/> permettant de démarrer l'exercice.</p>
   <p>Voici deux exemples de programmes élèves de tracé d'une <l class="editor" link="un-chinois-qui-court.jvs" text="petite animation"/> et d'une <l class="editor" link="allumons-les-fenetres.jvs" text="autre animation"/>.</p>
+  <p>Voici aussi deux exemples de tracés de fractals de <l class="editor" link="JFKMandel.jvs" text="Mandelbrot"/> et de <l class="editor" link="JFKJulia.jvs" text="Julia"/></p>
+
+
 <p>Cette «proglet» est un composant logiciel ouvert dont documentation et code-source sont disponibles <l link="http://javascool.gforge.inria.fr/?page=proglets&amp;action=show&amp;id=codagePixels&amp;helpFile=api/org/javascool/proglets/codagePixels/package-summary.html" text="ici"/></p>
+
 
 <div class="notes">
   <div><b>Coordonnées non centrées:</b> On utilise ici des coordonnées centrées, mais il est aussi possible d'utiliser des coordonnées "brutes" <c>[0, width[ x [0, height[</c> 
