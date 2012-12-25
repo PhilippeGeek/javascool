@@ -16,7 +16,7 @@ import org.javascool.macros.Macros.*;
 public class Functions {
 
     /**
-     * @see http://javascool.gforge.inria.fr/index.php?page=developers&action=doc-proglets
+     * See <a href="http://javascool.gforge.inria.fr/index.php?page=developers&action=doc-proglets">doc-proglets</a>.
      * @return l'instance de la proglet
      */
     private static Panel getPane() {
