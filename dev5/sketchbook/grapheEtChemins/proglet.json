@@ -1,0 +1,9 @@
+{ "tag" : ""
+, "icon" : "logo.png"
+, "author" : "Cécile Picard-Limpens <ccl.picard@gmail.com>"
+, "title" : "Pour s’approprier sur un exemple 2D les différents éléments caractéristiques d’un graphe, en vue de saisir les algorithmes qui en font usage."
+, "height" : "500"
+, "width" : "900"
+, "processing" : "true"
+}
+
