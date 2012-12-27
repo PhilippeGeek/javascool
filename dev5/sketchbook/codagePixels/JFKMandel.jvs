@@ -1,0 +1,89 @@
+// Code proposé par Jean-Francois Kentzel <Jean-Franc.Kentzel@ac-toulouse.fr>
+
+//                 Ensemble de Mandelbrot
+//
+// Le symbole // en début de ligne indique des commentaires destinés aux humains
+// ( = non lus par la machine)
+//
+// Coordonnées de la fenêtre : 
+//  on prend initialement une micro-fenêtre
+//(on prendrait x et y entre -2 et 2 pour avoir tout Mandelbrot)
+double x_min =- 0.7533;
+
+double x_max =- 0.7523;
+
+double y_min = 0.039;
+
+double y_max = 0.04;
+
+// Nombres de pixels :
+int N_x = 256;
+
+int N_y = 256;
+
+// avec ça on aura 512*512 pixels (voir l'aide de la proglet) 
+// L'ordinateur calcule mieux avec des multiples de 2... 
+int maxIter = 3000;
+
+//plus maxIter est grand plus on se rapproche du vrai Mandelbrot
+// on calcule avec des  x et y réels mais il faut penser à z=x+iy
+// Largeur d'un pixel :
+double A = (x_max - x_min) / (2 * N_x);
+
+double B = (y_max - y_min) / (2 * N_y);
+
+void main() {
+  //Initialisations :
+  double c_x = 0;
+  double c_y = 0;
+  double z_x = 0;
+  double z_y = 0;
+  double a = 0;
+  double b = 0;
+  int k = 0;
+  reset(200, 200);
+  //
+  for (int i = - N_x; i <= N_x; i ++) {
+    c_x = x_min + (N_x + i) * A;
+    // c'est la partie réelle du nombre qu'on teste
+    for (int j = - N_y; j <= N_y; j ++) {
+      {
+	k = 0;
+	z_x = 0;
+	z_y = 0;
+	c_y = y_min + (N_y + j) * B;
+	// c'est sa partie imaginaire
+	//
+	/* on peut prouver que si |z|>2 il y a divergence
+	   donc tant que |z|<2, on itère avec z----->z^2+c   :  */
+	while (z_x * z_x + z_y * z_y < 4 && k < maxIter)            
+	  {
+	    a = z_x;
+	    b = z_y;
+	    //  a et b ne serviront qu'à bien itérer la suite
+	    z_x = a * a - b * b + c_x;
+	    z_y = 2 * a * b + c_y;
+	    k = k + 1;
+	  }
+	/* ici si k==maxIter+1, on déclare que c est dans x si maxIter est trop petit!)
+	 *  et on colore le pixel i-j qui représente c en noir.
+	 *  Sinon on le colorie suivant k =la "date" de sortie du disque de convergence = le Cercle(O;2)*/
+	if (k == maxIter) setPixel(i, j, 0, 0, 0);
+	else setPixel(i, j, (25 + 30 * k) % 255, (20 + 20 * k) % 255, 30 * k % 255);
+	// i et j c'est la position, les trois entiers suivants (entre 0 pour noir absolu et 255 
+	// indiquent les composantes red, green, blue de la couleur.
+	// noter que a%b donne le reste de la div euclidienne de a par b.
+             
+      }
+    }
+  }
+  // Définition d'un runnable servant à repérer des régions :
+  setRunnable(new Runnable() { public void run() {
+    println((double)(x_min + (N_x + (double)getX()) * A)); println(A);
+    println("Oh! On a cliqué dans l'image en (" + (double)(x_min + (N_x + (double)getX()) * A) + ", " + (double)(y_min + (N_y + (double)getY()) * B) + ")");
+    int r = getPixelColor(getX(), getY())[0];
+    int g = getPixelColor(getX(), getY())[1]; int b = getPixelColor(getX(), getY())[2];
+    println("où on a les couleurs : red = " + r + " green = " + g + " blue = " + b);
+  }});
+}
+

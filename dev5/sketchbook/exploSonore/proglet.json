@@ -1,0 +1,9 @@
+{ "tag" : ""
+, "icon" : "logo.png"
+, "author" : "Cécile Picard-Limpens <ccl.picard@gmail.com>"
+, "title" : "Permet de visualiser l'évolution temporelle et le contenu fréquentiel (le spectre) d'un son."
+, "height" : "600"
+, "width" : "800"
+, "processing" : "true"
+}
+
