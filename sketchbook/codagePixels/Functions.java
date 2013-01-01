@@ -64,7 +64,7 @@ public class Functions {
    */
   static public void load(String image, boolean centered, boolean zoom) {
     try {
-      getPane().reset(ImageUtils.loadImage(image), zoom);
+      getPane().reset(org.javascool.tools.ImageUtils.loadImage(image), zoom);
       Dimension dim = getPane().getDimension();
       Functions.centered = centered;
       if(centered) {
@@ -102,7 +102,7 @@ public class Functions {
    */
   static public boolean save(String location) {
     try {
-      ImageUtils.saveImage(location, getPane().getImage());
+      org.javascool.tools.ImageUtils.saveImage(location, getPane().getImage());
       return true;
     } catch(Exception e) {
       System.out.println("Erreur à la sauvegarde de l'image dans '" + location + "' : " + e);
