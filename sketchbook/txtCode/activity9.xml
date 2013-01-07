@@ -21,8 +21,7 @@
       <p><T/>int i,j;</p>
       <p><T/>String str;</p>      
       <p><T/> ....</p>
-      <p><T/>setModeTraceSocket(true);</p>
-      <p><T/>initSocketServer(6000);</p>
+      <p><T/>openSocketServer(6000);</p>
       <p><T/>str=getMessageViaSocketServer();</p>
       <p><T/>.... écriture dans le fichier de reception </p>    
       <p><T/>closeSocketServer();</p> 
@@ -36,8 +35,7 @@
       <p><r>void</r> main() {</p>
       <p><T/>int i,j;</p>
       <p><T/>String str;</p>       
-      <p><T/>setModeTraceSocket(true);</p>
-      <p><T/>initSocketClient("127.0.0.1",6000);</p> 
+      <p><T/>openSocketClient("127.0.0.1",6000);</p> 
       <p><T/> ....</p>
       <p><T/>sendMessageViaSocketClient(str);</p>
         <p><T/> ....</p>
@@ -49,8 +47,8 @@
 
 <div title="Principes de fonctionnement">
     <div class="ul">    
-<p>Une fois lancé, le proglet serveur ouvre un socket sur le port 6000 (<c>initSocketServer</c>) puis il se met en attente d'un bloc de caratère envoyé par le proglet client (<c>getMessageViaSocketServer()</c>).Il ne faut pas oublier de fermer le socket server (<c>closeSocketServer()</c>) pour libérer le port 6000 pour une future utilisation.</p>
-<p>Une fois lancé, le proglet client essaye d'ouvrir un socket (<c>initSocketClient</c>) communiquant via le port 6000 avec le serveur spécifié, ici localhost/127.0.0.1 .Puis il envoie une partie du fichier (<c>sendMessageViaSocketClient("3,3")</c>). Il ne faut pas oublier de fermer le socket Client (<c>closeSocketClient()</c>) pour libérer le port ouvert par le client pour une future utilisation.</p>
+<p>Une fois lancé, le proglet serveur ouvre un socket sur le port 6000 (<c>openSocketServer</c>) puis il se met en attente d'un bloc de caratère envoyé par le proglet client (<c>getMessageViaSocketServer()</c>).Il ne faut pas oublier de fermer le socket server (<c>closeSocketServer()</c>) pour libérer le port 6000 pour une future utilisation.</p>
+<p>Une fois lancé, le proglet client essaye d'ouvrir un socket (<c>openSocketClient</c>) communiquant via le port 6000 avec le serveur spécifié, ici localhost/127.0.0.1 .Puis il envoie une partie du fichier (<c>sendMessageViaSocketClient("3,3")</c>). Il ne faut pas oublier de fermer le socket Client (<c>closeSocketClient()</c>) pour libérer le port ouvert par le client pour une future utilisation.</p>
 <p>Rappel : la fonction  <c>readString()</c> (Cf mémo) lit une chaîne de caratères dans la ligne d'entrée au clavier.</p>
 </div>
 </div>
