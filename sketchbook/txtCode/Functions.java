@@ -166,6 +166,13 @@ public static void filedump(String nomFichier){
     }            
   }    
 
+
+  /** Permet de positionner une marque sur la grille du panel de la proglet 
+   * @param i Position horizontale entre 1 et 3.
+   * @param j Position verticale entre 1 et 3.
+   * @param mark Marque du tictactoe soit 'X', soit 'O'
+   */
+   
   public static void affiche(String str) {
 	  getPane().textArea.append(str);
   }
@@ -187,7 +194,7 @@ public static void filedump(String nomFichier){
   }  
   
   public static void afficheCodeAuFormatBin(int c) {
-         getPane().textArea.append(Integer.toBinaryString(c));
+	  getPane().textArea.append(Integer.toBinaryString(c));
   }  
   
   public static void afficheCodeAuFormatCar(int c) {
