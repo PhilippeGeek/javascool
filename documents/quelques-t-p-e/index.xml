@@ -353,7 +353,7 @@
 
   <tpe id="stereo" title="De la deuxième à la troisième dimension: la vision 3D" icon="http://interstices.info/upload/2d3d/tete.jpg" theme="A">
     <link l="http://interstices.info/display.jsp?id=c_9564"/>
-    <link l="http://www.realviz.com/index.php?language=FR"/>
+    <link l="http://www.autodesk.fr"/>
   </tpe>
 
   <tpe id="neuroimagerie" title="Opérer le cerveau grâce à l'ordinateur" icon="http://www.chirurgie-face.com/images/crane.png" theme="C">
