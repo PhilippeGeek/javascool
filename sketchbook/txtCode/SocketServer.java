@@ -71,6 +71,12 @@ public class SocketServer {
 	socket.close();
       socket = null;
     } catch (IOException e) {}
+    try {
+      if(server != null) {
+        server.close();
+      }
+      server = null;
+    } catch(IOException e) {}
   }
   
   /** Renvoie la socket actuellement utilisée. 
