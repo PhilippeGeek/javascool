@@ -3,7 +3,7 @@
 
   <!--property name="jdk.dir" value="/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64"/-->
   <property name="jdk.dir" value="/usr/java/jdk1.6.0_25"/>
-  <property name="jdk7.dir" value="/usr/java/jdk1.7.0_06"/>
+  <property name="jdk7.dir" value="/usr/java/jdk1.7.0_07"/>
   <property name="build.dir" value="../../build/lib"/>
 
   <!-- Construction de la library javac.jar où le compilateur java est extrait du tools.jar standard -->

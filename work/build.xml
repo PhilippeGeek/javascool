@@ -28,6 +28,7 @@
         <jar destfile="./dist/javascool-base.jar">
             <manifest>
                 <attribute name="Main-Class" value="org.javascool.Core"/>
+                <attribute name="Java-Version" value="${ant.java.version}"/>
             </manifest>
             <fileset dir="./build/classes"/>
             <fileset dir="./src" includes="org/javascool/widgets/icons/*"/>
@@ -43,6 +44,7 @@
             <manifest>
                 <attribute name="Created-By" value="inria.fr (javascool.gforge.inria.fr) ©INRIA: CeCILL V2 + CreativeCommons BY-NC-ND V2"/>
                 <attribute name="Implementation-URL" value="http://javascool.gforge.inria.fr"/>
+                <attribute name="Java-Version" value="${ant.java.version}"/>
                 <attribute name="Implementation-Vendor" value="fuscia-accueil@inria.fr, ou=javascool.gforge.inria.fr, o=inria.fr, c=fr"/>
                 <attribute name="Implementation-Version" value="${svn.revision}"/>
             </manifest>
@@ -60,8 +62,18 @@
     <unzip dest="./build/classes" src="./lib/RSyntaxTextArea.jar"/>
     <unzip dest="./build/classes" src="./lib/autocomplete.jar"/>
     <unzip dest="./build/classes" src="./lib/javadoc.jar"/>
-    <unzip dest="./build/classes" src="./lib/jarsigner.jar"/>
-    <unzip dest="./build/classes" src="./lib/javac.jar"/>
+    <unzip dest="./build/classes" src="./lib/jarsigner.jar"/>    
+    <if>
+       <equals arg1="${ant.java.version}" arg2="1.7" />
+      <then>   
+        <echo message="using java ${ant.java.version}" />
+        <unzip dest="./build/classes" src="./lib/javac7.jar"/>
+      </then>
+      <else>
+        <echo message="using java  ${ant.java.version}" />
+        <unzip dest="./build/classes" src="./lib/javac.jar"/>
+      </else>
+    </if>
     <unzip dest="./build/classes" src="./lib/jvs2html.jar"/>
     <unzip dest="./build/classes" src="./lib/saxon.jar"/>
     <jar destfile="./dist/javascool-builder.jar">
@@ -69,6 +81,7 @@
         <attribute name="Main-Class" value="org.javascool.Build"/>
         <attribute name="Created-By" value="inria.fr (javascool.gforge.inria.fr) ©INRIA: CeCILL V2 + CreativeCommons BY-NC-ND V2"/>
         <attribute name="Implementation-URL" value="http://javascool.gforge.inria.fr"/>
+        <attribute name="Java-Version" value="${ant.java.version}"/>
         <attribute name="Implementation-Vendor" value="javascool@googlegroups.com, ou=javascool.gforge.inria.fr, o=inria.fr, c=fr"/>
         <attribute name="Implementation-Version" value="${svn.revision}"/>
       </manifest>
