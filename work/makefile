@@ -3,8 +3,8 @@
 
 dft : tst
 
-#export JAVA_HOME=/usr/java/jdk1.6.0_25
-export JAVA_HOME=/usr/java/jdk1.7.0_07
+export JAVA_HOME=/usr/java/jdk1.6.0_25
+#export JAVA_HOME=/usr/java/jdk1.7.0_07
 
 export PATH := $(JAVA_HOME)/bin:$(PATH)
 
