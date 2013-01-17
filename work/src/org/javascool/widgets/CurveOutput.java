@@ -38,6 +38,10 @@ public class CurveOutput extends JPanel {
     Color c;
   }
   private ArrayList<line> lines = new ArrayList<line>();
+  private static class rectangle {
+    line l1, l2, l3, l4;
+  }
+  private ArrayList<rectangle> rectangles = new ArrayList<rectangle>();
   private static class oval {
     double x, y, w, h;
     Color c;
@@ -229,8 +233,9 @@ public class CurveOutput extends JPanel {
    * <tr><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td></tr>
    * <tr><td>noir</td><td>marron</td><td>rouge</td><td>orange</td><td>jaune</td><td>vert</td><td>bleu</td><td>violet</td><td>gris</td><td>blanc</td></td>
    * </table></div>
+   * @return L'objet graphique créé, utilisé pour détruire l'objet ensuite.
    */
-  public void add(double x, double y, int c) {
+  public Object add(double x, double y, int c) {
     point p = new point();
     p.x = (x - Xoffset) / Xscale;
     p.y = (y - Yoffset) / Yscale;
@@ -238,6 +243,7 @@ public class CurveOutput extends JPanel {
       curves.get(c).add(p);
     }
     repaint(0, 0, getWidth(), getHeight());
+    return p;
   }
   /** Trace une ligne.
    * <p>Pour tracer un point, tracer une ligne de longueur nulle (<tt>add(x, y, x, y, c);</tt>.</p>
@@ -246,8 +252,9 @@ public class CurveOutput extends JPanel {
    * @param x2 Abscisse du point, dans [-Xscale+Xoffset..Xscale+Xoffset].
    * @param y2 Ordonnée du point, dans [-Yscale+Yoffset..Yscale+Yoffset].
    * @param c Couleur du tracé, <a href="#colors">dans {0, 9}</a>.
+   * @return L'objet graphique créé, utilisé pour détruire l'objet ensuite.
    */
-  public void add(double x1, double y1, double x2, double y2, int c) {
+  public Object add(double x1, double y1, double x2, double y2, int c) {
     line l = new line();
     l.x1 = (x1 - Xoffset) / Xscale;
     l.y1 = (y1 - Yoffset) / Yscale;
@@ -256,14 +263,33 @@ public class CurveOutput extends JPanel {
     l.c = 0 <= c && c < 10 ? colors[c] : Color.BLACK;
     lines.add(l);
     repaint(0, 0, getWidth(), getHeight());
+    return l;
+  }
+  /** Trace un rectangle.
+   * @param xmin Abcisse inférieure gauche, dans [-X, X], par défaut [-1, 1].
+   * @param ymin Ordonnée inférieure gauche, dans [-Y, Y], par défaut [-1, 1].
+   * @param xmax Abcisse supérieure droite, dans [-X, X], par défaut [-1, 1].
+   * @param ymax Ordonnée supérieure droite, dans [-Y, Y], par défaut [-1, 1].
+   * @param c Numéro de la courbe: 0 (noir, défaut), 1 (brun), 2 (rouge), 3 (orange), 4 (jaune), 5 (vert), 6 (bleu), 7 (violet), 8 (gris), 9 (blanc).
+   * @return L'objet graphique créé, utilisé pour détruire l'objet ensuite.
+   */
+  public Object addRectangle(double xmin, double ymin, double xmax, double ymax, int c) {
+    rectangle r = new rectangle();
+    r.l1 = (line) add(xmin, ymin, xmax, ymin, c);
+    r.l2 = (line) add(xmax, ymin, xmax, ymax, c);
+    r.l3 = (line) add(xmax, ymax, xmin, ymax, c);
+    r.l4 = (line) add(xmin, ymax, xmin, ymin, c);
+    rectangles.add(r);
+    return r;  
   }
   /** Trace un cercle.
    * @param x Abscisse du centre, dans [-Xscale+Xoffset..Xscale+Xoffset].
    * @param y Ordonnée du point, dans [-Yscale+Yoffset..Yscale+Yoffset].
    * @param r Rayon du cercle.
    * @param c Couleur du tracé, <a href="#colors">dans {0, 9}</a>.
+   * @return L'objet graphique créé, utilisé pour détruire l'objet ensuite.
    */
-  public void add(double x, double y, double r, int c) {
+  public Object add(double x, double y, double r, int c) {
     oval l = new oval();
     l.x = (x - Xoffset - r) / Xscale;
     l.y = (y - Yoffset + r) / Yscale;
@@ -272,6 +298,7 @@ public class CurveOutput extends JPanel {
     l.c = 0 <= c && c < 10 ? colors[c] : Color.BLACK;
     ovals.add(l);
     repaint(0, 0, getWidth(), getHeight());
+    return l;
   }
   /** Trace un block rectangulaire.
    * <p>Pour tracer un point, tracer une ligne de longueur nulle (<tt>add(x, y, x, y, c);</tt>.</p>
@@ -281,8 +308,9 @@ public class CurveOutput extends JPanel {
    * @param h Hauteur du block.
    * @param c_f Couleur du fond du tracé, <a href="#colors">dans {0, 9}</a>.
    * @param c_b Couleur du bord du tracé, <a href="#colors">dans {0, 9}</a>, -1 si pas de tracé du bord.
+   * @return L'objet graphique créé, utilisé pour détruire l'objet ensuite.
    */
-  public void add(double x, double y, double w, double h, int c_f, int c_b) {
+  public Object add(double x, double y, double w, double h, int c_f, int c_b) {
     block l = new block();
     l.x = (x - Xoffset) / Xscale;
     l.y = (y + h - Yoffset) / Yscale;
@@ -292,14 +320,16 @@ public class CurveOutput extends JPanel {
     l.c_b = 0 <= c_b && c_b < 10 ? colors[c_b] : l.c_f;
     blocks.add(l);
     repaint(0, 0, getWidth(), getHeight());
+    return l;
   }
   /** Trace une chaîne de caractères.
    * @param x Abscisse du coin en haut à gauche du texte, dans [-Xscale+Xoffset..Xscale+Xoffset].
    * @param y Ordonnée du coin en haut à gauche du texte, dans [-Yscale+Yoffset..Yscale+Yoffset].
    * @param s Texte à tracer.
    * @param c Couleur du tracé, <a href="#colors">dans {0, 9}</a>.
+   * @return L'objet graphique créé, utilisé pour détruire l'objet ensuite.
    */
-  public void add(double x, double y, String s, int c) {
+  public Object add(double x, double y, String s, int c) {
     label l = new label();
     l.x = (x - Xoffset) / Xscale;
     l.y = (y - Yoffset) / Yscale;
@@ -307,6 +337,44 @@ public class CurveOutput extends JPanel {
     l.c = 0 <= c && c < 10 ? colors[c] : Color.BLACK;
     labels.add(l);
     repaint(0, 0, getWidth(), getHeight());
+    return l;
+  }
+  /** Détruit l'objet graphique spécifié.
+   * @param object L'objet à détruire.
+   * @return La valeur true si l'objet existait, false sinon.
+   */
+  public boolean remove(Object object) {
+    if (lines.contains(object)) {
+      lines.remove(object);
+      return true;
+    }
+    if (rectangles.contains(object)) {
+      rectangle r = (rectangle) object;
+      lines.remove(r.l1);
+      lines.remove(r.l2);
+      lines.remove(r.l3);
+      lines.remove(r.l4);
+      rectangles.remove(object);
+      return true;
+    }
+    if (ovals.contains(object)) {
+      ovals.remove(object);
+      return true;
+    }
+    if (blocks.contains(object)) {
+      blocks.remove(object);
+      return true;
+    }
+    if (labels.contains(object)) {
+      labels.remove(object);
+      return true;
+    }   
+    for(int c = 0; c < 10; c++)
+      if (curves.get(c).contains(object)) {
+	curves.get(c).remove(object);
+	return true;
+      }
+    return false;
   }
   /** Renvoie la position horizontale du réticule. */
   public double getReticuleX() {
