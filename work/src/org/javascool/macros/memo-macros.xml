@@ -3,7 +3,7 @@
   <div title="Programme principal">Il se note <b><r>void main</r>{ }</b> avec les instructions définies entre <b>{ }</b>.</div>
   <div title="Type de données utilisées"><div class="ul">
     <div><r>String</r> Chaîne de caractères (ex: <b><r>String</r> nom = <v>Dupond</v>;</b>).</div>
-    <div><r>int</r> Entier positif ou négatif, de environ -2 à +2 milliards (ex: <b><r>int</r> n = <v>8</v>;</b>).</div>
+    <div><r>int</r> Entier positif ou négatif, de environ -2 à +2 milliards (ex: <b><r>int</r> n = 8;</b>).</div>
     <div><r>double</r> Nombre décimal, comme sur une calculette (ex:<b><r>double</r> pi = 3.1416;</b>).<div class="code">
     <m>Les nombres décimaux se notent avec un "." point et non une virgule !</m>
     <m>Les nombres en notation scientifique (par exemple 6.023 1023) se note avec un "e" (pour exposant) : ici <c>6.023e23</c></m>
