@@ -56,14 +56,14 @@ public class Panel extends JPanel {
    * @param x Turtle horizontal position, not shown if &lt; 0.
    * @param y Turtle vertical position, not shown if &lt; 0.
    */
-  public void show(int x, int y) {
+  public void show(int x, int y, boolean turtle_visibility) {
     repaint(turtle_x - 1, turtle_y - 1, turtle.getIconWidth() + 3, turtle.getIconHeight() + 3);
     if((x < 0) || (y < 0)) {
       turtle_shown = false;
     } else {
       turtle_x = x;
       turtle_y = y;
-      turtle_shown = true;
+      turtle_shown = turtle_visibility;
     }
     repaint(turtle_x - 1, turtle_y - 1, turtle.getIconWidth() + 3, turtle.getIconHeight() + 3);
   }
