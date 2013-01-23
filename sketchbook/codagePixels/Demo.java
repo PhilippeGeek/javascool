@@ -3,7 +3,9 @@ package org.javascool.proglets.codagePixels;
 import static org.javascool.proglets.codagePixels.Functions.*;
 import static org.javascool.macros.Macros.*;
 
-/** Démonstration de la proglet. */
+/** Démonstration de la proglet. 
+ * @see <a href="Demo.java.html">code source</a>
+ */
 public class Demo {
   /** Lance la démo de la proglet. */
   public static void start() {
