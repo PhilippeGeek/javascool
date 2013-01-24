@@ -1,0 +1,232 @@
+
+//                Dessins des ensembles de Mandelbrot et Julia (Didier et JF)
+//
+double c = 6;
+
+/* c'est le coefficient du zoom .
+Pour avoir un dézoom (de même coeff) on posera c=1/c    */
+ // Le symbole // en debut de ligne indique des commentaires destinés aux humains
+// ( = non lus par la machine)
+//
+ import javax.swing. *;
+
+import java.awt.event. *;
+
+import java.awt. *;
+
+class GestionClic implements MouseListener {
+   public void mouseClicked(MouseEvent e) {
+      if (SwingUtilities.isRightMouseButton(e)) {
+         ClickDroit = true;
+      } else {
+         ClickDroit = false;
+      }
+   }
+   public void mouseEntered(MouseEvent e) {
+   }
+   public void mouseReleased(MouseEvent e) {
+   }
+   public void mousePressed(MouseEvent e) {
+   }
+   public void mouseExited(MouseEvent e) {
+   }
+}
+
+// Nombres de pixels :
+int N_x = 256;
+
+int N_y = 256;
+
+// avec ça on aura 512*512 pixels (voir l'aide de la proglet) 
+ // L'ordinateur calcule mieux avec des multiples de 2... 
+ int maxIter = 500;
+
+/*   plus maxIter est grand plus on se rapproche du vrai Mandelbrot.
+On va calculer avec des  x et y reels mais il faut penser à z=x+iy
+Coordonnees de la fenetre : 
+ on prend initialement x et y entre -2 et 2 pour avoir tout Mandelbrot */
+ double x_min =- 2;
+
+double x_max = 2;
+
+double y_min = - 2;
+
+double y_max = 2;
+
+// Largeur et hauteur représentées par un pixel :
+double A = (x_max - x_min) / (2 * N_x);
+
+double B = (y_max - y_min) / (2 * N_y);
+
+int u = 0;
+
+// nombre de zooms ou dézooms
+ //Initialisations :
+double c_x = 0;
+
+double c_y = 0;
+
+double z_x = 0;
+
+double z_y = 0;
+
+double a = 0;
+
+double b = 0;
+
+int k = 0;
+
+double j_x = 0;
+
+double j_y = 0;
+
+// j_x et j_y sont les coordonnées du point définissant le Julia
+boolean ClickDroit = false;
+
+boolean zoom = false;
+
+void myJulia() {
+   //recreer une image 200*200 et l'initialiser
+    reset(256, 256);
+   //println("              dans Julia      c1 = "+c1    );        
+    //println("                        dans Julia      c_x = "+c_x    );
+    /* Ci-dessous on va remplacer while (condition) par for (;condition;), entourloupe Javascool incompr???hensible
+          pour le profane qui tape ces lignes.
+          Du coup, l'ordi va environ 1000 fois plus vite. Merci Thierry Vieville !*/
+    //
+    // d'abord en noir et blanc (c'est le "vrai' Julia):
+    for (int i = - N_x; i <= N_x; i ++) for (int j = - N_y; j <= N_y; j ++) {
+      {
+         k = 0;
+         z_x = x_min + (N_x + i) * A;
+         z_y = y_min + (N_y + j) * B;
+         for (; z_x * z_x + z_y * z_y < 4 && k < maxIter;) {
+            a = z_x;
+            b = z_y;
+            z_x = a * a - b * b + j_x;
+            z_y = 2 * a * b + j_y;
+            k = k + 1;
+         }
+         if (k == maxIter)setPixel(i, j, 0, 0, 0);
+      }
+   }
+   sleep(500);
+   // puis en couleurs
+    for (int i = - N_x; i <= N_x; i ++) for (int j = - N_y; j <= N_y; j ++) {
+      {
+         k = 0;
+         z_x = x_min + (N_x + i) * A;
+         z_y = y_min + (N_y + j) * B;
+         for (; z_x * z_x + z_y * z_y < 4 && k < maxIter;) {
+            a = z_x;
+            b = z_y;
+            z_x = a * a - b * b + j_x;
+            z_y = 2 * a * b + j_y;
+            k = k + 1;
+         }
+         if (k == maxIter)setPixel(i, j, 255,255, 255);
+         else setPixel(i, j, (61 * k) % 255, (10 + 27 * k) % 255, 11 * k % 255);
+      }
+   }
+}
+
+void myMandel() {
+   //recreer une image 200*200 et l'initialiser
+    reset(256, 256);
+   //println("                           dans Mandel      c_x = "+c_x    );        
+    for (int i = - N_x; i <= N_x; i ++) {
+      c_x = x_min + (N_x + i) * A;
+      // c'est la partie reelle du nombre qu'on teste
+       for (int j = - N_y; j <= N_y; j ++) {
+         k = 0;
+         z_x = 0;
+         z_y = 0;
+         c_y = y_min + (N_y + j) * B;
+         // c'est sa partie imaginaire
+          /* on peut prouver que si |z|>2 il y a divergence
+ donc tant que |z|<2, on itere avec z----->z^2+c   :  */
+          for (; z_x * z_x + z_y * z_y < 4 && k < maxIter;) {
+            a = z_x;
+            b = z_y;
+            //  a et b ne serviront qu'a bien iterer la suite
+             z_x = a * a - b * b + c_x;
+            z_y = 2 * a * b + c_y;
+            k = k + 1;
+         }
+         /* ici si k==maxIter+1, on declare que c est dans x si maxIter est trop petit!)
+  *  et on colore le pixel i-j qui represente c en noir (ou en blanc).
+  *  Sinon on le colorie suivant k =la "date" de sortie du disque de convergence = le Cercle(O;2)*/
+          if (k == maxIter) setPixel(i, j, 0,0,0);
+         //else setPixel(i, j, (25 + 20 * k) % 255, (20 + 10 * k) % 255, (130 + 20 * k) % 255);
+         // i et j c'est la position, les trois entiers suivants (entre 0 pour noir absolu et 255 
+          // indiquent les composantes red, green, blue de la couleur.
+          // noter que a%b donne le reste de la div euclidienne de a par b.         
+       }
+   }
+}
+
+void myZoom(int clicX, int clicY, boolean Clickdroit) {
+   // le paramètre booléen Clickdroit ne sert qu'à println "dézoom" dans la console quand on dézoome !
+    double old_x_min = x_min;
+   double old_y_min = y_min;
+   /* Ces old_ évitent les interférences dans les 4 lignes qui suivent
+          *  (comme a et b dans les dessins de Mandel et Julia)*/
+    x_min = (double)(x_min + (N_x + (double)clicX) * A) - 0.5 * (x_max - x_min) / c;
+   x_max = (double)(old_x_min + (N_x + (double)clicX) * A) + 0.5 * (x_max - old_x_min) / c;
+   y_min = (double)(y_min + (N_y + (double)clicY) * B) - 0.5 * (y_max - y_min) / c;
+   y_max = (double)(old_y_min + (N_y + (double)clicY) * B) + 0.5 * (y_max - old_y_min) / c;
+   A = (x_max - x_min) / (2 * N_x);
+   B = (y_max - y_min) / (2 * N_y);
+   println("New x_min = " + x_min);
+   println("New x_max = " + x_max);
+   println("New largeur de plage (dans C) = " + (x_max - x_min));
+   // println("New y_min = " + y_min);
+    //println("New y_max = " + y_max); 
+    println("New A = B = " + A);
+   // println("New B = " + B);
+    if (Clickdroit == true)println("                                         là on a dézoomé!");
+   //Initialisations :
+    z_x = 0;
+   z_y = 0;
+   a = 0;
+   b = 0;
+   k = 0;
+   //(re)dessiner Julia
+    myJulia();
+}
+
+void main() {// supprimez les 15 lignes qui suivent !
+   JFrame cadre1 = new JFrame();
+   JTextArea texte1 = new JTextArea(3,2);
+   	String str="Lorsque vous cliquez sur un point C de l'image de départ qui est l'ensemble de Mandelbrot (choisir un point près du noir, c'est plus joli) vous obtenez l'ensemble de Julia correspondant au point cliqué. Vous pouvez ensuite zoomer (clic gauche) ou dézoomer (clic droit).On affiche d'abord (0,3 seconde) le vrai Julia (en noir et blanc), souvent vide ou presque si C n'est pas dans Mandelbrot (= n'est pas dans le noir.)";
+   texte1.append(str);
+   
+   cadre1.add(texte1);
+   
+   cadre1.setSize(800, 200);
+   
+   cadre1.setLocation(0, 100);
+   
+   cadre1.setVisible(true);
+   
+   //
+   getProgletPane().addMouseListener(new GestionClic());
+   myMandel();
+   // Définition d'un runnable servant à lancer des dessins 
+    //(Mandelbrot puis Julia puis zooms/dézooms):
+    setRunnable(new Runnable() {
+      public void run() {
+         u = u + 1; println(""); println(" A = B = taille d'un pixel au depart : " + A); println("Oh! getX() = " + getX() + " et getY() = " + getY()); // (ce sont des entiers entre -256 et 256)
+          println("c'est le zoom numero : " + (u - 1)); println("On a clique dans le plan des complexes en (" + (double)(x_min + (N_x + (double)getX()) * A) + ", " + (double)(y_min + (N_y + (double)getY()) * B) + ")"); int red = getPixelColor(getX(), getY())[0]; int green = getPixelColor(getX(), getY())[1]; int blue = getPixelColor(getX(), getY())[2]; println("oh on a les couleurs : red = " + red + " green = " + green + " blue = " + blue); if (zoom == false) {
+            // on démarre le Julia (j_x;j_y) au point cliqué :
+             j_x = (double)getX() * 2 / N_x; j_y = (double)getY() * 2 / N_y; zoom = true; myJulia(); // int c1=getX();int c2=getY(); // a mon avis inutile //pas au mien!!!!!     
+          } else if (ClickDroit) {
+            c = 1 / c; // (on fait un déZoom = un Zoom en inversant le coeff de zoom)
+             myZoom(getX(), getY(), ClickDroit); c = 1 / c; // on remet le coeff normal pour la suite
+          } else {
+            myZoom(getX(), getY(), ClickDroit);}
+      }
+   }
+  );
+}
+
