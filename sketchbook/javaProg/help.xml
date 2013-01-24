@@ -39,8 +39,11 @@
    <div>Un autre exemple d'utilisation est proposé en démonstration, 
   à partir d'un <l class="editor" link="HeureEnBinaire.jvs" text="code Jvs"/> réalisé à partir d'une idée originale de Gilles Dowek (horloge binaire).</div>
 
-   <div>Un exemple d'utilisation avec l'intégration du composant de la proglet «codagePixels», 
-  à partir d'un <l class="editor" link="integrationIconOutput.jvs" text="code Jvs"/> réalisé à partir d'une idée originale de Jerome Saint Omer.</div>
+   <div>Un autre exemple d'utilisation est proposé en démonstration, 
+  à partir d'un <l class="editor" link="HeureEnBinaire.jvs" text="code Jvs"/> réalisé à partir d'une idée originale de Gilles Dowek (horloge binaire).</div>
+
+   <div>Un exemple d'utilisation permet de tracer des Fractals, 
+  à partir d'un <l class="editor" link="JuliaZoomDidierJF.jvs" text="code Jvs"/>.</div>
 
 <p>Cette «proglet» est un composant logiciel ouvert dont documentation et code-source sont disponibles <l link="http://javascool.gforge.inria.fr/?page=proglets&amp;action=show&amp;id=javaProg&amp;helpFile=api/org/javascool/proglets/javaProg/package-summary.html" text="ici"/></p>
 </div>
