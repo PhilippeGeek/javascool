@@ -50,7 +50,7 @@ public class Panel extends JPanel {
   /** Clears the garden. */
   public final void clear() {
     garden = new Color[width * height];
-    repaint(0, 0, getWidth(), getHeight());
+    repaint(0, 0, 0, getWidth(), getHeight());
   }
   /** Shows the turtle at a given location.
    * @param x Turtle horizontal position, not shown if &lt; 0.
@@ -73,6 +73,18 @@ public class Panel extends JPanel {
    * @param c Color in {0, 9}.
    */
   public void add(int x, int y, Color c) {
+    if(x < 0) {
+      x = 0;
+    }
+    if(x > width-1) {
+      x = width-1;
+    }
+    if(y < 0) {
+      y = 0;
+    }
+    if(y > height-1) {
+      y = height-1;
+    }
     garden[x + y * width] = c;
     repaint(x - 1, y - 1, 3, 3);
   }
