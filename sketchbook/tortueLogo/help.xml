@@ -31,7 +31,7 @@
     </div>
   </div>
 
-  <p>Voici un exemple de <l class="editor" link="FloconVonKoch.jvs" text="petit programme"/> de dessin.</p>
+  <p>Voici deux exemples de <l class="editor" link="FloconVonKoch.jvs" text="petit programme"/> et un autre <l class="editor" link="FloconVonKoch2.jvs" text="petit programme"/> de dessin du flocon de von Koch.</p>
 
   </p>
 <p>Cette «proglet» est un composant logiciel ouvert dont documentation et code-source sont disponibles <l link="http://javascool.gforge.inria.fr/?page=proglets&amp;action=show&amp;id=tortueLogo&amp;helpFile=api/org/javascool/proglets/tortueLogo/package-summary.html" text="ici"/></p>
