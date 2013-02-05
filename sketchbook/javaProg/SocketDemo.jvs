@@ -1,3 +1,4 @@
+
 import java.net.ServerSocket;
 import java.net.Socket; 
 
@@ -25,7 +26,7 @@ static class Server extends Thread {
       }
     } catch(Exception e) { 
       // . . et en ré-mettant les éventuelles erreurs, sauf celle de fermeture
-      if (!(e instanceof java.net.SocketException && "Socket closed".equals(e.getMessage()))) {
+      if (!(e instanceof java.net.SocketException && "socket closed".equals(e.getMessage()))) {
         println("Erreur du thread du serveur : "+e);
 	throw new RuntimeException(e); 
       }
