@@ -9,6 +9,16 @@ package org.javascool.macros;
 import org.javascool.gui.Desktop;
 import org.javascool.widgets.Console;
 
+// Classes pour l'impression d'un composent ou de la consol.
+import java.awt.Component;
+import java.awt.print.Printable;
+import java.awt.print.PrinterJob;
+import java.awt.print.PageFormat;
+import java.awt.print.PrinterException;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import javax.swing.RepaintManager;
+
 /** Cette factory contient des fonctions générales rendues visibles à l'utilisateur de proglets.
  * <p>Elle permet de définir des fonctions statiques qui seront utilisées pour faire des programmes élèves.</p>
  * <p>Elle permet aussi avoir quelques fonctions de base lors de la création de nouvelles proglets.</p>
@@ -156,5 +166,53 @@ public class Stdout {
    */
   public static void saveConsoleOutput(String location) {
     Console.getInstance().saveConsoleOutput(location);
+  }
+
+  /** Envoie à l'imprimante la console.*/
+  public static void sendConsoleToPrinter() {
+    sendToPrinter(Console.getInstance());
+  }
+  /** Envoie à l'imprimante la console.*/
+  public static void sendProgletToPrinter() {
+    sendToPrinter(Macros.getProgletPane());
+  }
+  /** Envoie à l'imprimante un composant graphique.*/
+  public static void sendToPrinter(Component c) {
+    new Printer(c).print();
+  }
+  private static class Printer implements Printable {
+    private Component component;
+
+    private Printer(Component component) {
+      this.component = component;
+    }
+    
+    private void print() {
+      PrinterJob printJob = PrinterJob.getPrinterJob();
+      printJob.setPrintable(this);
+      if (printJob.printDialog())
+	try {
+	  printJob.print();
+	} catch(PrinterException pe) {
+	  System.out.println("Error printing: " + pe);
+	}
+    }
+    
+    public int print(Graphics g, PageFormat pf, int pi) {
+      if (pi > 0) {
+	return(NO_SUCH_PAGE);
+      } else {
+	Graphics2D g2d = (Graphics2D) g;
+	g2d.translate(pf.getImageableX(), pf.getImageableY());
+	double factor = Math.min(pf.getImageableWidth() / component.getWidth(), pf.getImageableHeight() / component.getHeight());
+	g2d.scale(factor, factor);
+	RepaintManager currentManager = RepaintManager.currentManager(component);
+	boolean db = currentManager.isDoubleBufferingEnabled();
+	currentManager.setDoubleBufferingEnabled(false);
+	component.printAll(g2d);
+	currentManager.setDoubleBufferingEnabled(db);
+	return(PAGE_EXISTS);
+      }
+    }
   }
 }
