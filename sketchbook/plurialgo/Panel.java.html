@@ -1,0 +1,29 @@
+<pre><font color="#ffc800"><b>package&#160;</b></font><font color="#000000">org.javascool.proglets.plurialgo;</font>
+<font color="#ffffff"></font>
+<font color="#ffc800"><b>import&#160;</b></font><font color="#000000">raffinat.inout.config.Config;</font>
+<font color="#ffc800"><b>import&#160;</b></font><font color="#000000">raffinat.inout.interaction1.PanelInteraction;</font>
+<font color="#ffffff"></font>
+<font color="#3f5fbf">/**</font>
+<font color="#ffffff">&#160;</font><font color="#3f5fbf">*&#160;Definit&#160;le&#160;panneau&#160;graphique&#160;de&#160;la&#160;proglet</font>
+<font color="#ffffff">&#160;</font><font color="#3f5fbf">*&#160;</font>
+<font color="#ffffff">&#160;</font><font color="#3f5fbf">*&#160;</font><font color="#7f9fbf">@see&#160;</font><font color="#3f5fbf">&lt;a&#160;href=&quot;Panel.java.html&quot;&gt;code&#160;source</font><font color="#7f7f9f">&lt;/a&gt;</font>
+<font color="#ffffff">&#160;</font><font color="#3f5fbf">*&#160;</font><font color="#7f9fbf">@serial&#160;</font><font color="#3f5fbf">exclude</font>
+<font color="#ffffff">&#160;</font><font color="#3f5fbf">*/</font>
+<font color="#ffc800"><b>public&#160;class&#160;</b></font><font color="#000000">Panel&#160;</font><font color="#ffc800"><b>extends&#160;</b></font><font color="#000000">PanelInteraction&#160;</font><font color="#000000">{</font>
+<font color="#ffffff">&#160;&#160;</font><font color="#ffc800"><b>private&#160;static&#160;final&#160;</b></font><font color="#7f0055"><b>long&#160;</b></font><font color="#000000">serialVersionUID&#160;=&#160;</font><font color="#990000">1L</font><font color="#000000">;</font>
+<font color="#ffffff"></font>
+<font color="#ffffff">&#160;&#160;</font><font color="#3f7f5f">//&#160;@bean</font>
+<font color="#ffffff">&#160;&#160;</font><font color="#ffc800"><b>public&#160;</b></font><font color="#000000">Panel</font><font color="#000000">()&#160;{</font>
+<font color="#ffffff">	</font><font color="#ffc800"><b>super</b></font><font color="#000000">()</font><font color="#000000">;</font>
+<font color="#ffffff">&#160;&#160;</font><font color="#000000">}</font>
+<font color="#ffffff"></font>
+<font color="#ffffff">&#160;&#160;</font><font color="#ffc800"><b>public&#160;</b></font><font color="#7f0055"><b>void&#160;</b></font><font color="#000000">initConfig</font><font color="#000000">()&#160;{</font>
+<font color="#ffffff">	</font><font color="#000000">Config.setEnglish</font><font color="#000000">(</font><font color="#ffc800"><b>false</b></font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#ffffff">	</font><font color="#000000">Config.urlDoc&#160;=&#160;</font><font color="#2a00ff">&quot;/org/javascool/proglets/plurialgo/aideJVS/&quot;</font><font color="#000000">;</font>
+<font color="#ffffff">	</font><font color="#3f7f5f">//&#160;modifications&#160;de&#160;l'interface&#160;graphique</font>
+<font color="#ffffff">	</font><font color="#000000">String</font><font color="#000000">[]&#160;</font><font color="#000000">langages&#160;=&#160;</font><font color="#000000">{&#160;</font><font color="#2a00ff">&quot;javascool&quot;</font><font color="#000000">,&#160;</font><font color="#2a00ff">&quot;vb&quot;</font><font color="#000000">,&#160;</font><font color="#2a00ff">&quot;larp&quot;</font><font color="#000000">,&#160;</font><font color="#2a00ff">&quot;python&quot;</font><font color="#000000">,&#160;</font><font color="#2a00ff">&quot;javascript&quot;</font><font color="#000000">,&#160;</font>
+<font color="#ffffff">		</font><font color="#2a00ff">&quot;php&quot;</font><font color="#000000">,&#160;</font><font color="#2a00ff">&quot;cplus&quot;</font><font color="#000000">,&#160;</font><font color="#2a00ff">&quot;java&quot;&#160;</font><font color="#000000">}</font><font color="#000000">;</font>
+<font color="#ffffff">	</font><font color="#000000">Config.langList&#160;=&#160;langages;</font>
+<font color="#ffffff">&#160;&#160;</font><font color="#000000">}</font>
+<font color="#ffffff"></font>
+<font color="#000000">}</font></pre>

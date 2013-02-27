@@ -18,7 +18,7 @@ public class Functions {
     return getProgletPane();
   }
   // Updates the turtle position and draw if required
-  private static void update(int x, int y) {
+  private static void update(double x, double y) {
     if(x < 0) {
       x = 0;
     }
@@ -32,12 +32,14 @@ public class Functions {
       y = 511;
     }
     if(pen) {
-      draw(Functions.x, x, Functions.y, y);
+      draw((int) Functions.x,(int) x, (int) Functions.y,(int) y);
     }
     Functions.x = x;
     Functions.y = y;
-    getPane().show(x, y);
-    sleep(1);
+    if (turtle_shown) {
+      getPane().show((int) x,(int) y,turtle_shown);
+      sleep(1);
+    }
   }
   private static void draw(int x1, int x2, int y1, int y2) {
     if(Math.abs(x1 - x2) > Math.abs(y1 - y2)) {
@@ -62,10 +64,11 @@ public class Functions {
     for(int y = y1; y <= y2; y++)
       getPane().add(x1 + ((x2 - x1) * (y - y1)) / (y2 - y1), y, pen_color);
   }
-  private static int x = 0, y = 0;
+  private static double x = 0, y = 0;
   private static double a = 0;
   private static Color pen_color = Color.BLACK;
   private static boolean pen = true;
+  private static boolean turtle_shown = true;
 
   /** Efface toutes traces du carré de salade de taille (512, 512). */
   public static void clear_all() {
@@ -93,7 +96,7 @@ public class Functions {
   }
   /** Fixe la position absolue de la tortue dans le carré de salade. */
   public static void set_position(double x, double y) {
-    update((int) x, (int) y);
+    update( x, y);
   }
   /** Fixe le cap de la tortue de maniere absolue, selon l'angle de a degrés. */
   public static void set_heading(double a) {
@@ -120,4 +123,13 @@ public class Functions {
     pen_color = colors[n < 0 || n > 9 ? 0 : n];
   }
   private static Color colors[] = { Color.BLACK, new Color(150, 75, 0), Color.RED, Color.ORANGE, Color.YELLOW, Color.GREEN, Color.BLUE, Color.MAGENTA, Color.GRAY, Color.WHITE };
+  public static void show_turtle() {
+    turtle_shown = true;
+    getPane().show((int) x,(int) y,turtle_shown);
+  }
+  public static void hide_turtle() {
+    turtle_shown = false;
+    getPane().show((int) x,(int) y,turtle_shown);
+  }
+
 }

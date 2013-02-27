@@ -41,8 +41,8 @@ public class Panel extends JComponent {
   /** Initialise le graphique avec une image stockée dans le fichier à la location donnée. */
   public void reset(String location) {
     try {
-      background = org.javascool.proglets.codagePixels.ImageUtils.loadImage(location);
-      setPreferredSize(new Dimension( background.getWidth(), background.getHeight()));
+      background = org.javascool.tools.ImageUtils.loadImage(location);
+      setPreferredSize(new Dimension(background.getWidth(), background.getHeight()));
       shapes.clear();
       repaint();
     } catch(Exception e) { 

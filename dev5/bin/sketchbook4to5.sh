@@ -1,10 +1,11 @@
 
 #
 # Effectue la convertion des proglets jvs4 en jvs5
+#   ce script est un mecanisme temporaire et local à l'environnement de vthierry, il n'a pas vocation à être utilisé après le basculement v4->v5
 #
 
 # Positionnement à la racine du svn
-cd `dirname $0`/../..
+cd /home/vthierry/Work/culsci/jvs4
 
 # Définit le répertoire source et cible et les proglets à convertir
 
