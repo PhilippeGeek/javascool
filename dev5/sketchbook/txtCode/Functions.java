@@ -187,7 +187,7 @@ public static void filedump(String nomFichier){
   }  
   
   public static void afficheCodeAuFormatBin(int c) {
-         getPane().textArea.append(Integer.toBinaryString(c));
+	  getPane().textArea.append(Integer.toBinaryString(c));
   }  
   
   public static void afficheCodeAuFormatCar(int c) {

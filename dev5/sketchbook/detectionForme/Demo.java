@@ -8,7 +8,9 @@ import static org.javascool.proglets.detectionForme.Functions.*;
 import static org.javascool.macros.Macros.*;
 import java.awt.Color;
 
-/** Démonstration de la proglet. */
+/** Démonstration de la proglet. 
+ * @see <a href="Demo.java.html">code source</a>
+ */
 public class Demo {
   /** Lance la démo de la proglet. */
   public static void start() {

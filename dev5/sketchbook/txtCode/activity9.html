@@ -69,12 +69,7 @@
                                     
                               <div>
                                  &nbsp;&nbsp;&nbsp;
-                                 setModeTraceSocket(true);
-                              </div>
-                                    
-                              <div>
-                                 &nbsp;&nbsp;&nbsp;
-                                 initSocketServer(6000);
+                                 openSocketServer(6000);
                               </div>
                                     
                               <div>
@@ -132,12 +127,7 @@
                                     
                               <div>
                                  &nbsp;&nbsp;&nbsp;
-                                 setModeTraceSocket(true);
-                              </div>
-                                    
-                              <div>
-                                 &nbsp;&nbsp;&nbsp;
-                                 initSocketClient("127.0.0.1",6000);
+                                 openSocketClient("127.0.0.1",6000);
                               </div> 
                                     
                               <div>
@@ -178,10 +168,10 @@
                 
             <ul class="ul">    
                
-               <li>Une fois lanc&eacute;, le proglet serveur ouvre un socket sur le port 6000 (<tt>initSocketServer</tt>) puis il se met en attente d'un bloc de carat&egrave;re envoy&eacute; par le proglet client (<tt>getMessageViaSocketServer()</tt>).Il ne faut pas oublier de fermer le socket server (<tt>closeSocketServer()</tt>) pour lib&eacute;rer le port 6000 pour une future utilisation.
+               <li>Une fois lanc&eacute;, le proglet serveur ouvre un socket sur le port 6000 (<tt>openSocketServer</tt>) puis il se met en attente d'un bloc de carat&egrave;re envoy&eacute; par le proglet client (<tt>getMessageViaSocketServer()</tt>).Il ne faut pas oublier de fermer le socket server (<tt>closeSocketServer()</tt>) pour lib&eacute;rer le port 6000 pour une future utilisation.
                </li>
                
-               <li>Une fois lanc&eacute;, le proglet client essaye d'ouvrir un socket (<tt>initSocketClient</tt>) communiquant via le port 6000 avec le serveur sp&eacute;cifi&eacute;, ici localhost/127.0.0.1 .Puis il envoie une partie du fichier (<tt>sendMessageViaSocketClient("3,3")</tt>). Il ne faut pas oublier de fermer le socket Client (<tt>closeSocketClient()</tt>) pour lib&eacute;rer le port ouvert par le client pour une future utilisation.
+               <li>Une fois lanc&eacute;, le proglet client essaye d'ouvrir un socket (<tt>openSocketClient</tt>) communiquant via le port 6000 avec le serveur sp&eacute;cifi&eacute;, ici localhost/127.0.0.1 .Puis il envoie une partie du fichier (<tt>sendMessageViaSocketClient("3,3")</tt>). Il ne faut pas oublier de fermer le socket Client (<tt>closeSocketClient()</tt>) pour lib&eacute;rer le port ouvert par le client pour une future utilisation.
                </li>
                
                <li>Rappel : la fonction  <tt>readString()</tt> (Cf m&eacute;mo) lit une cha&icirc;ne de carat&egrave;res dans la ligne d'entr&eacute;e au clavier.
