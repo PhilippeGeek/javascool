@@ -164,7 +164,7 @@
 
   <div class="works">
     <div title="A nous de jouer"><div class="ul">
-      <div>Recopier les deux portions de code dans deux fichiers différents et vérifier si les deux donnent le bon résulat.</div>
+      <div>Recopier les deux portions de code dans deux fichiers différents et vérifier si les deux donnent le bon résultat.</div>
       <div>A partir du 2ème exemple de code, ajouter la fonction "min" (qui renvoie la plus petite des valeurs x ou y),
       pour calculer <i>la plus <b>petite</b> des valeurs absolues</i>, et non la plus grande. Vérifier le résultat.</div>
       <div>A partir du 2ème exemple de code, puisque la valeur absolue<l class="note" link="1"/> de x est aussi la plus grande entre x et -x, reprogrammer la fonction valeur absolue en une ligne, sans utiliser de <r>if</r>, mais en utilisant la fonction <r>max</r>.</div>
@@ -174,7 +174,7 @@
       qui renvoie <div class="ul">
         <div><b>x</b> divisé par <b>y</b> (cela se note comme sur les calculettes <b>x / y</b>), si <b>y</b> n'est pas zéro,</div>
         <div>imprime un message d'erreur, puis renvoie la valeur <b>Double.NaN</b>, si <b>y</b> est nul (<b>y == 0</b>) .</div>
-      </div>(la valeur <b>Double.NaN</b> qui se lie "Not-a-Number" signifie que le résulat n'est pas un nombre, mais est indéfini.</div>
+      </div>(la valeur <b>Double.NaN</b> qui se lie "Not-a-Number" signifie que le résultat n'est pas un nombre, mais est indéfini.</div>
       <div>Programmer la fonction "ou exclusif" <b><r>boolean</r> xor(<r>boolean</r> x, <r>boolean</r> y)</b>,
       découverte avec l'<l link="condition.htm" text="instruction conditionnelle"/>, 
       qui renvoie <r>true</r> (vrai) si soit <b>x</b>, soit <b>y</b> est <r>true</r> mais pas les deux à la fois.</div> 
