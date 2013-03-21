@@ -1060,8 +1060,14 @@ public static void showPipImage() {
   }
   
   
-   /** Tracer d'une grille */
+   // Ajout de la gestion de la souris
    
+  /** Définit une portion de code appelée à chaque clic de souris.
+   * @param runnable La portion de code à appeler, ou null si il n'y en a pas.
+   */
+  public static void setRunnable(Runnable runnable) {
+    getPane().setRunnable(runnable);
+  }
  
   
 }
