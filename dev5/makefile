@@ -1,14 +1,11 @@
 #
-# regler les warnings 
-## : [static] static method should be qualified by type name, 
-## : [static] static variable should be qualified by type name,
-## : [unchecked] unchecked call to JComboBox(E[]) as a member of the raw type JComboBox
+# regler les warnings de JCombo
 
 
 # Choix de la JDK
 
-#export JAVA_HOME=/usr/java/jdk1.7.0_07
-export JAVA_HOME=/usr/java/jdk1.6.0_25
+export JAVA_HOME=/usr/java/jdk1.7.0_07
+#export JAVA_HOME=/usr/java/jdk1.6.0_25
 export PATH:="$(JAVA_HOME)/bin:$(PATH)"
 
 export JVS_HOME=/home/vthierry/Work/culsci/jvs4
@@ -47,7 +44,7 @@ run : ../work/dist/javascool-proglets.jar
 	java -jar ../work/dist/javascool-proglets.jar abcdAlgos
 
 ../work/dist/javascool-proglets.jar : $(SRC)
-	cd ../work ; ant javascool-proglets.jar
+	cd ../work ; ant clean ; ant javascool-proglets.jar
 
 # Effectue la conversion des proglets jvs4 en jvs5
 

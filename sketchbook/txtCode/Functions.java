@@ -167,35 +167,35 @@ public static void filedump(String nomFichier){
   }    
 
   public static void affiche(String str) {
-	  getPane().textArea.append(str);
+	  org.javascool.proglets.txtCode.Panel.textArea.append(str);
   }
      
   public static void affiche(char c) {
-	  getPane().textArea.append(Character.toString(c));
+	  org.javascool.proglets.txtCode.Panel.textArea.append(Character.toString(c));
   }
   
   public static void affiche(int n) {
-	  getPane().textArea.append(Integer.toString(n));
+	  org.javascool.proglets.txtCode.Panel.textArea.append(Integer.toString(n));
   }  
   
   public static void afficheCodeAuFormatHex(int c) {
-	  getPane().textArea.append(code2HexStr(c));
+	  org.javascool.proglets.txtCode.Panel.textArea.append(code2HexStr(c));
   }
   
   public static void afficheCodeAuFormatDec(int c) {
-	  getPane().textArea.append(Integer.toString(c));
+	  org.javascool.proglets.txtCode.Panel.textArea.append(Integer.toString(c));
   }  
   
   public static void afficheCodeAuFormatBin(int c) {
-	  getPane().textArea.append(Integer.toBinaryString(c));
+	  org.javascool.proglets.txtCode.Panel.textArea.append(Integer.toBinaryString(c));
   }  
   
   public static void afficheCodeAuFormatCar(int c) {
-	  getPane().textArea.append(code2CarStr(c));
+	  org.javascool.proglets.txtCode.Panel.textArea.append(code2CarStr(c));
   }   
      
   public static void sautDeLigne() {
-	  getPane().textArea.append("\n");
+	  org.javascool.proglets.txtCode.Panel.textArea.append("\n");
   }  
   
   public static String code2HexStr(int code) {
@@ -212,8 +212,8 @@ public static void filedump(String nomFichier){
   /** Remets à zéro la zone d'affichage du proglet */
   public static void resetConsole() {
 
-	getPane().textArea.setText(" ");
-	getPane().textArea.setForeground(Color.BLACK);    
+	org.javascool.proglets.txtCode.Panel.textArea.setText(" ");
+	org.javascool.proglets.txtCode.Panel.textArea.setForeground(Color.BLACK);    
 
   }
   
