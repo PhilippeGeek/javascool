@@ -38,7 +38,7 @@ class PaintBrushMain {
   }
 }
 
-class Point implements Comparable {
+class Point implements Comparable<Point> {
   int x;
   int y;
   Point(int _x, int _y) {
@@ -46,8 +46,8 @@ class Point implements Comparable {
     y = _y;
   }
   @Override
-  public int compareTo(Object o) {
-    Point p = (Point) o;
+  public int compareTo(Point o) {
+    Point p = o; // (Point) o;
     int cmp1 = p.x - x;
     if(cmp1 != 0) {
       return cmp1;

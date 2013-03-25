@@ -57,8 +57,7 @@ public class SerialInterfacePanel extends JPanel {
                     }
                   }
                   );
-              add(new JComboBox(new Integer[] { 19200, 9600, 4800, 2400, 1200, 600, 300 }
-                                ) {
+              add(new JComboBox(new Integer[] { 19200, 9600, 4800, 2400, 1200, 600, 300 }) {
                     private static final long serialVersionUID = 1L;
                     {
                       setBorder(BorderFactory.createTitledBorder("Débit en b./s."));
@@ -74,8 +73,7 @@ public class SerialInterfacePanel extends JPanel {
                     }
                   }
                   );
-              add(new JComboBox(new String[] { "aucun", "pair", "impair" }
-                                ) {
+              add(new JComboBox(new String[] { "aucun", "pair", "impair" }) {
                     private static final long serialVersionUID = 1L;
                     {
                       setBorder(BorderFactory.createTitledBorder("Bit de parité"));
@@ -92,8 +90,7 @@ public class SerialInterfacePanel extends JPanel {
                     }
                   }
                   );
-              add(new JComboBox(new Integer[] { 8, 7 }
-                                ) {
+              add(new JComboBox(new Integer[] { 8, 7 }) {
                     private static final long serialVersionUID = 1L;
                     {
                       setBorder(BorderFactory.createTitledBorder("Taille du mot"));
@@ -109,8 +106,7 @@ public class SerialInterfacePanel extends JPanel {
                     }
                   }
                   );
-              add(new JComboBox(new Double[] { 1.0, 1.5, 2.0 }
-                                ) {
+              add(new JComboBox(new Double[] { 1.0, 1.5, 2.0 }) {
                     private static final long serialVersionUID = 1L;
                     {
                       setBorder(BorderFactory.createTitledBorder("Bits de stop"));
