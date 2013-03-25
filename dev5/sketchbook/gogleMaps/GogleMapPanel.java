@@ -387,7 +387,7 @@ class GogleMapPanel extends JPanel implements ActionListener {
   }
 }
 
-class PointAAfficher implements Comparable {
+class PointAAfficher implements Comparable<PointAAfficher> {
   double x;
   double y;
   int idx;
@@ -397,8 +397,8 @@ class PointAAfficher implements Comparable {
     idx = _idx;
   }
   @Override
-  public int compareTo(Object o) {
-    PointAAfficher p = (PointAAfficher) o;
+  public int compareTo(PointAAfficher o) {
+    PointAAfficher p = o; // (PointAAfficher) o;
     int cmp1 = (int) Math.round(1000 * (p.x - x));
     if(cmp1 != 0) {
       return cmp1;

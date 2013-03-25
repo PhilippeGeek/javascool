@@ -38,7 +38,7 @@ class PaintBrushMain {
   }
 }
 
-class Point implements Comparable {
+class Point implements Comparable<Point> {
   int x;
   int y;
   Point(int _x, int _y) {
@@ -46,8 +46,8 @@ class Point implements Comparable {
     y = _y;
   }
   @Override
-  public int compareTo(Object o) {
-    Point p = (Point) o;
+  public int compareTo(Point o) {
+    Point p = o; // (Point) o;
     int cmp1 = p.x - x;
     if(cmp1 != 0) {
       return cmp1;
@@ -176,15 +176,15 @@ class MainPanel extends JPanel implements ActionListener {
     } else if(action.equals(button5String)) {
       myPanel.updateMode(Mode.LINE);
     } else if(action.equals(buttonVersion1String)) {
-      myPanel.manipImage = myPanel.demoManipImage;
+      MyPanel.manipImage = MyPanel.demoManipImage;
     } else if(action.equals(buttonVersion2String)) {
-      myPanel.manipImage = myPanel.progletManipImage;
+      MyPanel.manipImage = MyPanel.progletManipImage;
     } else if(action.equals(showCodeBoxString)) {
       MyPanel.showCode = !MyPanel.showCode;
       myPanel.repaint();
       cPanel.repaint();
     } else if(action.equals(buttonRotateString)) {
-      myPanel.manipImage.rotationGauche();
+      MyPanel.manipImage.rotationGauche();
       myPanel.repaint();
     } else if(action.equals(buttonClearString)) {
       myPanel.clear();
@@ -327,11 +327,11 @@ class MyPanel extends JPanel implements MouseMotionListener {
   private static JPanel me;
 
   int sanitizeX(int x) {
-    int max_x = image.maxX() * square;
+    int max_x = PaintBrushImage.maxX() * square;
     return (x <= 0) ? 0 : (x >= max_x) ? max_x - 1 : x;
   }
   int sanitizeY(int y) {
-    int max_y = image.maxY() * square;
+    int max_y = PaintBrushImage.maxY() * square;
     return (y <= 0) ? 0 : (y >= max_y) ? max_y - 1 : y;
   }
   int inverseY(int y) {
@@ -467,7 +467,7 @@ class MyPanel extends JPanel implements MouseMotionListener {
   }
   void drawPoint(Graphics g, Point p) {
     try {
-      int col_int = image.getPixel(p.x, p.y);
+      int col_int = PaintBrushImage.getPixel(p.x, p.y);
       if (0 <= col_int && col_int < ColorPaint.colors.length) {
 	ColorPaint col = ColorPaint.colors[col_int];
 	g.setColor(col.getColor());
@@ -605,7 +605,7 @@ class MyPanel extends JPanel implements MouseMotionListener {
     return new Color(red, green, blue, alpha);
   }
   void lighterSquare(Graphics g, int x, int y) {
-    ColorPaint cp = ColorPaint.colors[image.getPixel(x, y)];
+    ColorPaint cp = ColorPaint.colors[PaintBrushImage.getPixel(x, y)];
     if(cp.getIndex() != 15) {
       Color c = cp.getColor();
       g.setColor(Color.WHITE);
@@ -665,8 +665,8 @@ class MyPanel extends JPanel implements MouseMotionListener {
   }
   private void draw_point(Graphics g, Point p) {
     if(mode == Mode.ERASE) {
-      for(int i = p.x - 1; i <= p.x + 1 && i < image.maxX(); i++)
-        for(int j = p.y - 1; j <= p.y + 1 && j < image.maxY(); j++)
+      for(int i = p.x - 1; i <= p.x + 1 && i < PaintBrushImage.maxX(); i++)
+        for(int j = p.y - 1; j <= p.y + 1 && j < PaintBrushImage.maxY(); j++)
           if((i >= 0) && (j >= 0)) {
             lighterSquare(g, i, j);
           }
@@ -678,7 +678,7 @@ class MyPanel extends JPanel implements MouseMotionListener {
   protected void paintComponent(Graphics g) {
     super.paintComponent(g);
     // g.drawString("text",10,20);
-    for(Point p : image.points)
+    for(Point p : PaintBrushImage.points)
       drawPoint(g, p);
     if(previous_point != null) {
       draw_point(g, previous_point);

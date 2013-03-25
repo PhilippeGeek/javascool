@@ -27,13 +27,13 @@ public class Functions {
   public static void setGrille(int i, int j, char mark) {
     if((0 < i) && (i < 4) && (0 < j) && (j < 4)) {
       if(mark == 'O') {
-        getPane().tictac[i - 1][j - 1].setText("O");
-        getPane().tictac[i - 1][j - 1].setForeground(Color.BLUE);
+        org.javascool.proglets.ticTacToe.Panel.tictac[i - 1][j - 1].setText("O");
+        org.javascool.proglets.ticTacToe.Panel.tictac[i - 1][j - 1].setForeground(Color.BLUE);
       } else if(mark == 'X') {
-        getPane().tictac[i - 1][j - 1].setText("X");
-        getPane().tictac[i - 1][j - 1].setForeground(Color.GREEN);
+        org.javascool.proglets.ticTacToe.Panel.tictac[i - 1][j - 1].setText("X");
+        org.javascool.proglets.ticTacToe.Panel.tictac[i - 1][j - 1].setForeground(Color.GREEN);
       } else {
-        getPane().tictac[i - 1][j - 1].setText(" ");
+        org.javascool.proglets.ticTacToe.Panel.tictac[i - 1][j - 1].setText(" ");
       }
     }
   }
@@ -43,14 +43,14 @@ public class Functions {
    * @return mark La marque du tictactoe soit 'X', soit 'O', soit ' ' si il n'y a pas de marque.
    */
   public static char getGrille(int i, int j) {
-    return (0 < i && i < 4 && 0 < j && j < 4) ? getPane().tictac[i - 1][j - 1].getText().charAt(0) : ' ';
+    return (0 < i && i < 4 && 0 < j && j < 4) ? org.javascool.proglets.ticTacToe.Panel.tictac[i - 1][j - 1].getText().charAt(0) : ' ';
   }
   /** Remets à zéro le jeu du tic-tac-toe. */
   public static void resetGrille() {
     for(int i = 0; i < 3; i++)
       for(int j = 0; j < 3; j++) {
-        getPane().tictac[i][j].setText(" ");
-        getPane().tictac[i][j].setForeground(Color.BLACK);
+        org.javascool.proglets.ticTacToe.Panel.tictac[i][j].setText(" ");
+        org.javascool.proglets.ticTacToe.Panel.tictac[i][j].setForeground(Color.BLACK);
       }
   }
   /*
