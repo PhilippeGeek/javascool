@@ -76,7 +76,7 @@ public class Functions {
   }
   /** Retour au milieu du carré de salade, au point (256, 256). */
   public static void home() {
-    update(getPane().width / 2, getPane().height / 2);
+    update(org.javascool.proglets.tortueLogo.Panel.width / 2, org.javascool.proglets.tortueLogo.Panel.height / 2);
   }
   /** La tortue avance de n pas. */
   public static void forward(double n) {

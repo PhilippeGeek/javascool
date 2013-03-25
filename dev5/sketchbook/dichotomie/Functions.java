@@ -14,7 +14,7 @@ public class Functions {
   }
   /** Renvoie le nombre de page du livre. */
   public static int length() {
-    return getPane().pays.length;
+    return org.javascool.proglets.dichotomie.Panel.pays.length;
   }
   /** Ouvre le livre à une page et compare un nom au nom affiché sur cette page.
    * @param name Le nom à comparer.
@@ -23,7 +23,7 @@ public class Functions {
    */
   public static int compare(String name, int index) {
     index = getPane().show(index);
-    return noAccent(name).compareTo(noAccent(getPane().pays[index][0]));
+    return noAccent(name).compareTo(noAccent(org.javascool.proglets.dichotomie.Panel.pays[index][0]));
   }
   private static String noAccent(String name) {
     return name.replaceAll("[éè]", "e").replace("É", "E").replace("Î", "I").replace("ô", "o").replace("ã", "a");
