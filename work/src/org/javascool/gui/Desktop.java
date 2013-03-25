@@ -145,17 +145,24 @@ public class Desktop {
   public void closeProglet() {
     JVSPanel.getInstance().closeProglet();
   }
-  /** Ouvre une proglet
+  /** Ouvre une proglet.
    * @param proglet Le nom de code de la Proglet
+   * @param closed Si false ferme les proglets précédentes.
    * @return True si tous les fichier ont été sauvegardé et la proglet sauvegardé
    */
-  public boolean openProglet(String proglet) {
-    if(JVSPanel.getInstance().closeAllFiles()) {
+  public boolean openProglet(String proglet, boolean closed) {
+    if(closed || JVSPanel.getInstance().closeAllFiles()) {
       JVSPanel.getInstance().loadProglet(proglet);
       return true;
     } else {
       return false;
     }
+  }
+  /** Ouvre une proglet.
+   * @see #openProglet(String, boolean)
+   */
+  public boolean openProglet(String proglet) {
+    return openProglet(proglet, false);
   }
   /** Ouvre un nouvel onglet de navigation
    * Ouvre un onglet HTML3 dans le JVSWidgetPanel, cet onglet peut être fermé

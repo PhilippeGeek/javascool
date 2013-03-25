@@ -77,7 +77,7 @@ public class Core {
   private static String javascoolJar = null, javascoolJarEnc = null;
 
   /** Lanceur de l'application.
-   * @param usage <tt>java -jar javascool.jar</tt>
+   * @param usage <tt>java -jar javascool.jar [proglet]</tt>
    */
   public static void main(String[] usage) {
     if((usage.length > 0) && (usage[0].equals("-h") || usage[0].equals("-help") || usage[0].equals("--help"))) {
@@ -91,6 +91,10 @@ public class Core {
     System.err.println("" + About.title + " is starting ...");
     ErrorCatcher.checkJavaVersion(6);
     setUncaughtExceptionAlert();
+    // Lance le pannneau général ou une proglet directement
     Desktop.getInstance().getFrame();
+    if(usage.length == 1) {
+      Desktop.getInstance().openProglet(usage[0], true);
+    }
   }
 }
