@@ -30,6 +30,9 @@ mig :
 ant :
 	ant prun
 
+jdoc :
+	ant javadoc ; firefox ./dist/javadoc/overview-summary.html
+
 nbe :
 	/usr/java/netbeans-7.0.1/bin/netbeans --jdkhome $(JAVA_HOME) &
 

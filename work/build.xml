@@ -61,6 +61,7 @@
     <delete file="./dist/javascool-builder.jar"/>
     <unzip dest="./build/classes" src="./lib/RSyntaxTextArea.jar"/>
     <unzip dest="./build/classes" src="./lib/autocomplete.jar"/>
+    <unzip dest="./build/classes" src="./lib/json.jar"/>
     <unzip dest="./build/classes" src="./lib/javadoc.jar"/>
     <unzip dest="./build/classes" src="./lib/jarsigner.jar"/>    
     <if>
@@ -140,7 +141,7 @@
     </outofdate>
   </target>
 
-  <property name="classpath" value="./lib/autocomplete.jar:./lib/RSyntaxTextArea.jar:lib/jvs2html.jar:lib/javadoc.jar:lib/jarsigner.jar"/>
+  <property name="classpath" value="./lib/autocomplete.jar:./lib/RSyntaxTextArea.jar:./lib/json.jar:./lib/jvs2html.jar:./lib/javadoc.jar:./lib/jarsigner.jar"/>
   
   <target name="classes" depends="svn.revision">
     <exec os="Linux" executable="which">
@@ -331,6 +332,7 @@
 		<javac debug="true" debuglevel="lines,vars,source" includeantruntime="false" encoding="UTF-8" classpath="${classpath}:./dist/javascool-base.jar" srcdir="./../dev/javascool/src/" destdir="./build/classes/"/> 
 		<unzip dest="./build/classes" src="./lib/RSyntaxTextArea.jar"/>
 		<unzip dest="./build/classes" src="./lib/autocomplete.jar"/>
+                <unzip dest="./build/classes" src="./lib/json.jar"/>
 		<unzip dest="./build/classes" src="./lib/javac.jar"/>
 		<jar destfile="./dist/javascool-beta.jar">
 			<manifest>
