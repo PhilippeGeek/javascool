@@ -19,15 +19,20 @@ public class Proglet2Jar {
    *
    * @throws RuntimeException Si une erreur d'entrée-sortie s'est produite lors de la compilation ou construction.
    */
-  public static boolean build(String jarFile, String progletDir) {
+  public static boolean buildJar(String jarFile, String progletDir) {
     // Nom et paramètres de la proglet
     String name = new File(progletDir).getName();
     // AJOUTER new Pml().load(progletDir + File.separator + "proglet.pml");
     // Jarres à utiliser
     // Fichiers java à compiler
-    // Fichiers de documentation à embarquer
-    // Fichiers source à montrer
     
+    // Expansion des jarres
+    // Copie des fichiers
+    // Compilation des sources
+
+    // Création du jar
+    
+    // Création du html dans le même répetoire que le jar
 
     return false; 
   }
@@ -37,7 +42,7 @@ public class Proglet2Jar {
   public static void main(String[] usage) {
     // @main
     if(usage.length == 2) {
-      build(usage[0], usage[1]);
+      buildJar(usage[0], usage[1]);
     }
   }
 }
