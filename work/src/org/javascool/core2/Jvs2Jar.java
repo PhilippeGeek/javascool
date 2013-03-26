@@ -19,6 +19,15 @@ public class Jvs2Jar {
    * @throws RuntimeException Si une erreur d'entrée-sortie s'est produite lors de la compilation ou construction.
    */
   public static boolean build(String jarFile, String progletJar, String jvsFile) {
+    // Expansion du jar 
+
+    // Creation du fichier java
+
+    // Compilation du source
+
+    // Creation du jar
+
+
     return false;
   }
   /** Lanceur de la conversion Jvs en Java.
