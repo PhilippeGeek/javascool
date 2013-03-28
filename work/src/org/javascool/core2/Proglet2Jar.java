@@ -1,6 +1,8 @@
 package org.javascool.core2;
 
 import java.io.File;
+//import org.javascool.core.JarManager;
+//import org.javascool.core.ProgletApplet;
 
 /** Définit le mécanisme de compilation en ligne d'une proglet dans sa version jvs5.
  * - Attention il faut que la proglet ait été convertie en jvs5 (conversion des docs XML en HTML, du fichier de méta-donnée en .json).
@@ -36,7 +38,14 @@ public class Proglet2Jar {
 
     return false; 
   }
-  /** Lanceur de la conversion Jvs en Java.
+
+  // Teste la validite d'un nom de proglet.
+  static void checkProgletName(String name) {
+    if (!(4 <= name.length() && name.length() <= 16 && name.matches("[a-z][a-zA-Z0-9]+")))
+      throw new IllegalArgumentException("le nom \""+ name + "\" est invalide,\n\t il ne doit contenir que des lettres, faire au moins quatre caractères et au plus seize et démarrer par une lettre minuscule");
+  }
+  
+  /** Lanceur de la construction de proglet.
    * @param usage <tt>java org.javascool.core2.Proglet2Jar jarFile progletDir</tt>
    */
   public static void main(String[] usage) {
