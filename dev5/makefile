@@ -1,23 +1,25 @@
 #
-# regler les warnings de JCombo
+# Intégrer le nv json dans la traduction 
+# Tester le create
+# 
 
+
+dft : clean proglets
 
 # Choix de la JDK
 
 export JAVA_HOME=/usr/java/jdk1.7.0_07
-#export JAVA_HOME=/usr/java/jdk1.6.0_25
 export PATH:="$(JAVA_HOME)/bin:$(PATH)"
 
 export JVS_HOME=/home/vthierry/Work/culsci/jvs4
 
-dft : run
-
-# Ouvre les doc de jvs4
-
-doc :
-	cd ../work ; ant javadoc ; firefox ./dist/javadoc/overview-summary.html
+clean :
+	rm -rf ../work/dist/javascool-core.jar ../work/dist/javascool-proglet-*.jar
 
 # Construction des jars
+
+proglet  : jar ../work/dist/javascool-proglet-abcdAlgos.jar
+	java -cp ../work/dist/javascool-proglet-abcdAlgos.jar org.javascool.Core
 
 proglets : jar $(patsubst sketchbook/%,../work/dist/javascool-proglet-%.jar,$(wildcard sketchbook/*))
 
@@ -30,7 +32,7 @@ proglets : jar $(patsubst sketchbook/%,../work/dist/javascool-proglet-%.jar,$(wi
 
 # Construit le jar des classes de jvs4
 
-SRC = $(patsubst %,$(JVS_HOME)/work/lib/%.jar, javac7 RSyntaxTextArea java2html jarsigner javadoc) $(shell find $(JVS_HOME)/work/src -name '*.java')
+SRC = $(patsubst %,$(JVS_HOME)/work/lib/%.jar, javac7 RSyntaxTextArea json java2html jarsigner javadoc) $(shell find $(JVS_HOME)/work/src -name '*.java')
 
 jar : ../work/dist/javascool-core.jar
 

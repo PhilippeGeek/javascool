@@ -224,6 +224,10 @@ public class ProgletEngine {
   public Iterable<Proglet> getProglets() {
     return proglets;
   }
+  /** Renvoie le nombre de progets. */
+  public int getProgletCount() {
+    return proglets.size();
+  }
   public class Proglet {
     /** Méta-données de la proglet. */
     public Pml pml = new Pml();

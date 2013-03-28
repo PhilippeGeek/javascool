@@ -18,6 +18,7 @@ jvs :
 	ant javascool-proglets.jar
 
 tst : 
+	ant clean
 	ant javascool-proglets.jar
 	$(JRE_HOME)/bin/java -jar dist/javascool-proglets.jar
 
