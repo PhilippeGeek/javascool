@@ -74,9 +74,8 @@ public class Pml {
     } else if("htm".equals(format) || "html".equals(format)) {
       return reset(Xml2Xml.run(Xml2Xml.html2xhtml(value), xml2pml), "pml");
     } else {
-      reset(value);
+      return reset(value);
     }
-    return this;
   }
   /** Initialise la PML en en recopiant la PML en entrée.
    * @param pml Le PML à copier.
@@ -446,6 +445,46 @@ public class Pml {
     + "  }</xsl:template>\n"
     + "</xsl:stylesheet>";
 
+  /* Convertit une structure Json en PML : non implémenté
+  private Pml resetJSON(String value) {
+    value = value.trim();
+    try {
+      if (value.trim().startsWith("{")) {
+	resetJSONobject(this, new JSONObject(value));
+      } else if (value.trim().startsWith("{")) {
+	resetJSONarray(this, new JSONArray(value));
+      }
+    } catch(Exception e) {
+      set("tag", "json");
+      set("body", value);
+    }
+    return this;
+  }
+  private static Pml resetJSONobject(Pml pml, JSONObject object) { 
+    for(java.util.Iterator k = object.keys(); k.hasNext();) {
+      String key = k.next().toString();
+      if (object.optJSONObject(key) != null)
+	pml.set(key, resetJSONobject(new Pml(), object.optJSONObject(key)));
+      else if (object.optJSONArray(key) != null)
+	pml.set(key, resetJSONarray(new Pml(), object.optJSONArray(key)));
+      else
+	pml.set(key, object.optString(key));
+    }
+    return pml;
+  }
+  private static Pml resetJSONarray(Pml pml, JSONArray array) {
+    for(int i = 0; i < array.length(); i++)  {
+      if (array.optJSONObject(i) != null)
+	pml.set(i, resetJSONobject(new Pml(), array.optJSONObject(i)));
+      else if (array.optJSONArray(i) != null)
+	pml.set(i, resetJSONarray(new Pml(), array.optJSONArray(i)));
+      else
+	pml.set(i, array.optString(i));
+    }
+    return pml;
+  }
+  */
+
   /** Définit le convertisseur de PML en chaîne de caractères. */
   private static class PlainWriter {
     private StringBuffer string;
@@ -619,20 +658,29 @@ public class Pml {
           s += (n == 0 ? "" : " , ") + toString(pml.getChild(n));
 	return s + "]\n";
       } else {
-	String s = "{ \"tag\" : " + quote(pml.getTag()) + "\n";
-        for(String name : pml.attributes()) 
-	  s += ", " + quote(name) + " : " + toString(pml.getChild(name)) + "\n";
-	for(int n = 0; n < pml.getCount(); n++)
+	String s = "{\n";
+	boolean once = true;
+	if (pml.getTag().length() > 0) {
+	  s += " \"tag\" : " + quote(pml.getTag()) + "\n";
+	  once = false;
+	}
+        for(String name : pml.attributes()) {
+	  s += (once ? "  " : ", ") + quote(name) + " : " + toString(pml.getChild(name)) + "\n";
+	  once = false;
+	}
+	for(int n = 0; n < pml.getCount(); n++) {
 	  if (pml.getChild(n).getSize() == pml.getChild(n).getCount() && pml.getChild(n).getCount() == 1)
-	    s += ", " + quote(pml.getChild(n).getTag()) + " : " + toString(pml.getChild(n).getChild(0)) + "\n";
+	    s += (once ? "  " : ", ") + quote(pml.getChild(n).getTag()) + " : " + toString(pml.getChild(n).getChild(0)) + "\n";
 	  else
-	    s += ", " + quote(""+n) + " : " + toString(pml.getChild(n)) + "\n";
+	    s += (once ? "  " : ", ") + quote(""+n) + " : " + toString(pml.getChild(n)) + "\n";
+	  once = false;
+	}
 	return s + "}\n";
       }
     }
     /** Prends en compte les \". */
     private static String quote(String string) {
-      return "\"" + string.replaceAll("\\\\", "\\\\\\\\").replaceAll("\"", "\\\\\"") + "\"";
+      return "\"" + string.replaceAll("\n", "\t").replaceAll("\\\\", "\\\\\\\\").replaceAll("\"", "\\\\\"") + "\"";
     }
   }
 

@@ -1,8 +1,10 @@
-{ "tag" : ""
-, "icon" : "logo.png"
-, "author" : "Cécile Picard-Limpens <ccl.picard@gmail.com>"
+{
+  "icon" : "logo.png"
+, "author" : "Cécile Picard-Limpens"
 , "title" : "Permet de visualiser l'évolution temporelle et le contenu fréquentiel (le spectre) d'un son."
 , "height" : "600"
+, "email" : "ccl.picard@gmail.com"
+, "name" : "exploSonore"
 , "width" : "800"
 , "processing" : "true"
 }

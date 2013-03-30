@@ -1,6 +1,8 @@
-{ "tag" : ""
-, "icon" : "tictactoe.png"
-, "author" : "Christophe Béasse <oceank2@gmail.com>"
+{
+  "icon" : "tictactoe.png"
+, "author" : "Christophe Béasse"
 , "title" : "Jeu du TicTacToe en réseau"
+, "email" : "oceank2@gmail.com"
+, "name" : "ticTacToe"
 }
 

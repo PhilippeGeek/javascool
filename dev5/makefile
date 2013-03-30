@@ -1,10 +1,21 @@
 #
-# Intégrer le nv json dans la traduction 
-# Tester le create
+# @TODO :
+#
+# Diagnostiquer le pb des core.Proglet
+# Voir a reajuster proglet.pml->.json et *.hym->*.html (peut etre commencer un core2.Proglet ?)
+# Copier les fichier dans org.javascool.proglets.$$.  
+# Relier javadoc au site html
+#
+# Degraisser jvs4 de gui2 de l editeur dans widget de AppletProut (a mettre dans jvs4 poubelle) et Jvs2Jar etc...
+#
+# Voir a appeler core2 build
+# Recuperer le site jvs5 sous dev5
+# Creer des web service pour tout ça
+# Recuperer l'éditeur HTML5 de Philippe est en faire un produit 
+# Et . . detruire les repertoires github de jvs5
 # 
 
-
-dft : clean proglets
+dft : clean cnv proglet
 
 # Choix de la JDK
 
@@ -18,8 +29,10 @@ clean :
 
 # Construction des jars
 
-proglet  : jar ../work/dist/javascool-proglet-abcdAlgos.jar
-	java -cp ../work/dist/javascool-proglet-abcdAlgos.jar org.javascool.Core
+testProglet = algoDeMaths
+
+proglet  : jar ../work/dist/javascool-proglet-$(testProglet).jar
+	java -cp ../work/dist/javascool-proglet-$(testProglet).jar org.javascool.Core
 
 proglets : jar $(patsubst sketchbook/%,../work/dist/javascool-proglet-%.jar,$(wildcard sketchbook/*))
 
@@ -32,18 +45,26 @@ proglets : jar $(patsubst sketchbook/%,../work/dist/javascool-proglet-%.jar,$(wi
 
 # Construit le jar des classes de jvs4
 
-SRC = $(patsubst %,$(JVS_HOME)/work/lib/%.jar, javac7 RSyntaxTextArea json java2html jarsigner javadoc) $(shell find $(JVS_HOME)/work/src -name '*.java')
+SRC = $(patsubst %,$(JVS_HOME)/work/lib/%.jar, javac7 RSyntaxTextArea json java2html jarsigner javadoc) $(shell find $(JVS_HOME)/work/src -name '*.java' -o -name '*.xml' -o -name '*.png' -o -name '*.htm')
 
 jar : ../work/dist/javascool-core.jar
 
 ../work/dist/javascool-core.jar : $(SRC)
+	echo "build $@"
 	sh ./bin/java2jar.sh -static $@ $^
-	java -cp ../work/dist/javascool-core.jar org.javascool.Core
+
+# Teste la creation d'une proglet
+
+crt : jar
+	/bin/rm -rf /tmp/bidon
+	java -cp ../work/dist/javascool-core.jar org.javascool.core2.ProgletCreate /tmp/bidon
+	ls -l /tmp/bidon
+	cat /tmp/bidon/proglet.json
 
 # Teste l'ouverture d'une proglet
 
 run : ../work/dist/javascool-proglets.jar
-	java -jar ../work/dist/javascool-proglets.jar abcdAlgos
+	java -jar ../work/dist/javascool-proglets.jar $(testProglet)
 
 ../work/dist/javascool-proglets.jar : $(SRC)
 	cd ../work ; ant clean ; ant javascool-proglets.jar
@@ -51,4 +72,5 @@ run : ../work/dist/javascool-proglets.jar
 # Effectue la conversion des proglets jvs4 en jvs5
 
 cnv :
+	cd work ; ant javascool-builder.jar
 	sh ./bin/sketchbook4to5.sh

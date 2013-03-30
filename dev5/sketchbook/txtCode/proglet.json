@@ -1,6 +1,8 @@
-{ "tag" : ""
-, "icon" : "dump.png"
-, "author" : "Christophe B�asse <Christophe.Beasse@ac-rennes.fr>"
+{
+  "icon" : "dump.png"
+, "author" : "Christophe B�asse"
 , "title" : "txtCode"
+, "email" : "Christophe.Beasse@ac-rennes.fr"
+, "name" : "txtCode"
 }
 

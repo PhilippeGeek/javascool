@@ -1,6 +1,8 @@
-{ "tag" : ""
-, "icon" : "visage.png"
-, "author" : "Alain Jouve , C�dric Lacharmoise <alain.jouve@ac-lyon.fr>"
+{
+  "icon" : "visage.png"
+, "author" : "Alain Jouve , C�dric Lacharmoise"
 , "title" : "Reconnaitre un visge"
+, "email" : "alain.jouve@ac-lyon.fr"
+, "name" : "visages"
 }
 

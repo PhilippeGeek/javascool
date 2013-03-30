@@ -20,6 +20,21 @@ jvs="`pwd`/work/dist/javascool-builder.jar"
 jsx="`pwd`/work/lib/saxon.jar" 
 xslt="`pwd`/work/jsrc/builder/hdoc2htm.xslt" 
 
+# proglet.pml -> proglet.json
+rm -rf /tmp/pml2json ; mkdir /tmp/pml2json
+cat > /tmp/pml2json/pml2json.java <<EOF
+import org.javascool.tools.Pml;
+public class pml2json { public static void main(String usage[]) {
+  Pml pml = new Pml().load(usage[0]);
+  pml.set("name", usage[2]);
+  String who = pml.getString("author");
+  pml.set("author", who.replaceFirst("<[^>]*>", "").trim());
+  pml.set("email", who.replaceFirst("[^<]*<([^>]*)>.*", "\$1").trim());
+  pml.save(usage[1], "json");
+}}
+EOF
+pushd /tmp/pml2json > /dev/null ; javac -cp $jvs pml2json.java ; popd > /dev/null
+
 # Boucle sur les proglets
 
 for p in $srcProglets
@@ -30,7 +45,7 @@ do s="$srcDir/$p" ; d="$dstDir/$p" ; echo "Translate $p"
   
   # Translation des fichiers de ressource
   pushd $d > /dev/null
-  if [ -f proglet.pml ] ; then java -cp $jvs org.javascool.tools.Pml proglet.pml proglet.json ; rm proglet.pml ; else echo "Erreur : y'a pas de proglet.pml !" ; fi
+  if [ -f proglet.pml ] ; then java -cp $jvs:/tmp/pml2json pml2json proglet.pml proglet.json $p ; rm proglet.pml ; else echo "Erreur : y'a pas de proglet.pml !" ; fi
   if [ -f completion.xml ] ; then java -cp $jvs org.javascool.tools.Pml completion.xml completion.json ; rm completion.xml ; fi
   # Translation des fichiers *.html
   if ls *.xml > /dev/null ; then for f in *.xml ; do n=`echo $f | sed s'/.xml$//'` ; java -jar $jsx -o $n.html $n.xml $xslt ; rm -f $f ; done ; fi
