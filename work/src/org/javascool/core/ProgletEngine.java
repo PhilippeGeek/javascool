@@ -48,8 +48,8 @@ public class ProgletEngine {
     // Détection des proglets présentes dans le jar
     try {
       proglets = new ArrayList<Proglet>();
-      for(String dir : FileManager.list(javascoolJar, "org.javascool.proglets.[^\\.]+.proglet.pml")) {
-        String name = dir.replaceFirst("jar:[^!]*!(.*)proglet.pml", "$1");
+      for(String dir : FileManager.list(javascoolJar, "org.javascool.proglets.[^\\.]+.proglet.(pml|json)")) {
+        String name = dir.replaceFirst("jar:[^!]*!(.*)proglet.(pml|json)", "$1");
         try {
           Proglet proglet = new Proglet().load(name);
           proglets.add(proglet);
@@ -239,7 +239,14 @@ public class ProgletEngine {
      */
     public Proglet load(String location) {
       // Définit les méta-données de la proglet.
-      pml.load(location + "proglet.pml", true);
+      try {
+	pml.load(location + "proglet.pml", true);
+	pml.set("jvs-version", 4);
+      } catch(Exception e) {
+	pml.load(location + "proglet.json", true);
+	pml.set("help-location", location + "help.html");
+ 	pml.set("jvs-version", 5);
+      }
       pml.set("location", location);
       try {
         pml.set("name", new File(location).getName());
@@ -248,9 +255,7 @@ public class ProgletEngine {
       if(FileManager.exists(Macros.getResourceURL(location + "completion.xml"))) {
         pml.set("completion", location + "completion.xml");
       }
-      if(pml.isDefined("icon")
-         && FileManager.exists(Macros.getResourceURL(location + pml.getString("icon"))))
-      {
+      if(pml.isDefined("icon") && FileManager.exists(Macros.getResourceURL(location + pml.getString("icon")))) {
         pml.set("icon-location", location + pml.getString("icon"));
       } else {
         pml.set("icon-location", "org/javascool/widgets/icons/scripts.png");

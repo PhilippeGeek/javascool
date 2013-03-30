@@ -1,6 +1,8 @@
-{ "tag" : ""
-, "icon" : "maths.png"
-, "author" : "Collectif d'auteurs <javascool@googlegroups.com>"
+{
+  "icon" : "maths.png"
+, "author" : "Collectif d'auteurs"
 , "title" : "Explorez le domaine de l'algorithmique en maths."
+, "email" : "javascool@googlegroups.com"
+, "name" : "algoDeMaths"
 }
 

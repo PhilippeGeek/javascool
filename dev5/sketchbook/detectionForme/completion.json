@@ -1,5 +1,7 @@
-{ "tag" : "keywords"
-, "0" : { "tag" : "keyword"
+{
+ "tag" : "keywords"
+, "0" : {
+ "tag" : "keyword"
 , "title" : "Initialise l'image"
 , "name" : "reset"
 , "code" : "createImage(num,width, height);"

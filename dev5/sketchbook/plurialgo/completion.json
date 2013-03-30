@@ -1,5 +1,7 @@
-{ "tag" : "keywords"
-, "0" : { "tag" : "keyword"
+{
+ "tag" : "keywords"
+, "0" : {
+ "tag" : "keyword"
 , "title" : "description en ligne"
 , "name" : "nom de la complétion"
 , "code" : "texte source de la complétion"

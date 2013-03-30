@@ -1,11 +1,13 @@
 [
-{ "tag" : "keyword"
+{
+ "tag" : "keyword"
 , "title" : "Renvoie le panneau d'affichage de la proglet."
 , "name" : "getPane"
 , "code" : "JLayeredPane pane = getPane();"
 , "doc" : "Renvoie le panneau d'affichage de la proglet pour y dessiner et manipuler des objets 2D."
 }
- , { "tag" : "keyword"
+ , {
+ "tag" : "keyword"
 , "title" : "showIcon"
 , "name" : "Crée et montre une icône sur le display"
 , "offset" : "23"

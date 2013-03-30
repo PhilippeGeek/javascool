@@ -1,8 +1,14 @@
 package org.javascool.core2;
 
 import java.io.File;
-//import org.javascool.core.JarManager;
-//import org.javascool.core.ProgletApplet;
+import java.io.IOException;
+import org.json.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.javascool.tools.Pml;
+import org.javascool.tools.FileManager;
+
+
 
 /** Définit le mécanisme de compilation en ligne d'une proglet dans sa version jvs5.
  * - Attention il faut que la proglet ait été convertie en jvs5 (conversion des docs XML en HTML, du fichier de méta-donnée en .json).
@@ -22,30 +28,113 @@ public class Proglet2Jar {
    * @throws RuntimeException Si une erreur d'entrée-sortie s'est produite lors de la compilation ou construction.
    */
   public static boolean buildJar(String jarFile, String progletDir) {
+    try { 
+      JSONObject params = getProgletParameters(progletDir);
+      // Répertoire temporaire de compilation
+      String jarDir = FileManager.createTempDir("jvs-build-").getAbsolutePath();
+      JarManager.jarExtract("/home/vthierry/Work/culsci/jvs4/work/dist/javascool-core.jar", jarDir);
+      String targetDir = jarDir + File.separator + "org" + File.separator + "javascool" + File.separator + "proglets" + File.separator + params.getString("name");
+      new File(targetDir).mkdirs();
+      // Copy et expansion des ressources
+      for (String file : FileManager.list(progletDir)) {
+	if (new File(file).isFile()) {
+	  if (file.endsWith(".jar") || file.endsWith(".zip")) {
+	    JarManager.jarExtract(file, jarDir);
+	  } else {
+	    JarManager.copyFile(file, targetDir + File.separator + new File(file).getName());
+	    // Reconstitution de la version jvs4 de la completion, permet de tester la compatibilité
+	    if (file.endsWith("/completion.json")) {	      
+	      System.out.println("et de 0");
+	      JSONArray in = new JSONArray(FileManager.load(file));
+	      System.out.println("et de 1");
+	      String out = "";
+	      for(int i = 0; i < in.length(); i++) {
+		System.out.println("et de 2."+i);
+		JSONObject o = in.getJSONObject(i);
+		out += "<keyword name=\""+o.getString("name")+"\" title=\""+o.getString("title")+"\"><code>"+o.getString("code")+"</code><doc>"+o.getString("doc")+"</doc></keyword>\n";
+	      }
+	      FileManager.save(file.replaceFirst("\\.json$", ".xml"), "<keywords>"+out+"</keywords>");
+	    }
+	  }
+	}
+      }
+      // Compilation des sources java
+      String[] javaFiles = FileManager.list(progletDir, ".*\\.java", 4);
+      if (javaFiles.length > 0)
+	javac(jarDir, javaFiles);
+      // Nettoyage des arborescences inutiles
+      for (String d : new String[] { "com/com/sun/javadoc", "com/com/sun/tools/javadoc", "com/com/sun/tools/doclets", "com/com/sun/jarsigner" })
+	JarManager.rmDir(new File(jarDir + File.separator + d));
+      // Construction de la jarre
+      String mfData = 
+	"Manifest-Version: 1.0\n" +
+	"Created-By: "+params.getString("author")+" <"+params.getString("email")+">\n" +
+	"Main-Class: org.javascool.Core\n" +
+	"Implementation-URL: http://javascool.gforge.inria.fr\n" +
+	"Java-Version: 1.7\n" +
+	"Implementation-Vendor: javascool@googlegroups.com, ou=javascool.gforge.inria.fr, o=inria.fr, c=fr\n";
+      JarManager.jarCreate(jarFile, mfData, jarDir);
+        
+      //@todo JarManager.rmDir(new File(jarDir));
+      return true;
+    } catch (Throwable e) {
+      System.err.println(e);
+      return false;
+    }
+  }
+
+  private static void javac(String classPath, String[] javaFiles) throws IOException {
+    try {
+      String args[] = new String[javaFiles.length + 2];
+      args[0] = "-cp";
+      args[1] = classPath;
+      System.arraycopy(javaFiles, 0, args, 2, javaFiles.length);
+      java.io.StringWriter out = new java.io.StringWriter();
+      Class.forName("com.sun.tools.javac.Main")
+	.getDeclaredMethod("compile",
+			   Class.forName("[Ljava.lang.String;"),
+			   Class.forName("java.io.PrintWriter"))
+	.invoke(null, args, new java.io.PrintWriter(out));
+      String sout = out.toString().trim();
+      sout = sout.replaceFirst("Note: .* uses unchecked or unsafe operations.\\s*Note: Recompile with -Xlint:unchecked for details.","");
+      check(sout.length() == 0, "Erreur de compilation java:\n" + sout);
+    } catch (Throwable e) {
+      throw new IOException("Erreur à la compilation java, «" + e + "»");
+    }
+  }
+    
+  // Renvoie les paramètres d'une proglet
+  static JSONObject getProgletParameters(String progletDir) {
     // Nom et paramètres de la proglet
     String name = new File(progletDir).getName();
-    // AJOUTER new Pml().load(progletDir + File.separator + "proglet.pml");
-    // Jarres à utiliser
-    // Fichiers java à compiler
-    
-    // Expansion des jarres
-    // Copie des fichiers
-    // Compilation des sources
-
-    // Création du jar
-    
-    // Création du html dans le même répetoire que le jar
-
-    return false; 
-  }
-
-  // Teste la validite d'un nom de proglet.
-  static void checkProgletName(String name) {
-    if (!(4 <= name.length() && name.length() <= 16 && name.matches("[a-z][a-zA-Z0-9]+")))
-      throw new IllegalArgumentException("le nom \""+ name + "\" est invalide,\n\t il ne doit contenir que des lettres, faire au moins quatre caractères et au plus seize et démarrer par une lettre minuscule");
+    checkProgletName(name);
+    String paramFile = progletDir + File.separator + "proglet.json";
+    check(new File(paramFile).exists(), "le fichier de description "+paramFile+" n'existe pas, il faut le créer");
+    try {
+      JSONObject params = new JSONObject(FileManager.load(paramFile));
+      check(params != null, "impossible de lire le fichier de description "+paramFile+" (probablement une erreur de syntaxe)");
+      for (String key : new String[] {"name", "title", "author", "email", "icon"})
+	check(params.optString(key) != null, "erreur dans "+paramFile+" le paramètre "+key+" doit être défini");
+      check(name.equals(params.optString("name")), "il y a une incohérence entre le nom du répertoire '"+name+"' et celui déclaré comme nom de la proglet dans proglet.json '"+params.getString("name")+"'");
+      return params;
+    } catch(JSONException e) {
+      check(false, "erreur "+e+" de lecture du fichier de description "+paramFile+" (probablement une erreur de syntaxe)");
+      return null;
+    }
   }
   
-  /** Lanceur de la construction de proglet.
+  // Teste la validité d'un nom de proglet.
+  static void checkProgletName(String name) {
+    check(4 <= name.length() && name.length() <= 16 && name.matches("[a-z][a-zA-Z0-9]+"), 
+	  "le nom \""+ name + "\" est invalide,\n\t il ne doit contenir que des lettres, faire au moins quatre caractères et au plus seize et démarrer par une lettre minuscule");
+  }
+
+  // Test la validité d'un éléments de la proglet
+  static void check(boolean condition, String errorMessage) {
+    if (!condition) throw new IllegalArgumentException("Erreur à la construction de la proglet : "+errorMessage);
+  }
+
+  /** Lanceur de la construction de la proglet.
    * @param usage <tt>java org.javascool.core2.Proglet2Jar jarFile progletDir</tt>
    */
   public static void main(String[] usage) {

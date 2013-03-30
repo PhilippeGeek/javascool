@@ -16,7 +16,7 @@ for f in $* ; do e="`echo $f | sed 's/.*\.//'`"
        case "$e" in
          java ) src="$src $f";;
          jar )  cp="$cp:$f" ; jrc="$jrc $f";;
-         * ) echo "Invalid extension (not .java|.jar) for the source file $f" exit -1 ;;
+         * )    res="$res $f";;
         esac
     fi;;
   esac
@@ -32,6 +32,9 @@ fi
 
 # Répertoire de travail
 d="lib-$$" ; /bin/rm -rf $d ; mkdir $d
+
+# Inclut les sources et fichiers de ressource
+for f in $res $src ; do t=$d/`echo $f | sed 's/.*\/src\///'`; mkdir -p `dirname $t` ; cp $f $t ; done
 
 # Inclut les jarres du classpath en mode static
 if [ "$static" = 1 ] ; then for j in $jrc ; do unzip -d $d -oq $j ; done ; fi

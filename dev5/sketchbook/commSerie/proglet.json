@@ -1,6 +1,8 @@
-{ "tag" : ""
-, "icon" : "logo.png"
-, "author" : "Laurent Rebuffie <laurent.rebuffie@ac-rennes.fr>"
+{
+  "icon" : "logo.png"
+, "author" : "Laurent Rebuffie"
 , "title" : "Utilisée pour manipuler une communication série RS232."
+, "email" : "laurent.rebuffie@ac-rennes.fr"
+, "name" : "commSerie"
 }
 
