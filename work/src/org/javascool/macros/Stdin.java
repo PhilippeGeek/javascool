@@ -433,6 +433,11 @@ public class Stdin {
   /** Définit une portion de code appelée à chaque entrée d'un caractère au clavier.
    * <p>Les caractères du clavier ne sont détectés que si la souris est sur la fenêtre de la proglet de façon à ce qu'elle est le focus.</p>
    * <p>Les caractères du clavier et quelques touches de contrôle sont gérés.</p>
+   * <p>Exemple d'usage: <pre>
+setKeyListener(new Runnable() { public void run() {
+  // Ici vient le code à exécuter quand une touche est enfoncée
+  println("Ô : la touche '" + getLastKey() + "' a été détectée");
+}});</pre>
    * @param runnable La portion de code à appeler, ou null pour annuler l'appel à la portion de code précédent.
    */
   public static void setKeyListener(Runnable runnable) {
