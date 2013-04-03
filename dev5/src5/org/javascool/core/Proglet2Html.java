@@ -1,4 +1,4 @@
-package org.javascool.core2;
+package org.javascool.core;
 
 import java.io.File;
 import java.io.IOException;
@@ -42,15 +42,19 @@ public class Proglet2Html {
 			     .replaceAll("@icon", params.getString("icon"))
 			     .replaceAll("@author", params.getString("author"))
 			     .replaceAll("@email", params.getString("email"))
-			     .replaceAll("@base-url", file.substring(htmlDir.length() + 1).replaceAll("[^/]+", "..").substring(1)));
+			     .replaceAll("@base-url", "."));
 	  } else {
-	    JarManager.copyFiles(file, htmlDir, false);
+	    JarManager.copyFile(file, htmlDir + File.separator + new File(file).getName());
 	  }
 	}
       }
+      // Génération des fichiers liés aux sources java
+      Proglet2Jar.buildJar(htmlDir + File.separator + "javascool-proglet-"+params.getString("name")+".jar", progletDir);
+      javadoc(params.getString("name"), System.getProperty("java.class.path"), progletDir, htmlDir + File.separator + "api");
       return true;
     } catch (Throwable e) {
       System.err.println(e);
+      e.printStackTrace();
       return false;
     }
   }
@@ -102,7 +106,7 @@ public class Proglet2Html {
   }
 
   private static void addBootstrap(String apiDir) throws IOException {
-    JarManager.copyResource("proglet-css.zip", apiDir + File.separator + "proglet-css.zip");
+    JarManager.copyResource("org/javascool/core/proglet-css.zip", apiDir + File.separator + "proglet-css.zip");
     JarManager.jarExtract(apiDir + File.separator + "proglet-css.zip", apiDir);
     new File(apiDir + File.separator + "proglet-css.zip").delete();
   }
@@ -138,7 +142,7 @@ public class Proglet2Html {
     "      <div class=\"nav-collapse\">\n" +
     "        <ul class=\"nav\">\n" +
     "          <li><a href=\"@base-url/help.html\">Documentation</a></li>\n" +
-    "          <li><a href=\"@base-url/_applet.html\">Démonstration</a></li>\n" +
+    "          <li><a href=\"@base-url/javascool-proglet-@name.jar\">Démonstration</a></li>\n" +
     "          <li><a href=\"@base-url/api/org/javascool/proglets/@name/package-summary.html\">Implémentation</a></li>\n" +
     "          <li><a href=\"mailto:@email?subject=À propos de Java'sCool «@name»\">Contact</a></li>\n" +
     "        </ul>\n" +

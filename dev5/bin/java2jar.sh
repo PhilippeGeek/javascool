@@ -33,15 +33,17 @@ fi
 # Répertoire de travail
 d="lib-$$" ; /bin/rm -rf $d ; mkdir $d
 
-# Inclut les sources et fichiers de ressource
-for f in $res $src ; do t=$d/`echo $f | sed 's/.*\/src\///'`; mkdir -p `dirname $t` ; cp $f $t ; done
+# Inclut les sources et fichiers de ressources
+for f in $res $src ; do t=$d/`echo $f | sed 's/.*src[^\/]*\///'`; mkdir -p `dirname $t` ; cp $f $t ;  done
 
 # Inclut les jarres du classpath en mode static
 if [ "$static" = 1 ] ; then for j in $jrc ; do unzip -d $d -oq $j ; done ; fi
 
 # Compilation
-javac -d $d -cp $cp $src
-rm -f $jar ; pushd $d > /dev/null ; jar cfM $jar . ; popd > /dev/null
+if javac -d $d -cp $cp $src
+then rm -f $jar ; pushd $d > /dev/null ; jar cfM $jar . ; popd > /dev/null
+else rm -f $jar
+fi
 
 /bin/rm -rf $d
 

@@ -1,21 +1,31 @@
 #
 # @TODO :
-#
-# Diagnostiquer le pb des core.Proglet
-# Voir a reajuster proglet.pml->.json et *.hym->*.html (peut etre commencer un core2.Proglet ?)
-# Copier les fichier dans org.javascool.proglets.$$.  
+# Valider Proglet2Html
+# Créer site javascool-5 avec juste les icones des proglets (generation via makefile) et un lokk bootsrap et menu minima;
+# Créer les WebServices : proglet2zip jvs2jar ; voir l'idée de lancer avec des paramètres dans le manifeste, sinon compiler un wrapper ?
+# Voir a reajuster proglet.pml->.json et *.hym->*.html
+# Changer /home/vthierry/Work/culsci/jvs4/dev5/dist/javascool-core.jar
 # Relier javadoc au site html
-#
-# Degraisser jvs4 de gui2 de l editeur dans widget de AppletProut (a mettre dans jvs4 poubelle) et Jvs2Jar etc...
-#
-# Voir a appeler core2 build
 # Recuperer le site jvs5 sous dev5
 # Creer des web service pour tout ça
 # Recuperer l'éditeur HTML5 de Philippe est en faire un produit 
-# Et . . detruire les repertoires github de jvs5
+# Et . . detruire les repertoires github de jvs5 ET
+# Virer le jvs3 sur le site
 # 
+#
+# - Reduire ./widgets/PanelApplet.java ./tools/Invoke.java ./core/ProgletEngine.java
+# - Ajouter json à Pml en entrée/sortie.
+#
 
-dft : clean cnv proglet
+# Test en cours 
+
+dft : tst
+
+tstP = algoDeMaths
+
+tst  : clean jar dist/javascool-proglet-$(tstP)-html
+#	firefox dist/javascool-proglet-$(tstP)-html
+#	java -cp dist/javascool-proglet-$(tstP)-html/javascool-proglet-$(tstP).jar org.javascool.Core
 
 # Choix de la JDK
 
@@ -24,53 +34,39 @@ export PATH:="$(JAVA_HOME)/bin:$(PATH)"
 
 export JVS_HOME=/home/vthierry/Work/culsci/jvs4
 
-clean :
-	rm -rf ../work/dist/javascool-core.jar ../work/dist/javascool-proglet-*.jar
-
 # Construction des jars
 
-testProglet = algoDeMaths
+proglets : jar $(patsubst sketchbook/%,dist/javascool-proglet-%-html,$(wildcard sketchbook/*))
 
-proglet  : jar ../work/dist/javascool-proglet-$(testProglet).jar
-	java -cp ../work/dist/javascool-proglet-$(testProglet).jar org.javascool.Core
+dist/javascool-proglet-%-html : sketchbook/%
+	java -cp dist/javascool-core.jar org.javascool.core.Proglet2Html $@ $^
 
-proglets : jar $(patsubst sketchbook/%,../work/dist/javascool-proglet-%.jar,$(wildcard sketchbook/*))
-
-../work/dist/javascool-proglet-%.jar : sketchbook/%
-	java -cp ../work/dist/javascool-core.jar org.javascool.core2.Proglet2Jar $@ $^
+dist/javascool-proglet-%.jar : sketchbook/%
+	java -cp dist/javascool-core.jar org.javascool.core.Proglet2Jar $@ $^
 	for f in $^/*.jvs ;\
 	 do n=`echo $$f | sed 's/.*\/\([^\.]*\)\.jvs/\1/'` ;\
-	 java -cp ../work/dist/javascool-core.jar org.javascool.core2.Jvs2Jar ../work/dist/javascool-proglet-$*-$$n.jar $* $$f ;\
+	 java -cp dist/javascool-core.jar org.javascool.core.Jvs2Jar dist/javascool-proglet-$*-$$n.jar $* $$f ;\
 	done
 
-# Construit le jar des classes de jvs4
+# Construit la jarre de javascool 
 
-SRC = $(patsubst %,$(JVS_HOME)/work/lib/%.jar, javac7 RSyntaxTextArea json java2html jarsigner javadoc) $(shell find $(JVS_HOME)/work/src -name '*.java' -o -name '*.xml' -o -name '*.png' -o -name '*.htm')
+jar : cpv dist/javascool-core.jar 
 
-jar : ../work/dist/javascool-core.jar
-
-../work/dist/javascool-core.jar : $(SRC)
-	echo "build $@"
+dist/javascool-core.jar : $(wildcard lib4/*.jar) $(shell find src4 -name '*.java' -o -name '*.xml' -o -name '*.png' -o -name '*.htm') $(shell find src5 -name '*.java' -o -name '*.zip' )
 	sh ./bin/java2jar.sh -static $@ $^
 
-# Teste la creation d'une proglet
+# Effectue la copie des src/lib de jvs4 vers jvs5
 
-crt : jar
-	/bin/rm -rf /tmp/bidon
-	java -cp ../work/dist/javascool-core.jar org.javascool.core2.ProgletCreate /tmp/bidon
-	ls -l /tmp/bidon
-	cat /tmp/bidon/proglet.json
-
-# Teste l'ouverture d'une proglet
-
-run : ../work/dist/javascool-proglets.jar
-	java -jar ../work/dist/javascool-proglets.jar $(testProglet)
-
-../work/dist/javascool-proglets.jar : $(SRC)
-	cd ../work ; ant clean ; ant javascool-proglets.jar
+cpv :
+	sh ./bin/srclib4to5.sh
 
 # Effectue la conversion des proglets jvs4 en jvs5
 
 cnv :
-	cd work ; ant javascool-builder.jar
 	sh ./bin/sketchbook4to5.sh
+
+# Nettoie les répertoires générés
+
+clean :
+	rm -rf dist/* lib-*
+

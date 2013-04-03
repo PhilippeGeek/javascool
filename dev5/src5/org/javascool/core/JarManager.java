@@ -4,7 +4,7 @@
 * Thierry.Vieville@sophia.inria.fr, Copyright (C) 2009.  All rights reserved.   *
 *********************************************************************************/
 
-package org.javascool.core2;
+package org.javascool.core;
 
 import org.javascool.tools.FileManager;
 
@@ -15,7 +15,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.StringBufferInputStream;
 import java.io.StringReader;
 import java.io.IOException;
 
@@ -25,7 +24,6 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.jar.JarInputStream;
 import java.util.jar.JarOutputStream;
-import java.util.jar.Manifest;
 
 /** Mets à disposition des fonctions de gestion de jar et répertoires de déploiement. */
 public class JarManager {
@@ -56,7 +54,7 @@ public class JarManager {
   }
   /** Crée un jar à partir d'une arborescence.
    * @param jarFile Jar à construire. Elle est détruite avant d'être crée.
-   * @param mfData String de manifeste (obligatoire).
+   * @param mfData Contenu du fichier de manifeste (obligatoire).
    * @param srcDir Dossier source avec les fichiers à mettre en jarre.
    */
   public static void jarCreate(String jarFile, String mfData, String srcDir) {
@@ -66,8 +64,12 @@ public class JarManager {
         parent.mkdirs();
       new File(jarFile).delete();
       srcDir = new File(srcDir).getCanonicalPath();
-      Manifest manifest = new Manifest(new StringBufferInputStream(mfData));
-      JarOutputStream target = new JarOutputStream(new FileOutputStream(jarFile), manifest);
+      // Ajout du manifeste
+      {
+	new File(srcDir + File.separator + "META-INF").mkdirs();
+	FileManager.save(srcDir + File.separator + "META-INF" + File.separator + "MANIFEST.MF", mfData);
+      }
+      JarOutputStream target = new JarOutputStream(new FileOutputStream(jarFile));
       copyFileToJar(new File(srcDir), target, new File(srcDir));
       target.close();
     } catch(Exception ex) {

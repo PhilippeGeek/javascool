@@ -20,6 +20,8 @@ jvs="`pwd`/work/dist/javascool-builder.jar"
 jsx="`pwd`/work/lib/saxon.jar" 
 xslt="`pwd`/work/jsrc/builder/hdoc2htm.xslt" 
 
+pushd work > /dev/null ; ant javascool-builder.jar ; popd > /dev/null
+
 # proglet.pml -> proglet.json
 rm -rf /tmp/pml2json ; mkdir /tmp/pml2json
 cat > /tmp/pml2json/pml2json.java <<EOF

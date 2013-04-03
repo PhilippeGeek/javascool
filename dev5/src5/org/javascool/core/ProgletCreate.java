@@ -1,4 +1,4 @@
-package org.javascool.core2;
+package org.javascool.core;
 
 import java.io.File;
 import java.util.HashMap;
