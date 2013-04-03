@@ -1,6 +1,7 @@
 #
 # @TODO :
 # Valider Proglet2Html
+# Pb de creation de *.class et completion.xml dans une progletDir
 # Créer site javascool-5 avec juste les icones des proglets (generation via makefile) et un lokk bootsrap et menu minima;
 # Créer les WebServices : proglet2zip jvs2jar ; voir l'idée de lancer avec des paramètres dans le manifeste, sinon compiler un wrapper ?
 # Voir a reajuster proglet.pml->.json et *.hym->*.html
