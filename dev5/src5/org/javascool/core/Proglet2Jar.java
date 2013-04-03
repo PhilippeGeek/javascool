@@ -1,4 +1,4 @@
-package org.javascool.core2;
+package org.javascool.core;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,7 +32,7 @@ public class Proglet2Jar {
       JSONObject params = getProgletParameters(progletDir);
       // Répertoire temporaire de compilation
       String jarDir = FileManager.createTempDir("jvs-build-").getAbsolutePath();
-      JarManager.jarExtract("/home/vthierry/Work/culsci/jvs4/work/dist/javascool-core.jar", jarDir);
+      JarManager.jarExtract("/home/vthierry/Work/culsci/jvs4/dev5/dist/javascool-core.jar", jarDir);
       String targetDir = jarDir + File.separator + "org" + File.separator + "javascool" + File.separator + "proglets" + File.separator + params.getString("name");
       new File(targetDir).mkdirs();
       // Copy et expansion des ressources
@@ -44,12 +44,9 @@ public class Proglet2Jar {
 	    JarManager.copyFile(file, targetDir + File.separator + new File(file).getName());
 	    // Reconstitution de la version jvs4 de la completion, permet de tester la compatibilité
 	    if (file.endsWith("/completion.json")) {	      
-	      System.out.println("et de 0");
 	      JSONArray in = new JSONArray(FileManager.load(file));
-	      System.out.println("et de 1");
 	      String out = "";
 	      for(int i = 0; i < in.length(); i++) {
-		System.out.println("et de 2."+i);
 		JSONObject o = in.getJSONObject(i);
 		out += "<keyword name=\""+o.getString("name")+"\" title=\""+o.getString("title")+"\"><code>"+o.getString("code")+"</code><doc>"+o.getString("doc")+"</doc></keyword>\n";
 	      }

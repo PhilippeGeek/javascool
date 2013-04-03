@@ -1,4 +1,4 @@
-package org.javascool.core2;
+package org.javascool.core;
 
 /** Définit le mécanisme de compilation en ligne d'un programme javasccol d'une proglet donnée dans sa version jvs5.
  * - Attention il faut que la proglet ait été convertie en jvs5 (conversion des docs XML en HTML, du fichier de méta-donnée en .json).
