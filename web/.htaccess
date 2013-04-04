@@ -38,5 +38,6 @@ RedirectMatch permanent "^/proglet/javaprog/doc-files/.*\.htm$" "http://javascoo
 RedirectMatch permanent "^(/v.)?/(proglet/.*\.htm)$" "http://javascool.gforge.inria.fr?page=$1/$2"
 RedirectMatch permanent "^(/v.)?/documents/sketchbook/([a-zA-Z][a-zA-Z]*)[/]?$" "http://javascool.gforge.inria.fr/?page=proglets\&action=show\&id=$2"
 RedirectMatch permanent "^(/v.)?/proglets/([a-zA-Z][a-zA-Z]*)[/]?$" "http://javascool.gforge.inria.fr/?page=proglets\&action=show\&id=$2"
+RedirectMatch permanent "^/v[23]/.*" "http://javascool.gforge.inria.fr"
 
 

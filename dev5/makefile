@@ -1,22 +1,20 @@
 #
 # @TODO :
+#
 # Valider Proglet2Html
 # Pb de creation de *.class et completion.xml dans une progletDir
 # Créer site javascool-5 avec juste les icones des proglets (generation via makefile) et un lokk bootsrap et menu minima;
 # Créer les WebServices : proglet2zip jvs2jar ; voir l'idée de lancer avec des paramètres dans le manifeste, sinon compiler un wrapper ?
-# Voir a reajuster proglet.pml->.json et *.hym->*.html
+# Voir a reajuster proglet.pml->.json et *.htm->*.html
 # Changer /home/vthierry/Work/culsci/jvs4/dev5/dist/javascool-core.jar
-# Relier javadoc au site html
-# Recuperer le site jvs5 sous dev5
-# Creer des web service pour tout ça
-# Recuperer l'éditeur HTML5 de Philippe est en faire un produit 
-# Et . . detruire les repertoires github de jvs5 ET
-# Virer le jvs3 sur le site
+# Mettre en place le wget de http://javascool.gforge.inria.fr/v5 dans javascool.github.com/wproglets
 # 
 #
 # - Reduire ./widgets/PanelApplet.java ./tools/Invoke.java ./core/ProgletEngine.java
 # - Ajouter json à Pml en entrée/sortie.
+# - Recuperer l'éditeur HTML5 de Philippe est en faire un produit autonome qui se connecte aux web services
 #
+
 
 # Test en cours 
 
@@ -70,4 +68,5 @@ cnv :
 
 clean :
 	rm -rf dist/* lib-*
-
+	find sketchbook \( -name '*.class' -o -name 'completion.xml' \) -exec rm {} \;
+	svn status
