@@ -9,7 +9,6 @@ import org.javascool.tools.Pml;
 import org.javascool.tools.FileManager;
 
 
-
 /** Définit le mécanisme de compilation en ligne d'une proglet dans sa version jvs5.
  * - Attention il faut que la proglet ait été convertie en jvs5 (conversion des docs XML en HTML, du fichier de méta-donnée en .json).
  * @see <a href="Proglet2Jar.java.html">code source</a>
@@ -100,8 +99,12 @@ public class Proglet2Jar {
     }
   }
     
-  // Renvoie les paramètres d'une proglet
-  static JSONObject getProgletParameters(String progletDir) {
+  /** Renvoie les paramètres d'une proglet.
+   * @param Le répertoire de la proglet.
+   * @return La structure json des paramètres.
+   * @throws Une erreur en cas de problème de lecture ou de format.
+   */
+  public static JSONObject getProgletParameters(String progletDir) {
     // Nom et paramètres de la proglet
     String name = new File(progletDir).getName();
     checkProgletName(name);
