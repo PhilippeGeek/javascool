@@ -7,6 +7,8 @@ import static org.javascool.macros.Macros.*;
  */
 public class Functions {
   private static final long serialVersionUID = 1L;
+   // @factory
+   private Functions() {}
   private static Panel getPane() {
     return getProgletPane();
   }

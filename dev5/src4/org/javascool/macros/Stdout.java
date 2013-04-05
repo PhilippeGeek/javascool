@@ -19,7 +19,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import javax.swing.RepaintManager;
 
-/** Cette factory contient des fonctions générales rendues visibles à l'utilisateur de proglets.
+/** Cette factory contient des fonctions de sortie rendues visibles à l'utilisateur de proglets.
  * <p>Elle permet de définir des fonctions statiques qui seront utilisées pour faire des programmes élèves.</p>
  * <p>Elle permet aussi avoir quelques fonctions de base lors de la création de nouvelles proglets.</p>
  *

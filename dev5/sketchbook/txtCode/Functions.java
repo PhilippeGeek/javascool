@@ -22,6 +22,9 @@ import java.io.FileNotFoundException;
  */
 public class Functions {
 
+   // @factory
+   private Functions() {}
+
   /** Renvoie l'instance de la proglet. */
   private static Panel getPane() {
     return getProgletPane();

@@ -51,7 +51,10 @@ do s="$srcDir/$p" ; d="$dstDir/$p" ; echo "Translate $p"
   if [ -f completion.xml ] ; then java -cp $jvs org.javascool.tools.Pml completion.xml completion.json ; rm completion.xml ; fi
   # Translation des fichiers *.html
   if ls *.xml > /dev/null ; then for f in *.xml ; do n=`echo $f | sed s'/.xml$//'` ; java -jar $jsx -o $n.html $n.xml $xslt ; rm -f $f ; done ; fi
-    for f in *.html ; do cp $f $f~ ; sed s'/.htm"/.html"/g' < $f~ > $f ; done
+    for f in *.html ; do cp $f $f~ ; cat $f~ |\
+	sed 's/[?]page=proglets&amp;action=show&amp;id=\([^&]*\)&amp;helpFile=\([^"]*\)/v5\/wproglets\/javascool-proglet-\1-html\/\2/g' |\
+	sed 's/index\.php[?]page=api/v5\/wproglets\/javascool-core-api/' |\
+	sed 's/.htm"/.html"/g' > $f ; done
   # Manipulation des fichiers java
   if ls *.java > /dev/null ; then for f in *.java ; do cp $f $f~ ; cat $f~ |\
      sed 's/org\.javascool/org.javascool/g' > $f

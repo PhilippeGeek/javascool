@@ -90,11 +90,7 @@ public class ProgletEngine {
   public boolean doCompile(String program) {
     doStop();
     // Traduction Jvs -> Java puis Java -> Class et chargement de la classe si succès
-    Jvs2Java jvs2java = new Jvs2Java();
-    if(getProglet() != null) {
-      jvs2java.setProgletTranslator(getProglet().getTranslator());
-      jvs2java.setProgletPackageName(getProglet().hasFunctions() ? "org.javascool.proglets." + getProglet().getName() : null);
-    }
+    Jvs2Java jvs2java = getProglet() != null ? getProglet().getJvs2java() : new Jvs2Java();
     String javaCode = jvs2java.translate(program);
     // Creation d'un répertoire temporaire
     String javaFile;
@@ -228,7 +224,7 @@ public class ProgletEngine {
   public int getProgletCount() {
     return proglets.size();
   }
-  public class Proglet {
+  public static class Proglet {
     /** Méta-données de la proglet. */
     public Pml pml = new Pml();
 
@@ -327,6 +323,7 @@ public class ProgletEngine {
       setPane();
       return (Component) pml.getObject("java-proglet-pane");
     }
+    // Met en place le panneau de la proglet
     private void setPane() {
       if(!pml.isDefined("pane-defined")) {
         pml.set("pane-defined", true);
@@ -380,6 +377,19 @@ public class ProgletEngine {
     public Translator getTranslator() {
       return (Translator) pml.getObject("jvs-translator");
     }
+    
+    /** Renvoie un traducteur de jvs en java.
+     * @return Le traducteur dans l'environnement de la proglet
+     */
+    public Jvs2Java getJvs2java() {
+      if (jvs2java == null) {
+	jvs2java = new Jvs2Java();
+	jvs2java.setProgletTranslator(getTranslator());
+	jvs2java.setProgletPackageName(hasFunctions() ? "org.javascool.proglets." + getName() : null);
+      }
+      return jvs2java;
+    }
+    private Jvs2Java jvs2java = null;
     /** Indique si la proglet a une démo pour l'utilisateur.
      */
     public boolean hasDemo() {

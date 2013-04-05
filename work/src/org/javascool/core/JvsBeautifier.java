@@ -75,13 +75,17 @@ public class JvsBeautifier {
         }
         // Normalize spaces around operators
         if(isOperator(f[i])) {
-          if(!(Character.isWhitespace(c0) || isOperator(c0))) {
-            g += ' ';
-          }
-          g += f[i];
-          if((i < f.length - 1) && !(Character.isWhitespace(f[i + 1]) || isOperator(f[i + 1]))) {
-            g += ' ';
-          }
+	  if ((f[i] == '-' || f[i] == '+') && (c0 == 'e' || c0 == 'E')) {
+	    g += f[i];
+	  } else {
+	    if(!(Character.isWhitespace(c0) || isOperator(c0))) {
+	      g += ' ';
+	    }
+	    g += f[i];
+	    if((i < f.length - 1) && !(Character.isWhitespace(f[i + 1]) || isOperator(f[i + 1]) || Character.isDigit(f[i + 1]))) {
+	      g += ' ';
+	    }
+	  }
         } else if(f[i] == '.') {
           if((g.length() > 0) && Character.isWhitespace(c0)) {
             g = g.substring(0, g.length() - 1);

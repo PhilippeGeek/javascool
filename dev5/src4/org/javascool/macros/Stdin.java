@@ -21,7 +21,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.event.CaretListener;
 import javax.swing.event.CaretEvent;
 
-/** Cette factory contient des fonctions générales rendues visibles à l'utilisateur de proglets.
+/** Cette factory contient des fonctions d'entrées rendues visibles à l'utilisateur de proglets.
  * <p>Elle permet de définir des fonctions statiques qui seront utilisées pour faire des programmes élèves.</p>
  * <p>Elle permet aussi avoir quelques fonctions de base lors de la création de nouvelles proglets.</p>
  *

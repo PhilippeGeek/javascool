@@ -23,6 +23,8 @@ import java.awt.event.MouseEvent;
  */
 public class Functions {
   private static final long serialVersionUID = 1L;
+   // @factory
+   private Functions() {}
   /** Nettoie le panneau d'affichage  la proglet. */
   public static void removeAll() {
     getPane().removeAll();

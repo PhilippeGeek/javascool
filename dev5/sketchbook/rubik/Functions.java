@@ -5,6 +5,9 @@ import org.javascool.proglets.rubik.RubikAnimator;
 
 public class Functions {
   
+   // @factory
+   private Functions() {}
+
   public static void front() {
     RubikAnimator.simpleTurnFace(Face.FRONT, false);
   }
