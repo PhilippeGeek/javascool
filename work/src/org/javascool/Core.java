@@ -40,7 +40,7 @@ public class Core {
       return javascoolJar;
     }
     String url = Macros.getResourceURL("org/javascool/Core.class").toString().replaceFirst("jar:file:([^!]*)!.*", "$1");
-    System.err.println("Notice: javascool url is " + url);
+    //- System.err.println("Notice: javascool url is " + url);
     if(url.endsWith(".jar")) {
       try {
         String jar = URLDecoder.decode(url, "UTF-8");

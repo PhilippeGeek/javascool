@@ -6,6 +6,8 @@ import static org.javascool.macros.Macros.*;
  * @serial exclude
  */
 public class Functions {
+   // @factory
+   private Functions() {}
   /** Renvoie l'instance de la proglet. */
   private static Panel getPane() {
     return getProgletPane();

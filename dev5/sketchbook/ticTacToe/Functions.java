@@ -11,6 +11,8 @@ import java.net.Socket;
  * @author Christophe Béasse <oceank2@gmail.com>
  */
 public class Functions {
+   // @factory
+   private Functions() {}
   /** Renvoie l'instance de la proglet. */
   private static Panel getPane() {
     return getProgletPane();

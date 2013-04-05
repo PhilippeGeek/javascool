@@ -146,16 +146,4 @@ public class Jvs2Java extends Translator {
     }
     return s;
   }
-  /** Lanceur de la conversion Jvs en Java.
-   * @param usage <tt>java org.javascool.core.Jvs2Java [proglet-name] input-file [output-file]</tt>
-   */
-  public static void main(String[] usage) {
-    // @main
-    if(usage.length > 0) {
-      if (usage.length == 3)
-	FileManager.save(usage.length > 1 ? usage[2] : "stdout:", new Jvs2Java().setProgletPackageName(usage[0]).translate(FileManager.load(usage[1])));
-      else
-	FileManager.save(usage.length > 1 ? usage[1] : "stdout:", new Jvs2Java().translate(FileManager.load(usage[0])));
-    }
-  }
 }

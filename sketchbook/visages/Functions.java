@@ -19,7 +19,10 @@ import java.awt.event.*;
 
 
  public class  Functions{
-	public static float[][] produit(float[][] matrice1, float[][] matrice2){
+   //@factory
+   private Functions() {}
+	
+   public static float[][] produit(float[][] matrice1, float[][] matrice2){
 	/** 
 	 *Donne une matrice égale au produit de deux matrices ayant au moins deux colonnes, codées en float.
 	 * 

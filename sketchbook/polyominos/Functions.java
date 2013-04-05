@@ -15,10 +15,9 @@ import org.javascool.macros.Macros.*;
  */
 public class Functions {
 
-    /**
-     * See <a href="http://javascool.gforge.inria.fr/index.php?page=developers&action=doc-proglets">doc-proglets</a>.
-     * @return l'instance de la proglet
-     */
+   // @factory
+   private Functions() {}
+
     private static Panel getPane() {
         return org.javascool.macros.Macros.getProgletPane();
     }

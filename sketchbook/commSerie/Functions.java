@@ -16,6 +16,8 @@ import javax.swing.JPanel;
  */
 public class Functions {
   private static final long serialVersionUID = 1L;
+   // @factory
+   private Functions() {}
   /** Renvoie le panneau d'affichage de la proglet. */
   public static Panel getPane() {
     return getProgletPane();

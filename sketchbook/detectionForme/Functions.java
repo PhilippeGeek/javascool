@@ -46,6 +46,7 @@ import java.io.FileNotFoundException;
  */
 public class Functions {
   private static final long serialVersionUID = 1L;
+
   // img[0] et g2d[0] ne sont pas utilisés 
   // Les indices d'images utilisés sont 1,2,3,4
   private static BufferedImage [] img = new BufferedImage[5];
