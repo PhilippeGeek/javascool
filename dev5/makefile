@@ -1,14 +1,7 @@
 #
 # @TODO :
 #
-# Extraitre classe Proglet
-# Virer usage de PanelApplet.java
-# Creer un MainFrameRunnable avec 
-# Mettre Pml en classe interne a core
-# 
-# svn ci -m '' ; svn mv src4 src4+5
 # Voir sketchbook/algoDeMaths/help.html: href="http://newtab?http://javascool.gforge.inria.fr/v4/index.php?page=resources&amp;action=link-sujets-mathinfo"
-# sketchbook/javaProg/help.html:           l'<a href="http://javascool.gforge.inria.fr/index.php?page=api">API JavaScool</a>. 
 #
 # Valider les Jvs2Jar en creant les jar des jvs mettant des (@run dans les liens le jvs.html -> jvs.jar)
 #  - Creer un main dans Jvs2Java qui lance MainFrame avec la proglet et un startstop
@@ -19,6 +12,8 @@
 # Voir comment se gère les proglets processing et bien valider les liens vers le site fuscia
 # Valider le make www de ici
 # Mettre en place le wget de http://javascool.gforge.inria.fr/v5 dans javascool.github.com/wproglets
+# Extraitre classe Proglet ; Virer usage de PanelApplet.java ; Mettre Pml en classe a core
+# 
 # 
 #
 # - Ajouter json à Pml en entrée/sortie.
@@ -50,13 +45,13 @@ dist/javascool-proglet-%-html : sketchbook/%
 
 # Construit la jarre de javascool 
 
-SRC = $(wildcard lib4/*.jar) $(shell find src4 -name '*.java' -o -name '*.xml' -o -name '*.png' -o -name '*.htm' -o -name '*.zip')
+SRC = $(wildcard lib4/*.jar) $(shell find src4+5 -name '*.java' -o -name '*.xml' -o -name '*.png' -o -name '*.htm' -o -name '*.zip')
 
 dist/javascool-core.jar : $(SRC)
 	sh ./bin/java2jar.sh -static $@ $^
 
 dist/javascool-core-api : $(SRC)
-	java -cp dist/javascool-core.jar org.javascool.core.Proglet2Html javascool-core src4 $@
+	java -cp dist/javascool-core.jar org.javascool.core.Proglet2Html javascool-core src4+5 $@
 
 # Effectue la copie des src/lib de jvs4 vers jvs5
 
