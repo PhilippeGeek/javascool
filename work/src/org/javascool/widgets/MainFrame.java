@@ -5,6 +5,7 @@ import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UIManager;
 
 import javax.swing.JFrame;
+import java.awt.BorderLayout;
 import javax.swing.JRootPane;
 import java.applet.Applet;
 import java.awt.Component;
@@ -12,6 +13,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.ImageIcon;
 import org.javascool.macros.Macros;
+import org.javascool.core.Jvs2Java;
 
 /** Définit une fenêtre principale pour lancer une application. */
 public class MainFrame extends JFrame {
@@ -89,6 +91,40 @@ public class MainFrame extends JFrame {
       if(image != null) {
         setIconImage(image.getImage());
       }
+    }
+    if (pane instanceof Runnable) {
+      add(new StartStopButton() {
+	  private static final long serialVersionUID = 1L;
+	  @Override
+	  public void start() {
+	    stop();
+	    (runnableThread = new Thread(new Runnable() {
+		@Override
+		public void run() {
+		  try {
+		    ((Runnable) MainFrame.this.pane).run();
+		    runnableThread = null;
+		  } catch(Throwable e) {
+		    Jvs2Java.report(e);
+		  }
+		}
+	      }
+	      )).start();
+	  }
+	  @Override
+	  public void stop() {    
+	    if(runnableThread != null) {
+	      runnableThread.interrupt();
+	      runnableThread = null;
+	    }
+	  }
+	  
+	  @Override
+	  public boolean isRunning() {
+	    return runnableThread != null;
+	  }
+	  private Thread runnableThread = null;
+	}, BorderLayout.NORTH);
     }
     add(this.pane = pane);
     if(pane instanceof Applet) {
