@@ -4,7 +4,7 @@
 # Voir sketchbook/algoDeMaths/help.html: href="http://newtab?http://javascool.gforge.inria.fr/v4/index.php?page=resources&amp;action=link-sujets-mathinfo"
 #
 # Valider les Jvs2Jar en creant les jar des jvs mettant des (@run dans les liens le jvs.html -> jvs.jar)
-#  - Creer un main dans Jvs2Java qui lance MainFrame avec la proglet et un startstop
+#  - Creer un main dans Jvs2Java qui lance MainFrame avec la proglet et un startstop + une console 
 # Créer les WebServices : proglet2zip jvs2jar ; voir l'idée de lancer avec des paramètres dans le manifeste, sinon compiler un wrapper ?
 #  - Creer trois api sous forme de jar /user/vthierry/home/Work/culsci/jvs4/dev/jvs5-builder-src/ProgletBuilder.java
 #
