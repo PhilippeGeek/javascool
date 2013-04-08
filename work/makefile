@@ -31,6 +31,9 @@ mig :
 ant :
 	ant prun
 
+nbe :
+	sh -c '/usr/java/netbeans-7.3/bin/netbeans &'
+
 jdoc :
 	ant javadoc ; firefox ./dist/javadoc/overview-summary.html
 

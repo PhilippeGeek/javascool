@@ -9,6 +9,7 @@ import  org.javascool.tools.FileManager;
 // Used to report a throwable
 import java.lang.reflect.InvocationTargetException;
 import org.javascool.tools.FileManager;
+import org.javascool.widgets.Console;
 
 /** Implémente le mécanisme de base de traduction d'un code Jvs en code Java standard.
  * <p>Les erreurs de traduction sont affichées dans la console.</p>
@@ -19,28 +20,24 @@ import org.javascool.tools.FileManager;
 public class Jvs2Java extends Translator {
   // @bean
   public Jvs2Java() {}
-
-  /** Définit un mécanisme spécifique de traduction en plus du mécanisme standard.
-   * @param progletTranslator Le mécanisme de traduction spécifique d'une proglet donnée.
-   * @return Cet objet, permettant de définir la construction <tt>Jvs2Java translator = new Jvs2Java().setProgletTranslator(..)</tt>.
+ 
+  /** Définit la proglet dans l'environnement du quel se fait la traduction.
+   * @param proglet La proglet dans l'environnement du quel se fait la traduction.
+   * @return Cet objet, permettant de définir la construction <tt>Jvs2Java translator = new Jvs2Java().setProglet(..)</tt>.
    */
-  public Jvs2Java setProgletTranslator(Translator progletTranslator) {
+  public Jvs2Java setProglet(Proglet proglet) {
     // @bean-parameter(Translator, progletTranslator, w);
-    this.progletTranslator = progletTranslator;
+    progletTranslator = proglet.getTranslator();
+    progletPackageName = proglet.hasFunctions() ? "org.javascool.proglets." + proglet.getName() : null;
+    this.proglet = proglet;
     return this;
   }
+  // Le mécanisme de traduction spécifique d'une proglet donnée.
   private Translator progletTranslator = null;
-
-  /** Définit le nom complet du package de la proglet pour ce mécanismes de traduction.
-   * @param progletPackageName Le nom complet du package de la proglet.
-   * @return Cet objet, permettant de définir la construction <tt>Jvs2Java translator = new Jvs2Java().setProgletPackageName(..)</tt>.
-   */
-  public Jvs2Java setProgletPackageName(String progletPackageName) {
-    // @bean-parameter(String, progletPackageName, w);
-    this.progletPackageName = progletPackageName;
-    return this;
-  }
+  // Le nom complet du package de la proglet.
   private String progletPackageName = null;
+  // La proglet du contexte
+  private Proglet proglet = null;
 
   @Override
   public String translate(String jvsCode) {
@@ -108,7 +105,17 @@ public class Jvs2Java extends Translator {
       head.append("   try{ main(); } catch(Throwable e) { ");
       head.append("    if (e.toString().matches(\".*Interrupted.*\"))System.out.println(\"\\n-------------------\\nProggramme arrêté !\\n-------------------\\n\");");
       head.append("    else System.out.println(\"\\n-------------------\\nErreur lors de l'exécution de la proglet\\n\"+org.javascool.core.Jvs2Java.report(e)+\"\\n-------------------\\n\");}");
-      head.append("}");
+      head.append("  }");
+      // Adds a main wrapper to run the proglet jvs runnable
+      if (proglet != null) {
+	String main = 
+	  "public static void main(String[] usage) {" + 
+	  "    new org.javascool.widgets.MainFrame().reset(\""+proglet.getName()+"\", "+proglet.getDimension().width+", "+proglet.getDimension().height+", "+
+	  (proglet.getPane() != null ? "new "+progletPackageName+".Panel()" : "org.javascool.widgets.Console.getInstance()") +
+	  ").setRunnable(new JvsToJavaTranslated"+uid+"());" +
+	  "}";
+	head.append(main);
+      }
     }
     String finalBody = body.toString().
                        replaceAll("(while.*\\{)", "$1 sleep(1);");
@@ -126,6 +133,7 @@ public class Jvs2Java extends Translator {
   public String getClassName() {
     return "JvsToJavaTranslated" + uid;
   }
+
   // Counter used to increment the serialVersionUID in order to reload the different versions of the class
   private static int uid = 0;
 

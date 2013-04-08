@@ -1,6 +1,7 @@
 package org.javascool.core;
 
 import java.io.File;
+import org.javascool.Core;
 import org.javascool.tools.FileManager;
 
 /** Définit le mécanisme de compilation en ligne d'un programme javasccol d'une proglet donnée dans sa version jvs5.
@@ -15,39 +16,49 @@ public class Jvs2Jar {
   /** Compile sous forme de jar un programme javascool d'une proglet donnée.
    * <p>Les erreurs de compilation ou de construction s'affichent dans la console.</p>
    * @param name Nom de la proglet.
-   * @param progletJar La jarre de stockage de la proglet.
    * @param jvsFile Le fichier source en .jvs.
    * @param jarFile La jarre de stockage du résultat.
    * @return La valeur true en cas de succès, false si il y a des erreurs de compilation.
    *
    * @throws RuntimeException Si une erreur d'entrée-sortie s'est produite lors de la compilation ou construction.
    */
-  public static boolean build(String name, String progletJar, String jvsFile, String jarFile) {
+  public static boolean build(String name, String jvsFile, String jarFile) {
+    System.out.println("jvs2jar -proglet "+name+" -in "+jvsFile+" -out "+jarFile);
     try {
       // Répertoire temporaire de compilation
       String jarDir = FileManager.createTempDir("jvs-build-").getAbsolutePath();
       // Extraction des classes de javascool
-      String javascoolJar = org.javascool.Core.javascoolJar();
-      JarManager.jarExtract(javascoolJar, jarDir);
-      // Recuperation de la proglet
-      ProgletEngine.Proglet proglet = new ProgletEngine.Proglet().load(name);
+      JarManager.jarExtract(Core.javascoolJar(), jarDir);
+      System.err.println("1>"+ Core.javascoolJar());
+      // Chargement de la proglet
+      Proglet proglet = new Proglet().load("org" + File.separator + "javascool" + File.separator + "proglets" + File.separator + name);
       Jvs2Java jvs2java = proglet.getJvs2java();
+      System.err.println("2>"+ name);
       // Compilation du source
       String javaCode = jvs2java.translate(FileManager.load(jvsFile));
       String javaFile = jarDir + File.separator + jvs2java.getClassName() + ".java";
+      System.err.println("3>"+ javaFile);
       FileManager.save(javaFile, javaCode);
+      System.err.println("3>"+ javaFile);
       if(!Java2Class.compile(javaFile))
 	return false;
+      System.err.println("4> done");
       // Nettoyage des arborescences inutiles
-      // @todo
-      for (String d : new String[] { "com/com/sun/javadoc", "com/com/sun/tools/javadoc", "com/com/sun/tools/doclets", "com/com/sun/jarsigner" })
-	JarManager.rmDir(new File(jarDir + File.separator + d));
+      for (String d : new String[] { 
+	  "com/com/sun/javadoc", "com/com/sun/tools/javadoc", "com/com/sun/tools/doclets", "com/com/sun/jarsigner",
+	  "org/fife", "de/tisje", "de/java2html",
+	  "org/javascool/builder",
+	  "com/sun/tools/javac"
+	})
+	JarManager.rmDir(new File(jarDir + File.separator + d.replaceAll("/", File.separator)));
+      System.err.println("5> done");
       // Construction de la jarre
       String mfData = 
 	"Manifest-Version: 1.0\n" +
-	"Main-Class: org.javascool.NOTYETIMPLEMENTED @todo\n" +
+	"Main-Class: "+jvs2java.getClassName()+"\n" +
 	"Implementation-URL: http://javascool.gforge.inria.fr\n";
       JarManager.jarCreate(jarFile, mfData, jarDir);
+      System.err.println("6>" + jarFile);
       JarManager.rmDir(new File(jarDir));
       return true;
     } catch (Throwable e) {
@@ -56,12 +67,14 @@ public class Jvs2Jar {
     }
   }
   /** Lanceur de la conversion Jvs en Java.
-   * @param usage <tt>java org.javascool.core2.Jvs2Jar progletName progletJar jvsFile jarFile</tt>
+   * @param usage <tt>java org.javascool.core2.Jvs2Jar progletName jvsFile jarFile</tt>
    */
   public static void main(String[] usage) {
     // @main
-    if(usage.length == 4) {
-      build(usage[0], usage[1], usage[2], usage[3]);
+    if(usage.length == 3) {
+      build(usage[0], usage[1], usage[2]);
+    } else {
+     // ICI l'interface graphique avec progletName et jvsFile en chooser 
     }
   }
 }

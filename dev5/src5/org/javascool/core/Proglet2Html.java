@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import org.json.JSONObject;
 import org.javascool.tools.FileManager;
+import java.io.InputStreamReader;
 
 /** Définit le mécanisme de compilation en ligne d'une proglet dans sa version jvs5.
  * - Attention il faut que la proglet ait été convertie en jvs5 (conversion des docs XML en HTML, du fichier de méta-donnée en .json).
@@ -54,7 +55,7 @@ public class Proglet2Html {
 	Proglet2Jar.buildJar(progletJar, progletDir);
 	for (String file : FileManager.list(progletDir))
 	  if (file.endsWith(".jvs"))
-	    Jvs2Jar.build(params.getString("name"), progletJar, file, file + File.separator + ".jar");
+	    javaStart("-cp "+progletJar+" org.javascool.core.Jvs2Jar "+params.getString("name")+" "+file+" "+file+".jar", 60);
 	javadoc(params.getString("name"), System.getProperty("java.class.path"), htmlDir + File.separator + "api", htmlDir + File.separator + "api");
       }
       return true;
@@ -127,6 +128,42 @@ public class Proglet2Html {
     }
   }
 
+  /** Exécute dans un autre process une commande java.
+   * <p>Les sorties du process java sont renvoyés en mémoire au stdin/stderr de la présente exécution.</p>
+   * @param command Les arguments de la ligne de commande de l'exécutable java.
+   * @param timeout La durée maximale d'exécution de la commande.
+   * @return Le status de l'exécutable java, 0 si pas d'erreur.
+   * @throws IllegalStateException en cas de time-out.
+   */
+  public static boolean javaStart(String command, int timeout) {
+    try {
+      // @todo regarder sur windows si il y a le bin ou un exec à la place
+      String javaCommand = System.getProperty("java.home") + File.separator + "bin" + File.separator + "java"; 
+      return exec(javaCommand+(command.indexOf('\t') == -1 ? " " : "\t")+command, timeout) == 0;
+    } catch(Exception e) {
+      System.err.println("Impossible de lancer la command '$java " + command + "' : " + e);
+      return false;
+    }
+  }
+  // Lance une commande avec echo des stdout/stderr
+  private static int exec(String command, int timeout) throws IOException  {
+    Process process = Runtime.getRuntime().exec(command.trim().split((command.indexOf('\t') == -1) ? " " : "\t"));
+    InputStreamReader stdout = new InputStreamReader(process.getInputStream());
+    InputStreamReader stderr = new InputStreamReader(process.getErrorStream());
+    long now = System.currentTimeMillis();
+    while(true) {
+      try { Thread.sleep(300); } catch(Exception e) { }
+      while(stdout.ready())
+	System.out.print((char) stdout.read());
+      while(stderr.ready())
+	System.err.print((char) stderr.read());
+      try {
+	return process.exitValue();
+      } catch(Exception e) { }
+      if (timeout > 0 && System.currentTimeMillis() > now + timeout * 1000)
+	throw new IllegalStateException("Timeout T > "+timeout+"s when running '"+command+"'");
+    }
+  }
   private static void addBootstrap(String apiDir) throws IOException {
     JarManager.copyResource("org/javascool/core/proglet-css.zip", apiDir + File.separator + "proglet-css.zip");
     JarManager.jarExtract(apiDir + File.separator + "proglet-css.zip", apiDir);
