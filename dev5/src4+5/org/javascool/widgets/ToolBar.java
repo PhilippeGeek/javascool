@@ -155,8 +155,6 @@ public class ToolBar extends JToolBar {
     p.b = addRightTool(label, p);
     return p.j;
   }
-  // @todo a enlever apres la refonte du proglet-builder
-
   /** Ajoute en permanence un composant à la droite de la barre d'outils.
    * @param component Le composant à ajouter.
    */

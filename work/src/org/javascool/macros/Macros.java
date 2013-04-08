@@ -17,7 +17,6 @@ import java.util.Calendar;
 import javax.swing.ImageIcon;
 
 import org.javascool.tools.Sampler;
-import org.javascool.core.ProgletEngine;
 
 import java.net.URL;
 import java.io.File;
@@ -27,7 +26,6 @@ import javax.swing.JEditorPane;
 import org.javascool.core.ProgletEngine;
 import org.javascool.widgets.Dialog;
 import javax.swing.SwingUtilities;
-import org.javascool.widgets.PanelApplet;
 
 /** Cette factory contient des fonctions générales rendues visibles à l'utilisateur de proglets.
  * <p>Elle permet de définir des fonctions plus facile d'utilisation que les appels Java usuels.</p>
@@ -324,9 +322,7 @@ public class Macros {
     Component c = null;
     try {
       c = ProgletEngine.getInstance().getProglet().getProgletPane();
-    } catch(Throwable e) {
-      c = PanelApplet.getPane();
-    }
+    } catch(Throwable e) { }
     return (T) c;
   }
 }

@@ -11,6 +11,7 @@ import java.net.URLDecoder;
 import java.nio.charset.Charset;
 import java.io.UnsupportedEncodingException;
 import org.javascool.gui.Desktop;
+import org.javascool.core.Proglet;
 import org.javascool.core.ProgletEngine;
 import org.javascool.tools.ErrorCatcher;
 
@@ -97,7 +98,7 @@ public class Core {
     if(usage.length == 1) {
       Desktop.getInstance().openProglet(usage[0], true);
     } else if (ProgletEngine.getInstance().getProgletCount() == 1) {
-      for(ProgletEngine.Proglet proglet: ProgletEngine.getInstance().getProglets()) {
+      for(Proglet proglet: ProgletEngine.getInstance().getProglets()) {
 	String name = proglet.getName();
 	System.err.println("Ouverture de la proglet «"+name+"»");
 	Desktop.getInstance().openProglet(name, true);

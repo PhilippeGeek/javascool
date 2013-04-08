@@ -37,13 +37,22 @@ public class Console extends JPanel {
   // @static-instance
 
   /** Crée et/ou renvoie l'unique instance de console.
+   * @param popup Si il n'y a pas d'instance de créer génère un popup avec la console affichée.
    * <p>Une application ne peut définir qu'une seule console.</p>
    */
-  public static Console getInstance() {
+  public static Console getInstance(boolean popup) {
     if(console == null) {
       console = new Console();
+      if (popup)
+	new MainFrame().reset("Console", "org/javascool/widgets/icons/copyAll.png", 800, 600, console);
     }
     return console;
+  }
+  /**
+   * @see #getInstance(boolean)
+   */
+  public static Console getInstance() {
+    return getInstance(false);
   }
   /** Renvoie true si la console a déjà été instanciée, false sinon. */
   public static boolean isInstanced() {

@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ToolTipManager;
+import org.javascool.core.Proglet;
 import org.javascool.core.ProgletEngine;
 import org.javascool.macros.Macros;
 
@@ -47,10 +48,10 @@ class JVSStartPanel extends JScrollPane {
   private static JPanel shortcutPanel() {
     JPanel shortcuts = new JPanel();
     int i = 0;
-    for(ProgletEngine.Proglet proglet : ProgletEngine.getInstance().getProglets())
+    for(Proglet proglet : ProgletEngine.getInstance().getProglets())
       i++;
     shortcuts.setLayout(new GridLayout(0, (i / 3) == 0 ? 1 : (i / 3)));
-    for(ProgletEngine.Proglet proglet : ProgletEngine.getInstance().getProglets())
+    for(Proglet proglet : ProgletEngine.getInstance().getProglets())
       shortcuts.add(JVSStartPanel.createShortcut(Macros.getIcon(proglet.getIcon()), proglet.getName(), proglet.getTitle(), new ProgletLoader(proglet.getName())));
     return shortcuts;
   }

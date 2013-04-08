@@ -5,6 +5,7 @@ import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UIManager;
 
 import javax.swing.JFrame;
+import java.awt.BorderLayout;
 import javax.swing.JRootPane;
 import java.applet.Applet;
 import java.awt.Component;
@@ -12,6 +13,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.ImageIcon;
 import org.javascool.macros.Macros;
+import org.javascool.core.Jvs2Java;
 
 /** Définit une fenêtre principale pour lancer une application. */
 public class MainFrame extends JFrame {
@@ -148,6 +150,56 @@ public class MainFrame extends JFrame {
   public MainFrame reset(Component pane) {
     return reset(pane.getClass().toString(), null, 0, 0, pane);
   }
+  /** Ajoute le déclenchement d'un runnable.
+   * @param runnable Le runnable à exécuter à travers un boutton de start-stop.
+   * @return Cet objet, permettant de définir la construction <tt>new MainFrame().reset(..)</tt>.
+   */
+  public MainFrame setRunnable(Runnable runnable) {
+    if (runnable == null) {
+      if (runnableStartStopButton != null)
+	remove(runnableStartStopButton);
+      runnableStartStopButton = null;
+    } else {
+      if (runnableStartStopButton == null)
+	add(runnableStartStopButton = new StartStopButton() {
+	    private static final long serialVersionUID = 1L;
+	    @Override
+	    public void start() {
+	      stop();
+	      (runnableThread = new Thread(new Runnable() {
+		  @Override
+		  public void run() {
+		    try {
+		       MainFrame.this.runnable.run();
+		       runnableThread = null;
+		      } catch(Throwable e) {
+			Jvs2Java.report(e);
+		      }
+		    }
+		  }
+		  )).start();
+		}
+		@Override
+		public void stop() {    
+		if(runnableThread != null) {
+		  runnableThread.interrupt();
+		  runnableThread = null;
+		}
+	      }
+	      
+	      @Override
+		public boolean isRunning() {
+		return runnableThread != null;
+	      }
+	      private Thread runnableThread = null;
+	    }, BorderLayout.NORTH);
+	  }
+    this.runnable = runnable;
+    return this;
+  }
+  private StartStopButton runnableStartStopButton = null;
+  private Runnable runnable = null;
+
   /** Ferme la fenêtre principale à partir du programme.
    * @param force Si true ferme la fenêter même si isClosable() renvoie false.
    */
