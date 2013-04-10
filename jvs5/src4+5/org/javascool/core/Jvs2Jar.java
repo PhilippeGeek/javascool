@@ -86,7 +86,7 @@ public class Jvs2Jar {
   }
 
   /** Lanceur de la conversion Jvs en Java.
-   * @param usage <tt>java org.javascool.core2.Jvs2Jar [progletName] jvsFile jarFile</tt>
+   * @param usage <tt>java org.javascool.core.Jvs2Jar [progletName] jvsFile jarFile</tt>
    */
   public static void main(String[] usage) {
     // @main
@@ -96,6 +96,9 @@ public class Jvs2Jar {
       build(usage[0], usage[1]);
     } else if(usage.length == 1) {
       build(usage[0]);
+    } else if (FileManager.exists("main-usage-0.txt")) {
+      // Détection de l'argument dans un fichier ajouté à la jarre
+      build(FileManager.load("main-usage-0.txt"));
     } else {
       new MainFrame().reset("Jvs2Jar", "org/javascool/widgets/icons/compile.png", 800, 600, new JPanel() {
 	  private JTextField path;
