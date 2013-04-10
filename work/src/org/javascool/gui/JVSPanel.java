@@ -339,7 +339,9 @@ class JVSPanel extends JPanel {
     this.repaint();
     this.setVisible(false);
     this.setVisible(true);
+    /*
     JVSToolBar.getInstance().disableDemoButton();
+    */
     this.add(JVSToolBar.getInstance(), BorderLayout.NORTH);
     this.add(JVSCenterPanel.getInstance(), BorderLayout.CENTER);
     this.revalidate();
@@ -347,11 +349,13 @@ class JVSPanel extends JPanel {
     JVSCenterPanel.getInstance().setDividerLocation(getWidth() / 2);
     JVSCenterPanel.getInstance().revalidate();
     JVSWidgetPanel.getInstance().setProglet(name);
+    /*
     if(ProgletEngine.getInstance().getProglet().hasDemo()) {
       JVSToolBar.getInstance().enableDemoButton();
     } else {
       JVSToolBar.getInstance().disableDemoButton();
     }
+    */
     this.newFile();
   }
   public void reportRuntimeBug(String ex) {

@@ -2,32 +2,30 @@
 # @TODO :
 #
 # Voir sketchbook/algoDeMaths/help.html: href="http://newtab?http://javascool.gforge.inria.fr/v4/index.php?page=resources&amp;action=link-sujets-mathinfo"
-# Enlever toutes les notions de demo des sources des sketchbook et faire des jvs et dans les docs et virer de Proglet et cie .. . 
-# Faire un document qui décrit ce qui a été allégé de jvs4 à jvs4.9
+# Faire un document qui décrit ce qui a été allégé de jvs4 à jvs4.9 (json, plus de demo, plus de xml, ..)
 # Voir le pb du javaStart sous windows 
 #
 # Valider les Jvs2Jar en creant les jar des jvs mettant des (@run dans les liens le jvs.html -> jvs.jar)
-#  - Tester de ci de là 
-# Créer les WebServices : proglet2zip jvs2jar ; voir l'idée de lancer avec des paramètres dans le manifeste, sinon compiler un wrapper ?
-#  - Creer trois api sous forme de jar /user/vthierry/home/Work/culsci/jvs4/dev/jvs5-builder-src/ProgletBuilder.java
-#  - Virer la notion de demo ds les proglets
+# Créer les WebServices : proglet2zip jvs2jar ; voir l'idée d'ajouter un fichier la jarre
 #
 # Valider le site javascool-5 avec juste les icones des proglets (generation via makefile) et un lokk bootsrap et menu minima
 # Voir comment se gère les proglets processing et bien valider les liens vers le site fuscia
-# Valider le make www de ici
-# Mettre en place le wget de http://javascool.gforge.inria.fr/v5 dans javascool.github.com/wproglets
-# Ajouter json à Pml en entrée/sortie.
+# Valider le make www de ici et le git (avec le wget de http://javascool.gforge.inria.fr/v5 dans javascool.github.com/wproglets)
 #
+# - Ajouter json à Pml en entrée/sortie.
 # - Recuperer l'éditeur HTML5 de Philippe est en faire un produit autonome qui se connecte aux web services
 # - Voir jar jbed jad http://www.developpez.net/forums/d922916/java/general-java/java-mobiles/android/android-jar/
 
 # Test en cours 
 
-dft : tst
+dft : tst2
+
+tst2 : clean cpv dist/javascool-core.jar
+	java -cp dist/javascool-core.jar org.javascool.core.Proglet2Html
 
 tstP = algoDeMaths
 
-tst  : clean cpv dist/javascool-core.jar dist/javascool-proglet-$(tstP)-html
+tst1  : clean cpv dist/javascool-core.jar dist/javascool-proglet-$(tstP)-html
 #	firefox dist/javascool-proglet-$(tstP)-html/index.html
 #	java -cp dist/javascool-proglet-$(tstP)-html/javascool-proglet-$(tstP).jar org.javascool.Core
 
@@ -43,6 +41,15 @@ www : clean cnv cpv dist/javascool-core.jar dist/javascool-core-api $(patsubst s
 
 dist/javascool-proglet-%-html : sketchbook/%
 	java -cp dist/javascool-core.jar org.javascool.core.Proglet2Html $@ $^
+
+# Publie les fichiers du site github
+
+GIT_HOME=/home/vthierry/Work/culsci/old/jvs5/javascool.github.com
+
+git :
+	rsync -rl doc5/* $(GIT_HOME)/doc
+	cd $(GIT_HOME) ; git status
+#	$(MAKE) -C $(GIT_HOME) push
 
 # Construit la jarre de javascool 
 

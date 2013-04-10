@@ -78,6 +78,16 @@ public class Core {
   }
   private static String javascoolJar = null, javascoolJarEnc = null;
 
+  /** Retrouve la proglet du jar, si elle est unique.
+   * @return Le nom de la proglet ou null si il y a une ambiguïté.
+   */
+  public static String javascoolProglet() {
+    if (ProgletEngine.getInstance().getProgletCount() == 1)
+      for(Proglet proglet: ProgletEngine.getInstance().getProglets())
+	return proglet.getName();
+    return null;
+  }
+
   /** Lanceur de l'application.
    * @param usage <tt>java -jar javascool.jar [proglet]</tt>
    */
@@ -97,12 +107,11 @@ public class Core {
     Desktop.getInstance().getFrame();
     if(usage.length == 1) {
       Desktop.getInstance().openProglet(usage[0], true);
-    } else if (ProgletEngine.getInstance().getProgletCount() == 1) {
-      for(Proglet proglet: ProgletEngine.getInstance().getProglets()) {
-	String name = proglet.getName();
+    } else {
+      String name = javascoolProglet();
+      if (name != null) {
 	System.err.println("Ouverture de la proglet «"+name+"»");
 	Desktop.getInstance().openProglet(name, true);
-	break;
       }
     }
   }

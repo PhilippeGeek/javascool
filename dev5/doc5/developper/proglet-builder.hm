@@ -1,0 +1,7 @@
+<h2>ProgletBuilder application interactive</h2>
+
+`EN COURS DE MISE AU POINT NE PAS UTILISER`
+
+<center><applet width='850' height='350' codebase='../../lib' code='ProgletBuilder' archive='javascool-builder.jar,json_simple.jar'>
+ <pre>Impossible de lancer l'application : Java n'est pas installé ou mal configuré</pre>
+</applet></center>

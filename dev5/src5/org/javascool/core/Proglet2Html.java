@@ -6,6 +6,18 @@ import org.json.JSONObject;
 import org.javascool.tools.FileManager;
 import java.io.InputStreamReader;
 
+import org.javascool.widgets.MainFrame;
+import javax.swing.JPanel;
+import java.awt.BorderLayout;
+import javax.swing.BorderFactory;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import org.javascool.macros.Macros;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JFileChooser;
+import org.javascool.widgets.Console;
+
 /** Définit le mécanisme de compilation en ligne d'une proglet dans sa version jvs5.
  * - Attention il faut que la proglet ait été convertie en jvs5 (conversion des docs XML en HTML, du fichier de méta-donnée en .json).
  * @see <a href="Proglet2Html.java.html">code source</a>
@@ -23,7 +35,7 @@ public class Proglet2Html {
    *
    * @throws RuntimeException Si une erreur d'entrée-sortie s'est produite lors de la compilation ou construction.
    */
-  public static boolean buildHtml(String htmlDir, String progletDir) {
+  public static boolean build(String htmlDir, String progletDir) {
     try {
       JSONObject params = Proglet2Jar.getProgletParameters(progletDir);
       // Creation d'un répertoire vierge
@@ -52,10 +64,12 @@ public class Proglet2Html {
       // Génération des fichiers liés aux sources java
       {
 	String progletJar = htmlDir + File.separator + "javascool-proglet-"+params.getString("name")+".jar";
-	Proglet2Jar.buildJar(progletJar, progletDir);
-	for (String file : FileManager.list(progletDir))
+	Proglet2Jar.build(progletJar, progletDir);
+	String jsv2jarJar = htmlDir + File.separator + "javascool-jvs2jar-"+params.getString("name")+".jar";
+	Proglet2Jar.build(jsv2jarJar, progletDir);
+	for (String file : FileManager.list(htmlDir))
 	  if (file.endsWith(".jvs"))
-	    javaStart("-cp "+progletJar+" org.javascool.core.Jvs2Jar "+params.getString("name")+" "+file+" "+file+".jar", 60);
+	    javaStart("-jar "+jsv2jarJar+" "+file, 60);
 	javadoc(params.getString("name"), System.getProperty("java.class.path"), htmlDir + File.separator + "api", htmlDir + File.separator + "api");
       }
       return true;
@@ -65,7 +79,12 @@ public class Proglet2Html {
       return false;
     }
   }
-
+  /**
+   * @see #build(String, String)
+   */
+  public static boolean build(String htmlDir) {
+    return build(htmlDir, htmlDir+"-html");
+  }
   // Encapsulate le corps d'une page html
   private static String encapsulates(String body, JSONObject params) throws Exception {
     return (progletHtmlHeader + body + progletHtmlTrailer)
@@ -203,6 +222,7 @@ public class Proglet2Html {
     "          <li><a href=\"@base-url/help.html\">Documentation</a></li>\n" +
     "          <li><a href=\"@base-url/javascool-proglet-@name.jar\">Démonstration</a></li>\n" +
     "          <li><a href=\"@base-url/api/org/javascool/proglets/@name/package-summary.html\">Implémentation</a></li>\n" +
+    "          <li><a href=\"@base-url/javascool-jsv2jar-@name.jar\">Compilation</a></li>\n" +
     "          <li><a href=\"mailto:@email?subject=À propos de Java'sCool «@name»\">Contact</a></li>\n" +
     "        </ul>\n" +
     "      </div>\n" +
@@ -256,18 +276,70 @@ public class Proglet2Html {
     "</body></html>\n";
   
   /** Lanceur de la construction de la proglet.
-   * @param usage <tt>java org.javascool.core2.Proglet2Html (jarFile progletDir|javadocName srcDir apiDir)</tt>
+   * @param usage <tt>java org.javascool.core.Proglet2Html (jarFile progletDir|javadocName srcDir apiDir)</tt>
    */
   public static void main(String[] usage) {
     // @main
     if(usage.length == 2) {
-      buildHtml(usage[0], usage[1]);
+      build(usage[0], usage[1]);
+    } else if(usage.length == 1) {
+      build(usage[0]);
     } else if(usage.length == 3) {
       try {
 	javadoc(usage[0], System.getProperty("java.class.path"), usage[1], usage[2]);
       } catch(IOException e) {
 	throw new RuntimeException(e.toString());
       }
+    } else if (FileManager.exists("main-usage-0.txt")) {
+      // Détection de l'argument dans un fichier ajouté à la jarre
+      build(FileManager.load("main-usage-0.txt"));
+    } else {
+      new MainFrame().reset("Proglet2Html", "org/javascool/widgets/icons/compile.png", 800, 600, new JPanel() {
+	  private JTextField path;
+	  {
+	    setLayout(new BorderLayout());
+	    setBorder(BorderFactory.createTitledBorder("Compilation d'une proglet javascol"));
+	    add(new JPanel() {
+		{
+		  add(new JButton("Choisir", Macros.getIcon("org/javascool/widgets/icons/open.png")) {
+		      private static final long serialVersionUID = 1L;
+		      {
+			addActionListener(new ActionListener() {
+			    private static final long serialVersionUID = 1L;
+			    @Override
+			    public void actionPerformed(ActionEvent e) {
+			      (new JFileChooser() {
+				  private static final long serialVersionUID = 1L;
+				  {
+				    setDialogTitle("Sélection du répertoire de la proglet . . ");
+				    setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+				  }
+				  
+				  public void run(ActionEvent e) {
+				    if (showOpenDialog(((JButton) e.getSource()).getParent().getParent()) == JFileChooser.APPROVE_OPTION) {
+				      path.setText(getSelectedFile().getPath());
+				    }
+				  }
+				}).run(e);
+			    }
+			  });
+		      }});
+		  add(path = new JTextField(40));
+		  add(new JButton("Compiler", Macros.getIcon("org/javascool/widgets/icons/compile.png")) {
+		      private static final long serialVersionUID = 1L;
+		      {
+			addActionListener(new ActionListener() {
+			    private static final long serialVersionUID = 1L;
+			    @Override
+			    public void actionPerformed(ActionEvent e) {
+			      build(path.getText());
+			    }
+			  });
+		      }});
+		  
+		}}, BorderLayout.NORTH);
+	    add(Console.getInstance());
+	  }});
     }
   }
 }
