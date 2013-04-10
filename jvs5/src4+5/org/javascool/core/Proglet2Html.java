@@ -276,7 +276,7 @@ public class Proglet2Html {
     "</body></html>\n";
   
   /** Lanceur de la construction de la proglet.
-   * @param usage <tt>java org.javascool.core2.Proglet2Html (jarFile progletDir|javadocName srcDir apiDir)</tt>
+   * @param usage <tt>java org.javascool.core.Proglet2Html (jarFile progletDir|javadocName srcDir apiDir)</tt>
    */
   public static void main(String[] usage) {
     // @main
@@ -290,6 +290,9 @@ public class Proglet2Html {
       } catch(IOException e) {
 	throw new RuntimeException(e.toString());
       }
+    } else if (FileManager.exists("main-usage-0.txt")) {
+      // Détection de l'argument dans un fichier ajouté à la jarre
+      build(FileManager.load("main-usage-0.txt"));
     } else {
       new MainFrame().reset("Proglet2Html", "org/javascool/widgets/icons/compile.png", 800, 600, new JPanel() {
 	  private JTextField path;

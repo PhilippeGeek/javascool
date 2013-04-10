@@ -139,7 +139,7 @@ public class Proglet2Jar {
   }
 
   /** Lanceur de la construction de la proglet.
-   * @param usage <tt>java org.javascool.core2.Proglet2Jar jarFile progletDir</tt>
+   * @param usage <tt>java org.javascool.core.Proglet2Jar jarFile progletDir</tt>
    */
   public static void main(String[] usage) {
     // @main

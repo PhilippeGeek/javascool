@@ -10,7 +10,7 @@ cd /home/vthierry/Work/culsci/jvs4
 # Définit le répertoire source et cible et les proglets à convertir
 
 srcDir="`pwd`/sketchbook"
-dstDir="`pwd`/dev5/sketchbook"
+dstDir="`pwd`/jvs5/sketchbook"
 srcProglets="`find $srcDir -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | egrep -v 'jeux2D|sampleCode'`"
 
 echo "Conversion de «" $srcProglets "» de '$srcDir' à '$dstDir'"
