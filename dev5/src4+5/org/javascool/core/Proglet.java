@@ -34,7 +34,7 @@ public class Proglet {
 	pml.set("help-location", location + "help.html");
 	pml.set("jvs-version", 5);
       } catch(Exception e2) {
-	throw new IllegalStateException("La proglet "+location+" n'est pas présente et ne peut être chagée");
+	throw new IllegalStateException("La proglet "+location+" n'est pas présente et ne peut être chargée");
       }
     }
     pml.set("location", location);
@@ -196,13 +196,13 @@ public class Proglet {
   }
   private Jvs2Java jvs2java = null;
   /** Indique si la proglet a une démo pour l'utilisateur.
-   */
+   * 
   public boolean hasDemo() {
     return getPane() != null && Invoke.run(getPane(), "run", false);
-  }
+  }*/
   /** Lance la démo de la proglet.
    * @throws RuntimeException si la méthode génère une exception lors de son appel.
-   */
+   *
   public void doDemo() {
     if(hasDemo()) {
       (new Thread() {
@@ -213,7 +213,7 @@ public class Proglet {
 	}
         ).start();
     }
-  }
+  */
   /**  Indique si la proglet est une proglet processing.
    * @return La valeur true si cette applet est développée en processing.
    */

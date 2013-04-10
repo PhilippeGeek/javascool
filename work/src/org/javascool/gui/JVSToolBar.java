@@ -19,7 +19,7 @@ class JVSToolBar extends ToolBar {
   private static final long serialVersionUID = 1L;
   /** Boutons de l'interface. */
   private JButton compileButton;
-  private JButton demoButton;
+  //private JButton demoButton;
   private StartStopButton runButton;
   /** Instance de la classe */
   private static JVSToolBar jvstb;
@@ -101,6 +101,7 @@ class JVSToolBar extends ToolBar {
             }
             );
     runButton.setVisible(false);
+    /*
     this.demoButton = addTool("Demo", "org/javascool/widgets/icons/play.png", new Runnable() {
                                 @Override
                                 public void run() {
@@ -110,6 +111,7 @@ class JVSToolBar extends ToolBar {
                               }
                               );
     demoButton.setVisible(false);
+    */
     /* Crée le menu de construction de proglets si pertinent
     if(ProgletsBuilder.canBuildProglets()) {
       pbutton = addRightTool("Proglet Builder", new Runnable() {
@@ -135,6 +137,7 @@ class JVSToolBar extends ToolBar {
     compileButton.setVisible(false);
     revalidate();
   }
+  /*
   public void enableDemoButton() {
     demoButton.setVisible(true);
     revalidate();
@@ -143,6 +146,7 @@ class JVSToolBar extends ToolBar {
     demoButton.setVisible(false);
     revalidate();
   }
+  */
   public void enableStartStopButton() {
     runButton.setVisible(true);
     revalidate();

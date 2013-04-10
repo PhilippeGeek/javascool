@@ -18,7 +18,7 @@
      qui renvoie -1 si la tension inconnue est plus petite et 1 si elle plus grande ou égale.
     </div>
 
-    <div>Un exemple d'utilisation:  dans la démonstration les résultats de la conversion analogique-numérique s'affichent avec un algorithme dichotomique . . 
+    <div>Les résultats de la conversion analogique-numérique s'afficheront avec un algorithme dichotomique . . 
     qui doit être trouvé en <l class="newtab" link="exercice.htm" text="exercice"/> !</div>
   </p>
 <p>Cette «proglet» est un composant logiciel ouvert dont documentation et code-source sont disponibles <l link="http://javascool.gforge.inria.fr/?page=proglets&amp;action=show&amp;id=analogNumerique&amp;helpFile=api/org/javascool/proglets/analogNumerique/package-summary.html" text="ici"/></p>

@@ -19,16 +19,5 @@ public class Panel extends JPanel {
   }
   // Ce label sera utilisé par la routine Functions.setMessage()
   JLabel label;
-
-  /** Démo de la proglet. */
-  public void run() {
-    // On boucle pour 10 clignotements entre oui et non
-    for(int i = 0; i < 10; i++) {
-      // Si i modulo 2 == 0, donc si i est pair, on affiche OUI, sinon NON.
-      setMessage(i % 2 == 0 ? "OUI" : "NON");
-      // On temporise 500 msec, donc 1/2 seconde.
-      sleep(500);
-    }
-  }
 }
 

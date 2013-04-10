@@ -88,16 +88,4 @@ public class Panel extends JPanel {
     garden[x + y * width] = c;
     repaint(x - 1, y - 1, 3, 3);
   }
-  /** Démo de la proglet. */
-  public void run() {
-    clear_all();
-    pen_up();
-    int t = 0;
-    while(t < 9000) {
-      set_color((t / 1000) % 10);
-      set_position(256 + 250 * Math.cos(0.0015 * t), 256 + 250 * Math.sin(0.0045 * t));
-      pen_down();
-      t = t + 1;
-    }
-  }
 }

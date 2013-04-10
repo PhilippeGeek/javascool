@@ -13,7 +13,7 @@
   <div class="center"><l class="icon" icon="turtle.gif"/></div>
   </div>
 
-  <div>Un exemple d'utilisation: lors de la démonstration,
+  <div>Un <l class="editor" link="Demo.jvs" text="exemple"/> d'utilisation: lors de la démonstration,
   la tortue trace de belles <l link="http://fr.wikipedia.org/wiki/Courbe_de_Lissajous" text="courbes de Lissajous"/> en changeant la couleur:<div class="code">
     <m>Initialisation du tracé</m>
     <p><r>clear_all</r>();</p>

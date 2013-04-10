@@ -34,7 +34,7 @@
      <p><r>setNotes</r>(<v>séquence-de-note</v>);</p>
    </div> où la syntaxe de <v>séquence-de-note</v> est définie dans la <l link="http://javascool.gforge.inria.fr/v4?page=proglets&amp;action=show&amp;id=syntheSons&amp;helpFile=api/org/javascool/proglets/syntheSons/NotesSoundBit.html" text="documentation"/> de la classe.</div>
 
-  <div>Un exemple d'utilisation: lors de la démonstration, 
+  <div>Un <l class="editor" link="Demo.jvs" text="exemple"/> d'utilisation: lors de la démonstration, 
   les différents sons:<div class="code">
      <p><r>@tone:</r> cos(t);</p>
      <p><r>play</r>();</p>

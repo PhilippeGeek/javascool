@@ -39,8 +39,20 @@ public class Jvs2Java extends Translator {
   // La proglet du contexte
   private Proglet proglet = null;
 
+  /**
+   * @see #translate(String, String)
+   */
   @Override
   public String translate(String jvsCode) {
+    return translate(jvsCode, null);
+  }
+
+  /** Traduit un code javascool en langage java.
+   * @param jvsCode Le code javascool à traduire
+   * @param jvsName Le nom du code javascool (par défaut le nom de la proglet)
+   * @return Le code java traduit
+   */
+  public String translate(String jvsCode, String jvsName) {
     String text = jvsCode.replace((char) 160, ' ');
     // Ici on ajoute
     if(!text.replaceAll("[ \n\r\t]+", " ").matches(".*void[ ]+main[ ]*\\([ ]*\\).*")) {
@@ -108,9 +120,11 @@ public class Jvs2Java extends Translator {
       head.append("  }");
       // Adds a main wrapper to run the proglet jvs runnable
       if (proglet != null) {
+	if (jvsName == null)
+	  jvsName = proglet.getName()+" démo";
 	String main = 
 	  "public static void main(String[] usage) {" + 
-	  "    new org.javascool.widgets.MainFrame().reset(\""+proglet.getName()+"\", "+proglet.getDimension().width+", "+proglet.getDimension().height+", "+
+	  "    new org.javascool.widgets.MainFrame().reset(\""+jvsName+"\", "+proglet.getDimension().width+", "+proglet.getDimension().height+", "+
 	  (proglet.getPane() != null ? "new "+progletPackageName+".Panel()" : "org.javascool.widgets.Console.getInstance()") +
 	  ").setRunnable(new JvsToJavaTranslated"+uid+"());" +
 	  "}";

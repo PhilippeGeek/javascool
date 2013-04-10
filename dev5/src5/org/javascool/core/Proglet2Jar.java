@@ -20,13 +20,13 @@ public class Proglet2Jar {
 
   /** Compile sous forme de jar une proglet donnée.
    * <p>Les erreurs de compilation ou de construction s'affichent dans la console.</p>
-   * @param jarFile La jarre de stockage du résultat.
+   * @param jarFile La jarre de stockage du résultat. Si le nom commence par "javascool-jvs2jar-" un compilateur de fichier jvs est créé.
    * @param progletDir Le répertoire où se trouvent les fichiers de la proglet.
    * @return La valeur true en cas de succès, false si il y a des erreurs de compilation.
    *
    * @throws RuntimeException Si une erreur d'entrée-sortie s'est produite lors de la compilation ou construction.
    */
-  public static boolean buildJar(String jarFile, String progletDir) {
+  public static boolean build(String jarFile, String progletDir) {
     try { 
       JSONObject params = getProgletParameters(progletDir);
       // Répertoire temporaire de compilation
@@ -67,7 +67,7 @@ public class Proglet2Jar {
       String mfData = 
 	"Manifest-Version: 1.0\n" +
 	"Created-By: "+params.getString("author")+" <"+params.getString("email")+">\n" +
-	"Main-Class: org.javascool.Core\n" +
+	"Main-Class: org.javascool."+(jarFile.startsWith("javascool-jvs2jar-") ? "core.Jvs2Jar" : "Core")+"\n" +
 	"Implementation-URL: http://javascool.gforge.inria.fr\n" +
 	"Java-Version: 1.7\n" +
 	"Implementation-Vendor: javascool@googlegroups.com, ou=javascool.gforge.inria.fr, o=inria.fr, c=fr\n";
@@ -139,12 +139,12 @@ public class Proglet2Jar {
   }
 
   /** Lanceur de la construction de la proglet.
-   * @param usage <tt>java org.javascool.core2.Proglet2Jar jarFile progletDir</tt>
+   * @param usage <tt>java org.javascool.core.Proglet2Jar jarFile progletDir</tt>
    */
   public static void main(String[] usage) {
     // @main
     if(usage.length == 2) {
-      buildJar(usage[0], usage[1]);
+      build(usage[0], usage[1]);
     }
   }
 }
