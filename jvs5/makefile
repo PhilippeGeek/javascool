@@ -1,7 +1,6 @@
 #
 # @TODO :
 #
-# Voir sketchbook/algoDeMaths/help.html: href="http://newtab?http://javascool.gforge.inria.fr/v4/index.php?page=resources&amp;action=link-sujets-mathinfo"
 # Faire un document qui décrit ce qui a été allégé de jvs4 à jvs4.9 (json, plus de demo, plus de xml, ..)
 # Voir le pb du javaStart sous windows 
 #
@@ -18,7 +17,7 @@
 
 # Test en cours 
 
-dft : tst2
+dft : tst1
 
 tst2 : clean cpv dist/javascool-core.jar
 	java -cp dist/javascool-core.jar org.javascool.core.Proglet2Html

@@ -9,11 +9,12 @@ Ce fichier en syntaxe [json](http://www.json.org) donne la description de la pro
 
 	{
 	 "title"  : "Exemple de «proglet» (1 à 2 lignes de description)",
-	 "author" : "Guillaume Matheron <guillaume.quest@gmail.com>", 
+	 "author" : "Guillaume Matheron",
+	 "email"  : "guillaume.quest@gmail.com", 
 	 "icon"   : "icon.png"
 	}
 
-* Les trois champs sont obligatoires, et le champ *author* doit faire apparaître un email de contact.
+* Les quatre champs sont obligatoires.
 
 * Le fichier image *icon* est celui du logo de la proglet. Elle peut avoir n'importe quel nom mais :
   * Il est quasi-indispensable que cette image soit au format png transparent. Sans cela il est très difficile de l'intégrer sur le site sans affecter son design.

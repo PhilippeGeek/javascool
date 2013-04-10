@@ -10,12 +10,12 @@ title: Développer autour de Java'sCool 5
 * Le nom doit avoir au plus seize lettres minuscules ou majuscules; pas de chiffre ou de symbole. 
 * Il ne doit contenir que des lettres faire au moins quatre caractères et au pluse seize et démarrer par une minuscule. 
 * Il doit être de la forme «algoDeMaths» pour «algo de maths» c'est à dire, sans espace, commencer par une minucule et les autres mots par une majuscule. 
-* L'identificateur de chaque proglet doit être unique. Regarder sur la [table des proglets](../soon.html) les noms existants. 
+* L'identificateur de chaque proglet doit être unique. Regarder sur la [table des proglets](../../wproglets/index.html) les noms existants. 
 
 ### Dossier d'une proglet
 
 * Tous les fichiers nécessaires au fonctionnement de la proglet sont placés dans un dossier. 
-* Le nom de ce dossier doit être de la forme *proglet-<identificateur>*.
+* Le nom de ce dossier doit avoir le nom de la proglet.
 * Il contient tous les fichiers de la proglet
 
 * Fichiers de description (obligatoires)
@@ -24,7 +24,7 @@ title: Développer autour de Java'sCool 5
 
 * Fichiers d'implémentation (optionnels)
   * *[Functions.java](./functions-java.html)*: définit les fonctions proposées à l'élève, si il y a des fonctions spécifiques à la proglet.
-  * *[Panel.java](./functions-java.html)* : implémente l'applet graphique de la proglet, si l'activité ne se fait pas à la console.
+  * *[Panel.java](./functions-java.html)* : implémente le panneau graphique de la proglet, si l'activité ne se fait pas à la console.
 
 * Fichiers supplémentaires (optionnels)
   * *[completion.json](./completion-json.html)* : qui définit les complétions automatiques proposées dans l'éditeur.
@@ -43,6 +43,7 @@ title: Développer autour de Java'sCool 5
 ### Documents de la proglet
 
 * Tous les documents qui ne sont pas à utiliser en local
-** sont à déposer sur le [dépot github](https://github.com/javascool/web-documents/tree/master/sketchbook),
-** pour être mis en ligne sur la [forge de publication](http://javascool.gforge.inria.fr/documents/sketchbook).
+  * sont à faire déposer sur la [forge de publication](http://javascool.gforge.inria.fr/documents/sketchbook).
+  * http://javascool.gforge.inria.fr/documents/sketchbook/«nom-de-la-proglet»
+
 
