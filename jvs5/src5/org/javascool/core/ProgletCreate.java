@@ -4,6 +4,18 @@ import java.io.File;
 import java.util.HashMap;
 import org.javascool.tools.FileManager;
 
+import org.javascool.widgets.MainFrame;
+import javax.swing.JPanel;
+import java.awt.BorderLayout;
+import javax.swing.BorderFactory;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import org.javascool.macros.Macros;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JFileChooser;
+import org.javascool.widgets.Console;
+
 /** Définit le mécanisme de création d'une proglet vide dans sa version jvs5.
  * @see <a href="ProgletCreate.java.html">code source</a>
  * @serial exclude
@@ -14,7 +26,7 @@ public class ProgletCreate {
   private ProgletCreate() {}
 
   /** Lanceur de la création dune proglet.
-   * @param usage <tt>java org.javascool.core2.ProgletCreate progletDir</tt>
+   * @param usage <tt>java org.javascool.core.ProgletCreate progletDir</tt>
    */
   public static void main(String[] usage) {
     if (usage.length == 1) {
@@ -34,6 +46,56 @@ public class ProgletCreate {
 	}
 	System.out.println("La proglet «" + name + "» est crée dans " + location + ".");
       }
+    } else if (FileManager.exists("main-usage-0.txt")) {
+      // Détection de l'argument dans un fichier ajouté à la jarre
+      main(new String[] { FileManager.load("main-usage-0.txt") });
+    } else {
+      new MainFrame().reset("ProgletCreate", "org/javascool/widgets/icons/compile.png", 800, 400, new JPanel() {
+	  private JTextField path;
+	  {
+	    setLayout(new BorderLayout());
+	    setBorder(BorderFactory.createTitledBorder("Création du canevas d'une proglet javascol"));
+	    add(new JPanel() {
+		{
+		  add(new JButton("Choisir", Macros.getIcon("org/javascool/widgets/icons/open.png")) {
+		      private static final long serialVersionUID = 1L;
+		      {
+			addActionListener(new ActionListener() {
+			    private static final long serialVersionUID = 1L;
+			    @Override
+			    public void actionPerformed(ActionEvent e) {
+			      (new JFileChooser() {
+				  private static final long serialVersionUID = 1L;
+				  {
+				    setDialogTitle("Sélection du répertoire de la proglet . . ");
+				    setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+				  }
+				  
+				  public void run(ActionEvent e) {
+				    if (showOpenDialog(((JButton) e.getSource()).getParent().getParent()) == JFileChooser.APPROVE_OPTION) {
+				      path.setText(getSelectedFile().getPath());
+				    }
+				  }
+				}).run(e);
+			    }
+			  });
+		      }});
+		  add(path = new JTextField(40));
+		  add(new JButton("Créer", Macros.getIcon("org/javascool/widgets/icons/compile.png")) {
+		      private static final long serialVersionUID = 1L;
+		      {
+			addActionListener(new ActionListener() {
+			    private static final long serialVersionUID = 1L;
+			    @Override
+			    public void actionPerformed(ActionEvent e) {
+			      main(new String[] { path.getText() });
+			    }
+			  });
+		      }});
+		  
+		}}, BorderLayout.NORTH);
+	    add(Console.getInstance());
+	  }});
     }
   }
   private static HashMap<String,String> filePatterns = new HashMap<String,String>();

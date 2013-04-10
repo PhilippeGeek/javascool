@@ -11,13 +11,15 @@ title: Développer autour de Java'sCool 5
 
 ####  Utiliser des «proglets»: rôle d'«apprenant»
 
-* Un apprenant a juste besoin de [lancer](./lancer.html) javascool, choisir une activité et suivre les instructions. L'activité [«abcdAlgo»](./soon.html) permet de se former à la fois à l'usage de la plateforme et aux ingrédients de base des algorithmes.
+* Un apprenant a juste besoin de choisir la [proglet](../wproglets/index.html) à lancer.
+
+  * L'activité [«abcdAlgo»](../wproglets/javascool-proglet-abcdAlgos-html/index.html) permet de se former à la fois à l'usage de la plateforme et aux ingrédients de base des algorithmes.
 
 #### Créer des «proglets»: rôle de «formateur»
 
 * Un formateur peut créer les documents de sa propre activité en réutilisant une proglet existante. Dans ce cas il crée les documents HTML.
 
-* Un formateur peut aussi créer un nouveau "plugin" à JavaScool, une [«proglet»](../wpages/JavaScool:Proglet.html) qui va donner accès à l'élève à des fonctions personalisés pour interagir avec un panel graphique, grâce à une documentation qui décrit l'activité. 
+* Un formateur peut aussi créer une [«proglet»](../wpages/JavaScool:Proglet.html) qui va donner accès à l'élève à des fonctions personalisés pour interagir avec un panel graphique, grâce à une documentation qui décrit l'activité. 
 
   * **[Comment créer une proglet ?](./developper/index.html)**
 
