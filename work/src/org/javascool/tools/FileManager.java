@@ -66,7 +66,6 @@ public class FileManager {
       }
       return buffer.toString();
       /*
-
       loadReader = new BufferedReader(new InputStreamReader(Macros.getResourceURL(location, true).openStream(),
                                                                        utf8 ? Charset.forName("utf-8") : Charset.defaultCharset()), 10240);
       loadBuffer = new StringBuilder();
@@ -112,7 +111,7 @@ public class FileManager {
     }
   }
   /**
-   * * @see #load(String, boolean)
+   * @see #load(String, boolean)
    */
   public static String load(String location) {
     return load(location, false);

@@ -1,6 +1,7 @@
 #
 # @TODO :
 #
+# Voir userconfig . factoriser applet
 # Faire un document qui décrit ce qui a été allégé de jvs4 à jvs4.9 (json, plus de demo, plus de xml, ..)
 # Voir le pb du javaStart sous windows 
 #
