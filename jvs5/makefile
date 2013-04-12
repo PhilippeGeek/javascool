@@ -42,32 +42,38 @@ tst1  : clean cpv dist/javascool-core.jar dist/javascool-proglet-$(tstP)-html
 export JAVA_HOME=/usr/java/jdk1.7.0_07
 export PATH:="$(JAVA_HOME)/bin:$(PATH)"
 
-# Publie les fichiers du site web
-
-www : clean cnv cpv dist/javascool-core.jar dist/javascool-core-api $(patsubst sketchbook/%,dist/javascool-proglet-%-html,$(wildcard sketchbook/*))
-	rsync --rsh='ssh -C' -rl dist/* scm.gforge.inria.fr:/home/groups/javascool/htdocs/v5
-
-dist/javascool-proglet-%-html : sketchbook/%
-	java -cp dist/javascool-core.jar org.javascool.core.Proglet2Html $@ $^
-
-# Publie les fichiers du site github
+# Installation du web github
 
 GIT_HOME=/home/vthierry/Work/culsci/old/jvs5/javascool.github.com
+
+DIST=$(GIT_HOME)/wproglets
+
+# Publie les fichiers du site github
 
 git :
 	rsync -rl doc5/* $(GIT_HOME)/doc
 	cd $(GIT_HOME) ; git status
 #	$(MAKE) -C $(GIT_HOME) push
 
+# Publie les fichiers du site web
+
+www : clean cnv cpv $(DIST)/javascool-core.jar $(DIST)/javascool-core-api $(patsubst sketchbook/%,$(DIST)/javascool-proglet-%-html,$(wildcard sketchbook/*))
+	rsync --rsh='ssh -C' -rl $(DIST)/* scm.gforge.inria.fr:/home/groups/javascool/htdocs/v5
+
+# Construit les proglets
+
+$(DIST)/javascool-proglet-%-html : sketchbook/%
+	echo java -cp $(DIST)/javascool-core.jar org.javascool.core.Proglet2Html $@ $^
+
 # Construit la jarre de javascool 
 
 SRC = $(wildcard lib4/*.jar) $(shell find src4+5 -name '*.java' -o -name '*.xml' -o -name '*.png' -o -name '*.htm' -o -name '*.zip')
 
-dist/javascool-core.jar : $(SRC)
+$(DIST)/javascool-core.jar : $(SRC)
 	sh ./bin/java2jar.sh -static -main=org.javascool.core.Proglet2Html $@ $^
 
-dist/javascool-core-api : $(SRC)
-	java -jar dist/javascool-core.jar javascool-core src4+5 $@
+$(DIST)/javascool-core-api : $(SRC)
+	java -jar $(DIST)/javascool-core.jar javascool-core src4+5 $@
 
 # Effectue la copie des src/lib de jvs4 vers jvs5
 
@@ -82,12 +88,12 @@ cnv :
 # Nettoie les répertoires générés
 
 clean :
-	rm -rf dist/* lib-*
+	rm -rf lib-*
 	svn status
 
 # Test des différences entre jvs4 et jvs5
 
 diff : 
-	sh bin/diffv4v5.sh > dist/diffv4v5.txt
+	sh bin/diffv4v5.sh
 
 ########################################################################################################################################################
