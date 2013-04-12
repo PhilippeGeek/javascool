@@ -36,9 +36,9 @@ import java.util.ArrayList;
  * <li>Les pages locales d'extension <tt>*.htm</tt> sont réputées être du HTML3 et sont affichées ici.</li>
  * <li>Les autres pages <tt>http://</tt>, <tt>file://</tt>, etc.. sont visualiées dans le navigateur du système, extérieur à javascool.</li>
  * <li>Il est possible d'ouvrir des pages dans une cible autre que ce visualisateur: <ul>
- *   <li>Les liens de la forme <tt>http://editor/<i>location</i></tt> ouvrent le document dans l'éditeur de JavaScool. <br>
+ *   <li>Les liens de la forme <tt>http://editor/?<i>location</i></tt> ouvrent le document dans l'éditeur de JavaScool. <br>
  *     Il sont générés par un tag de la form <tt>&lt;l class="editor" ..</tt></li>
- *   <li>Les liens de la forme <tt>http://newtab/<i>location</i></tt> ouvrent le document dans un autre onglet de JavaScool.<br>
+ *   <li>Les liens de la forme <tt>http://newtab/?<i>location</i></tt> ouvrent le document dans un autre onglet de JavaScool.<br>
  *     Il sont générés par un tag de la form <tt>&lt;l class="newtab" ..</tt></li> </li>
  * </ul> Il sont produits par les tags <tt>&lt;a target="editor" . . </tt> du XML.
  * En cas d'échec les contenus sont dirigés vers le navigateur du système, extérieur à javascool.</li>
@@ -215,6 +215,7 @@ public class HtmlDisplay extends JPanel {
   }
   /** Mécanisme de gestion des URL. */
   private void update(String location, boolean push) {
+    System.out.println("1>>>"+location);
     // Gestion des contenus textuels
     if(location.startsWith(stringPrefix)) { // Affichage de texte
       try {
@@ -228,6 +229,7 @@ public class HtmlDisplay extends JPanel {
       org.javascool.gui.Desktop.getInstance().openFile(toURL(location.substring(editorPrefix.length())));
     } else if(location.startsWith(newtabPrefix)) {    // Affichage dans browser JavaScool
       URL url = toURL(location.substring(newtabPrefix.length()));
+      System.out.println("2>>>"+url);
       String name = new File(url.getPath()).getName().replaceFirst("\\.[^\\.]*$", "").replace('_', '.');
       org.javascool.gui.Desktop.getInstance().openBrowserTab(url.toString(), name.substring(0, 1).toUpperCase() + name.substring(1));
     } else if(location.matches("^(http|https|rtsp|mailto):.*$")) {    // Gestion des URL externes

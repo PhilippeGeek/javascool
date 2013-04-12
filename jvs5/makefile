@@ -32,7 +32,8 @@ tstP = algoDeMaths
 
 tst1  : clean cpv dist/javascool-core.jar dist/javascool-proglet-$(tstP)-html
 #	firefox dist/javascool-proglet-$(tstP)-html/index.html
-#	java -cp dist/javascool-proglet-$(tstP)-html/javascool-proglet-$(tstP).jar org.javascool.Core
+	java -jar dist/javascool-proglet-$(tstP)-html/javascool-proglet-$(tstP).jar
+#	java -jar dist/javascool-proglet-algoDeMaths-html/JeuSimon.jvs.jar 
 
 ########################################################################################################################################################
 
