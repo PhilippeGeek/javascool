@@ -1,6 +1,6 @@
 <div title="La «proglet» algoDeMaths">
  <p class="margin">
-    <p><l class="newtab" link="http://javascool.gforge.inria.fr/v4/documents/sujets-mathinfo/index.htm"/>: cliquer sur le lien pour accéder aux exercices.</p>
+   <p><l link="http://javascool.gforge.inria.fr/v4/documents/sujets-mathinfo/index.htm" text="cliquer sur le lien"/> pour accéder aux exercices.</p>
   </p>
   <p>
     Cette proglet permet d'afficher des tracés de couleurs différentes.
