@@ -23,13 +23,15 @@ title: Développer autour de Java'sCool 5
 
   * **[Comment créer une proglet ?](./developper/index.html)**
 
+  * **[Lancer le constructeur de proglet](./wproglets/javascool-core.jar)**
+
 #### Contribuer au «framework» Java's Cool
 
 La plateforme Java's Cool a été [co-développée](../wpages/JavaScool:Crédits) par plusieurs petites équipes d'enseignant, étudiants et lycéens . . et tout le monde est bienvenu !
 
 * Tout le développement du framework est public, documenté et modularisé.
 
-* Contactez-nous sur [contact@javascool.fr](mailto:contact@javascool.fr) 
+* Contactez-nous sur [contact@javascool.fr](mailto:contact@javascool.fr) pour nous rejoindre, si vous le souhaaitez.
 
 ----
 

@@ -7,7 +7,7 @@ title: Développer autour de Java's Cool 5
 
 * Regarder comment est [spécifié une proglet](./specification.html).
 
-* Créer un répertoire de travail de nom *proglet-<identificateur>* 
+* Créer un répertoire de travail du nom de la proglet, avec le [constructeur de proglet](./wproglets/javascool-core.jar)
   * pour y définir le fichier de *[description](./proglet-json.html)* et de *[help.html](./documentation.html)*.
 
 * Implémenter les [sources Java](./functions-java.html) 
@@ -16,8 +16,9 @@ title: Développer autour de Java's Cool 5
 
 * Pour les proglets créées avec [processing](http://processing.org) se référer à la doc [spécifique](../../wpages/JavaScool:ProgletProcessing.html).
 
-`A COMPLETER : installation au niveau de github, creation et compilation par web service`
+* **[Lancer le constructeur de proglet](./wproglets/javascool-core.jar)**
+
 
 ---- 
 
-* *Note* : La méthode à été simplifiée par rapport à [Java's Cool4](http://javascool.gforge.inria.fr/index.php?page=developers) et si besoin [nous pouvons vous faire](../wpages/contact.html) la traduction automatique des anciennes proglets.
+* *Note* : La méthode à été [simplifiée](./jvs4-jvs5.html) par rapport à [Java's Cool4](http://javascool.gforge.inria.fr/v4/index.php?page=developers), les proglets connues ont été traduites e et si besoin [nous pouvons vous faire](../wpages/contact.html) la traduction automatique des anciennes proglets.
