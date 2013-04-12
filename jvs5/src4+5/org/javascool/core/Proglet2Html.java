@@ -11,12 +11,14 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.BorderFactory;
 import javax.swing.JTextField;
+import javax.swing.JLabel;
 import javax.swing.JButton;
 import org.javascool.macros.Macros;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFileChooser;
 import org.javascool.widgets.Console;
+import org.javascool.tools.UserConfig;
 
 /** Définit le mécanisme de compilation en ligne d'une proglet dans sa version jvs5.
  * - Attention il faut que la proglet ait été convertie en jvs5 (conversion des docs XML en HTML, du fichier de méta-donnée en .json).
@@ -29,7 +31,7 @@ public class Proglet2Html {
 
   /** Compile sous forme de répertoire web une proglet donnée.
    * <p>Les erreurs de compilation ou de construction s'affichent dans la console.</p>
-   * @param htmlDir Le répertoire cible de la construction.
+   * @param htmlDir Le répertoire cible de la construction, qui sera <i>détruit</i> avant d'être utilisé pour créer les fichiers.
    * @param progletDir Le répertoire où se trouvent les fichiers de la proglet.
    * @return La valeur true en cas de succès, false si il y a des erreurs de compilation.
    *
@@ -37,6 +39,10 @@ public class Proglet2Html {
    */
   public static boolean build(String htmlDir, String progletDir) {
     try {
+      if (!new File(progletDir).exists())
+	throw new IllegalArgumentException("Le répertoire "+progletDir+" n'existe pas");
+      if (!new File(progletDir).isDirectory())
+	throw new IllegalArgumentException("Le fichier "+progletDir+" n'est pa sun répertoire");
       JSONObject params = Proglet2Jar.getProgletParameters(progletDir);
       // Creation d'un répertoire vierge
       JarManager.rmDir(new File(htmlDir));
@@ -74,7 +80,7 @@ public class Proglet2Html {
       }
       return true;
     } catch (Throwable e) {
-      System.err.println(e);
+      System.out.println(e);
       e.printStackTrace();
       return false;
     }
@@ -83,7 +89,7 @@ public class Proglet2Html {
    * @see #build(String, String)
    */
   public static boolean build(String htmlDir) {
-    return build(htmlDir, htmlDir+"-html");
+    return build(htmlDir+"-html", htmlDir);
   }
   // Encapsulate le corps d'une page html
   private static String encapsulates(String body, JSONObject params) throws Exception {
@@ -160,7 +166,7 @@ public class Proglet2Html {
       String javaCommand = System.getProperty("java.home") + File.separator + "bin" + File.separator + "java"; 
       return exec(javaCommand+(command.indexOf('\t') == -1 ? " " : "\t")+command, timeout) == 0;
     } catch(Exception e) {
-      System.err.println("Impossible de lancer la command '$java " + command + "' : " + e);
+      System.out.println("Impossible de lancer la command '$java " + command + "' : " + e);
       return false;
     }
   }
@@ -295,7 +301,6 @@ public class Proglet2Html {
       build(FileManager.load("main-usage-0.txt"));
     } else {
       new MainFrame().reset("Proglet2Html", "org/javascool/widgets/icons/compile.png", 800, 600, new JPanel() {
-	  private JTextField path;
 	  {
 	    setLayout(new BorderLayout());
 	    setBorder(BorderFactory.createTitledBorder("Compilation d'une proglet javascol"));
@@ -313,33 +318,90 @@ public class Proglet2Html {
 				  {
 				    setDialogTitle("Sélection du répertoire de la proglet . . ");
 				    setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+				    String path = UserConfig.getInstance("proglet2html").getProperty("proglet-path");
+				    if (path != null)
+				      setCurrentDirectory(new File(path));
+                                if (path != null)
+                                    setCurrentDirectory(new File(path));
+
 				  }
-				  
 				  public void run(ActionEvent e) {
 				    if (showOpenDialog(((JButton) e.getSource()).getParent().getParent()) == JFileChooser.APPROVE_OPTION) {
-				      path.setText(getSelectedFile().getPath());
+				      updateLocation(getSelectedFile().getPath());
 				    }
 				  }
 				}).run(e);
 			    }
 			  });
 		      }});
-		  add(path = new JTextField(40));
-		  add(new JButton("Compiler", Macros.getIcon("org/javascool/widgets/icons/compile.png")) {
+		  add(new JPanel() {
+		      {
+			setBorder(BorderFactory.createTitledBorder("Répertoire de la proglet"));
+			add(folder = (new JTextField(32) {
+			    private static final long serialVersionUID = 1L;
+			    {
+			      addActionListener(new ActionListener() {
+				  @Override
+				  public void actionPerformed(ActionEvent e) {
+				    updateLocation();
+				  }
+				});
+			    }
+			  }));
+			add(new JLabel(File.separator));
+			add(name = (new JTextField(12) {
+			    private static final long serialVersionUID = 1L;
+			    {
+			      addActionListener(new ActionListener() {
+				  @Override
+				  public void actionPerformed(ActionEvent e) {
+				    updateLocation();
+				  }
+				});
+			    }
+			  }));
+		      }});
+		  add(doit = new JButton("Compiler", Macros.getIcon("org/javascool/widgets/icons/compile.png")) {
 		      private static final long serialVersionUID = 1L;
 		      {
 			addActionListener(new ActionListener() {
 			    private static final long serialVersionUID = 1L;
 			    @Override
 			    public void actionPerformed(ActionEvent e) {
-			      build(path.getText());
+			      String path = folder.getText() + File.separator + name.getText();
+			      if (new File(path).exists()) {
+				build(path);
+			      } else {
+				ProgletCreate.build(path);
+				doit.setText("Compiler");
+			      }
 			    }
 			  });
 		      }});
 		  
 		}}, BorderLayout.NORTH);
 	    add(Console.getInstance());
-	  }});
+	  }
+	  private JTextField folder, name;
+	  private JButton doit;
+	  private void updateLocation(String path) {
+	    if (name.getText().length() == 0 && new File(path + File.separator + "proglet.json").exists()) {
+	      folder.setText(new File(path).getParent());
+	      name.setText(new File(path).getName());
+	    } else {
+	      folder.setText(path);
+	    }
+	    updateLocation();
+	  }
+	  private void updateLocation() {
+	    String path = folder.getText() + File.separator + name.getText();
+	    if (new File(folder.getText()).isDirectory())
+	      UserConfig.getInstance("proglet2html").setProperty("proglet-path", path);
+	    else
+	      System.out.println("Attention, le répertoire "+folder+" n'existe pas");
+	    doit.setText(new File(path).exists() ? "Compiler" : "Créer");
+	  }
+	});
     }
   }
 }

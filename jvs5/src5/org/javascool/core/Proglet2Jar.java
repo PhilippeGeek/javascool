@@ -76,8 +76,9 @@ public class Proglet2Jar {
       JarManager.rmDir(new File(jarDir));
       return true;
     } catch (Throwable e) {
-      System.err.println(e);
-      return false;
+      System.out.println(e);
+      e.printStackTrace();
+     return false;
     }
   }
 

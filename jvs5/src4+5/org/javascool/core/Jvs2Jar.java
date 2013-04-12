@@ -15,6 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFileChooser;
 import org.javascool.widgets.Console;
+import org.javascool.tools.UserConfig;
 
 /** Définit le mécanisme de compilation en ligne d'un programme javasccol d'une proglet donnée dans sa version jvs5.
  * - Attention il faut que la proglet ait été convertie en jvs5 (conversion des docs XML en HTML, du fichier de méta-donnée en .json).
@@ -68,7 +69,7 @@ public class Jvs2Jar {
       JarManager.rmDir(new File(jarDir));
       return true;
     } catch (Throwable e) {
-      System.err.println(e);
+      System.out.println(e);
       return false;
     }
   }  
@@ -104,7 +105,7 @@ public class Jvs2Jar {
 	  private JTextField path;
 	  {
 	    setLayout(new BorderLayout());
-	    setBorder(BorderFactory.createTitledBorder("Création d'une jarre à partir d'un code javascol"));
+	    setBorder(BorderFactory.createTitledBorder("Création d'une jarre à partir d'un code javascool"));
 	    add(new JPanel() {
 		{
 		  add(new JButton("Choisir", Macros.getIcon("org/javascool/widgets/icons/open.png")) {
@@ -119,18 +120,37 @@ public class Jvs2Jar {
 				  {
 				    setDialogTitle("Chargement du fichier jvs . . ");
 				    setFileSelectionMode(JFileChooser.FILES_ONLY);
+				    String path = UserConfig.getInstance("jvs2jar").getProperty("jvs-path");
+				    if (path != null)
+				      setCurrentDirectory(new File(path));
 				  }
 				  
 				  public void run(ActionEvent e) {
 				    if (showOpenDialog(((JButton) e.getSource()).getParent().getParent()) == JFileChooser.APPROVE_OPTION) {
 				      path.setText(getSelectedFile().getPath());
+				      updateLocation();
 				    }
 				  }
 				}).run(e);
 			    }
 			  });
 		      }});
-		  add(path = new JTextField(40));
+		  add(new JPanel() {
+		      {
+			setBorder(BorderFactory.createTitledBorder("Fichier à compiler"));
+			add(path = (new JTextField(40) {
+			    private static final long serialVersionUID = 1L;
+			    {
+			      addActionListener(new ActionListener() {
+				  @Override
+				  public void actionPerformed(ActionEvent e) {
+				    updateLocation();
+				  }
+				});
+			    }
+			  }));
+		      }
+		    });
 		  add(new JButton("Compiler", Macros.getIcon("org/javascool/widgets/icons/compile.png")) {
 		      private static final long serialVersionUID = 1L;
 		      {
@@ -145,7 +165,12 @@ public class Jvs2Jar {
 		  
 		}}, BorderLayout.NORTH);
 	    add(Console.getInstance());
-	  }});
+	  }
+	  private void updateLocation() {
+	    if (new File(path.getText()).isFile())
+	      UserConfig.getInstance("jvs2jar").setProperty("jvs-path", path.getText());
+	  }
+	});
     }
   }
 }
