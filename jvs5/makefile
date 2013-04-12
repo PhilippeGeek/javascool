@@ -10,7 +10,8 @@
 # Valider le site javascool-5 avec juste les icones des proglets (generation via makefile) et un lokk bootsrap et menu minima
 # Voir comment se gère les proglets processing et bien valider les liens vers le site fuscia
 # Valider le make www de ici et le git (avec le wget de http://javascool.gforge.inria.fr/v5 dans javascool.github.com/wproglets)
-#
+# http://javascool.github.com/wpages/JavaScool:Ressources.html
+
 # - Mettre Build.java dans builder et About.java + Core.java dans gui et créer un javascool/core/Utils.java ; et mettre  jour build.xml
 # - Copier dans javascool-core les classes images, socket et son
 # - Ajouter json à Pml en entrée/sortie.
@@ -44,21 +45,15 @@ export PATH:="$(JAVA_HOME)/bin:$(PATH)"
 
 # Installation du web github
 
-GIT_HOME=/home/vthierry/Work/culsci/old/jvs5/javascool.github.com
+GIT_HOME=./javascool.github.com
 
 DIST=$(GIT_HOME)/wproglets
-
-# Publie les fichiers du site github
-
-git :
-	rsync -rl doc5/* $(GIT_HOME)/doc
-	cd $(GIT_HOME) ; git status
-#	$(MAKE) -C $(GIT_HOME) push
 
 # Publie les fichiers du site web
 
 www : clean cnv cpv $(DIST)/javascool-core.jar $(DIST)/javascool-core-api $(patsubst sketchbook/%,$(DIST)/javascool-proglet-%-html,$(wildcard sketchbook/*))
-	rsync --rsh='ssh -C' -rl $(DIST)/* scm.gforge.inria.fr:/home/groups/javascool/htdocs/v5
+	cd $(GIT_HOME) ; git status
+#	$(MAKE) -C $(GIT_HOME) push
 
 # Construit les proglets
 
