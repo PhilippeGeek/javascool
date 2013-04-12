@@ -47,25 +47,4 @@ public class Panel extends JPanel {
   public NumberInput value;
   /** Etiquette du comparateur et de la sortie. */
   public JLabel out, cmp;
-  /** Démo de la proglet. */
-  public void run() {
-    // Méthode dichotomique
-    {
-      int min = 0, max = 1024;
-      while(min < max - 1) {
-        // Macros.echo("La valeur est comprise entre " + (min) + " et " + (max - 1));
-        int milieu = (min + max) / 2;
-        Functions.output(milieu);
-        if(Functions.compare() == 1) {
-          min = milieu;
-        } else {
-          max = milieu;
-        }
-        Macros.sleep(1000);
-      }
-      Functions.output(min);
-      Functions.compare();
-      System.out.println("La valeur vaut " + min);
-    }
-  }
 }

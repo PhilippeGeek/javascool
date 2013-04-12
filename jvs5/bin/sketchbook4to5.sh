@@ -52,8 +52,8 @@ do s="$srcDir/$p" ; d="$dstDir/$p" ; echo "Translate $p"
   # Translation des fichiers *.html
   if ls *.xml > /dev/null ; then for f in *.xml ; do n=`echo $f | sed s'/.xml$//'` ; java -jar $jsx -o $n.html $n.xml $xslt ; rm -f $f ; done ; fi
     for f in *.html ; do cp $f $f~ ; cat $f~ |\
-	sed 's/[?]page=proglets&amp;action=show&amp;id=\([^&]*\)&amp;helpFile=\([^"]*\)/v5\/wproglets\/javascool-proglet-\1-html\/\2/g' |\
-	sed 's/index\.php[?]page=api/v5\/wproglets\/javascool-core-api/' |\
+	sed 's/http:..javascool.gforge.inria.fr.[?]page=proglets&amp;action=show&amp;id=\([^&]*\)&amp;helpFile=\([^"]*\)/http:\/\/javascool.github.com\/wproglets\/javascool-proglet-\1-html\/\2/g' |\
+	sed 's/http:..javascool.gforge.inria.fr.index\.php[?]page=api/http:\/\/javascool.github.com\/wproglets\/javascool-core-api/' |\
 	sed 's/.htm"/.html"/g' > $f ; done
   # Manipulation des fichiers java
   if ls *.java > /dev/null ; then for f in *.java ; do cp $f $f~ ; cat $f~ |\

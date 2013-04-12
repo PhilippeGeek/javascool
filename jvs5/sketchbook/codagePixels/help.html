@@ -149,7 +149,7 @@
                 
          </div>
              
-         <div>Un <a href="http://javascool.gforge.inria.fr/v5/wproglets/javascool-proglet-codagePixels-html/api/org/javascool/proglets/codagePixels/Demo.html">exemple</a> d'utilisation: lors de la d&eacute;monstration, le signe de la paix va s'afficher:
+         <div>Un <a href="http://editor?Demo.jvs">exemple</a> d'utilisation: lors de la d&eacute;monstration, le signe de la paix va s'afficher:
                   
             <div align="center" class="center"><img src="smiley2.jpg" alt="" class="icon"></div>
                   ceci, &agrave; diff&eacute;rentes r&eacute;solutions 256, 128, 64, 32, 16, 8, 4, 2, 1. Avec une bonne r&eacute;solution il sera tr&egrave;s lisible, puis
@@ -166,10 +166,13 @@
       </div>
         
       <div>Voici aussi deux exemples de trac&eacute;s de fractals de <a href="http://editor?JFKMandel.jvs">Mandelbrot</a> et de <a href="http://editor?JFKJulia.jvs">Julia</a></div>
+        
+      <div>Voici un exemple de programme qui <a href="http://editor?DeuxImages.jvs">superpose deux imaages</a>.
+      </div>
       
       
       
-      <div>Cette &laquo;proglet&raquo; est un composant logiciel ouvert dont documentation et code-source sont disponibles <a href="http://javascool.gforge.inria.fr/v5/wproglets/javascool-proglet-codagePixels-html/api/org/javascool/proglets/codagePixels/package-summary.html">ici</a></div>
+      <div>Cette &laquo;proglet&raquo; est un composant logiciel ouvert dont documentation et code-source sont disponibles <a href="http://javascool.github.com/wproglets/javascool-proglet-codagePixels-html/api/org/javascool/proglets/codagePixels/package-summary.html">ici</a></div>
       
       
       
@@ -177,16 +180,16 @@
       <div id="notes">
          <ol>
             <li><b>Coordonn&eacute;es non centr&eacute;es:</b> On utilise ici des coordonn&eacute;es centr&eacute;es, mais il est aussi possible d'utiliser des coordonn&eacute;es "brutes" <tt>[0, width[ x [0, height[</tt> 
-                 (de gauche &agrave; droite et de bas en haut) avec cette proglet, comme <a href="http://javascool.gforge.inria.fr/v5/wproglets/javascool-proglet-codagePixels-html/api/org/javascool/proglets/codagePixels/Functions.html#reset(int, int, boolean)">document&eacute; ici</a></li>
-            <li><b>Images couleurs:</b> Il est aussi possible d'utiliser des pixels couleurs en sp&eacute;cifiant les valeurs rouge-vert-bleue &eacute;crites avec <tt><a href="http://javascool.gforge.inria.fr/v5/wproglets/javascool-proglet-codagePixels-html/api/org/javascool/proglets/codagePixels/Functions.html#set(int, int, int, int, int)">setPixel(x, y, red, green, blue)</a></tt> (ou par leur <tt><a href="http://javascool.gforge.inria.fr/v5/wproglets/javascool-proglet-codagePixels-html/api/org/javascool/proglets/codagePixels/Functions.html#set(int, int, String)">nom</a></tt>) et lues avec <tt><a href="http://javascool.gforge.inria.fr/v5/wproglets/javascool-proglet-codagePixels-html/api/org/javascool/proglets/codagePixels/Functions.html#getPixelColor(int, int)">int rgb[] = getPixelColor(x, y)</a></tt> (la valeur rouge est <tt>rgb[0]</tt>, bleue <tt>rgb[1]</tt>, et verte <tt>rgb[2]</tt>).
+                 (de gauche &agrave; droite et de bas en haut) avec cette proglet, comme <a href="http://javascool.github.com/wproglets/javascool-proglet-codagePixels-html/api/org/javascool/proglets/codagePixels/Functions.html#reset(int, int, boolean)">document&eacute; ici</a></li>
+            <li><b>Images couleurs:</b> Il est aussi possible d'utiliser des pixels couleurs en sp&eacute;cifiant les valeurs rouge-vert-bleue &eacute;crites avec <tt><a href="http://javascool.github.com/wproglets/javascool-proglet-codagePixels-html/api/org/javascool/proglets/codagePixels/Functions.html#set(int, int, int, int, int)">setPixel(x, y, red, green, blue)</a></tt> (ou par leur <tt><a href="http://javascool.github.com/wproglets/javascool-proglet-codagePixels-html/api/org/javascool/proglets/codagePixels/Functions.html#set(int, int, String)">nom</a></tt>) et lues avec <tt><a href="http://javascool.github.com/wproglets/javascool-proglet-codagePixels-html/api/org/javascool/proglets/codagePixels/Functions.html#getPixelColor(int, int)">int rgb[] = getPixelColor(x, y)</a></tt> (la valeur rouge est <tt>rgb[0]</tt>, bleue <tt>rgb[1]</tt>, et verte <tt>rgb[2]</tt>).
             </li>
             <li><b>Manipulation d'images sous forme de tableau</b> Voici disponibles <a href="http://editor?MoreImage.jvs">quelques routines</a> exemples pour aller plus loin: redimensionner une image, la manipuler en tableau, etc...
             </li>
-            <li><b>Sauvegarde d'images:</b> Il est aussi possible de sauvegarder une image dans un fichier, avec <a href="http://javascool.gforge.inria.fr/v5/wproglets/javascool-proglet-codagePixels-html/api/org/javascool/proglets/codagePixels/Functions.html#save(java.lang.String)">save(String)</a>.
+            <li><b>Sauvegarde d'images:</b> Il est aussi possible de sauvegarder une image dans un fichier, avec <a href="http://javascool.github.com/wproglets/javascool-proglet-codagePixels-html/api/org/javascool/proglets/codagePixels/Functions.html#save(java.lang.String)">save(String)</a>.
             </li>
             <li><b>Format ASCII:</b> Il est aussi possible de charger/sauvegarder des images en format ASCII <a href="http://fr.wikipedia.org/wiki/Portable_pixmap">PBM, PGM ou PPM</a> pour en analyser le codage (voir <a href="http://editor?Exemple2.jvs">ici</a>).
             </li>
-            <li><b>D&eacute;tection de clic</b>: On peut d&eacute;tecter un clic utilisateur avec un <a href="../algoDeMaths/aboutRunnable.html">Runnable</a> et r&eacute;cup&eacute;rer la position dans l'image avec les fonctions <a href="http://javascool.gforge.inria.fr/v5/wproglets/javascool-proglet-codagePixels-html/api/org/javascool/proglets/codagePixels/Functions.html#getX()">getX()</a> et <a href="http://javascool.gforge.inria.fr/v5/wproglets/javascool-proglet-codagePixels-html/api/org/javascool/proglets/codagePixels/Functions.html#getY()">getY()</a>.
+            <li><b>D&eacute;tection de clic</b>: On peut d&eacute;tecter un clic utilisateur avec un <a href="../algoDeMaths/aboutRunnable.html">Runnable</a> et r&eacute;cup&eacute;rer la position dans l'image avec les fonctions <a href="http://javascool.github.com/wproglets/javascool-proglet-codagePixels-html/api/org/javascool/proglets/codagePixels/Functions.html#getX()">getX()</a> et <a href="http://javascool.github.com/wproglets/javascool-proglet-codagePixels-html/api/org/javascool/proglets/codagePixels/Functions.html#getY()">getY()</a>.
             </li>
          </ol>
       </div>

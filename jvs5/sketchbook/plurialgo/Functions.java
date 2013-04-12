@@ -16,7 +16,4 @@ public class Functions {
   private static Panel getPane() {
      return getProgletPane();
   }
-
-  //@todo Définir ici les fonctions <tt>public static</tt>
-
 }

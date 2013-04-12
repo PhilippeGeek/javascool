@@ -29,9 +29,4 @@ public class Panel extends JPanel {
     Functions.villes = main.latitudes.keySet();
   }
   GogleMapPanel main;
-
-  /** Démo de la proglet. */
-  public void run() {
-    Macros.message("Pour la démo . . utiliser les boutons \"Parcours en profondeur\" +  \"Parcours en largeur\" !");
-  }
 }

@@ -15,8 +15,5 @@ public class Panel extends IconOutput {
   private static final long serialVersionUID = 1L;
   // @bean
   public Panel() {}
-  /** Démo de la proglet. */
-  public void run() {
-    Demo.start();
-  }
 }
+
