@@ -1,3 +1,4 @@
+########################################################################################################################################################
 #
 # @TODO :
 #
@@ -12,13 +13,16 @@
 # Voir comment se gère les proglets processing et bien valider les liens vers le site fuscia
 # Valider le make www de ici et le git (avec le wget de http://javascool.gforge.inria.fr/v5 dans javascool.github.com/wproglets)
 #
+# - Mettre Build.java dans builder et About.java + Core.java dans gui et créer un javascool/core/Utils.java ; et mettre  jour build.xml
 # - Ajouter json à Pml en entrée/sortie.
 # - Recuperer l'éditeur HTML5 de Philippe est en faire un produit autonome qui se connecte aux web services
 # - Voir jar jbed jad http://www.developpez.net/forums/d922916/java/general-java/java-mobiles/android/android-jar/
+#
+########################################################################################################################################################
 
 # Test en cours 
 
-dft : tst1
+dft : tst2
 
 tst2 : clean cpv dist/javascool-core.jar
 	java -cp dist/javascool-core.jar org.javascool.core.Proglet2Html
@@ -28,6 +32,8 @@ tstP = algoDeMaths
 tst1  : clean cpv dist/javascool-core.jar dist/javascool-proglet-$(tstP)-html
 #	firefox dist/javascool-proglet-$(tstP)-html/index.html
 #	java -cp dist/javascool-proglet-$(tstP)-html/javascool-proglet-$(tstP).jar org.javascool.Core
+
+########################################################################################################################################################
 
 # Choix de la JDK
 
@@ -76,3 +82,10 @@ cnv :
 clean :
 	rm -rf dist/* lib-*
 	svn status
+
+# Test des différences entre jvs4 et jvs5
+
+diff : 
+	sh bin/diffv4v5.sh > dist/diffv4v5.txt
+
+########################################################################################################################################################

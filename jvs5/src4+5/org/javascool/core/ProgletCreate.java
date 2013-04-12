@@ -25,79 +25,46 @@ public class ProgletCreate {
 
   private ProgletCreate() {}
 
-  /** Lanceur de la création dune proglet.
-   * @param usage <tt>java org.javascool.core.ProgletCreate progletDir</tt>
+  /** Crée un répertoire d'une proglet et y installe des modèles de fichiers.
+   * @param progletDir Le répertoire où se trouvent les fichiers de la proglet.
+   * @return La valeur true en cas de succès, false si il y a des erreurs de compilation.
+   *
+   * @throws RuntimeException Si une erreur d'entrée-sortie s'est produite lors de la compilation ou construction.
    */
-  public static void main(String[] usage) {
-    if (usage.length == 1) {
-      String location = usage[0];
-      String name = new File(location).getName();
+  public static boolean build(String progletDir) {
+    try {
+      String name = new File(progletDir).getName();
       Proglet2Jar.checkProgletName(name);
       // Copie les fichiers exemple dans le répertoire
       {
-	new File(location).mkdirs();
+	new File(progletDir).mkdirs();
 	for (String fileName : filePatterns.keySet()) {
-	  String pathName = location + File.separator + fileName;
+	  String pathName = progletDir + File.separator + fileName;
 	  if (new File(pathName).exists()) {
 	    System.out.println("le fichier " + fileName + " existe déjà, on ne le modifie pas");
 	  } else {
 	    FileManager.save(pathName, filePatterns.get(fileName).replaceAll("@name", name), true);
 	  }
 	}
-	System.out.println("La proglet «" + name + "» est crée dans " + location + ".");
+	System.out.println("La proglet «" + name + "» est crée dans " + progletDir + ".");
       }
-    } else if (FileManager.exists("main-usage-0.txt")) {
-      // Détection de l'argument dans un fichier ajouté à la jarre
-      main(new String[] { FileManager.load("main-usage-0.txt") });
-    } else {
-      new MainFrame().reset("ProgletCreate", "org/javascool/widgets/icons/compile.png", 800, 400, new JPanel() {
-	  private JTextField path;
-	  {
-	    setLayout(new BorderLayout());
-	    setBorder(BorderFactory.createTitledBorder("Création du canevas d'une proglet javascol"));
-	    add(new JPanel() {
-		{
-		  add(new JButton("Choisir", Macros.getIcon("org/javascool/widgets/icons/open.png")) {
-		      private static final long serialVersionUID = 1L;
-		      {
-			addActionListener(new ActionListener() {
-			    private static final long serialVersionUID = 1L;
-			    @Override
-			    public void actionPerformed(ActionEvent e) {
-			      (new JFileChooser() {
-				  private static final long serialVersionUID = 1L;
-				  {
-				    setDialogTitle("Sélection du répertoire de la proglet . . ");
-				    setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-				  }
-				  
-				  public void run(ActionEvent e) {
-				    if (showOpenDialog(((JButton) e.getSource()).getParent().getParent()) == JFileChooser.APPROVE_OPTION) {
-				      path.setText(getSelectedFile().getPath());
-				    }
-				  }
-				}).run(e);
-			    }
-			  });
-		      }});
-		  add(path = new JTextField(40));
-		  add(new JButton("Créer", Macros.getIcon("org/javascool/widgets/icons/compile.png")) {
-		      private static final long serialVersionUID = 1L;
-		      {
-			addActionListener(new ActionListener() {
-			    private static final long serialVersionUID = 1L;
-			    @Override
-			    public void actionPerformed(ActionEvent e) {
-			      main(new String[] { path.getText() });
-			    }
-			  });
-		      }});
-		  
-		}}, BorderLayout.NORTH);
-	    add(Console.getInstance());
-	  }});
+      return true;
+    } catch (Throwable e) {
+      System.out.println(e);
+      e.printStackTrace();
+      return false;
     }
   }
+
+  /** Lanceur de la création dune proglet.
+   * @param usage <tt>java org.javascool.core.ProgletCreate progletDir</tt>
+   */
+  public static void main(String[] usage) {
+    if (usage.length == 1) {
+      build(usage[0]);
+    }
+  }
+
   private static HashMap<String,String> filePatterns = new HashMap<String,String>();
 
   static {
@@ -106,7 +73,7 @@ public class ProgletCreate {
 		     "{\n" +
 		     "  \"name\"   : \"@name\",\n" +
 		     "  \"title\"  : \"Exemple de «proglet»\",\n" +
-		     "  \"author\" : \"Prenom Nom\",\n" +
+		     "  \"author\" : \"Prénom Nom\",\n" +
 		     "  \"email\"  : \"email@serveur.com\",\n" +
 		     "  \"icon\"   : \"sample.png\"\n" +
 		     "}\n");
@@ -140,7 +107,6 @@ public class ProgletCreate {
 		     "    \"code\"  : \"texte source de la complétion\",\n" +
 		     "    \"doc\"   : \"Texte qui documente la fonction de l'on complète\"\n" +
 		     "  } \n" +
-		     "  // , autres keyword \n" +
 		     "]\n");
 		     
     filePatterns.put("Functions.java", 

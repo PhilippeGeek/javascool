@@ -6,7 +6,6 @@
 
 package org.javascool.macros;
 
-import org.javascool.gui.Desktop;
 import org.javascool.widgets.Console;
 
 // Classes pour l'impression d'un composent ou de la consol.
@@ -80,7 +79,7 @@ public class Stdout {
    * @see #echo(String)
    */
   public static void println(String string) {
-    Desktop.getInstance().focusOnConsolePanel();
+    org.javascool.gui.Desktop.getInstance().focusOnConsolePanel();
     System.err.println("printing : \"" + string + "\"");
     Console.getInstance(true).print(string + "\n");
   }
