@@ -11,11 +11,11 @@ title: Développer autour de Java'sCool 5
 
 * La classe permet aussi de spécifier des import Java spécifique de la proglet.
 
-* Par exemple, le [translateur de la proglet syntheSons](http://javascool.gforge.inria.fr/?page=proglets&action=show&id=syntheSons&helpFile=api/org/javascool/proglets/syntheSons/Translator.java.html) définit : 
+* Par exemple, le [translateur de la proglet syntheSons](../wproglets/syntheSons/api/org/javascool/proglets/syntheSons/Translator.java.html) définit : 
   * avec *getImports()* l'import automatiquement des classes utiles;
   * avec *translate()* la traduction de la construction *@tone* en code Java
 
-* Par exemple, le [translateur de la proglet wwwIOI](http://javascool.gforge.inria.fr/?page=proglets&action=show&id=wwwIOI&helpFile=api/org/javascool/proglets/wwwIOI/Translator.java.html) définit :
+* Par exemple, le [translateur de la proglet wwwIOI](../wproglets/wwwIOI/api/org/javascool/proglets/wwwIOI/Translator.java.html) définit :
   * l'analyse du texte source pour ajouter la construction *repeat ( .cond. ) { .expr. }*
 
-* Se référer à la [documentation de la classe](http://javascool.gforge.inria.fr/v4//?page=api&api=org/javascool/core/Translator.html) pour plus de détails et nous [contacter](../../wpages/contact.html) pour co-développer cet élément.
+* Se référer à la [documentation de la classe](../../javascool-core-api/org/javascool/core/Translator.html) pour plus de détails et nous [contacter](../../wpages/contact.html) pour co-développer cet élément.

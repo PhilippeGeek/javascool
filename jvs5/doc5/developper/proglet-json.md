@@ -8,7 +8,7 @@ title: Développer autour de Java'sCool 5
 Ce fichier en syntaxe [json](http://www.json.org) donne la description de la proglet, le nom de son icône et les auteurs, sous la forme:
 
 	{
-	 "title"  : "Exemple de «proglet» (1 à 2 lignes de description)",
+	 "title"  : "Exemple de «proglet» (1 ligne de description)",
 	 "author" : "Guillaume Matheron",
 	 "email"  : "guillaume.quest@gmail.com", 
 	 "icon"   : "icon.png"

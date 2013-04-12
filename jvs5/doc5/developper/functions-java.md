@@ -62,17 +62,9 @@ title: Développer autour de Java'sCool 5
 	  JLabel label;
 	}
 	
-
-#### Code de démonstration de la proglet
-
-* Dans le fichier *Panel.java* on peut ajouter une méthode *run()* qui permet de lancer une démo de la proglet: 
-
-	  public void run() {
-	  }
-
 ----
 
 * *Note*: La plateforme Java's Cool propose:
-  * Des [widgets](http://javascool.gforge.inria.fr/v4//?page=api:/org/javascool/widgets/package-summary.html) pour aider à créer des interfaces graphiques.
-  * Des [macros](http://javascool.gforge.inria.fr/v4//?page=api:/org/javascool/macros/package-summary.html) et des [tools](http://javascool.gforge.inria.fr/v4//?page=api:/org/javascool/tools/package-summary.html) disposer de fonctions utilitaires facilitant l'implémentation.
-  * Un mécanisme d'[assertion](http://javascool.gforge.inria.fr/v4//index.php?page=api&api=org/javascool/macros/Macros.html#assertion%28boolean,%20java.lang.String,%20java.lang.Object%29) aide à débugger le code. 
+  * Des [widgets](../../javascool-core-api/org/javascool/widgets/package-summary.html) pour aider à créer des interfaces graphiques.
+  * Des [macros](../../javascool-core-api/org/javascool/macros/package-summary.html) et des [tools](../../javascool-core-api/org/javascool/tools/package-summary.html) disposer de fonctions utilitaires facilitant l'implémentation.
+  * Un mécanisme d'[assertion](../../javascool-core-api/org/javascool/macros/Macros.html#assertion%28boolean,%20java.lang.String,%20java.lang.Object%29) aide à débugger le code. 

@@ -67,7 +67,7 @@ public class Proglet2Jar {
       String mfData = 
 	"Manifest-Version: 1.0\n" +
 	"Created-By: "+params.getString("author")+" <"+params.getString("email")+">\n" +
-	"Main-Class: org.javascool."+(jarFile.startsWith("javascool-jvs2jar-") ? "core.Jvs2Jar" : "Core")+"\n" +
+	"Main-Class: org.javascool."+(new File(jarFile).getName().startsWith("javascool-jvs2jar-") ? "core.Jvs2Jar" : "Core")+"\n" +
 	"Implementation-URL: http://javascool.gforge.inria.fr\n" +
 	"Java-Version: 1.7\n" +
 	"Implementation-Vendor: javascool@googlegroups.com, ou=javascool.gforge.inria.fr, o=inria.fr, c=fr\n";

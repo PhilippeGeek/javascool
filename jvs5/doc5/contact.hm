@@ -24,17 +24,16 @@
       <option>------------------------------------------------------</option>
       <option>Linux</option>
       <option>Mac Os X</option>
-      <option>Windows XP</option>
-
+      <option>Windows 8</option>
       <option>Windows Vista ou 7</option>
+      <option>Windows XP</option>
+      <option>Windows autres (préciser dans le mail)</option>
       <option>autres . . (préciser dans le mail)</option>
     </select></td></tr>
     <tr><td>Votre version de java :</td><td><select name="java">
       <option>------------------------------------------------------</option>
-      <option>Java 1.5 (préciser si possible la version : ex 1.5.22)</option>
-
-      <option>Java 1.6 (préciser si possible la version : ex 1.6.0)</option>
       <option>Java 1.7 (préciser si possible la version : ex 1.7.0)</option>
+      <option>Java 1.6 (préciser si possible la version : ex 1.6.0)</option>
       <option>Autre version de Java (préciser dans le mail)</option>
       <option>Je ne sais pas</option>
     </select></td></tr>
