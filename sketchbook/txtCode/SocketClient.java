@@ -16,8 +16,11 @@ import java.net.UnknownHostException;
 /** Définit un dialogue minimal via une socket entre deux programmes.
  * @see <a href="SocketClient.java.html">source code</a>
  * @serial exclude
+ * @deprecatedSoon
+ * ATTENTION CETTE CLASSE EST DEPRECIEE : UTILISER org.javascool.tools.socket.SocketClient SVP.
  * @author Christophe Béasse <oceank2@gmail.com>
  */
+// @Deprecated
 public class SocketClient {
   // Variables de la socket
   private Socket socket;

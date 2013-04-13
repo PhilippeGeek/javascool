@@ -4,6 +4,8 @@
 package org.javascool.proglets.syntheSons;
 import static org.javascool.macros.Macros.*;
 
+import org.javascool.tools.sound.SoundBit;
+
 /** Défines the JavaScool user functions for this proglet.
  *
  * @see <a href="Functions.java.html">code source</a>

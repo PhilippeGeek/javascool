@@ -10,6 +10,8 @@ import javax.sound.sampled.AudioInputStream;
 // Used to build a notes'frequencies
 import java.util.ArrayList;
 
+import org.javascool.tools.sound.SoundBit;
+
 /** Creates a monophonic ``piccolo´´ sound-bit from a note sequence (still in development).
  * <div>The sound-bit can be changed using the <tt><a href="#reset(java.lang.String)">reset</a>(notes)</tt> method.</div>
  * @param notes <a name="notes"></a> Definition of note's sequence and note:<ul>

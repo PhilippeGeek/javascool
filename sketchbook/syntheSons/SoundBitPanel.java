@@ -14,6 +14,8 @@ import java.awt.Graphics;
 import java.awt.Color;
 import java.awt.Font;
 
+import org.javascool.tools.sound.SoundBit;
+
 /** Defines the drawing of a SoundBit spectrum and trace's start.
  * <div>Opens a frame, drawing: <ul>
  *  <li>drawing the frequencies amplitudes (in red, in normalized dB (log coordinates)), frequencies being drawn between A0 (27.5Hz) and A9 (6400Hz) around A3 (440Hz);</li>

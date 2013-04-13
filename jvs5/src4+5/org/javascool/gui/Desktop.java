@@ -8,7 +8,6 @@ package org.javascool.gui;
 import java.io.File;
 import java.net.URL;
 import javax.swing.JFrame;
-import org.javascool.About;
 import org.javascool.core.ProgletEngine;
 import org.javascool.macros.Macros;
 import org.javascool.tools.FileManager;

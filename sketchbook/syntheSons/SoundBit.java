@@ -25,7 +25,10 @@ import org.javascool.macros.Macros;
  *
  * @see <a href="SoundBit.java.html">source code</a>
  * @serial exclude
+ * @deprecatedSoon
+ * WARNING: THIS CLASS IS DEPRECATED, USE org.javascool.tools.sound.SoundBit INSTEAD.
  */
+// @Deprecated
 public class SoundBit {
   private static final long serialVersionUID = 1L;
 

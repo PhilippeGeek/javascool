@@ -43,7 +43,7 @@ public class Xml2Xml {
     // Compile la tranformation XSLT dans le cache des XSLT
     try {
       if(!tranformers.containsKey(xsl)) {
-        StreamSource xslSource = null;
+        StreamSource xslSource;
         if(xsl.trim().startsWith("<")) {
           xslSource = new StreamSource(new StringReader(xsl));
         } else {

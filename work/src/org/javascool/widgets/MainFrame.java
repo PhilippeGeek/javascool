@@ -110,6 +110,7 @@ public class MainFrame extends JFrame {
     } else {
       setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
+    setLocation(100+frameCount*250,100+frameCount*150);
     setVisible(true);
     if(pane instanceof Applet) {
       ((Applet) pane).start();

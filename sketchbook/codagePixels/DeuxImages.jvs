@@ -3,7 +3,7 @@
 //
 
 import java.awt.image.BufferedImage;
-import org.javascool.tools.ImageUtils;
+import org.javascool.tools.image.ImageUtils;
 
 void main() {
    // On crée un surface de 400 x 400 pixels avec le (0, 0) en haut à gauche

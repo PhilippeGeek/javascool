@@ -450,18 +450,25 @@ setKeyListener(new Runnable() { public void run() {
     if(Macros.getProgletPane() != null && (keyListenerRunnable = runnable) != null) { 
       Macros.getProgletPane().setFocusable(true);
       Macros.getProgletPane().addMouseListener(keyMouseListener = new MouseListener() {
+                                                 @Override
                                                  public void mousePressed(MouseEvent e) {}
+                                                 @Override
                                                  public void mouseReleased(MouseEvent e) {}
+                                                 @Override
                                                  public void mouseClicked(MouseEvent e) {}
+                                                 @Override
                                                  public void mouseEntered(MouseEvent e) {
                                                    Macros.getProgletPane().requestFocus();
                                                    Macros.getProgletPane().requestFocusInWindow();
                                                  }
+                                                 @Override
                                                  public void mouseExited(MouseEvent e) {}
                                                }
                                                );
       Macros.getProgletPane().addKeyListener(keyKeyListener = new KeyListener() {
+                                               @Override
                                                public void keyPressed(KeyEvent e) {}
+                                               @Override
                                                public void keyReleased(KeyEvent e) {
                                                  String s = KeyEvent.getKeyText(e.getKeyCode());
                                                  if((e.getModifiers() & KeyEvent.CTRL_MASK) != 0) {

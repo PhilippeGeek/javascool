@@ -344,36 +344,37 @@ public class CurveOutput extends JPanel {
    * @return La valeur true si l'objet existait, false sinon.
    */
   public boolean remove(Object object) {
-    if (lines.contains(object)) {
-      lines.remove(object);
+    if (object instanceof line && lines.contains((line) object)) {
+      lines.remove((line) object);
       return true;
     }
-    if (rectangles.contains(object)) {
+    if (object instanceof rectangle && rectangles.contains((rectangle) object)) {
       rectangle r = (rectangle) object;
       lines.remove(r.l1);
       lines.remove(r.l2);
       lines.remove(r.l3);
       lines.remove(r.l4);
-      rectangles.remove(object);
+      rectangles.remove((rectangle) object);
       return true;
     }
-    if (ovals.contains(object)) {
-      ovals.remove(object);
+    if (object instanceof oval && ovals.contains((oval) object)) {
+      ovals.remove((oval) object);
       return true;
     }
-    if (blocks.contains(object)) {
-      blocks.remove(object);
+    if (object instanceof block && blocks.contains((block) object)) {
+      blocks.remove((block) object);
       return true;
     }
-    if (labels.contains(object)) {
-      labels.remove(object);
+    if (object instanceof label && labels.contains((label) object)) {
+      labels.remove((label) object);
       return true;
-    }   
-    for(int c = 0; c < 10; c++)
-      if (curves.get(c).contains(object)) {
-	curves.get(c).remove(object);
-	return true;
-      }
+    } 
+    if (object instanceof point)  
+      for(int c = 0; c < 10; c++)
+        if (curves.get(c).contains((point) object)) {
+	  curves.get(c).remove((point) object);
+	  return true;
+        }
     return false;
   }
   /** Renvoie la position horizontale du réticule. */

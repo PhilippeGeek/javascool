@@ -17,7 +17,7 @@ done
 echo "CE REPERTOIRE MIROIRE LES LIB DE JVS4 : NE PAS TOUCHER" > jvs5/lib4/README.TXT
 
 # Copy des srcs nécessaires
-for l in `ls work/src/org/javascool/{{Core,About,package},{core,gui,macros,tools,widgets,widgets/icons}/*}.{java,xml,png,htm,html} 2> /dev/null`
+for l in `ls work/src/org/javascool/{core,gui,macros,tools,tools/image,tools/sound,tools/socket,widgets,widgets/icons}/*.{java,xml,png,htm,html} 2> /dev/null`
 do f=`echo $l | sed 's/work\/src//'` ; make  -f - <<EOF
 jvs5/src4+5/$f : work/src/$f
 	mkdir -p \$(@D)

@@ -5,6 +5,9 @@ import java.awt.Color;
 
 import java.net.Socket;
 
+import org.javascool.tools.socket.SocketServer;
+import org.javascool.tools.socket.SocketClient;
+
 /** Définit les fonctions de la proglet.
  * @see <a href="Functions.java.html">source code</a>
  * @serial exclude

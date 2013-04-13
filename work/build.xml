@@ -27,7 +27,7 @@
         <unzip dest="./build/classes" src="./lib/saxon.jar"/>
         <jar destfile="./dist/javascool-base.jar">
             <manifest>
-                <attribute name="Main-Class" value="org.javascool.Core"/>
+                <attribute name="Main-Class" value="org.javascool.gui.Core"/>
                 <attribute name="Java-Version" value="${ant.java.version}"/>
             </manifest>
             <fileset dir="./build/classes"/>
@@ -79,7 +79,7 @@
     <unzip dest="./build/classes" src="./lib/saxon.jar"/>
     <jar destfile="./dist/javascool-builder.jar">
       <manifest>
-        <attribute name="Main-Class" value="org.javascool.Build"/>
+        <attribute name="Main-Class" value="org.javascool.builder.Build"/>
         <attribute name="Created-By" value="inria.fr (javascool.gforge.inria.fr) ©INRIA: CeCILL V2 + CreativeCommons BY-NC-ND V2"/>
         <attribute name="Implementation-URL" value="http://javascool.gforge.inria.fr"/>
         <attribute name="Java-Version" value="${ant.java.version}"/>
@@ -129,7 +129,7 @@
         <fileset dir="./../sketchbook" includes="**/*"/>
         <fileset dir="./src">
           <include name="**/*"/>
-          <exclude name="org/javascool/About.java"/>
+          <exclude name="org/javascool/gui/About.java"/>
         </fileset>
       </sourcefiles>
       <targetfiles>
@@ -148,14 +148,14 @@
       <arg value="javac"/>
     </exec>
     <mkdir dir="./build/classes"/>
-    <copy file="src/org/javascool/About.java" tofile="src/org/javascool/About.java.save" preservelastmodified="true"/>
-    <replaceregexp file="src/org/javascool/About.java" match="[0-9]*(.; *// *@revision)" replace="${svn.revision}\1"/>
+    <copy file="src/org/javascool/gui/About.java" tofile="src/org/javascool/gui/About.java.save" preservelastmodified="true"/>
+    <replaceregexp file="src/org/javascool/gui/About.java" match="[0-9]*(.; *// *@revision)" replace="${svn.revision}\1"/>
     <trycatch>
       <try>
         <javac debug="true" debuglevel="lines,vars,source" includeantruntime="false" deprecation="on" encoding="UTF-8" classpath="${classpath}" srcdir="./src" destdir="./build/classes"/>   
       </try>
       <finally>
-        <move tofile="src/org/javascool/About.java" file="src/org/javascool/About.java.save" overwrite="true" preservelastmodified="true"/>
+        <move tofile="src/org/javascool/gui/About.java" file="src/org/javascool/gui/About.java.save" overwrite="true" preservelastmodified="true"/>
       </finally>
     </trycatch>
     <java jar="lib/saxon.jar" dir="src/org/javascool/macros" fork="yes">
@@ -325,25 +325,4 @@
     <java jar="./dist/javascool-builder.jar" dir="./../sketchbook" fork="true"/>
   </target>
 	
-	<target name="javascool-beta.jar" depends="javascool-base.jar">
-		<delete dir="./build/classes/org/javascool/gui/"/> 
-		<delete file="./build/classes/org/javascool/Core.class"/> 
-		<delete file="./build/classes/org/javascool/About.class"/>
-		<javac debug="true" debuglevel="lines,vars,source" includeantruntime="false" encoding="UTF-8" classpath="${classpath}:./dist/javascool-base.jar" srcdir="./../dev/javascool/src/" destdir="./build/classes/"/> 
-		<unzip dest="./build/classes" src="./lib/RSyntaxTextArea.jar"/>
-		<unzip dest="./build/classes" src="./lib/autocomplete.jar"/>
-                <unzip dest="./build/classes" src="./lib/json.jar"/>
-		<unzip dest="./build/classes" src="./lib/javac.jar"/>
-		<jar destfile="./dist/javascool-beta.jar">
-			<manifest>
-				<attribute name="Main-Class" value="org.javascool.Core"/>
-			</manifest>
-			<fileset dir="./build/classes"/>
-			<fileset dir="./src" includes="org/javascool/widgets/icons/*"/>
-			<fileset dir="./../dev/javascool/src/" includes="org/javascool/gui/editor/*.xml"/>
-			<fileset dir="./src" includes="org/javascool/macros/*.htm"/>
-		</jar>
-		<java jar="./dist/javascool-beta.jar" dir="." fork="true"/>
-	</target>
-  
 </project>

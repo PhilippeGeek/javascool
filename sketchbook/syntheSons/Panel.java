@@ -5,6 +5,8 @@
 package org.javascool.proglets.syntheSons;
 import static org.javascool.proglets.syntheSons.Functions.*;
 
+import org.javascool.tools.sound.SoundBit;
+
 /** Defines the GUI of this proglet.
  *
  * @see <a href="Panel.java.html">code source</a>

@@ -8,7 +8,6 @@ import org.json.JSONException;
 import org.javascool.tools.Pml;
 import org.javascool.tools.FileManager;
 
-
 /** Définit le mécanisme de compilation en ligne d'une proglet dans sa version jvs5.
  * - Attention il faut que la proglet ait été convertie en jvs5 (conversion des docs XML en HTML, du fichier de méta-donnée en .json).
  * @see <a href="Proglet2Jar.java.html">code source</a>
@@ -33,7 +32,7 @@ public class Proglet2Jar {
       String jarDir = FileManager.createTempDir("jvs-build-").getAbsolutePath();
       String targetDir = jarDir + File.separator + "org" + File.separator + "javascool" + File.separator + "proglets" + File.separator + params.getString("name");
       // Extraction des classes de javascool
-      String javascoolJar = org.javascool.Core.javascoolJar();
+      String javascoolJar = Utils.javascoolJar();
       JarManager.jarExtract(javascoolJar, jarDir);
       // Copy et expansion des ressources
       for (String file : FileManager.list(progletDir)) {
@@ -67,7 +66,7 @@ public class Proglet2Jar {
       String mfData = 
 	"Manifest-Version: 1.0\n" +
 	"Created-By: "+params.getString("author")+" <"+params.getString("email")+">\n" +
-	"Main-Class: org.javascool."+(new File(jarFile).getName().startsWith("javascool-jvs2jar-") ? "core.Jvs2Jar" : "Core")+"\n" +
+	"Main-Class: org.javascool."+(new File(jarFile).getName().startsWith("javascool-jvs2jar-") ? "core.Jvs2Jar" : "gui.Core")+"\n" +
 	"Implementation-URL: http://javascool.gforge.inria.fr\n" +
 	"Java-Version: 1.7\n" +
 	"Implementation-Vendor: javascool@googlegroups.com, ou=javascool.gforge.inria.fr, o=inria.fr, c=fr\n";

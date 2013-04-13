@@ -34,7 +34,7 @@ exit -1
 fi
 
 # Répertoire de travail
-d="lib-$$" ; /bin/rm -rf $d ; mkdir $d
+d="tmp-$$" ; /bin/rm -rf $d ; mkdir $d
 
 # Inclut les sources et fichiers de ressources
 for f in $res $src ; do t=$d/`echo $f | sed 's/.*src[^\/]*\///'`; mkdir -p `dirname $t` ; cp $f $t ;  done
@@ -44,9 +44,9 @@ if [ "$static" = 1 ] ; then for j in $jrc ; do unzip -d $d -oq $j ; done ; fi
 
 # Compilation
 rm -f $jar
-if javac -d $d -cp $cp $src
+if javac -Xlint:unchecked -d $d -cp $cp $src
 then pushd $d > /dev/null
-  if [ -z "$main" ]
+  if [ \! -z "$main" ]
   then (echo "Manifest-Version: 1.0" ; echo "Main-Class: $main" ; echo "Implementation-URL: http://javascool.gforge.inria.fr") > "META-INF/MANIFEST.MF"
   fi
   jar cfM $jar .

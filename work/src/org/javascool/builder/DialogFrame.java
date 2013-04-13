@@ -21,8 +21,7 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import org.javascool.About;
-import org.javascool.Build;
+import org.javascool.gui.About;
 
 /** Définit l'interface graphique pour la construction de proglets.
  *

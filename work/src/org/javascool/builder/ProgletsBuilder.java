@@ -16,8 +16,8 @@ import java.io.StringWriter;
 
 import java.util.ArrayList;
 import java.util.Date;
-import org.javascool.Core;
-import org.javascool.About;
+import org.javascool.core.Utils;
+import org.javascool.gui.About;
 
 /** Cette factory contient les mécanismes de construction d'une application Java's Cool avec des proglets.
  *
@@ -117,7 +117,7 @@ public class ProgletsBuilder {
           for(String jar : FileManager.list(proglet, ".*\\.jar", 2))
             JarManager.jarExtract(jar, jarDir);
         // Expansion des jars de javascool
-        String javascoolJar = Core.javascoolJar();
+        String javascoolJar = Utils.javascoolJar();
         log("Extraction de Java's cool", true);
         String libs[] = { "org/javascool", "org/fife", "sun/tools/java", "com/sun/tools/javac", "com/sun/source/tree", "com/sun/source/util" };
         for(String lib : libs)
@@ -158,7 +158,7 @@ public class ProgletsBuilder {
       // Création des jarres avec le manifest
       {
         String version = "Java'sCool v4 on \"" + new Date() + "\" Revision #" + About.revision;
-        Pml manifest = new Pml().set("Main-Class", "org.javascool.Core").
+        Pml manifest = new Pml().set("Main-Class", "org.javascool.gui.Core").
                        set("Manifest-version", version).
                        set("Created-By", "inria.fr (javascool.gforge.inria.fr) ©INRIA: CeCILL V2 + CreativeCommons BY-NC-ND V2").
                        set("Implementation-URL", "http://javascool.gforge.inria.fr").
@@ -171,13 +171,16 @@ public class ProgletsBuilder {
             String name = new File(proglet).getName();
             String javascoolPrefix = "org" + File.separator + "javascool" + File.separator;
             String jarEntries[] = {
-              javascoolPrefix + "Core",
-              javascoolPrefix + "About",
               "org" + File.separator + "dnsalias",
               "org" + File.separator + "fife",
               "com" + File.separator + "sun",
               "sun" + File.separator + "tools",
-              javascoolPrefix + "builder", javascoolPrefix + "core", javascoolPrefix + "gui", javascoolPrefix + "macros", javascoolPrefix + "tools", javascoolPrefix + "widgets",
+              javascoolPrefix + "builder", 
+	      javascoolPrefix + "core", 
+	      javascoolPrefix + "gui", 
+	      javascoolPrefix + "macros", 
+	      javascoolPrefix + "tools", 
+	      javascoolPrefix + "widgets",
               javascoolPrefix + "proglets" + File.separator + name
             };
             String tmpJar = buildDir + File.separator + "javascool-proglet-" + name + ".jar";
