@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import org.json.JSONObject;
 import org.javascool.tools.FileManager;
-import java.io.InputStreamReader;
 
 import org.javascool.widgets.MainFrame;
 import javax.swing.JPanel;
@@ -45,6 +44,7 @@ public class Proglet2Html {
 	throw new IllegalArgumentException("Le fichier "+progletDir+" n'est pa sun répertoire");
       JSONObject params = Proglet2Jar.getProgletParameters(progletDir);
       // Creation d'un répertoire vierge
+      System.out.println("> création de "+htmlDir);
       JarManager.rmDir(new File(htmlDir));
       new File(htmlDir).mkdirs();
       // Expansion des fichiers de base du site
@@ -62,21 +62,26 @@ public class Proglet2Html {
 	  } else {
 	    if (file.endsWith(".jvs"))
 	      FileManager.save(htmlDir + File.separator + new File(file).getName() + ".html",
-			       encapsulates("<pre class=\"prettyprint linenums\">\n" + FileManager.load(file) + "\n</pre>", params));
+			       encapsulates("<br/><br/><div align=\"right\"><a href=\""+new File(file).getName()+".jar\">@lancer le programme</a></div><br/><pre class=\"prettyprint linenums\">\n\n" + FileManager.load(file) + "\n</pre>", params));
 	    JarManager.copyFile(file, htmlDir + File.separator + new File(file).getName());
 	  }
 	}
       }
       // Génération des fichiers liés aux sources java
       {
+	System.out.println("> compilation 1/2 de "+params.getString("name"));
 	String progletJar = htmlDir + File.separator + "javascool-proglet-"+params.getString("name")+".jar";
 	Proglet2Jar.build(progletJar, progletDir);
+	System.out.println("> compilation 2/2 de "+params.getString("name"));
 	String jsv2jarJar = htmlDir + File.separator + "javascool-jvs2jar-"+params.getString("name")+".jar";
 	Proglet2Jar.build(jsv2jarJar, progletDir);
-	for (String file : FileManager.list(htmlDir))
-	  if (file.endsWith(".jvs"))
-	    javaStart("-jar "+jsv2jarJar+" "+file, 60);
+	System.out.println("> compilation de la javadoc");
 	javadoc(params.getString("name"), System.getProperty("java.class.path"), htmlDir + File.separator + "api", htmlDir + File.separator + "api");
+	for (String file : FileManager.list(htmlDir))
+	  if (file.endsWith(".jvs")) {
+	    System.out.println("> compilation de "+new File(file).getName());
+	    Utils.javaStart("-jar "+jsv2jarJar+" "+file, 60);
+	  }
       }
       return true;
     } catch (Throwable e) {
@@ -101,7 +106,7 @@ public class Proglet2Html {
       .replaceAll("@email", params.getString("email"))
       .replaceAll("@base-url", ".")
       .replaceAll("href=\"http://newtab\\?", "href=\"")
-      .replaceAll("< *a +href=\"http://editor\\?([^\\.]*).jvs\"", "(<a href=\"$1.jvs.jar\">@run</a>) <a href=\"$1.jvs.html\"");
+      .replaceAll("< *a +href=\"http://editor\\?([^\\.]*).jvs\"", "<a href=\"$1.jvs.html\"");
   }
 
   // Genere la doc liée aux source java
@@ -153,42 +158,7 @@ public class Proglet2Html {
     }
   }
 
-  /** Exécute dans un autre process une commande java.
-   * <p>Les sorties du process java sont renvoyés en mémoire au stdin/stderr de la présente exécution.</p>
-   * @param command Les arguments de la ligne de commande de l'exécutable java.
-   * @param timeout La durée maximale d'exécution de la commande.
-   * @return Le status de l'exécutable java, 0 si pas d'erreur.
-   * @throws IllegalStateException en cas de time-out.
-   */
-  public static boolean javaStart(String command, int timeout) {
-    try {
-      // @todo regarder sur windows si il y a le bin ou un exec à la place
-      String javaCommand = System.getProperty("java.home") + File.separator + "bin" + File.separator + "java"; 
-      return exec(javaCommand+(command.indexOf('\t') == -1 ? " " : "\t")+command, timeout) == 0;
-    } catch(Exception e) {
-      System.out.println("Impossible de lancer la command '$java " + command + "' : " + e);
-      return false;
-    }
-  }
-  // Lance une commande avec echo des stdout/stderr
-  private static int exec(String command, int timeout) throws IOException  {
-    Process process = Runtime.getRuntime().exec(command.trim().split((command.indexOf('\t') == -1) ? " " : "\t"));
-    InputStreamReader stdout = new InputStreamReader(process.getInputStream());
-    InputStreamReader stderr = new InputStreamReader(process.getErrorStream());
-    long now = System.currentTimeMillis();
-    while(true) {
-      try { Thread.sleep(300); } catch(Exception e) { }
-      while(stdout.ready())
-	System.out.print((char) stdout.read());
-      while(stderr.ready())
-	System.err.print((char) stderr.read());
-      try {
-	return process.exitValue();
-      } catch(Exception e) { }
-      if (timeout > 0 && System.currentTimeMillis() > now + timeout * 1000)
-	throw new IllegalStateException("Timeout T > "+timeout+"s when running '"+command+"'");
-    }
-  }
+  // Ajout des fichier du style HTML local
   private static void addBootstrap(String apiDir) throws IOException {
     JarManager.copyResource("org/javascool/core/proglet-css.zip", apiDir + File.separator + "proglet-css.zip");
     JarManager.jarExtract(apiDir + File.separator + "proglet-css.zip", apiDir);
@@ -226,9 +196,9 @@ public class Proglet2Html {
     "      <div class=\"nav-collapse\">\n" +
     "        <ul class=\"nav\">\n" +
     "          <li><a href=\"@base-url/help.html\">Documentation</a></li>\n" +
-    "          <li><a href=\"@base-url/javascool-proglet-@name.jar\">Démonstration</a></li>\n" +
+    "          <li><a href=\"@base-url/javascool-proglet-@name.jar\">Lancement</a></li>\n" +
+    "          <li><a href=\"@base-url/javascool-jvs2jar-@name.jar\">JvsCompilation</a></li>\n" +
     "          <li><a href=\"@base-url/api/org/javascool/proglets/@name/package-summary.html\">Implémentation</a></li>\n" +
-    "          <li><a href=\"@base-url/javascool-jsv2jar-@name.jar\">Compilation</a></li>\n" +
     "          <li><a href=\"mailto:@email?subject=À propos de Java'sCool «@name»\">Contact</a></li>\n" +
     "        </ul>\n" +
     "      </div>\n" +
@@ -296,9 +266,6 @@ public class Proglet2Html {
       } catch(IOException e) {
 	throw new RuntimeException(e.toString());
       }
-    } else if (FileManager.exists("main-usage-0.txt")) {
-      // Détection de l'argument dans un fichier ajouté à la jarre
-      build(FileManager.load("main-usage-0.txt"));
     } else {
       new MainFrame().reset("Proglet2Html", "org/javascool/widgets/icons/compile.png", 800, 600, new JPanel() {
 	  {
@@ -368,13 +335,19 @@ public class Proglet2Html {
 			    private static final long serialVersionUID = 1L;
 			    @Override
 			    public void actionPerformed(ActionEvent e) {
-			      String path = folder.getText() + File.separator + name.getText();
-			      if (new File(path).exists()) {
-				build(path);
-			      } else {
-				ProgletCreate.build(path);
-				doit.setText("Compiler");
-			      }
+			      (new Thread(new Runnable() { public void run() {
+				String path = folder.getText() + File.separator + name.getText();
+				if (new File(path).exists()) {
+				  System.out.println("Construction de "+new File(path).getName()+"..");
+				  if (build(path))
+				    System.out.println("achevée avec succès :\n Le répertoire '"+path+"-html' est disponible");
+				} else {
+				  System.out.println("Construction de "+new File(path).getName()+"..");
+				  if (ProgletCreate.build(path))
+				    System.out.println("achevée avec succès :\n Le répertoire '"+path+"' est disponible");
+				  doit.setText("Compiler");
+				}
+			      }})).start();
 			    }
 			  });
 		      }});
@@ -405,4 +378,3 @@ public class Proglet2Html {
     }
   }
 }
-

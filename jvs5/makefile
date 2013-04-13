@@ -2,41 +2,22 @@
 #
 # @TODO :
 #
-# Voir le pb du javaStart sous windows 
-#
-# Valider les Jvs2Jar en creant les jar des jvs mettant des (@run dans les liens le jvs.html -> jvs.jar)
-# Créer les WebServices : proglet2zip jvs2jar ; voir l'idée d'ajouter un fichier la jarre
-#
-# Valider le site javascool-5 avec juste les icones des proglets (generation via makefile) et un lokk bootsrap et menu minima
+# Voir le javaStart sous windows 
 # Voir comment se gère les proglets processing et bien valider les liens vers le site fuscia
+# Voir pour la proglet java3D
+# Pb de sketchbook/.build et ../build.* et ../*.html
 # Valider le make www de ici et le git (avec le wget de http://javascool.gforge.inria.fr/v5 dans javascool.github.com/wproglets)
-# http://javascool.github.com/wpages/JavaScool:Ressources.html
-
-# - Mettre Build.java dans builder et About.java + Core.java dans gui et créer un javascool/core/Utils.java ; et mettre  jour build.xml
-# - Copier dans javascool-core les classes images, socket et son
-# - Ajouter json à Pml en entrée/sortie.
+# Verifier en ligne les nv liens des proglet's docs.
+#
+# @THEN
 # - Recuperer l'éditeur HTML5 de Philippe est en faire un produit autonome qui se connecte aux web services
 # - Voir au déploiement par jnlp des jars utilisés
 # - Voir jar jbed jad http://www.developpez.net/forums/d922916/java/general-java/java-mobiles/android/android-jar
-# - Noter virer les classes redondantes dans les proglets cet été
+# - Noter virer les classes @deprecated dans jvs4 cet été
 #
 ########################################################################################################################################################
 
-# Test en cours 
-
-dft : tst1
-
-tst2 : clean cpv dist/javascool-core.jar
-	java -cp dist/javascool-core.jar org.javascool.core.Proglet2Html
-
-tstP = algoDeMaths
-
-tst1  : clean cpv dist/javascool-core.jar dist/javascool-proglet-$(tstP)-html
-#	firefox dist/javascool-proglet-$(tstP)-html/index.html
-	java -jar dist/javascool-proglet-$(tstP)-html/javascool-proglet-$(tstP).jar
-#	java -jar dist/javascool-proglet-algoDeMaths-html/JeuSimon.jvs.jar 
-
-########################################################################################################################################################
+dft : www
 
 # Choix de la JDK
 
@@ -49,25 +30,43 @@ GIT_HOME=./javascool.github.com
 
 DIST=$(GIT_HOME)/wproglets
 
+########################################################################################################################################################
+
+# Test en cours 
+
+tstP = algoDeMaths
+
+tst1  : cleanall cpv $(DIST)/javascool-core.jar $(DIST)/javascool-proglet-$(tstP)-html
+	firefox $(DIST)/javascool-proglet-$(tstP)-html/index.html
+#	java -jar $(DIST)/javascool-proglet-$(tstP)-html/javascool-proglet-$(tstP).jar
+#	java -jar $(DIST)/javascool-proglet-algoDeMaths-html/JeuSimon.jvs.jar 
+
+tst2 : cleanall cpv $(DIST)/javascool-core.jar
+	java -cp $(DIST)/javascool-core.jar org.javascool.core.Proglet2Html
+
+########################################################################################################################################################
+
 # Publie les fichiers du site web
 
 www : clean cnv cpv $(DIST)/javascool-core.jar $(DIST)/javascool-core-api $(patsubst sketchbook/%,$(DIST)/javascool-proglet-%-html,$(wildcard sketchbook/*))
-	cd $(GIT_HOME) ; git status
 #	$(MAKE) -C $(GIT_HOME) push
 
 # Construit les proglets
 
 $(DIST)/javascool-proglet-%-html : sketchbook/%
-	echo java -cp $(DIST)/javascool-core.jar org.javascool.core.Proglet2Html $@ $^
+	echo build $*
+	java -jar $(DIST)/javascool-core.jar $@ $^
 
 # Construit la jarre de javascool 
 
 SRC = $(wildcard lib4/*.jar) $(shell find src4+5 -name '*.java' -o -name '*.xml' -o -name '*.png' -o -name '*.htm' -o -name '*.zip')
 
 $(DIST)/javascool-core.jar : $(SRC)
+	echo javac javascool-core
 	sh ./bin/java2jar.sh -static -main=org.javascool.core.Proglet2Html $@ $^
 
 $(DIST)/javascool-core-api : $(SRC)
+	echo javadoc javascool-core
 	java -jar $(DIST)/javascool-core.jar javascool-core src4+5 $@
 
 # Effectue la copie des src/lib de jvs4 vers jvs5
@@ -83,8 +82,12 @@ cnv :
 # Nettoie les répertoires générés
 
 clean :
-	rm -rf lib-*
+	rm -rf tmp-*
 	svn status
+	cd $(GIT_HOME) ; git status
+
+cleanall : clean
+	rm -rf $(DIST)/*
 
 # Test des différences entre jvs4 et jvs5
 

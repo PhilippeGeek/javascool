@@ -16,11 +16,11 @@ import java.net.URISyntaxException;
 import java.util.Calendar;
 import javax.swing.ImageIcon;
 
-import org.javascool.tools.Sampler;
-
 import java.net.URL;
 import java.io.File;
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import org.javascool.core.ProgletEngine;
@@ -81,20 +81,24 @@ public class Macros {
   }
   /** Excécute une routine à un intervalle régulier.
    * Exemple d'usage (impression de 10 messages à interval d'1 sec. puis arrêt):<pre>
-   * sample(1000, new Runnable() { public void run() {
+   * Timer timer = sample(1000, new TimerTask() { public void run() {
    *    if (count &lt; 10) {
    *      println("Et de "+(++count)+" !");
-   *    } else throw new RuntimeException("done!");
+   *    }
    *  }
    *  int count = 0;
-   * });</pre>
+   * });
+   * while(!readBoolean("On arrête ?"));
+   * timer.cancel();
+   * </pre>
    * <p> Noter que le runnable doit être interrompu par le jet d'une exception, sinon il tournera sans relâche jusqu'à la fermeture de javascool.
    * @param delay Période d'échantillonage en milli-secondes.
    * @param runnable Le code à exécuter à chaque appel.
    */
-  public static void sample(int delay, Runnable runnable) {
-    Sampler sampler = new Sampler().setDelay(delay).setRunnable(runnable);
-    sampler.start();
+  public static Timer sample(int delay, TimerTask runnable) {
+    Timer timer = new Timer();   
+    timer.schedule(runnable, 0, delay);
+    return timer;
   }
   /** Vérifie une assertion et arrête le code si elle est fausse.
    * Le diagnoctic apparait sous la forme:
@@ -318,11 +322,14 @@ public class Macros {
   /** Renvoie le panneau graphique de la proglet courante.
    * @return Le panneau graphique de la proglet courante ou null si il n'est pas défini.
    */
+  @SuppressWarnings("unchecked")
   public static < T extends Component > T getProgletPane() {
     Component c = null;
     try {
       c = ProgletEngine.getInstance().getProglet().getProgletPane();
     } catch(Throwable e) { }
+    if (c == null)
+      throw new IllegalStateException(" le panneau graphique de la proglet est indéfini, c'est un bug");
     return (T) c;
   }
 }

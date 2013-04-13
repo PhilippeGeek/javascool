@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.io.File;
 import java.util.Collections;
 import java.util.Comparator;
-import org.javascool.Core;
 import org.javascool.tools.FileManager;
 
 /** Définit les mécanismes de compilation, exécution, gestion de proglet.
@@ -36,7 +35,7 @@ public class ProgletEngine {
   private static ProgletEngine engine = null;
 
   private ProgletEngine() {
-    String javascoolJar = Core.javascoolJar();
+    String javascoolJar = Utils.javascoolJar();
     // Détection des proglets présentes dans le jar
     try {
       proglets = new ArrayList<Proglet>();

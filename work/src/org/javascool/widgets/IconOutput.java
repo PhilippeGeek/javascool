@@ -20,7 +20,6 @@ import java.io.IOException;
 
 // Used to define a click
 import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseEvent;
 
 /** Panneau pour le tracé d'images pixeliques.

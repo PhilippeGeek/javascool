@@ -11,11 +11,15 @@ import javax.sound.sampled.TargetDataLine;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
 
+import org.javascool.tools.sound.SoundBit;
+
 /** Defines a microphone-input sound-bit wrapper.
- * <h1>DO NOT USE : THI SIS STILL IN DEVELOPMENT</h1>
  * @see <a href="InputSoundBit.java.html">code source</a>
+ * @deprecatedSoon
+ * WARNING: THIS CLASS IS DEPRECATED, USE org.javascool.tools.sound.InputSoundBit INSTEAD.
  * @serial exclude
  */
+// @Deprecated
 public class InputSoundBit extends SoundBit {
   private TargetDataLine line = null;
   private boolean recording = false;

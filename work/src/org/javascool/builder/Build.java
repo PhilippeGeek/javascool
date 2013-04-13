@@ -1,8 +1,7 @@
-package org.javascool;
+package org.javascool.builder;
 
 import java.io.File;
 import java.io.IOException;
-import org.javascool.builder.ProgletsBuilder;
 import org.javascool.tools.ErrorCatcher;
 import org.javascool.tools.Pml;
 
@@ -16,12 +15,12 @@ public class Build {
   public static final String logo = "org/javascool/widgets/icons/logo-builder.png";
 
   /** Lanceur de la conversion Jvs en Java.
-   * @param usage <tt>java org.javascool.Build  [-q [targetDir]]</tt>
+   * @param usage <tt>java org.javascool.builder.Build  [-q [targetDir]]</tt>
    */
   public static void main(String[] usage) {
     Pml args = new Pml().reset(usage);
     ErrorCatcher.checkJavaVersion(6);
-    Core.setUncaughtExceptionAlert();
+    org.javascool.gui.Core.setUncaughtExceptionAlert();
     ProgletsBuilder.setVerbose(args.getBoolean("v") || args.getBoolean("verbose"));
     if(args.getBoolean("h") || args.getBoolean("help")) {
       System.out.println("Java's Cool Builder - Construit un jar avec les proglets souhaitées");

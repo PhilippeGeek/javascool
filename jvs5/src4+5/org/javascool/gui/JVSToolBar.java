@@ -4,7 +4,6 @@ import org.javascool.core.ProgletEngine;
 
 import org.javascool.widgets.ToolBar;
 import javax.swing.JButton;
-import org.javascool.About;
 import org.javascool.widgets.StartStopButton;
 //import org.javascool.builder.DialogFrame;
 //import org.javascool.builder.ProgletsBuilder;

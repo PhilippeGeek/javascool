@@ -123,13 +123,13 @@ class JvsXMLCompletion extends DefaultHandler {
    * Called when an element is closed.
    */
   @Override
+  @SuppressWarnings("unchecked")
   public void endElement(String uri, String localName, String qName) {
     if("keywords".equals(qName)) {
       doingKeywords = false;
     } else if(doingKeywords) {
       if("keyword".equals(qName)) {
-        Completion c = null;
-        c = this.createCompletion();
+        Completion c = this.createCompletion();
         completions.add(c);
         inKeyword = false;
       } else if(inKeyword) {

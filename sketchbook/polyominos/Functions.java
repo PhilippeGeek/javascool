@@ -1,23 +1,40 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/*======================================================================
+ * Functions.java
+ * 	Time-stamp:					"2012-12-29"
+ * 
+ * @author Lionel Avon
+ * @since 2012-06-19
+ *
+ * Définition des fonctions de proglet polyominos
+ * conformément aux spécifications de Javascool
+ *======================================================================
  */
+
 package org.javascool.proglets.polyominos;
 
 import org.dnsalias.avon.polyominos.*;
 import org.javascool.macros.Macros.*;
 
 /**
- * Les fonctions de la « proglet polyominos », accessibles depuis Javascool.
+ * Les fonctions de la proglet polyominos, accessibles depuis Javascool.
  *
  * @author Lionel Avon
  * @since 2012-06-19
  */
 public class Functions {
 
-   // @factory
-   private Functions() {}
+    /*::::::::::::::::::::::::::::::
+     * pour corriger un bug étrange :
+     * erreur à l'exécution du programme jvs lorsqu'on utilise setOmbre()
+     * sans avoir préalablement utilisé setRunnableMAJOmbre()
+     */
+    private static boolean runnableMAJOmbreSet = false;
+    //::::::::::::::::::::::::::::::
 
+    /**
+     * @see http://javascool.gforge.inria.fr/index.php?page=developers&amp;action=doc-proglets
+     * @return l'instance de la proglet.
+     */
     private static Panel getPane() {
         return org.javascool.macros.Macros.getProgletPane();
     }
@@ -28,7 +45,12 @@ public class Functions {
     }
 
     public static void setOmbre(Ombre ombre) {
-        getPane().getPlanN2JPanel().setOmbre(ombre);
+	//::::::::::::::::::::::::::::::
+	if (!runnableMAJOmbreSet) {
+	    setRunnableMAJOmbre(new Runnable() { public void run() {}});
+	}
+	//::::::::::::::::::::::::::::::
+	getPane().getPlanN2JPanel().setOmbre(ombre);
         getPane().repaint();
     }
 
@@ -47,15 +69,7 @@ public class Functions {
 
     public static void setRunnableMAJOmbre(Runnable r) {
         getPane().getPlanN2JPanel().setRunnableMAJOmbre(r);
+	runnableMAJOmbreSet = true;
     }
+
 }
-
-/*
-    public static Runnable getRunnableMAJOmbre() {
-        return getPane().getPlanN2JPanel().getRunnableMAJOmbre();
-    }
-
-    public static Runnable getRunnableGo() {
-        return getPane().getRunnableGo();
-    }
-*/

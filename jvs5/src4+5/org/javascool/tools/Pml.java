@@ -10,6 +10,9 @@ import java.util.regex.Pattern;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import org.json.JSONObject;
+import org.json.JSONArray;
+
 /** Définit la syntaxe PML (Programmatic Markup Language) et son DOM (Data Object Model) Java.
  *
  * <p> Un contenu PML (pour «Programmatic Métadata Logicalstructure») et une structure-logique minimale (Parametric Minimal Logical-structure)
@@ -64,6 +67,7 @@ public class Pml {
    * <li>"PML" (valeur par défaut).</li>
    * <li>"XML" pour utiliser les structure-logiques XML de la forme <tt>&lt;tag name = value .. > &lt;element .. &lt;/tag></tt>
    * <li>"HTM" pour utiliser les structure-logiques HTML.</li>
+   * <li>"JSON"pour utiliser les structure-logiques <a href="http://www.json.org">Json</a>.
    * </ul></div>
    * @return Cet objet, permettant de définir la construction <tt>Pml pml= new Pml().reset(..)</tt>.
    */
@@ -73,6 +77,8 @@ public class Pml {
       return reset(Xml2Xml.run(value, xml2pml).replaceAll("¨", "\\\\\"").replaceAll("«", "\\{"), "pml");
     } else if("htm".equals(format) || "html".equals(format)) {
       return reset(Xml2Xml.run(Xml2Xml.html2xhtml(value), xml2pml), "pml");
+    } else if("json".equals(format)) {
+      return resetJSON(value);
     } else {
       return reset(value);
     }
@@ -445,18 +451,19 @@ public class Pml {
     + "  }</xsl:template>\n"
     + "</xsl:stylesheet>";
 
-  /* Convertit une structure Json en PML : non implémenté
+  // Convertit une structure Json en PML
   private Pml resetJSON(String value) {
     value = value.trim();
     try {
       if (value.trim().startsWith("{")) {
 	resetJSONobject(this, new JSONObject(value));
-      } else if (value.trim().startsWith("{")) {
+      } else if (value.trim().startsWith("[")) {
 	resetJSONarray(this, new JSONArray(value));
       }
     } catch(Exception e) {
       set("tag", "json");
       set("body", value);
+      set("error", e.toString());
     }
     return this;
   }
@@ -483,7 +490,6 @@ public class Pml {
     }
     return pml;
   }
-  */
 
   /** Définit le convertisseur de PML en chaîne de caractères. */
   private static class PlainWriter {
@@ -660,7 +666,7 @@ public class Pml {
       } else {
 	String s = "{\n";
 	boolean once = true;
-	if (pml.getTag().length() > 0) {
+	if (pml.getTag().length() > 0 && (!pml.getTag().equals("org.javascool.tools.Pml")) && (!pml.isDefined("tag"))) {
 	  s += " \"tag\" : " + quote(pml.getTag()) + "\n";
 	  once = false;
 	}

@@ -79,9 +79,8 @@ public class Stdout {
    * @see #echo(String)
    */
   public static void println(String string) {
-    org.javascool.gui.Desktop.getInstance().focusOnConsolePanel();
-    System.err.println("printing : \"" + string + "\"");
     Console.getInstance(true).print(string + "\n");
+    org.javascool.gui.Desktop.getInstance().focusOnConsolePanel();
   }
   /**
    * @see #echo(String)
@@ -197,6 +196,7 @@ public class Stdout {
 	}
     }
     
+    @Override
     public int print(Graphics g, PageFormat pf, int pi) {
       if (pi > 0) {
 	return(NO_SUCH_PAGE);

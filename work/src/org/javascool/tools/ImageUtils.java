@@ -2,7 +2,7 @@
 * Thierry.Vieville@sophia.inria.fr, Copyright (C) 2009.  All rights reserved. *
 *******************************************************************************/
 
-package org.javascool.tools;
+package org.javascool.proglets.codagePixels;
 
 // Used to load/save images
 import java.awt.image.BufferedImage;
@@ -25,7 +25,10 @@ import java.io.EOFException;
  * <p>Utilise les fonctions de <a href="http://docs.oracle.com/javase/6/docs/api/javax/imageio/ImageIO.html">javax.imageio.ImageIO</a>.</p>
  * @see <a href="ImageUtils.java.html">code source</a>
  * @serial exclude
+ * @deprecatedSoon
+ * ATTENTION CETTE CLASSE EST DEPRECIEE : UTILISER org.javascool.tools.image.ImageUtils SVP.
  */
+// @Deprecated
 public class ImageUtils {
   private ImageUtils() {}
 

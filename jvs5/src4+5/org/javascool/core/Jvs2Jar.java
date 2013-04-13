@@ -1,7 +1,6 @@
 package org.javascool.core;
 
 import java.io.File;
-import org.javascool.Core;
 import org.javascool.tools.FileManager;
 
 import org.javascool.widgets.MainFrame;
@@ -42,7 +41,7 @@ public class Jvs2Jar {
       // Répertoire temporaire de compilation
       String jarDir = FileManager.createTempDir("jvs-build-").getAbsolutePath();
       // Extraction des classes de javascool
-      JarManager.jarExtract(Core.javascoolJar(), jarDir);
+      JarManager.jarExtract(Utils.javascoolJar(), jarDir);
       // Chargement de la proglet
       Proglet proglet = new Proglet().load("org" + File.separator + "javascool" + File.separator + "proglets" + File.separator + name);
       Jvs2Java jvs2java = proglet.getJvs2java();
@@ -77,13 +76,13 @@ public class Jvs2Jar {
    * @see #build(String, String, String)
    */
   public static boolean build(String jvsFile, String jarFile) {
-    return build(Core.javascoolProglet(), jvsFile, jarFile);
+    return build(Utils.javascoolProglet(), jvsFile, jarFile);
   }
   /**
    * @see #build(String, String, String)
    */
   public static boolean build(String jvsFile) {
-    return build(Core.javascoolProglet(), jvsFile, jvsFile+".jar");
+    return build(Utils.javascoolProglet(), jvsFile, jvsFile+".jar");
   }
 
   /** Lanceur de la conversion Jvs en Java.
@@ -97,12 +96,10 @@ public class Jvs2Jar {
       build(usage[0], usage[1]);
     } else if(usage.length == 1) {
       build(usage[0]);
-    } else if (FileManager.exists("main-usage-0.txt")) {
-      // Détection de l'argument dans un fichier ajouté à la jarre
-      build(FileManager.load("main-usage-0.txt"));
     } else {
-      new MainFrame().reset("Jvs2Jar", "org/javascool/widgets/icons/compile.png", 800, 600, new JPanel() {
+      new MainFrame().reset("Jvs2Jar", "org/javascool/widgets/icons/compile.png", 900, 600, new JPanel() {
 	  private JTextField path;
+	  private JButton run;
 	  {
 	    setLayout(new BorderLayout());
 	    setBorder(BorderFactory.createTitledBorder("Création d'une jarre à partir d'un code javascool"));
@@ -158,17 +155,35 @@ public class Jvs2Jar {
 			    private static final long serialVersionUID = 1L;
 			    @Override
 			    public void actionPerformed(ActionEvent e) {
-			      build(path.getText());
+			      (new Thread(new Runnable() { public void run() {
+				System.out.println("Compilation de "+new File(path.getText()).getName()+"..");
+				if (build(path.getText())) {
+				  System.out.println("achevée avec succès :\n Le fichier '"+path.getText()+".jar' est disponible");
+				  run.setEnabled(true);
+				}
+			      }})).start();
 			    }
 			  });
 		      }});
-		  
+		  add(run = new JButton("Lancer", Macros.getIcon("org/javascool/widgets/icons/play.png")) {
+		      private static final long serialVersionUID = 1L;
+		      {
+			setEnabled(false);
+			addActionListener(new ActionListener() {
+			    private static final long serialVersionUID = 1L;
+			    @Override
+			    public void actionPerformed(ActionEvent e) {
+			      Utils.javaStart("-jar "+path.getText()+".jar", 0);
+			    }
+			  });
+		      }});
 		}}, BorderLayout.NORTH);
 	    add(Console.getInstance());
 	  }
 	  private void updateLocation() {
 	    if (new File(path.getText()).isFile())
 	      UserConfig.getInstance("jvs2jar").setProperty("jvs-path", path.getText());
+	    run.setEnabled(false);
 	  }
 	});
     }

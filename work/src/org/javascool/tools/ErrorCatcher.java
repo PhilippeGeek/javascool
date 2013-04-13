@@ -46,7 +46,7 @@ public class ErrorCatcher {
                                                   try {
                                                     s += "> localhost = " + java.net.InetAddress.getLocalHost() + "\n";
                                                   } catch(Exception er) {}
-                                                  s += "> file.enc = " + org.javascool.Core.javascoolJarEnc() + "\n";
+                                                  s += "> file.enc = " + org.javascool.core.Utils.javascoolJarEnc() + "\n";
                                                   s += "> thread.name = " + t.getName() + "\n";
                                                   s += "> throwable = " + e + "\n";
                                                   if(0 < uncaughtExceptionAlertOnce) {

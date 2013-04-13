@@ -215,7 +215,6 @@ public class HtmlDisplay extends JPanel {
   }
   /** Mécanisme de gestion des URL. */
   private void update(String location, boolean push) {
-    System.out.println("1>>>"+location);
     // Gestion des contenus textuels
     if(location.startsWith(stringPrefix)) { // Affichage de texte
       try {
@@ -229,12 +228,11 @@ public class HtmlDisplay extends JPanel {
       org.javascool.gui.Desktop.getInstance().openFile(toURL(location.substring(editorPrefix.length())));
     } else if(location.startsWith(newtabPrefix)) {    // Affichage dans browser JavaScool
       URL url = toURL(location.substring(newtabPrefix.length()));
-      System.out.println("2>>>"+url);
       String name = new File(url.getPath()).getName().replaceFirst("\\.[^\\.]*$", "").replace('_', '.');
       org.javascool.gui.Desktop.getInstance().openBrowserTab(url.toString(), name.substring(0, 1).toUpperCase() + name.substring(1));
     } else if(location.matches("^(http|https|rtsp|mailto):.*$")) {    // Gestion des URL externes
       browse(location);
-    } else if(location.matches(".*\\.htm$") || location.matches("^#.*")) {   // Gestion des URLs en HTML3 et des ancres
+    } else if(location.matches(".*\\.(htm|html)$") || location.matches("^#.*")) {   // Gestion des URLs en HTML3 et des ancres
       update(toURL(location), push);
     } else if(!doBrowse(location)) {   // Délégation au client
       setText("Le lien : <tt>«" + location + "»</tt> n'a pas pu être affiché");

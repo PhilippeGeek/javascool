@@ -3,13 +3,9 @@
 **************************************************************/
 package org.javascool.core;
 
-import java.util.HashSet;
-import  org.javascool.tools.FileManager;
-
 // Used to report a throwable
 import java.lang.reflect.InvocationTargetException;
 import org.javascool.tools.FileManager;
-import org.javascool.widgets.Console;
 
 /** Implémente le mécanisme de base de traduction d'un code Jvs en code Java standard.
  * <p>Les erreurs de traduction sont affichées dans la console.</p>
@@ -66,6 +62,7 @@ public class Jvs2Java extends Translator {
     }
     String[] lines = text.split("\n");
     StringBuilder head = new StringBuilder();
+    StringBuilder tail = new StringBuilder();
     StringBuilder body = new StringBuilder();
     // Here is the translation loop
     {
@@ -80,7 +77,7 @@ public class Jvs2Java extends Translator {
           }
         } else if(line.matches("^\\s*include[^;]*;\\s*$")) {
           String name = line.replaceAll("^\\s*include([^;]*);\\s*$", "$1").trim();
-          body.append("/* include " + name + "; */ ");
+          body.append("/* include ").append(name).append("; */ ");
           try {
             String include = FileManager.load(name + ".jvs");
             for(String iline : include.split("\n"))
@@ -112,12 +109,12 @@ public class Jvs2Java extends Translator {
       // Declares the proglet's core as a Runnable in the Applet
       uid++;
       head.append("public class JvsToJavaTranslated").append(uid).append(" implements Runnable{");
-      head.append("  private static final long serialVersionUID = ").append(uid).append("L;");
-      head.append("  public void run() {");
-      head.append("   try{ main(); } catch(Throwable e) { ");
-      head.append("    if (e.toString().matches(\".*Interrupted.*\"))System.out.println(\"\\n-------------------\\nProggramme arrêté !\\n-------------------\\n\");");
-      head.append("    else System.out.println(\"\\n-------------------\\nErreur lors de l'exécution de la proglet\\n\"+org.javascool.core.Jvs2Java.report(e)+\"\\n-------------------\\n\");}");
-      head.append("  }");
+      tail.append("  private static final long serialVersionUID = ").append(uid).append("L;");
+      tail.append("  public void run() {");
+      tail.append("   try{ main(); } catch(Throwable e) { ");
+      tail.append("    if (e.toString().matches(\".*Interrupted.*\"))println(\"\\n-------------------\\nProgramme arrêté !\\n-------------------\\n\");");
+      tail.append("    else println(\"\\n-------------------\\nErreur lors de l'exécution de la proglet\\n\"+org.javascool.core.Jvs2Java.report(e)+\"\\n-------------------\\n\");}");
+      tail.append("  }");
       // Adds a main wrapper to run the proglet jvs runnable
       if (proglet != null) {
 	if (jvsName == null)
@@ -125,10 +122,10 @@ public class Jvs2Java extends Translator {
 	String main = 
 	  "public static void main(String[] usage) {" + 
 	  "    new org.javascool.widgets.MainFrame().reset(\""+jvsName+"\", "+proglet.getDimension().width+", "+proglet.getDimension().height+", "+
-	  (proglet.getPane() != null ? "new "+progletPackageName+".Panel()" : "org.javascool.widgets.Console.getInstance()") +
+	  (proglet.getPane() != null ? "org.javascool.core.ProgletEngine.getInstance().setProglet(\""+proglet.getName()+"\").getProgletPane()" : "org.javascool.widgets.Console.getInstance()") +
 	  ").setRunnable(new JvsToJavaTranslated"+uid+"());" +
 	  "}";
-	head.append(main);
+	tail.append(main);
       }
     }
     String finalBody = body.toString().
@@ -136,12 +133,7 @@ public class Jvs2Java extends Translator {
     if(progletTranslator != null) {
       finalBody = progletTranslator.translate(finalBody);
     }
-    if (false)
-      System.err.println(
-			 "\n-------------------\nCode java généré\n-------------------\n" +
-			 head.toString().replaceAll("([{;])", "$1\n") + "\n" + finalBody + "}" +
-			 "\n----------------------------------------------------------\n");
-    return head.toString() + finalBody + "}";
+    return head.toString() + finalBody + tail.toString() + "}";
   }
   /** Renvoie le nom de la dernière classe Java générée lors de la traduction. */
   public String getClassName() {
