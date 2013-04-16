@@ -3,6 +3,7 @@
 # @TODO :
 #
 # Voir le javaStart sous windows 
+# Voir le pb de la console uouverte deux fois
 # Voir comment se gère les proglets processing et bien valider les liens vers le site fuscia
 # Voir pour la proglet java3D
 # Pb de sketchbook/.build et ../build.* et ../*.html
