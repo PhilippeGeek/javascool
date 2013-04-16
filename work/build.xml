@@ -263,7 +263,7 @@
   </target>
   
   <target name="run.processing" depends="javascool-base.jar">
-    <property name="pHome" value="/usr/java/processing-1.2.1"/>
+    <property name="pHome" value="/usr/java/processing-2.0b8"/>
     <java dir="${pHome}" jvm="${pHome}/java/bin/java" classname="processing.app.Base" fork="true">
       <classpath>
         <pathelement location="./dist/javascool-base.jar"/>

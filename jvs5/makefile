@@ -3,8 +3,10 @@
 # @TODO :
 #
 # Voir le javaStart sous windows 
-# Voir le pb de la console uouverte deux fois
+# Voir le pb de la console uouverte deux fois en utilisant la console multi fenetre + gerer la recup de stdout sans graphique aussi pour stocket un pg dans chaque repertoire
 # Voir comment se gère les proglets processing et bien valider les liens vers le site fuscia
+## /usr/java/processing-2.0b8/processing-java --sketch=sketchbook/cryptageRSA --output=tmp --force --build
+## http://code.google.com/p/processing/issues/detail?id=142
 # Voir pour la proglet java3D
 # Pb de sketchbook/.build et ../build.* et ../*.html
 # Valider le make www de ici et le git (avec le wget de http://javascool.gforge.inria.fr/v5 dans javascool.github.com/wproglets)
@@ -18,7 +20,7 @@
 #
 ########################################################################################################################################################
 
-dft : www
+dft : prc
 
 # Choix de la JDK
 
@@ -34,6 +36,9 @@ DIST=$(GIT_HOME)/wproglets
 ########################################################################################################################################################
 
 # Test en cours 
+
+prc :
+	/usr/java/processing-2.0b8/processing
 
 tstP = algoDeMaths
 
