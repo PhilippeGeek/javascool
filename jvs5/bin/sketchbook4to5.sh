@@ -11,7 +11,7 @@ cd /home/vthierry/Work/culsci/jvs4
 
 srcDir="`pwd`/sketchbook"
 dstDir="`pwd`/jvs5/sketchbook"
-srcProglets="`find $srcDir -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | egrep -v 'jeux2D|sampleCode'`"
+srcProglets="`find $srcDir -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | egrep -v 'jeux2D|sampleCode|\.build'`"
 
 echo "Conversion de «" $srcProglets "» de '$srcDir' à '$dstDir'"
 

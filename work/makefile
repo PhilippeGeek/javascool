@@ -40,9 +40,6 @@ jbl :
 jpr : 
 	ant javascool-proglets.jar ; javac -cp dist/javascool-proglets.jar Main.java ; java -cp .:dist/javascool-proglets.jar Main
 
-pro :
-	ant processing
-
 pgl :
 	cd ../web ; ant build
 	$(JRE_HOME)/bin/java -jar ../web/proglets/codagePixels/javascool-proglet-codagePixels.jar 

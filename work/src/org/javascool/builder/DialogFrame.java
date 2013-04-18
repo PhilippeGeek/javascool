@@ -31,7 +31,7 @@ import org.javascool.gui.About;
 public class DialogFrame {
   /** Ouvre une console indépendante pour lancer la construction de proglets. */
   public static void startFrame() {
-    jCreatorButton = Console.getInstance().getToolBar().addTool("Créer une nouvelle proglet", "org/javascool/widgets/icons/new.png",
+    jCreatorButton = getConsoleInstance().getToolBar().addTool("Créer une nouvelle proglet", "org/javascool/widgets/icons/new.png",
                                                                 new Runnable() {
                                                                   @Override
                                                                   public void run() {
@@ -39,7 +39,7 @@ public class DialogFrame {
                                                                   }
                                                                 }
                                                                 );
-    jBuilderButton = Console.getInstance().getToolBar().addTool("Lancement du builder", "org/javascool/widgets/icons/compile.png",
+    jBuilderButton = getConsoleInstance().getToolBar().addTool("Lancement du builder", "org/javascool/widgets/icons/compile.png",
                                                                 new Runnable() {
                                                                   @Override
                                                                   public void run() {
@@ -47,19 +47,19 @@ public class DialogFrame {
                                                                   }
                                                                 }
                                                                 );
-    Console.getInstance().getToolBar().addTool("Progress Bar", jProgressBar = new JProgressBar());
+    getConsoleInstance().getToolBar().addTool("Progress Bar", jProgressBar = new JProgressBar());
     jProgressBar.setSize(new Dimension(100, 25));
-    Console.getInstance().getToolBar().addTool("Status Bar", jLabel = new JLabel());
-    Console.getInstance().getToolBar().addRightTool("Convertisseur HML", new Runnable() {
+    getConsoleInstance().getToolBar().addTool("Status Bar", jLabel = new JLabel());
+    getConsoleInstance().getToolBar().addRightTool("Convertisseur HML", new Runnable() {
                                                       @Override
                                                       public void run() {
                                                         startConvertisseurHML();
                                                       }
                                                     }
                                                     );
-    Console.getInstance().getToolBar().addRightTool(About.getAboutMessage());
+    getConsoleInstance().getToolBar().addRightTool(About.getAboutMessage());
     setUpdate("", 0);
-    new MainFrame().reset("Java's Cool 4 Proglet Buidler", Build.logo, Console.getInstance());
+    new MainFrame().reset("Java's Cool 4 Proglet Buidler", Build.logo, getConsoleInstance());
   }
   /** Met à jour la progression de la construction.
    * @param statut Statut sur l'opération en cours. Un message de 64 caractères max.
@@ -112,7 +112,7 @@ public class DialogFrame {
                                  }
                                }
                                );
-    Component parent = Console.getInstance().getToolBar();
+    Component parent = getConsoleInstance().getToolBar();
     jCreatorMenu.show(jCreatorButton, 0, parent.getHeight());
   }
   private static JTextField jCreatorMenuDir, jCreatorMenuName;
@@ -142,7 +142,7 @@ public class DialogFrame {
                                                         if(c instanceof JCheckBox && ((JCheckBox) c).isSelected()) {
                                                           proglets.add(((JCheckBox) c).getText());
                                                         }
-                                                      Console.getInstance().clear();
+                                                      getConsoleInstance().clear();
                                                       ProgletsBuilder.build(proglets.toArray(new String[proglets.size()]));
                                                     }
                                                   }
@@ -155,7 +155,7 @@ public class DialogFrame {
         jBuilderMenu.add(new JLabel("Aucune proglet à construire dans ce répertoire"));
       }
     }
-    Component parent = Console.getInstance().getToolBar();
+    Component parent = getConsoleInstance().getToolBar();
     jBuilderMenu.show(jBuilderButton, 0, parent.getHeight());
   }
   // @ inner-class-variable
@@ -164,7 +164,12 @@ public class DialogFrame {
   private static void startConvertisseurHML() {
     JPopupMenu jCreatorMenu = new JPopupMenu();
     jCreatorMenu.add(new Htm2Hml());
-    Component parent = Console.getInstance().getToolBar();
+    Component parent = getConsoleInstance().getToolBar();
     jCreatorMenu.show(jCreatorButton, 0, parent.getHeight());
+  }  
+  /** Renvoie la console courante. */
+  private static Console getConsoleInstance() {
+    return console;
   }
+  private static Console console = Console.newInstance();
 }
