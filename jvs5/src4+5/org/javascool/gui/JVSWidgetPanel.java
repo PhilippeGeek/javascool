@@ -28,8 +28,7 @@ class JVSWidgetPanel extends JVSTabs {
   }
   private JVSWidgetPanel() {
     super();
-    if(!Console.isInstanced())
-      this.add("Console", "", Console.getInstance());
+    this.add("Console", "", console = Console.newInstance());
   }
   /** Charge les tabs de la proglet
    * Charge le tab de la proglet (Panel) et l'HTMLDisplay avec le fichier d'aide.
@@ -37,8 +36,8 @@ class JVSWidgetPanel extends JVSTabs {
    */
   public void setProglet(String name) {
     this.removeAll();
-    if(!Console.isInstanced())
-      this.add("Console", "", Console.getInstance());
+    Console.removeInstance(console);
+    this.add("Console", "", console = Console.newInstance());
     Proglet proglet = ProgletEngine.getInstance().setProglet(name);
     if(proglet.getPane() != null) {
       this.progletTabId = this.add("Proglet " + name, "", new JScrollPane(proglet.getPane()));
@@ -80,4 +79,9 @@ class JVSWidgetPanel extends JVSTabs {
     this.setTabComponentAt(this.indexOfTab(tabName), new TabPanel(this));
     this.setSelectedComponent(memo);
   }
+  /** Renvoie la console courante. */
+  public Console getConsoleInstance() {
+    return console;
+  }
+  private Console console = null;
 }

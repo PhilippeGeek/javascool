@@ -25,7 +25,7 @@ import org.javascool.macros.Macros;
  *
  * @see <a href="SoundBit.java.html">source code</a>
  * @serial exclude
- * @deprecatedSoon
+ * #deprecated
  * WARNING: THIS CLASS IS DEPRECATED, USE org.javascool.tools.sound.SoundBit INSTEAD.
  */
 // @Deprecated

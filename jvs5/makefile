@@ -9,6 +9,7 @@
 ## http://code.google.com/p/processing/issues/detail?id=142
 # Voir pour la proglet java3D
 # Valider le make www de ici et le git (avec le wget de http://javascool.gforge.inria.fr/v5 dans javascool.github.com/wproglets)
+## faire git wproglets quand stable
 # Verifier en ligne les nv liens des proglet's docs.
 #
 # @THEN
@@ -19,7 +20,7 @@
 #
 ########################################################################################################################################################
 
-dft : cnv
+dft : rien
 
 # Choix de la JDK
 
@@ -53,7 +54,7 @@ tst2 : cleanall cpv $(DIST)/javascool-core.jar
 
 # Publie les fichiers du site web
 
-www : clean cnv cpv $(DIST)/javascool-core.jar $(DIST)/javascool-core-api $(patsubst sketchbook/%,$(DIST)/javascool-proglet-%-html,$(wildcard sketchbook/*))
+www : clean cnv cpv jar $(patsubst sketchbook/%,$(DIST)/javascool-proglet-%-html,$(wildcard sketchbook/*))
 #	$(MAKE) -C $(GIT_HOME) push
 
 # Construit les proglets
@@ -65,6 +66,8 @@ $(DIST)/javascool-proglet-%-html : sketchbook/%
 # Construit la jarre de javascool 
 
 SRC = $(wildcard lib4/*.jar) $(shell find src4+5 -name '*.java' -o -name '*.xml' -o -name '*.png' -o -name '*.htm' -o -name '*.zip')
+
+jar : $(DIST)/javascool-core.jar $(DIST)/javascool-core-api 
 
 $(DIST)/javascool-core.jar : $(SRC)
 	echo javac javascool-core

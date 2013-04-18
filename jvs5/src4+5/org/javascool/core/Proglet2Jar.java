@@ -110,7 +110,7 @@ public class Proglet2Jar {
    */
   public static JSONObject getProgletParameters(String progletDir) {
     // Nom et paramètres de la proglet
-    String name = new File(progletDir).getName();
+    String name = new File(progletDir).getName().replaceFirst("javascool-proglet-([^-]*)-html", "$1");
     checkProgletName(name);
     String paramFile = progletDir + File.separator + "proglet.json";
     check(new File(paramFile).exists(), "le fichier de description "+paramFile+" n'existe pas, il faut le créer");

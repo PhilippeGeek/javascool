@@ -29,7 +29,7 @@ import org.javascool.tools.sound.SoundBit;
  *
  * @see <a href="FileSoundBit.java.html">code source</a>
  * @serial exclude
- * @deprecatedSoon
+ * #deprecated
  * WARNING: THIS CLASS IS DEPRECATED, USE org.javascool.tools.sound.FileSoundBit INSTEAD.
  */
 // @Deprecated
