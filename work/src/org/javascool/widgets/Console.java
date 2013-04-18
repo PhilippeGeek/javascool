@@ -4,6 +4,8 @@
 
 package org.javascool.widgets;
 
+import java.util.ArrayList;
+
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -16,6 +18,7 @@ import javax.swing.JTextArea;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.IOException;
+
 import org.javascool.tools.FileManager;
 
 /** Définit une zone d'affichage qui permet de recevoir les messages de la console.
@@ -27,38 +30,84 @@ import org.javascool.tools.FileManager;
 public class Console extends JPanel {
   private static final long serialVersionUID = 1L;
 
+  /** Enregistrement des consoles. */
+  private static ArrayList<Console> consoles = new ArrayList<Console>();
+
+  // @static-instance
+
+  /** Crée et/ou renvoie une nouvelle instance de console connectée à stdout.
+   * @param popup Génère un popup avec la console affichée. False par défaut.
+   */
+  public static Console newInstance(boolean popup) {
+    console = new Console();
+    if (popup)
+      new MainFrame().reset("Console", "org/javascool/widgets/icons/copyAll.png", 600, 400, console);
+    consoles.add(console);
+    return console;
+  }
+  /*
+   * @see #newInstance(boolean)
+   */
+  public static Console newInstance() {
+    return newInstance(false);
+  }
+
+  /** Déconnecte une console.
+   * @param console La console à déconnecter.
+   */
+  public static void removeInstance(Console console) {
+    if(console != null)
+      consoles.remove(console);
+  }
+
+  /** Renvoie la dernière instance de console crée.
+   * @see #newInstance(boolean)
+   */
+  public static Console getInstance() {
+    if(console == null) {
+      console = new Console();
+    }
+    return console;
+  }
+  private static Console console = null;
+
+  /** Redirige le System.out vers ces affichages */
+  private static void redirectSystemStreams() {
+    if (!redirected) {
+      final OutputStream oldOut = System.out;
+      OutputStream out = new OutputStream() {
+	  @Override
+	  public void write(int b) throws IOException {
+	    printAll(String.valueOf((char) b));
+	    oldOut.write(b);
+	  }
+	  @Override
+	  public void write(byte[] b, int off, int len) throws IOException {
+	    printAll(new String(b, off, len));
+	    oldOut.write(b, off, len);
+	  }
+	  @Override
+	  public void write(byte[] b) throws IOException {
+	    write(b, 0, b.length);
+	    oldOut.write(b);
+	  }
+	};
+      System.setOut(new PrintStream(out, true));
+      redirected = true;
+    }
+  }
+  private static boolean redirected = false;
+  //Affiche du texte dans les consoles.
+  private static void printAll(String text) {	  
+    for(Console console : consoles)
+      console.print(text);
+  }
   /** Zone d'affichage */
   private JTextArea outputPane;
   /** Barre de menu */
   private ToolBar toolbar;
   /** Zone d'affichage du statut. */
   private JLabel status;
-
-  // @static-instance
-
-  /** Crée et/ou renvoie l'unique instance de console.
-   * @param popup Si il n'y a pas d'instance déjà crée, génère un popup avec la console affichée. False par défaut.
-   * <p>Une application ne peut définir qu'une seule console.</p>
-   */
-  public static Console getInstance(boolean popup) {
-    if(console == null) {
-      console = new Console();
-      if (popup)
-	new MainFrame().reset("Console", "org/javascool/widgets/icons/copyAll.png", 600, 400, console);
-    }
-    return console;
-  }
-  /**
-   * @see #getInstance(boolean)
-   */
-  public static Console getInstance() {
-    return getInstance(false);
-  }
-  /** Renvoie true si la console a déjà été instanciée, false sinon. */
-  public static boolean isInstanced() {
-    return console != null;
-  }
-  private static Console console = null;
 
   private Console() {
     BorderLayout layout = new BorderLayout();
@@ -97,30 +146,8 @@ public class Console extends JPanel {
     toolbar.addSeparator();
     toolbar.addTool("status", status = new JLabel("                                         "));
     this.add(toolbar, BorderLayout.NORTH);
-    // Finalise l'objet
+    // Met en place la redirection
     redirectSystemStreams();
-  }
-  /** Redirige le System.out vers cet affichage */
-  private void redirectSystemStreams() {
-    final OutputStream oldOut = System.out;
-    OutputStream out = new OutputStream() {
-      @Override
-      public void write(int b) throws IOException {
-        print(String.valueOf((char) b));
-        oldOut.write(b);
-      }
-      @Override
-      public void write(byte[] b, int off, int len) throws IOException {
-        print(new String(b, off, len));
-        oldOut.write(b, off, len);
-      }
-      @Override
-      public void write(byte[] b) throws IOException {
-        write(b, 0, b.length);
-        oldOut.write(b);
-      }
-    };
-    System.setOut(new PrintStream(out, true));
   }
   /** Efface le contenu de la console. */
   public void clear() {

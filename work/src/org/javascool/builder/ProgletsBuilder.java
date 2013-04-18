@@ -211,7 +211,7 @@ public class ProgletsBuilder {
         DialogFrame.setUpdate("Finalisation 2/2", 100);
       }
       if(targetDir == null) {
-        // JarManager.rmDir(buildDir);
+        JarManager.rmDir(buildDir);
       }
       System.out.println("Construction achevée avec succès: «" + targetJar + "» a été créé");
       System.out.println("\tIl faut lancer «" + targetJar + "» pour tester/utiliser les proglets.");

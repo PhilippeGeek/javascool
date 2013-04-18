@@ -3,12 +3,11 @@
 # @TODO :
 #
 # Voir le javaStart sous windows 
-# Voir le pb de la console uouverte deux fois en utilisant la console multi fenetre + gerer la recup de stdout sans graphique aussi pour stocket un pg dans chaque repertoire
+# Voir le pb de la console jsv2jar + gerer la recup de stdout sans graphique aussi pour stocket un pg dans chaque repertoire
 # Voir comment se gère les proglets processing et bien valider les liens vers le site fuscia
 ## /usr/java/processing-2.0b8/processing-java --sketch=sketchbook/cryptageRSA --output=tmp --force --build
 ## http://code.google.com/p/processing/issues/detail?id=142
 # Voir pour la proglet java3D
-# Pb de sketchbook/.build et ../build.* et ../*.html
 # Valider le make www de ici et le git (avec le wget de http://javascool.gforge.inria.fr/v5 dans javascool.github.com/wproglets)
 # Verifier en ligne les nv liens des proglet's docs.
 #
@@ -16,11 +15,11 @@
 # - Recuperer l'éditeur HTML5 de Philippe est en faire un produit autonome qui se connecte aux web services
 # - Voir au déploiement par jnlp des jars utilisés
 # - Voir jar jbed jad http://www.developpez.net/forums/d922916/java/general-java/java-mobiles/android/android-jar
-# - Noter virer les classes @deprecated dans jvs4 cet été
+#
 #
 ########################################################################################################################################################
 
-dft : prc
+dft : cnv
 
 # Choix de la JDK
 

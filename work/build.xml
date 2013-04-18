@@ -11,7 +11,6 @@
       ant webproglets             construit dans ./dist/proglets les éléments pour la mise en ligne web des proglets
       ant classes                 teste la compilation des classes
       ant beautify                reformate tous les sources avec la commande uncrustify
-      ant processing              lance (si l'installation est ok) la plateforme processing
       ant clean                   nettoie les cibles non retenues dans le svn
       ant prun			lance Javas'Cool Core "apprenant" avec les proglets
       ant jrun			lance Javas'Cool Core "apprenant" sans les proglets
@@ -258,11 +257,12 @@
   </target>
   
   <target name="processing"> 
-    <antcall target="run.processing"/>
-    <delete dir="./../sketchbook/*/applet/org"/>
+  <echo message="il n'est plus possible de mettre à jour les proglets processing en jvs4, la maintenance reprend en jvs5" />
+    <!--antcall target="run.processing"/-->
+    <!--delete dir="./../sketchbook/*/applet/org"/-->
   </target>
   
-  <target name="run.processing" depends="javascool-base.jar">
+  <!--target name="run.processing" depends="javascool-base.jar">
     <property name="pHome" value="/usr/java/processing-2.0b8"/>
     <java dir="${pHome}" jvm="${pHome}/java/bin/java" classname="processing.app.Base" fork="true">
       <classpath>
@@ -274,7 +274,7 @@
         </fileset>
       </classpath>
     </java>
-  </target>
+  </target-->
   
   <target name="clean">  
     <delete dir="./build/classes"/> 

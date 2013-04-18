@@ -280,8 +280,8 @@ public class SerialInterfacePanel extends JPanel {
                        );
     }
     // Permet d'afficher les messages de la console dans l'interface.
-    if(!org.javascool.widgets.Console.isInstanced()) {
-      JPanel c = org.javascool.widgets.Console.getInstance();
+    {
+      JPanel c = org.javascool.widgets.Console.newInstance();
       c.setPreferredSize(new Dimension(600, 200));
       add(c, BorderLayout.SOUTH);
     }

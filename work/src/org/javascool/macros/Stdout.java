@@ -35,7 +35,7 @@ public class Stdout {
    * @see #println(String)
    */
   public static void echo(String string) {
-    Console.getInstance(true).print(string + "\n");
+    Console.getInstance().print(string + "\n");
   }
   /**
    * @see #echo(String)
@@ -79,7 +79,7 @@ public class Stdout {
    * @see #echo(String)
    */
   public static void println(String string) {
-    Console.getInstance(true).print(string + "\n");
+    Console.getInstance().print(string + "\n");
     org.javascool.gui.Desktop.getInstance().focusOnConsolePanel();
   }
   /**
@@ -157,18 +157,18 @@ public class Stdout {
   }
   /** Efface tout ce qui est écrit dans la console. */
   public static void clear() {
-    Console.getInstance(true).clear();
+    Console.getInstance().clear();
   }
   /** Sauve ce qui est présentement écrit dans la console dans un fichier.
    * @param location La localisation (chemin du fichier ou localisation internet) où sauver le texte.
    */
   public static void saveConsoleOutput(String location) {
-    Console.getInstance(true).saveConsoleOutput(location);
+    Console.getInstance().saveConsoleOutput(location);
   }
 
   /** Envoie à l'imprimante la console.*/
   public static void sendConsoleToPrinter() {
-    sendToPrinter(Console.getInstance(true));
+    sendToPrinter(Console.getInstance());
   }
   /** Envoie à l'imprimante la console.*/
   public static void sendProgletToPrinter() {

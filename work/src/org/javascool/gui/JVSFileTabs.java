@@ -8,7 +8,6 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import org.javascool.widgets.Console;
 import org.javascool.core.ProgletEngine;
 import org.javascool.tools.UserConfig;
 
@@ -177,7 +176,7 @@ class JVSFileTabs extends JVSTabs {
     }
     JVSFileTabs.currentCompiledFile = fileId;
     if(ProgletEngine.getInstance().doCompile(JVSFileTabs.editors.get(fileId).getText())) {
-      Console.getInstance().clear();
+      JVSWidgetPanel.getInstance().getConsoleInstance().clear();
       System.out.println("Compilation réussie !");
       return true;
     } else {
