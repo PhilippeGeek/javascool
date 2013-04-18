@@ -15,7 +15,7 @@ import org.javascool.tools.sound.SoundBit;
 
 /** Defines a microphone-input sound-bit wrapper.
  * @see <a href="InputSoundBit.java.html">code source</a>
- * @deprecatedSoon
+ * #deprecated
  * WARNING: THIS CLASS IS DEPRECATED, USE org.javascool.tools.sound.InputSoundBit INSTEAD.
  * @serial exclude
  */

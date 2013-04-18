@@ -297,6 +297,12 @@ public class FileManager {
   /**
    * @see #list(String, String, int)
    */
+  public static String[] list(String folder, int depth) {
+    return list(folder, null, depth);
+  }
+  /**
+   * @see #list(String, String, int)
+   */
   public static String[] list(String folder, String pattern) {
     return list(folder, pattern, 0);
   }
