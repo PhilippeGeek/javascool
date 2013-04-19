@@ -37,6 +37,8 @@ public class Proglet2Html {
    * @throws RuntimeException Si une erreur d'entrée-sortie s'est produite lors de la compilation ou construction.
    */
   public static boolean build(String htmlDir, String progletDir) {
+    Console console = Console.newInstance();
+    boolean status = false;
     try {
       if (!new File(progletDir).exists())
 	throw new IllegalArgumentException("Le répertoire "+progletDir+" n'existe pas");
@@ -83,12 +85,13 @@ public class Proglet2Html {
 	    Utils.javaStart("-jar "+jsv2jarJar+" "+file, 60);
 	  }
       }
-      return true;
+      status = true;
     } catch (Throwable e) {
       System.out.println(e);
       e.printStackTrace();
-      return false;
     }
+    console.saveConsoleOutput(htmlDir + File.separator + "compilation.log");
+    return status;
   }
   /**
    * @see #build(String, String)
@@ -338,11 +341,11 @@ public class Proglet2Html {
 			      (new Thread(new Runnable() { public void run() {
 				String path = folder.getText() + File.separator + name.getText();
 				if (new File(path).exists()) {
-				  System.out.println("Construction de "+new File(path).getName()+"..");
+				  System.out.println("Construction de "+new File(path).getName()+" ..");
 				  if (build(path))
 				    System.out.println("achevée avec succès :\n Le répertoire '"+path+"-html' est disponible");
 				} else {
-				  System.out.println("Construction de "+new File(path).getName()+"..");
+				  System.out.println("Construction de "+new File(path).getName()+" ..");
 				  if (ProgletCreate.build(path))
 				    System.out.println("achevée avec succès :\n Le répertoire '"+path+"' est disponible");
 				  doit.setText("Compiler");
