@@ -2,25 +2,39 @@
 #
 # @TODO :
 #
-# Voir le javaStart sous windows 
-# Voir le pb de la console jsv2jar + gerer la recup de stdout sans graphique aussi pour stocket un pg dans chaque repertoire
+# Expliquer XmlXml lib ext et virer de lib4
+# Filter les jars en regardant les zips
+# Linker jvs4.jar pour ne plus acceder a v4
+# Page credits avec logos
+# Finir page qui pique 4.9
+# Voir à mettre manuelISN en partage commun
+# Commencer a calculer les rebonds vers v5/*
+# Valider le mécanisme de webservice en lancement d'un programme local
+# Creer zip pour les sources de la proglet
+# Voir le pb de la console jsv2jar ok
+# Assumer taille des jars et juste reduire les a côté
 # Voir comment se gère les proglets processing et bien valider les liens vers le site fuscia
+## cp $d/applet/{*.java,{name}.java} $d ; rm -rf applet
 ## /usr/java/processing-2.0b8/processing-java --sketch=sketchbook/cryptageRSA --output=tmp --force --build
 ## http://code.google.com/p/processing/issues/detail?id=142
 # Voir pour la proglet java3D
-# Valider le make www de ici et le git (avec le wget de http://javascool.gforge.inria.fr/v5 dans javascool.github.com/wproglets)
-## faire git wproglets quand stable
+#
+# @DEPLOY
+#
+# Vider javascool sous github et y basculer {documents,sketchbook,javascool-core} en un ou en trois ?
+# Valider le www en ligne
+## faire git add wproglets quand stable
 # Verifier en ligne les nv liens des proglet's docs.
 #
 # @THEN
 # - Recuperer l'éditeur HTML5 de Philippe est en faire un produit autonome qui se connecte aux web services
-# - Voir au déploiement par jnlp des jars utilisés
+# - Voir au déploiement par jnlp des jars utilisés http://en.wikipedia.org/wiki/Java_Web_Start
 # - Voir jar jbed jad http://www.developpez.net/forums/d922916/java/general-java/java-mobiles/android/android-jar
 #
 #
 ########################################################################################################################################################
 
-dft : rien
+dft :tst1
 
 # Choix de la JDK
 
@@ -37,9 +51,6 @@ DIST=$(GIT_HOME)/wproglets
 
 # Test en cours 
 
-prc :
-	/usr/java/processing-2.0b8/processing
-
 tstP = algoDeMaths
 
 tst1  : cleanall cpv $(DIST)/javascool-core.jar $(DIST)/javascool-proglet-$(tstP)-html
@@ -50,11 +61,14 @@ tst1  : cleanall cpv $(DIST)/javascool-core.jar $(DIST)/javascool-proglet-$(tstP
 tst2 : cleanall cpv $(DIST)/javascool-core.jar
 	java -cp $(DIST)/javascool-core.jar org.javascool.core.Proglet2Html
 
+prc :
+	/usr/java/processing-2.0b8/processing
+
 ########################################################################################################################################################
 
 # Publie les fichiers du site web
 
-www : clean cnv cpv jar $(patsubst sketchbook/%,$(DIST)/javascool-proglet-%-html,$(wildcard sketchbook/*))
+www : clean cnv jar $(patsubst sketchbook/%,$(DIST)/javascool-proglet-%-html,$(wildcard sketchbook/*))
 #	$(MAKE) -C $(GIT_HOME) push
 
 # Construit les proglets
@@ -67,7 +81,7 @@ $(DIST)/javascool-proglet-%-html : sketchbook/%
 
 SRC = $(wildcard lib4/*.jar) $(shell find src4+5 -name '*.java' -o -name '*.xml' -o -name '*.png' -o -name '*.htm' -o -name '*.zip')
 
-jar : $(DIST)/javascool-core.jar $(DIST)/javascool-core-api 
+jar : cpv $(DIST)/javascool-core.jar $(DIST)/javascool-core-api 
 
 $(DIST)/javascool-core.jar : $(SRC)
 	echo javac javascool-core
@@ -92,7 +106,7 @@ cnv :
 clean :
 	rm -rf tmp-*
 	svn status
-	cd $(GIT_HOME) ; git status
+#	cd $(GIT_HOME) ; git status @todo
 
 cleanall : clean
 	rm -rf $(DIST)/*
