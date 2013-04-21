@@ -64,10 +64,7 @@ public class Console extends JPanel {
    * @see #newInstance(boolean)
    */
   public static Console getInstance() {
-    if(console == null) {
-      console = new Console();
-    }
-    return console;
+    return console == null ? newInstance(true) : console;
   }
   private static Console console = null;
 
@@ -178,7 +175,7 @@ public class Console extends JPanel {
       }
     outputPane.append(text);
   }
-  // Messages paarasites supprimés à l'affichage
+  // Messages parasites supprimés à l'affichage
   private static final String prefixes[] = {
     "=== Minim Error ===",
     "=== Likely buffer underrun in AudioOutput.",

@@ -84,8 +84,9 @@ public class Utils {
    */
   public static boolean javaStart(String command, int timeout) {
     try {
-      // @todo regarder sur windows si il y a le bin ou un exec à la place
       String javaCommand = System.getProperty("java.home") + File.separator + "bin" + File.separator + "java"; 
+      if (System.getProperty("os.name").toUpperCase().contains("WIN"))
+	javaCommand +=".exe";
       return exec(javaCommand+(command.indexOf('\t') == -1 ? " " : "\t")+command, timeout) == 0;
     } catch(Exception e) {
       System.out.println("Impossible de lancer la command '$java " + command + "' : " + e);
