@@ -8,7 +8,7 @@
 cd /home/vthierry/Work/culsci/jvs4
 
 # Copy des libs nécessaires
-for f in javac7 RSyntaxTextArea json java2html javadoc7
+for f in javac7 javadoc7 json RSyntaxTextArea 
 do make -f - <<EOF
 jvs5/lib4/$f.jar : work/lib/$f.jar
 	cp \$^ \$@

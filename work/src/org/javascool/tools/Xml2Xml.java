@@ -19,7 +19,7 @@ import javax.xml.transform.stream.StreamResult;
 
 /** Transforme une structure XML en une autre structure XML avec un XSLT.
  *
- * <p>Note: utilise <tt>saxon.jar</tt> qui doit être dans le CLASSPATH.</p>
+ * <p>Note: utilise <tt>saxon.jar</tt> qui doit être dans le CLASSPATH, donc dans le répertoire la proglet, si la classe est utilisée.</p>
  * @see <a href="Xml2Xml.java.html">code source</a>
  * @serial exclude
  */

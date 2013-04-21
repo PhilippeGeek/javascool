@@ -35,7 +35,8 @@ public class Stdout {
    * @see #println(String)
    */
   public static void echo(String string) {
-    Console.getInstance().print(string + "\n");
+    Console.getInstance();
+    System.out.println(string);
   }
   /**
    * @see #echo(String)
@@ -79,7 +80,8 @@ public class Stdout {
    * @see #echo(String)
    */
   public static void println(String string) {
-    Console.getInstance().print(string + "\n");
+    Console.getInstance();
+    System.out.println(string);
     org.javascool.gui.Desktop.getInstance().focusOnConsolePanel();
   }
   /**
@@ -122,6 +124,7 @@ public class Stdout {
    * @param string La chaine ou l'objet à afficher sous sa représentation textuelle.
    */
   public static void print(String string) {
+    Console.getInstance();
     System.out.print(string);
     System.out.flush();
   }

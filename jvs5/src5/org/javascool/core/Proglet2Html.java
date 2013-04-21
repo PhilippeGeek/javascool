@@ -2,6 +2,7 @@ package org.javascool.core;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.FileSystems;
 import org.json.JSONObject;
 import org.javascool.tools.FileManager;
 
@@ -43,7 +44,7 @@ public class Proglet2Html {
       if (!new File(progletDir).exists())
 	throw new IllegalArgumentException("Le répertoire "+progletDir+" n'existe pas");
       if (!new File(progletDir).isDirectory())
-	throw new IllegalArgumentException("Le fichier "+progletDir+" n'est pa sun répertoire");
+	throw new IllegalArgumentException("Le fichier "+progletDir+" n'est pas un répertoire");
       JSONObject params = Proglet2Jar.getProgletParameters(progletDir);
       // Creation d'un répertoire vierge
       System.out.println("> création de "+htmlDir);
@@ -53,14 +54,14 @@ public class Proglet2Html {
       addBootstrap(htmlDir);
       FileManager.save(htmlDir + File.separator + "index.html", "<script>location.replace('help.html');</script>");
       // Copy des fichiers de la proglet
+      String srcHtmlDir = htmlDir + File.separator + "api" + File.separator + "org" + File.separator + "javascool" + File.separator + "proglets" + 
+	File.separator + params.getString("name");
       for (String file : FileManager.list(progletDir)) {
 	if (new File(file).isFile() && !(file.endsWith(".jar") || file.endsWith(".zip"))) {
 	  if (file.endsWith(".html")) {
 	    FileManager.save(htmlDir + File.separator + new File(file).getName(), encapsulates(FileManager.load(file), params));
 	  } else if (file.endsWith(".java")) {
-	    JarManager.copyFile(file, htmlDir + File.separator + "api" +  
-				File.separator + "org" + File.separator + "javascool" + File.separator + "proglets" + File.separator + params.getString("name") + 
-				File.separator + new File(file).getName());
+	    JarManager.copyFile(file, srcHtmlDir + File.separator + new File(file).getName());
 	  } else {
 	    if (file.endsWith(".jvs"))
 	      FileManager.save(htmlDir + File.separator + new File(file).getName() + ".html",
@@ -69,15 +70,23 @@ public class Proglet2Html {
 	  }
 	}
       }
+      JarManager.jarCreate(htmlDir + File.separator + "javascool-proglet-source-" + params.getString("name") + ".zip", null, progletDir);
       // Génération des fichiers liés aux sources java
       {
-	System.out.println("> compilation 1/2 de "+params.getString("name"));
+	System.out.println("> compilation de "+params.getString("name"));
 	String progletJar = htmlDir + File.separator + "javascool-proglet-"+params.getString("name")+".jar";
-	Proglet2Jar.build(progletJar, progletDir);
-	System.out.println("> compilation 2/2 de "+params.getString("name"));
 	String jsv2jarJar = htmlDir + File.separator + "javascool-jvs2jar-"+params.getString("name")+".jar";
-	Proglet2Jar.build(jsv2jarJar, progletDir);
+	Proglet2Jar.build(progletJar, progletDir);
+	try {
+	  java.nio.file.Files.createLink(FileSystems.getDefault().getPath(jsv2jarJar), FileSystems.getDefault().getPath(progletJar));
+	} catch(Exception e) {
+	  System.out.println("> compilation séparée de javascool-jvs2jar-"+params.getString("name"));
+	  Proglet2Jar.build(jsv2jarJar, progletDir);
+	}
 	System.out.println("> compilation de la javadoc");
+	FileManager.save(srcHtmlDir + File.separator + "package.html",
+			 "<body><h3>Implémentation de la proglet "+params.getString("name")+
+			 " (accès aux <a href=\"../../../../../javascool-proglet-source-"+params.getString("name")+".zip\">sources</a>).</h3></body>");
 	javadoc(params.getString("name"), System.getProperty("java.class.path"), htmlDir + File.separator + "api", htmlDir + File.separator + "api");
 	for (String file : FileManager.list(htmlDir))
 	  if (file.endsWith(".jvs")) {
@@ -155,6 +164,12 @@ public class Proglet2Html {
 						.substring(1));
 	FileManager.save(file, text);
       }
+      for (String file : FileManager.list(apiDir, ".*package-summary\\.html", 5))
+	FileManager.save(file, FileManager.load(file).
+			 replaceAll("<h1", "<h3").replaceAll("</h1>", "</h3>").
+			 replaceAll("<p>See:&nbsp;<a href=\"#package_description\">Description</a></p>", "").
+			 replaceAll("<div class=\"docSummary\">.*\n.*</div>", "<div>").
+			 replaceFirst(">Package org.javascool.proglets.* Description", ">"));
       if (new File(apiDir + File.separator + "overview-summary.html").exists())
 	JarManager.copyFile(apiDir + File.separator + "overview-summary.html", apiDir + File.separator + "index.html");
       addBootstrap(apiDir);

@@ -53,8 +53,8 @@ public class JarManager {
     }
   }
   /** Crée un jar à partir d'une arborescence.
-   * @param jarFile Jar à construire. Elle est détruite avant d'être crée.
-   * @param mfData Contenu du fichier de manifeste (obligatoire).
+   * @param jarFile Le fichier .jar ou .zip à construire. Il est détruit avant d'être créé.
+   * @param mfData Contenu du fichier de manifeste (obligatoire) si c'est un fichier en .jar.
    * @param srcDir Dossier source avec les fichiers à mettre en jarre.
    */
   public static void jarCreate(String jarFile, String mfData, String srcDir) {
@@ -65,7 +65,7 @@ public class JarManager {
       new File(jarFile).delete();
       srcDir = new File(srcDir).getCanonicalPath();
       // Ajout du manifeste
-      {
+      if (mfData != null) {
 	new File(srcDir + File.separator + "META-INF").mkdirs();
 	FileManager.save(srcDir + File.separator + "META-INF" + File.separator + "MANIFEST.MF", mfData);
       }

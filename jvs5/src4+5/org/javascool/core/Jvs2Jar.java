@@ -37,11 +37,18 @@ public class Jvs2Jar {
   public static boolean build(String name, String jvsFile, String jarFile) {
     if (name == null)
       throw new IllegalArgumentException("Le nom de la proglet est ambigu ou indéfini");
+    if (!new File(jvsFile).isFile())
+      throw new IllegalArgumentException("Le fichier "+jvsFile+" n'existe pas");
     try {
       // Répertoire temporaire de compilation
       String jarDir = FileManager.createTempDir("jvs-build-").getAbsolutePath();
-      // Extraction des classes de javascool
+      // Extraction des classes de javascool et nettoyage des classes inutiles
       JarManager.jarExtract(Utils.javascoolJar(), jarDir);
+      for (String d : new String[] { 
+	  "org/fife", // RSyntaxTextArea.jar
+	  "com/sun/tools/javac", "com/sun/source/tree", "com/sun/source/util" // javac.jar
+	})
+	JarManager.rmDir(new File(jarDir + File.separator + d.replaceAll("/", File.separator)));
       // Chargement de la proglet
       Proglet proglet = new Proglet().load("org" + File.separator + "javascool" + File.separator + "proglets" + File.separator + name);
       Jvs2Java jvs2java = proglet.getJvs2java();
@@ -51,14 +58,6 @@ public class Jvs2Jar {
       FileManager.save(javaFile, javaCode);
       if(!Java2Class.compile(javaFile))
 	return false;
-      // Nettoyage des arborescences inutiles
-      for (String d : new String[] { 
-	  "com/com/sun/javadoc", "com/com/sun/tools/javadoc", "com/com/sun/tools/doclets", "com/com/sun/jarsigner",
-	  "org/fife", "de/tisje", "de/java2html",
-	  "org/javascool/builder",
-	  "com/sun/tools/javac"
-	})
-	JarManager.rmDir(new File(jarDir + File.separator + d.replaceAll("/", File.separator)));
       // Construction de la jarre
       String mfData = 
 	"Manifest-Version: 1.0\n" +

@@ -34,6 +34,10 @@ public class Proglet2Jar {
       // Extraction des classes de javascool
       String javascoolJar = Utils.javascoolJar();
       JarManager.jarExtract(javascoolJar, jarDir);
+      for (String d : new String[] { 
+	  "com/sun/javadoc", "com/sun/tools/javadoc", "com/sun/tools/doclets" // javadoc.jar
+	})
+	JarManager.rmDir(new File(jarDir + File.separator + d.replaceAll("/", File.separator)));
       // Copy et expansion des ressources
       for (String file : FileManager.list(progletDir)) {
 	if (new File(file).isFile()) {
@@ -59,14 +63,11 @@ public class Proglet2Jar {
       String[] javaFiles = FileManager.list(progletDir, ".*\\.java", 4);
       if (javaFiles.length > 0)
 	javac(jarDir, jarDir, javaFiles);
-      // Nettoyage des arborescences inutiles
-      for (String d : new String[] { "com/com/sun/javadoc", "com/com/sun/tools/javadoc", "com/com/sun/tools/doclets", "com/com/sun/jarsigner" })
-	JarManager.rmDir(new File(jarDir + File.separator + d));
       // Construction de la jarre
       String mfData = 
 	"Manifest-Version: 1.0\n" +
 	"Created-By: "+params.getString("author")+" <"+params.getString("email")+">\n" +
-	"Main-Class: org.javascool."+(new File(jarFile).getName().startsWith("javascool-jvs2jar-") ? "core.Jvs2Jar" : "gui.Core")+"\n" +
+	"Main-Class: org.javascool.core.MainWrapper\n" +
 	"Implementation-URL: http://javascool.gforge.inria.fr\n" +
 	"Java-Version: 1.7\n" +
 	"Implementation-Vendor: javascool@googlegroups.com, ou=javascool.gforge.inria.fr, o=inria.fr, c=fr\n";

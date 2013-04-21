@@ -2,17 +2,14 @@
 #
 # @TODO :
 #
-# Expliquer XmlXml lib ext et virer de lib4
-# Filter les jars en regardant les zips
+# Voir le pb de la console jsv2jar ok
+#
 # Linker jvs4.jar pour ne plus acceder a v4
 # Page credits avec logos
 # Finir page qui pique 4.9
 # Voir à mettre manuelISN en partage commun
 # Commencer a calculer les rebonds vers v5/*
 # Valider le mécanisme de webservice en lancement d'un programme local
-# Creer zip pour les sources de la proglet
-# Voir le pb de la console jsv2jar ok
-# Assumer taille des jars et juste reduire les a côté
 # Voir comment se gère les proglets processing et bien valider les liens vers le site fuscia
 ## cp $d/applet/{*.java,{name}.java} $d ; rm -rf applet
 ## /usr/java/processing-2.0b8/processing-java --sketch=sketchbook/cryptageRSA --output=tmp --force --build
