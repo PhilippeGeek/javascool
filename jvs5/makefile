@@ -2,6 +2,7 @@
 #
 # @TODO :
 #
+#. pb de log proglet.error.log proglet.okay.log
 #. voir jvs avec fichiers pister les load
 #. ajouter lien webwrapper
 #. chercher appdata winfows lien
