@@ -39,10 +39,11 @@ public class MainWrapper {
     // Lit le fichier de commande
     String wrapperCommandFile = UserConfig.getInstance("javascool").getApplicationFolder() + "webcommand.mf";
     if (new File(wrapperCommandFile).exists()) {
+      String wrapperCommandText = FileManager.load(wrapperCommandFile).replaceAll("\n+", " ");
+      new File(wrapperCommandFile).delete();
       Console.newInstance(true);
       try {
 	// Parse la ligne de commande du fichier
-	String wrapperCommandText = FileManager.load(wrapperCommandFile).replaceAll("\n+", " ");
 	String wrapperCommand[] = wrapperCommandText.split("=");
 	if (wrapperCommand.length == 2) {
 	  String wrapperCommandName = wrapperCommand[0].trim(), wrapperCommandPath = wrapperCommand[1].trim();
@@ -62,6 +63,7 @@ public class MainWrapper {
       } catch (Throwable e) {
 	System.out.println(e);
 	e.printStackTrace();
+	try { new File(wrapperCommandFile).delete(); } catch(Exception x) {}
 	return true;
       }
     } else
