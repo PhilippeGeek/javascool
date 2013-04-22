@@ -2,14 +2,10 @@
 #
 # @TODO :
 #
-. rm commandfileapreslecture
-. voir jvs avec fichiers pister les load
-. source au lieu de implementation
-.. Creer un jar
-. ajouter lien webwrapper
-. chercher appdata winfows lien
-. tester wrapper ds mzkefile .. err et ss err
-. 
+#. voir jvs avec fichiers pister les load
+#. ajouter lien webwrapper
+#. chercher appdata winfows lien
+#. tester wrapper ds mzkefile .. err et ss err
 #
 # Linker jvs4.jar pour ne plus acceder a v4
 # Page credits avec logos

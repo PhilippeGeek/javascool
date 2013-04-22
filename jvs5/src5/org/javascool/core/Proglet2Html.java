@@ -215,8 +215,8 @@ public class Proglet2Html {
     "        <ul class=\"nav\">\n" +
     "          <li><a href=\"@base-url/help.html\">Documentation</a></li>\n" +
     "          <li><a href=\"@base-url/javascool-proglet-@name.jar\">Lancement</a></li>\n" +
-    "          <li><a href=\"@base-url/javascool-jvs2jar-@name.jar\">JvsCompilation</a></li>\n" +
-    "          <li><a href=\"@base-url/api/org/javascool/proglets/@name/package-summary.html\">Implémentation</a></li>\n" +
+    "          <li><a href=\"@base-url/javascool-jvs2jar-@name.jar\">Jvs⇀Jar</a></li>\n" +
+    "          <li><a href=\"@base-url/api/org/javascool/proglets/@name/package-summary.html\">Sources</a></li>\n" +
     "          <li><a href=\"mailto:@email?subject=À propos de Java'sCool «@name»\">Contact</a></li>\n" +
     "        </ul>\n" +
     "      </div>\n" +
