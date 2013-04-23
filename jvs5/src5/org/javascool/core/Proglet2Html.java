@@ -139,7 +139,9 @@ public class Proglet2Html {
       for (String f : files)
 	argv += "\t" + f;
       try {
+	Console.redirectStderr(true);
 	com.sun.tools.javadoc.Main.execute(argv.split("\t"));
+	Console.redirectStderr(false);
       } catch (Throwable e) {
 	throw new IllegalStateException("Erreur à la création de la javadoc du répertoire \"" + srcDir + "\", «" + e + "»");
       }

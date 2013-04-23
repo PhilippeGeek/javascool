@@ -14,7 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-// redirectSystemStreams
+// redirectStdout/Stderr
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.IOException;
@@ -68,32 +68,69 @@ public class Console extends JPanel {
   }
   private static Console console = null;
 
-  /** Redirige le System.out vers ces affichages */
-  private static void redirectSystemStreams() {
-    if (!redirected) {
-      final OutputStream oldOut = System.out;
+  /** Redirige le System.out vers la console. */
+  private static void redirectStdout(boolean redirect) {
+    if (redirect && !redirectedStdout) {
       OutputStream out = new OutputStream() {
 	  @Override
 	  public void write(int b) throws IOException {
 	    printAll(String.valueOf((char) b));
-	    oldOut.write(b);
+	    defaultStdout.write(b);
 	  }
 	  @Override
 	  public void write(byte[] b, int off, int len) throws IOException {
 	    printAll(new String(b, off, len));
-	    oldOut.write(b, off, len);
+	    defaultStdout.write(b, off, len);
 	  }
 	  @Override
 	  public void write(byte[] b) throws IOException {
 	    write(b, 0, b.length);
-	    oldOut.write(b);
+	    defaultStdout.write(b);
 	  }
 	};
       System.setOut(new PrintStream(out, true));
-      redirected = true;
+      redirectedStdout = true;
+    } else if (redirectedStdout && !redirect) {
+      System.setOut(defaultStdout);
+      redirectedStdout = false;
     }
   }
-  private static boolean redirected = false;
+  private static PrintStream defaultStdout = System.out;
+  private static boolean redirectedStdout = false;
+
+  /** Redirige le System.err vers la console. 
+   * @param redirect Selon la valeur True/False active/désactive la redirection.
+   */
+  public static void redirectStderr(boolean redirect) {
+    if (redirect && !redirectedStderr) {
+      OutputStream err = new OutputStream() {
+	  @Override
+	  public void write(int b) throws IOException {
+	    printAll(String.valueOf((char) b));
+	    defaultStderr.write(b);
+	  }
+	  @Override
+	  public void write(byte[] b, int off, int len) throws IOException {
+	    printAll(new String(b, off, len));
+	    defaultStderr.write(b, off, len);
+	  }
+	  @Override
+	  public void write(byte[] b) throws IOException {
+	    write(b, 0, b.length);
+	    defaultStderr.write(b);
+	  }
+	};
+      System.setErr(new PrintStream(err, true));
+      redirectedStderr = true;
+    } else if (redirectedStderr && !redirect) {
+      System.setErr(defaultStderr);
+      redirectedStderr = false;
+    }
+  }
+  private static PrintStream defaultStderr = System.err;
+  private static boolean redirectedStderr = false;
+
+
   //Affiche du texte dans les consoles.
   private static void printAll(String text) {	  
     for(Console console : consoles)
@@ -144,7 +181,7 @@ public class Console extends JPanel {
     toolbar.addTool("status", status = new JLabel("                                         "));
     this.add(toolbar, BorderLayout.NORTH);
     // Met en place la redirection
-    redirectSystemStreams();
+    redirectStdout(true);
   }
   /** Efface le contenu de la console. */
   public void clear() {
