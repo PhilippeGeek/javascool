@@ -2,8 +2,8 @@
 #
 # @TODO :
 #
-#. pb de log proglet.error.log proglet.okay.log
-#. voir jvs avec fichiers pister les load
+#. remonter les warnig de javascool et stop si pb de compilation
+#. #. voir jvs avec fichiers pister les load
 #. ajouter lien webwrapper
 #. chercher appdata winfows lien
 #. tester wrapper ds mzkefile .. err et ss err
@@ -35,7 +35,7 @@
 #
 ########################################################################################################################################################
 
-dft :tst1
+dft :tst0
 
 # Choix de la JDK
 
@@ -51,6 +51,10 @@ DIST=$(GIT_HOME)/wproglets
 ########################################################################################################################################################
 
 # Test en cours 
+
+tst0 :
+	for d in $(DIST)/javascool-proglet-*-html ; do ls $$d/compilation.*.log ; done
+
 
 tstP = algoDeMaths
 
