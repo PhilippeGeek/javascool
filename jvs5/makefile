@@ -4,12 +4,9 @@
 #
 #. remonter les warnig de javascool et stop si pb de compilation
 #. #. voir jvs avec fichiers pister les load
-#. ajouter lien webwrapper
 #. chercher appdata winfows lien
 #. tester wrapper ds mzkefile .. err et ss err
 #
-# Linker jvs4.jar pour ne plus acceder a v4
-# Page credits avec logos
 # Finir page qui pique 4.9
 # Voir à mettre manuelISN en partage commun
 # Commencer a calculer les rebonds vers v5/*
@@ -26,6 +23,7 @@
 # Valider le www en ligne
 ## faire git add wproglets quand stable
 # Verifier en ligne les nv liens des proglet's docs.
+# Reduire le site v4 à accueil + lancement + rebonds vers v5
 #
 # @THEN
 # - Recuperer l'éditeur HTML5 de Philippe est en faire un produit autonome qui se connecte aux web services
@@ -35,7 +33,7 @@
 #
 ########################################################################################################################################################
 
-dft :tst0
+dft : www
 
 # Choix de la JDK
 
@@ -51,10 +49,6 @@ DIST=$(GIT_HOME)/wproglets
 ########################################################################################################################################################
 
 # Test en cours 
-
-tst0 :
-	for d in $(DIST)/javascool-proglet-*-html ; do ls $$d/compilation.*.log ; done
-
 
 tstP = algoDeMaths
 
@@ -74,6 +68,7 @@ prc :
 # Publie les fichiers du site web
 
 www : clean cnv jar $(patsubst sketchbook/%,$(DIST)/javascool-proglet-%-html,$(wildcard sketchbook/*))
+	for d in $(DIST)/javascool-proglet-*-html ; do ls $$d/compilation.*.log ; done
 #	$(MAKE) -C $(GIT_HOME) push
 
 # Construit les proglets
