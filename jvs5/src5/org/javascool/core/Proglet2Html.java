@@ -99,7 +99,7 @@ public class Proglet2Html {
       System.out.println(e);
       e.printStackTrace();
     }
-    console.saveConsoleOutput(htmlDir + File.separator + "compilation.log");
+    console.saveConsoleOutput(htmlDir + File.separator + "compilation."+status+".log");
     return status;
   }
   /**
