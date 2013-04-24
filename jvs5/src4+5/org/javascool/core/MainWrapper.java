@@ -13,7 +13,7 @@ import org.javascool.gui.Core;
  *    <br><tt><i>APPDATA</i>javascool/webcommand.mf</tt> avec la ligne de commande:
  *    <br><tt><i>command</i> = <i>chemin</i></tt> où: <ul>
  *      <li><tt><i>APPDATA</i>javascool</tt> est le répertoire standard où stocker les données d'une application 
- *        <br>(<small><tt>$HOME/.javascool</tt> sous <tt>Linux</tt>, <tt>$HOME/Library/Application Support/javascool</tt> sous MacOS, ..</small>)</li>
+ *        <br>(<small><tt>$HOME/.javascool</tt> sous <tt>Linux</tt>, <tt>$HOME/Library/Application Support/javascool</tt> sous MacOS, <tt>:\Documents and Settings\USER\Application Data\javascool</tt> sous Windows récent, ..</small>)</li>
  *      <li><tt><i>command</i></tt> vaut : <ul>
  *        <li><tt><a href="Jvs2Jar.html">Jvs2Jar</a></tt> pour compiler un fichier javascool en <tt>.jar</tt> avec la proglet qui est définit dans l'exécutable.</li>
  *        <li><tt><a href="Proglet2Html.html">Proglet2Html</a></tt> pour compiler le dossier d'une proglet à partir de ses sources.</li>

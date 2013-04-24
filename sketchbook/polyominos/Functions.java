@@ -32,7 +32,6 @@ public class Functions {
     //::::::::::::::::::::::::::::::
 
     /**
-     * @see http://javascool.gforge.inria.fr/index.php?page=developers&amp;action=doc-proglets
      * @return l'instance de la proglet.
      */
     private static Panel getPane() {

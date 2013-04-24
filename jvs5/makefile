@@ -2,9 +2,9 @@
 #
 # @TODO :
 #
-#. remonter les warnig de javascool et stop si pb de compilation
-#. #. voir jvs avec fichiers pister les load
-#. chercher appdata winfows lien
+#. completion.json avec [ ] car au moins 2 !!
+#. regarder grafikformate|plurialgo si oui ou non
+#. voir jvs avec fichiers pister les load
 #. tester wrapper ds mzkefile .. err et ss err
 #
 # Finir page qui pique 4.9
@@ -14,6 +14,7 @@
 # Voir comment se gère les proglets processing et bien valider les liens vers le site fuscia
 ## cp $d/applet/{*.java,{name}.java} $d ; rm -rf applet
 ## /usr/java/processing-2.0b8/processing-java --sketch=sketchbook/cryptageRSA --output=tmp --force --build
+## jvs5/{libraries,tools,modes,tmp}
 ## http://code.google.com/p/processing/issues/detail?id=142
 # Voir pour la proglet java3D
 #
@@ -68,7 +69,7 @@ prc :
 # Publie les fichiers du site web
 
 www : clean cnv jar $(patsubst sketchbook/%,$(DIST)/javascool-proglet-%-html,$(wildcard sketchbook/*))
-	for d in $(DIST)/javascool-proglet-*-html ; do ls $$d/compilation.*.log ; done
+	for d in $(DIST)/javascool-proglet-*-html ; do ls $$d/compilation.*.log.txt ; done
 #	$(MAKE) -C $(GIT_HOME) push
 
 # Construit les proglets

@@ -25,7 +25,6 @@ FFT fft;
 int w;
 PImage fade;
 float rWidth, rHeight;
-Frame frame;
 int myOr = color(255, 100, 0);
 int myRed = color(255, 0, 0);
 int myBlue = color(153);  // (120,140,150);//(20,70,105);
@@ -54,7 +53,7 @@ void setup() {
   frameRate(60);
 
   // Ces deux lignes permettent l'interface avec JavaScool
-  frame = new Frame();
+  // frame = new javax.awt.Frame();
 
   f = createFont("Arial Bold", 14, true);
   size(800, 600, P3D);  // size(800,512);//,P3D);//OPENGL);
