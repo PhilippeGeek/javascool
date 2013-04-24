@@ -39,7 +39,6 @@ public class Proglet2Html {
    */
   public static boolean build(String htmlDir, String progletDir) {
     Console console = Console.newInstance();
-    boolean status = false;
     try {
       if (!new File(progletDir).exists())
 	throw new IllegalArgumentException("Le répertoire "+progletDir+" n'existe pas");
@@ -47,7 +46,7 @@ public class Proglet2Html {
 	throw new IllegalArgumentException("Le fichier "+progletDir+" n'est pas un répertoire");
       JSONObject params = Proglet2Jar.getProgletParameters(progletDir);
       // Creation d'un répertoire vierge
-      System.out.println("> création de "+htmlDir);
+      System.out.println("\n> création de "+htmlDir);
       JarManager.rmDir(new File(htmlDir));
       new File(htmlDir).mkdirs();
       // Expansion des fichiers de base du site
@@ -73,7 +72,7 @@ public class Proglet2Html {
       JarManager.jarCreate(htmlDir + File.separator + "javascool-proglet-source-" + params.getString("name") + ".zip", null, progletDir);
       // Génération des fichiers liés aux sources java
       {
-	System.out.println("> compilation de "+params.getString("name"));
+	System.out.println("> compilation de javascool-proglet-"+params.getString("name")+".jar");
 	String progletJar = htmlDir + File.separator + "javascool-proglet-"+params.getString("name")+".jar";
 	String jsv2jarJar = htmlDir + File.separator + "javascool-jvs2jar-"+params.getString("name")+".jar";
 	Proglet2Jar.build(progletJar, progletDir);
@@ -87,19 +86,28 @@ public class Proglet2Html {
 	FileManager.save(srcHtmlDir + File.separator + "package.html",
 			 "<body><h3>Implémentation de la proglet "+params.getString("name")+
 			 " (accès aux <a href=\"../../../../../javascool-proglet-source-"+params.getString("name")+".zip\">sources</a>).</h3></body>");
-	javadoc(params.getString("name"), System.getProperty("java.class.path"), htmlDir + File.separator + "api", htmlDir + File.separator + "api");
+	javadoc(params.getString("name"), 
+		System.getProperty("java.class.path")+File.pathSeparator+progletJar, 
+		htmlDir + File.separator + "api",
+		htmlDir + File.separator + "api");
 	for (String file : FileManager.list(htmlDir))
 	  if (file.endsWith(".jvs")) {
 	    System.out.println("> compilation de "+new File(file).getName());
 	    Utils.javaStart("-jar "+jsv2jarJar+" "+file, 60);
 	  }
       }
-      status = true;
     } catch (Throwable e) {
       System.out.println(e);
       e.printStackTrace();
     }
-    console.saveConsoleOutput(htmlDir + File.separator + "compilation."+status+".log");
+    boolean status = console.getText().
+      replaceAll("\n> .*", "").
+      replaceAll("\njavadoc: warning - Error fetching URL: http://download.oracle.com/javase/6/docs/api/package-list", "").
+      replaceAll("\n1 warning", "").
+      trim().length() == 0;
+    System.out.println("> proglet construction: "+status+"\n");
+    console.saveConsoleOutput(htmlDir + File.separator + "compilation."+status+".log.txt");
+    Console.removeInstance(console);
     return status;
   }
   /**
