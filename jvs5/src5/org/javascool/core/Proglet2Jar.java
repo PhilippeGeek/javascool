@@ -82,26 +82,26 @@ public class Proglet2Jar {
     }
   }
   // Gère la précompilation de code processing
-  private buildProcessing(String jarDir, String progletDir, JSONObject params) throws Exception {
+  private void buildProcessing(String jarDir, String progletDir, JSONObject params) throws Exception {
     // Répertoire de travail
     String tmpDir = jarDir + File.separator + "tmp-processing";
     new File(tmpDir).mkdirs();
     // Mise en place du classpath
     String CP = jarDir;
-    for(j : new String[] { "tools.jar", "rt.jar"})
+    for(String j : new String[] { "tools.jar", "rt.jar"})
       CP += File.pathSeparator + PHOME + File.separator + "java" + File.separator + "lib" + File.separator + j;
-    for(j : FileManager.list(PHOME + File.separator + "lib", "8\\.jar"))
+    for(String j : FileManager.list(PHOME + File.separator + "lib", "8\\.jar"))
       CP += File.pathSeparator + j;
-    for(j : FileManager.list(PHOME + File.separator + "core" + File.separator + "lib", "8\\.jar"))
+    for(String j : FileManager.list(PHOME + File.separator + "core" + File.separator + "lib", "8\\.jar"))
       CP += File.pathSeparator + j;
-    System.out.prinltn("> CP="+CP);
+    System.out.println("> CP = "+CP);
     // Lancement de la précompilation
     String workdir = System.getProperty("work.dir");
     System.setProperty("work.dir", tmpDir);
-    Utils.javaStart("-cp\t"+CP+"\tprocessing.mode.java.Commander\t--sketch="+progletDir+"\t--output="+tmpDir+"\t--force\t--build");
+    Utils.javaStart("-cp\t"+CP+"\tprocessing.mode.java.Commander\t--sketch="+progletDir+"\t--output="+tmpDir+"\t--force\t--build", 60);
     System.setProperty("work.dir", workdir);
     // Transfert et nettoyage
-    JarManager.copy(tmpDir + File.separator + "source" + File.separator + params.getString("name") + ".java", jarDir);
+    JarManager.copyFile(tmpDir + File.separator + "source" + File.separator + params.getString("name") + ".java", jarDir);
     JarManager.rmDir(new File(tmpDir));
   }
   private static final String PHOME = "/usr/java/processing-2.0b8";
