@@ -5,7 +5,7 @@
 #
 
 # Positionnement à la racine du svn
-cd /home/vthierry/Work/culsci/jvs4
+cd /home/vthierry/Work/culsci/jvs
 
 # Copy des libs nécessaires
 for f in javac7 javadoc7 json RSyntaxTextArea 

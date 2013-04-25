@@ -16,6 +16,8 @@ import ddf.minim.signals.*;
 import ddf.minim.analysis.*;
 import ddf.minim.effects.*;
 
+import java.awt.Frame;
+
 Minim minim;
 AudioInput in;
 AudioOutput out;
