@@ -3,7 +3,6 @@
 # @TODO :
 #
 #. completion.json avec [ ] car au moins 2 !!
-#. regarder grafikformate|plurialgo si oui ou non
 #. voir jvs avec fichiers pister les load
 #. tester wrapper ds mzkefile .. err et ss err
 #
@@ -105,12 +104,12 @@ cnv :
 # Nettoie les répertoires générés
 
 clean :
-	rm -rf tmp-*
+	rm -rf tmp-* libraries modes tools
 	svn status
 #	cd $(GIT_HOME) ; git status @todo
 
 cleanall : clean
-	rm -rf $(DIST)/*
+	rm -rf $(DIST)/* 
 
 # Test des différences entre jvs4 et jvs5
 

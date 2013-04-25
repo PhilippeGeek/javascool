@@ -128,7 +128,6 @@ public class Proglet2Html {
       .replaceAll("href=\"http://newtab\\?", "href=\"")
       .replaceAll("< *a +href=\"http://editor\\?([^\\.]*).jvs\"", "<a href=\"$1.jvs.html\"");
   }
-
   // Genere la doc liée aux source java
   private static void javadoc(String name, String classPath, String srcDir, String apiDir) throws IOException {
     // Mise en place des dossiers source et cible
