@@ -40,7 +40,7 @@ public class Core {
     System.err.println("" + About.title + " is starting ...");
     ErrorCatcher.checkJavaVersion(6);
     setUncaughtExceptionAlert();
-    // Lance le pannneau général ou une proglet directement
+    // Lance le panneau général ou une proglet directement
     Desktop.getInstance().getFrame();
     if(usage.length == 1) {
       Desktop.getInstance().openProglet(usage[0], true);

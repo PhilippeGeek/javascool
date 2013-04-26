@@ -309,6 +309,7 @@ if(isset($_GET['kezako']) && $_GET['kezako'] == 'niquevisages') {
 
     </head>
 
+<!--?php echo "<h1> Désolé: un problème sur le site , javascool revient le lundi 30 avril . . </h1>"; exit() ?-->
 
     <!-- //TODO comment -->
     <body onload="loaded()" onunload="unloaded()"><a name=""/>

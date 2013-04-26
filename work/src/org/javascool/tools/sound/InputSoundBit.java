@@ -12,7 +12,6 @@ import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
 
 /** Defines a microphone-input sound-bit wrapper.
- * <h1>DO NOT USE : THI SIS STILL IN DEVELOPMENT</h1>
  * @see <a href="InputSoundBit.java.html">code source</a>
  * @serial exclude
  */

@@ -49,7 +49,7 @@ DIST=$(GIT_HOME)/wproglets
 tstP = cryptageRSA
 
 tst1  : cleanall cpv $(DIST)/javascool-core.jar $(DIST)/javascool-proglet-$(tstP)-html
-	firefox $(DIST)/javascool-proglet-$(tstP)-html/index.html
+##	firefox $(DIST)/javascool-proglet-$(tstP)-html/index.html
 #	java -jar $(DIST)/javascool-proglet-$(tstP)-html/javascool-proglet-$(tstP).jar
 #	java -jar $(DIST)/javascool-proglet-algoDeMaths-html/JeuSimon.jvs.jar 
 

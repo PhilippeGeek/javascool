@@ -76,10 +76,12 @@ public class ProgletsBuilder {
    * @return La valeur true si la construction est sans erreur, false sinon.
    */
   public static boolean build(String[] proglets, String targetDir, boolean webdoc) {
-    if(!canBuildProglets()) { throw new IllegalArgumentException("Mauvaise configuration du builder, il faut utiliser le bon jar !");
+    if(!canBuildProglets()) {
+      throw new IllegalArgumentException("Mauvaise configuration du builder, il faut utiliser le bon jar !");
     }
     try {
-      if(proglets.length == 0) { throw new IllegalArgumentException("Aucune proglet à construire");
+      if(proglets.length == 0) {
+	throw new IllegalArgumentException("Aucune proglet à construire");
       }
       // Définition de la jarre cible.
       String targetJar = System.getProperty("user.dir") + File.separator + "javascool-proglets.jar";
