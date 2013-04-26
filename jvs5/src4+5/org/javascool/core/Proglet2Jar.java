@@ -95,18 +95,19 @@ public class Proglet2Jar {
     String CP = jarDir;
     for(String j : new String[] { "tools.jar", "rt.jar"})
       CP += File.pathSeparator + PHOME + File.separator + "java" + File.separator + "lib" + File.separator + j;
-    for(String j : FileManager.list(PHOME + File.separator + "lib", "*\\.jar"))
+    for(String j : FileManager.list(PHOME + File.separator + "lib", ".*\\.jar"))
       CP += File.pathSeparator + j;
-    for(String j : FileManager.list(PHOME + File.separator + "core" + File.separator + "lib", "*\\.jar"))
+    for(String j : FileManager.list(PHOME + File.separator + "core" + File.separator + "library", ".*\\.jar"))
       CP += File.pathSeparator + j;
-    System.out.println("> CP = "+CP);
+    JarManager.jarExtract(PHOME + File.separator + "core" + File.separator + "library" + File.separator + "core.jar", jarDir);
     // Lancement de la précompilation
-    String workdir = System.getProperty("work.dir");
-    System.setProperty("work.dir", tmpDir);
+    String userdir = System.getProperty("user.dir");
+    System.setProperty("user.dir", tmpDir);
     Utils.javaStart("-cp\t"+CP+"\tprocessing.mode.java.Commander\t--sketch="+progletDir+"\t--output="+tmpDir+"\t--force\t--build", 60);
-    System.setProperty("work.dir", workdir);
+    System.setProperty("user.dir", userdir);
     // Transfert et nettoyage
-    JarManager.copyFile(tmpDir + File.separator + "source" + File.separator + params.getString("name") + ".java", jarDir);
+    JarManager.copyFile(tmpDir + File.separator + "source" + File.separator + params.getString("name") + ".java", 
+			jarDir + File.separator + params.getString("name") + ".java");
     JarManager.rmDir(new File(tmpDir));
   }
   private static final String PHOME = "/usr/java/processing-2.0b8";

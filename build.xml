@@ -23,7 +23,7 @@
 
   <target name="web">
     <ant dir="./web" target="build"/>
-    <ant dir="./web" target="publish"/>
+    <!--ant dir="./web" target="publish"/-->
   </target>
 
   <target name="clean">

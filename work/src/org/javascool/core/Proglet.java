@@ -39,7 +39,8 @@ public class Proglet {
     pml.set("location", location);
     try {
       pml.set("name", new File(location).getName());
-    } catch(Exception e) { throw new IllegalArgumentException(e + " : " + location + " is a malformed URL");
+    } catch(Exception e) {
+      throw new IllegalArgumentException(e + " : " + location + " is a malformed URL");
     }
     if(FileManager.exists(Macros.getResourceURL(location + "completion.xml"))) {
       pml.set("completion", location + "completion.xml");
@@ -133,7 +134,7 @@ public class Proglet {
     if(!pml.isDefined("pane-defined")) {
       pml.set("pane-defined", true);
       if(this.isProcessing()) {
-	boolean popup = true;
+	boolean popup = pml.getString("jvs-version").equals("4");
 	try {
 	  int width = pml.getInteger("width", 500), height = pml.getInteger("height", 500);
 	  Applet applet = (Applet) Class.forName("" + pml.getString("name") + "").newInstance();
