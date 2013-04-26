@@ -59,6 +59,8 @@ do s="$srcDir/$p" ; d="$dstDir/$p" ; echo "Translate $p"
   if ls *.java > /dev/null ; then for f in *.java ; do cp $f $f~ ; cat $f~ |\
      sed 's/org\.javascool/org.javascool/g' > $f
   done ; fi
+  # Basculement des fichiers processing
+  if [ -d applet ] ; then mv applet/*.jar . ; rm -rf applet ; fi
   rm -f *~
   popd > /dev/null
 

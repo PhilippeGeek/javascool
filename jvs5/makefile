@@ -2,20 +2,18 @@
 #
 # @TODO :
 #
-#. completion.json avec [ ] car au moins 2 !!
 #. voir jvs avec fichiers pister les load
 #. tester wrapper ds mzkefile .. err et ss err
 #
-# Finir page qui pique 4.9
-# Voir à mettre manuelISN en partage commun
 # Commencer a calculer les rebonds vers v5/*
 # Valider le mécanisme de webservice en lancement d'un programme local
+#
 # Voir comment se gère les proglets processing et bien valider les liens vers le site fuscia
 ## cp $d/applet/{*.java,{name}.java} $d ; rm -rf applet
 ## /usr/java/processing-2.0b8/processing-java --sketch=sketchbook/cryptageRSA --output=tmp --force --build
-## jvs5/{libraries,tools,modes,tmp}
+## voir pb clean of jvs5/{libraries,tools,modes,tmp}
+## voir a creer Panel extends .. { pour eviter le pb des non package
 ## http://code.google.com/p/processing/issues/detail?id=142
-# Voir pour la proglet java3D
 #
 # @DEPLOY
 #
@@ -26,14 +24,12 @@
 # Reduire le site v4 à accueil + lancement + rebonds vers v5
 #
 # @THEN
-# - Recuperer l'éditeur HTML5 de Philippe est en faire un produit autonome qui se connecte aux web services
-# - Voir au déploiement par jnlp des jars utilisés http://en.wikipedia.org/wiki/Java_Web_Start
 # - Voir jar jbed jad http://www.developpez.net/forums/d922916/java/general-java/java-mobiles/android/android-jar
 #
 #
 ########################################################################################################################################################
 
-dft : jar
+dft : cnv # tst1
 
 # Choix de la JDK
 
@@ -50,7 +46,7 @@ DIST=$(GIT_HOME)/wproglets
 
 # Test en cours 
 
-tstP = algoDeMaths
+tstP = cryptageRSA
 
 tst1  : cleanall cpv $(DIST)/javascool-core.jar $(DIST)/javascool-proglet-$(tstP)-html
 	firefox $(DIST)/javascool-proglet-$(tstP)-html/index.html
