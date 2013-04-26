@@ -59,6 +59,11 @@ public class Proglet2Jar {
 	  }
 	}
       }
+      // Traitement d'une proglet processing
+      if (params.optBoolean("processing")) {
+	System.out.println("> pre-compilation de la proglet processing");
+	buildProcessing(jarDir, progletDir,  params);
+      }
       // Compilation des sources java
       String[] javaFiles = FileManager.list(progletDir, ".*\\.java", 4);
       if (javaFiles.length > 0)
@@ -82,7 +87,7 @@ public class Proglet2Jar {
     }
   }
   // Gère la précompilation de code processing
-  private void buildProcessing(String jarDir, String progletDir, JSONObject params) throws Exception {
+  private static void buildProcessing(String jarDir, String progletDir, JSONObject params) throws Exception {
     // Répertoire de travail
     String tmpDir = jarDir + File.separator + "tmp-processing";
     new File(tmpDir).mkdirs();
@@ -90,9 +95,9 @@ public class Proglet2Jar {
     String CP = jarDir;
     for(String j : new String[] { "tools.jar", "rt.jar"})
       CP += File.pathSeparator + PHOME + File.separator + "java" + File.separator + "lib" + File.separator + j;
-    for(String j : FileManager.list(PHOME + File.separator + "lib", "8\\.jar"))
+    for(String j : FileManager.list(PHOME + File.separator + "lib", "*\\.jar"))
       CP += File.pathSeparator + j;
-    for(String j : FileManager.list(PHOME + File.separator + "core" + File.separator + "lib", "8\\.jar"))
+    for(String j : FileManager.list(PHOME + File.separator + "core" + File.separator + "lib", "*\\.jar"))
       CP += File.pathSeparator + j;
     System.out.println("> CP = "+CP);
     // Lancement de la précompilation
