@@ -2,6 +2,9 @@
 #
 # @TODO :
 #
+# PUTE DE PB DE WONDOWS puis virer pdir 
+#
+#
 #. voir jvs avec fichiers pister les load
 #. tester wrapper ds mzkefile .. err et ss err
 #
@@ -49,7 +52,7 @@ DIST=$(GIT_HOME)/wproglets
 tstP = cryptageRSA
 
 tst1  : cleanall cpv $(DIST)/javascool-core.jar $(DIST)/javascool-proglet-$(tstP)-html
-##	firefox $(DIST)/javascool-proglet-$(tstP)-html/index.html
+	firefox $(DIST)/javascool-proglet-$(tstP)-html/index.html
 #	java -jar $(DIST)/javascool-proglet-$(tstP)-html/javascool-proglet-$(tstP).jar
 #	java -jar $(DIST)/javascool-proglet-algoDeMaths-html/JeuSimon.jvs.jar 
 

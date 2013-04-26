@@ -40,6 +40,7 @@ public class ProgletEngine {
     try {
       proglets = new ArrayList<Proglet>();
       for(String dir : FileManager.list(javascoolJar, "org.javascool.proglets.[^\\.]+.proglet.(pml|json)")) {
+	System.out.println("> pdir = "+dir);
         String name = dir.replaceFirst("jar:[^!]*!(.*)proglet.(pml|json)", "$1");
         try {
           Proglet proglet = new Proglet().load(name);
@@ -53,6 +54,8 @@ public class ProgletEngine {
     }
     // Définit une proglet "vide" pour lancer l'interface
     if(proglets.isEmpty()) {
+      throw new IllegalStateException("Erreur dans javascool: cette jarre ne contient pas de proglets");
+      /*
       for(int i = 0; i < 1; i++) {
         Proglet p = new Proglet();
         p.pml.set("name", "Interface");
@@ -60,6 +63,7 @@ public class ProgletEngine {
         p.pml.set("help-location", "org/javascool/macros/memo-macros.htm");
         proglets.add(p);
       }
+      */
     }
     // Tri des proglets par ordre alphabétique
     Collections.sort(proglets, new Comparator<Proglet>() {
@@ -106,7 +110,7 @@ public class ProgletEngine {
         runnable = Java2Class.load(javaFile);
         return true;
       } catch(Exception e3) {
-        System.out.println("Attention ! il y a eu une action externe de netoyyage de fichiers temporraires ou le répertoire '" + new File(javaFile).getParent() + "' ne peut être utilisé pour sauver des fichiers, \n il faut re-lancer javascool dans un répertoire de travail approprié.");
+        System.out.println("Attention ! il y a eu une action externe de nettoyage de fichiers temporaires ou le répertoire '" + new File(javaFile).getParent() + "' ne peut être utilisé pour sauver des fichiers, \n il faut re-lancer javascool dans un répertoire de travail approprié.");
         return false;
       }
     } else {
