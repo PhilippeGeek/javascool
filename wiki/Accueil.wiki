@@ -1,6 +1,1 @@
-#summary Ce wiki n'est utilisé que par les développeurs de JavaScool.
-
-Voici:
-  * Le [http://javascool.fr site officiel].
-  * L'accès [http://code.google.com/p/javascool/source/browse web aux sources].
-  * L'accès au [http://wiki.inria.fr/sciencinfolycee/Catégorie:JavaScool wiki] javascool du [http://science-info-lycee.fr «SIL:O!»]. 
+#summary Ce wiki n'est plus utilisé
