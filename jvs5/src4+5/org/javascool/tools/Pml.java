@@ -658,7 +658,7 @@ public class Pml {
         return " {} ";
       } else if (pml.getSize() == 0) {
 	return quote(pml.getTag());
-      } else if (pml.getSize() == pml.getCount() && pml.getCount() > 1) {
+      } else if (pml.getSize() == pml.getCount()) {
 	String s = "[\n";
 	for(int n = 0; n < pml.getCount(); n++)
           s += (n == 0 ? "" : " , ") + toString(pml.getChild(n));
