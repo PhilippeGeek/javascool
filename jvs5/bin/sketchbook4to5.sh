@@ -60,7 +60,7 @@ do s="$srcDir/$p" ; d="$dstDir/$p" ; echo "Translate $p"
      sed 's/org\.javascool/org.javascool/g' > $f
   done ; fi
   # Basculement des fichiers processing
-  if [ -d applet ] ; then mv applet/*.jar . ; rm -rf applet ; fi
+  if [ -d applet ] ; then  mv applet/*.jar . ; rm -rf applet $p.jar ; fi
   rm -f *~
   popd > /dev/null
 
