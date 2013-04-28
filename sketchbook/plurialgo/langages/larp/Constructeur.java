@@ -6,8 +6,8 @@ package org.javascool.proglets.plurialgo.langages.larp;
 
 
 /**
- * Cette classe, héritant de la classe homonyme du modèle, est nécessaire
- * par souci de compatibilité avec le modèle.
+ * Cette classe, hÃ©ritant de la classe homonyme du modÃ¨le, est nÃ©cessaire
+ * par souci de compatibilitÃ© avec le modÃ¨le.
 */
 public class Constructeur extends org.javascool.proglets.plurialgo.langages.modele.Constructeur {
 

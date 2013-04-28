@@ -1,4 +1,4 @@
 /**
- * Ce package permet de traduire en Java un programme du modèle.
+ * Ce package permet de traduire en Java un programme du modÃ¨le.
  */
 package org.javascool.proglets.plurialgo.langages.java;

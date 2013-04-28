@@ -112,7 +112,7 @@ public class SerialInterface {
           return this;
         }
       } throw new IOException("Impossible d'ouvrir un port série de nom :" + name + " (il n'existe pas)");
-    } catch(Exception e) {
+    } catch(Throwable e) {
       output = null;
       input = null;
       port = null;
@@ -208,7 +208,8 @@ public class SerialInterface {
       if(writer != null) {
         writer.writing(value);
       }
-      if(output == null) { throw new IOException("Port série fermé ou en erreur");
+      if(output == null) { 
+	throw new IOException("Port série fermé ou en erreur");
       }
       output.write(value & 0xff);
       output.flush();
@@ -321,15 +322,19 @@ public class SerialInterface {
   }
   /** Renvoie la liste des noms de ports séries disponibles. */
   public static String[] getPortNames() {
-    ArrayList<String> names = new ArrayList<String>();
-    for(Enumeration< ? > list = CommPortIdentifier.getPortIdentifiers(); list.hasMoreElements();) {
-      CommPortIdentifier id = (CommPortIdentifier) list.nextElement();
-      show(id);
-      if(id.getPortType() == CommPortIdentifier.PORT_SERIAL) {
-        names.add(id.getName());
+    try {
+      ArrayList<String> names = new ArrayList<String>();
+      for(Enumeration< ? > list = CommPortIdentifier.getPortIdentifiers(); list.hasMoreElements();) {
+	CommPortIdentifier id = (CommPortIdentifier) list.nextElement();
+	show(id);
+	if(id.getPortType() == CommPortIdentifier.PORT_SERIAL) {
+	  names.add(id.getName());
+	}
       }
+      return names.toArray(new String[names.size()]);
+    } catch(Throwable e) {
+      return new String[0];
     }
-    return names.toArray(new String[names.size()]);
   }
   // Affiche les paramètres du port.
   private static void show(CommPortIdentifier id) {

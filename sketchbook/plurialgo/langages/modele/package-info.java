@@ -1,10 +1,10 @@
 /**
- * Ce package décrit le modèle des programmes gérés par PluriAlgo.
+ * Ce package dÃ©crit le modÃ¨le des programmes gÃ©rÃ©s par PluriAlgo.
  * 
  * <p>
- * Pour chaque langage de programmation (exemple visual basic), il faut créer un package 
+ * Pour chaque langage de programmation (exemple visual basic), il faut crÃ©er un package 
  * ...langage.xxx (exemple ...langage.vb)
- * capable d'effectuer la traduction d'un programme du modèle.
+ * capable d'effectuer la traduction d'un programme du modÃ¨le.
  * </p>
  * 
  * <p>
@@ -12,7 +12,7 @@
  * (Programme, Instruction, 
  * Affectation, Si, Pour, Tantque, Variable, 
  * Operation, Parametre, Argument,
- * Classe, Constructeur) héritant du modele, même si certaines de ces classes ne sont pas utilisées 
+ * Classe, Constructeur) hÃ©ritant du modele, mÃªme si certaines de ces classes ne sont pas utilisÃ©es 
  * par le langage xxx. 
  * </p>
  */

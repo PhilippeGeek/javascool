@@ -8,8 +8,8 @@ import org.javascool.proglets.plurialgo.langages.modele.InfoTypee;
 
 
 /**
- * Cette classe sert d'intermédiaire entre l'interface graphique (onglet Principal)
- * et le paquetage (...langages.xml) chargé de créer et transformer des programmes.
+ * Cette classe sert d'intermÃ©diaire entre l'interface graphique (onglet Principal)
+ * et le paquetage (...langages.xml) chargÃ© de crÃ©er et transformer des programmes.
 */
 public class Intermediaire {
 	

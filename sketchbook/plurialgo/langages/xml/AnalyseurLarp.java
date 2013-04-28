@@ -23,10 +23,10 @@ public class AnalyseurLarp implements iAnalyseur {
 
 	/**
 	      Transforme un code Larp en un objet de classe Programme.
-	      @param txt le code Larp à analyser
+	      @param txt le code Larp Ã  analyser
 	      @param ignorerLire ignore les instructions de lire si true
-	      @param ignorerEcrire ignore les instructions d'écriture si true
-	      @param inter pour récupérer le type des variables du code Larp
+	      @param ignorerEcrire ignore les instructions d'Ã©criture si true
+	      @param inter pour rÃ©cupÃ©rer le type des variables du code Larp
 	*/		
 	public AnalyseurLarp(String txt, boolean ignorerLire, boolean ignorerEcrire, Intermediaire inter) {
 		this.nettoyerLarp(txt);
@@ -39,9 +39,9 @@ public class AnalyseurLarp implements iAnalyseur {
 
 	/**
 	      Transforme un code Larp en un objet de classe Programme.
-	      @param txt le code Larp à analyser
+	      @param txt le code Larp Ã  analyser
 	      @param ignorerLire ignore les instructions de lire si true
-	      @param ignorerEcrire ignore les instructions d'écriture si true
+	      @param ignorerEcrire ignore les instructions d'Ã©criture si true
 	*/		
 	public AnalyseurLarp(String txt, boolean ignorerLire, boolean ignorerEcrire) {
 		this.nettoyerLarp(txt);
@@ -51,14 +51,14 @@ public class AnalyseurLarp implements iAnalyseur {
 	}
 
 	/**
-	      Retourne l'objet de classe Programme obtenu après analyse du code Larp.
+	      Retourne l'objet de classe Programme obtenu aprÃ¨s analyse du code Larp.
 	*/		
 	public Programme getProgramme() {
 		return prog_xml;
 	}
 
 	/**
-	      Retourne le code Xml obtenu après analyse du code Larp.
+	      Retourne le code Xml obtenu aprÃ¨s analyse du code Larp.
 	*/	
 	public StringBuffer getXml() {
 		return buf_xml;
@@ -106,10 +106,10 @@ public class AnalyseurLarp implements iAnalyseur {
 			if (mot_maj.equals("POUR")) {
 				buf_larp.append(mot_maj); continue;
 			}
-			if (mot_maj.equals("JUSQU'À") || mot_maj.equals("JUSQU'A")) {
+			if (mot_maj.equals("JUSQU'Ã€") || mot_maj.equals("JUSQU'A")) {
 				buf_larp.append("JUSQU'A"); continue;
 			}
-			if (mot_maj.equals("INCRÉMENT") || mot_maj.equals("INCREMENT")) {
+			if (mot_maj.equals("INCRÃ‰MENT") || mot_maj.equals("INCREMENT")) {
 				buf_larp.append("INCREMENT"); continue;
 			}
 			if (mot_maj.equals("FAIRE")) {
@@ -127,16 +127,16 @@ public class AnalyseurLarp implements iAnalyseur {
 			if (mot_maj.equals("LIRE")) {
 				buf_larp.append(mot_maj); continue;
 			}
-			if (mot_maj.equals("ÉCRIRE") || mot_maj.equals("ECRIRE")) {
+			if (mot_maj.equals("Ã‰CRIRE") || mot_maj.equals("ECRIRE")) {
 				buf_larp.append("ECRIRE"); continue;
 			}
-			if (mot_maj.equals("DEBUT") || mot_maj.equals("DÉBUT")) {
+			if (mot_maj.equals("DEBUT") || mot_maj.equals("DÃ‰BUT")) {
 				buf_larp.append("DEBUT"); continue;
 			}
 			if (mot_maj.equals("FIN")) {
 				buf_larp.append(mot_maj); continue;
 			}
-			if (mot_maj.equals("EXECUTER") || mot_maj.equals("EXÉCUTER")) {
+			if (mot_maj.equals("EXECUTER") || mot_maj.equals("EXÃ‰CUTER")) {
 				buf_larp.append("EXECUTER"); continue;
 			}
 			if (mot_maj.equals("ENTRER")) {

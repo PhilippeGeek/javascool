@@ -14,7 +14,6 @@ import org.javascool.macros.Macros;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFileChooser;
-import org.javascool.widgets.Console;
 
 /** Définit le mécanisme de création d'une proglet vide dans sa version jvs5.
  * @see <a href="ProgletCreate.java.html">code source</a>
@@ -54,6 +53,17 @@ public class ProgletCreate {
       e.printStackTrace();
       return false;
     }
+  }
+  /**
+   * @see #build(String)
+   */
+  public static boolean build(String ProgletDir, boolean verbose) {
+    if (verbose)
+      System.out.println("Compilation de "+new File(ProgletDir).getName()+"..");
+    boolean built = build(ProgletDir);
+    if (verbose && built)
+      System.out.println("achevée avec succès :\n Le répertoire '"+ProgletDir+" est disponible");
+    return built;
   }
 
   /** Lanceur de la création dune proglet.

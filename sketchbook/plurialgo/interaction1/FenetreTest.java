@@ -7,8 +7,8 @@ import javax.swing.*;
 
 
 /**
- * Cette classe permet de tester l'application dans une fenêtre swing, sans 
- * créer la proglet.
+ * Cette classe permet de tester l'application dans une fenÃªtre swing, sans 
+ * crÃ©er la proglet.
 */
 public class FenetreTest extends JFrame {
 	private static final long serialVersionUID = 1L;

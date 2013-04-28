@@ -14,7 +14,7 @@ import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import org.javascool.proglets.syntheSons.SoundBit;
+import org.javascool.tools.sound.SoundBit;
 
 // Nombre de notes, nom desnotyyes et fréquences des notes
 

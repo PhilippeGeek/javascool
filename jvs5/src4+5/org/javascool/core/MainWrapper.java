@@ -39,7 +39,7 @@ public class MainWrapper {
     // Lit le fichier de commande
     String wrapperCommandFile = UserConfig.getInstance("javascool").getApplicationFolder() + "webcommand.mf";
     if (new File(wrapperCommandFile).exists()) {
-      String wrapperCommandText = FileManager.load(wrapperCommandFile).replaceAll("\n+", " ");
+      String wrapperCommandText = FileManager.load(wrapperCommandFile).replaceAll("\n+", " ").replaceAll("\\s*=\\s*", " = ").trim();
       new File(wrapperCommandFile).delete();
       Console.newInstance(true);
       try {
@@ -49,17 +49,20 @@ public class MainWrapper {
 	  String wrapperCommandName = wrapperCommand[0].trim(), wrapperCommandPath = wrapperCommand[1].trim();
 	  // Ventile la commande à exécuter
 	  if ("Jvs2Jar".equals(wrapperCommandName)) {
-	    Jvs2Jar.build(wrapperCommandPath);
+	    Jvs2Jar.build(wrapperCommandPath, true);
+	    System.out.println("\n> la commande «"+wrapperCommandText+"» est effectuée");
 	    return true;
 	  } else if ("Proglet2Html".equals(wrapperCommandName)) {
-	    Proglet2Html.build(wrapperCommandPath);
+	    Proglet2Html.build(wrapperCommandPath, true);
+	    System.out.println("\n>  la commande «"+wrapperCommandText+"» est effectuée");
 	    return true;
 	  } else if ("ProgletCreate".equals(wrapperCommandName)) {
-	    ProgletCreate.build(wrapperCommandPath);
+	    ProgletCreate.build(wrapperCommandPath, true);
+	    System.out.println("\n>  la commande «"+wrapperCommandText+"» est effectuée");
 	    return true;
 	  }
 	}
-	throw new IllegalStateException("Un fichier APPDATAjavascool/webcommand.mf avec la commande erronnée «"+wrapperCommandText+"» est détecté");
+	throw new IllegalStateException("Un fichier $APPDATA/javascool/webcommand.mf avec la commande erronnée «"+wrapperCommandText+"» est détecté");
       } catch (Throwable e) {
 	System.out.println(e);
 	e.printStackTrace();
@@ -79,8 +82,10 @@ public class MainWrapper {
       String javascoolJar = Utils.javascoolJar();
       if (new File(javascoolJar).getName().startsWith("javascool-jvs2jar-")) {
 	Jvs2Jar.main(usage);
-      } else
+      } else if (new File(javascoolJar).getName().startsWith("javascool-proglet-")) {
 	Core.main(usage);
+      } else
+	Proglet2Html.main(usage);
     }
   }
 }

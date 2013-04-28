@@ -9,7 +9,7 @@ import java.util.Iterator;
 import org.javascool.proglets.plurialgo.langages.modele.InfoTypee;
 
 /**
- * Cette classe hérite de la classe homonyme du modèle.
+ * Cette classe hÃ©rite de la classe homonyme du modÃ¨le.
 */
 public class Operation extends org.javascool.proglets.plurialgo.langages.modele.Operation {
 	

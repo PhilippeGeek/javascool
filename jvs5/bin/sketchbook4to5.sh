@@ -7,11 +7,14 @@
 # Positionnement à la racine du svn
 cd /home/vthierry/Work/culsci/jvs
 
-# Définit le répertoire source et cible et les proglets à convertir
+# Définit le répertoire source et cibles et les proglets à convertir
 
 srcDir="`pwd`/sketchbook"
 dstDir="`pwd`/jvs5/sketchbook"
-srcProglets="`find $srcDir -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | egrep -v 'jeux2D|sampleCode|grafikformate|\.build'`"
+prcDir="`pwd`/jvs5/processing"
+srcProglets="`find $srcDir -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | egrep -v 'jeux2D|sampleCode|grafikformate|plurialgo|cryptageRSA|enVoiture|exploSonore|grapheEtChemins|\.build'`"
+
+mkdir -p $prcDir/{libraries,tools,modes,sketchbook}
 
 echo "Conversion de «" $srcProglets "» de '$srcDir' à '$dstDir'"
 
@@ -56,11 +59,20 @@ do s="$srcDir/$p" ; d="$dstDir/$p" ; echo "Translate $p"
 	sed 's/http:..javascool.gforge.inria.fr.index\.php[?]page=api/http:\/\/javascool.github.com\/wproglets\/javascool-core-api/' |\
 	sed 's/.htm"/.html"/g' > $f ; done
   # Manipulation des fichiers java
-  if ls *.java > /dev/null ; then for f in *.java ; do cp $f $f~ ; cat $f~ |\
+  if ls *.java 2>/dev/null >/dev/null ; then for f in *.java ; do cp $f $f~ ; cat $f~ |\
      sed 's/org\.javascool/org.javascool/g' > $f
   done ; fi
-  # Basculement des fichiers processing
-  if [ -d applet ] ; then  mv applet/*.jar . ; rm -rf applet $p.jar ; fi
+  # Basculement des fichiers processing 
+  if [ -d applet ] ; then
+    #mv applet/*.jar . 
+    rm -rf applet $p.jar 
+    # ici on reporte en retour les modifs du processing/sketchbook
+    t=../../processing/sketchbook/$p
+    if [ -d $t ] 
+    then cp $t/*.* . ; cp $t/*.* $s
+    else mkdir -p $t ; cp -f *.pde *.wav *.png $t 2>/dev/null 
+    fi
+  fi
   rm -f *~
   popd > /dev/null
 

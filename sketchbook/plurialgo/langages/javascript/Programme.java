@@ -9,14 +9,14 @@ import org.javascool.proglets.plurialgo.divers.*;
 
 
 /**
- * Cette classe hérite de la classe homonyme du modèle.
+ * Cette classe hÃ©rite de la classe homonyme du modÃ¨le.
 */
 public class Programme extends org.javascool.proglets.plurialgo.langages.modele.Programme {
 	
 	Instruction instr_saisie;	// saisie elementaire ou formulaire
 
 	/*
-	 * Plutôt que de faire la saisie ELEMENTAIRE avec des boîtes de dialogue ( alert ), on
+	 * PlutÃ´t que de faire la saisie ELEMENTAIRE avec des boÃ®tes de dialogue ( alert ), on
 	 * regroupe les instructions de saisie du programme principal dans une unique
 	 * instruction de saisie dans un FORMULAIRE
 	 */

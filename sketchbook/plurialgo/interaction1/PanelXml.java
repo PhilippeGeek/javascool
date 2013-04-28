@@ -19,7 +19,7 @@ import org.javascool.proglets.plurialgo.langages.xml.ProgrammeVectorise;
  * Cette classe permet de visualiser le code Xml des programmes.
  * 
  * <p>
- * L'éditeur syntaxique est réalisé à partir de la librairie
+ * L'Ã©diteur syntaxique est rÃ©alisÃ© Ã  partir de la librairie
  * <a href="http://fifesoft.com/rsyntaxtextarea/" target="_blank">rsyntaxtextarea</a>.
  * </p>
 */
@@ -100,19 +100,19 @@ public class PanelXml extends JInternalFrame implements ActionListener {
 	// ---------------------------------------------
 
 	private boolean reformulerXml() {
-		// récupération du programme Xml
+		// rÃ©cupÃ©ration du programme Xml
 		pInter.clearConsole();
 		org.javascool.proglets.plurialgo.langages.xml.Programme prog = (org.javascool.proglets.plurialgo.langages.xml.Programme) pInter.getProgramme(this.getText(),"xml"); 
 		if (pInter.messageErreur(prog)) {
 			return false;
 		}
-		// construction du programme dérivé
+		// construction du programme dÃ©rivÃ©
 		Intermediaire inter = pInter.creerIntermediaire();
 		inter.setOption("donnees", pInter.pPrincipal.donneesField.getText());
 		inter.setOption("resultats", pInter.pPrincipal.resultatsField.getText());
 		ProgrammeDerive progDer = new ProgrammeDerive(prog, inter);
 		pInter.pPrincipal.algoField.setText(progDer.nom);
-		// écriture du programme Xml dans l'onglet Xml
+		// Ã©criture du programme Xml dans l'onglet Xml
 		pInter.add_xml(new org.javascool.proglets.plurialgo.langages.xml.Programme(progDer));
 		pInter.pPrincipal.algoField.setText(progDer.nom);
 		return(true);
@@ -120,15 +120,15 @@ public class PanelXml extends JInternalFrame implements ActionListener {
 	
 	private boolean vectoriserXml() {
 		pInter.clearConsole();
-		// récupération du programme Xml
+		// rÃ©cupÃ©ration du programme Xml
 		org.javascool.proglets.plurialgo.langages.xml.Programme prog;
 		prog = (org.javascool.proglets.plurialgo.langages.xml.Programme) pInter.getProgramme(this.getText(),"xml");  
 		if (pInter.messageErreur(prog)) {
 			return false;
 		}
-		// construction du programme vectorisé
+		// construction du programme vectorisÃ©
 		ProgrammeVectorise progVect = new ProgrammeVectorise(prog);
-		// écriture du programme Xml dans l'onglet Xml
+		// Ã©criture du programme Xml dans l'onglet Xml
 		pInter.add_xml(new org.javascool.proglets.plurialgo.langages.xml.Programme(progVect));
 		pInter.pPrincipal.algoField.setText(progVect.nom);
 		return(true);

@@ -9,7 +9,7 @@ import org.javascool.proglets.plurialgo.divers.Divers;
 
 /**
  * Cette classe permet de traduire en Java une instruction
- * de lecture ou d'écriture dans un fichier texte.
+ * de lecture ou d'Ã©criture dans un fichier texte.
 */
 public class FichierTexte {
 	
@@ -159,7 +159,7 @@ public class FichierTexte {
 	}
 	
 // --------------------------------------
-// écriture d'arguments	
+// Ã©criture d'arguments	
 // --------------------------------------
 	
 	private void ecrireFichierTexte(Programme prog, StringBuffer buf, int indent, String msg, Argument arg) {

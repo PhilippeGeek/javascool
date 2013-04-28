@@ -11,17 +11,17 @@ import org.javascool.proglets.plurialgo.divers.Divers;
 
 
 /**
- * Cette classe doit être étendue pour chaque langage de programmation implanté.
+ * Cette classe doit Ãªtre Ã©tendue pour chaque langage de programmation implantÃ©.
 */
 public class Si extends Noeud {
 	
-	// variables utilisées par BindingCastor
+	// variables utilisÃ©es par BindingCastor
 	/**
 	 * La condition de l'alternative.
 	 */
 	public String condition;
 	/**
-	 * Instructions internes à l'alternative.
+	 * Instructions internes Ã  l'alternative.
 	 */
 	public ArrayList<Instruction> instructions;
 	// autres variables
@@ -44,7 +44,7 @@ public class Si extends Noeud {
 	}
 	
 	// ---------------------------------------------
-	// Fonctions booléennes
+	// Fonctions boolÃ©ennes
 	// ---------------------------------------------
 	
 	public final boolean isSi() {

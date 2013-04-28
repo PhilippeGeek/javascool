@@ -4,7 +4,7 @@
 package org.javascool.proglets.plurialgo.langages.xml;
 
 /**
- * Cette interface énumère les méthodes que doit implanter un analyseur de code
+ * Cette interface Ã©numÃ¨re les mÃ©thodes que doit implanter un analyseur de code
  * (Visual Basic, Javascool ou Larp).
 */
 public interface iAnalyseur {

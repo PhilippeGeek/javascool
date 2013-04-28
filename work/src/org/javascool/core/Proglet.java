@@ -134,7 +134,7 @@ public class Proglet {
     if(!pml.isDefined("pane-defined")) {
       pml.set("pane-defined", true);
       if(this.isProcessing()) {
-	boolean popup = pml.getString("jvs-version").equals("4");
+	boolean popup = true;
 	try {
 	  int width = pml.getInteger("width", 500), height = pml.getInteger("height", 500);
 	  Applet applet = (Applet) Class.forName("" + pml.getString("name") + "").newInstance();

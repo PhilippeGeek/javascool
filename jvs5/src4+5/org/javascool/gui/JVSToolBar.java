@@ -35,13 +35,14 @@ class JVSToolBar extends ToolBar {
   }
   /** Initialize la barre d'outils en créant les bouttons */
   private void init() {
-    addTool("Nouvelle activité", "org/javascool/widgets/icons/new.png", new Runnable() {
-              @Override
-              public void run() {
-                JVSPanel.getInstance().closeProglet();
-              }
-            }
-            );
+    if (ProgletEngine.getInstance().getProgletCount() > 1)
+      addTool("Nouvelle activité", "org/javascool/widgets/icons/new.png", new Runnable() {
+	  @Override
+	  public void run() {
+	    JVSPanel.getInstance().closeProglet();
+	  }
+	}
+	);
     addTool("Nouveau fichier", "org/javascool/widgets/icons/new.png", new Runnable() {
               @Override
               public void run() {

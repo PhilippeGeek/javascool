@@ -6,17 +6,17 @@ package org.javascool.proglets.plurialgo.langages.modele;
 import org.javascool.proglets.plurialgo.divers.Divers;
 
 /**
- * Cette classe doit être étendue pour chaque langage de programmation implanté.
+ * Cette classe doit Ãªtre Ã©tendue pour chaque langage de programmation implantÃ©.
 */
 public class Affectation extends Noeud {
 	
-	// variables utilisées par BindingCastor
+	// variables utilisÃ©es par BindingCastor
 	/**
 	 * Le nom de la variable d'affectation.
 	 */
 	public String var;
 	/**
-	 * L'expression affectée à la variable.
+	 * L'expression affectÃ©e Ã  la variable.
 	 */
 	public String expression;
 	

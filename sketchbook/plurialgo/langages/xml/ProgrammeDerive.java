@@ -14,21 +14,21 @@ import org.javascool.proglets.plurialgo.langages.modele.InfoTypee;
 */
 public class ProgrammeDerive extends Programme {
 
-	private Programme prog;	// le programme à reformuler	
-	private Intermediaire inter; // la reformulation à appliquer
+	private Programme prog;	// le programme Ã  reformuler	
+	private Intermediaire inter; // la reformulation Ã  appliquer
 	private ArrayList<InfoTypee> infos; // liste de triplets (nom, type, mode) 
-	private Classe classe; // la classe créée (si reformulation avec regroupement)
+	private Classe classe; // la classe crÃ©Ã©e (si reformulation avec regroupement)
 
 	/**
 	 * 	Construit un programme par reformulation
-	 *    @param prog le programme à reformuler
-	 *    @param inter la reformulation à appliquer
+	 *    @param prog le programme Ã  reformuler
+	 *    @param inter la reformulation Ã  appliquer
 	*/	
 	public ProgrammeDerive(Programme prog, Intermediaire inter) {
 		this.prog = prog;
 		this.nom = prog.nom; 
 		this.inter = inter;
-		// récupération des classes et des operations
+		// rÃ©cupÃ©ration des classes et des operations
 		for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Classe> iter=prog.classes.iterator(); iter.hasNext(); ) {
 			Classe cl = (Classe) iter.next();
 			this.classes.add(cl);
@@ -55,7 +55,7 @@ public class ProgrammeDerive extends Programme {
 
 	/**
 	 * 	Construit un programme par reformulation
-	 *    @param prog le programme à reformuler (reformulation précisée dans la propriété options du programme)
+	 *    @param prog le programme Ã  reformuler (reformulation prÃ©cisÃ©e dans la propriÃ©tÃ© options du programme)
 	*/		
 	public ProgrammeDerive(Programme prog) {
 		this(prog, new Intermediaire());
@@ -84,7 +84,7 @@ public class ProgrammeDerive extends Programme {
 			inter.setOption("donnees", mode);
 		}
 		else {
-			// recherche des instructions de lecture (perimé ?)
+			// recherche des instructions de lecture (perimÃ© ?)
 			for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Instruction> iter=prog.instructions.iterator(); iter.hasNext(); ) {
 				Instruction instr = (Instruction) iter.next();
 				if (instr.isLectureStandard() || instr.isLectureFormulaire()) {
@@ -110,7 +110,7 @@ public class ProgrammeDerive extends Programme {
 			inter.setOption("resultats", mode);
 		}
 		else {
-			// recherche des instructions d'ecriture (perimé ?)
+			// recherche des instructions d'ecriture (perimÃ© ?)
 			for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Instruction> iter=prog.instructions.iterator(); iter.hasNext(); ) {
 				Instruction instr = (Instruction) iter.next();
 				if (instr.isEcritureStandard()) {
@@ -142,13 +142,13 @@ public class ProgrammeDerive extends Programme {
 				infosList.addModes(var.nom, "OUT");
 			}
 		}
-		// interpretation des données, des resultats...
+		// interpretation des donnÃ©es, des resultats...
 		infosList.addIntermediaire(inter);
 		this.infos = infosList.getInfos();
 	}
 	
 	// ----------------------------
-	// regroupement élémentaire
+	// regroupement Ã©lÃ©mentaire
 	// ----------------------------
 	
 	private void traiterElementaire(){

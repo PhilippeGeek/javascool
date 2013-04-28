@@ -83,6 +83,17 @@ public class Jvs2Jar {
   public static boolean build(String jvsFile) {
     return build(Utils.javascoolProglet(), jvsFile, jvsFile+".jar");
   }
+  /**
+   * @see #build(String, String, String)
+   */
+  public static boolean build(String jvsFile, boolean verbose) {
+    if (verbose)
+      System.out.println("Compilation de "+new File(jvsFile).getName()+"..");
+    boolean built = build(jvsFile);
+    if (verbose && built)
+      System.out.println("achevée avec succès :\n Le fichier '"+jvsFile+".jar' est disponible");
+    return built;
+  }
 
   /** Lanceur de la conversion Jvs en Java.
    * @param usage <tt>java org.javascool.core.Jvs2Jar [progletName] jvsFile jarFile</tt>
@@ -116,7 +127,7 @@ public class Jvs2Jar {
 				  {
 				    setDialogTitle("Chargement du fichier jvs . . ");
 				    setFileSelectionMode(JFileChooser.FILES_ONLY);
-				    String path = UserConfig.getInstance("jvs2jar").getProperty("jvs-path");
+				    String path = UserConfig.getInstance("javascool").getProperty("jvs-path");
 				    if (path != null)
 				      setCurrentDirectory(new File(path));
 				  }
@@ -155,9 +166,7 @@ public class Jvs2Jar {
 			    @Override
 			    public void actionPerformed(ActionEvent e) {
 			      (new Thread(new Runnable() { public void run() {
-				System.out.println("Compilation de "+new File(path.getText()).getName()+"..");
-				if (build(path.getText())) {
-				  System.out.println("achevée avec succès :\n Le fichier '"+path.getText()+".jar' est disponible");
+				if (build(path.getText(), true)) {
 				  run.setEnabled(true);
 				}
 			      }})).start();
@@ -177,11 +186,11 @@ public class Jvs2Jar {
 			  });
 		      }});
 		}}, BorderLayout.NORTH);
-	    add(Console.getInstance());
+	    add(Console.newInstance());
 	  }
 	  private void updateLocation() {
 	    if (new File(path.getText()).isFile())
-	      UserConfig.getInstance("jvs2jar").setProperty("jvs-path", path.getText());
+	      UserConfig.getInstance("javascool").setProperty("jvs-path", path.getText());
 	    run.setEnabled(false);
 	  }
 	});
