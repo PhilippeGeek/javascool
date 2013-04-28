@@ -1,3 +1,8 @@
+
+import java.util.List;
+
+final static int maxInteger = Integer.MAX_VALUE;
+
 void verifierVille(String s) {
   assertion(latitudes.containsKey(s), s + " n'est pas une ville connue");
 }

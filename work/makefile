@@ -22,6 +22,11 @@ tst :
 
 #################################################
 
+enc :
+	for f in `find ../sketchbook/plurialgo \( -name '*.jvs' -o -name '*.java' -o -name '*.xml' -o -name '*.html' -o -name '*.pml' \)` ;\
+	do mv $$f $$f~ ; iconv -f ISO8859-1 -t UTF-8 $$f~ > $$f ;\
+	done
+
 ant :
 	ant prun
 

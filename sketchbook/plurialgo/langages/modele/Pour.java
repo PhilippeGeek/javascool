@@ -11,13 +11,13 @@ import org.javascool.proglets.plurialgo.divers.Divers;
 
 
 /**
- * Cette classe doit être étendue pour chaque langage de programmation implanté.
+ * Cette classe doit Ãªtre Ã©tendue pour chaque langage de programmation implantÃ©.
 */
 public class Pour extends Noeud {
 	
-	// variables utilisées par BindingCastor
+	// variables utilisÃ©es par BindingCastor
 	/**
-	 * Valeur de début de la boucle.
+	 * Valeur de dÃ©but de la boucle.
 	 */
 	public String debut; 
 	/**
@@ -33,12 +33,12 @@ public class Pour extends Noeud {
 	 */
 	public String var;
 	/**
-	 * Instructions internes à la boucle.
+	 * Instructions internes Ã  la boucle.
 	 */
 	public ArrayList<Instruction> instructions;
 	// autres variables
 	/**
-	 * Bientôt obsolète ?
+	 * BientÃ´t obsolÃ¨te ?
 	 */
 	public String schema;	// pour, pour.tantque
 	
@@ -59,7 +59,7 @@ public class Pour extends Noeud {
 	}
 	
 	// ---------------------------------------------
-	// Fonctions booléennes
+	// Fonctions boolÃ©ennes
 	// ---------------------------------------------
 	
 	public final boolean isPour() {

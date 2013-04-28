@@ -12,8 +12,8 @@ import org.javascool.proglets.plurialgo.langages.xml.Intermediaire;
 
 
 /**
- * Cette classe correspond au conteneur de l'interface graphique, à intégrer
- * ensuite dans une fenêtre swing, une applette ou l'environnement Javascool.
+ * Cette classe correspond au conteneur de l'interface graphique, Ã  intÃ©grer
+ * ensuite dans une fenÃªtre swing, une applette ou l'environnement Javascool.
 */
 public class PanelInteraction extends JPanel {	
 	private static final long serialVersionUID = 1L;
@@ -36,8 +36,8 @@ public class PanelInteraction extends JPanel {
 	}
 	
 	/**
-	 * L'initialisation des onglets (notamment le masquage de l'onglet Compléments)
-	 * peut être redéfini dans une classe dérivée.
+	 * L'initialisation des onglets (notamment le masquage de l'onglet ComplÃ©ments)
+	 * peut Ãªtre redÃ©fini dans une classe dÃ©rivÃ©e.
 	 */
 	public void initOnglets() {
 		// nord
@@ -47,15 +47,15 @@ public class PanelInteraction extends JPanel {
 		onglets = new JTabbedPane(JTabbedPane.TOP);
 		onglets.setBackground(null);
 		pPrincipal = new PanelPrincipal(this);	onglets.add("Principal", pPrincipal);
-		pEdition = new PanelProgrammes(this); onglets.add("Résultats", pEdition);
+		pEdition = new PanelProgrammes(this); onglets.add("RÃ©sultats", pEdition);
 		pHtml = new PanelHtml(this); onglets.add("Documentation", pHtml);
-		pXml = new PanelXml(this);  onglets.add("Compléments", pXml);
+		pXml = new PanelXml(this);  onglets.add("ComplÃ©ments", pXml);
 		this.add(onglets, "Center");
 	}
 	
 	/**
 	 * L'initialisation de la configuration (liste des langages, url de la documentation...) 
-	 * peut être redéfinie dans une classe dérivée.
+	 * peut Ãªtre redÃ©finie dans une classe dÃ©rivÃ©e.
 	 */
 	public void initConfig() {
 		// urlDoc
@@ -157,7 +157,7 @@ public class PanelInteraction extends JPanel {
 	}
 	
 	private boolean traduireXml(String nom_lang) {
-		// récupération du programme
+		// rÃ©cupÃ©ration du programme
 		Programme prog = getProgramme(pXml.getText(),nom_lang); 
 		if (this.messageErreur(prog)) {
 			System.out.println("erreur:"+prog.getXmlBuffer().toString());
@@ -183,7 +183,7 @@ public class PanelInteraction extends JPanel {
     }
 	
 	// ---------------------------------------------	
-	// méthodes de création d'intermediaire	
+	// mÃ©thodes de crÃ©ation d'intermediaire	
 	// ---------------------------------------------
 	
 	public Intermediaire creerIntermediaire() {

@@ -1,4 +1,4 @@
 /**
- * Ce package permet de traduire en Larp un programme du modèle.
+ * Ce package permet de traduire en Larp un programme du modÃ¨le.
  */
 package org.javascool.proglets.plurialgo.langages.larp;

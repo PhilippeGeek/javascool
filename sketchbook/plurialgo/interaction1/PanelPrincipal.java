@@ -15,7 +15,7 @@ import org.javascool.proglets.plurialgo.langages.xml.ProgrammeNouveau;
 
 
 /**
- * Cette classe correspond à l'onglet Principal de l'interface graphique.
+ * Cette classe correspond Ã  l'onglet Principal de l'interface graphique.
 */
 public class PanelPrincipal extends JPanel implements ActionListener, ListSelectionListener {
 	private static final long serialVersionUID = 1L;
@@ -76,7 +76,7 @@ public class PanelPrincipal extends JPanel implements ActionListener, ListSelect
 		pInOut.add( new JLabel("sorties") );
 		resultatsField = new JTextField(donnees_width);
 		pInOut.add(resultatsField);
-		// panel types élémentaires
+		// panel types Ã©lÃ©mentaires
 		JPanel pTypes = new JPanel(new GridLayout(4,5));
 		entiersField = new JTextField();
 		reelsField = new JTextField();
@@ -92,9 +92,9 @@ public class PanelPrincipal extends JPanel implements ActionListener, ListSelect
 		mat_booleensField = new JTextField();
 		pTypes.add( new JLabel("TYPES") );
 		pTypes.add( new JLabel("Entiers") );
-		pTypes.add( new JLabel("Réels") );
+		pTypes.add( new JLabel("RÃ©els") );
 		pTypes.add( new JLabel("Textes") );
-		pTypes.add( new JLabel("Booléens") );
+		pTypes.add( new JLabel("BoolÃ©ens") );
 		pTypes.add( new JLabel("Simples") );
 		pTypes.add( entiersField );
 		pTypes.add( reelsField );
@@ -110,7 +110,7 @@ public class PanelPrincipal extends JPanel implements ActionListener, ListSelect
 		pTypes.add( mat_reelsField );
 		pTypes.add( mat_textesField );
 		pTypes.add( mat_booleensField );
-		// Panel opérations
+		// Panel opÃ©rations
 		JPanel pOper; pOper = new JPanel(); pOper.setBackground(null);
 		pOper.add( new JLabel("saisie") );
 		niv_saisieList = new JList(niv_saisie);

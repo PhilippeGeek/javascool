@@ -6,7 +6,7 @@ void main(){
  int posy = 0;
  boolean find = false;
  	
- createRandomPixelImage();
+ createRandomShapeImage(1);
  showImage(1);
  sleep(800);
 

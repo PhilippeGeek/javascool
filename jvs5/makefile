@@ -2,37 +2,21 @@
 #
 # @TODO :
 #
-# PUTE DE PB DE WONDOWS puis virer pdir 
-#
-#
-#. voir jvs avec fichiers pister les load
-#. tester wrapper ds mzkefile .. err et ss err
-#
-# Commencer a calculer les rebonds vers v5/*
-# Valider le mécanisme de webservice en lancement d'un programme local
-#
-# Voir comment se gère les proglets processing et bien valider les liens vers le site fuscia
-## cp $d/applet/{*.java,{name}.java} $d ; rm -rf applet
-## /usr/java/processing-2.0b8/processing-java --sketch=sketchbook/cryptageRSA --output=tmp --force --build
-## voir pb clean of jvs5/{libraries,tools,modes,tmp}
-## voir a creer Panel extends .. { pour eviter le pb des non package
-## http://code.google.com/p/processing/issues/detail?id=142
-#
-# @DEPLOY
-#
-# Vider javascool sous github et y basculer {documents,sketchbook,javascool-core} en un ou en trois ?
-# Valider le www en ligne
-## faire git add wproglets quand stable
-# Verifier en ligne les nv liens des proglet's docs.
-# Reduire le site v4 à accueil + lancement + rebonds vers v5
+# - Corriger PB windows avec ordi + valider javaStart
 #
 # @THEN
+# - Voir pb de librairies toxi processing 2.0--bits 64
+# - Comprendre usage de --export
+# - Deployer un linkcheck sur les liens
+# - Automatiser les productions de librairies pour gérer les contenus processing 
 # - Voir jar jbed jad http://www.developpez.net/forums/d922916/java/general-java/java-mobiles/android/android-jar
+# - Reorganiser jvs5 sous github javascool/{documents,sketchbook,processing,javascool-core/{makefile,bin,src,lib}} et miroir retour sur jvs4
+# - Creer les rebonds de v4 -> v5 selon l'usage qui se profile
 #
 #
 ########################################################################################################################################################
 
-dft : tst1
+dft : tst
 
 # Choix de la JDK
 
@@ -47,17 +31,23 @@ DIST=$(GIT_HOME)/wproglets
 
 ########################################################################################################################################################
 
-# Test en cours 
+sos : 
+	cp ../work/lib/javascool.bat ../work/dist/javascool-proglets.jar ~/Desktop
 
-tstP = cryptageRSA
+# Tests en cours 
 
-tst1  : cleanall cpv $(DIST)/javascool-core.jar $(DIST)/javascool-proglet-$(tstP)-html
-	firefox $(DIST)/javascool-proglet-$(tstP)-html/index.html
-#	java -jar $(DIST)/javascool-proglet-$(tstP)-html/javascool-proglet-$(tstP).jar
-#	java -jar $(DIST)/javascool-proglet-algoDeMaths-html/JeuSimon.jvs.jar 
+tstProglet = algoDeMaths
 
-tst2 : cleanall cpv $(DIST)/javascool-core.jar
-	java -cp $(DIST)/javascool-core.jar org.javascool.core.Proglet2Html
+tst  : 
+	rm -rf $(DIST)/javascool-proglet-$(tstProglet)-html
+	$(MAKE) cpv $(DIST)/javascool-core.jar $(DIST)/javascool-proglet-$(tstProglet)-html
+	echo "Jvs2Jar=/user/vthierry/home/Work/culsci/ongoing/jvs/jvs5/javascool.github.com/wproglets/javascool-proglet-algoDeMaths-html/JeuSimon.jvs" > $(HOME)/.javascool/webcommand.mf
+#	firefox $(DIST)/javascool-proglet-$(tstProglet)-html/index.html
+	java -jar $(DIST)/javascool-proglet-$(tstProglet)-html/javascool-proglet-$(tstProglet).jar
+
+########################################################################################################################################################
+
+# Lancement de l'environnement processing
 
 prc :
 	/usr/java/processing-2.0b8/processing
@@ -67,8 +57,8 @@ prc :
 # Publie les fichiers du site web
 
 www : clean cnv jar $(patsubst sketchbook/%,$(DIST)/javascool-proglet-%-html,$(wildcard sketchbook/*))
-	for d in $(DIST)/javascool-proglet-*-html ; do ls $$d/compilation.*.log.txt ; done
 #	$(MAKE) -C $(GIT_HOME) push
+	ls $(DIST)/javascool-proglet-*-html/compilation.false.log.txt
 
 # Construit les proglets
 
@@ -84,7 +74,7 @@ jar : cpv $(DIST)/javascool-core.jar $(DIST)/javascool-core-api
 
 $(DIST)/javascool-core.jar : $(SRC)
 	echo javac javascool-core
-	sh ./bin/java2jar.sh -static -main=org.javascool.core.Proglet2Html $@ $^
+	sh ./bin/java2jar.sh -static -main=org.javascool.core.MainWrapper $@ $^
 
 $(DIST)/javascool-core-api : $(SRC)
 	echo javadoc javascool-core
@@ -103,9 +93,8 @@ cnv :
 # Nettoie les répertoires générés
 
 clean :
-	rm -rf tmp-* libraries modes tools
+	rm -rf tmp-*
 	svn status
-#	cd $(GIT_HOME) ; git status @todo
 
 cleanall : clean
 	rm -rf $(DIST)/* 

@@ -6,10 +6,10 @@ package org.javascool.proglets.plurialgo.langages.modele;
 import java.util.*;
 
 /**
- * Cette classe permet de gérer les liens bidirectionnels dans l'arborescence d'un programme.
+ * Cette classe permet de gÃ©rer les liens bidirectionnels dans l'arborescence d'un programme.
  * 
  * <p>
- * Cette classe a été ajoutée car seuls les liens descendants sont gérés par BindingCastor (package Divers).
+ * Cette classe a Ã©tÃ© ajoutÃ©e car seuls les liens descendants sont gÃ©rÃ©s par BindingCastor (package Divers).
  * </p>
 */
 public abstract class Noeud {
@@ -27,7 +27,7 @@ public abstract class Noeud {
 	/**
 	 * Ajoute une variable dans le plus proche parent le permettant 
 	 * (Operation, Constructeur ou Programme).
-	 * @param var : la variable à ajouter
+	 * @param var : la variable Ã  ajouter
 	 */
 	public final void addVariable(Variable var) {
 		Noeud nd = this;

@@ -26,9 +26,9 @@ public class AnalyseurJavascool implements iAnalyseur {
 
 	/**
 	      Transforme un code Javascool en un objet de classe Programme.
-	      @param txt le code Javascool à analyser
+	      @param txt le code Javascool Ã  analyser
 	      @param ignorerLire ignore les instructions de lire si true
-	      @param ignorerEcrire ignore les instructions d'écriture si true
+	      @param ignorerEcrire ignore les instructions d'Ã©criture si true
 	*/	
 	public AnalyseurJavascool(String txt, boolean ignorerLire, boolean ignorerEcrire) {
 		this.nettoyerJvs(txt);
@@ -36,14 +36,14 @@ public class AnalyseurJavascool implements iAnalyseur {
 	}
 
 	/**
-	      Retourne l'objet de classe Programme obtenu après analyse du code Javascool.
+	      Retourne l'objet de classe Programme obtenu aprÃ¨s analyse du code Javascool.
 	*/		
 	public Programme getProgramme() {
 		return prog_xml;
 	}
 
 	/**
-	      Retourne le code Xml obtenu après analyse du code Javascool.
+	      Retourne le code Xml obtenu aprÃ¨s analyse du code Javascool.
 	*/		
 	public StringBuffer getXml() {
 		return buf_xml;
@@ -78,7 +78,7 @@ public class AnalyseurJavascool implements iAnalyseur {
 			ligne = ligne.trim();
 			if (ligne.startsWith("else")) {
 				if (ligne_prec.equals("}")) {
-					buf_jvs.deleteCharAt(buf_jvs.length()-1);	// on ôte la fin de ligne
+					buf_jvs.deleteCharAt(buf_jvs.length()-1);	// on Ã´te la fin de ligne
 				}
 			}
 			if (ligne.endsWith(";")) ligne = ligne.substring(0, ligne.length()-1);
@@ -101,7 +101,7 @@ public class AnalyseurJavascool implements iAnalyseur {
 			Operation cur_oper = null;
 			Classe cur_class = null;
 			Constructeur cur_constr = null;
-			Noeud cur_nd = prog_xml;	// le noeud où seront ajoutées les instructions
+			Noeud cur_nd = prog_xml;	// le noeud oÃ¹ seront ajoutÃ©es les instructions
 			StringTokenizer tok = new StringTokenizer(buf_jvs.toString(),"\n\r",false);
 			while(tok.hasMoreTokens()) {
 				String ligne = tok.nextToken();
@@ -525,7 +525,7 @@ public class AnalyseurJavascool implements iAnalyseur {
 	}
 		
 	private String trouverType(String txt) {
-		//utilisé pour typage (sauf lire et ecrire)
+		//utilisÃ© pour typage (sauf lire et ecrire)
 		String type = "";
 		int i = txt.indexOf(" ");
 		if (i>=0) {
@@ -588,7 +588,7 @@ public class AnalyseurJavascool implements iAnalyseur {
 	}
 	
 	private void trouverType(Argument arg, Operation cur_oper, Constructeur cur_constr) { 
-		// utilisé pour lire et ecrire
+		// utilisÃ© pour lire et ecrire
 		InfoTypeeList liste = new InfoTypeeList();
 		if (cur_oper!=null) {
 			liste.addVariables(cur_oper.variables);
@@ -639,7 +639,7 @@ public class AnalyseurJavascool implements iAnalyseur {
 	}
 	
 	private String trouverNom(String txt) {
-		// de variable (ou propriete), de fonction, de parametre : txt débute par un type
+		// de variable (ou propriete), de fonction, de parametre : txt dÃ©bute par un type
 		// de procedure, de classe, d'appel
 		int i = 0;
 		int j = txt.length();

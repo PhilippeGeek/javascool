@@ -22,7 +22,7 @@ public class Formulaire {
 	}
 
 	/**
-	 * Déclaration des composants du formulaire.
+	 * DÃ©claration des composants du formulaire.
 	 * @param prog
 	 * @param buf
 	 * @param indent
@@ -62,7 +62,7 @@ public class Formulaire {
 	}
 	
 // -------------------------------
-// Déclaration des composants du formulaire
+// DÃ©claration des composants du formulaire
 // -------------------------------
 	
 	private void declFormu(Programme prog, StringBuffer buf, int indent, Argument arg) {

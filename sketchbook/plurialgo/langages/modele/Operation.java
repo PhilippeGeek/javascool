@@ -10,17 +10,17 @@ import org.javascool.proglets.plurialgo.divers.Divers;
 
 
 /**
- * Cette classe doit être étendue pour chaque langage de programmation implanté.
+ * Cette classe doit Ãªtre Ã©tendue pour chaque langage de programmation implantÃ©.
 */
 public class Operation extends Noeud {
 	
-	// variables utilisées par BindingCastor	
+	// variables utilisÃ©es par BindingCastor	
 	/*
 	 * Le nom du sous-programme.
 	 */
 	public String nom;
 	/**
-	 * Les paramètres du sous-programme.
+	 * Les paramÃ¨tres du sous-programme.
 	 */
 	public ArrayList<Parametre> parametres;
 	/**

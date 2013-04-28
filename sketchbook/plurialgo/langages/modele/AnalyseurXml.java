@@ -23,7 +23,7 @@ public class AnalyseurXml {
 
 	/**
 	      Transforme un code Xml en un objet de classe Programme.
-	      @param txt_xml le code Xml à analyser
+	      @param txt_xml le code Xml Ã  analyser
 	      @param nom_lang le langage de traduction
 	*/	
 	public AnalyseurXml(String txt_xml, String nom_lang) {
@@ -38,13 +38,13 @@ public class AnalyseurXml {
 		this.analyser();
 	}
 	/**
-	      Retourne l'objet de classe Programme obtenu après analyse du code Xml.
+	      Retourne l'objet de classe Programme obtenu aprÃ¨s analyse du code Xml.
 	*/		
 	public Programme getProgramme() {
 		return prog_xml;
 	}
 
-	// marche uniquement quand on teste dans une fenetre Swing indépendante de l'environnement proglet
+	// marche uniquement quand on teste dans une fenetre Swing indÃ©pendante de l'environnement proglet
 //	private Object creerObjet(String nom_classe) {
 //		Object obj = null;
 //		try {
@@ -332,7 +332,7 @@ public class AnalyseurXml {
 			Operation cur_oper = null;
 			Classe cur_class = null;
 			Constructeur cur_constr = null;
-			Noeud cur_nd = null;	// le noeud où seront ajoutées les instructions
+			Noeud cur_nd = null;	// le noeud oÃ¹ seront ajoutÃ©es les instructions
 			StringTokenizer tok = new StringTokenizer(buf_xml.toString(),"\n\r",false);
 			String attr = null;
 			while(tok.hasMoreTokens()) {

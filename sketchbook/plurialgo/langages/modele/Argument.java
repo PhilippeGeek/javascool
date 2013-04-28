@@ -10,13 +10,13 @@ import org.javascool.proglets.plurialgo.divers.*;
 
 
 /**
- * Cette classe doit être étendue pour chaque langage de programmation implanté.
+ * Cette classe doit Ãªtre Ã©tendue pour chaque langage de programmation implantÃ©.
 */
 public class Argument extends InfoTypee {	
 	
-	// variables utilisées par BindingCastor
+	// variables utilisÃ©es par BindingCastor
 	/**
-	 * Bientôt obsolète ?
+	 * BientÃ´t obsolÃ¨te ?
 	 */
 	public ArrayList<Instruction> instructions;	// pour arguments de type fichier
 	

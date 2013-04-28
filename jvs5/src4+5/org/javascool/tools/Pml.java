@@ -259,7 +259,7 @@ public class Pml {
               tokens.add(new token(string, ichar0, ichar1, ln));
               // Detects a name
             } else if(Character.isLetter(chars[ichar0]) || (chars[ichar0] == '_')) {
-              while(ichar < chars.length && (Character.isLetterOrDigit(chars[ichar]) || chars[ichar0] == '_')) {
+              while(ichar < chars.length && (Character.isLetterOrDigit(chars[ichar]) || chars[ichar] == '_')) {
                 ichar++;
               }
               tokens.add(new token(string, ichar0, ichar, ln));

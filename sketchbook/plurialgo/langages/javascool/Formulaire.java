@@ -23,7 +23,7 @@ public class Formulaire {
 	}
 
 	/**
-	 * Déclaration des composants du formulaire.
+	 * DÃ©claration des composants du formulaire.
 	 * @param prog
 	 * @param buf
 	 * @param indent

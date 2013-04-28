@@ -6,8 +6,8 @@ package org.javascool.proglets.plurialgo.interaction1;
 import javax.swing.JTabbedPane;
 
 /**
- * Cette classe adapte à l'environnement Javascool
- * certains paramètres du conteneur par défaut de l'interface graphique.
+ * Cette classe adapte Ã  l'environnement Javascool
+ * certains paramÃ¨tres du conteneur par dÃ©faut de l'interface graphique.
 */
 public class PanelInteractionJVS extends PanelInteraction {
 	private static final long serialVersionUID = 1L;
@@ -17,7 +17,7 @@ public class PanelInteractionJVS extends PanelInteraction {
 	}
 		
 	/*
-	 * Redéfinition pour masquer l'onglet Complements.
+	 * RedÃ©finition pour masquer l'onglet Complements.
 	 */
 	public void initOnglets() {
 		// nord
@@ -27,14 +27,14 @@ public class PanelInteractionJVS extends PanelInteraction {
 		onglets = new JTabbedPane(JTabbedPane.TOP);
 		onglets.setBackground(null);
 		pPrincipal = new PanelPrincipal(this);	onglets.add("Principal", pPrincipal);
-		pEdition = new PanelProgrammes(this); onglets.add("Résultats", pEdition);
+		pEdition = new PanelProgrammes(this); onglets.add("RÃ©sultats", pEdition);
 		pHtml = new PanelHtml(this); onglets.add("Documentation", pHtml);
-		pXml = new PanelXml(this);  // onglets.add("Compléments", pXml);  // caché pour des lycéens
+		pXml = new PanelXml(this);  // onglets.add("ComplÃ©ments", pXml);  // cachÃ© pour des lycÃ©ens
 		this.add(onglets, "Center");
 	}
 
 	/*
-	 * Redéfinition pour changer la configuration (langages, l'url de documentation...).
+	 * RedÃ©finition pour changer la configuration (langages, l'url de documentation...).
 	 */
 	public void initConfig() {
 		PanelInteraction.urlDoc = "/org/javascool/proglets/plurialgo/aideJVS/";

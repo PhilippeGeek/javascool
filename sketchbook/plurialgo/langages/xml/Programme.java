@@ -10,7 +10,7 @@ import java.util.*;
 import org.javascool.proglets.plurialgo.divers.*;
 
 /**
- * Cette classe hérite de la classe homonyme du modèle.
+ * Cette classe hÃ©rite de la classe homonyme du modÃ¨le.
 */
 public class Programme extends org.javascool.proglets.plurialgo.langages.modele.Programme {
 	
@@ -30,12 +30,12 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 
 
 	// -------------------------------------------------------
-	// importation de librairies (non finalisé pour l'instant)
+	// importation de librairies (non finalisÃ© pour l'instant)
 	// -------------------------------------------------------
 
 	/**
-	      Cette méthode importe des librairies xml, larp, vb ou Javascool.
-	      @param chemin répertoire de stockage des librairies
+	      Cette mÃ©thode importe des librairies xml, larp, vb ou Javascool.
+	      @param chemin rÃ©pertoire de stockage des librairies
 	*/	
 	public void deplierImportation(String chemin) {
 		Programme prog;
@@ -96,7 +96,7 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 			}
 		}
 		else {
-			// la récursion
+			// la rÃ©cursion
 			for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Programme> iter=this.programmes.iterator(); iter.hasNext();) {
 				prog = (Programme) iter.next();
 				prog.deplierImportation(chemin);
@@ -105,17 +105,17 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 	}
 
 	/**
-	      Cette méthode finalise l'importation entamée par la méthode déplierImportation.
+	      Cette mÃ©thode finalise l'importation entamÃ©e par la mÃ©thode dÃ©plierImportation.
 	*/		
 	public void replierImportation() {
 		Programme prog;
 		Programme progSeq = new Programme();
-		// la récursion
+		// la rÃ©cursion
 		for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Programme> iter=this.programmes.iterator();iter.hasNext();) {
 			prog = (Programme) iter.next();
 			prog.parent = this;
 			prog.replierImportation();
-			// la remontée des opérations, des instructions...
+			// la remontÃ©e des opÃ©rations, des instructions...
 			this.fusionnerOperations(prog);
 			this.fusionnerClasses(prog);
 			progSeq.fusionnerInstructions(prog);

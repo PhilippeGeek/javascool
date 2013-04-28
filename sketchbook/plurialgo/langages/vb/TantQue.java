@@ -8,7 +8,7 @@ import java.util.Iterator;
 import org.javascool.proglets.plurialgo.divers.Divers;
 
 /**
- * Cette classe hérite de la classe homonyme du modèle.
+ * Cette classe hÃ©rite de la classe homonyme du modÃ¨le.
 */
 public class TantQue extends org.javascool.proglets.plurialgo.langages.modele.TantQue {
 

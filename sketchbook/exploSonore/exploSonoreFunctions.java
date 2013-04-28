@@ -30,7 +30,7 @@ public class exploSonoreFunctions {
   }
   /** Joue un enregistrement de son choix.
    * @param path Nom de l'extrait
-   * @param f fréquence de coupure du signal en Herz.
+   * @param frequence fréquence de coupure du signal en Herz.
    */
   public static void playRecord(String path, double frequence) {
     getPanel().record1.setRecord(path);

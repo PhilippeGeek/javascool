@@ -9,7 +9,7 @@ import org.javascool.proglets.plurialgo.divers.*;
 
 
 /**
- * Cette classe hérite de la classe homonyme du modèle.
+ * Cette classe hÃ©rite de la classe homonyme du modÃ¨le.
 */
 public class Instruction extends org.javascool.proglets.plurialgo.langages.modele.Instruction {
 	
@@ -44,12 +44,12 @@ public class Instruction extends org.javascool.proglets.plurialgo.langages.model
 			int nb_si = interpreterSi();
 			if (isSelon()) {
 				String var = this.getVariableSelon();
-				Divers.ecrire(buf, "SÉLECTIONNER " + var, indent);
+				Divers.ecrire(buf, "SÃ‰LECTIONNER " + var, indent);
 				for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Si> iter=sis.iterator(); iter.hasNext();) {
 					Si si = (Si) iter.next();
 					si.ecrire(prog, buf, indent + 1);
 				}
-				Divers.ecrire(buf, "FINSÉLECTIONNER", indent);
+				Divers.ecrire(buf, "FINSÃ‰LECTIONNER", indent);
 			}
 			else {	// si classique
 				for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Si> iter=sis.iterator(); iter.hasNext();) {

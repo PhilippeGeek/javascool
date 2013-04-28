@@ -99,7 +99,8 @@ public class Proglet2Jar {
       CP += File.pathSeparator + j;
     for(String j : FileManager.list(PHOME + File.separator + "core" + File.separator + "library", ".*\\.jar"))
       CP += File.pathSeparator + j;
-    JarManager.jarExtract(PHOME + File.separator + "core" + File.separator + "library" + File.separator + "core.jar", jarDir);
+    for (String j : new String[] { "core.jar", "gluegen-rt.jar", "jogl-all.jar"})
+      JarManager.jarExtract(PHOME + File.separator + "core" + File.separator + "library" + File.separator + j, jarDir);
     // Lancement de la précompilation
     String userdir = System.getProperty("user.dir");
     System.setProperty("user.dir", tmpDir);

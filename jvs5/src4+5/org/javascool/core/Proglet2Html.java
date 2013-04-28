@@ -64,7 +64,9 @@ public class Proglet2Html {
 	  } else {
 	    if (file.endsWith(".jvs"))
 	      FileManager.save(htmlDir + File.separator + new File(file).getName() + ".html",
-			       encapsulates("<br/><br/><div align=\"right\"><a href=\""+new File(file).getName()+".jar\">@lancer le programme</a></div><br/><pre class=\"prettyprint linenums\">\n\n" + FileManager.load(file) + "\n</pre>", params));
+			       encapsulates((params.optBoolean("processing") ? "" : 
+					     "<br/><br/><div align=\"right\"><a href=\""+new File(file).getName()+".jar\">@lancer le programme</a></div>") +
+					    "<br/><pre class=\"prettyprint linenums\">\n\n" + FileManager.load(file) + "\n</pre>", params));
 	    JarManager.copyFile(file, htmlDir + File.separator + new File(file).getName());
 	  }
 	}
@@ -76,25 +78,31 @@ public class Proglet2Html {
 	String progletJar = htmlDir + File.separator + "javascool-proglet-"+params.getString("name")+".jar";
 	String jsv2jarJar = htmlDir + File.separator + "javascool-jvs2jar-"+params.getString("name")+".jar";
 	Proglet2Jar.build(progletJar, progletDir);
-	try {
-	  java.nio.file.Files.createLink(FileSystems.getDefault().getPath(jsv2jarJar), FileSystems.getDefault().getPath(progletJar));
-	} catch(Exception e) {
-	  System.out.println("> compilation séparée de javascool-jvs2jar-"+params.getString("name"));
-	  Proglet2Jar.build(jsv2jarJar, progletDir);
-	}
-	System.out.println("> compilation de la javadoc");
-	FileManager.save(srcHtmlDir + File.separator + "package.html",
-			 "<body><h3>Implémentation de la proglet "+params.getString("name")+
-			 " (accès aux <a href=\"../../../../../javascool-proglet-source-"+params.getString("name")+".zip\">sources</a>).</h3></body>");
-	javadoc(params.getString("name"), 
-		System.getProperty("java.class.path")+File.pathSeparator+progletJar, 
-		htmlDir + File.separator + "api",
-		htmlDir + File.separator + "api");
-	for (String file : FileManager.list(htmlDir))
-	  if (file.endsWith(".jvs")) {
-	    System.out.println("> compilation de "+new File(file).getName());
-	    Utils.javaStart("-jar "+jsv2jarJar+" "+file, 60);
+	if (!params.optBoolean("processing")) {
+	  try {
+	    java.nio.file.Files.createLink(FileSystems.getDefault().getPath(jsv2jarJar), FileSystems.getDefault().getPath(progletJar));
+	  } catch(Exception e) {
+	    System.out.println("> compilation séparée de javascool-jvs2jar-"+params.getString("name"));
+	    Proglet2Jar.build(jsv2jarJar, progletDir);
 	  }
+	}
+	if (!params.has("source_url")) {
+	  System.out.println("> compilation de la javadoc");
+	  FileManager.save(srcHtmlDir + File.separator + "package.html",
+			   "<body><h3>Implémentation de la proglet "+params.getString("name")+
+			   " (accès aux <a href=\"../../../../../javascool-proglet-source-"+params.getString("name")+".zip\">sources</a>).</h3></body>");
+	  javadoc(params.getString("name"), 
+		  System.getProperty("java.class.path")+File.pathSeparator+progletJar, 
+		  htmlDir + File.separator + "api",
+		  htmlDir + File.separator + "api");
+	}
+	if (!params.optBoolean("processing")) {
+	  for (String file : FileManager.list(htmlDir))
+	    if (file.endsWith(".jvs")) {
+	      System.out.println("> compilation de "+new File(file).getName());
+	      Utils.javaStart("-jar "+jsv2jarJar+" "+file, 60);
+	    }
+	}
       }
     } catch (Throwable e) {
       System.out.println(e);
@@ -104,6 +112,7 @@ public class Proglet2Html {
       replaceAll("\n> .*", "").
       replaceAll("\njavadoc: warning - Error fetching URL: http://download.oracle.com/javase/6/docs/api/package-list", "").
       replaceAll("\n1 warning", "").
+      replaceAll("\nFinished.", "").
       trim().length() == 0;
     System.out.println("> proglet construction: "+status+"\n");
     console.saveConsoleOutput(htmlDir + File.separator + "compilation."+status+".log.txt");
@@ -116,15 +125,31 @@ public class Proglet2Html {
   public static boolean build(String htmlDir) {
     return build(htmlDir+"-html", htmlDir);
   }
+  /**
+   * @see #build(String, String, String)
+   */
+  public static boolean build(String htmlDir, boolean verbose) {
+    if (verbose)
+      System.out.println("Compilation de "+new File(htmlDir).getName()+"..");
+    boolean built = build(htmlDir);
+    if (verbose && built)
+      System.out.println("achevée avec succès :\n Le répertoire '"+htmlDir+"-html' est disponible");
+    return built;
+  }
+
   // Encapsulate le corps d'une page html
   private static String encapsulates(String body, JSONObject params) throws Exception {
     return (progletHtmlHeader + body + progletHtmlTrailer)
+      .replaceAll("@source_url", 
+		  params.has("source_url") ? params.optString("source_url") : "@base_url/api/org/javascool/proglets/@name/package-summary.html")
+      .replaceAll("@jvs2jar",
+		  params.optBoolean("processing") ? "" : "<li><a href=\"@base_url/javascool-jvs2jar-@name.jar\">Jvs⇀Jar</a></li>\n")
       .replaceAll("@name", params.getString("name"))
       .replaceAll("@title", params.getString("title"))
       .replaceAll("@icon", params.getString("icon"))
       .replaceAll("@author", params.getString("author"))
       .replaceAll("@email", params.getString("email"))
-      .replaceAll("@base-url", ".")
+      .replaceAll("@base_url", ".")
       .replaceAll("href=\"http://newtab\\?", "href=\"")
       .replaceAll("< *a +href=\"http://editor\\?([^\\.]*).jvs\"", "<a href=\"$1.jvs.html\"");
   }
@@ -167,7 +192,7 @@ public class Proglet2Html {
 	  .replaceAll("<(/?)code>", "<$1pre>");
 	text = (javadocHtmlHeader + text + progletHtmlTrailer)
 	  .replaceAll("@name", name).replaceAll(
-						"@base-url",
+						"@base_url",
 						file.substring(apiDir.length() + 1)
 						.replaceAll("[^/]+", "..")
 						.substring(1));
@@ -201,11 +226,11 @@ public class Proglet2Html {
     "  <style type=\"text/css\">\n" +
     "     #main { margin-top: 80px;  }\n" +
     "  </style>\n" +
-    "  <link href=\"@base-url/assets/pygments.css\" rel=\"stylesheet\">\n" +
-    "  <link href=\"@base-url/assets/bootstrap/css/bootstrap.css\" rel=\"stylesheet\">\n" +
-    "  <link href=\"@base-url/assets/bootstrap/css/bootstrap-responsive.css\" rel=\"stylesheet\">\n" +
-    "  <link href=\"@base-url/assets/google-code-prettify/prettify.css\" type=\"text/css\" rel=\"stylesheet\"/>\n" +
-    "  <script type=\"text/javascript\" src=\"@base-url/assets/google-code-prettify/prettify.js\"></script>\n" +
+    "  <link href=\"@base_url/assets/pygments.css\" rel=\"stylesheet\">\n" +
+    "  <link href=\"@base_url/assets/bootstrap/css/bootstrap.css\" rel=\"stylesheet\">\n" +
+    "  <link href=\"@base_url/assets/bootstrap/css/bootstrap-responsive.css\" rel=\"stylesheet\">\n" +
+    "  <link href=\"@base_url/assets/google-code-prettify/prettify.css\" type=\"text/css\" rel=\"stylesheet\"/>\n" +
+    "  <script type=\"text/javascript\" src=\"@base_url/assets/google-code-prettify/prettify.js\"></script>\n" +
     "</head><body style=\"background-color:#FFFFFF;\" onload=\"prettyPrint()\">\n" +
     "\n";
 
@@ -217,15 +242,15 @@ public class Proglet2Html {
     "        <span class=\"icon-bar\"></span>\n" +
     "        <span class=\"icon-bar\"></span>\n" +
     "      </a>\n" +
-    "      <a class=\"brand\" href=\"@base-url/help.html\" style=\"margin: 0; margin-right: 30px; margin-top: 3px; padding:0;\">\n" +
-    "        <img alt=\"logo\" src=\"@base-url/@icon\" style=\"height: 35px; padding: 0; margin: 0;\"/>&nbsp;<b>Java'sCool «@name»</b>\n" +
+    "      <a class=\"brand\" href=\"@base_url/help.html\" style=\"margin: 0; margin-right: 30px; margin-top: 3px; padding:0;\">\n" +
+    "        <img alt=\"logo\" src=\"@base_url/@icon\" style=\"height: 35px; padding: 0; margin: 0;\"/>&nbsp;<b>Java'sCool «@name»</b>\n" +
     "      </a>\n" +
     "      <div class=\"nav-collapse\">\n" +
     "        <ul class=\"nav\">\n" +
-    "          <li><a href=\"@base-url/help.html\">Documentation</a></li>\n" +
-    "          <li><a href=\"@base-url/javascool-proglet-@name.jar\">Lancement</a></li>\n" +
-    "          <li><a href=\"@base-url/javascool-jvs2jar-@name.jar\">Jvs⇀Jar</a></li>\n" +
-    "          <li><a href=\"@base-url/api/org/javascool/proglets/@name/package-summary.html\">Sources</a></li>\n" +
+    "          <li><a href=\"@base_url/help.html\">Documentation</a></li>\n" +
+    "          <li><a href=\"@base_url/javascool-proglet-@name.jar\">Lancement</a></li>\n" +
+    "          @jvs2jar" +
+    "          <li><a href=\"@source_url\">Sources</a></li>\n" +
     "          <li><a href=\"mailto:@email?subject=À propos de Java'sCool «@name»\">Contact</a></li>\n" +
     "        </ul>\n" +
     "      </div>\n" +
@@ -245,7 +270,7 @@ public class Proglet2Html {
     "        <span class=\"icon-bar\"></span>\n" +
     "        <span class=\"icon-bar\"></span>\n" +
     "      </a>\n" +
-    "      <a class=\"brand\" href=\"@base-url/help.html\" style=\"margin: 0; margin-right: 30px; margin-top: 3px; padding:0;\">\n" +
+    "      <a class=\"brand\" href=\"@base_url/help.html\" style=\"margin: 0; margin-right: 30px; margin-top: 3px; padding:0;\">\n" +
     "        &nbsp;<b>Java'sCool «@name»</b>\n" +
     "      </a>\n" +
     "      <div class=\"nav-collapse\">\n" +
@@ -263,19 +288,19 @@ public class Proglet2Html {
 
   private final static String progletHtmlTrailer = 
     "</div>\n" +
-    "<script src=\"@base-url/assets/bootstrap/js/jquery.js\"></script>\n" +
-    "<script src=\"@base-url/assets/bootstrap/js/bootstrap-transition.js\"></script>\n" +
-    "<script src=\"@base-url/assets/bootstrap/js/bootstrap-alert.js\"></script>\n" +
-    "<script src=\"@base-url/assets/bootstrap/js/bootstrap-modal.js\"></script>\n" +
-    "<script src=\"@base-url/assets/bootstrap/js/bootstrap-dropdown.js\"></script>\n" +
-    "<script src=\"@base-url/assets/bootstrap/js/bootstrap-scrollspy.js\"></script>\n" +
-    "<script src=\"@base-url/assets/bootstrap/js/bootstrap-tab.js\"></script>\n" +
-    "<script src=\"@base-url/assets/bootstrap/js/bootstrap-tooltip.js\"></script>\n" +
-    "<script src=\"@base-url/assets/bootstrap/js/bootstrap-popover.js\"></script>\n" +
-    "<script src=\"@base-url/assets/bootstrap/js/bootstrap-button.js\"></script>\n" +
-    "<script src=\"@base-url/assets/bootstrap/js/bootstrap-collapse.js\"></script>\n" +
-    "<script src=\"@base-url/assets/bootstrap/js/bootstrap-carousel.js\"></script>\n" +
-    "<script src=\"@base-url/assets/bootstrap/js/bootstrap-typeahead.js\"></script>\n" +
+    "<script src=\"@base_url/assets/bootstrap/js/jquery.js\"></script>\n" +
+    "<script src=\"@base_url/assets/bootstrap/js/bootstrap-transition.js\"></script>\n" +
+    "<script src=\"@base_url/assets/bootstrap/js/bootstrap-alert.js\"></script>\n" +
+    "<script src=\"@base_url/assets/bootstrap/js/bootstrap-modal.js\"></script>\n" +
+    "<script src=\"@base_url/assets/bootstrap/js/bootstrap-dropdown.js\"></script>\n" +
+    "<script src=\"@base_url/assets/bootstrap/js/bootstrap-scrollspy.js\"></script>\n" +
+    "<script src=\"@base_url/assets/bootstrap/js/bootstrap-tab.js\"></script>\n" +
+    "<script src=\"@base_url/assets/bootstrap/js/bootstrap-tooltip.js\"></script>\n" +
+    "<script src=\"@base_url/assets/bootstrap/js/bootstrap-popover.js\"></script>\n" +
+    "<script src=\"@base_url/assets/bootstrap/js/bootstrap-button.js\"></script>\n" +
+    "<script src=\"@base_url/assets/bootstrap/js/bootstrap-collapse.js\"></script>\n" +
+    "<script src=\"@base_url/assets/bootstrap/js/bootstrap-carousel.js\"></script>\n" +
+    "<script src=\"@base_url/assets/bootstrap/js/bootstrap-typeahead.js\"></script>\n" +
     "</body></html>\n";
   
   /** Lanceur de la construction de la proglet.
@@ -312,7 +337,7 @@ public class Proglet2Html {
 				  {
 				    setDialogTitle("Sélection du répertoire de la proglet . . ");
 				    setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-				    String path = UserConfig.getInstance("proglet2html").getProperty("proglet-path");
+				    String path = UserConfig.getInstance("javascool").getProperty("proglet-path");
 				    if (path != null)
 				      setCurrentDirectory(new File(path));
                                 if (path != null)
@@ -365,14 +390,10 @@ public class Proglet2Html {
 			      (new Thread(new Runnable() { public void run() {
 				String path = folder.getText() + File.separator + name.getText();
 				if (new File(path).exists()) {
-				  System.out.println("Construction de "+new File(path).getName()+" ..");
-				  if (build(path))
-				    System.out.println("achevée avec succès :\n Le répertoire '"+path+"-html' est disponible");
+				  build(path, true);
 				} else {
-				  System.out.println("Construction de "+new File(path).getName()+" ..");
-				  if (ProgletCreate.build(path))
-				    System.out.println("achevée avec succès :\n Le répertoire '"+path+"' est disponible");
-				  doit.setText("Compiler");
+				  if (ProgletCreate.build(path, true))
+				    doit.setText("Compiler");
 				}
 			      }})).start();
 			    }
@@ -380,7 +401,7 @@ public class Proglet2Html {
 		      }});
 		  
 		}}, BorderLayout.NORTH);
-	    add(Console.getInstance());
+	    add(Console.newInstance());
 	  }
 	  private JTextField folder, name;
 	  private JButton doit;
@@ -396,7 +417,7 @@ public class Proglet2Html {
 	  private void updateLocation() {
 	    String path = folder.getText() + File.separator + name.getText();
 	    if (new File(folder.getText()).isDirectory())
-	      UserConfig.getInstance("proglet2html").setProperty("proglet-path", path);
+	      UserConfig.getInstance("javascool").setProperty("proglet-path", path);
 	    else
 	      System.out.println("Attention, le répertoire "+folder+" n'existe pas");
 	    doit.setText(new File(path).exists() ? "Compiler" : "Créer");

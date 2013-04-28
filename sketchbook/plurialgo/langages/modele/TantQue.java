@@ -11,22 +11,22 @@ import org.javascool.proglets.plurialgo.divers.Divers;
 
 
 /**
- * Cette classe doit être étendue pour chaque langage de programmation implanté.
+ * Cette classe doit Ãªtre Ã©tendue pour chaque langage de programmation implantÃ©.
 */
 public class TantQue extends Noeud {
 	
-	// variables utilisées par BindingCastor
+	// variables utilisÃ©es par BindingCastor
 	/**
 	 * La condition de la boucle.
 	 */
 	public String condition;
 	/**
-	 * Instructions internes à la boucle.
+	 * Instructions internes Ã  la boucle.
 	 */
 	public ArrayList<Instruction> instructions;
 	// autres variables
 	/**
-	 * Bientôt obsolète ?
+	 * BientÃ´t obsolÃ¨te ?
 	 */
 	public String schema;	
 	

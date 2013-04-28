@@ -1,7 +1,7 @@
 // Implément l'idée originale de Thomas Giraudon <ptiroccodu06@hotmail.fr> et Victor Granet <victor.granet@hotmail.com>
 
 import javax.swing.*;
-import org.javascool.proglets.syntheSons.FileSoundBit;
+import org.javascool.tools.sound.FileSoundBit;
 
 // Défini l'affichage des icones lors d'évènements sonores
 class FlowerSoundBit extends FileSoundBit {

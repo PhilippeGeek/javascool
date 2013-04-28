@@ -5,7 +5,7 @@ package org.javascool.proglets.plurialgo.langages.larp;
 
 
 /**
- * Cette classe hérite de la classe homonyme du modèle.
+ * Cette classe hÃ©rite de la classe homonyme du modÃ¨le.
 */
 public class Variable extends org.javascool.proglets.plurialgo.langages.modele.Variable {
 	
@@ -19,7 +19,7 @@ public class Variable extends org.javascool.proglets.plurialgo.langages.modele.V
 	}
 	
 	public void ecrire(Programme prog, StringBuffer buf, int indent) {
-		// vide puisqu'on ne déclare pas les variables en Larp
+		// vide puisqu'on ne dÃ©clare pas les variables en Larp
 	}
 
 }

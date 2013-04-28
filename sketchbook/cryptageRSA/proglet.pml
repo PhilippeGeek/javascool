@@ -4,4 +4,5 @@ icon="logo.png"
 processing = "true"
 width="900"
 height="650"
+source_url="http://www.openprocessing.org/portal/?userID=8553"
 

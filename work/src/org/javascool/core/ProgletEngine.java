@@ -40,7 +40,7 @@ public class ProgletEngine {
     try {
       proglets = new ArrayList<Proglet>();
       for(String dir : FileManager.list(javascoolJar, "org.javascool.proglets.[^\\.]+.proglet.(pml|json)")) {
-	System.out.println("> pdir = "+dir);
+	System.err.println("> PB pdir = "+dir);
         String name = dir.replaceFirst("jar:[^!]*!(.*)proglet.(pml|json)", "$1");
         try {
           Proglet proglet = new Proglet().load(name);

@@ -39,6 +39,7 @@ public class Console extends JPanel {
    * @param popup Génère un popup avec la console affichée. False par défaut.
    */
   public static Console newInstance(boolean popup) {
+    //{ try { throw new Throwable("Test console="+console+" popup="+popup); } catch(Throwable e) { e.printStackTrace(); } }
     console = new Console();
     if (popup)
       new MainFrame().reset("Console", "org/javascool/widgets/icons/copyAll.png", 600, 400, console);

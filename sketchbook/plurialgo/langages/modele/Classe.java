@@ -9,11 +9,11 @@ import org.javascool.proglets.plurialgo.divers.Divers;
 
 
 /**
- * Cette classe doit être étendue pour chaque langage de programmation implanté.
+ * Cette classe doit Ãªtre Ã©tendue pour chaque langage de programmation implantÃ©.
 */
 public class Classe extends Noeud {	
 	
-	// variables utilisées par BindingCastor
+	// variables utilisÃ©es par BindingCastor
 	/**
 	 * Le nom de l'enregistrement ou de la classe.
 	 */
@@ -23,7 +23,7 @@ public class Classe extends Noeud {
 	 */
 	public ArrayList<Constructeur> constructeurs;
 	/**
-	 * Les méthodes de la classe.
+	 * Les mÃ©thodes de la classe.
 	 */
 	public ArrayList<Operation> operations;
 	/**
@@ -34,7 +34,7 @@ public class Classe extends Noeud {
 	public boolean isRecord;
 	
 	public Classe() {
-		// variables utilisées par BindingCastor
+		// variables utilisÃ©es par BindingCastor
 		constructeurs = new ArrayList<Constructeur>();
 		operations = new ArrayList<Operation>();
 		proprietes = new ArrayList<Variable>();
@@ -65,7 +65,7 @@ public class Classe extends Noeud {
 	}
 
 	// ---------------------------------------------
-	// fonctions booléennes
+	// fonctions boolÃ©ennes
 	// ---------------------------------------------
 	
 	public final boolean isClasse() {

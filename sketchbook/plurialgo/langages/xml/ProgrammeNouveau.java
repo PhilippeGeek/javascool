@@ -10,17 +10,17 @@ import org.javascool.proglets.plurialgo.langages.modele.InfoTypee;
 
 
 /**
- * Cette classe permet de créer des squelettes de programmes (bouton Nouveau de l'onglet Principal).
+ * Cette classe permet de crÃ©er des squelettes de programmes (bouton Nouveau de l'onglet Principal).
 */
 public class ProgrammeNouveau extends Programme {
 	
-	private Intermediaire inter; // inter les caractéristiques de l'onglet Principal à prendre en compte
+	private Intermediaire inter; // inter les caractÃ©ristiques de l'onglet Principal Ã  prendre en compte
 	private ArrayList<InfoTypee> infos; // liste de triplets (nom, type, mode)
-	private Classe classe;	 // la classe créée (si création avec regroupement)
+	private Classe classe;	 // la classe crÃ©Ã©e (si crÃ©ation avec regroupement)
 
 	/**
 	 * Construit un squelette de programme.
-	      @param inter les caractéristiques de l'onglet Principal à prendre en compte
+	      @param inter les caractÃ©ristiques de l'onglet Principal Ã  prendre en compte
 	*/		
 	public ProgrammeNouveau(Intermediaire inter) {
 		this.nom = inter.getNomAlgo();
@@ -42,7 +42,7 @@ public class ProgrammeNouveau extends Programme {
 	}
 	
 	// ----------------------------
-	// regroupement élémentaire
+	// regroupement Ã©lÃ©mentaire
 	// ----------------------------
 	
 	private void traiterElementaire(){
