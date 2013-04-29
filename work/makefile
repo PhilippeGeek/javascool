@@ -56,8 +56,8 @@ php :
 	cd ../web ; ant local
 
 usb :
-	ant javascool-proglets.jar javascool-builder.jar
-	cd dist ; cp javascool-proglets.jar javascool-builder.jar /media/javascool 
+	ant javascool-proglets.jar
+	cd dist/javascool-proglets.jar lib/javascool.bat /home/vthierry/Desktop
 
 ###################################
 

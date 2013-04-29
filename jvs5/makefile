@@ -31,9 +31,6 @@ DIST=$(GIT_HOME)/wproglets
 
 ########################################################################################################################################################
 
-sos : 
-	cp ../work/lib/javascool.bat ../work/dist/javascool-proglets.jar ~/Desktop
-
 # Tests en cours 
 
 tstProglet = algoDeMaths
