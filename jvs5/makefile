@@ -33,14 +33,14 @@ DIST=$(GIT_HOME)/wproglets
 
 # Tests en cours 
 
-tstProglet = algoDeMaths
+tstProglet = plurialgo
 
-tst  : 
+tst  : cnv
 	rm -rf $(DIST)/javascool-proglet-$(tstProglet)-html
 	$(MAKE) cpv $(DIST)/javascool-core.jar $(DIST)/javascool-proglet-$(tstProglet)-html
-	echo "Jvs2Jar=/user/vthierry/home/Work/culsci/ongoing/jvs/jvs5/javascool.github.com/wproglets/javascool-proglet-algoDeMaths-html/JeuSimon.jvs" > $(HOME)/.javascool/webcommand.mf
+#	echo "Jvs2Jar=/user/vthierry/home/Work/culsci/ongoing/jvs/jvs5/javascool.github.com/wproglets/javascool-proglet-algoDeMaths-html/JeuSimon.jvs" > $(HOME)/.javascool/webcommand.mf
 #	firefox $(DIST)/javascool-proglet-$(tstProglet)-html/index.html
-	java -jar $(DIST)/javascool-proglet-$(tstProglet)-html/javascool-proglet-$(tstProglet).jar
+#	java -jar $(DIST)/javascool-proglet-$(tstProglet)-html/javascool-proglet-$(tstProglet).jar
 
 ########################################################################################################################################################
 

@@ -50,15 +50,15 @@ public class MainWrapper {
 	  // Ventile la commande à exécuter
 	  if ("Jvs2Jar".equals(wrapperCommandName)) {
 	    Jvs2Jar.build(wrapperCommandPath, true);
-	    System.out.println("\n> la commande «"+wrapperCommandText+"» est effectuée");
+	    System.out.println("\n> la webcommand.mf «"+wrapperCommandText+"» est effectuée");
 	    return true;
 	  } else if ("Proglet2Html".equals(wrapperCommandName)) {
 	    Proglet2Html.build(wrapperCommandPath, true);
-	    System.out.println("\n>  la commande «"+wrapperCommandText+"» est effectuée");
+	    System.out.println("\n>  la webcommand.mf «"+wrapperCommandText+"» est effectuée");
 	    return true;
 	  } else if ("ProgletCreate".equals(wrapperCommandName)) {
 	    ProgletCreate.build(wrapperCommandPath, true);
-	    System.out.println("\n>  la commande «"+wrapperCommandText+"» est effectuée");
+	    System.out.println("\n>  la webcommand.mf «"+wrapperCommandText+"» est effectuée");
 	    return true;
 	  }
 	}

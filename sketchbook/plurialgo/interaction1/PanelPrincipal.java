@@ -17,6 +17,7 @@ import org.javascool.proglets.plurialgo.langages.xml.ProgrammeNouveau;
 /**
  * Cette classe correspond à l'onglet Principal de l'interface graphique.
 */
+@SuppressWarnings("unchecked")
 public class PanelPrincipal extends JPanel implements ActionListener, ListSelectionListener {
 	private static final long serialVersionUID = 1L;
 
