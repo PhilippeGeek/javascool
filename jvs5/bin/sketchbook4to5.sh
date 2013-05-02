@@ -12,7 +12,7 @@ cd /home/vthierry/Work/culsci/jvs
 srcDir="`pwd`/sketchbook"
 dstDir="`pwd`/jvs5/sketchbook"
 prcDir="`pwd`/jvs5/processing"
-srcProglets="`find $srcDir -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | egrep -v 'jeux2D|sampleCode|grafikformate|cryptageRSA|enVoiture|exploSonore|grapheEtChemins|\.build'`"
+srcProglets="`find $srcDir -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | egrep -v 'jeux2D|sampleCode|grafikformate|plurialgo|cryptageRSA|enVoiture|exploSonore|grapheEtChemins|\.build'`"
 
 mkdir -p $prcDir/{libraries,tools,modes,sketchbook}
 
