@@ -16,14 +16,15 @@ public class Proglet {
   public Pml pml = new Pml();
 
   /** Définit une proglet à partir d'un répertoire donné.
-   * @param location L'URL (Universal Resource Location) où se trouve la proglet.
+   * @param location Endroit où se trouve la proglet dans le chemin de ressource.
    * @throws IllegalArgumentException Si l'URL est mal formée.
    * @return Cet objet, permettant de définir la construction <tt>new Proglet().load(..)</tt>.
    */
   public Proglet load(String location) {
-    if (!location.endsWith(File.separator))
-      location += File.separator;    
     // Définit les méta-données de la proglet.
+    if (!location.endsWith("/"))
+      location += "/";
+    //-System.err.println("> loading "+location);
     try {
       pml.load(location + "proglet.pml", true);
       pml.set("jvs-version", 4);

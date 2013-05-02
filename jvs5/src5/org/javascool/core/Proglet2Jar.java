@@ -115,12 +115,13 @@ public class Proglet2Jar {
 
   private static void javac(String classPath, String targetDir, String[] javaFiles) throws IOException {
     try {
-      String args[] = new String[javaFiles.length + 4];
+      String args[] = new String[javaFiles.length + 5];
       args[0] = "-cp";
       args[1] = classPath;
       args[2] = "-d";
       args[3] = targetDir;
-      System.arraycopy(javaFiles, 0, args, 4, javaFiles.length);
+      args[4] = "-Xlint:unchecked";
+      System.arraycopy(javaFiles, 0, args, 5, javaFiles.length);
       java.io.StringWriter out = new java.io.StringWriter();
       Class.forName("com.sun.tools.javac.Main")
 	.getDeclaredMethod("compile",
