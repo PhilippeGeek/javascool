@@ -8,7 +8,7 @@
     La proglet affiche un livre avec tous les drapeaux du monde 
     (répertoriés grâce à <l link="http://fr.wikipedia.org/wiki/Galerie_des_drapeaux_des_pays_du_monde" text="wikipedia"/>)
     et permet d'ouvrir le livre à une page donnée pour comparer le nom de pays avec le nom du pays recherché. 
-    <div>Plus précisément la fonction <r>dichoCompare</r> ouvre le livre à une page et compare un nom au nom affiché sur cette page: <div class="code">
+    <div>Plus précisément la fonction <r>compare</r> ouvre le livre à une page et compare un nom au nom affiché sur cette page: <div class="code">
       <p><r>int</r> résultat = <r>compare</r>(nom, page);</p>
     </div><div class="ul">
     <div>où <b>nom</b> est un <r>String</r> dont la valeur est le nom du pays recherché;</div>
