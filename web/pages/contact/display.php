@@ -65,9 +65,9 @@ Nous sommes à votre écoute&nbsp;! Pour nous contacter:
 
 <div class="label2">L'&eacute;quipe de d&eacute;veloppement de JavaS'Cool 4</div>
 <ul class="developpers">
- <li>Philippe Vienne &lt;philippe@vienne.fr></li>
- <li>Guillaume Matheron &lt;guillaumematheron06@gmail.com></li>
-</ul> <p>avec l'aide David Pichardie &lt;david.pichardie@inria.fr>, Thierry Vi&eacute;ville &lt;thierry@vieville.fr> et les précieux conseils de Robert Cabane.</p>
+ <li>Philippe Vienne </li>
+ <li>Guillaume Matheron </li>
+</ul> <p>avec l'aide David Pichardie, Thierry Vi&eacute;ville et les précieux conseils de Robert Cabane.</p>
 
 
 <div class="label2">Soumettre un bug ou proposer une fonctionnalit&eacute;</div>
