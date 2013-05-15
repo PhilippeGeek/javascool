@@ -3,6 +3,18 @@
 # @TODO :
 #
 # - Corriger PB windows avec ordi + valider javaStart
+# - VOir pb de lien algodemaths
+# - Creer FileWrapper { setLocation(location), getParent(), getBaseName(), getExtension(), setText(text), hasBeenModified(), load(), save(), browse(saving) }
+# - Creer file-wrapper.js avec minimum javascool + jvs-wrapper.js 
+#
+# - Voir à créer/déleter un github/proglet-* et basculer de sketchbook vers github
+# - Recréer javascool-core sur github
+#
+# - Deployer éditeur avec : colorisation, reformateg, completion
+#
+# - Voir une spec de proglet : Help + Functions + Panel
+#     - penser à une spec meta à la j2h ?
+# - Repenser processing avec : inference des classes java appellees, Panel qui extends le panneau standard
 #
 # @THEN
 # - Voir pb de librairies toxi processing 2.0--bits 64
