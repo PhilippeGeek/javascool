@@ -12,14 +12,14 @@ import org.javascool.proglets.plurialgo.langages.modele.InfoTypee;
 
 
 /**
- * Cette classe implémente le mécanisme de transformation 1-n 
- * (bouton Transformer 1-n de l'onglet Résultats).
+ * Cette classe implÃ©mente le mÃ©canisme de transformation 1-n 
+ * (bouton Transformer 1-n de l'onglet RÃ©sultats).
 */
 public class ProgrammeVectorise extends Programme {
 
-	private Programme prog; // le programme à vectoriser
+	private Programme prog; // le programme Ã  vectoriser
 	private ArrayList<InfoTypee> infos; // les variables du programme principal
-	private ArrayList<InfoTypee> infosVect;  // les variables à vectoriser
+	private ArrayList<InfoTypee> infosVect;  // les variables Ã  vectoriser
 	
 	private String ii,nn;
 	private String sommeVar, sommeArg;
@@ -30,12 +30,12 @@ public class ProgrammeVectorise extends Programme {
 
 	/**
 	 * 	Construit un programme par transformation 1-n
-	 *    @param prog le programme à transformer (transformation précisée dans la propriété options du programme)
+	 *    @param prog le programme Ã  transformer (transformation prÃ©cisÃ©e dans la propriÃ©tÃ© options du programme)
 	*/	
 	public ProgrammeVectorise(Programme prog) {
 		this.prog = prog;
 		this.nom = prog.nom;
-		// récupération des classes et des operations
+		// rÃ©cupÃ©ration des classes et des operations
 		for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Classe> iter=prog.classes.iterator(); iter.hasNext(); ) {
 			Classe cl = (Classe) iter.next();
 			this.classes.add(cl);

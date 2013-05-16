@@ -9,12 +9,12 @@ import org.javascool.proglets.plurialgo.divers.*;
 
 
 /**
- * Cette classe hérite de la classe homonyme du modèle.
+ * Cette classe hÃ©rite de la classe homonyme du modÃ¨le.
 */
 public class Programme extends org.javascool.proglets.plurialgo.langages.modele.Programme {
 
 	/**
-	 * Redéfinition obligatoire de cette méthode.
+	 * RedÃ©finition obligatoire de cette mÃ©thode.
 	 */
 	public void ecrire() {
 		StringBuffer buf = new StringBuffer();
@@ -138,7 +138,7 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 	
 	private void addTypes(StringBuffer buf, int indent) {
 		if (avecType("TAB_") || avecType("MAT_")) {
-			Divers.ecrire(buf, "int MAX_TAB = 5;  // taille maximale d'un tableau (à adapter)", indent);
+			Divers.ecrire(buf, "int MAX_TAB = 5;  // taille maximale d'un tableau (Ã  adapter)", indent);
 		}
 	}
 	
@@ -204,12 +204,12 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 	
 	private void addActionFormulaire(StringBuffer buf, Formulaire form, int indent) {
 		Instruction instr_saisie = form.instr_pere;
-		Divers.ecrire(buf, "public void actionPerformed(ActionEvent e) { // actions associées aux boutons", indent);
+		Divers.ecrire(buf, "public void actionPerformed(ActionEvent e) { // actions associÃ©es aux boutons", indent);
 		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Variable> iter=variables.iterator(); iter.hasNext();) {
 			Variable var = (Variable) iter.next();
 			var.ecrire(this, buf, indent+1);
 		}
-		Divers.ecrire(buf, "if (e.getSource()==bouton_ok) { // récupération des entrées + calculs + affichage des sorties", indent+1);
+		Divers.ecrire(buf, "if (e.getSource()==bouton_ok) { // rÃ©cupÃ©ration des entrÃ©es + calculs + affichage des sorties", indent+1);
 		form.lireFormu(this, buf, indent);
 		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Instruction> iter=instructions.iterator(); iter.hasNext();) {
 			Instruction instr = (Instruction) iter.next();

@@ -8,17 +8,17 @@ import java.util.*;
 import org.javascool.proglets.plurialgo.divers.*;
 
 /**
- * Cette classe doit être étendue pour chaque langage de programmation implanté.
+ * Cette classe doit Ãªtre Ã©tendue pour chaque langage de programmation implantÃ©.
 */
 public class Programme extends Noeud {
 	
-	// variables utilisées par BindingCastor
+	// variables utilisÃ©es par BindingCastor
 	/**
 	 * Le nom du programme.
 	 */
 	public String nom;
 	/**
-	 * Les sous-programmes (fonctions ou procédures).
+	 * Les sous-programmes (fonctions ou procÃ©dures).
 	 */
 	public ArrayList<Operation> operations;
 	/**
@@ -34,11 +34,11 @@ public class Programme extends Noeud {
 	 */
 	public ArrayList<Classe> classes;
 	/**
-	 * Les programmes (ou bibliothèques) importés.
+	 * Les programmes (ou bibliothÃ¨ques) importÃ©s.
 	 */
 	public ArrayList<Programme> programmes;
 	/**
-	 * Les options du programme (utilisées par le paquetage raffinat.inout.langages.xml).
+	 * Les options du programme (utilisÃ©es par le paquetage raffinat.inout.langages.xml).
 	 */
 	public ArrayList<Argument> options;
 	// autres variables
@@ -56,14 +56,14 @@ public class Programme extends Noeud {
 	public StringBuffer buf_warning;
 	
 	public Programme() {
-		// variables utilisées par BindingCastor
+		// variables utilisÃ©es par BindingCastor
 		operations = new ArrayList<Operation>();
 		variables = new ArrayList<Variable>();
 		instructions = new ArrayList<Instruction>();
 		classes = new ArrayList<Classe>();
 		programmes = new ArrayList<Programme>();
 		options = new ArrayList<Argument>();
-		// variables non utilisées par BindingCastor
+		// variables non utilisÃ©es par BindingCastor
 		les_fichiers = new TreeMap<String,StringBuffer>();
 		buf_error = new StringBuffer(); 
 		buf_warning = new StringBuffer();
@@ -91,7 +91,7 @@ public class Programme extends Noeud {
 	// ---------------------------------------------
 	
 	/**
-	 * A redéfinir pour chaque langage implanté.
+	 * A redÃ©finir pour chaque langage implantÃ©.
 	 */
 	public void ecrire() {}
 	
@@ -115,7 +115,7 @@ public class Programme extends Noeud {
 	}
 
 	// ---------------------------------------------
-	// fonctions booléennes
+	// fonctions boolÃ©ennes
 	// ---------------------------------------------
 	
 	public final boolean avecFormulaire() {

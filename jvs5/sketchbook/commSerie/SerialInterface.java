@@ -149,7 +149,7 @@ public class SerialInterface {
     port.setSerialPortParams(rate, size,
                              stop == 2.0 ? SerialPort.STOPBITS_2 : stop == 1.5 ? SerialPort.STOPBITS_1_5 : SerialPort.STOPBITS_1,
                              parity == 'E' ? SerialPort.PARITY_EVEN : parity == 'O' ? SerialPort.PARITY_ODD : SerialPort.PARITY_NONE);
-    port.addEventListener(new SerialPortEventListener() {
+    port.addEventListener(listener = new SerialPortEventListener() {
                             synchronized public void serialEvent(SerialPortEvent serialEvent) {
                               if(serialEvent.getEventType() == SerialPortEvent.DATA_AVAILABLE) {
                                 try {
@@ -171,10 +171,15 @@ public class SerialInterface {
   private Reader reader = null;
   private Writer writer = null;
   private ArrayList<Integer> data = new ArrayList<Integer>();
+  private SerialPortEventListener listener = null;
 
   /** Ferme le port série. */
   public void close() {
     try {
+      if (listener != null) {
+	port.removeEventListener();
+	listener = null;
+      }
       if(output != null) {
         output.close();
         output = null;

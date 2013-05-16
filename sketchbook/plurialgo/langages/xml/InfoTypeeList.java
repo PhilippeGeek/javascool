@@ -10,9 +10,9 @@ import org.javascool.proglets.plurialgo.langages.modele.InfoTypee;
 
 
 /**
- * Cette classe permet de gérer des listes de quadruplets (nom, type, mode, dim)
- * afin d'interpréter les informations de l'interface graphique (onglet principal)
- * pour créer ou transformer des programmes.
+ * Cette classe permet de gÃ©rer des listes de quadruplets (nom, type, mode, dim)
+ * afin d'interprÃ©ter les informations de l'interface graphique (onglet principal)
+ * pour crÃ©er ou transformer des programmes.
  * 
  * @see org.javascool.proglets.plurialgo.langages.modele.InfoTypee
 */

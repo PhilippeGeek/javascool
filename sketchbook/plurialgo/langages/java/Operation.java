@@ -9,7 +9,7 @@ import org.javascool.proglets.plurialgo.divers.*;
 
 
 /**
- * Cette classe hérite de la classe homonyme du modèle.
+ * Cette classe hÃ©rite de la classe homonyme du modÃ¨le.
 */
 public class Operation extends org.javascool.proglets.plurialgo.langages.modele.Operation {
 	
@@ -30,12 +30,12 @@ public class Operation extends org.javascool.proglets.plurialgo.langages.modele.
 			Parametre param = (Parametre) iter.next();
 			if (param.isInOut()) {
 				if (param.isSimple()) {
-					prog.ecrireWarning("sous-programme " + this.nom + " : " + param.nom +" ne peut être parametre d'entree-sortie");
+					prog.ecrireWarning("sous-programme " + this.nom + " : " + param.nom +" ne peut Ãªtre parametre d'entree-sortie");
 				}
 			}
 			if (param.isOut()) {
 				if (param.isSimple()) {
-					prog.ecrireWarning("sous-programme " + this.nom + " : " + param.nom +" ne peut être parametre de sortie");
+					prog.ecrireWarning("sous-programme " + this.nom + " : " + param.nom +" ne peut Ãªtre parametre de sortie");
 				}
 			}
 			param.ecrire(prog, buf);

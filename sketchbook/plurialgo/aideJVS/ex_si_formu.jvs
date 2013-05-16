@@ -44,11 +44,11 @@ class FORM implements ActionListener {
 		fen.pack();
 		fen.setVisible(true);
 	}
-	public void actionPerformed(ActionEvent e) { // actions associées aux boutons
+	public void actionPerformed(ActionEvent e) { // actions associÃ©es aux boutons
 		double prixUnitaire; 
 		int quantite; 
 		double prixTotal; 
-		if (e.getSource()==bouton_ok) { // récupération des entrées + calculs + affichage des sorties
+		if (e.getSource()==bouton_ok) { // rÃ©cupÃ©ration des entrÃ©es + calculs + affichage des sorties
 			prixUnitaire = Double.parseDouble( zone_prixUnitaire.getText() ); 
 			quantite = Integer.parseInt( zone_quantite.getText() ); 
 			prixTotal = calculer_prixTotal(prixUnitaire, quantite);

@@ -9,7 +9,7 @@ import org.javascool.proglets.plurialgo.divers.*;
 
 
 /**
- * Cette classe hérite de la classe homonyme du modèle.
+ * Cette classe hÃ©rite de la classe homonyme du modÃ¨le.
 */
 public class Constructeur extends org.javascool.proglets.plurialgo.langages.modele.Constructeur {
 

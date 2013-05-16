@@ -42,7 +42,7 @@ public class PanelInteraction extends JPanel {
 		pPrincipal = new PanelPrincipal(this);	onglets.add("Principal", pPrincipal);
 		pEdition = new PanelBoucles(this); onglets.add("Boucles", pEdition);
 		pHtml = new PanelHtml(this); onglets.add("Documentation", pHtml);
-		pXml = new PanelXml(this);  // onglets.add("Compléments", pXml);
+		pXml = new PanelXml(this);  // onglets.add("ComplÃ©ments", pXml);
 		this.add(onglets, "Center");
 	}
 		
@@ -135,7 +135,7 @@ public class PanelInteraction extends JPanel {
 	}
 	
 	private boolean traduireXml(String nom_lang) {
-		// récupération du programme
+		// rÃ©cupÃ©ration du programme
 		Programme prog = Programme.getProgramme(pXml.getText(),nom_lang); 
 		if (this.messageErreur(prog)) {
 			System.out.println("erreur:"+prog.getXmlBuffer().toString());
@@ -186,14 +186,14 @@ public class PanelInteraction extends JPanel {
 	
 	public boolean isLarp() {
 		String txt=this.getText().toLowerCase();
-		if ((txt.contains("debut")||txt.contains("début"))&&txt.contains("fin")) return true;
+		if ((txt.contains("debut")||txt.contains("dÃ©but"))&&txt.contains("fin")) return true;
 		if (txt.contains("entrer")&&txt.contains("retourner")) return true;
 		//if (txt.trim().length()==0) return true;
 		return false;
 	}	
 	
 	// ---------------------------------------------	
-	// méthodes de création d'intermediaire	
+	// mÃ©thodes de crÃ©ation d'intermediaire	
 	// ---------------------------------------------
 	
 	public Intermediaire creerIntermediaire() {
