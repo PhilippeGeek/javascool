@@ -9,11 +9,11 @@ import org.javascool.proglets.plurialgo.divers.Divers;
 
 
 /**
- * Cette classe doit être étendue pour chaque langage de programmation implanté.
+ * Cette classe doit Ãªtre Ã©tendue pour chaque langage de programmation implantÃ©.
 */
 public class Instruction extends Noeud {
 	
-	// variables utilisées par BindingCastor
+	// variables utilisÃ©es par BindingCastor
 	/*
 	 * Le nom de l'instruction : lire, ecrire, si, pour, tantque, affectation,
 	 * appel de sous-programme, // (commentaire)...
@@ -28,11 +28,11 @@ public class Instruction extends Noeud {
 	 */
 	public ArrayList<Argument> retours;	// 0 ou 1 Argument
 	/**
-	 * L'objet d'appel (si méthode de classe).
+	 * L'objet d'appel (si mÃ©thode de classe).
 	 */
 	public ArrayList<Argument> objets;	// 0 ou 1 Argument
 	/**
-	 * Option de lecture ou d'écriture (FORM_FICHIER_TEXTE, SQL...)
+	 * Option de lecture ou d'Ã©criture (FORM_FICHIER_TEXTE, SQL...)
 	 */
 	public ArrayList<Argument> options;	// 0 ou 1 Argument
 	/**
@@ -52,7 +52,7 @@ public class Instruction extends Noeud {
 	 */
 	public ArrayList<Affectation> affectations;	// 0 ou 1 Affectation
 	/**
-	 * Bientôt obsolète ?
+	 * BientÃ´t obsolÃ¨te ?
 	 */
 	public ArrayList<Instruction> instructions;	
 	

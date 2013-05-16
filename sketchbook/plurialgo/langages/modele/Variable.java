@@ -3,7 +3,7 @@ package org.javascool.proglets.plurialgo.langages.modele;
 import org.javascool.proglets.plurialgo.divers.Divers;
 
 /**
- * Cette classe doit être étendue pour chaque langage de programmation implanté.
+ * Cette classe doit Ãªtre Ã©tendue pour chaque langage de programmation implantÃ©.
 */
 public class Variable extends InfoTypee {
 	

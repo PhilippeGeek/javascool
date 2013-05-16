@@ -21,7 +21,7 @@ import org.javascool.proglets.plurialgo.divers.Divers;
 
 
 /**
- * Cette classe correspond à l'onglet Documentation de l'interface graphique.
+ * Cette classe correspond Ã  l'onglet Documentation de l'interface graphique.
 */
 public class PanelHtml extends JPanel implements ActionListener, HyperlinkListener {
 	private static final long serialVersionUID = 1L;
@@ -172,14 +172,14 @@ public class PanelHtml extends JPanel implements ActionListener, HyperlinkListen
 				}	
 				if (desc.equals("ex_proc_out")) {
 					pInter.pPrincipal.resultatsField.setText("prixTotal,remise");
-					pInter.pPrincipal.niv_calculList.setSelectedIndex(1);	// procédure
+					pInter.pPrincipal.niv_calculList.setSelectedIndex(1);	// procÃ©dure
 				}
 				if (desc.equals("ex_proc_inout")) {
 					pInter.pPrincipal.donneesField.setText("quantite, prixTotal"); 
 					pInter.pPrincipal.resultatsField.setText("prixTotal");
 					pInter.pPrincipal.entiersField.setText("quantite"); 
 					pInter.pPrincipal.reelsField.setText("prixTotal, remise"); 
-					pInter.pPrincipal.niv_calculList.setSelectedIndex(1);	// procédure
+					pInter.pPrincipal.niv_calculList.setSelectedIndex(1);	// procÃ©dure
 				}	
 				if (desc.equals("ex_intro")) {
 					pInter.pPrincipal.reelsField.setText("prixTotal,prixUnitaire"); 

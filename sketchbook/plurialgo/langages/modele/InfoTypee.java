@@ -6,18 +6,18 @@ package org.javascool.proglets.plurialgo.langages.modele;
 import java.util.*;
 
 /**
- * Cette classe permet de gérer les caractéristiques communes aux classes Variable, Argument et Parametre.
+ * Cette classe permet de gÃ©rer les caractÃ©ristiques communes aux classes Variable, Argument et Parametre.
  * 
  * <p>
- * Elle est également utilisée par le paquetage (...langages.xml) 
- * chargé de créer et transformer des programmes. 
+ * Elle est Ã©galement utilisÃ©e par le paquetage (...langages.xml) 
+ * chargÃ© de crÃ©er et transformer des programmes. 
  * </p>
 */
 public class InfoTypee extends Noeud {
 	
-	// variables utilisées par BindingCastor
+	// variables utilisÃ©es par BindingCastor
 	/**
-	 * Nom de variable, de paramètre ou d'argument d'instruction.
+	 * Nom de variable, de paramÃ¨tre ou d'argument d'instruction.
 	 */
 	public String nom;
 	/**
@@ -27,14 +27,14 @@ public class InfoTypee extends Noeud {
 	 */
 	public String type;
 	/**
-	 * Nature d'un passage de paramètre (IN, OUT, INOUT) ou
+	 * Nature d'un passage de paramÃ¨tre (IN, OUT, INOUT) ou
 	 * sauvegarde de l'attribut dim.
 	 */
 	public String mode;
 	// autres variables
 	/**
-	 * Attribut (destiné uniquement au paquetage raffinat.inout.langages.xml) 
-	 * indiquant le nombre d'éléments à lire ou à écrire pour un argument de
+	 * Attribut (destinÃ© uniquement au paquetage raffinat.inout.langages.xml) 
+	 * indiquant le nombre d'Ã©lÃ©ments Ã  lire ou Ã  Ã©crire pour un argument de
 	 * type tableau.  
 	 */
 	public String dim;
@@ -84,7 +84,7 @@ public class InfoTypee extends Noeud {
 	}
 	
 	// ------------------------------------------
-	// fonctions booléennes
+	// fonctions boolÃ©ennes
 	// ------------------------------------------
 	
 	public final boolean isType(String nom_type) {

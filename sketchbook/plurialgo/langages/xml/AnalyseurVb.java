@@ -23,9 +23,9 @@ public class AnalyseurVb implements iAnalyseur {
 
 	/**
 	      Transforme un code Visual Basic en un objet de classe Programme.
-	      @param txt le code Visual Basic à analyser
+	      @param txt le code Visual Basic Ã  analyser
 	      @param ignorerLire ignore les instructions de lire si true
-	      @param ignorerEcrire ignore les instructions d'écriture si true
+	      @param ignorerEcrire ignore les instructions d'Ã©criture si true
 	*/		
 	public AnalyseurVb(String txt, boolean ignorerLire, boolean ignorerEcrire) {
 		this.nettoyerVb(txt);
@@ -33,14 +33,14 @@ public class AnalyseurVb implements iAnalyseur {
 	}
 
 	/**
-	      Retourne l'objet de classe Programme obtenu après analyse du code Visual Basic.
+	      Retourne l'objet de classe Programme obtenu aprÃ¨s analyse du code Visual Basic.
 	*/		
 	public Programme getProgramme() {
 		return prog_xml;
 	}
 
 	/**
-	      Retourne le code Xml obtenu après analyse du code Visual Basic.
+	      Retourne le code Xml obtenu aprÃ¨s analyse du code Visual Basic.
 	*/	
 	public StringBuffer getXml() {
 		return buf_xml;
@@ -508,7 +508,7 @@ public class AnalyseurVb implements iAnalyseur {
 	}
 		
 	private String trouverType(String txt) {
-		//utilisé pour typage (sauf lire et ecrire)
+		//utilisÃ© pour typage (sauf lire et ecrire)
 		String type = "REEL";
 		int i = txt.indexOf(" AS ");
 		if (i>=0) {
@@ -541,7 +541,7 @@ public class AnalyseurVb implements iAnalyseur {
 	}
 	
 	private void trouverType(Argument arg, Operation cur_oper) { 
-		// utilisé pour lire et ecrire
+		// utilisÃ© pour lire et ecrire
 		InfoTypeeList liste = new InfoTypeeList();
 		if (cur_oper!=null) {
 			liste.addVariables(cur_oper.variables);

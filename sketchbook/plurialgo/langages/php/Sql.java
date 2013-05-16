@@ -9,7 +9,7 @@ import org.javascool.proglets.plurialgo.divers.Divers;
 
 /**
  * Cette classe permet de traduire (approximativement) en Php une instruction
- * de lecture (select ...) ou d'écriture (insert into...) dans une base de données.
+ * de lecture (select ...) ou d'Ã©criture (insert into...) dans une base de donnÃ©es.
 */
 public class Sql {
 	
@@ -58,7 +58,7 @@ public class Sql {
 	}	
 	
 	/**
-	 * Traduction d'une instruction d'écriture.
+	 * Traduction d'une instruction d'Ã©criture.
 	 * @param prog
 	 * @param buf
 	 * @param indent

@@ -6,7 +6,7 @@ package org.javascool.proglets.plurialgo.langages.larp;
 import org.javascool.proglets.plurialgo.divers.Divers;
 
 /**
- * Cette classe hérite de la classe homonyme du modèle.
+ * Cette classe hÃ©rite de la classe homonyme du modÃ¨le.
 */
 public class Affectation extends org.javascool.proglets.plurialgo.langages.modele.Affectation {
 

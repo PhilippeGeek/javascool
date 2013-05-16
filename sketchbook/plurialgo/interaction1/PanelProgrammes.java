@@ -28,14 +28,14 @@ import org.javascool.proglets.plurialgo.langages.xml.iAnalyseur;
 
 
 /**
- * Cette classe correspond à l'onglet Résultats de l'interface graphique.
+ * Cette classe correspond Ã  l'onglet RÃ©sultats de l'interface graphique.
  * 
  * <p>
- * L'éditeur syntaxique est réalisé à partir de la librairie
+ * L'Ã©diteur syntaxique est rÃ©alisÃ© Ã  partir de la librairie
  * <a href="http://fifesoft.com/rsyntaxtextarea/" target="_blank">rsyntaxtextarea</a>.
  * </p>
 */
-@SuppressWarnings("all")	// car les JList doivent être paramétrées avec Java7
+@SuppressWarnings("all")	// car les JList doivent Ãªtre paramÃ©trÃ©es avec Java7
 public class PanelProgrammes extends JPanel implements ActionListener, ListSelectionListener {
 	private static final long serialVersionUID = 1L;
 
@@ -133,7 +133,7 @@ public class PanelProgrammes extends JPanel implements ActionListener, ListSelec
 		pourVarField = new JTextField(4);
 		pourVarField.setText("k");
 		p.add(pourVarField);
-		p.add( new JLabel(" de 1 à ") );
+		p.add( new JLabel(" de 1 Ã  ") );
 		pourFinField = new JTextField(4);
 		pourFinField.setText("n");
 		p.add(pourFinField);
@@ -251,7 +251,7 @@ public class PanelProgrammes extends JPanel implements ActionListener, ListSelec
 	}
 	
 	// ---------------------------------------------
-	// Mise à jour éditeur
+	// Mise Ã  jour Ã©diteur
 	// ---------------------------------------------
 	
 	private void updateEditeur(){
@@ -339,7 +339,7 @@ public class PanelProgrammes extends JPanel implements ActionListener, ListSelec
 	
 	private boolean isLarp() {
 		String txt=getText().toLowerCase();
-		if ((txt.contains("debut")||txt.contains("début"))&&txt.contains("fin")) return true;
+		if ((txt.contains("debut")||txt.contains("dÃ©but"))&&txt.contains("fin")) return true;
 		if (txt.contains("entrer")&&txt.contains("retourner")) return true;
 		//if (txt.trim().length()==0) return true;
 		return false;
@@ -420,7 +420,7 @@ public class PanelProgrammes extends JPanel implements ActionListener, ListSelec
 		else {
 			pInter.clearConsole();
 			pInter.writeConsole("---------- Avertissement ----------\n");
-			pInter.writeConsole("le programme à traduire ne semble pas etre du javascool, du visual basic ou du Larp");
+			pInter.writeConsole("le programme Ã  traduire ne semble pas etre du javascool, du visual basic ou du Larp");
 			return;
 		}
 		// ajout du resultat dans les onglets Complements et Resultats
@@ -451,9 +451,9 @@ public class PanelProgrammes extends JPanel implements ActionListener, ListSelec
 		else {
 			pInter.clearConsole();
 			pInter.writeConsole("---------- Avertissement ----------\n");
-			pInter.writeConsole("le programme à reformuler ne semble pas etre du javascool ou du visual basic");
+			pInter.writeConsole("le programme Ã  reformuler ne semble pas etre du javascool ou du visual basic");
 		}
-		// construction du programme dérivé
+		// construction du programme dÃ©rivÃ©
 		pInter.messageWarning(analyseur.getProgramme());
 		inter = pInter.creerIntermediaire();
 		ProgrammeDerive progDer = new ProgrammeDerive(analyseur.getProgramme(), inter);

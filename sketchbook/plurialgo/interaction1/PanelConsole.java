@@ -7,7 +7,7 @@ import java.awt.*;
 import javax.swing.*;
 
 /**
- * Cette classe correspond à la console de l'interface graphique.
+ * Cette classe correspond Ã  la console de l'interface graphique.
 */
 public class PanelConsole extends JPanel {
 	private static final long serialVersionUID = 1L;

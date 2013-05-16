@@ -1,4 +1,4 @@
 /**
- * Ce package permet de traduire en Php un programme du modèle.
+ * Ce package permet de traduire en Php un programme du modÃ¨le.
  */
 package org.javascool.proglets.plurialgo.langages.php;

@@ -9,12 +9,12 @@ import org.javascool.proglets.plurialgo.divers.*;
 
 
 /**
- * Cette classe hérite de la classe homonyme du modèle.
+ * Cette classe hÃ©rite de la classe homonyme du modÃ¨le.
 */
 public class Programme extends org.javascool.proglets.plurialgo.langages.modele.Programme {
 
 	/**
-	 * Redéfinition obligatoire de cette méthode.
+	 * RedÃ©finition obligatoire de cette mÃ©thode.
 	 */	
 	public void ecrire() {
 		StringBuffer buf = new StringBuffer();

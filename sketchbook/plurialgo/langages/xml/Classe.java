@@ -8,7 +8,7 @@ import java.util.*;
 import org.javascool.proglets.plurialgo.langages.modele.InfoTypee;
 
 /**
- * Cette classe hérite de la classe homonyme du modèle.
+ * Cette classe hÃ©rite de la classe homonyme du modÃ¨le.
 */
 public class Classe extends org.javascool.proglets.plurialgo.langages.modele.Classe {
 	
@@ -21,7 +21,7 @@ public class Classe extends org.javascool.proglets.plurialgo.langages.modele.Cla
 	}
 	
 	// -----------------------------------------------------------
-	// création des propriétés de la classe
+	// crÃ©ation des propriÃ©tÃ©s de la classe
 	// -----------------------------------------------------------
 	
 	ArrayList<InfoTypee> creerProprietes(ArrayList<InfoTypee> infos, ArrayList<InfoTypee> infos_prop) {

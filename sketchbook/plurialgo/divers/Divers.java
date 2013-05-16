@@ -9,7 +9,7 @@ import java.util.StringTokenizer;
 import javax.swing.JTextArea;
 
 /**
- * Cette classe contient divers utilitaires, en particulier pour écrire
+ * Cette classe contient divers utilitaires, en particulier pour Ã©crire
  * un programme dans un StringBuffer.
  */
 public class Divers {

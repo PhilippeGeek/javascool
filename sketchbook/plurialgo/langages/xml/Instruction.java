@@ -4,7 +4,7 @@
 package org.javascool.proglets.plurialgo.langages.xml;
 
 /**
- * Cette classe hérite de la classe homonyme du modèle.
+ * Cette classe hÃ©rite de la classe homonyme du modÃ¨le.
 */
 public class Instruction extends org.javascool.proglets.plurialgo.langages.modele.Instruction {
 	
