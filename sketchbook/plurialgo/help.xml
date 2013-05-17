@@ -2,50 +2,48 @@
 
 <div title="Introduction">
 <div>
-PluriAlgo est un logiciel d'algorithmique que j'ai commencÃ© Ã  expÃ©rimenter avec des Ã©tudiants d'IUT en 2011. 
-Il accompagne un <l link="http://www.iutenligne.net/ressources_search_fiche.php?id=922" text="cours d'algorithmique"/> publiÃ© au dÃ©but 
-de cette mÃªme annÃ©e sur <l link="http://www.iutenligne.net" text="IUTenLigne"/>, le campus numÃ©rique des IUT. 
+PluriAlgo est un logiciel d'algorithmique que j'ai commencÃÂ© ÃÂ  expÃÂ©rimenter avec des ÃÂ©tudiants d'IUT en 2011. 
+Il accompagne un <l link="http://www.iutenligne.net/ressources_search_fiche.php?id=922" text="cours d'algorithmique"/> publiÃÂ© au dÃÂ©but 
+de cette mÃÂªme annÃÂ©e sur <l link="http://www.iutenligne.net" text="IUTenLigne"/>, le campus numÃÂ©rique des IUT. 
 </div>
 <div class="center">
 <l icon="iutenlignelien.jpg" link="http://www.iutenligne.net"/>
 </div>
 <div>
-Avec l'introduction de l'algorithmique dans les programmes de lycÃ©e, il m'a semblÃ© souhaitable
-de rÃ©aliser une version simplifiÃ©e du logiciel destinÃ©e Ã  un public lycÃ©en :
-cela a dÃ©bouchÃ© sur la crÃ©ation de la proglet PluriAlgo.
+Avec l'introduction de l'algorithmique dans les programmes de lycÃÂ©e, il m'a semblÃÂ© souhaitable
+de rÃÂ©aliser une version simplifiÃÂ©e du logiciel destinÃÂ©e ÃÂ  un public lycÃÂ©en :
+cela a dÃÂ©bouchÃÂ© sur la crÃÂ©ation de la proglet PluriAlgo.
 </div>
 </div>
 
-<div title="PrÃ©requis">
+<div title="PrÃÂ©requis">
 <div>
-Il est nÃ©cessaire de connaÃ®tre quelques ingrÃ©dients de base de tout algorithme (variables, instructions
-conditionnelles, boucles en particulier), ainsi que l'environnement d'exÃ©cution de Javascool.
-Mais, rassurez-vous, nous ne ferons rien de trÃ¨s compliquÃ© comme le montre l'exemple
-suivant que je vous invite Ã  <l class="editor" link="ex_intro_nom.jvs" text="tÃ©lÃ©charger"/>
-et Ã  tester.
+Il est nÃÂ©cessaire de connaÃÂ®tre quelques ingrÃÂ©dients de base de tout algorithme (variables, instructions
+conditionnelles, boucles en particulier), ainsi que l'environnement d'exÃÂ©cution de Javascool.
+Mais, rassurez-vous, nous ne ferons rien de trÃÂ¨s compliquÃÂ©.
 </div>
 <div>
-Trois <b>variables</b> sont utilisÃ©es dans ce programme qui calcule un prix total Ã  partir du prix
-unitaire de l'article achetÃ© et de sa quantitÃ©.
-Elles sont soit de type rÃ©el (prixUnitaire, prixTotal), soit de type entier (quantite).
-Les variables que l'utilisateur doit saisir (prixUnitaire, quantite) sont appelÃ©es
-<b>entrÃ©es</b> et celles que le programme calcule et affiche (prixTotal) sont appelÃ©es <b>sorties</b>.
+Trois <b>variables</b> sont utilisÃÂ©es dans ce programme qui calcule un prix total ÃÂ  partir du prix
+unitaire de l'article achetÃÂ© et de sa quantitÃÂ©.
+Elles sont soit de type rÃÂ©el (prixUnitaire, prixTotal), soit de type entier (quantite).
+Les variables que l'utilisateur doit saisir (prixUnitaire, quantite) sont appelÃÂ©es
+<b>entrÃÂ©es</b> et celles que le programme calcule et affiche (prixTotal) sont appelÃÂ©es <b>sorties</b>.
 </div>
 </div>
 
 <div title="Utilisation du logiciel">
 <div>
-La copie d'Ã©cran ci-dessous montre comment accÃ©der au logiciel et Ã  ses onglets :
+La copie d'ÃÂ©cran ci-dessous montre comment accÃÂ©der au logiciel et ÃÂ  ses onglets :
 </div>
 <div class="center">
 <l icon="pluriproglet.PNG"/>
 </div>
 </div>
 <div>
-L'onglet reprÃ©sentÃ©, appelÃ© onglet "Principal", permet de crÃ©er des squelettes de programmes
-Ã  partir d'informations telles que les <b>entrÃ©es</b> (ici quantite et prixUnitaire), les 
+L'onglet reprÃÂ©sentÃÂ©, appelÃÂ© onglet "Principal", permet de crÃÂ©er des squelettes de programmes
+ÃÂ  partir d'informations telles que les <b>entrÃÂ©es</b> (ici quantite et prixUnitaire), les 
 <b>sorties</b> (ici prixTotal) et leur type.
-Pour en savoir plus, il vous reste Ã  consulter l'onglet "Documentation" du logiciel...
+Pour en savoir plus, il vous reste ÃÂ  consulter l'onglet "Documentation" du logiciel...
 </div>
 
 </div>

@@ -40,11 +40,11 @@ public class Proglet2Jar {
 	JarManager.rmDir(new File(jarDir + File.separator + d.replaceAll("/", File.separator)));
       // Copy et expansion des ressources
       for (String file : FileManager.list(progletDir)) {
+	String tfile = targetDir + File.separator + new File(file).getName();
 	if (new File(file).isFile()) {
 	  if (file.endsWith(".jar") || file.endsWith(".zip")) {
 	    JarManager.jarExtract(file, jarDir);
 	  } else {
-	    String tfile = targetDir + File.separator + new File(file).getName();
 	    JarManager.copyFile(file, tfile);
 	    // Reconstitution de la version jvs4 de la completion, permet de tester la compatibilité
 	    if (tfile.endsWith("/completion.json")) {	      
@@ -57,6 +57,8 @@ public class Proglet2Jar {
 	      FileManager.save(tfile.replaceFirst("\\.json$", ".xml"), "<keywords>"+out+"</keywords>");
 	    }
 	  }
+	} else if (new File(file).isDirectory()) {
+	  JarManager.copyFiles(file, tfile);
 	}
       }
       // Traitement d'une proglet processing

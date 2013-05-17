@@ -24,6 +24,8 @@
 # - Voir une spec de proglet : Help + Functions + Panel
 #     - penser à une spec meta à la j2h ?
 # - Repenser processing avec : inference des classes java appellees, Panel qui extends le panneau standard
+# 
+# - Nettoyer Proglet2Jar et Html des trucs processing
 #
 # @THEN
 # - Voir pb de librairies toxi processing 2.0--bits 64
@@ -37,7 +39,7 @@
 #
 ########################################################################################################################################################
 
-dft : cnv
+dft : tst
 
 # Choix de la JDK
 

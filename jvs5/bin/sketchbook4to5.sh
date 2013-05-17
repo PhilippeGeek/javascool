@@ -66,7 +66,7 @@ do s="$srcDir/$p" ; d="$dstDir/$p" ; echo "Translate $p"
   if [ -d applet ] ; then
     t=../../processing/sketchbook/$p
     rm -rf applet $p.jar
-    (echo "package org.javascool.proglets.$p;" ; sed "s/$pFunctions/Functions" < $pFunctions.java) > Functions.java ; $pFunctions.java
+    (echo "package org.javascool.proglets.$p;" ; sed "s/${p}Functions/Functions/" < ${p}Functions.java) > Functions.java ; rm ${p}Functions.java
     (echo "package org.javascool.proglets.$p;" ; echo "public class Panel extends $p {}") > Panel.java
     #if [ $p = 'cryptageRSA' ] ; then echo "public class BigInteger extends java.math.BigInteger {}") > BigInteger.java ; fi
     cp *.* $t
