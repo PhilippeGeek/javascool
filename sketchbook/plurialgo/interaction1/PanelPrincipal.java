@@ -17,7 +17,7 @@ import org.javascool.proglets.plurialgo.langages.xml.ProgrammeNouveau;
 /**
  * Cette classe correspond à l'onglet Principal de l'interface graphique.
 */
-@SuppressWarnings("all")	// car les JList doivent être paramétrées avec Java7
+@SuppressWarnings("unchecked")	// car les JList doivent être paramétrées avec Java7
 public class PanelPrincipal extends JPanel implements ActionListener, ListSelectionListener {
 	private static final long serialVersionUID = 1L;
 

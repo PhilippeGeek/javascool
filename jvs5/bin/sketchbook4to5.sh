@@ -12,7 +12,7 @@ cd /home/vthierry/Work/culsci/jvs
 srcDir="`pwd`/sketchbook"
 dstDir="`pwd`/jvs5/sketchbook"
 prcDir="`pwd`/jvs5/processing"
-srcProglets="`find $srcDir -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | egrep -v 'jeux2D|sampleCode|grafikformate|cryptageRSA|enVoiture|exploSonore|grapheEtChemins|\.build'`"
+srcProglets="`find $srcDir -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | egrep -v 'jeux2D|sampleCode|grafikformate|\.build'`"
 
 mkdir -p $prcDir/{libraries,tools,modes,sketchbook}
 
@@ -64,14 +64,13 @@ do s="$srcDir/$p" ; d="$dstDir/$p" ; echo "Translate $p"
   done ; fi
   # Basculement des fichiers processing 
   if [ -d applet ] ; then
-    #mv applet/*.jar . 
-    rm -rf applet $p.jar 
-    # ici on reporte en retour les modifs du processing/sketchbook
     t=../../processing/sketchbook/$p
-    if [ -d $t ] 
-    then cp $t/*.* . ; cp $t/*.* $s
-    else mkdir -p $t ; cp -f *.pde *.wav *.png $t 2>/dev/null 
-    fi
+    rm -rf applet $p.jar
+    (echo "package org.javascool.proglets.$p;" ; sed "s/$pFunctions/Functions" < $pFunctions.java) > Functions.java ; $pFunctions.java
+    (echo "package org.javascool.proglets.$p;" ; echo "public class Panel extends $p {}") > Panel.java
+    #if [ $p = 'cryptageRSA' ] ; then echo "public class BigInteger extends java.math.BigInteger {}") > BigInteger.java ; fi
+    cp *.* $t
+    cd .. ; rm -rf $p
   fi
   rm -f *~
   popd > /dev/null
