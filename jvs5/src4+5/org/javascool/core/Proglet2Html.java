@@ -70,8 +70,13 @@ public class Proglet2Html {
 	    JarManager.copyFile(file, htmlDir + File.separator + new File(file).getName());
 	  }
 	}
-      }
-      JarManager.jarCreate(htmlDir + File.separator + "javascool-proglet-source-" + params.getString("name") + ".zip", null, progletDir);
+      }      
+      for (String file : FileManager.list(progletDir, "^.*\\.jvs", 1)) 
+	if (!FileManager.exists(htmlDir + File.separator + new File(file).getName() + ".html")) {
+	  FileManager.save(htmlDir + File.separator + new File(file).getName() + ".html",
+			   encapsulates("<br/><br/><br/><pre class=\"prettyprint linenums\">\n\n" + FileManager.load(file) + "\n</pre>", params));
+	  JarManager.copyFile(file, htmlDir + File.separator + new File(file).getName());
+	}
       // Génération des fichiers liés aux sources java
       {
 	System.out.println("> compilation de javascool-proglet-"+params.getString("name")+".jar");
