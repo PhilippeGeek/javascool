@@ -35,7 +35,7 @@ import org.javascool.proglets.plurialgo.langages.xml.iAnalyseur;
  * <a href="http://fifesoft.com/rsyntaxtextarea/" target="_blank">rsyntaxtextarea</a>.
  * </p>
 */
-@SuppressWarnings("all")	// car les JList doivent être paramétrées avec Java7
+@SuppressWarnings("unchecked")	// car les JList doivent être paramétrées avec Java7
 public class PanelProgrammes extends JPanel implements ActionListener, ListSelectionListener {
 	private static final long serialVersionUID = 1L;
 

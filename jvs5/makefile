@@ -2,8 +2,17 @@
 #
 # @TODO :
 #
-# - Corriger PB windows avec ordi + valider javaStart
-# - VOir pb de lien algodemaths
+# - Corriger PB windows avec ordi + valider javaStart 
+# - Poser une date fin juin pour le rebasculement
+# - Voir pb de lien algodemaths
+#
+# - Reorg des proglets processing : 
+#  ! si on met les fichiers java ils sont compilés : ah oui mais on pourrait ajouter javascool-core.jar dans les jar et rester dans processing
+#     -> donc lancement de javascool qui "accroche" la Papplet par un processingStart(this) 
+#  ! si on compile cote javascool il y a le probleme de la gestion des libs
+#
+# @TOTHINKABOUT :
+#
 # - Creer FileWrapper { setLocation(location), getParent(), getBaseName(), getExtension(), setText(text), hasBeenModified(), load(), save(), browse(saving) }
 # - Creer file-wrapper.js avec minimum javascool + jvs-wrapper.js 
 #
@@ -28,7 +37,7 @@
 #
 ########################################################################################################################################################
 
-dft : tst
+dft : cnv
 
 # Choix de la JDK
 

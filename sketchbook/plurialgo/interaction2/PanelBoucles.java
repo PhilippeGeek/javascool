@@ -21,7 +21,7 @@ import org.javascool.proglets.plurialgo.langages.xml.iAnalyseur;
 /**
  * Cette classe correspond à l'onglet Boucles de l'interface graphique.
 */
-@SuppressWarnings("all")	// car les JList doivent être paramétrées avec Java7
+@SuppressWarnings("unchecked")	// car les JList doivent être paramétrées avec Java7
 public class PanelBoucles extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
 
