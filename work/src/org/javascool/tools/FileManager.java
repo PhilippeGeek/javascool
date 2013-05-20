@@ -6,9 +6,9 @@ package org.javascool.tools;
 // Used for URL formation
 import java.net.URL;
 import java.util.Arrays;
-import org.javascool.macros.Macros;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 // Used for URL read
 import java.io.InputStreamReader;
@@ -53,7 +53,7 @@ public class FileManager {
    */
   public static String load(String location, boolean utf8) {
     try {
-      BufferedReader reader = new BufferedReader(new InputStreamReader(Macros.getResourceURL(location, true).openStream(),
+      BufferedReader reader = new BufferedReader(new InputStreamReader(getResourceURL(location, true).openStream(),
 								       utf8 ? Charset.forName("utf-8") : Charset.defaultCharset()), 10240);
       StringBuilder buffer = new StringBuilder();
       char chars[] = new char[10240];
@@ -66,7 +66,7 @@ public class FileManager {
       }
       return buffer.toString();
       /*
-      loadReader = new BufferedReader(new InputStreamReader(Macros.getResourceURL(location, true).openStream(),
+      loadReader = new BufferedReader(new InputStreamReader(getResourceURL(location, true).openStream(),
                                                                        utf8 ? Charset.forName("utf-8") : Charset.defaultCharset()), 10240);
       loadBuffer = new StringBuilder();
       // Boucle de lecture avec surveillance du blocage sur le read
@@ -125,14 +125,14 @@ public class FileManager {
   /** Ecrit un contenu textuel local ou distant en tenant compte de l'encodage local.
    *
    * @param location Une URL (Universal Resource Location) de la forme: <div id="save-format"><table>
-   * <tr><td><tt>ftp:/<i>path-name</i></tt></td><td>pour sauver sur un site FTP.</td></tr>
+   * <tr><td><tt>http:/<i>path-name</i></tt></td><td>pour poster un fichier à une adresse Web</td></tr>
    * <tr><td><tt>file:/<i>path-name</i></tt></td><td>pour sauver dans le système de fichier local (le <tt>file:</tt> est optionnel).</td></tr>
    * <tr><td><tt>mailto:<i>address</i>?subject=<i>subject</i></tt></td><td>pour envoyer un courriel avec le texte en contenu.</td></tr>
    * <tr><td><tt>stdout:/</tt></td><td>pour l'imprimer dans la console.</td></tr>
    * </table></div>
    * @param string Le texte à sauvegarder.
    * @param backup Si true, dans le cas d'un fichier, crée une sauvegarde d'un fichier existant. Par défaut false.
-   * * <p>Le fichier sauvegardé est doté d'un suffixe numérique unique.</p>
+   * <p>Le fichier sauvegardé est doté d'un suffixe numérique unique.</p>
    * @param utf8 Si la valeur est vraie, force l'encodage en UTF-8 à la lecture. Par défaut (false) utilise l'encodage local.
    *
    * @throws IllegalArgumentException Si l'URL est mal formée.
@@ -143,12 +143,13 @@ public class FileManager {
       System.out.println("\n" + location + " " + string);
       return;
     }
-    location = Macros.getResourceURL(location, false).toString();
+    location = getResourceURL(location, false).toString();
     try {
       if(location.startsWith("file:") && (new File(location.substring(5)).getParentFile() != null)) {
         new File(location.substring(5)).getParentFile().mkdirs();
       }
-      if(backup && !location.startsWith("file:")) { throw new IllegalArgumentException("Impossible de procéder à un backup pour l'URL «" + location + "»");
+      if(backup && !location.startsWith("file:")) { 
+	throw new IllegalArgumentException("Impossible de procéder à un backup pour l'URL «" + location + "»");
       }
       OutputStreamWriter writer = location.startsWith("file:") ? getFileWriter(location.substring(5), backup, utf8) : getUrlWriter(location, utf8);
       for(int i = 0; i < string.length(); i++)
@@ -237,7 +238,7 @@ public class FileManager {
    * @return La valeur du temps de dernière modification, donné en millisecondes depuis le 1er janvier 1970 en temps GMT, ou 0 si la valeur est indéfinie.
    */
   public static long getLastModified(String location) {
-    location = Macros.getResourceURL(location).toString();
+    location = getResourceURL(location).toString();
     if(location.matches("(ftp|http|https|jar):.*")) {
       try {
         return new URL(location).openConnection().getLastModified();
@@ -312,17 +313,85 @@ public class FileManager {
   public static String[] list(String folder) {
     return list(folder, null, 0);
   }
-  /** Crée un répertoire temporaire dans le répertoire temporaire de la machine.
-   * @param prefix Prefix du répertoire.
-   * @throws RuntimeException Si une erreur d'entrée-sortie s'est produite.
+  /** Renvoie une URL (Universal Resource Location) normalisée, dans le cas du système de fichier local ou d'une ressource.
+   * <p>La fonction recherche l'existence du fichier:
+   * (i) par rapport au répertoire de base qui est donné,
+   * (ii) par rapport au dossier de travaul "user.dir",
+   * (iii) par rapport à la racine des fichier "user.home",
+   * (iv) dans les ressources du CLASSPATH.</p>
+   * @param location L'URL à normaliser.
+   * @param base     Un répertoire de réference pour la normalisation. Par défaut null.
+   * @param reading  Précise si nous sommes en lecture (true) ou écriture (false). Par défaut en lecture.
+   * @throws IllegalArgumentException Si l'URL est mal formée.
    */
-  public static File createTempDir(String prefix) {
-    try {
-      File d = File.createTempFile(prefix, "");
-      d.delete();
-      d.mkdirs();
-      return d;
-    } catch(IOException e) { throw new RuntimeException(e + " when creating temporary directory");
+  public static URL getResourceURL(String location, String base, boolean reading) {
+    if(base != null) {
+      location = base + "/" + location;
     }
+    try {
+      // @patch : ceci blinde un bug sur les URL jar
+      if(location.matches("jar:[^!]*!.*")) {
+        String res = location.replaceFirst("[^!]*!/", "");
+        URL url = Thread.currentThread().getContextClassLoader().getResource(res);
+        if(url != null) {
+          return url;
+        } else { throw new IllegalArgumentException("Unable to find " + res + " from " + location + " as a classpath resource");
+        }
+      }
+      if(location.matches("(ftp|http|https|jar|mailto|stdout):.*")) {
+        return new URL(location).toURI().normalize().toURL();
+      }
+      if(location.startsWith("file:")) {
+        location = location.substring(5);
+      }
+      if(reading) {
+	File file;
+	try {
+	  file = new File(location);
+	  if(file.exists()) {
+	    return new URL("file:" + file.getCanonicalPath());
+	  }
+	} catch(Throwable e) {}
+	try {
+	  file = new File(System.getProperty("user.dir"), location);
+	  if(file.exists()) {
+	    return new URL("file:" + file.getCanonicalPath());
+	  }
+	} catch(Throwable e) {}
+	try {
+	  file = new File(System.getProperty("user.home"), location);
+	  if(file.exists()) {
+	    return new URL("file:" + file.getCanonicalPath());
+	  }
+	} catch(Throwable e) {}
+	try {
+	  URL url = Thread.currentThread().getContextClassLoader().getResource(location);
+	  if(url != null) {
+	    return url;
+	  }
+	} catch(Throwable e) {}
+      }
+      return new URL("file:" + location);
+    } catch(IOException e) { throw new IllegalArgumentException(e + " : " + location + " is a malformed URL");
+    } catch(URISyntaxException e) { throw new IllegalArgumentException(e + " : " + location + " is a malformed URL");
+    }
+  }
+  /**
+   * @see #getResourceURL(String, String, boolean)
+   */
+  public static URL getResourceURL(String location, String base) {
+    return getResourceURL(location, base, true);
+  }
+  /**
+   * @see #getResourceURL(String, String, boolean)
+   */
+  public static URL getResourceURL(String location, boolean reading) {
+    return getResourceURL(location, null, reading);
+  }
+  /**
+   * @see #getResourceURL(String, String, boolean)
+   */
+  public static URL getResourceURL(String location) {
+    return getResourceURL(location, null, true);
   }
 }

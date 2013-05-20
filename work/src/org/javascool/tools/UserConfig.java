@@ -4,6 +4,7 @@
 package org.javascool.tools;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Properties;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -35,7 +36,7 @@ public class UserConfig {
       return System.getProperty("user.home") + "/." + applicationName + "/";
     } else {
       System.err.println("Impossible de définir un répertoire de configuration pour l'application " + applicationName + " sous le système d'exploitation «" + OS + "»");
-      return FileManager.createTempDir(applicationName).getAbsolutePath();
+      return createTempDir(applicationName).getAbsolutePath();
     }
   }
   /** Lit une propriété liée à cette application.
@@ -98,4 +99,17 @@ public class UserConfig {
   }
   private static String theApplicationName = null;
   private static UserConfig userConfig = null;
+  /** Crée un répertoire temporaire dans le répertoire temporaire de la machine.
+   * @param prefix Prefix du répertoire.
+   * @throws RuntimeException Si une erreur d'entrée-sortie s'est produite.
+   */
+  public static File createTempDir(String prefix) {
+    try {
+      File d = File.createTempFile(prefix, "");
+      d.delete();
+      d.mkdirs();
+      return d;
+    } catch(IOException e) { throw new RuntimeException(e + " when creating temporary directory");
+    }
+  }
 }
