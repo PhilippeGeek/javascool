@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.javascool.tools.Pml;
 import org.javascool.tools.FileManager;
+import org.javascool.tools.UserConfig;
 
 /** Définit le mécanisme de compilation en ligne d'une proglet dans sa version jvs5.
  * - Attention il faut que la proglet ait été convertie en jvs5 (conversion des docs XML en HTML, du fichier de méta-donnée en .json).
@@ -29,7 +30,7 @@ public class Proglet2Jar {
     try { 
       JSONObject params = getProgletParameters(progletDir);
       // Répertoire temporaire de compilation
-      String jarDir = FileManager.createTempDir("jvs-build-").getAbsolutePath();
+      String jarDir = UserConfig.createTempDir("jvs-build-").getAbsolutePath();
       String targetDir = jarDir + File.separator + "org" + File.separator + "javascool" + File.separator + "proglets" + File.separator + params.getString("name");
       // Extraction des classes de javascool
       String javascoolJar = Utils.javascoolJar();

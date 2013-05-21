@@ -29,7 +29,7 @@ public class PanelInteraction extends JPanel {
 	
 	public static String[] langList = { "javascool", "vb", "larp", "javascript", "java", "php", "python" };
 	public static String dirTravail = null;
-	public static String urlDoc = "/org/javascool/proglets/plurialgo/aideJVS/";
+	public static String urlDoc = "/org/javascool/proglets/plurialgo/";
 
 	public PanelInteraction() {
 		super(new BorderLayout());
@@ -42,7 +42,7 @@ public class PanelInteraction extends JPanel {
 		pPrincipal = new PanelPrincipal(this);	onglets.add("Principal", pPrincipal);
 		pEdition = new PanelBoucles(this); onglets.add("Boucles", pEdition);
 		pHtml = new PanelHtml(this); onglets.add("Documentation", pHtml);
-		pXml = new PanelXml(this);  // onglets.add("Compléments", pXml);
+		pXml = new PanelXml(this);  // onglets.add("Complements", pXml);
 		this.add(onglets, "Center");
 	}
 		
@@ -135,7 +135,7 @@ public class PanelInteraction extends JPanel {
 	}
 	
 	private boolean traduireXml(String nom_lang) {
-		// récupération du programme
+		// rï¿½cupï¿½ration du programme
 		Programme prog = Programme.getProgramme(pXml.getText(),nom_lang); 
 		if (this.messageErreur(prog)) {
 			System.out.println("erreur:"+prog.getXmlBuffer().toString());
@@ -193,7 +193,7 @@ public class PanelInteraction extends JPanel {
 	}	
 	
 	// ---------------------------------------------	
-	// méthodes de création d'intermediaire	
+	// mï¿½thodes de crï¿½ation d'intermediaire	
 	// ---------------------------------------------
 	
 	public Intermediaire creerIntermediaire() {

@@ -23,7 +23,7 @@ tst :
 #################################################
 
 enc :
-	for f in `find ../sketchbook/plurialgo \( -name '*.xml' -o -name '*.xml' -o -name '*.java' -o -name '*.xml' -o -name '*.html' -o -name '*.pml' \)` ;\
+	for f in `find ../sketchbook/plurialgo \( -name '*.java' \)` ;\
 	do mv $$f $$f~ ; iconv -f ISO8859-1 -t UTF-8 $$f~ > $$f ;\
 	done
 

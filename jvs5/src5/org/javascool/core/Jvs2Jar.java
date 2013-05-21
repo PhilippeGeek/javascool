@@ -41,7 +41,7 @@ public class Jvs2Jar {
       throw new IllegalArgumentException("Le fichier "+jvsFile+" n'existe pas");
     try {
       // Répertoire temporaire de compilation
-      String jarDir = FileManager.createTempDir("jvs-build-").getAbsolutePath();
+      String jarDir = UserConfig.createTempDir("jvs-build-").getAbsolutePath();
       // Extraction des classes de javascool et nettoyage des classes inutiles
       JarManager.jarExtract(Utils.javascoolJar(), jarDir);
       for (String d : new String[] { 
