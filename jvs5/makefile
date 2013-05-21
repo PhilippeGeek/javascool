@@ -39,7 +39,7 @@
 #
 ########################################################################################################################################################
 
-dft : tst
+dft : www
 
 # Choix de la JDK
 
@@ -78,7 +78,7 @@ prc :
 
 www : clean cnv jar $(patsubst sketchbook/%,$(DIST)/javascool-proglet-%-html,$(wildcard sketchbook/*))
 #	$(MAKE) -C $(GIT_HOME) push
-	ls $(DIST)/javascool-proglet-*-html/compilation.false.log.txt
+	ls $(DIST)/javascool-proglet-*-html/compilation.false.log.txt ; echo ok=
 
 # Construit les proglets
 

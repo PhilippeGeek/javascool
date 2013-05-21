@@ -26,7 +26,7 @@ import org.javascool.proglets.plurialgo.divers.Divers;
 public class PanelHtml extends JPanel implements ActionListener, HyperlinkListener {
 	private static final long serialVersionUID = 1L;
 	
-	private String accueil_page = "index.html";	
+	private String accueil_page = "accueil.html";	
 	private PanelInteraction pInter;	
 	private JEditorPane htmlEdit;
 	private JButton accueilButton;

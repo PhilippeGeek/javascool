@@ -11,10 +11,11 @@ import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.URISyntaxException;
 
 import java.util.Calendar;
 import javax.swing.ImageIcon;
+
+import org.javascool.tools.FileManager;
 
 import java.net.URL;
 import java.io.File;
@@ -250,56 +251,7 @@ public class Macros {
    * @throws IllegalArgumentException Si l'URL est mal formée.
    */
   public static URL getResourceURL(String location, String base, boolean reading) {
-    if(base != null) {
-      location = base + "/" + location;
-    }
-    try {
-      // @patch : ceci blinde un bug sur les URL jar
-      if(location.matches("jar:[^!]*!.*")) {
-        String res = location.replaceFirst("[^!]*!/", "");
-        URL url = Thread.currentThread().getContextClassLoader().getResource(res);
-        if(url != null) {
-          return url;
-        } else { throw new IllegalArgumentException("Unable to find " + res + " from " + location + " as a classpath resource");
-        }
-      }
-      if(location.matches("(ftp|http|https|jar|mailto|stdout):.*")) {
-        return new URL(location).toURI().normalize().toURL();
-      }
-      if(location.startsWith("file:")) {
-        location = location.substring(5);
-      }
-      if(reading) {
-	File file;
-	try {
-	  file = new File(location);
-	  if(file.exists()) {
-	    return new URL("file:" + file.getCanonicalPath());
-	  }
-	} catch(Throwable e) {}
-	try {
-	  file = new File(System.getProperty("user.dir"), location);
-	  if(file.exists()) {
-	    return new URL("file:" + file.getCanonicalPath());
-	  }
-	} catch(Throwable e) {}
-	try {
-	  file = new File(System.getProperty("user.home"), location);
-	  if(file.exists()) {
-	    return new URL("file:" + file.getCanonicalPath());
-	  }
-	} catch(Throwable e) {}
-	try {
-	  URL url = Thread.currentThread().getContextClassLoader().getResource(location);
-	  if(url != null) {
-	    return url;
-	  }
-	} catch(Throwable e) {}
-      }
-      return new URL("file:" + location);
-    } catch(IOException e) { throw new IllegalArgumentException(e + " : " + location + " is a malformed URL");
-    } catch(URISyntaxException e) { throw new IllegalArgumentException(e + " : " + location + " is a malformed URL");
-    }
+    return FileManager.getResourceURL(location, base, reading);
   }
   /**
    * @see #getResourceURL(String, String, boolean)

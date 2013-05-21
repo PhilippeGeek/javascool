@@ -11,6 +11,7 @@ import java.io.File;
 import java.util.Collections;
 import java.util.Comparator;
 import org.javascool.tools.FileManager;
+import org.javascool.tools.UserConfig;
 
 /** Définit les mécanismes de compilation, exécution, gestion de proglet.
  *
@@ -89,7 +90,7 @@ public class ProgletEngine {
     // Creation d'un répertoire temporaire
     String javaFile;
     try {
-      File buildDir = FileManager.createTempDir("javac");
+      File buildDir = UserConfig.createTempDir("javac");
       javaFile = buildDir + File.separator + jvs2java.getClassName() + ".java";
       FileManager.save(javaFile, javaCode);
       // Si il y a un problème avec le répertoire temporaire on se rabat sur le répertoire local

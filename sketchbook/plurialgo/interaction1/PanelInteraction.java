@@ -60,8 +60,8 @@ public class PanelInteraction extends JPanel {
 	public void initConfig() {
 		// urlDoc
 		PanelInteraction.urlDoc = "file:///E:/raffinat/projects/IO_base/aideIEL/";
-		PanelInteraction.urlDoc = "http://web.univ-pau.fr/~raffinat/plurialgo/proglet/aideJVS/";
-		PanelInteraction.urlDoc = "http://web.univ-pau.fr/~raffinat/plurialgo/proglet/aideIEL/";
+		PanelInteraction.urlDoc = "http://web.univ-pau.fr/~raffinat/plurialgo/proglet1/aideJVS/";
+		PanelInteraction.urlDoc = "http://web.univ-pau.fr/~raffinat/plurialgo/proglet1/aideIEL/";
 	}
 		
 	public void selectPanel(Component pn) {

@@ -96,8 +96,11 @@ public class Proglet2Html {
 	  FileManager.save(srcHtmlDir + File.separator + "package.html",
 			   "<body><h3>Implémentation de la proglet "+params.getString("name")+
 			   " (accès aux <a href=\"../../../../../javascool-proglet-source-"+params.getString("name")+".zip\">sources</a>).</h3></body>");
+	  // Ici on extrait le jar pour platrer un bug de javadoc7.jar
+	  String jarDir = UserConfig.createTempDir("javadoc-build-").getAbsolutePath();
+	  JarManager.jarExtract(progletJar, jarDir);
 	  javadoc(params.getString("name"), 
-		  System.getProperty("java.class.path")+File.pathSeparator+progletJar, 
+		  jarDir, 
 		  htmlDir + File.separator + "api",
 		  htmlDir + File.separator + "api");
 	}
@@ -116,6 +119,7 @@ public class Proglet2Html {
     boolean status = console.getText().
       replaceAll("\n> .*", "").
       replaceAll("\njavadoc: warning - Error fetching URL: http://download.oracle.com/javase/6/docs/api/package-list", "").
+      replaceAll("\njavadoc: warning - Multiple sources of package comments found.*", "").
       replaceAll("\n1 warning", "").
       replaceAll("\nFinished.", "").
       trim().length() == 0;
@@ -131,7 +135,7 @@ public class Proglet2Html {
     return build(htmlDir+"-html", htmlDir);
   }
   /**
-   * @see #build(String, String, String)
+   * @see #build(String, String)
    */
   public static boolean build(String htmlDir, boolean verbose) {
     if (verbose)
