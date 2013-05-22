@@ -96,6 +96,9 @@ public class Proglet2Html {
 	  FileManager.save(srcHtmlDir + File.separator + "package.html",
 			   "<body><h3>Implémentation de la proglet "+params.getString("name")+
 			   " (accès aux <a href=\"../../../../../javascool-proglet-source-"+params.getString("name")+".zip\">sources</a>).</h3></body>");
+	  JarManager.jarCreate(htmlDir + File.separator + "javascool-proglet-source-"+params.getString("name")+".zip",
+			       null, 
+			       progletDir);
 	  // Ici on extrait le jar pour platrer un bug de javadoc7.jar
 	  String jarDir = UserConfig.createTempDir("javadoc-build-").getAbsolutePath();
 	  JarManager.jarExtract(progletJar, jarDir);
