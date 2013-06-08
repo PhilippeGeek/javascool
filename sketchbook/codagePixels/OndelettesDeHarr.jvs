@@ -97,7 +97,8 @@ int[][] Haarback(int[][] table, int n) {
 void main() {
   // Initialisation
   // charge une image qui fait 512x512 (prendre une image carrée de 2^n de côté)
-  load("http://gv64.free.fr/Img/IMG_512x512.JPG",false,false);
+  load("http://javascool.gforge.inria.fr/documents/sketchbook/codagePixels/OndeletteDeHarrImage1.jpg",false,false);
+  // voir aussi : http://javascool.gforge.inria.fr/documents/sketchbook/codagePixels/OndeletteDeHarrImage2.jpg
   // convertit l'image en tableau monochrome
   int tableau[][] = getImageArray();  
   setImageArray(tableau);
