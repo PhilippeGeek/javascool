@@ -13,7 +13,7 @@
   <div title="Quelques fonctions utilisées."><div class="ul">
     <p><b>sleep(1000);</b> Arrête l'exécution du programme pendant 1000 milli-secondes.</p>
     <p><b><r>double</r> x = random();</b> Renvoie dans la variable <b>x</b> un nombre aléatoire décimal compris entre 0 et 1.</p>
-    <p><b><r>int</r> n = random(1, 6);</b> Renvoie dans la variable <b>n</b> un nombre aléatoire entier entre 1 et 6.</p>
+    <p><b><r>int</r> n = random(1, 6);</b> Renvoie dans la variable <b>n</b> un nombre aléatoire entier entre 1 et 6, 6 exclu.</p>
     <p><b><r>boolean</r> y = equal("Dupond", "Dupont");</b> Compare les deux chaînes de caratères « Dupond » et « Dupont » et renvoie dans la variable <b>y</b> la valeur <b>false</b>.</p>
     <p><b><r>double</r> z = pow(x, 2);</b> Renvoie dans la variable <b>y</b> le carré <b>x²</b>.</p>
     <p><b><r>double</r> x = sqrt(x);</b> Renvoie dans la variable <b>x</b> la racine de <b>x</b>.</p>
