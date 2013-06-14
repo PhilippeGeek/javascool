@@ -77,7 +77,8 @@ public class IconOutput extends JPanel {
    * @return Cet objet, permettant de définir la construction <tt>new IconOutput().reset(..)</tt>.
    */
   public final IconOutput reset(int width, int height, boolean zoom) {
-    if((width > 550) || (height > 550) || (width * height > 550 * 550)) { throw new IllegalArgumentException("L'image est trop grande (" + width + ", " + height + ") !");
+    int MAXSIZE = 1000;
+    if((width > MAXSIZE) || (height > MAXSIZE) || (width * height > MAXSIZE * MAXSIZE)) { throw new IllegalArgumentException("L'image est trop grande (" + width + ", " + height + ") !");
     }
     this.zoom = zoom;
 
