@@ -135,7 +135,7 @@ public class PanelInteraction extends JPanel {
 	}
 	
 	private boolean traduireXml(String nom_lang) {
-		// rï¿½cupï¿½ration du programme
+		// recuperation du programme
 		Programme prog = Programme.getProgramme(pXml.getText(),nom_lang); 
 		if (this.messageErreur(prog)) {
 			System.out.println("erreur:"+prog.getXmlBuffer().toString());
@@ -153,14 +153,16 @@ public class PanelInteraction extends JPanel {
 	// ---------------------------------------------
 	
 	public String getText() {
-		return org.javascool.gui.EditorWrapper.getText();
+		//String txt = org.javascool.gui.EditorWrapper.getText();
+		String txt = org.javascool.gui.EditorWrapper.getRTextArea().getText();
+		return txt;
 	}	
 	
 	public void setText(String txt) {
 		Desktop.getInstance().openNewFile();
 		org.javascool.gui.EditorWrapper.setText(txt);
 	}	
-		
+	
 	public void add_editeur(org.javascool.proglets.plurialgo.langages.modele.Programme prog) {
 		Iterator<String> iter = prog.les_fichiers.keySet().iterator();
 		while (iter.hasNext()) {
@@ -186,14 +188,22 @@ public class PanelInteraction extends JPanel {
 	
 	public boolean isLarp() {
 		String txt=this.getText().toLowerCase();
-		if ((txt.contains("debut")||txt.contains("début"))&&txt.contains("fin")) return true;
+		if (isAlgobox()) return false;
+		if ((txt.contains("debut")||txt.contains("début")||txt.contains("but"))
+				&&txt.contains("fin")) return true;
 		if (txt.contains("entrer")&&txt.contains("retourner")) return true;
 		//if (txt.trim().length()==0) return true;
 		return false;
 	}	
 	
+	public boolean isAlgobox() {
+		String txt=getText().toLowerCase();
+		if (txt.contains("debut_algorithme")&&txt.contains("fin_algorithme")) return true;
+		return false;
+	}	
+	
 	// ---------------------------------------------	
-	// mï¿½thodes de crï¿½ation d'intermediaire	
+	// methodes de creation d'intermediaire	
 	// ---------------------------------------------
 	
 	public Intermediaire creerIntermediaire() {

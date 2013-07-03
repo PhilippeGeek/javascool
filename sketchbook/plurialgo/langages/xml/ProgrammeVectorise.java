@@ -26,6 +26,7 @@ public class ProgrammeVectorise extends Programme {
 	private String miniVar, miniArg;
 	private String maxiVar, maxiArg;
 	private String compterVar, compterArg;
+	private String chercherVar, chercherArg;
 	private boolean avecTantque;
 
 	/**
@@ -124,7 +125,7 @@ public class ProgrammeVectorise extends Programme {
 			}
 		}
 		var = new Variable(ii, "ENTIER", null);
-		if (liste.getInfo(ii)==null) {
+		if (liste.getInfo(ii)==null && !ii.isEmpty()) {
 			variables.add(var); liste.addInfo(var);
 		}
 		for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Argument> iter=prog.options.iterator(); iter.hasNext(); ) {
@@ -133,6 +134,12 @@ public class ProgrammeVectorise extends Programme {
 			if (sommeVar!=null) {
 				var = new Variable(sommeVar, "REEL", null);
 				if (liste.getInfo(sommeVar)==null) {
+					variables.add(var); liste.addInfo(var);
+				}
+			}
+			if (compterVar!=null) {
+				var = new Variable(compterVar, "ENTIER", null);
+				if (liste.getInfo(compterVar)==null) {
 					variables.add(var); liste.addInfo(var);
 				}
 			}
@@ -145,6 +152,12 @@ public class ProgrammeVectorise extends Programme {
 			if (maxiVar!=null) {
 				var = new Variable(maxiVar, "REEL", null);
 				if (liste.getInfo(maxiVar)==null) {
+					variables.add(var); liste.addInfo(var);
+				}
+			}
+			if (chercherVar!=null) {
+				var = new Variable(chercherVar, "BOOLEEN", null);
+				if (liste.getInfo(chercherVar)==null) {
 					variables.add(var); liste.addInfo(var);
 				}
 			}
@@ -161,7 +174,7 @@ public class ProgrammeVectorise extends Programme {
 		if (txt.isEmpty()) return false;
 		String ch = txt.substring(0,1);
 		if (!Divers.isLettre(ch)) return false;
-		for(int i=0;i<nn.length(); i++) {
+		for(int i=0;i<txt.length(); i++) {
 			ch = txt.substring(i,i+1);
 			if (!Divers.isChiffre(ch) && !Divers.isLettre(ch)) return false;
 		}
@@ -170,37 +183,42 @@ public class ProgrammeVectorise extends Programme {
 	
 	private void initOption(Argument option) {
 		String mode = option.mode;
-		sommeVar = null;
 		if ((option.nom.equals("sommation")) && (mode!=null)) {
+			sommeVar = null;
 			int i = mode.indexOf(":");
 			if (i>=0) {
 				sommeVar = mode.substring(0, i).trim();
 				sommeArg = mode.substring(i+1, mode.length()).trim();
 			}
 		}
-		miniVar = null;
+		if ((option.nom.equals("comptage")) && (mode!=null)) {
+			compterVar = null;
+			int i = mode.indexOf(":");
+			if (i>=0) {
+				compterVar = mode.substring(0, i).trim();
+				compterArg = mode.substring(i+1, mode.length()).trim();
+			}
+		}
 		if ((option.nom.equals("minimum")) && (mode!=null)) {
+			miniVar = null;
 			int i = mode.indexOf(":");
 			if (i>=0) {
 				miniVar = mode.substring(0, i).trim();
 				miniArg = mode.substring(i+1, mode.length()).trim();
 			}
 		}
-		maxiVar = null;
 		if ((option.nom.equals("maximum")) && (mode!=null)) {
+			maxiVar = null;
 			int i = mode.indexOf(":");
 			if (i>=0) {
 				maxiVar = mode.substring(0, i).trim();
 				maxiArg = mode.substring(i+1, mode.length()).trim();
 			}
 		}
-		compterVar = null;
-		if ((option.nom.equals("comptage")) && (mode!=null)) {
-			int i = mode.indexOf(":");
-			if (i>=0) {
-				compterVar = mode.substring(0, i).trim();
-				compterArg = mode.substring(i+1, mode.length()).trim();
-			}
+		if ((option.nom.equals("recherche")) && (mode!=null)) {
+			chercherVar = "trouve";
+			//if (!ii.isEmpty()) chercherVar = chercherVar + "_" + ii;
+			chercherArg = mode;
 		}
 	}
 			
@@ -211,8 +229,8 @@ public class ProgrammeVectorise extends Programme {
 		if (isIdent(nn)) {
 			arg = new Argument(nn, "ENTIER", null);
 			instr.arguments.add(arg);
+			instructions.add(instr);
 		}
-		instructions.add(instr);
 	}
 	
 	private void traiterStandardAffichage() {
@@ -222,20 +240,24 @@ public class ProgrammeVectorise extends Programme {
 		for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Argument> iter=prog.options.iterator(); iter.hasNext(); ) {
 			Argument option = (Argument) iter.next();
 			initOption(option);
-			if (sommeVar!=null) {
+			if (option.nom.equals("sommation") && sommeVar!=null) {
 				arg = new Argument(sommeVar, "REEL", null);
 				instr.arguments.add(arg);
 			}
-			if (miniVar!=null) {
+			if (option.nom.equals("comptage") && compterVar!=null) {
+				arg = new Argument(compterVar, "ENTIER", null);
+				instr.arguments.add(arg);
+			}
+			if (option.nom.equals("minimum") && miniVar!=null) {
 				arg = new Argument(miniVar, "REEL", null);
 				instr.arguments.add(arg);
 			}
-			if (maxiVar!=null) {
+			if (option.nom.equals("maximum") && maxiVar!=null) {
 				arg = new Argument(maxiVar, "REEL", null);
 				instr.arguments.add(arg);
 			}
-			if (compterVar!=null) {
-				arg = new Argument(compterVar, "ENTIER", null);
+			if (option.nom.equals("recherche") && chercherVar!=null) {
+				arg = new Argument(chercherVar, "BOOLEEN", null);
 				instr.arguments.add(arg);
 			}
 		}
@@ -249,20 +271,24 @@ public class ProgrammeVectorise extends Programme {
 		for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Argument> iter=prog.options.iterator(); iter.hasNext(); ) {
 			Argument option = (Argument) iter.next();
 			initOption(option);
-			if (sommeVar!=null) {
+			if (option.nom.equals("sommation") && sommeVar!=null) {
 				Instruction instr = Instruction.creerInstructionAffectation(sommeVar, "0");
 				instructions.add(instr);
 			}
-			if (miniVar!=null) {
-				Instruction instr = Instruction.creerInstructionAffectation(miniVar, "1000000");
-				instructions.add(instr);
-			}
-			if (maxiVar!=null) {
-				Instruction instr = Instruction.creerInstructionAffectation(maxiVar, "-1000000");
-				instructions.add(instr);
-			}
-			if (compterVar!=null) {
+			if (option.nom.equals("comptage") && compterVar!=null) {
 				Instruction instr = Instruction.creerInstructionAffectation(compterVar, "0");
+				instructions.add(instr);
+			}
+			if (option.nom.equals("minimum") && miniVar!=null) {
+				Instruction instr = Instruction.creerInstructionAffectation(miniVar, "1000");
+				instructions.add(instr);
+			}
+			if (option.nom.equals("maximum") && maxiVar!=null) {
+				Instruction instr = Instruction.creerInstructionAffectation(maxiVar, "-1000");
+				instructions.add(instr);
+			}
+			if (option.nom.equals("recherche") && chercherVar!=null) {
+				Instruction instr = Instruction.creerInstructionAffectation(chercherVar, "FAUX");
 				instructions.add(instr);
 			}
 		}
@@ -270,12 +296,23 @@ public class ProgrammeVectorise extends Programme {
 		Pour pour = null;
 		TantQue tq = null;
 		Instruction instr_iter = null;
+		if (nn.isEmpty()) this.avecTantque = true;
+		if (ii.isEmpty()) this.avecTantque = true;
+		if (chercherVar!=null) this.avecTantque = true;
 		if (this.avecTantque) {
 			instr_iter = new Instruction("tantque");
 			tq = new TantQue();
-			tq.condition = "(" + ii + "<=" + nn + ")";
+			tq.condition = "";
+			if (!nn.isEmpty() && !ii.isEmpty()) tq.condition = "(" + ii + "<=" + nn + ")";
+			if (chercherVar!=null) {
+				if (!tq.condition.isEmpty()) tq.condition = tq.condition + " ET ";
+				tq.condition = tq.condition + "(" + chercherVar + "==" + "FAUX" + ")";
+			}
+			if (tq.condition.contains(" ET ") ) tq.condition = "(" + tq.condition + ")";
 			instr_iter.tantques.add(tq);
-			instructions.add( Instruction.creerInstructionAffectation(ii, "1") );
+			if (!ii.isEmpty()) {
+				instructions.add( Instruction.creerInstructionAffectation(ii, "1") );
+			}
 			instructions.add(instr_iter);
 		}
 		else {
@@ -297,12 +334,21 @@ public class ProgrammeVectorise extends Programme {
 		for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Argument> iter=prog.options.iterator(); iter.hasNext(); ) {
 			Argument option = (Argument) iter.next();
 			initOption(option);
-			if (sommeVar!=null) {
+			if (option.nom.equals("sommation") && sommeVar!=null) {
 				Instruction instr = Instruction.creerInstructionAffectation(sommeVar, vectoriser(sommeVar + " + " + sommeArg));
 				if (pour!=null) pour.instructions.add(instr);
 				if (tq!=null) tq.instructions.add(instr);
 			}
-			if (miniVar!=null) {
+			if (option.nom.equals("comptage") && compterVar!=null) {
+				Instruction instr = new Instruction("si");
+				Si si = new Si(); 
+				si.condition = vectoriser(compterArg);
+				si.instructions.add( Instruction.creerInstructionAffectation(compterVar, compterVar + "+1") );
+				instr.sis.add(si);
+				if (pour!=null) pour.instructions.add(instr);
+				if (tq!=null) tq.instructions.add(instr);
+			}
+			if (option.nom.equals("minimum") && miniVar!=null) {
 				Instruction instr = new Instruction("si");
 				Si si = new Si(); 
 				si.condition = vectoriser(miniArg + " < " + miniVar);
@@ -311,7 +357,7 @@ public class ProgrammeVectorise extends Programme {
 				if (pour!=null) pour.instructions.add(instr);
 				if (tq!=null) tq.instructions.add(instr);
 			}
-			if (maxiVar!=null) {
+			if (option.nom.equals("maximum") && maxiVar!=null) {
 				Instruction instr = new Instruction("si");
 				Si si = new Si(); 
 				si.condition = vectoriser(maxiArg + " > " + maxiVar);
@@ -320,11 +366,11 @@ public class ProgrammeVectorise extends Programme {
 				if (pour!=null) pour.instructions.add(instr);
 				if (tq!=null) tq.instructions.add(instr);
 			}
-			if (compterVar!=null) {
+			if (option.nom.equals("recherche") && chercherVar!=null) {
 				Instruction instr = new Instruction("si");
 				Si si = new Si(); 
-				si.condition = vectoriser(compterArg);
-				si.instructions.add( Instruction.creerInstructionAffectation(compterVar, compterVar + "+1") );
+				si.condition = vectoriser(chercherArg);
+				si.instructions.add( Instruction.creerInstructionAffectation(chercherVar, "VRAI") );
 				instr.sis.add(si);
 				if (pour!=null) pour.instructions.add(instr);
 				if (tq!=null) tq.instructions.add(instr);
@@ -336,7 +382,12 @@ public class ProgrammeVectorise extends Programme {
 			}
 		}
 		if (tq!=null) {
-			tq.instructions.add( Instruction.creerInstructionAffectation(ii, ii + "+1") );
+			if (!ii.isEmpty()) {
+				tq.instructions.add( Instruction.creerInstructionAffectation(ii, ii + "+1") );
+			}
+			else if (tq.instructions.size()==0) {
+				tq.instructions.add(new Instruction("// ajouter des instructions"));
+			}
 		}
 	}
 	

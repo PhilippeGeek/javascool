@@ -16,6 +16,7 @@ import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.fife.ui.rtextarea.RTextScrollPane;
 import org.javascool.proglets.plurialgo.divers.Divers;
+import org.javascool.proglets.plurialgo.langages.xml.AnalyseurAlgobox;
 import org.javascool.proglets.plurialgo.langages.xml.AnalyseurJavascool;
 import org.javascool.proglets.plurialgo.langages.xml.AnalyseurLarp;
 import org.javascool.proglets.plurialgo.langages.xml.AnalyseurVb;
@@ -48,6 +49,7 @@ public class PanelProgrammes extends JPanel implements ActionListener, ListSelec
 	private JTextField compterModeField; private JCheckBox compterCheck;
 	private JTextField miniModeField; private JCheckBox miniCheck;
 	private JTextField maxiModeField; private JCheckBox maxiCheck;
+	private JTextField chercherModeField; private JCheckBox chercherCheck;
 	private JButton vectoriserButton;
 	
 	private JPanel pEdit;
@@ -162,13 +164,21 @@ public class PanelProgrammes extends JPanel implements ActionListener, ListSelec
 		miniModeField.setText("mini:expression");
 		p.add(miniModeField);
 		vbox.add(p);
-		// minimum
+		// maximum
 		p = new JPanel(); 
 		maxiCheck = new JCheckBox(); p.add(maxiCheck);
 		p.add( new JLabel("maximum : ") );
 		maxiModeField = new JTextField(10);
 		maxiModeField.setText("maxi:expression");
 		p.add(maxiModeField);
+		vbox.add(p);
+		// chercher
+		p = new JPanel(); 
+		chercherCheck = new JCheckBox(); p.add(chercherCheck);
+		p.add( new JLabel("chercher (un) : ") );
+		chercherModeField = new JTextField(10);
+		chercherModeField.setText("condition");
+		p.add(chercherModeField);
 		vbox.add(p);
 		// bouton
 		p = new JPanel(); 
@@ -339,12 +349,18 @@ public class PanelProgrammes extends JPanel implements ActionListener, ListSelec
 	
 	private boolean isLarp() {
 		String txt=getText().toLowerCase();
+		if (isAlgobox()) return false;
 		if ((txt.contains("debut")||txt.contains("début"))&&txt.contains("fin")) return true;
 		if (txt.contains("entrer")&&txt.contains("retourner")) return true;
-		//if (txt.trim().length()==0) return true;
 		return false;
 	}	
 	
+	private boolean isAlgobox() {
+		String txt=getText().toLowerCase();
+		if (txt.contains("debut_algorithme")&&txt.contains("fin_algorithme")) return true;
+		return false;
+	}	
+		
 	// ---------------------------------------------
 	// Vectorisation
 	// ---------------------------------------------
@@ -396,6 +412,9 @@ public class PanelProgrammes extends JPanel implements ActionListener, ListSelec
 		if (maxiCheck.isSelected()) {
 			prog.options.add( new Argument("maximum", null, maxiModeField.getText()) );
 		}
+		if (chercherCheck.isSelected()) {
+			prog.options.add( new Argument("recherche", null, chercherModeField.getText()) );
+		}
 	}	
 
 	// ---------------------------------------------
@@ -413,6 +432,9 @@ public class PanelProgrammes extends JPanel implements ActionListener, ListSelec
 		else if (isJavascool()) {
 			analyseur = new AnalyseurJavascool(editArea.getText(), false, false);
 		}
+		else if (isAlgobox()) {
+			analyseur = new AnalyseurAlgobox(editArea.getText(), false, false);
+		}
 		else if (isLarp()) {
 			inter = pInter.creerIntermediaireLarp("traduire");
 			analyseur = new AnalyseurLarp(editArea.getText(), false, false, inter);
@@ -420,7 +442,7 @@ public class PanelProgrammes extends JPanel implements ActionListener, ListSelec
 		else {
 			pInter.clearConsole();
 			pInter.writeConsole("---------- Avertissement ----------\n");
-			pInter.writeConsole("le programme à traduire ne semble pas etre du javascool, du visual basic ou du Larp");
+			pInter.writeConsole("le programme à traduire ne semble pas etre du javascool, du visual basic, du Larp ou de l'algobox");
 			return;
 		}
 		// ajout du resultat dans les onglets Complements et Resultats

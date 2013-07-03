@@ -3,7 +3,7 @@
 <div title="Introduction">
 <div>
 PluriAlgo est un logiciel d'algorithmique que j'ai commencé à expérimenter avec des étudiants d'IUT en 2011. 
-Il accompagne un <l link="http://www.iutenligne.net/ressources_search_fiche.php?id=922" text="cours d'algorithmique"/> publié au début 
+Il accompagne un <l link="http://public.iutenligne.net/informatique/algorithme-et-programmation/raffinat/algo/index.html" text="cours d'algorithmique"/> publié au début 
 de cette même année sur <l link="http://www.iutenligne.net" text="IUTenLigne"/>, le campus numérique des IUT. 
 </div>
 <div class="center">
@@ -11,7 +11,7 @@ de cette même année sur <l link="http://www.iutenligne.net" text="IUTenLigne"/
 </div>
 <div>
 Avec l'introduction de l'algorithmique dans les programmes de lycée, il m'a semblé souhaitable
-de réaliser une version simplifiée du logiciel destinée à un public lycéen :
+de réaliser une adaptation du logiciel destinée à un public lycéen :
 cela a débouché sur la création de la proglet PluriAlgo.
 </div>
 </div>
@@ -24,18 +24,43 @@ conditionnelles, boucles en particulier), ainsi que l'environnement d'exécution
 </div>
 
 <div title="Utilisation du logiciel">
-<div>
-La copie d'écran ci-dessous montre comment accéder au logiciel et à ses onglets :
-</div>
 <div class="center">
 <l icon="pluriproglet.PNG"/>
 </div>
-</div>
 <div>
-L'onglet représenté, appelé onglet "Principal", permet de créer des squelettes de programmes
+La copie d'écran ci-dessus montre comment accéder au logiciel et à ses onglets :
+</div>
+<div class="ul">
+<div>
+L'onglet "Principal" permet de créer des squelettes de programmes
 à partir d'informations telles que les <b>entrées</b> (ici quantite et prixUnitaire), les 
 <b>sorties</b> (ici prixTotal) et leur type.
-Pour en savoir plus, il vous reste à consulter l'onglet "Documentation" du logiciel...
+</div>
+<div>
+L'onglet "Boucles", facilite l'introduction de boucles et de techniques usuelles liées (sommation, comptage...).
+</div>
+<div>
+L'onglet "Documentation" vous permet d'en savoir plus...
+</div>
+</div>
+<div>
+Des <l link="http://web.univ-pau.fr/~raffinat/plurialgo/jvs/index.html" text="travaux pratiques"/> seront 
+progressivement ajoutés sur mes pages professionnelles.
+</div>
+</div>
+
+<div title="Langages gérés">
+<div>
+Les programmes créés à l'aide de la proglet PluriAlgo sont par défaut écrits en langage Javascool, ce qui
+a pour intérêt évident d'en permettre l'exécution dans l'environnement Javascool.
+</div>
+<div>
+Mais comme écrire des programmes Javascool n'est pas une finalité, la proglet peut
+traduire dans d'autres langages (Python, Visual Basic, Javascript...) des programmes Javascool, avec
+quelques conditions restrictives évidemment.
+Il est également possible de récupérer des programmes Algobox ou Larp pour faire la traduction 
+inverse vers Javascool.
+</div>
 </div>
 
 </div>

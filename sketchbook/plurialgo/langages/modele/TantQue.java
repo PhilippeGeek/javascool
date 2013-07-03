@@ -56,7 +56,7 @@ public class TantQue extends Noeud {
 	
 	public String getCondition() {
 		if (condition==null) return "";
-		if (!condition.trim().startsWith("(")) return "("+condition+")"; 
+		if (!condition.trim().startsWith("(") && !condition.trim().endsWith(")")) return "("+condition+")"; 
 		return condition;
 	}
 	

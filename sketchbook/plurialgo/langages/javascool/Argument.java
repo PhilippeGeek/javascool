@@ -106,6 +106,7 @@ public class Argument extends org.javascool.proglets.plurialgo.langages.modele.A
 			Variable prop = (Variable) iter.next();
 			if (prop.isOut()) continue;
 			Argument arg = new Argument(this.nom+"."+prop.nom, prop.type, this.mode);
+			arg.parent = this.parent;	// utile si arg tableau (déclaration indice pour)
 			String msg1 =  prog.quote(arg.nom + " : ");
 			arg.lireStandard(prog, buf, indent, msg1);
 		}
@@ -118,6 +119,7 @@ public class Argument extends org.javascool.proglets.plurialgo.langages.modele.A
 		for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Variable> iter=cl.proprietes.iterator(); iter.hasNext(); ) {
 			Variable prop = (Variable) iter.next();
 			Argument arg = new Argument(this.nom+"[ii]"+"."+prop.nom, prop.type, oteDim(1));
+			arg.parent = this.parent;	// utile si arg tableau (déclaration indice pour)
 			if (prop.isOut()) continue;
 			String msg1 =  prog.quote(arg.nom + " : ");
 			msg1=prog.quote(prop.nom + " : ");
@@ -179,7 +181,7 @@ public class Argument extends org.javascool.proglets.plurialgo.langages.modele.A
 			Variable prop = (Variable) iter.next();
 			if (prop.isIn()) continue;
 			Argument arg = new Argument(this.nom+"."+prop.nom, prop.type, this.mode);
-			arg.parent = this.parent;
+			arg.parent = this.parent;	// utile si arg tableau (déclaration indice pour)
 			String msg1 = prog.quote(arg.nom + " : ");
 			arg.ecrireStandard(prog, buf, indent, msg1);
 		}
@@ -193,7 +195,7 @@ public class Argument extends org.javascool.proglets.plurialgo.langages.modele.A
 			Variable prop = (Variable) iter.next();
 			if (prop.isIn()) continue;
 			Argument arg = new Argument(this.nom+"[ii]"+"."+prop.nom, prop.type, oteDim(1));
-			arg.parent = this.parent;
+			arg.parent = this.parent;	// utile si arg tableau (déclaration indice pour)
 			String msg1=prog.quote(prop.nom + " : ");
 			arg.ecrireStandard(prog, buf, indent+1, msg1);
 		}

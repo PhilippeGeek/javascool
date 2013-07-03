@@ -1,6 +1,3 @@
-/*******************************************************************************
-*     patrick.raffinat@univ-pau.fr, Copyright (C) 2013.  All rights reserved.  *
-*******************************************************************************/
 package org.javascool.proglets.plurialgo.divers;
 
 import java.io.*;

@@ -84,6 +84,11 @@ public class Programme extends Noeud {
 			nd.parent = this;
 			nd.parcoursEnfants();
 		}
+		for(Iterator<Classe> iter=classes.iterator(); iter.hasNext(); ) {
+			Noeud nd = (Noeud) iter.next();
+			nd.parent = this;
+			nd.parcoursEnfants();
+		}
 	}
 
 	// ---------------------------------------------

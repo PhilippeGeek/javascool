@@ -8,6 +8,7 @@ import java.awt.FlowLayout;
 import java.awt.event.*;
 import javax.swing.*;
 
+import org.javascool.proglets.plurialgo.langages.xml.AnalyseurAlgobox;
 import org.javascool.proglets.plurialgo.langages.xml.AnalyseurJavascool;
 import org.javascool.proglets.plurialgo.langages.xml.AnalyseurLarp;
 import org.javascool.proglets.plurialgo.langages.xml.AnalyseurVb;
@@ -34,6 +35,7 @@ public class PanelBoucles extends JPanel implements ActionListener {
 	private JTextField compterModeField; private JCheckBox compterCheck;
 	private JTextField miniModeField; private JCheckBox miniCheck;
 	private JTextField maxiModeField; private JCheckBox maxiCheck;
+	private JTextField chercherModeField; private JCheckBox chercherCheck;
 	private JButton vectoriserButton, bouclerButton;
 
 	public PanelBoucles (PanelInteraction pInter) {
@@ -63,7 +65,7 @@ public class PanelBoucles extends JPanel implements ActionListener {
 		pourVarField = new JTextField(8);
 		pourVarField.setText("k");
 		p.add(pourVarField);
-		p.add( new JLabel(" de 1 à ") );
+		p.add( new JLabel(" de 1 a ") );
 		pourFinField = new JTextField(8);
 		pourFinField.setText("n");
 		p.add(pourFinField);
@@ -92,13 +94,21 @@ public class PanelBoucles extends JPanel implements ActionListener {
 		miniModeField.setText("mini:expression");
 		p.add(miniModeField);
 		vbox.add(p);
-		// minimum
+		// maximum
 		p = new JPanel(); 
 		maxiCheck = new JCheckBox(); p.add(maxiCheck);
 		p.add( new JLabel("maximum : ") );
 		maxiModeField = new JTextField(20);
 		maxiModeField.setText("maxi:expression");
 		p.add(maxiModeField);
+		vbox.add(p);
+		// chercher
+		p = new JPanel(); 
+		chercherCheck = new JCheckBox(); p.add(chercherCheck);
+		p.add( new JLabel("chercher (un) : ") );
+		chercherModeField = new JTextField(20);
+		chercherModeField.setText("condition");
+		p.add(chercherModeField);
 		vbox.add(p);
 		// bouton
 		p = new JPanel(); 
@@ -149,6 +159,9 @@ public class PanelBoucles extends JPanel implements ActionListener {
 		else if (pInter.isJavascool()) {
 			analyseur = new AnalyseurJavascool(pInter.getText(), false, false);
 		}
+		else if (pInter.isAlgobox()) {
+			analyseur = new AnalyseurAlgobox(pInter.getText(), false, false);
+		}
 		else if (pInter.isLarp()) {
 			inter = pInter.creerIntermediaireLarp("vectoriser");
 			analyseur = new AnalyseurLarp(pInter.getText(), false, false, inter);
@@ -185,10 +198,12 @@ public class PanelBoucles extends JPanel implements ActionListener {
 		if (maxiCheck.isSelected()) {
 			prog.options.add( new Argument("maximum", null, maxiModeField.getText()) );
 		}
+		if (chercherCheck.isSelected()) {
+			prog.options.add( new Argument("recherche", null, chercherModeField.getText()) );
+		}
 	}	
 	
 	private void boucler() {
-		Intermediaire inter = null;
 		pInter.clearConsole();
 		// vectorisation
 		org.javascool.proglets.plurialgo.langages.xml.Programme prog;

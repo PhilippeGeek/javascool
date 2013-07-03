@@ -13,7 +13,7 @@ import org.javascool.proglets.plurialgo.langages.modele.Noeud;
 
 
 /**
- * Cette classe permet de transformer un code Larp en en un objet de classe Programme.
+ * Cette classe permet de transformer un code Larp en un objet de classe Programme.
  */
 public class AnalyseurLarp implements iAnalyseur {
 	
@@ -106,10 +106,12 @@ public class AnalyseurLarp implements iAnalyseur {
 			if (mot_maj.equals("POUR")) {
 				buf_larp.append(mot_maj); continue;
 			}
-			if (mot_maj.equals("JUSQU'À") || mot_maj.equals("JUSQU'A")) {
+			//if (mot_maj.equals("JUSQU'À") || mot_maj.equals("JUSQU'A")) {
+			if (mot_maj.length()==7 && mot_maj.startsWith("JUSQU'")) {
 				buf_larp.append("JUSQU'A"); continue;
 			}
-			if (mot_maj.equals("INCRÉMENT") || mot_maj.equals("INCREMENT")) {
+			//if (mot_maj.equals("INCRÉMENT") || mot_maj.equals("INCREMENT")) {
+			if (mot_maj.length()==9 && mot_maj.startsWith("INCR") && mot_maj.endsWith("MENT")) {
 				buf_larp.append("INCREMENT"); continue;
 			}
 			if (mot_maj.equals("FAIRE")) {
@@ -127,16 +129,23 @@ public class AnalyseurLarp implements iAnalyseur {
 			if (mot_maj.equals("LIRE")) {
 				buf_larp.append(mot_maj); continue;
 			}
-			if (mot_maj.equals("ÉCRIRE") || mot_maj.equals("ECRIRE")) {
+			//if (mot_maj.equals("ÉCRIRE") || mot_maj.equals("ECRIRE")) {
+			if (mot_maj.length()==6 && mot_maj.endsWith("CRIRE")) {
 				buf_larp.append("ECRIRE"); continue;
 			}
-			if (mot_maj.equals("DEBUT") || mot_maj.equals("DÉBUT")) {
+			//if (mot_maj.equals("REQUÊTE") || mot_maj.equals("REQUETE")) {
+			if (mot_maj.length()==7 && mot_maj.startsWith("REQU") && mot_maj.endsWith("TE")) {
+				buf_larp.append("REQUETE"); continue;
+			}
+			//if (mot_maj.equals("DEBUT") || mot_maj.equals("DÉBUT")) {
+			if (mot_maj.length()==5 && mot_maj.startsWith("D") && mot_maj.endsWith("BUT")) {
 				buf_larp.append("DEBUT"); continue;
 			}
 			if (mot_maj.equals("FIN")) {
 				buf_larp.append(mot_maj); continue;
 			}
-			if (mot_maj.equals("EXECUTER") || mot_maj.equals("EXÉCUTER")) {
+			//if (mot_maj.equals("EXECUTER") || mot_maj.equals("EXÉCUTER")) {
+			if (mot_maj.length()==8 && mot_maj.startsWith("EX") && mot_maj.endsWith("CUTER")) {
 				buf_larp.append("EXECUTER"); continue;
 			}
 			if (mot_maj.equals("ENTRER")) {
@@ -183,7 +192,7 @@ public class AnalyseurLarp implements iAnalyseur {
 					String gauche = ligne.substring(0, i);
 					if (gauche!=null) aff.var = gauche.trim();
 					String droite = ligne.substring(i+1, ligne.length());
-					if (droite!=null) aff.expression = droite;
+					if (droite!=null) aff.expression = droite.trim();
 				}
 				else if (this.isSi(ligne)) {
 					Instruction instr = new Instruction("si");
@@ -278,6 +287,12 @@ public class AnalyseurLarp implements iAnalyseur {
 				else if (this.isLire(ligne)) {
 					if (ignorerLire && (cur_oper==null)) continue;
 					String parametres = Divers.remplacer(ligne, "LIRE", "");
+					if (ligne.startsWith("REQUETE")) {
+						int i = ligne.lastIndexOf("'");	// dernier guillemet (s'il existe)
+						int j = ligne.indexOf(",", i+1);
+						if (j<0) continue;
+						parametres = ligne.substring(j+1);
+					}
 					StringTokenizer tok1 = new StringTokenizer(parametres,",",false);
 					while(tok1.hasMoreTokens()) {
 						String parametre = tok1.nextToken();
@@ -334,12 +349,16 @@ public class AnalyseurLarp implements iAnalyseur {
 					cur_oper = null;
 				}
 				else if (this.isAppel(ligne)) {
-					System.out.println("isappel " + ligne);
 					String parametre = null;
 					String parametres = null;
 					String nom = trouverNom(ligne);
 					Operation oper = (Operation) prog_xml.getOperation(nom);
-					if (oper==null) continue;
+					if (oper==null) {
+						ligne = Divers.remplacer(ligne,"EXECUTER ", "" );
+						Instruction instr = new Instruction(ligne.trim());
+						this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;
+						continue;
+					}
 					int i = ligne.indexOf("(");
 					if (i>=0) {
 						parametres = ligne.substring(i+1, ligne.lastIndexOf(")"));
@@ -549,8 +568,9 @@ public class AnalyseurLarp implements iAnalyseur {
 	}	
 	
 	private boolean isLire(String ligne) {
-		if (!ligne.startsWith("LIRE")) return false;
-		return true;
+		if (ligne.startsWith("LIRE")) return true;
+		if (ligne.startsWith("REQUETE")) return true;
+		return false;
 	}	
 	
 	private boolean isEcrire(String ligne) {

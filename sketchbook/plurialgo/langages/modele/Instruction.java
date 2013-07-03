@@ -351,26 +351,6 @@ public class Instruction extends Noeud {
 		if (oper==null) return false;
 		return oper.isFonction();
 	}
-	
-	public boolean isAppelLecture(Programme prog) {
-		Operation oper = getAppel(prog);
-		if (oper==null) return false;
-		for (Iterator<Instruction> iter=oper.instructions.iterator(); iter.hasNext();) {
-			Instruction instr = iter.next();
-			if (instr.isLecture()) return true;
-		}
-		return false;
-	}
-	
-	public boolean isAppelEcriture(Programme prog) {
-		Operation oper = getAppel(prog);
-		if (oper==null) return false;
-		for (Iterator<Instruction> iter=oper.instructions.iterator(); iter.hasNext();) {
-			Instruction instr = iter.next();
-			if (instr.isEcriture()) return true;
-		}
-		return false;
-	}
 
 	// ---------------------------------------------
 	// divers
@@ -382,15 +362,37 @@ public class Instruction extends Noeud {
 		return false;
 	}
 	
-	public boolean isCode() {
-		if (nom==null) return false;
-		if (nom.equalsIgnoreCase("_code_")) return true;
-		return false;
-	}
-	
 	public boolean isCommentaire() {
 		if (nom==null) return false;
 		return nom.startsWith("//");
+	}
+	
+	public boolean isPrimitive() {
+		if (nom==null) return false;
+		if (nom.startsWith("//")) return false;
+		if (nom.contains("////")) return true;
+		int i = nom.indexOf("("); 
+		if (i<2) return false;	// au moins 1 caractère pour le nom
+		int j = nom.lastIndexOf(")"); 
+		if (j<i) return false;
+		return true;
+	}
+	
+	public String getPrimitive() {
+		int i = nom.indexOf("////");
+		if (i>0) {
+			return nom.substring(0, i).trim();
+		}
+		i = nom.lastIndexOf(")"); 
+		return nom.substring(0, i+1).trim();
+	}
+	
+	public String getPrimitiveCommentaire() {
+		int i = nom.indexOf("////");
+		if (i>0) {
+			return nom.substring(i+4, nom.length()).trim();
+		}
+		return null;
 	}
 	
 	public void ecrireSql(Programme prog, StringBuffer bufInto, StringBuffer bufVal, StringBuffer bufPrep) {

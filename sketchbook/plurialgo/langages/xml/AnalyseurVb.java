@@ -199,7 +199,7 @@ public class AnalyseurVb implements iAnalyseur {
 					String gauche = ligne.substring(0, i);
 					if (gauche!=null) aff.var = gauche.trim();
 					String droite = ligne.substring(i+1, ligne.length());
-					if (droite!=null) aff.expression = droite;
+					if (droite!=null) aff.expression = droite.trim();
 					boolean ajouterInstr = true;
 					if (cur_oper!=null) {
 						if (aff.var.equals(cur_oper.nom)) {
@@ -382,7 +382,12 @@ public class AnalyseurVb implements iAnalyseur {
 					String parametres = null;
 					String nom = trouverNom(ligne);
 					Operation oper = (Operation) prog_xml.getOperation(nom);
-					if (oper==null) continue;
+					if (oper==null) {
+						ligne = Divers.remplacer(ligne,"CALL ", "" );
+						Instruction instr = new Instruction(ligne.trim());
+						this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;
+						continue;
+					}
 					int i = ligne.indexOf("(");
 					if (i>=0) {
 						parametres = ligne.substring(i+1, ligne.lastIndexOf(")"));
