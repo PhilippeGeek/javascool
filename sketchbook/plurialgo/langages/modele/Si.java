@@ -103,7 +103,7 @@ public class Si extends Noeud {
 	
 	public final String getCondition() {
 		if (condition==null) return "";
-		if (!condition.trim().startsWith("(")) return "("+condition+")"; 
+		if (!condition.trim().startsWith("(") || !condition.trim().endsWith(")")) return "("+condition+")"; 
 		return condition;
 	}
 	

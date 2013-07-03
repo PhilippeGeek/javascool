@@ -540,6 +540,16 @@ public class AnalyseurXml {
 					if (i_pile>0) i_pile--;
 					cur_nd = cur_nd.parent;
 				}
+				else if (this.isCommentaire(ligne)) {
+					i_pile++; pile[i_pile] = "commentaire"; 
+					Instruction instr = (Instruction) creerObjet("Instruction");
+					attr = lireAttribut(ligne, "nom");
+					instr.nom = attr;
+					this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;
+				}
+				else if (this.isFinCommentaire(ligne)) {
+					if (i_pile>0) i_pile--;
+				}
 				else if (this.isArgument(ligne)) { 
 					Instruction instr = (Instruction)cur_nd;
 					Argument arg = (Argument) creerObjet("Argument");
@@ -634,6 +644,16 @@ public class AnalyseurXml {
 						Instruction instr = (Instruction)cur_nd;
 						instr.options.add(option); option.parent = instr;
 					}
+				}
+				else if (this.isPrimitive(ligne)) {
+					i_pile++; pile[i_pile] = "primitive"; 
+					Instruction instr = (Instruction) creerObjet("Instruction");
+					attr = lireAttribut(ligne, "nom");
+					instr.nom = attr;
+					this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;
+				}
+				else if (this.isFinPrimitive(ligne)) {
+					if (i_pile>0) i_pile--;
 				}
 			}
 		}
@@ -814,6 +834,39 @@ public class AnalyseurXml {
 	private boolean isFinEcrire(String ligne) { 
 		if (!this.isFinInstruction(ligne)) return false;
 		if (!pile[i_pile].equals("ecrire")) return false;
+		return true;
+	}
+	
+	private boolean isCommentaire(String ligne) {
+		if (!this.isInstruction(ligne)) return false;
+		String attr = this.lireAttribut(ligne, "nom");
+		if (attr==null) return false;
+		if (attr.startsWith("//")) return true;
+		return false;
+	}	
+	
+	private boolean isFinCommentaire(String ligne) { 
+		if (!this.isFinInstruction(ligne)) return false;
+		if (!pile[i_pile].equals("commentaire")) return false;
+		return true;
+	}
+	
+	private boolean isPrimitive(String ligne) {
+		if (!this.isInstruction(ligne)) return false;
+		String attr = this.lireAttribut(ligne, "nom");
+		if (attr==null) return false;
+		if (attr.startsWith("//")) return false;
+		if (attr.contains("////")) return true;
+		int i = attr.indexOf("("); 
+		if (i<2) return false;	// au moins 1 caractère pour le nom
+		int j = attr.lastIndexOf(")"); 
+		if (j<i) return false;
+		return true;
+	}	
+	
+	private boolean isFinPrimitive(String ligne) { 
+		if (!this.isFinInstruction(ligne)) return false;
+		if (!pile[i_pile].equals("primitive")) return false;
 		return true;
 	}
 	

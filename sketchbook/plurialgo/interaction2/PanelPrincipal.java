@@ -7,9 +7,15 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.Color;
 import java.awt.event.*;
+import java.util.Iterator;
+import java.util.Map;
+
 import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
 
+import org.fife.ui.rtextarea.RTextArea;
+import org.javascool.gui.Desktop;
+import org.javascool.proglets.plurialgo.langages.xml.AnalyseurAlgobox;
 import org.javascool.proglets.plurialgo.langages.xml.AnalyseurJavascool;
 import org.javascool.proglets.plurialgo.langages.xml.AnalyseurLarp;
 import org.javascool.proglets.plurialgo.langages.xml.AnalyseurVb;
@@ -17,6 +23,7 @@ import org.javascool.proglets.plurialgo.langages.xml.Intermediaire;
 import org.javascool.proglets.plurialgo.langages.xml.ProgrammeDerive;
 import org.javascool.proglets.plurialgo.langages.xml.ProgrammeNouveau;
 import org.javascool.proglets.plurialgo.langages.xml.iAnalyseur;
+import org.javascool.widgets.Console;
 
 
 /**
@@ -53,6 +60,7 @@ public class PanelPrincipal extends JPanel implements ActionListener, ListSelect
 	private JButton creerButton;
 	private JButton effacerButton;
 	private JButton traduireButton, reformulerButton;
+	private JButton compilerButton;
 	
 	public PanelPrincipal (PanelInteraction pInter) {
 		this.setLayout( new BorderLayout() );
@@ -98,9 +106,9 @@ public class PanelPrincipal extends JPanel implements ActionListener, ListSelect
 		mat_booleensField = new JTextField();
 		pTypes.add( new JLabel("TYPES") );
 		pTypes.add( new JLabel("Entiers") );
-		pTypes.add( new JLabel("Réels") );
+		pTypes.add( new JLabel("Reels") );
 		pTypes.add( new JLabel("Textes") );
-		pTypes.add( new JLabel("Booléens") );
+		pTypes.add( new JLabel("Booleens") );
 		pTypes.add( new JLabel("Simples") );
 		pTypes.add( entiersField );
 		pTypes.add( reelsField );
@@ -158,10 +166,13 @@ public class PanelPrincipal extends JPanel implements ActionListener, ListSelect
 		traduireButton.setActionCommand("traduire");
 		reformulerButton = new JButton("Reformuler"); reformulerButton.addActionListener(this);
 		reformulerButton.setActionCommand("reformuler");
+		compilerButton = new JButton("Compiler++"); compilerButton.addActionListener(this);
+		compilerButton.setActionCommand("compiler");
         hbox.add(creerButton); hbox.add(Box.createHorizontalStrut(5));
         hbox.add(effacerButton); hbox.add(Box.createHorizontalStrut(5));
         hbox.add(traduireButton); hbox.add(Box.createHorizontalStrut(5));
         hbox.add(reformulerButton); hbox.add(Box.createHorizontalStrut(5));
+        hbox.add(compilerButton); hbox.add(Box.createHorizontalStrut(5));
         // panel final
 		vbox.add(Box.createGlue());
 		vbox.add(pAlgo);
@@ -193,6 +204,10 @@ public class PanelPrincipal extends JPanel implements ActionListener, ListSelect
 			}
 			else if (e.getSource() == this.reformulerButton || ("reformuler".equals(cmd))) {	
 				this.reformuler();		
+			}
+			else if (e.getSource() == this.compilerButton || ("compiler".equals(cmd))) {	
+				this.compilerPlus();	
+				//org.javascool.gui.EditorWrapper.compilerPlus();
 			}
 		} catch (Exception e1) {
 			e1.printStackTrace();
@@ -260,7 +275,7 @@ public class PanelPrincipal extends JPanel implements ActionListener, ListSelect
 		this.niv_affichageList.setSelectedIndex(0);
 		this.niv_calculList.setSelectedIndex(0);
 		this.niv_groupementList.setSelectedIndex(0);
-		this.groupeField.setText("");		
+		this.groupeField.setText("");
 	}	
 	
 	private void effacerTypes() {
@@ -289,6 +304,9 @@ public class PanelPrincipal extends JPanel implements ActionListener, ListSelect
 		else if (pInter.isJavascool()) {
 			analyseur = new AnalyseurJavascool(pInter.getText(), false, false);
 		}
+		else if (pInter.isAlgobox()) {
+			analyseur = new AnalyseurAlgobox(pInter.getText(), false, false);
+		}
 		else if (pInter.isLarp()) {
 			inter = pInter.creerIntermediaireLarp("traduire");
 			analyseur = new AnalyseurLarp(pInter.getText(), false, false, inter);
@@ -296,7 +314,7 @@ public class PanelPrincipal extends JPanel implements ActionListener, ListSelect
 		else {
 			pInter.clearConsole();
 			pInter.writeConsole("---------- Avertissement ----------\n");
-			pInter.writeConsole("le programme à traduire ne semble pas etre du javascool, du visual basic ou du Larp");
+			pInter.writeConsole("le programme à traduire ne semble pas etre du javascool, du visual basic, du Larp ou de l'Algobox");
 			return;
 		}
 		// ajout du resultat dans les onglets Complements et Resultats
@@ -316,6 +334,9 @@ public class PanelPrincipal extends JPanel implements ActionListener, ListSelect
 		else if (pInter.isJavascool()) {
 			analyseur = new AnalyseurJavascool(pInter.getText(), true, true);
 		}
+		else if (pInter.isAlgobox()) {
+			analyseur = new AnalyseurAlgobox(pInter.getText(), true, true);
+		}
 		else if (pInter.isLarp()) {
 			inter = pInter.creerIntermediaireLarp("reformuler");
 			analyseur = new AnalyseurLarp(pInter.getText(), true, true, inter);
@@ -323,7 +344,7 @@ public class PanelPrincipal extends JPanel implements ActionListener, ListSelect
 		else {
 			pInter.clearConsole();
 			pInter.writeConsole("---------- Avertissement ----------\n");
-			pInter.writeConsole("le programme à reformuler ne semble pas etre du javascool ou du visual basic");
+			pInter.writeConsole("le programme à traduire ne semble pas etre du javascool, du visual basic, du Larp ou de l'Algobox");
 		}
 		// construction du programme dérivé
 		pInter.messageWarning(analyseur.getProgramme());
@@ -333,6 +354,60 @@ public class PanelPrincipal extends JPanel implements ActionListener, ListSelect
 		pInter.add_xml(new org.javascool.proglets.plurialgo.langages.xml.Programme(progDer));
 		pInter.pPrincipal.algoField.setText(progDer.nom);
 		pInter.traduireXml();
-	}			
-
+	}	
+	
+	private void compilerPlus() {
+		Console.getInstance().clear();
+		String contenu_courant = org.javascool.gui.EditorWrapper.getText();
+		RTextArea area = org.javascool.gui.EditorWrapper.getRTextArea();
+		if (!contenu_courant.contains(" main(")) {
+			area.append("\n");
+			area.append("void main() {");
+			area.append("println(\"Pensez au 'void main()' !\");");
+			area.append("}");
+			Desktop.getInstance().saveCurrentFile();
+			Desktop.getInstance().compileFile();
+			org.javascool.gui.EditorWrapper.setText(contenu_courant);
+			Desktop.getInstance().saveCurrentFile();
+		}
+		else if (contenu_courant.contains("//@import")) {
+			int rep = javax.swing.JOptionPane.showConfirmDialog(null, "Actualiser les importations ?");
+			if (rep==javax.swing.JOptionPane.NO_OPTION) {
+				Desktop.getInstance().saveCurrentFile();
+				Desktop.getInstance().compileFile();
+			}
+			else if (rep==javax.swing.JOptionPane.YES_OPTION) {
+				org.javascool.gui.EditorWrapper.setText(contenu_courant.substring(0, contenu_courant.indexOf("//@import")));
+				Map<String,String> others = org.javascool.gui.EditorWrapper.getOthers();
+				Iterator<String> iter = others.keySet().iterator();
+				while (iter.hasNext()) {
+					String nom_fich = iter.next();
+					String contenu = others.get(nom_fich);
+					if (contenu.contains(" main(")) continue;
+					area.append("\n");
+					area.append("//@import : " + nom_fich + "\n");
+					area.append(contenu);
+					area.append("\n");
+				}
+				Desktop.getInstance().saveCurrentFile();
+				Desktop.getInstance().compileFile();
+			}
+		}
+		else {
+			Map<String,String> others = org.javascool.gui.EditorWrapper.getOthers();
+			Iterator<String> iter = others.keySet().iterator();
+			while (iter.hasNext()) {
+				String nom_fich = iter.next();
+				String contenu = others.get(nom_fich);
+				if (contenu.contains(" main(")) continue;
+				area.append("\n");
+				area.append("//@import : " + nom_fich + "\n");
+				area.append(contenu);
+				area.append("\n");
+			}
+			Desktop.getInstance().saveCurrentFile();
+			Desktop.getInstance().compileFile();
+		}
+	}
+	
 }

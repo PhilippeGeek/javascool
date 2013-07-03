@@ -113,7 +113,7 @@ public class PanelHtml extends JPanel implements ActionListener, HyperlinkListen
 				sites[i_site] = PanelInteraction.urlDoc + desc;
 				this.showHtml(PanelInteraction.urlDoc + desc);	
 			}
-			else if (desc.endsWith(".txt")||desc.endsWith(".jvs")||desc.endsWith(".bas")) {
+			else if (desc.endsWith(".txt")||desc.endsWith(".jvs")||desc.endsWith(".bas")||desc.endsWith(".alg")) {
 				String nom_url = PanelInteraction.urlDoc + desc;
 				pInter.clearConsole();
 				StringBuffer buf = this.ouvrir(nom_url);
@@ -178,14 +178,14 @@ public class PanelHtml extends JPanel implements ActionListener, HyperlinkListen
 				}	
 				if (desc.equals("ex_proc_out")) {
 					pInter.pPrincipal.resultatsField.setText("prixTotal,remise");
-					pInter.pPrincipal.niv_calculList.setSelectedIndex(1);	// procédure
+					pInter.pPrincipal.niv_calculList.setSelectedIndex(1);	// proc�dure
 				}
 				if (desc.equals("ex_proc_inout")) {
 					pInter.pPrincipal.donneesField.setText("quantite, prixTotal"); 
 					pInter.pPrincipal.resultatsField.setText("prixTotal");
 					pInter.pPrincipal.entiersField.setText("quantite"); 
 					pInter.pPrincipal.reelsField.setText("prixTotal, remise"); 
-					pInter.pPrincipal.niv_calculList.setSelectedIndex(1);	// procédure
+					pInter.pPrincipal.niv_calculList.setSelectedIndex(1);	// proc�dure
 				}	
 				if (desc.equals("ex_intro")) {
 					pInter.pPrincipal.reelsField.setText("prixTotal,prixUnitaire"); 

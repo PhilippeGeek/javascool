@@ -101,6 +101,8 @@ public class AnalyseurJavascool implements iAnalyseur {
 		Divers.remplacer(buf_jvs, "\\\"", " ");
 		Divers.remplacer(buf_jvs, "'", " ");
 		Divers.remplacer(buf_jvs, "\"", "'");
+		Divers.remplacer(buf_jvs, "readInteger", "readInt");
+		Divers.remplacer(buf_jvs, "readDecimal", "readDouble");
 	}
 	
 	private void jvsEnXml(boolean ignorerLire, boolean ignorerEcrire) {
@@ -118,9 +120,7 @@ public class AnalyseurJavascool implements iAnalyseur {
 			while(tok.hasMoreTokens()) {
 				String ligne = tok.nextToken();
 				//System.out.println("ligne:"+ligne);
-				if (this.isImport(ligne)) {					
-				}
-				else if (this.isClasse(ligne)) {
+				if (this.isClasse(ligne)) {
 					i_pile++; pile[i_pile] = "class"; 
 					cur_class = (Classe) prog_xml.getClasse(trouverNom(ligne));
 				}
@@ -341,6 +341,14 @@ public class AnalyseurJavascool implements iAnalyseur {
 				else if (this.isFinFonct(ligne)) {
 					if (i_pile>0) i_pile--;
 					cur_nd = cur_nd.parent;
+					if (cur_oper!=null) {
+						InfoTypee info;
+						InfoTypeeList liste = new InfoTypeeList();
+						liste.addVariables(cur_oper.variables);
+						if ((info=liste.getInfo(cur_oper.getRetour().nom))!=null) {
+								cur_oper.variables.remove(info);
+						}
+					}
 					cur_oper = null;
 				}
 				else if (this.isDim(ligne)) {
@@ -419,6 +427,11 @@ public class AnalyseurJavascool implements iAnalyseur {
 						}
 					}
 				}
+				else if (this.isPrimitive(ligne)) {
+					int j = ligne.lastIndexOf(")"); 
+					Instruction instr = new Instruction(ligne.substring(0, j+1));
+					this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;
+				}
 			}
 		}
 		catch (Exception ex) {
@@ -486,6 +499,8 @@ public class AnalyseurJavascool implements iAnalyseur {
 			}
 			else if (this.isPropriete(ligne)) {
 				Variable var = new Variable();
+				int i = ligne.indexOf("=");
+				if (i>0) ligne = ligne.substring(0, i);
 				var.nom = trouverNom(ligne);
 				var.type = trouverType(ligne);
 				cur_class.proprietes.add(var);
@@ -829,7 +844,7 @@ public class AnalyseurJavascool implements iAnalyseur {
 		return true;
 	}	
 	
-	boolean isPropriete(String ligne) {
+	private boolean isPropriete(String ligne) {
 		if (!pile[i_pile].equals("class")) return false;
 		String type = trouverType(ligne);
 		if (type.isEmpty()) return false;
@@ -837,31 +852,31 @@ public class AnalyseurJavascool implements iAnalyseur {
 		return true;
 	}	
 	
-	boolean isClasse(String ligne) {
+	private boolean isClasse(String ligne) {
 		if (!ligne.startsWith("class ")) return false;
 		return true;
 	}
 	
-	boolean isFinClasse(String ligne) {
+	private boolean isFinClasse(String ligne) {
 		if (!ligne.equals("}")) return false;
 		if (!pile[i_pile].equals("class")) return false;
 		return true;
 	}	
 	
-	boolean isConstructeur(String ligne) {
+	private boolean isConstructeur(String ligne) {
 		int i = ligne.indexOf("(");
 		if (i<0) return false;
 		String nom_cl = ligne.substring(0,i).trim();
 		return (prog_xml.getClasse(nom_cl)!=null);
 	}
 	
-	boolean isFinConstructeur(String ligne) {
+	private boolean isFinConstructeur(String ligne) {
 		if (!ligne.equals("}")) return false;
 		if (!pile[i_pile].equals("constructeur")) return false;
 		return true;
 	}	
 	
-	boolean isAppel(String ligne) {
+	private boolean isAppel(String ligne) {
 		if (!ligne.contains("(")) return false;
 		if (!ligne.contains(")")) return false;
 		String nom = trouverNom(ligne).trim();
@@ -872,9 +887,12 @@ public class AnalyseurJavascool implements iAnalyseur {
 		return false;
 	}
 	
-	boolean isImport(String ligne) {
-		if (ligne.contains("@import")) return true;
-		return false;
+	private boolean isPrimitive(String ligne) {
+		int i = ligne.indexOf("("); 
+		if (i<0) return false;
+		int j = ligne.lastIndexOf(")"); 
+		if (j<i) return false;
+		return true;	// isPrimitive à tester en dernier pour eliminer si, tantque...
 	}
 
 }

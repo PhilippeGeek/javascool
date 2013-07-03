@@ -82,6 +82,13 @@ public class Instruction extends org.javascool.proglets.plurialgo.langages.model
 		else if (isCommentaire()) {
 			prog.commenter(buf, nom.substring(2), indent);
 		}
+		else if (isPrimitive()) {
+			Divers.ecrire(buf, "EXECUTER " + this.getPrimitive(), indent);
+			String comm = this.getPrimitiveCommentaire();
+			if (comm!=null) {
+				Divers.ecrire(buf, " ' " + comm);
+			}
+		}
 		else {
 			Divers.ecrire(buf, nom, indent);
 		}

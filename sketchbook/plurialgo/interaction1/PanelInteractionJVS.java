@@ -37,7 +37,7 @@ public class PanelInteractionJVS extends PanelInteraction {
 	 * Redéfinition pour changer la configuration (langages, l'url de documentation...).
 	 */
 	public void initConfig() {
-		PanelInteraction.urlDoc = "/org/javascool/proglets/plurialgo/aideJVS/";
+		PanelInteraction.urlDoc = "/org/javascool/proglets/plurialgo/";
 		String[] langages = { "javascool", "vb", "larp", "javascript", "java" };
 		PanelInteraction.langList = langages;
 	}
