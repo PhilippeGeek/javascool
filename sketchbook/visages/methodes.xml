@@ -18,7 +18,7 @@ Les deux matrices multipliées doivent être telles que  la matrice 1 doit avoir
    Syntaxe : <font color="red">float[][] </font><font color="green">somme</font>(<font color="red">float[][] </font> matrice1, <font color="red">float[][] </font> matrice2)
 </div>
 Cette fonction utilise des tableaux de float ayant <u>obligatoirement</u> au moins deux colonnes.<BR></BR>
-Elle renvoie une matrice égale à la somme de deux <l class="newtab" link="http://fr.wikipedia.org/wiki/Matrice_%28math%C3%A9matiques%29" text="matrices" />.<BR></BR>
+Elle renvoie une matrice égale à la somme de deux <l link="http://fr.wikipedia.org/wiki/Matrice_%28math%C3%A9matiques%29" text="matrices" />.<BR></BR>
 Les deux matrices  doivent le même nombre de colonnes et de lignes.
 </div>
 
@@ -28,7 +28,7 @@ Les deux matrices  doivent le même nombre de colonnes et de lignes.
 Syntaxe : <font color="red">float[][] </font><font color="green">transposee</font>(<font color="red">float[][] </font> matrice1)
 </div>
 Cette fonction utilise des tableaux de float ayant <u>obligatoirement</u> au moins deux colonnes.<BR></BR>
-Elle renvoie une matrice égale à la transposée d'une <l class="newtab" link="http://fr.wikipedia.org/wiki/Matrice_%28math%C3%A9matiques%29" text="matrice" />.<BR></BR>
+Elle renvoie une matrice égale à la transposée d'une <l link="http://fr.wikipedia.org/wiki/Matrice_%28math%C3%A9matiques%29" text="matrice" />.<BR></BR>
 
 </div>
 <BR></BR>
@@ -37,7 +37,7 @@ Elle renvoie une matrice égale à la transposée d'une <l class="newtab" link="
 Syntaxe : <font color="red">float[][] </font><font color="green">proportionnelle</font>(<font color="red">float[][] </font> matrice1, <font color="red">float </font> constante)
 </div>
 Cette fonction utilise des tableaux de float ayant <u>obligatoirement</u> au moins deux colonnes.<BR></BR>
-Elle renvoie une matrice égale au produit d'une <l class="newtab" link="http://fr.wikipedia.org/wiki/Matrice_%28math%C3%A9matiques%29" text="matrices" /> par une constante.<BR></BR>
+Elle renvoie une matrice égale au produit d'une <l link="http://fr.wikipedia.org/wiki/Matrice_%28math%C3%A9matiques%29" text="matrices" /> par une constante.<BR></BR>
 
 </div>
 <BR></BR>
@@ -46,7 +46,7 @@ Elle renvoie une matrice égale au produit d'une <l class="newtab" link="http://
 Syntaxe : <font color="red">float[][] </font><font color="green"> somme_constante</font>(<font color="red">float[][] </font> matrice1, <font color="red">float </font>constante)
 </div>
 Cette fonction utilise des tableaux de float ayant <u>obligatoirement</u> au moins deux colonnes.<BR></BR>
-Elle renvoie une matrice dont les composantes sont égales à la somme des composantes d'une  <l class="newtab" link="http://fr.wikipedia.org/wiki/Matrice_%28math%C3%A9matiques%29" text="matrice" /> 
+Elle renvoie une matrice dont les composantes sont égales à la somme des composantes d'une  <l link="http://fr.wikipedia.org/wiki/Matrice_%28math%C3%A9matiques%29" text="matrice" /> 
 avec une même constante .<BR></BR>
 
 </div>
@@ -56,8 +56,8 @@ avec une même constante .<BR></BR>
 Syntaxe : <font color="red">float[][] </font> <font color="green">valeur_absolue</font>(<font color="red">float[][] </font> matrice1)
 </div>
 Cette fonction utilise des tableaux de float ayant <u>obligatoirement</u> au moins deux colonnes.<BR></BR>
-Elle renvoie une <l class="newtab" link="http://fr.wikipedia.org/wiki/Matrice_%28math%C3%A9matiques%29" text="matrices" />
- dont les composantes sont les valeurs absolues des composantes d'une <l class="newtab" link="http://fr.wikipedia.org/wiki/Matrice_%28math%C3%A9matiques%29" text="matrices" /> .<BR></BR>
+Elle renvoie une <l link="http://fr.wikipedia.org/wiki/Matrice_%28math%C3%A9matiques%29" text="matrices" />
+ dont les composantes sont les valeurs absolues des composantes d'une <l link="http://fr.wikipedia.org/wiki/Matrice_%28math%C3%A9matiques%29" text="matrices" /> .<BR></BR>
 
 </div>
 <BR></BR>
@@ -66,8 +66,8 @@ Elle renvoie une <l class="newtab" link="http://fr.wikipedia.org/wiki/Matrice_%2
 Syntaxe : <font color="red">float[][] </font><font color="green">racine</font>(<font color="red">float[][] </font> matrice1)
 </div>
 Cette fonction utilise des tableaux de float ayant <u>obligatoirement</u> au moins deux colonnes.<BR></BR>
-Elle renvoie une <l class="newtab" link="http://fr.wikipedia.org/wiki/Matrice_%28math%C3%A9matiques%29" text="matrices" />
- dont les composantes sont les racines carrées  des composantes d'une<l class="newtab" link="http://fr.wikipedia.org/wiki/Matrice_%28math%C3%A9matiques%29" text="matrices" /> .<BR></BR>
+Elle renvoie une <l link="http://fr.wikipedia.org/wiki/Matrice_%28math%C3%A9matiques%29" text="matrices" />
+ dont les composantes sont les racines carrées  des composantes d'une <l link="http://fr.wikipedia.org/wiki/Matrice_%28math%C3%A9matiques%29" text="matrices" /> .<BR></BR>
 Si la composante est négative, la fonction renvoie une valeur  nulle.
 </div>
 <BR></BR>
@@ -87,7 +87,7 @@ Elle calcule la moyenne des composantes situées sur chaque ligne d'une matrice 
 Syntaxe :  <font color="green">calcul_vecteurs_propres</font>(float[][] matrice,  <font color="red">int </font> nbvecteurspropres )
 </div>
 Cette fonction utilise des tableaux de float ayant <u>obligatoirement</u> au moins deux colonnes.<BR></BR>
-Elle  calcule les "nbvecteurspropres" premiers <l class="newtab" link="http://fr.wikipedia.org/wiki/Valeur_propre,_vecteur_propre_et_espace_propre vecteurs propres et valeur propres d'une matrice" texte="vecteurs propres"/>. <BR></BR>
+Elle  calcule les "nbvecteurspropres" premiers <l link="http://fr.wikipedia.org/wiki/Valeur_propre,_vecteur_propre_et_espace_propre vecteurs propres et valeur propres d'une matrice" texte="vecteurs propres"/>. <BR></BR>
 Elle créee un fichier texte dans le répertoire de travail nommé "vecteurs_propres.txt"  contenant les composantes de ces vecteurs propres. 
 Ce fichier contient les composantes selon les lignes. Chaque colonne est un vecteur.<BR></BR>
  Un autre fichier "valeurs_propres.txt" contenant les valeurs propres est également enregistré dans le repertoire de travail.
@@ -98,7 +98,7 @@ Ce fichier contient les composantes selon les lignes. Chaque colonne est un vect
 <div class="code">
 Syntaxe : <font color="red">float </font> <font color="green">produit_scalaire</font>(<font color="red">float[] </font> vecteur1; <font color="red">float[] </font> vecteur2)
 </div>
-Cette fonction donne un nombre float égal au <l class="newtab" link="http://fr.wikipedia.org/wiki/Produit_scalaire" text="produit scalaire" />  de deux vecteurs. <BR></BR>
+Cette fonction donne un nombre float égal au <l link="http://fr.wikipedia.org/wiki/Produit_scalaire" text="produit scalaire" />  de deux vecteurs. <BR></BR>
 Les deux vecteurs doivent être de même dimension.
 </div>
 

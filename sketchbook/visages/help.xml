@@ -40,9 +40,9 @@ des "directions" privilégiées sur lesquelles sont regroupés les pixels des im
 <div class="left" ><l icon="non_corellees.png"  />  Données brutes non corellées.</div>
 <div class="left" ><l icon="principale1.png" /> Les mêmes données classées selon une direction principale après étude statistique.</div>
 <div class="left" ><l icon="principale2.png" /> Les mêmes données classées selon une autre direction principale après étude statistique.</div>
-Images provenant du site <l class="newtab" link="http://fr.wikipedia.org/wiki/Valeur_propre,_vecteur_propre_et_espace_propre" text="wikipédia" /><BR></BR>
+Images provenant du site <l link="http://fr.wikipedia.org/wiki/Valeur_propre,_vecteur_propre_et_espace_propre" text="wikipédia" /><BR></BR>
 La proglet utilise donc les tableau à une colonne et n lignes encore appelés vecteurs et des tableaux à p colonnes et n lignes encore appelés 
-<l class="newtab" link="http://fr.wikipedia.org/wiki/Matrice_%28math%C3%A9matiques%29" text="matrices" />.
+<l link="http://fr.wikipedia.org/wiki/Matrice_%28math%C3%A9matiques%29" text="matrices" />.
 Elle est munie de fonctions ou <l class="newtab" link="methodes.htm" text="méthodes" /> qui permettent de réaliser les différentes
  opérations entre les vecteurs ou entre les matrices.
 
