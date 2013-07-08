@@ -1,7 +1,7 @@
 <div title="La «proglet» analogNumerique">
  <p class="margin">
     <p>Cliquer <l class="newtab" link="exercice.htm" text="ici"/> pour faire l'activité.</p>
-    <p>Cliquer <l class="newtab" link="../dichotomie/tutoriel.htm" text="ici"/> pour lire le tutoriel.</p>
+    <p>Cliquer <l class="newtab" link="http://javascool.gforge.inria.fr?page=proglets&amp;action=show&amp;id=dichotomie&amp;helpFile=./tutoriel.htm" text="ici"/> pour lire le tutoriel.</p>
   </p>
   <p>
     <p>Cette proglet permet de programmer un <l link="http://fr.wikipedia.org/wiki/Convertisseur_analogique-numérique" text="convertisseur analogique-numérique"/>, pour comprendre le mécanisme de recherche dichotomique.</p>
