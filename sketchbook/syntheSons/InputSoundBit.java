@@ -16,10 +16,10 @@ import org.javascool.tools.sound.SoundBit;
 /** Defines a microphone-input sound-bit wrapper.
  * @see <a href="InputSoundBit.java.html">code source</a>
  * @serial exclude
- * #deprecated
+ * @deprecated
  * WARNING: THIS CLASS IS DEPRECATED, USE org.javascool.tools.sound.InputSoundBit INSTEAD.
  */
-// @Deprecated
+@Deprecated
 public class InputSoundBit extends SoundBit {
   private TargetDataLine line = null;
   private boolean recording = false;

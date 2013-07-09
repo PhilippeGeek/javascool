@@ -17,11 +17,11 @@ import java.net.UnknownHostException;
 /** Définit un dialogue minimal via une socket entre deux programmes.
  * @see <a href="SocketServer.java.html">source code</a>
  * @serial exclude
- * #deprecated
+ * @deprecated
  * ATTENTION CETTE CLASSE EST DEPRECIEE : UTILISER org.javascool.tools.socket.SocketServer SVP.
  * @author Christophe Béasse <oceank2@gmail.com>
  */
-// @Deprecated
+@Deprecated
 public class SocketServer {
   // Variables de la socket
   private ServerSocket server;
