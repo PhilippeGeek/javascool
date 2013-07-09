@@ -29,10 +29,10 @@ import org.javascool.tools.sound.SoundBit;
  *
  * @see <a href="FileSoundBit.java.html">code source</a>
  * @serial exclude
- * #deprecated
+ * @deprecated
  * WARNING: THIS CLASS IS DEPRECATED, USE org.javascool.tools.sound.FileSoundBit INSTEAD.
  */
-// @Deprecated
+@Deprecated
 public class FileSoundBit extends SoundBit {
   /** Constructs a sound defined from a buffered file.
    * @param location Audio file path: either a file-name or an URL-name or an URI of the form <tt>midi:<i>name</i></tt> allowing to load a midi sound.
