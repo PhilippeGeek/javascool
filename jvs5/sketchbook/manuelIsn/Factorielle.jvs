@@ -1,9 +1,0 @@
-//  Ces programmes sont sous licence CeCILL-B V1.
-void main() {
-  int n, i, f;
-  n = readInt();
-  f = 1;
-  for(i = 1; i <= n; i = i + 1)
-    f = f * i;
-  println(f);
-}

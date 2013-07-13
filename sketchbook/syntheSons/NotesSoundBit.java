@@ -12,9 +12,9 @@ import java.util.ArrayList;
 
 import org.javascool.tools.sound.SoundBit;
 
-/** Creates a monophonic ``piccolo´´ sound-bit from a note sequence (still in development).
+/** Creates a monophonic ``piccolo´´ sound-bit from a note sequence.
  * <div>The sound-bit can be changed using the <tt><a href="#reset(java.lang.String)">reset</a>(notes)</tt> method.</div>
- * @param notes <a name="notes"></a> Definition of note's sequence and note:<ul>
+ * Notes <a name="notes"></a> Definition of note's sequence and note:<ul>
  * <li>The notes sequences is written as:<ul>
  *   <li> a sequence of notes, separated with spaces;</li>
  *   <li> while note's duration is noted by an integer, from <tt>1</tt> to <tt>999</tt>, separated with spaces;
@@ -25,8 +25,8 @@ import org.javascool.tools.sound.SoundBit;
  *   <li>other pattern being ignored.</li>
  * </ul> e.g. <tt>e5 e5b e5 e5b e5 e5b e5 b d5 c5 4 a | 1 h c e a 4 b | 1 h e g g# 4 a</tt> is more or less the Elise'letter piano right-hand 1st notes.</li>
  * <li>Each note is written as <tt>A4</tt> for the middle-board <tt>A</tt> (<i>La</i>) at 440Hz. <ul>
- *   <li>The letter: <table>
- *     <tr><td><tt>A</tt></td><td><tt>B</tt></td><td><tt>C</tt></td><td><tt>D</tt></td><td><tt>E</tt></td><td><tt>F</tt></td><td><tt>G</tt></td><td><tt>H</tt></td></tr>
+ *   <li>The letter: <table witdh="900%">
+ *     <tr><td width="10%"><tt>A</tt></td><td width="10%"><tt>B</tt></td><td width="10%"><tt>C</tt></td><td width="10%"><tt>D</tt></td><td width="10%"><tt>E</tt></td><td width="10%"><tt>F</tt></td><td width="10%"><tt>G</tt></td><td width="10%"><tt>H</tt></td></tr>
  *     <tr><td><i>La</i></td><td><i>Si</i></td><td><i>Do</i></td><td><i>Ré</i></td><td><i>Mi</i></td><td><i>Fa</i></td><td><i>Sol</i></td><td><i>silence</i></td></tr>
  *   </table> stands for the note name. The <tt>h</tt> stands for a ``halt´´, a silence.</li>
  *   <li>The digit, from <tt>0</tt> to <tt>8</tt> included, stands for the octave, default is <tt>4</tt>.</li>
@@ -70,10 +70,15 @@ public class NotesSoundBit extends SoundBit {
         return 0;
       }
     }
-    private double pl = 0, pr = 0;
   };
   private note freqs[] = new note[0];
   private double tempo = 0.25;
+  private double pl = 0, pr = 0;
+  @Override
+  public void play() {
+    pl = 0;pr = 0;
+    super.play();
+  }
   @Override
   public AudioInputStream getStream() {
     return sound.getStream();
@@ -105,11 +110,12 @@ public class NotesSoundBit extends SoundBit {
     return freqs.toArray(new note[freqs.size()]);
   }
   // Low-level note defined by a frequency and a intensity
-  private static class note { note(double f, double a) {
-                                this.f = f;
-                                this.a = a;
-                              }
-                              double f, a;
+  private static class note { 
+    note(double f, double a) {
+      this.f = f;
+      this.a = a;
+    }
+    double f, a;
   }
 
   // Gets the frequency of a given note.
@@ -117,10 +123,8 @@ public class NotesSoundBit extends SoundBit {
     // Frequency constants
     final double
       SharpPitch = Math.pow(2.0, 1.0 / 12.0), FlatPitch = Math.pow(SharpPitch, -1),
-      Tones[] = new double[] { 1,
-                               Math.pow(SharpPitch, 2), Math.pow(SharpPitch, -9), Math.pow(SharpPitch, -7), Math.pow(SharpPitch, -5), Math.pow(SharpPitch, -4), Math.pow(SharpPitch, -2), 0 },
-      Octaves[] =
-      new double[] { Math.pow(2, -4), Math.pow(2, -3), Math.pow(2, -2), Math.pow(2, -1), Math.pow(2, 0), Math.pow(2, 1), Math.pow(2, 2), Math.pow(2, 3), Math.pow(2, 4) };
+      Tones[] = new double[] { 1, Math.pow(SharpPitch, 2), Math.pow(SharpPitch, -9), Math.pow(SharpPitch, -7), Math.pow(SharpPitch, -5), Math.pow(SharpPitch, -4), Math.pow(SharpPitch, -2), 0 },
+      Octaves[] = new double[] { Math.pow(2, -4), Math.pow(2, -3), Math.pow(2, -2), Math.pow(2, -1), Math.pow(2, 0), Math.pow(2, 1), Math.pow(2, 2), Math.pow(2, 3), Math.pow(2, 4) };
     // Note syntax
     note = note.toLowerCase();
     if(note.matches("[a-h][#b]?")) {
