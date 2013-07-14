@@ -10,8 +10,8 @@ cd /home/vthierry/Work/culsci/jvs
 # Définit le répertoire source et cibles et les proglets à convertir
 
 srcDir="`pwd`/sketchbook"
-dstDir="`pwd`/jvs5/sketchbook"
-prcDir="`pwd`/jvs5/processing"
+dstDir="`pwd`/jvs4-to-5/sketchbook"
+prcDir="`pwd`/jvs4-to-5/processing"
 srcProglets="`find $srcDir -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | egrep -v 'jeux2D|sampleCode|grafikformate|\.build'`"
 
 mkdir -p $prcDir/{libraries,tools,modes,sketchbook}
@@ -46,7 +46,7 @@ for p in $srcProglets
 do s="$srcDir/$p" ; d="$dstDir/$p" ; echo "Translate $p"
 
   # Copie en miroir des fichiers
-  /bin/rm -rf $d ;  svn -q export --force $s $d
+  /bin/rm -rf $d ; mkdir -p `dirname $d` ; svn -q export --force $s $d
   
   # Translation des fichiers de ressource
   pushd $d > /dev/null
@@ -65,6 +65,7 @@ do s="$srcDir/$p" ; d="$dstDir/$p" ; echo "Translate $p"
   # Basculement des fichiers processing 
   if [ -d applet ] ; then
     t=../../processing/sketchbook/$p
+    mkdir -p $t
     rm -rf applet $p.jar
     (echo "package org.javascool.proglets.$p;" ; sed "s/${p}Functions/Functions/" < ${p}Functions.java) > Functions.java ; rm ${p}Functions.java
     (echo "package org.javascool.proglets.$p;" ; echo "public class Panel extends $p {}") > Panel.java
