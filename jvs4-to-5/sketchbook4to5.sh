@@ -58,12 +58,9 @@ do s="$srcDir/$p" ; d="$dstDir/$p" ; echo "Translate $p"
 	sed 's/http:..javascool.gforge.inria.fr.[?]page=proglets&amp;action=show&amp;id=\([^&]*\)&amp;helpFile=\([^"]*\)/http:\/\/javascool.github.com\/wproglets\/javascool-proglet-\1-html\/\2/g' |\
 	sed 's/http:..javascool.gforge.inria.fr.index\.php[?]page=api/http:\/\/javascool.github.com\/wproglets\/javascool-core-api/' |\
 	sed 's/.htm"/.html"/g' > $f ; done
-  # Manipulation des fichiers java
-  if ls *.java 2>/dev/null >/dev/null ; then for f in *.java ; do cp $f $f~ ; cat $f~ |\
-     sed 's/org\.javascool/org.javascool/g' > $f
-  done ; fi
-  # Basculement des fichiers processing 
+  #
   if [ -d applet ] ; then
+    # Basculement des fichiers processing 
     t=../../processing/sketchbook/$p
     mkdir -p $t
     rm -rf applet $p.jar
@@ -72,6 +69,10 @@ do s="$srcDir/$p" ; d="$dstDir/$p" ; echo "Translate $p"
     #if [ $p = 'cryptageRSA' ] ; then echo "public class BigInteger extends java.math.BigInteger {}") > BigInteger.java ; fi
     cp *.* $t
     cd .. ; rm -rf $p
+  else
+    # Manipulation des fichiers java
+    mkdir -p $d/java
+    mv $d/*.java $d/java
   fi
   rm -f *~
   popd > /dev/null

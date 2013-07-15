@@ -3,6 +3,8 @@
 **************************************************************/
 package org.javascool.core;
 
+import java.io.File;
+
 // Used to report a throwable
 import java.lang.reflect.InvocationTargetException;
 import org.javascool.tools.FileManager;
@@ -34,14 +36,6 @@ public class Jvs2Java extends Translator {
   private String progletPackageName = null;
   // La proglet du contexte
   private Proglet proglet = null;
-
-  /**
-   * @see #translate(String, String)
-   */
-  @Override
-  public String translate(String jvsCode) {
-    return translate(jvsCode, null);
-  }
 
   /** Traduit un code javascool en langage java.
    * @param jvsCode Le code javascool à traduire
@@ -122,7 +116,7 @@ public class Jvs2Java extends Translator {
 	String main = 
 	  "public static void main(String[] usage) {" + 
 	  "    new org.javascool.widgets.MainFrame().reset(\""+jvsName+"\", "+proglet.getDimension().width+", "+proglet.getDimension().height+", "+
-	  (proglet.getPane() != null ? "org.javascool.core.ProgletEngine.getInstance().setProglet(\""+proglet.getName()+"\").getProgletPane()" : "org.javascool.widgets.Console.newInstance(true)") +
+	  (proglet.getPane() != null ? "org.javascool.core.ProgletEngine.getInstance().setProglet(\""+proglet.getName()+"\").getProgletPane()" : "org.javascool.widgets.Console.newInstance()") +
 	  ").setRunnable(new JvsToJavaTranslated"+uid+"());" +
 	  "}";
 	tail.append(main);
@@ -135,6 +129,14 @@ public class Jvs2Java extends Translator {
     }
     return head.toString() + finalBody + tail.toString() + "}";
   }
+  /**
+   * @see #translate(String, String)
+   */
+  @Override
+  public String translate(String jvsCode) {
+    return translate(jvsCode, null);
+  }
+
   /** Renvoie le nom de la dernière classe Java générée lors de la traduction. */
   public String getClassName() {
     return "JvsToJavaTranslated" + uid;
@@ -159,5 +161,33 @@ public class Jvs2Java extends Translator {
       }
     }
     return s;
+  }
+
+  /** Compile sous forme de fichier java compilable à l'extérieur de javascool un programme javascool d'une proglet donnée.
+   * @param name Nom de la proglet.
+   * @param jvsFile Le fichier source en .jvs.
+   * @param javaFile Le nom du fichier java généré, par défaut construit à partir du nom jvs.
+   *
+   * @throws RuntimeException Si une erreur d'entrée-sortie s'est produite lors de la compilation ou construction.
+   */
+  public static void build(String name, String jvsFile, String javaFile) {
+    System.out.println("Compilation de "+javaFile+"..");
+    Proglet proglet = new Proglet().load("org" + File.separator + "javascool" + File.separator + "proglets" + File.separator + name);
+    Jvs2Java jvs2java = proglet.getJvs2java();
+    String javaCode = jvs2java.translate(FileManager.load(jvsFile), new File(jvsFile).getName().replaceFirst("\\.jvs$", ""));
+    FileManager.save(javaFile, javaCode.trim()+"\n");
+    System.out.println("achevée avec succès.");
+  }
+  /**
+   * @see #build(String, String, String)
+   */
+  public static void build(String name, String jvsFile) {
+    build(name, jvsFile, jvsFile.replaceFirst("\\.jvs$", ".java"));
+  }
+  /**
+   * @see #build(String, String, String)
+   */
+  public static void build(String jvsFile) {
+    build(Utils.javascoolProglet(), jvsFile, jvsFile.replaceFirst("\\.jvs$", ".java"));
   }
 }

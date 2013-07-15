@@ -3,8 +3,4 @@
 
 cnv :
 	sh ./sketchbook4to5.sh
-
-# Nettoie les répertoires générés
-
-clean :
 	svn status ..

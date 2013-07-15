@@ -62,7 +62,7 @@ public class ToolBar extends JToolBar {
   }
   /** Ajoute un pop-up à la barre d'outil.
    * @param label Nom du composant. Chaque bouton/item/étiquette doit avoir un nom différent.
-   * @param icon  Icone du bouton. Si null le bouton est montré sans icone.
+   * @param icon  Icone du menu. Si null le bouton est montré sans icone.
    * @return Le popup ajouté. Il permet de définir un menu ou d'afficher un composant etc...
    */
   public final JPopupMenu addTool(String label, String icon) {
@@ -78,10 +78,15 @@ public class ToolBar extends JToolBar {
   }
   private class PopupMenuRunnable implements Runnable {
     JPopupMenu j = new JPopupMenu();
+    {
+      j.setInvoker(ToolBar.this);
+      j.setBorderPainted(true);
+    }
     JButton b;
     @Override
     public void run() {
-      j.show(b, 0, ToolBar.this.getHeight());
+      // j.setLocation(ToolBar.this.getLocationOnScreen().x + 200, ToolBar.this.getLocationOnScreen().y + 100);
+      j.setVisible(true);
     }
   }
 
