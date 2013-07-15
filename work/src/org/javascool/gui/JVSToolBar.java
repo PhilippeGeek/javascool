@@ -4,6 +4,11 @@ import org.javascool.core.ProgletEngine;
 
 import org.javascool.widgets.ToolBar;
 import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPopupMenu;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import org.javascool.macros.Macros;
 import org.javascool.widgets.StartStopButton;
 //import org.javascool.builder.DialogFrame;
 //import org.javascool.builder.ProgletsBuilder;
@@ -64,13 +69,37 @@ class JVSToolBar extends ToolBar {
               }
             }
             );
-    addTool("Sauver sous", "org/javascool/widgets/icons/saveas.png", new Runnable() {
-              @Override
-              public void run() {
-                JVSPanel.getInstance().saveAsFile();
-              }
-            }
-            );
+    {
+      JPopupMenu menu = addTool("Sauver en ...", "org/javascool/widgets/icons/saveas.png");
+      JLabel l = new JLabel("Sauvegarde du fichier Java'sCool courant:");
+      l.setIcon(Macros.getIcon("org/javascool/widgets/icons/saveas.png"));
+      menu.add(l);
+      menu.add("   .. en javascool (.jvs)").addActionListener(new ActionListener() {
+	  private static final long serialVersionUID = 1L;
+	  @Override
+	  public void actionPerformed(ActionEvent e) {
+	    JVSPanel.getInstance().saveAsFile();
+	  }
+	});
+      menu.add("   .. source forme de source java (.java)").addActionListener(new ActionListener() {
+	  private static final long serialVersionUID = 1L;
+	  @Override
+	  public void actionPerformed(ActionEvent e) {   
+	    new Thread(new Runnable() { public void run() {
+	      JVSPanel.getInstance().saveAsJavaFile();
+	    }}).start();
+	  }
+	});
+      menu.add("   .. sous forme exécutable (.jar)").addActionListener(new ActionListener() {
+	  private static final long serialVersionUID = 1L;
+	  @Override
+	  public void actionPerformed(ActionEvent e) {
+	    new Thread(new Runnable() { public void run() {
+	      JVSPanel.getInstance().saveAsJarFile();
+	    }}).start();
+	  }
+	});
+    }
 
     compileButton = addTool("Compiler", "org/javascool/widgets/icons/compile.png", new Runnable() {
                               @Override

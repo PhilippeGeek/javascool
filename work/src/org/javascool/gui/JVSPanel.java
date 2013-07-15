@@ -11,6 +11,9 @@ import javax.swing.UIManager;
 import org.javascool.core.ProgletEngine;
 import org.javascool.tools.UserConfig;
 
+import org.javascool.core.Jvs2Java;
+import org.javascool.core.Jvs2Jar;
+
 /** The main panel for Java's cool
  * This class wich is very static contain all that we need to run Java's cool like save and open file command.
  * This class can only be called by JVSPanel on instance otherwise it can throw very big errors
@@ -115,6 +118,7 @@ class JVSPanel extends JPanel {
    * @see JVSFile
    */
   public boolean saveFile() {
+    System.out.println("> saveFile()");
     if(JVSFileTabs.getInstance().saveCurrentFile()) {
       haveToSave.put(JVSFileTabs.getInstance().getCurrentFileId(), false);
       return true;
@@ -132,6 +136,29 @@ class JVSPanel extends JPanel {
     }
     return false;
   }
+  /** Save the current file as java file
+   * @see JVSFileTabs
+   * @see JVSFile
+   */
+  public boolean saveAsJavaFile() {
+    boolean saving = saveFile();
+    String name = ProgletEngine.getInstance().getProglet().getName();
+    String jvsFile = JVSFileTabs.getInstance().getFile(JVSFileTabs.getInstance().getCurrentFileId()).getName();
+    Jvs2Java.build(name, jvsFile);
+    return saving;
+  }
+  /** Save the current file as java file
+   * @see JVSFileTabs
+   * @see JVSFile
+   */
+  public boolean saveAsJarFile() {
+    boolean saving = saveFile();
+    String name = ProgletEngine.getInstance().getProglet().getName();
+    String jvsFile = JVSFileTabs.getInstance().getFile(JVSFileTabs.getInstance().getCurrentFileId()).getName();
+    Jvs2Jar.build(name, jvsFile);
+    return saving;
+  }
+
   /** Close the current file
    * @see JVSFileTabs
    */
