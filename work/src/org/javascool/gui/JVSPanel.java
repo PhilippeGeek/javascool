@@ -143,7 +143,7 @@ class JVSPanel extends JPanel {
   public boolean saveAsJavaFile() {
     boolean saving = saveFile();
     String name = ProgletEngine.getInstance().getProglet().getName();
-    String jvsFile = JVSFileTabs.getInstance().getFile(JVSFileTabs.getInstance().getCurrentFileId()).getName();
+    String jvsFile = JVSFileTabs.getInstance().getFile(JVSFileTabs.getInstance().getCurrentFileId()).getPath();
     Jvs2Java.build(name, jvsFile);
     return saving;
   }
@@ -154,7 +154,7 @@ class JVSPanel extends JPanel {
   public boolean saveAsJarFile() {
     boolean saving = saveFile();
     String name = ProgletEngine.getInstance().getProglet().getName();
-    String jvsFile = JVSFileTabs.getInstance().getFile(JVSFileTabs.getInstance().getCurrentFileId()).getName();
+    String jvsFile = JVSFileTabs.getInstance().getFile(JVSFileTabs.getInstance().getCurrentFileId()).getPath();
     Jvs2Jar.build(name, jvsFile);
     return saving;
   }
