@@ -34,36 +34,50 @@ public class Jvs2Jar {
    * @throws RuntimeException Si une erreur d'entrée-sortie s'est produite lors de la compilation ou construction.
    */
   public static boolean build(String name, String jvsFile, String jarFile) {
-    System.out.println("Compilation de "+new File(jvsFile).getName()+"..");
+    System.out.println("compilation de "+new File(jvsFile).getName()+"");
     if (name == null)
       throw new IllegalArgumentException("Le nom de la proglet est ambigu ou indéfini");
     if (!new File(jvsFile).isFile())
       throw new IllegalArgumentException("Le fichier "+jvsFile+" n'existe pas");
+    System.out.println("lancement de la compilation");
     try {
       // Répertoire temporaire de compilation
       String jarDir = UserConfig.createTempDir("jvs-build-").getAbsolutePath();
+      System.out.println("> "+jarDir);
       // Extraction des classes de javascool et nettoyage des classes inutiles
       JarManager.jarExtract(Utils.javascoolJar(), jarDir);
-      for (String d : new String[] { 
-	  "org/fife", // RSyntaxTextArea.jar
-	  "com/sun/tools/javac", "com/sun/source/tree", "com/sun/source/util" // javac.jar
-	})
-	JarManager.rmDir(new File(jarDir + File.separator + d.replaceAll("/", File.separator)));
+      try {
+	for (String d : new String[] { 
+	    "org/fife", // RSyntaxTextArea.jar
+	    "com/sun/tools/javac", "com/sun/source/tree", "com/sun/source/util" // javac.jar
+	  })
+	  JarManager.rmDir(new File(jarDir + File.separator + d.replaceAll("/", File.separator)));
+      } catch(Exception e) {
+	System.out.println("> "+ e);
+      }
+      System.out.println("extraction des classes de javascool");
       // Chargement de la proglet
-      Proglet proglet = new Proglet().load("org" + File.separator + "javascool" + File.separator + "proglets" + File.separator + name);
+      Proglet proglet = new Proglet().load("org/javascool/proglets/" + name);
+      System.out.println("chargement de la proglet 1");
       Jvs2Java jvs2java = proglet.getJvs2java();
+      System.out.println("chargement de la proglet 2");
       // Compilation du source
       String javaCode = jvs2java.translate(FileManager.load(jvsFile), new File(jvsFile).getName().replaceFirst("\\.jvs$", ""));
       String javaFile = jarDir + File.separator + jvs2java.getClassName() + ".java";
       FileManager.save(javaFile, javaCode);
-      if(!Java2Class.compile(javaFile))
+      System.out.println("génération du fichier .java");
+      if(!Java2Class.compile(javaFile)) {
+	System.out.println("Impossible de générer le fichier '"+jvsFile+".jar' il y a des erreurs de compilations");
 	return false;
+      }
+      System.out.println("compilation du fichier .class");
       // Construction de la jarre
       String mfData = 
 	"Manifest-Version: 1.0\n" +
 	"Main-Class: "+jvs2java.getClassName()+"\n" +
 	"Implementation-URL: http://javascool.gforge.inria.fr\n";
       JarManager.jarCreate(jarFile, mfData, jarDir);
+      System.out.println("génération du fichier .jar");
       JarManager.rmDir(new File(jarDir));
       System.out.println("achevée avec succès :\n Le fichier '"+jvsFile+".jar' est disponible");
       return true;
