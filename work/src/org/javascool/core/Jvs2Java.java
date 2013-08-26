@@ -172,10 +172,10 @@ public class Jvs2Java extends Translator {
    */
   public static void build(String name, String jvsFile, String javaFile) {
     System.out.println("Compilation de "+javaFile+"..");
-    Proglet proglet = new Proglet().load("org" + File.separator + "javascool" + File.separator + "proglets" + File.separator + name);
+    Proglet proglet = new Proglet().load("org/javascool/proglets/" + name);
     Jvs2Java jvs2java = proglet.getJvs2java();
     String javaCode = jvs2java.translate(FileManager.load(jvsFile), new File(jvsFile).getName().replaceFirst("\\.jvs$", ""));
-    FileManager.save(javaFile, javaCode.trim()+"\n");
+    FileManager.save(javaFile, (javaCode.trim()+"\n").replaceAll("\n", System.getProperty("line.separator")));
     System.out.println("achevée avec succès.");
   }
   /**

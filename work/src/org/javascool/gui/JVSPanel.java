@@ -118,7 +118,6 @@ class JVSPanel extends JPanel {
    * @see JVSFile
    */
   public boolean saveFile() {
-    System.out.println("> saveFile()");
     if(JVSFileTabs.getInstance().saveCurrentFile()) {
       haveToSave.put(JVSFileTabs.getInstance().getCurrentFileId(), false);
       return true;
