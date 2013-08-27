@@ -127,7 +127,7 @@ public class Jvs2Java extends Translator {
     if(progletTranslator != null) {
       finalBody = progletTranslator.translate(finalBody);
     }
-    return head.toString() + finalBody + tail.toString() + "}";
+    return head.toString() + "\n\n"+ finalBody + "\n\n"+ tail.toString() + "}";
   }
   /**
    * @see #translate(String, String)
@@ -171,12 +171,12 @@ public class Jvs2Java extends Translator {
    * @throws RuntimeException Si une erreur d'entrée-sortie s'est produite lors de la compilation ou construction.
    */
   public static void build(String name, String jvsFile, String javaFile) {
-    System.out.println("Compilation de "+javaFile+"..");
+    System.out.println("Compilation de "+new File(javaFile).getName()+"..");
     Proglet proglet = new Proglet().load("org/javascool/proglets/" + name);
     Jvs2Java jvs2java = proglet.getJvs2java();
     String javaCode = jvs2java.translate(FileManager.load(jvsFile), new File(jvsFile).getName().replaceFirst("\\.jvs$", ""));
     FileManager.save(javaFile, (javaCode.trim()+"\n").replaceAll("\n", System.getProperty("line.separator")));
-    System.out.println("achevée avec succès.");
+    System.out.println(" achevée avec succès :\nLe fichier '"+javaFile+"' est disponible");
   }
   /**
    * @see #build(String, String, String)
