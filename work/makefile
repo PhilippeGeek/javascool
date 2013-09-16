@@ -1,7 +1,7 @@
 
 # vthierry's ongoing tasks, . . .
 
-dft : tst
+dft : tst2
 
 export JAVA_HOME=/usr/java/jdk1.6.0_25
 
@@ -15,10 +15,15 @@ www :
 jvs :
 	ant javascool-proglets.jar
 
-tst : 
+tst1 : 
 	ant clean
 	ant javascool-proglets.jar
 	$(JRE_HOME)/bin/java -jar dist/javascool-proglets.jar
+
+tst2 :
+	ant clean
+	cd ../web ; ant build
+	ls -l ./dist
 
 #################################################
 
