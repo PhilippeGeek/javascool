@@ -1,7 +1,7 @@
 
 # vthierry's ongoing tasks, . . .
 
-dft : tst2
+dft : tst1
 
 export JAVA_HOME=/usr/java/jdk1.6.0_25
 
