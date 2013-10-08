@@ -186,7 +186,8 @@ public class ProgletEngine {
       if(p.getName().equals(proglet)) {
         currentProglet = p;
       }
-    if(currentProglet == null) { throw new IllegalArgumentException("Tentative d'utilisation d'une proglet indéfinie : " + proglet);
+    if(currentProglet == null) { 
+      throw new IllegalArgumentException("Tentative d'utilisation d'une proglet indéfinie : " + proglet);
     }
     currentProglet.start();
     return currentProglet;
