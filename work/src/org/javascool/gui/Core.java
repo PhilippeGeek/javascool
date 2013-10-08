@@ -42,13 +42,23 @@ public class Core {
     setUncaughtExceptionAlert();
     // Lance le panneau général ou une proglet directement
     Desktop.getInstance().getFrame();
-    if(usage.length == 1) {
-      Desktop.getInstance().openProglet(usage[0], true);
-    } else {
-      String name = Utils.javascoolProglet();
-      if (name != null) {
-	System.err.println("Ouverture de la proglet «"+name+"»");
-	Desktop.getInstance().openProglet(name, true);
+    // Lance une proglet sur la ligne de commande
+    String pname = usage.length > 0 ? usage[usage.length - 1] : null;
+    try {
+      if (pname.matches(".*javascool.*")) {
+	pname = null; 
+      } else {
+	Desktop.getInstance().openProglet(pname, true);
+      }
+    } catch(Exception e) {
+      pname = null;
+    }
+    // Lance une proglet si elle est unique dans le jar
+    if (pname == null) {
+      pname = Utils.javascoolProglet();
+      if (pname != null) {
+	System.err.println("Ouverture de la proglet «"+pname+"»");
+	Desktop.getInstance().openProglet(pname, true);
       }
     }
   }
