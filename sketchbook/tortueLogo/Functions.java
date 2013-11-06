@@ -88,7 +88,7 @@ public class Functions {
   }
   /** La tortue tourne de n degrés d'angle vers la gauche. */
   public static void leftward(double n) {
-    a += Math.PI / 180.0 * n;
+    a -= Math.PI / 180.0 * n;
   }
   /** La tortue tourne de n degrés d'angle vers la droite. */
   public static void rightward(double n) {
