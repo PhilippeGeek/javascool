@@ -21,13 +21,22 @@ public class About {
 
   /** Affiche le message de "about". */
   public static void showAboutMessage() {
-    Macros.message(title + " (" + revision + ") est un logiciel conçu par : <br/><center>"
-                   + "Philippe VIENNE<br/>"
-                   + "Guillaume MATHERON<br/>"
-                   + " et Inria<br/>"
-                   + "</center>"
-                   + "en collaboration avec David Pichardie, Philippe Lucaud, etc.. et le conseil de Robert Cabane<br/><br/>"
-                   + "Il est distribué sous les conditions de la licence CeCILL et GNU GPL V3<br/>", true);
+    String message = 
+      title + " (" + revision + ") est un logiciel conçu par : <br/><center>"
+      + "Philippe VIENNE<br/>"
+      + "Guillaume MATHERON<br/>"
+      + " et Inria<br/>"
+      + "</center>"
+      + "en collaboration avec David Pichardie, Philippe Lucaud, etc.. et le conseil de Robert Cabane<br/><br/>"
+      + "Il est distribué sous les conditions de la licence CeCILL et GNU GPL V3<br/>";
+    // Ajoute toutes les données de l'environnement
+    {
+      message += "<pre>";
+      for(String name : System.getProperties().stringPropertyNames())
+	message += " " + name + " = " + System.getProperty(name) + "\n";
+      message += "</pre>";
+    }
+    Macros.message(message, true);
   }
   /** Renvoie une bouton (sous forme de logo) qui affiche le panneau de about lors de son clic. */
   public static JLabel getAboutMessage() {
