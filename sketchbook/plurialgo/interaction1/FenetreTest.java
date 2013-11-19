@@ -20,6 +20,7 @@ public class FenetreTest extends JFrame {
 		panelInteraction = new PanelInteraction(); 
 		this.setContentPane(panelInteraction);
 		setPreferredSize(new java.awt.Dimension(680, 480));
+		//this.setContentPane(new PanelSi(panelInteraction));
 		pack();
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}

@@ -131,6 +131,13 @@ public class Argument extends org.javascool.proglets.plurialgo.langages.modele.A
 		if ( isEnregistrement(prog) || isClasse(prog) ) {
 			ecrireClasseStandard(prog, buf, indent, msg);
 		}
+		if ( isExpression() ) {
+			ecrireExpression(prog,buf,indent);
+		}
+	}	
+	
+	private void ecrireExpression(Programme prog, StringBuffer buf, int indent) {
+		Divers.ecrire(buf, "print " + this.nom, indent);
 	}
 	
 	private void ecrireSimpleStandard(Programme prog, StringBuffer buf, int indent, String msg) {

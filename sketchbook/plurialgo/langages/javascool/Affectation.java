@@ -29,28 +29,28 @@ public class Affectation extends org.javascool.proglets.plurialgo.langages.model
 	
 	private void ecrireTabSimple(Programme prog, StringBuffer buf, int indent) {
 		String txt = expression;
-		int debut = txt.indexOf("[");
-		int fin = txt.lastIndexOf("]");
+		int debut = txt.indexOf("{");
+		int fin = txt.lastIndexOf("}");
 		txt = txt.substring(debut+1, fin);
 		StringTokenizer tok = new StringTokenizer(txt,",");
 		int i = 0;
 		while (tok.hasMoreTokens()) {
-			String elem = tok.nextToken();
+			String elem = tok.nextToken().trim();
 			Divers.ecrire(buf, var + "[" + i + "]" + " = " + elem + "; ", indent);
 			i = i+1;
 		}
 	}
 	
 	private void ecrireMatSimple(Programme prog, StringBuffer buf, int indent) {
-		String txt = expression;
-		int debut = txt.indexOf("[");
-		int fin = txt.lastIndexOf("]");
-		txt = txt.substring(debut+1, fin).trim();
-		txt = Divers.remplacer(txt, "],[", "]@[");
+		String txt = Divers.remplacer(expression, " ", "");
+		int debut = txt.indexOf("{");
+		int fin = txt.lastIndexOf("}");
+		txt = txt.substring(debut+1, fin);
+		txt = Divers.remplacer(txt, "},{", "@");
 		StringTokenizer tok1 = new StringTokenizer(txt,"@");
 		int i1 = 0;
 		while (tok1.hasMoreTokens()) {
-			StringTokenizer tok2 = new StringTokenizer(tok1.nextToken(),"[,]");
+			StringTokenizer tok2 = new StringTokenizer(tok1.nextToken(),"{,}");
 			int i2 = 0;
 			while (tok2.hasMoreTokens()) {
 				String elem = tok2.nextToken();

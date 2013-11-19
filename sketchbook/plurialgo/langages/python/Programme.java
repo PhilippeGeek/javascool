@@ -40,12 +40,13 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 	
 	private void addDebut(StringBuffer buf) {
 		Divers.ecrire(buf, "from string import *", 0);
-		Divers.ecrire(buf, "from Tkinter import *", 0);
+		if (this.avecFormulaire()) {
+			Divers.ecrire(buf, "from Tkinter import *", 0);
+		}
 	}
 	
 	private void addSousProgs(StringBuffer buf, int indent) {
-		if ((operations.size()>0))
-			this.commenter(buf, "sous programmes", indent);
+		//if ((operations.size()>0)) this.commenter(buf, "sous programmes", indent);
 		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Operation> iter=operations.iterator(); iter.hasNext();) {
 			Operation oper = (Operation) iter.next();
 			oper.ecrire(this, buf, indent);
@@ -53,8 +54,7 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 	}
 	
 	private void addClasses(StringBuffer buf, int indent) {
-		if ((classes.size()>0))
-			this.commenter(buf, "classes", indent);
+		if ((classes.size()>0))	this.commenter(buf, "classes", indent);
 		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Classe> iter=classes.iterator(); iter.hasNext();) {
 			Classe classe = (Classe) iter.next();
 			if (classe.isEnregistrement()) {
@@ -67,7 +67,7 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 	}
 	
 	private void addMain(StringBuffer buf, int indent) {
-		this.commenter(buf, "programme principal", indent);
+		//this.commenter(buf, "programme principal", indent);
 		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Variable> iter=variables.iterator(); iter.hasNext();) {
 			Variable var = (Variable) iter.next();
 			var.ecrire(this, buf, indent);
@@ -87,7 +87,7 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 	}
 	
 	public String quote(String s) {
-		return "'" +s + "'";
+		return "\"" +s + "\"";
 	}
 	
 	private void postTraitement(StringBuffer buf) {
@@ -155,7 +155,7 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 	// ------------------------------------------ 
 	
 	private void addTypes(StringBuffer buf, int indent) {
-		this.commenter(buf, "types standard utilises", indent);
+		//this.commenter(buf, "types standard utilises", indent);
 		if (avecType("TAB_") || avecType("MAT_")) {
 			Divers.ecrire(buf, "MAX_TAB = 5", indent);
 		}

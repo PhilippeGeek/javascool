@@ -20,7 +20,7 @@ public class TantQue extends org.javascool.proglets.plurialgo.langages.modele.Ta
 				Instruction instr = (Instruction)obj ;
 				instr.ecrire(prog, buf, indent+1);
 			}
-			Divers.ecrire(buf, "#end while", indent);
+			Divers.ecrire(buf, "#end", indent);
 	}
 	
 }

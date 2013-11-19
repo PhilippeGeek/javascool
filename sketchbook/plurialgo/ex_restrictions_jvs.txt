@@ -4,11 +4,11 @@ void main() {
 	note = readDouble("entrer la note : "); 
 	if (note<10) {
 		avis = "refus";	
-		// car println("refus") serait ignore par le traducteur
+		// car println("refus") peut etre ignore par le traducteur
 	}
 	else {
 		avis = "admis";	
-		// car println("admis") serait ignore par le traducteur
+		// car println("admis") peut etre ignore par le traducteur
 	}
 	println("la decision est : " + avis); 
 } 

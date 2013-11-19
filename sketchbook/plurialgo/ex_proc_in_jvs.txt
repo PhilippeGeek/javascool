@@ -1,4 +1,4 @@
-﻿double calculer_prixTotal(double prixUnitaire, int quantite) { 
+void calculer(double prixUnitaire, int quantite) { 
 	double remise; 
 	double prixTotal; 
 	prixTotal = quantite * prixUnitaire;
@@ -12,14 +12,13 @@
 		remise = 0.2; 
 	}
 	prixTotal = prixTotal - remise * prixTotal; 
-	return prixTotal;
+	println( "prixTotal : " + prixTotal );  
+	println( "remise : " + remise ); 
 } 
 void main() {
 	int quantite; 
 	double prixUnitaire; 
-	double prixTotal; 
 	quantite = readInt( "quantite : " ); 
 	prixUnitaire = readDouble( "prixUnitaire : " ); 
-	prixTotal = calculer_prixTotal(prixUnitaire, quantite); 
-	println( "prixTotal : " + prixTotal ); 
+	calculer(prixUnitaire, quantite); 
 } 

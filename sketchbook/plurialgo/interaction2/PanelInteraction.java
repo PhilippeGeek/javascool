@@ -26,6 +26,7 @@ public class PanelInteraction extends JPanel {
 	public PanelHtml pHtml;
 	public PanelPrincipal pPrincipal;
 	public PanelXml pXml;
+	public PanelSi pSi;
 	
 	public static String[] langList = { "javascool", "vb", "larp", "javascript", "java", "php", "python" };
 	public static String dirTravail = null;
@@ -40,6 +41,7 @@ public class PanelInteraction extends JPanel {
 		onglets = new JTabbedPane(JTabbedPane.TOP);
 		onglets.setBackground(null);
 		pPrincipal = new PanelPrincipal(this);	onglets.add("Principal", pPrincipal);
+		pSi = new PanelSi(this); onglets.add("Si", pSi);
 		pEdition = new PanelBoucles(this); onglets.add("Boucles", pEdition);
 		pHtml = new PanelHtml(this); onglets.add("Documentation", pHtml);
 		pXml = new PanelXml(this);  // onglets.add("Complements", pXml);
@@ -173,26 +175,24 @@ public class PanelInteraction extends JPanel {
 	}	
 	
 	public boolean isJavascool() {
-		String txt=this.getText();
+		String txt=getText();
 		if (txt.contains("void ") && txt.contains(" main()")) return true;
 		if (txt.contains("void ") && txt.contains(" main( )")) return true;
 		return false;
 	}	
 	
 	public boolean isVb() {
-		String txt=this.getText().toLowerCase();
+		String txt=getText().toLowerCase();
 		if (txt.contains("sub ")) return true;
 		if (txt.trim().length()==0) return true;
 		return false;
 	}	
 	
 	public boolean isLarp() {
-		String txt=this.getText().toLowerCase();
+		String txt=getText().toLowerCase();
 		if (isAlgobox()) return false;
-		if ((txt.contains("debut")||txt.contains("début")||txt.contains("but"))
-				&&txt.contains("fin")) return true;
+		if ((txt.contains("debut")||txt.contains("début"))&&txt.contains("fin")) return true;
 		if (txt.contains("entrer")&&txt.contains("retourner")) return true;
-		//if (txt.trim().length()==0) return true;
 		return false;
 	}	
 	
@@ -200,6 +200,14 @@ public class PanelInteraction extends JPanel {
 		String txt=getText().toLowerCase();
 		if (txt.contains("debut_algorithme")&&txt.contains("fin_algorithme")) return true;
 		return false;
+	}	
+	
+	public boolean isPython() {
+		String txt=getText().toLowerCase();
+		if (txt.contains("void ")) return false;
+		if (txt.contains("<html>")) return false;
+		if (txt.contains("<?php")) return false;
+		return true;
 	}	
 	
 	// ---------------------------------------------	

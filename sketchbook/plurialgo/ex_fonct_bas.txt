@@ -13,7 +13,7 @@ function calculer_prixTotal(ByVal prixUnitaire as double, ByVal quantite as inte
 		remise = 0.2
 	end if
 	prixTotal = prixTotal - remise * prixTotal 
-	calculer_prixTotal = prixTotal	' l'equivalent du retourner larp
+	calculer_prixTotal = prixTotal	' l'equivalent du return prixTotal de Javascool
 end function
 
 ' le programme principal doit se nommer main

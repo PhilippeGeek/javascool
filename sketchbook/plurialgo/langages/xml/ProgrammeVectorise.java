@@ -21,7 +21,8 @@ public class ProgrammeVectorise extends Programme {
 	private ArrayList<InfoTypee> infos; // les variables du programme principal
 	private ArrayList<InfoTypee> infosVect;  // les variables à vectoriser
 	
-	private String ii,nn;
+	private String ii,nn;	
+	private String debut,pas;
 	private String sommeVar, sommeArg;
 	private String miniVar, miniArg;
 	private String maxiVar, maxiArg;
@@ -53,9 +54,17 @@ public class ProgrammeVectorise extends Programme {
 		if ((mode=prog.getOptionMode("pour_var"))!=null) {
 			ii = mode.trim();
 		}
-		nn="nn"; //while (InfoTypee.getInfo(nn, prog.variables)!=null) nn=nn+"i";
+		nn="nn"; 
 		if ((mode=prog.getOptionMode("pour_fin"))!=null) {
 			nn = mode.trim();
+		}
+		debut="1"; 
+		if ((mode=prog.getOptionMode("pour_debut"))!=null) {
+			debut = mode.trim();
+		}
+		pas="1"; 
+		if ((mode=prog.getOptionMode("pour_pas"))!=null) {
+			pas = mode.trim();
 		}
 		traiterStandard();
 		// divers
@@ -118,15 +127,29 @@ public class ProgrammeVectorise extends Programme {
 		}
 		InfoTypeeList liste = new InfoTypeeList();
 		liste.addVariables(variables);
-		if (isIdent(nn)) {
+		if (Divers.isIdent(ii)) {
+			var = new Variable(ii, "ENTIER", null);
+			if (liste.getInfo(ii)==null) {
+				variables.add(0, var); liste.addInfo(var);
+			}
+		}
+		if (Divers.isIdent(debut)) {
+			var = new Variable(debut, "ENTIER", null);
+			if (liste.getInfo(debut)==null) {
+				variables.add(0, var); liste.addInfo(var);
+			}
+		}
+		if (Divers.isIdent(nn)) {
 			var = new Variable(nn, "ENTIER", null);
 			if (liste.getInfo(nn)==null) {
 				variables.add(0, var); liste.addInfo(var);
 			}
 		}
-		var = new Variable(ii, "ENTIER", null);
-		if (liste.getInfo(ii)==null && !ii.isEmpty()) {
-			variables.add(var); liste.addInfo(var);
+		if (Divers.isIdent(pas)) {
+			var = new Variable(pas, "ENTIER", null);
+			if (liste.getInfo(pas)==null) {
+				variables.add(0, var); liste.addInfo(var);
+			}
 		}
 		for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Argument> iter=prog.options.iterator(); iter.hasNext(); ) {
 			Argument option = (Argument) iter.next();
@@ -169,18 +192,7 @@ public class ProgrammeVectorise extends Programme {
 		// affichage
 		traiterStandardAffichage();
 	}
-	
-	private boolean isIdent(String txt) {
-		if (txt.isEmpty()) return false;
-		String ch = txt.substring(0,1);
-		if (!Divers.isLettre(ch)) return false;
-		for(int i=0;i<txt.length(); i++) {
-			ch = txt.substring(i,i+1);
-			if (!Divers.isChiffre(ch) && !Divers.isLettre(ch)) return false;
-		}
-		return true;
-	}
-	
+
 	private void initOption(Argument option) {
 		String mode = option.mode;
 		if ((option.nom.equals("sommation")) && (mode!=null)) {
@@ -226,9 +238,19 @@ public class ProgrammeVectorise extends Programme {
 		Instruction instr;
 		Argument arg;
 		instr = new Instruction("lire");
-		if (isIdent(nn)) {
+		if (Divers.isIdent(nn)) {
 			arg = new Argument(nn, "ENTIER", null);
 			instr.arguments.add(arg);
+		}
+		if (Divers.isIdent(debut)) {
+			arg = new Argument(debut, "ENTIER", null);
+			instr.arguments.add(arg);
+		}
+		if (Divers.isIdent(pas)) {
+			arg = new Argument(pas, "ENTIER", null);
+			instr.arguments.add(arg);
+		}
+		if (instr.arguments.size()>0) {
 			instructions.add(instr);
 		}
 	}
@@ -298,27 +320,36 @@ public class ProgrammeVectorise extends Programme {
 		Instruction instr_iter = null;
 		if (nn.isEmpty()) this.avecTantque = true;
 		if (ii.isEmpty()) this.avecTantque = true;
+		if (debut.isEmpty()) this.avecTantque = true;
+		if (pas.isEmpty()) this.avecTantque = true;
 		if (chercherVar!=null) this.avecTantque = true;
 		if (this.avecTantque) {
 			instr_iter = new Instruction("tantque");
 			tq = new TantQue();
 			tq.condition = "";
-			if (!nn.isEmpty() && !ii.isEmpty()) tq.condition = "(" + ii + "<=" + nn + ")";
+			if (!nn.isEmpty() && !ii.isEmpty() && !debut.isEmpty() && !pas.isEmpty()) {
+				if (pas.startsWith("-")) {
+					tq.condition = "(" + ii + ">=" + nn + ")";
+				}
+				else {
+					tq.condition = "(" + ii + "<=" + nn + ")";
+				}
+			}
 			if (chercherVar!=null) {
 				if (!tq.condition.isEmpty()) tq.condition = tq.condition + " ET ";
 				tq.condition = tq.condition + "(" + chercherVar + "==" + "FAUX" + ")";
 			}
 			if (tq.condition.contains(" ET ") ) tq.condition = "(" + tq.condition + ")";
 			instr_iter.tantques.add(tq);
-			if (!ii.isEmpty()) {
-				instructions.add( Instruction.creerInstructionAffectation(ii, "1") );
+			if (!ii.isEmpty() && !debut.isEmpty()) {
+				instructions.add( Instruction.creerInstructionAffectation(ii, debut) );
 			}
 			instructions.add(instr_iter);
 		}
 		else {
 			instr_iter = new Instruction("pour");
 			pour = new Pour(); 
-			pour.var = ii; pour.debut = "1"; pour.fin = nn; pour.pas = "1";
+			pour.var = ii; pour.debut = debut; pour.fin = nn; pour.pas = pas;
 			instr_iter.pours.add(pour);
 			instructions.add(instr_iter);
 		}
@@ -382,8 +413,13 @@ public class ProgrammeVectorise extends Programme {
 			}
 		}
 		if (tq!=null) {
-			if (!ii.isEmpty()) {
-				tq.instructions.add( Instruction.creerInstructionAffectation(ii, ii + "+1") );
+			if (!ii.isEmpty() && !pas.isEmpty()) {
+				if (pas.startsWith("-")) {
+					tq.instructions.add( Instruction.creerInstructionAffectation(ii, ii + pas) );
+				}
+				else {
+					tq.instructions.add( Instruction.creerInstructionAffectation(ii, ii + "+" + pas) );
+				}
 			}
 			else if (tq.instructions.size()==0) {
 				tq.instructions.add(new Instruction("// ajouter des instructions"));

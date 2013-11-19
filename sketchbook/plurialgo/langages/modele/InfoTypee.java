@@ -174,6 +174,11 @@ public class InfoTypee extends Noeud {
 		return isMatEntiers() || isMatReels() || isMatTextes() || isMatBooleens() ;
 	}
 	
+	public final boolean isExpression() {
+		if (type==null) return false;
+		return type.equalsIgnoreCase("EXPR");
+	}
+	
 	public final boolean isFichierTexte() {
 		if (type==null) return false;
 		if (type.equalsIgnoreCase("FICHIER_TEXTE")) return true;

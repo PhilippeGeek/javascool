@@ -18,6 +18,7 @@ import org.javascool.gui.Desktop;
 import org.javascool.proglets.plurialgo.langages.xml.AnalyseurAlgobox;
 import org.javascool.proglets.plurialgo.langages.xml.AnalyseurJavascool;
 import org.javascool.proglets.plurialgo.langages.xml.AnalyseurLarp;
+import org.javascool.proglets.plurialgo.langages.xml.AnalyseurPython;
 import org.javascool.proglets.plurialgo.langages.xml.AnalyseurVb;
 import org.javascool.proglets.plurialgo.langages.xml.Intermediaire;
 import org.javascool.proglets.plurialgo.langages.xml.ProgrammeDerive;
@@ -35,8 +36,8 @@ public class PanelPrincipal extends JPanel implements ActionListener, ListSelect
 
 	static String[] niv_groupement = { "elementaire", "enregistrement", "classe" };
 	static String[] niv_calcul = { "elementaire", "procedure", "fonctions" };
-	static String[] niv_affichage = { "elementaire", "procedure", "fichier_texte", "sql" };
-	static String[] niv_saisie = { "elementaire", "procedure", "formulaire", "fichier_texte", "sql" };
+	static String[] niv_affichage = { "elementaire", "procedure", "fichier_texte", "sql", "sans" };
+	static String[] niv_saisie = { "elementaire", "procedure", "formulaire", "fichier_texte", "sql", "sans" };
 	static int types_width=10;
 	static int algo_width=10;
 	static int donnees_width=15;
@@ -167,7 +168,7 @@ public class PanelPrincipal extends JPanel implements ActionListener, ListSelect
 		reformulerButton = new JButton("Reformuler"); reformulerButton.addActionListener(this);
 		reformulerButton.setActionCommand("reformuler");
 		compilerButton = new JButton("Compiler++"); compilerButton.addActionListener(this);
-		compilerButton.setActionCommand("compiler");
+		compilerButton.setActionCommand("compiler"); compilerButton.setVisible(false);
         hbox.add(creerButton); hbox.add(Box.createHorizontalStrut(5));
         hbox.add(effacerButton); hbox.add(Box.createHorizontalStrut(5));
         hbox.add(traduireButton); hbox.add(Box.createHorizontalStrut(5));
@@ -311,6 +312,10 @@ public class PanelPrincipal extends JPanel implements ActionListener, ListSelect
 			inter = pInter.creerIntermediaireLarp("traduire");
 			analyseur = new AnalyseurLarp(pInter.getText(), false, false, inter);
 		}
+		else if (pInter.isPython()) {
+			inter = pInter.creerIntermediaireLarp("traduire");
+			analyseur = new AnalyseurPython(pInter.getText(), false, false, inter);
+		}
 		else {
 			pInter.clearConsole();
 			pInter.writeConsole("---------- Avertissement ----------\n");
@@ -340,6 +345,10 @@ public class PanelPrincipal extends JPanel implements ActionListener, ListSelect
 		else if (pInter.isLarp()) {
 			inter = pInter.creerIntermediaireLarp("reformuler");
 			analyseur = new AnalyseurLarp(pInter.getText(), true, true, inter);
+		}
+		else if (pInter.isPython()) {
+			inter = pInter.creerIntermediaireLarp("reformuler");
+			analyseur = new AnalyseurPython(pInter.getText(), true, true, inter);
 		}
 		else {
 			pInter.clearConsole();

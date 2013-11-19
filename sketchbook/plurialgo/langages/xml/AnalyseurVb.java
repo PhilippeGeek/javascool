@@ -330,20 +330,27 @@ public class AnalyseurVb implements iAnalyseur {
 					if (ignorerEcrire && (cur_oper==null)) continue;
 					Instruction instr = new Instruction("ecrire");
 					int i = ligne.indexOf("(");
-					if (i>=0) {
-						String parametres = ligne.substring(i+1, ligne.lastIndexOf(")"));
-						StringTokenizer tok1 = new StringTokenizer(parametres,"&",false);
-						while(tok1.hasMoreTokens()) {
-							String parametre = tok1.nextToken();
-							if (parametre==null) continue;
-							if (parametre.contains("'")) continue;
-							Argument arg = new Argument();
-							arg.nom = parametre.trim();	
-							arg.type = "REEL"; trouverType(arg, cur_oper);
-							instr.arguments.add(arg); arg.parent = instr;
-						}
+					int j = ligne.lastIndexOf(")");
+					String parametres = ligne.substring(i+1, j);
+					if (parametres.trim().isEmpty()) continue;
+					StringTokenizer tok1 = new StringTokenizer(parametres,"&",false);
+					while(tok1.hasMoreTokens()) {
+						String parametre = tok1.nextToken();
+						if (parametre==null) continue;
+						if (parametre.contains("'")) continue;
+						Argument arg = new Argument();
+						arg.nom = parametre.trim();	
+						arg.type = "EXPR"; trouverType(arg, cur_oper);
+						instr.arguments.add(arg); arg.parent = instr;
 					}
 					if (instr.arguments.size()>0) {
+						this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;
+					}
+					else if (!parametres.contains("&")) {
+						Argument arg = new Argument();
+						arg.nom = ligne.substring(i+1, j).trim();	
+						arg.type = "EXPR";
+						instr.arguments.add(arg); arg.parent = instr;
 						this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;
 					}
 				}

@@ -12,7 +12,7 @@ de cette même année sur <l link="http://www.iutenligne.net" text="IUTenLigne"/
 <div>
 Avec l'introduction de l'algorithmique dans les programmes de lycée, il m'a semblé souhaitable
 de réaliser une adaptation du logiciel destinée à un public lycéen :
-cela a débouché sur la création de la proglet PluriAlgo.
+cela a débouché sur la création de la proglet PluriAlgo en 2013.
 </div>
 </div>
 
@@ -37,15 +37,20 @@ L'onglet "Principal" permet de créer des squelettes de programmes
 <b>sorties</b> (ici prixTotal) et leur type.
 </div>
 <div>
-L'onglet "Boucles", facilite l'introduction de boucles et de techniques usuelles liées (sommation, comptage...).
+L'onglet "Si" facilite l'introduction d'alternatives simples ou multiples.
+</div>
+<div>
+L'onglet "Boucles" facilite l'introduction de boucles et de techniques usuelles liées (sommation, comptage...).
 </div>
 <div>
 L'onglet "Documentation" vous permet d'en savoir plus...
 </div>
 </div>
 <div>
-Des <l link="http://web.univ-pau.fr/~raffinat/plurialgo/jvs/index.html" text="travaux pratiques"/> seront 
+Des <l link="http://web.univ-pau.fr/~raffinat/plurialgo/jvs/index.html" text="travaux pratiques"/> sont 
 progressivement ajoutés sur mes pages professionnelles.
+Vous y trouverez notamment un recueil des exercices proposés à mes étudiants de première année d'IUT
+dans le cadre d'un module d'initiation à l'algorithmique.
 </div>
 </div>
 

@@ -24,7 +24,7 @@ public class Pour extends org.javascool.proglets.plurialgo.langages.modele.Pour 
 					instr.ecrire(prog, buf, indent+1);
 				}
 				Divers.ecrire(buf, var + "=" + var + pas + "; ", indent+1) ;
-				Divers.ecrire(buf, "#end while", indent);
+				Divers.ecrire(buf, "#end", indent);
 			}
 			else {
 				Divers.ecrire(buf, var + "=" + debut + "; ", indent) ;
@@ -35,7 +35,7 @@ public class Pour extends org.javascool.proglets.plurialgo.langages.modele.Pour 
 					instr.ecrire(prog, buf, indent+1);
 				}
 				Divers.ecrire(buf, var + "=" + var + "+" + pas + "; ", indent+1) ;
-				Divers.ecrire(buf, "#end while", indent);
+				Divers.ecrire(buf, "#end", indent);
 			}
 		}
 		else {
@@ -52,7 +52,7 @@ public class Pour extends org.javascool.proglets.plurialgo.langages.modele.Pour 
 				Instruction instr = (Instruction)obj ;
 				instr.ecrire(prog, buf, indent+1);
 			}
-			Divers.ecrire(buf, "#end for", indent);
+			Divers.ecrire(buf, "#end", indent);
 		}
 	}
 	

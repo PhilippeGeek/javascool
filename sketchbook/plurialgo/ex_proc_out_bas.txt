@@ -1,9 +1,7 @@
-﻿Option Explicit
+Option Explicit
 
-' definition de la fonction calculer_prixTotal
-function calculer(ByVal prixUnitaire as double, ByVal quantite as integer) as double
-	Dim remise as double
-	Dim prixTotal as double
+sub calculer(ByVal prixUnitaire as double, ByVal quantite as integer, ByRef remise as double, ByRef prixTotal as double) 
+' passage par valeur (ByVal), passage par reference (ByRef)
 	prixTotal = quantite * prixUnitaire 
 	if (quantite = 1) then 
 		remise = 0
@@ -13,16 +11,16 @@ function calculer(ByVal prixUnitaire as double, ByVal quantite as integer) as do
 		remise = 0.2
 	end if
 	prixTotal = prixTotal - remise * prixTotal 
-	calculer = prixTotal	' l'equivalent du return javascool
 end function
 
-' le programme principal doit se nommer main
 sub main()
 	Dim quantite as integer
 	Dim prixUnitaire as double
 	Dim prixTotal as double
+	Dim remise as double
 	quantite = InputBox("quantite : ") 
 	prixUnitaire = InputBox("prix unitaire : ") 
-	prixTotal = calculer_prixTotal(prixUnitaire, quantite)	
+	call calculer(prixUnitaire, quantite, remise, prixTotal)	
 	MsgBox("prix total : " & prixTotal) 
+	MsgBox("remise : " & remise) 
 end sub

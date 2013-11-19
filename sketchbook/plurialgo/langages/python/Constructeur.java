@@ -48,7 +48,7 @@ public class Constructeur extends org.javascool.proglets.plurialgo.langages.mode
 			Instruction instr = (Instruction) iter.next();
 			instr.ecrire(prog, buf, indent+1);
 		}
-		Divers.ecrire(buf, "#end def", indent);
+		Divers.ecrire(buf, "#end", indent);
 	}
 	
 }

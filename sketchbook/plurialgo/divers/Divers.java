@@ -202,4 +202,15 @@ public class Divers {
 		return false;
 	}
 	
+	public static boolean isIdent(String txt) {
+		if (txt.isEmpty()) return false;
+		String ch = txt.substring(0,1);
+		if (!Divers.isLettre(ch)) return false;
+		for(int i=0;i<txt.length(); i++) {
+			ch = txt.substring(i,i+1);
+			if (!Divers.isChiffre(ch) && !Divers.isLettre(ch)) return false;
+		}
+		return true;
+	}
+	
 }
