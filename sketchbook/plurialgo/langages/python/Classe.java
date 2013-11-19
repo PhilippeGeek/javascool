@@ -37,7 +37,7 @@ public class Classe extends org.javascool.proglets.plurialgo.langages.modele.Cla
 			Constructeur constr = (Constructeur) iter.next();
 			constr.ecrire(prog, buf, indent+1);
 		}
-		Divers.ecrire(buf, "#end class", indent);
+		Divers.ecrire(buf, "#end", indent);
 	}
 
 }

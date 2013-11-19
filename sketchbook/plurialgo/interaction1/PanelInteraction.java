@@ -24,6 +24,7 @@ public class PanelInteraction extends JPanel {
 	public PanelHtml pHtml;
 	public PanelPrincipal pPrincipal;
 	public PanelXml pXml;
+	public PanelSi pSi;
 	
 	public static String[] langList = { "javascool", "vb", "larp", "javascript", "php", "python", "java" };
 	public static String dirTravail = null;
@@ -47,10 +48,12 @@ public class PanelInteraction extends JPanel {
 		onglets = new JTabbedPane(JTabbedPane.TOP);
 		onglets.setBackground(null);
 		pPrincipal = new PanelPrincipal(this);	onglets.add("Principal", pPrincipal);
+		pSi = new PanelSi(this);  onglets.add("Si", pSi);
 		pEdition = new PanelProgrammes(this); onglets.add("Résultats", pEdition);
 		pHtml = new PanelHtml(this); onglets.add("Documentation", pHtml);
 		pXml = new PanelXml(this);  onglets.add("Compléments", pXml);
 		this.add(onglets, "Center");
+		//onglets.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 	}
 	
 	/**

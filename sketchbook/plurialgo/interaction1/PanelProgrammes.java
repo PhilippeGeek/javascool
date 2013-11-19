@@ -20,6 +20,7 @@ import org.javascool.proglets.plurialgo.langages.xml.AnalyseurAlgobox;
 import org.javascool.proglets.plurialgo.langages.xml.AnalyseurJavascool;
 import org.javascool.proglets.plurialgo.langages.xml.AnalyseurLarp;
 import org.javascool.proglets.plurialgo.langages.xml.AnalyseurVb;
+import org.javascool.proglets.plurialgo.langages.xml.AnalyseurPython;
 import org.javascool.proglets.plurialgo.langages.xml.Argument;
 import org.javascool.proglets.plurialgo.langages.xml.Intermediaire;
 import org.javascool.proglets.plurialgo.langages.xml.ProgrammeDerive;
@@ -45,12 +46,13 @@ public class PanelProgrammes extends JPanel implements ActionListener, ListSelec
 	private JPanel pVect;	
 	private JList boucleList;
 	private JTextField pourVarField, pourFinField, vectModeField;
+	private JTextField pourDebutField, pourPasField;
 	private JTextField sommeModeField; private JCheckBox sommeCheck;
 	private JTextField compterModeField; private JCheckBox compterCheck;
 	private JTextField miniModeField; private JCheckBox miniCheck;
 	private JTextField maxiModeField; private JCheckBox maxiCheck;
 	private JTextField chercherModeField; private JCheckBox chercherCheck;
-	private JButton vectoriserButton;
+	private JButton vectoriserButton, bouclerButton;
 	
 	private JPanel pEdit;
 	private RSyntaxTextArea editArea;	
@@ -135,16 +137,25 @@ public class PanelProgrammes extends JPanel implements ActionListener, ListSelec
 		pourVarField = new JTextField(4);
 		pourVarField.setText("k");
 		p.add(pourVarField);
-		p.add( new JLabel(" de 1 à ") );
-		pourFinField = new JTextField(4);
+		//p.add( new JLabel(" de 1 à ") );
+		p.add( new JLabel(" de ") );
+		pourDebutField = new JTextField(2);
+		pourDebutField.setText("1");
+		p.add(pourDebutField);
+		p.add( new JLabel(" à ") );
+		pourFinField = new JTextField(6);
 		pourFinField.setText("n");
 		p.add(pourFinField);
+		p.add( new JLabel(" pas ") );
+		pourPasField = new JTextField(2);
+		pourPasField.setText("1");
+		p.add(pourPasField);
 		vbox.add(p);
 		// sommation
 		p = new JPanel(); 
 		sommeCheck = new JCheckBox(); p.add(sommeCheck);
 		p.add( new JLabel("sommation : ") );
-		sommeModeField = new JTextField(10);
+		sommeModeField = new JTextField(15);
 		sommeModeField.setText("somme:increment");
 		p.add(sommeModeField);
 		vbox.add(p);
@@ -152,7 +163,7 @@ public class PanelProgrammes extends JPanel implements ActionListener, ListSelec
 		p = new JPanel(); 
 		compterCheck = new JCheckBox();	p.add(compterCheck);
 		p.add( new JLabel("comptage : ") );
-		compterModeField = new JTextField(10);
+		compterModeField = new JTextField(20);
 		compterModeField.setText("effectif:condition");
 		p.add(compterModeField);
 		vbox.add(p);
@@ -160,7 +171,7 @@ public class PanelProgrammes extends JPanel implements ActionListener, ListSelec
 		p = new JPanel(); 
 		miniCheck = new JCheckBox(); p.add(miniCheck);
 		p.add( new JLabel("minimum : ") );
-		miniModeField = new JTextField(10);
+		miniModeField = new JTextField(15);
 		miniModeField.setText("mini:expression");
 		p.add(miniModeField);
 		vbox.add(p);
@@ -168,7 +179,7 @@ public class PanelProgrammes extends JPanel implements ActionListener, ListSelec
 		p = new JPanel(); 
 		maxiCheck = new JCheckBox(); p.add(maxiCheck);
 		p.add( new JLabel("maximum : ") );
-		maxiModeField = new JTextField(10);
+		maxiModeField = new JTextField(15);
 		maxiModeField.setText("maxi:expression");
 		p.add(maxiModeField);
 		vbox.add(p);
@@ -176,7 +187,7 @@ public class PanelProgrammes extends JPanel implements ActionListener, ListSelec
 		p = new JPanel(); 
 		chercherCheck = new JCheckBox(); p.add(chercherCheck);
 		p.add( new JLabel("chercher (un) : ") );
-		chercherModeField = new JTextField(10);
+		chercherModeField = new JTextField(15);
 		chercherModeField.setText("condition");
 		p.add(chercherModeField);
 		vbox.add(p);
@@ -186,11 +197,15 @@ public class PanelProgrammes extends JPanel implements ActionListener, ListSelec
 		vectoriserButton.addActionListener(this);
 		vectoriserButton.setActionCommand("vectoriser");
 		vectoriserButton.setVisible(true);
+		bouclerButton = new JButton("Boucler"); p.add(bouclerButton);
+		bouclerButton.addActionListener(this);
+		bouclerButton.setActionCommand("boucler");
+		vectoriserButton.setVisible(true);
 		vbox.add(p);
 		// ajout de dimension
 		p = new JPanel(); 
 		p.add( new JLabel("vectorisation : ") );
-		vectModeField = new JTextField(10);
+		vectModeField = new JTextField(15);
 		vectModeField.setText("");
 		p.add(vectModeField);
 		vbox.add(p);
@@ -201,6 +216,9 @@ public class PanelProgrammes extends JPanel implements ActionListener, ListSelec
 			String cmd = e.getActionCommand();
 			if (e.getSource() == this.vectoriserButton || ("vectoriser".equals(cmd))) {	
 				this.vectoriser();	
+			}
+			else if (e.getSource() == this.bouclerButton || ("boucler".equals(cmd))) {	
+				this.boucler();	
 			}
 			else if ("traduire".equals(cmd)) {	
 				this.traduire();	
@@ -281,8 +299,8 @@ public class PanelProgrammes extends JPanel implements ActionListener, ListSelec
     		editArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
     	}
     	else if (le_fichier.endsWith(".larp") || le_fichier.endsWith(".txt") || le_fichier.equals("larp")) {
-    		//editArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_NONE);
-    		editArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_DELPHI);
+    		editArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_NONE);
+    		//editArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_DELPHI);
     	}
     	else if (le_fichier.endsWith(".bas") || le_fichier.equals("vb")) {
     		//editArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_DELPHI);
@@ -312,7 +330,8 @@ public class PanelProgrammes extends JPanel implements ActionListener, ListSelec
     		editArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_LISP);
     	}
     	else if (le_fichier.endsWith(".py")) {
-    		editArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_PYTHON);
+    		editArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_NONE);
+    		//editArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_PYTHON);
     	}
     	else if (le_fichier.endsWith(".R")) {
     		editArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
@@ -360,6 +379,14 @@ public class PanelProgrammes extends JPanel implements ActionListener, ListSelec
 		if (txt.contains("debut_algorithme")&&txt.contains("fin_algorithme")) return true;
 		return false;
 	}	
+	
+	private boolean isPython() {
+		String txt=getText().toLowerCase();
+		if (txt.contains("void ")) return false;
+		if (txt.contains("<html>")) return false;
+		if (txt.contains("<?php")) return false;
+		return true;
+	}	
 		
 	// ---------------------------------------------
 	// Vectorisation
@@ -380,6 +407,10 @@ public class PanelProgrammes extends JPanel implements ActionListener, ListSelec
 			inter = pInter.creerIntermediaireLarp("vectoriser");
 			analyseur = new AnalyseurLarp(editArea.getText(), false, false, inter);
 		}
+		else if (isPython()) {
+			inter = pInter.creerIntermediaireLarp("vectoriser");
+			analyseur = new AnalyseurPython(editArea.getText(), false, false, inter);
+		}
 		else {
 			analyseur = new AnalyseurVb("", false, false);
 		}
@@ -397,6 +428,8 @@ public class PanelProgrammes extends JPanel implements ActionListener, ListSelec
 		prog.options.add( new Argument("vectorisation", null, vectModeField.getText()) );
 		prog.options.add( new Argument("pour_var", null, pourVarField.getText()) );
 		prog.options.add( new Argument("pour_fin", null, pourFinField.getText()) );
+		prog.options.add( new Argument("pour_debut", null, pourDebutField.getText()) );
+		prog.options.add( new Argument("pour_pas", null, pourPasField.getText()) );
 		if ("tantque".equals(boucleList.getSelectedValue())) {
 			prog.options.add( new Argument("tantque", null, "tantque") );
 		}
@@ -416,6 +449,19 @@ public class PanelProgrammes extends JPanel implements ActionListener, ListSelec
 			prog.options.add( new Argument("recherche", null, chercherModeField.getText()) );
 		}
 	}	
+	
+	private void boucler() {
+		pInter.clearConsole();
+		// vectorisation
+		org.javascool.proglets.plurialgo.langages.xml.Programme prog;
+		prog = new org.javascool.proglets.plurialgo.langages.xml.Programme();
+		prog.nom = pInter.pPrincipal.getNomAlgo();
+		vectoriser(prog);
+		ProgrammeVectorise progVect = new ProgrammeVectorise(prog);
+		// ajout du resultat dans les onglets Complements et Resultats
+		pInter.add_xml(new org.javascool.proglets.plurialgo.langages.xml.Programme(progVect));
+		pInter.traduireXml();
+	}
 
 	// ---------------------------------------------
 	// Traduction
@@ -438,6 +484,10 @@ public class PanelProgrammes extends JPanel implements ActionListener, ListSelec
 		else if (isLarp()) {
 			inter = pInter.creerIntermediaireLarp("traduire");
 			analyseur = new AnalyseurLarp(editArea.getText(), false, false, inter);
+		}
+		else if (isPython()) {
+			inter = pInter.creerIntermediaireLarp("traduire");
+			analyseur = new AnalyseurPython(editArea.getText(), false, false, inter);
 		}
 		else {
 			pInter.clearConsole();
@@ -466,9 +516,16 @@ public class PanelProgrammes extends JPanel implements ActionListener, ListSelec
 		else if (isJavascool()) {
 			analyseur = new AnalyseurJavascool(editArea.getText(), true, true);
 		}
+		else if (isAlgobox()) {
+			analyseur = new AnalyseurAlgobox(editArea.getText(), true, true);
+		}
 		else if (isLarp()) {
 			inter = pInter.creerIntermediaireLarp("reformuler");
 			analyseur = new AnalyseurLarp(editArea.getText(), true, true, inter);
+		}
+		else if (isPython()) {
+			inter = pInter.creerIntermediaireLarp("reformuler");
+			analyseur = new AnalyseurPython(editArea.getText(), true, true, inter);
 		}
 		else {
 			pInter.clearConsole();

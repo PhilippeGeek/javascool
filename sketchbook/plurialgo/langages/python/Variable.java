@@ -37,20 +37,20 @@ public class Variable extends org.javascool.proglets.plurialgo.langages.modele.V
 			Divers.ecrire(buf, nom + " = []", indent);
 			Divers.ecrire(buf, "for i1 in range(0," + MAX_TAB + ") :", indent);
 			Divers.ecrire(buf, this.nom + ".append(" + "[0]*" + MAX_TAB + ")", indent+1);
-			Divers.ecrire(buf, "#end for", indent);
+			Divers.ecrire(buf, "#end", indent);
 		}
 		if (this.isMatTextes()){
 			Divers.ecrire(buf, nom + " = []", indent);
 			Divers.ecrire(buf, "for i1 in range(0," + MAX_TAB + ") :", indent);
 			Divers.ecrire(buf, this.nom + ".append(" + "['']*" + MAX_TAB + ")", indent+1);
-			Divers.ecrire(buf, "#end for", indent);
+			Divers.ecrire(buf, "#end", indent);
 			//Divers.ecrire(buf, nom + " = ['']*(" + MAX_TAB + "*" + MAX_TAB +")", indent);
 		}
 		if (this.isMatBooleens()){
 			Divers.ecrire(buf, nom + " = []", indent);
 			Divers.ecrire(buf, "for i1 in range(0," + MAX_TAB + ") :", indent);
 			Divers.ecrire(buf, this.nom + ".append(" + "[True]*" + MAX_TAB + ")", indent+1);
-			Divers.ecrire(buf, "#end for", indent);
+			Divers.ecrire(buf, "#end", indent);
 		}
 		if (this.isEnregistrement(prog)) {
 			Divers.ecrire(buf, nom, indent);
@@ -72,14 +72,14 @@ public class Variable extends org.javascool.proglets.plurialgo.langages.modele.V
 				Divers.ecrire(buf, nom + " = [0]*" + MAX_TAB, indent);
 				Divers.ecrire(buf, "for ii in range(0," + MAX_TAB + ") :", indent);
 				Divers.ecrire(buf, this.nom + "[ii]" + " = " + cl.nom + "()", indent+1);
-				Divers.ecrire(buf, "#end for", indent);
+				Divers.ecrire(buf, "#end", indent);
 			}
 			else {
 				Divers.ecrire(buf, nom + " = [0]*" + MAX_TAB, indent);
 				Divers.ecrire(buf, "for ii in range(0," + MAX_TAB + ") :", indent);
 				Variable var = new Variable(this.nom + "[ii]", cl.nom);
 				var.ecrire(prog, buf, indent+1);
-				Divers.ecrire(buf, "#end for", indent);
+				Divers.ecrire(buf, "#end", indent);
 			}
 		}
 	}
@@ -102,19 +102,19 @@ public class Variable extends org.javascool.proglets.plurialgo.langages.modele.V
 			Divers.ecrire(buf, "self." + nom + " = []", indent);
 			Divers.ecrire(buf, "for i1 in range(0," + MAX_TAB + ") :", indent);
 			Divers.ecrire(buf, this.nom + ".append(" + "[0]*" + MAX_TAB + ")", indent+1);
-			Divers.ecrire(buf, "#end for", indent);
+			Divers.ecrire(buf, "#end", indent);
 		}
 		if (this.isMatTextes()){
 			Divers.ecrire(buf, "self." + nom + " = []", indent);
 			Divers.ecrire(buf, "for i1 in range(0," + MAX_TAB + ") :", indent);
 			Divers.ecrire(buf, this.nom + ".append(" + "['']*" + MAX_TAB + ")", indent+1);
-			Divers.ecrire(buf, "#end for", indent);
+			Divers.ecrire(buf, "#end", indent);
 		}
 		if (this.isMatBooleens()){
 			Divers.ecrire(buf, "self." + nom + " = []", indent);
 			Divers.ecrire(buf, "for i1 in range(0," + MAX_TAB + ") :", indent);
 			Divers.ecrire(buf, this.nom + ".append(" + "[True]*" + MAX_TAB + ")", indent+1);
-			Divers.ecrire(buf, "#end for", indent);
+			Divers.ecrire(buf, "#end", indent);
 		}
 		if (this.isClasse(prog)) {
 			Divers.ecrire(buf, "self." + nom, indent);

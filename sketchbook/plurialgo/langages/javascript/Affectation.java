@@ -14,6 +14,10 @@ public class Affectation extends org.javascool.proglets.plurialgo.langages.model
 	}
 	
 	public void ecrire(Programme prog, StringBuffer buf, int indent) {
+		if (this.isAffTabSimple() || this.isAffMatSimple()) {
+			expression = Divers.remplacer(expression, "{", "[");
+			expression = Divers.remplacer(expression, "}", "]");
+		}
 		Divers.ecrire(buf, var + "=" + expression + ";", indent);
 	}
 	

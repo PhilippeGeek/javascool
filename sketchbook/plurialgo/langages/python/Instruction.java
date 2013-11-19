@@ -61,7 +61,7 @@ public class Instruction extends org.javascool.proglets.plurialgo.langages.model
 					si.ecrire(prog, buf, indent);
 				}
 				if (nb_si>0) {
-					Divers.ecrire(buf, "#end if", indent);	
+					Divers.ecrire(buf, "#end", indent);	
 				}
 			}
 		}

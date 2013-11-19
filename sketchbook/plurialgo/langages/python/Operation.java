@@ -47,7 +47,7 @@ public class Operation extends org.javascool.proglets.plurialgo.langages.modele.
 		if (isFonction()) {
 			Divers.ecrire(buf, "return " + retour.nom, indent+1);
 		}
-		Divers.ecrire(buf, "#end def", indent);
+		Divers.ecrire(buf, "#end", indent);
 		Divers.ecrire(buf, "\n");
 	}
 	

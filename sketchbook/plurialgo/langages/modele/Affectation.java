@@ -35,15 +35,17 @@ public class Affectation extends Noeud {
 	// ---------------------------------------------
 	
 	public boolean isAffTabSimple(){
+		if (isAffMatSimple()) return false;
 		String txt_expr = expression.trim();
-		if (txt_expr.startsWith("[[")) return false;
 		if (txt_expr.startsWith("[")) return true;
+		if (txt_expr.startsWith("{")) return true;
 		return false;
 	}
 	
 	public boolean isAffMatSimple(){
-		String txt_expr = expression.trim();
+		String txt_expr = Divers.remplacer(expression, " ", "");
 		if (txt_expr.startsWith("[[")) return true;
+		if (txt_expr.startsWith("{{")) return true;
 		return false;
 	}
 

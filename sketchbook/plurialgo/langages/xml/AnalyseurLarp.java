@@ -193,6 +193,10 @@ public class AnalyseurLarp implements iAnalyseur {
 					if (gauche!=null) aff.var = gauche.trim();
 					String droite = ligne.substring(i+1, ligne.length());
 					if (droite!=null) aff.expression = droite.trim();
+					if (aff.isAffTabSimple() || aff.isAffMatSimple()) {
+						aff.expression = Divers.remplacer(aff.expression, "[", "{");
+						aff.expression = Divers.remplacer(aff.expression, "]", "}");
+					}
 				}
 				else if (this.isSi(ligne)) {
 					Instruction instr = new Instruction("si");
@@ -308,8 +312,16 @@ public class AnalyseurLarp implements iAnalyseur {
 				else if (this.isEcrire(ligne)) {
 					if (ignorerEcrire && (cur_oper==null)) continue;
 					Instruction instr = new Instruction("ecrire");
-					String parametres = Divers.remplacer(ligne, "ECRIRE", "");
-					StringTokenizer tok1 = new StringTokenizer(parametres,",",false);
+					int i = ligne.indexOf("ECRIRE") + 6;
+					int j = ligne.length();
+					String parametres = ligne.substring(i+1, j);
+					parametres = Divers.remplacer(parametres, " ", "");
+					parametres = Divers.remplacer(parametres, "',(", "'&");
+					parametres = Divers.remplacer(parametres, "',", "'&");
+					parametres = Divers.remplacer(parametres, "),'", "&'");
+					parametres = Divers.remplacer(parametres, ",'", "&'");
+					if (parametres.trim().isEmpty()) continue;
+					StringTokenizer tok1 = new StringTokenizer(parametres,"&",false);
 					while(tok1.hasMoreTokens()) {
 						String parametre = tok1.nextToken();
 						if (parametre==null) continue;
@@ -317,10 +329,17 @@ public class AnalyseurLarp implements iAnalyseur {
 						if (parametre.contains("'")) continue;
 						Argument arg = new Argument();
 						arg.nom = parametre.trim();	
-						arg.type = "REEL"; trouverType(arg);
+						arg.type = "EXPR"; trouverType(arg);
 						instr.arguments.add(arg); arg.parent = instr;
 					}
 					if (instr.arguments.size()>0) {
+						this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;
+					}
+					else if (!parametres.contains("&") && !parametres.contains(":")) {
+						Argument arg = new Argument();
+						arg.nom = ligne.substring(i+1, j).trim();	
+						arg.type = "EXPR";
+						instr.arguments.add(arg); arg.parent = instr;
 						this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;
 					}
 				}

@@ -172,14 +172,18 @@ public class PanelHtml extends JPanel implements ActionListener, HyperlinkListen
 				}	
 				if (desc.equals("ex_proc_out")) {
 					pInter.pPrincipal.resultatsField.setText("prixTotal,remise");
-					pInter.pPrincipal.niv_calculList.setSelectedIndex(1);	// proc�dure
+					pInter.pPrincipal.niv_calculList.setSelectedIndex(1);	// procedure
+				}	
+				if (desc.equals("ex_proc_in")) {
+					pInter.pPrincipal.resultatsField.setText("");
+					pInter.pPrincipal.niv_calculList.setSelectedIndex(1);	// procedure
 				}
 				if (desc.equals("ex_proc_inout")) {
 					pInter.pPrincipal.donneesField.setText("quantite, prixTotal"); 
 					pInter.pPrincipal.resultatsField.setText("prixTotal");
 					pInter.pPrincipal.entiersField.setText("quantite"); 
 					pInter.pPrincipal.reelsField.setText("prixTotal, remise"); 
-					pInter.pPrincipal.niv_calculList.setSelectedIndex(1);	// proc�dure
+					pInter.pPrincipal.niv_calculList.setSelectedIndex(1);	// procedure
 				}	
 				if (desc.equals("ex_intro")) {
 					pInter.pPrincipal.reelsField.setText("prixTotal,prixUnitaire"); 

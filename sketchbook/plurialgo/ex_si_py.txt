@@ -1,0 +1,12 @@
+prixUnitaire = input("Quel est le prix unitaire de l'article en euros ?") 
+quantite = input("Quelle est la quantite achetee ?") 
+prixTotal=quantite * prixUnitaire 
+if (quantite == 1) : 
+	remise=0 
+elif (quantite <= 3) : 
+	remise=0.1 
+else : 
+	remise=0.2 
+#end
+prixTotal=prixTotal - remise * prixTotal 
+print "Le prix total vaut ", prixTotal, " euros"

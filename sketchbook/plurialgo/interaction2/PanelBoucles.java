@@ -11,6 +11,7 @@ import javax.swing.*;
 import org.javascool.proglets.plurialgo.langages.xml.AnalyseurAlgobox;
 import org.javascool.proglets.plurialgo.langages.xml.AnalyseurJavascool;
 import org.javascool.proglets.plurialgo.langages.xml.AnalyseurLarp;
+import org.javascool.proglets.plurialgo.langages.xml.AnalyseurPython;
 import org.javascool.proglets.plurialgo.langages.xml.AnalyseurVb;
 import org.javascool.proglets.plurialgo.langages.xml.Argument;
 import org.javascool.proglets.plurialgo.langages.xml.Intermediaire;
@@ -31,6 +32,7 @@ public class PanelBoucles extends JPanel implements ActionListener {
 	private JPanel pVect;	
 	private JList boucleList;
 	private JTextField pourVarField, pourFinField, vectModeField;
+	private JTextField pourDebutField, pourPasField;
 	private JTextField sommeModeField; private JCheckBox sommeCheck;
 	private JTextField compterModeField; private JCheckBox compterCheck;
 	private JTextField miniModeField; private JCheckBox miniCheck;
@@ -62,13 +64,22 @@ public class PanelBoucles extends JPanel implements ActionListener {
 		boucleList.setSelectedIndex(0);
 		p.add(boucleList);
 		p.add( new JLabel(" : ") );
-		pourVarField = new JTextField(8);
+		pourVarField = new JTextField(2);
 		pourVarField.setText("k");
 		p.add(pourVarField);
-		p.add( new JLabel(" de 1 a ") );
-		pourFinField = new JTextField(8);
+		//p.add( new JLabel(" de 1 a ") );
+		p.add( new JLabel(" de ") );
+		pourDebutField = new JTextField(2);
+		pourDebutField.setText("1");
+		p.add(pourDebutField);
+		p.add( new JLabel(" a ") );
+		pourFinField = new JTextField(4);
 		pourFinField.setText("n");
 		p.add(pourFinField);
+		p.add( new JLabel(" pas ") );
+		pourPasField = new JTextField(2);
+		pourPasField.setText("1");
+		p.add(pourPasField);
 		vbox.add(p);
 		// sommation
 		p = new JPanel(); 
@@ -166,6 +177,10 @@ public class PanelBoucles extends JPanel implements ActionListener {
 			inter = pInter.creerIntermediaireLarp("vectoriser");
 			analyseur = new AnalyseurLarp(pInter.getText(), false, false, inter);
 		}
+		else if (pInter.isPython()) {
+			inter = pInter.creerIntermediaireLarp("vectoriser");
+			analyseur = new AnalyseurPython(pInter.getText(), false, false, inter);
+		}
 		else {
 			analyseur = new AnalyseurVb("", false, false);
 		}
@@ -183,6 +198,8 @@ public class PanelBoucles extends JPanel implements ActionListener {
 		prog.options.add( new Argument("vectorisation", null, vectModeField.getText()) );
 		prog.options.add( new Argument("pour_var", null, pourVarField.getText()) );
 		prog.options.add( new Argument("pour_fin", null, pourFinField.getText()) );
+		prog.options.add( new Argument("pour_debut", null, pourDebutField.getText()) );
+		prog.options.add( new Argument("pour_pas", null, pourPasField.getText()) );
 		if ("tantque".equals(boucleList.getSelectedValue())) {
 			prog.options.add( new Argument("tantque", null, "tantque") );
 		}

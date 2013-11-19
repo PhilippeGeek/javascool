@@ -366,10 +366,10 @@ public class ProgrammeDerive extends Programme {
 			oper.traiterElementaireVariables(infos);
 			InfoTypeeList liste = new InfoTypeeList();
 			liste.addInfos(infos);
-			if (liste.compterMode("INOUT")>0 || liste.compterMode("OUT")>0) {
+			//if (liste.compterMode("INOUT")>0 || liste.compterMode("OUT")>0) {
 				instructions.add(instr);
 				operations.add(oper);
-			}
+			//}
 		}
 		else {
 			this.traiterElementaireInstructions(prog.instructions, instructions);
