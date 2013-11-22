@@ -17,6 +17,8 @@
 Il suffit de le télécharger <b><a href="javascool-proglets.jar">ICI</a></b>, en choisissant l'option «Ouvrir» ou «Ouvrir avec Java».
 </td></tr><!--tr><td align="right">ou essayer la <b><a href="javascool-beta.jar">nouvelle release</a></b> (version beta)</td></tr--></table><br/></p>
 
+    <p>- Avec Java, version 1.8, il faut utiliser ce <a href="http://javascool.gforge.inria.fr/v4/javascool-proglets-8.jar">téléchargement</a></p>.
+
 <p>- Si le lancement échoue, vous devrez probablement <a href="http://www.java.com/fr/download">installer Java<a/> (version 1.6 ou <a href="#Utilisation_avec_java7">1.7</a>).</p>
 <p>- Ci dessous, nous donnons des indications pour vous aider plus si besoin, sous <a href="#windows">windows</a>, <a href="#macos">Mac OS</a>, et <a href="#linux">Linux</a>.</p>
 <p>- Si votre système est trop ancien la <a href="http://javascool.gforge.inria.fr/v3">version 3</a> est encore disponible.</p>

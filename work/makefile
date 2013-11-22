@@ -4,6 +4,7 @@
 dft : tst1
 
 export JAVA_HOME=/usr/java/jdk1.6.0_25
+#export JAVA_HOME=/usr/java/jdk1.7.0_45
 
 export PATH := $(JAVA_HOME)/bin:$(PATH)
 
@@ -16,6 +17,10 @@ jvs :
 	ant javascool-proglets.jar
 
 tst1 : 
+	echo $(PATH)
+	which java
+	java -version
+	echo OK
 	ant clean
 	ant javascool-proglets.jar
 	$(JRE_HOME)/bin/java -jar dist/javascool-proglets.jar
@@ -41,8 +46,9 @@ nbe :
 jdoc :
 	ant javadoc ; firefox ./dist/javadoc/overview-summary.html
 
-sos :
-	ant javascool-proglets.jar ; cd ../web ; ant publish-jar
+sos8 :
+	ant javascool-proglets.jar
+	rsync --rsh='ssh -C' -rl .htaccess ../work/dist/javascool-proglets.jar scm.gforge.inria.fr:/home/groups/javascool/htdocs/v4/javascool-proglets-8.jar
 
 jbl :
 	ant javascool-builder.jar ; cd ../sketchbook ; java -jar ../work/dist/javascool-builder.jar
