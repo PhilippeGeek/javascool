@@ -54,7 +54,12 @@ public class ProgletEngine {
     }
     // Définit une proglet "vide" pour lancer l'interface
     if(proglets.isEmpty()) {
-      throw new IllegalStateException("Erreur dans javascool: cette jarre ne contient pas de proglets");
+      String message = "Erreur dans javascool: cette jarre ne contient pas de proglets";
+      message += "\njavascoolJar = "+javascoolJar+"\n";
+      // Ajoute toutes les données de l'environnement
+      for(String name : System.getProperties().stringPropertyNames())
+	message += "  " + name + " = " + System.getProperty(name) + "\n";
+      throw new IllegalStateException(message);
       /*
       for(int i = 0; i < 1; i++) {
         Proglet p = new Proglet();
