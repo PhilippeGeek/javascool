@@ -26,7 +26,7 @@
    <p><r>void main</r>() {</p>
    <m>Définition d'un runnable</m>
    <p><T/><r>setRunnable</r>(<r>new Runnable</r>() { <r>public void run</r>() {</p>
-   <p><T/><T/>println(<v>Oh on a cliqué dans l'image en (</v> + getX() + <v>, </v> + getX() +<v>)</v>);</p>
+   <p><T/><T/>println(<v>Oh on a cliqué dans l'image en (</v> + getX() + <v>, </v> + getY() +<v>)</v>);</p>
    <p><T/>}});</p>
    <p>}</p>
  </div> (merci à François Passebon).
