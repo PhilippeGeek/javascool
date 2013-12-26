@@ -122,6 +122,8 @@ public class Jvs2Java extends Translator {
 	tail.append(main);
       }
     }
+    if (body.toString().indexOf("while") != -1)
+      System.out.println("Notice: à la boucle while une minuterie de 1ms est ajoutée pour éviter qu'une boucle infinie ne bloque tout.\n");
     String finalBody = body.toString().
                        replaceAll("(while.*\\{)", "$1 sleep(1);");
     if(progletTranslator != null) {

@@ -176,7 +176,6 @@ class JVSFileTabs extends JVSTabs {
     }
     JVSFileTabs.currentCompiledFile = fileId;
     if(ProgletEngine.getInstance().doCompile(JVSFileTabs.editors.get(fileId).getText())) {
-      JVSWidgetPanel.getInstance().getConsoleInstance().clear();
       System.out.println("Compilation réussie !");
       return true;
     } else {

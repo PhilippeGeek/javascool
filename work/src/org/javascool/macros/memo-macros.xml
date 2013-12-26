@@ -49,7 +49,11 @@
        <p><T/><r>println</r>(<v>Hello World !</v>);</p>
        <p><T/>n = n + 1;</p>
        <p>}</p>
-   </div></div></div>
+   </div></div>
+   <div><b>Attention:</b> La boucle while est "protégée" par une petite minuterie de 1 milli-seconde, 
+   qui permet au programme de ne pas être bloqué par une boucle infinie: 
+   la construction équivalente suivante pour ne pas avoir cette minuterie: <p><b><r>for</r> (;expressionBooléenne;) { BlocD'Instructions }</b></p>
+ </div></div>
   <div title="Compteur">
     <p><b><r>for</r> (<r>int</r> n = 0; n &lt; N; n++) { BlocD'Instructions }</b></p>
     <div>permet de faire une boucle où la variable <c>n</c> va de 0 à <c>N</c> exclus.
