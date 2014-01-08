@@ -103,6 +103,7 @@ public class Jvs2Java extends Translator {
       // Declares the proglet's core as a Runnable in the Applet
       uid++;
       head.append("public class JvsToJavaTranslated").append(uid).append(" implements Runnable{");
+      tail.append("\nvoid error_at_end_of_javascool_main() { }\n");     
       tail.append("  private static final long serialVersionUID = ").append(uid).append("L;");
       tail.append("  public void run() {");
       tail.append("   try{ main(); } catch(Throwable e) { ");
@@ -129,7 +130,7 @@ public class Jvs2Java extends Translator {
     if(progletTranslator != null) {
       finalBody = progletTranslator.translate(finalBody);
     }
-    return head.toString() + "\n\n"+ finalBody + "\n\n"+ tail.toString() + "}";
+    return head.toString() + "\n"+ finalBody + "\n\n"+ tail.toString() + "}";
   }
   /**
    * @see #translate(String, String)

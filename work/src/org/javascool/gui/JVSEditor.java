@@ -142,7 +142,12 @@ class JVSEditor extends JPanel {
    * @return The code
    */
   public String getText() {
-    return TextPane.getText();
+    String text = TextPane.getText();
+    if (text.charAt(0) != '\n') {
+      text = "\n" + text;
+      TextPane.setText(text);
+    }
+    return text;
   }
   /** Set the text
    * @param text The text to write on screen
