@@ -103,13 +103,13 @@ public class Jvs2Java extends Translator {
       // Declares the proglet's core as a Runnable in the Applet
       uid++;
       head.append("public class JvsToJavaTranslated").append(uid).append(" implements Runnable{");
-      tail.append("\nvoid error_at_end_of_javascool_main() { }\n");     
-      tail.append("  private static final long serialVersionUID = ").append(uid).append("L;");
-      tail.append("  public void run() {");
-      tail.append("   try{ main(); } catch(Throwable e) { ");
-      tail.append("    if (e.toString().matches(\".*Interrupted.*\"))println(\"\\n-------------------\\nProgramme arrêté !\\n-------------------\\n\");");
-      tail.append("    else println(\"\\n-------------------\\nErreur lors de l'exécution de la proglet\\n\"+org.javascool.core.Jvs2Java.report(e)+\"\\n-------------------\\n\");}");
-      tail.append("  }");
+      //-tail.append("\nvoid error_at_end_of_javascool_main() { }\n");     
+      head.append("  private static final long serialVersionUID = ").append(uid).append("L;");
+      head.append("  public void run() {");
+      head.append("   try{ main(); } catch(Throwable e) { ");
+      head.append("    if (e.toString().matches(\".*Interrupted.*\"))println(\"\\n-------------------\\nProgramme arrêté !\\n-------------------\\n\");");
+      head.append("    else println(\"\\n-------------------\\nErreur lors de l'exécution de la proglet\\n\"+org.javascool.core.Jvs2Java.report(e)+\"\\n-------------------\\n\");}");
+      head.append("  }");
       // Adds a main wrapper to run the proglet jvs runnable
       if (proglet != null) {
 	if (jvsName == null)
@@ -120,7 +120,7 @@ public class Jvs2Java extends Translator {
 	  (proglet.getPane() != null ? "org.javascool.core.ProgletEngine.getInstance().setProglet(\""+proglet.getName()+"\").getProgletPane()" : "org.javascool.widgets.Console.newInstance()") +
 	  ").setRunnable(new JvsToJavaTranslated"+uid+"());" +
 	  "}";
-	tail.append(main);
+	head.append(main);
       }
     }
     if (body.toString().indexOf("while") != -1)
@@ -130,7 +130,7 @@ public class Jvs2Java extends Translator {
     if(progletTranslator != null) {
       finalBody = progletTranslator.translate(finalBody);
     }
-    return head.toString() + "\n"+ finalBody + "\n\n"+ tail.toString() + "}";
+    return head.toString() + finalBody + "\n\n"+ tail.toString() + "}";
   }
   /**
    * @see #translate(String, String)
