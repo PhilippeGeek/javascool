@@ -71,7 +71,7 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 		return "5";
 	}
 	
-	private void postTraitement(StringBuffer buf) {
+	public void postTraitement(StringBuffer buf) {
 		Divers.remplacer(buf, "==", "=");
 		Divers.remplacer(buf, " et ", " ET ");
 		//Divers.remplacer(buf, " ET ", "&&");

@@ -37,8 +37,7 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 	}
 	
 	private void addSousProgs(StringBuffer buf, int indent) {
-		if ((operations.size()>0))
-			this.commenter(buf, "sous programmes", indent);
+		//if ((operations.size()>0)) this.commenter(buf, "sous programmes", indent);
 		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Operation> iter=operations.iterator(); iter.hasNext();) {
 			Operation oper = (Operation) iter.next();
 			oper.ecrire(this, buf, indent);
@@ -46,8 +45,7 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 	}
 	
 	private void addClasses(StringBuffer buf, int indent) {
-		if ((classes.size()>0))
-			this.commenter(buf, "enregistrements ou classes", indent);
+		//if ((classes.size()>0))	this.commenter(buf, "enregistrements ou classes", indent);
 		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Classe> iter=classes.iterator(); iter.hasNext();) {
 			Classe classe = (Classe) iter.next();
 			if (classe.isEnregistrement()) {
@@ -62,7 +60,7 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 	}
 	
 	private void addMain(StringBuffer buf, int indent) {
-		this.commenter(buf, "programme principal", indent);
+		//this.commenter(buf, "programme principal", indent);
 		Divers.ecrire(buf, "sub main()", indent);
 		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Variable> iter=variables.iterator(); iter.hasNext();) {
 			Variable var = (Variable) iter.next();
@@ -87,7 +85,7 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 		return "\"" + s + "\"";
 	}
 
-	private void postTraitement(StringBuffer buf) {
+	public void postTraitement(StringBuffer buf) {
 		Divers.remplacer(buf, "this.", "");
 		Divers.remplacer(buf, this.quote("\\t"), "vbTab");
 		Divers.remplacer(buf, "==", "=");

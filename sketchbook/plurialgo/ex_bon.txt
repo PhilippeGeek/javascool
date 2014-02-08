@@ -1,0 +1,3 @@
+baguette	0.8 	2
+journal	0.95	1
+magazine	2.5	1

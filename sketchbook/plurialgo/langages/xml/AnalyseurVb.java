@@ -233,7 +233,8 @@ public class AnalyseurVb implements iAnalyseur {
 					ligne = Divers.remplacer(ligne, "=", "==");
 					ligne = Divers.remplacer(ligne, ">==", ">=");
 					ligne = Divers.remplacer(ligne, "<==", "<=");
-					si.condition = ligne;				
+					ligne = Divers.remplacer(ligne, "!==", "!=");
+					si.condition = ligne.trim();				
 				}
 				else if (this.isSinonSi(ligne)) {
 					ligne = ajouterCrochet(ligne);
@@ -248,7 +249,8 @@ public class AnalyseurVb implements iAnalyseur {
 					ligne = Divers.remplacer(ligne, "=", "==");
 					ligne = Divers.remplacer(ligne, ">==", ">=");
 					ligne = Divers.remplacer(ligne, "<==", "<=");
-					sinonsi.condition = ligne;
+					ligne = Divers.remplacer(ligne, "!==", "!=");
+					sinonsi.condition = ligne.trim();
 				}
 				else if (this.isSinon(ligne)) {
 					ligne = ajouterCrochet(ligne);
@@ -274,7 +276,8 @@ public class AnalyseurVb implements iAnalyseur {
 					ligne = Divers.remplacer(ligne, "=", "==");
 					ligne = Divers.remplacer(ligne, ">==", ">=");
 					ligne = Divers.remplacer(ligne, "<==", "<=");
-					tq.condition = ligne;				
+					ligne = Divers.remplacer(ligne, "!==", "!=");
+					tq.condition = ligne.trim();				
 				}
 				else if (this.isFinTantQue(ligne)) {
 					this.ajouterCommentaires(cur_nd);

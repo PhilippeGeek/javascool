@@ -1,0 +1,12 @@
+\\ Module principal
+DEBUT
+	\\ donnees
+	tab = [12.5, 10.5, 10]
+	n = 3
+	\\ calcul et affichage du total du tableau
+	total = 0
+	POUR k=1 JUSQU'A n INCREMENT 1 FAIRE 
+		total = total + tab[k]
+	FINPOUR
+	ECRIRE "total : ", total
+FIN

@@ -45,7 +45,7 @@ public class FichierTexte {
 		}
 		Divers.ecrire(buf, "# incrementation du compteur de lignes", indent+1);
 		Divers.ecrire(buf, "n_lig=n_lig+1", indent+1);
-		Divers.ecrire(buf, "# end for", indent);
+		Divers.ecrire(buf, "# end", indent);
 		Divers.ecrire(buf, "f_in.close()",indent);
 	}
 	

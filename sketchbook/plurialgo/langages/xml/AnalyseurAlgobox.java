@@ -30,6 +30,11 @@ public class AnalyseurAlgobox implements iAnalyseur {
 	public AnalyseurAlgobox(String txt, boolean ignorerLire, boolean ignorerEcrire) {
 		this.nettoyerAlgobox(txt);
 		this.algoboxEnXml(ignorerLire, ignorerEcrire);
+	}	
+		
+	public AnalyseurAlgobox(String txt) {
+		buf_algo = new StringBuffer();
+		buf_algo.append(txt);
 	}
 
 	/**
@@ -120,7 +125,7 @@ public class AnalyseurAlgobox implements iAnalyseur {
 					cur_nd = si;
 					ligne = Divers.remplacer(ligne, "SI", "");
 					ligne = Divers.remplacer(ligne, "ALORS", "");
-					si.condition = ligne;				
+					si.condition = ligne.trim();				
 				}
 				else if (this.isSinonSi(ligne)) {
 					this.ajouterCommentaires(cur_nd);
@@ -131,7 +136,7 @@ public class AnalyseurAlgobox implements iAnalyseur {
 					ligne = Divers.remplacer(ligne, "SINON", "");
 					ligne = Divers.remplacer(ligne, "SI", "");
 					ligne = Divers.remplacer(ligne, "ALORS", "");
-					sinonsi.condition = ligne;
+					sinonsi.condition = ligne.trim();
 				}
 				else if (this.isSinon(ligne)) {
 					this.ajouterCommentaires(cur_nd);
@@ -153,7 +158,7 @@ public class AnalyseurAlgobox implements iAnalyseur {
 					cur_nd = tq;
 					ligne = Divers.remplacer(ligne, "TANT_QUE", "");
 					ligne = Divers.remplacer(ligne, "FAIRE", "");
-					tq.condition = ligne;				
+					tq.condition = ligne.trim();				
 				}
 				else if (this.isFinTantQue(ligne)) {
 					this.ajouterCommentaires(cur_nd);
@@ -494,6 +499,159 @@ public class AnalyseurAlgobox implements iAnalyseur {
 		if (!ligne.contains("repcode")) return false;
 		if (ligne.contains("inactif")) return false;
 		return true;
+	}
+	
+	// ---------------------------------------------
+	// export au format AlgoBox
+	// ---------------------------------------------
+
+	private void ecrireItem(String algoitem, String code, String fin) {
+		buf_xml.append("<item algoitem=");
+		buf_xml.append("\"" + algoitem + "\"");
+		buf_xml.append(" code=");
+		buf_xml.append("\"" + code + "\"");
+		buf_xml.append(fin);
+		buf_xml.append("\n");
+	}
+
+	private void ecrireFinItem(String algoitem) {
+		buf_xml.append("</item>");
+		buf_xml.append("\n");
+	}	
+	
+	public String exportAlgobox() {
+		// nettoyage de l'algo
+		Divers.remplacer(buf_algo,"\t", "");	
+		Divers.remplacer(buf_algo,"\r", "");
+		for(int i=0;i<60;i++) {
+			Divers.remplacer(buf_algo,"\n ", "\n");
+			Divers.remplacer(buf_algo," \n", "\n");
+			Divers.remplacer(buf_algo,"\n\n", "\n");
+		}
+		Divers.remplacer(buf_algo, "\"", "&quot;");
+		Divers.remplacer(buf_algo, "<", "&lt;");
+		Divers.remplacer(buf_algo, ">", "&gt;");
+		Divers.remplacer(buf_algo,"FIN_SI\nSINON", "SINON");	
+		Divers.remplacer(buf_algo,"AFFICHER*", "AFFICHER");	
+		// creation code XML
+		buf_xml = new StringBuffer();
+		buf_xml.append("<Algo>"); buf_xml.append("\n");
+		ecrireItem("VARIABLES","100#declarationsvariables", ">");
+		StringTokenizer tok = new StringTokenizer(buf_algo.toString(),"\n\r",false);
+		while(tok.hasMoreTokens()) {
+			String ligne = tok.nextToken();
+			if (this.isDim(ligne)) {
+				int i = ligne.indexOf("EST_DU_TYPE");
+				String nom = ligne.substring(0, i).trim();
+				String type = ligne.substring(i+11).trim();
+				String code = "1#" + type + "#" + nom; 
+				ecrireItem(ligne, code, "/>");
+			}
+		}
+		ecrireFinItem("VARIABLES");
+		ecrireItem("DEBUT_ALGORITHME","101#debutalgo", ">");
+		tok = new StringTokenizer(buf_algo.toString(),"\n\r",false);
+		while(tok.hasMoreTokens()) {
+			String ligne = tok.nextToken();
+			if (this.isDim(ligne)) {
+			}
+			else if (this.isAffectation(ligne)) {
+				int i = ligne.indexOf("PREND_LA_VALEUR");
+				String gauche = ligne.substring(0, i).trim();
+				String droite = ligne.substring(i+15, ligne.length()).trim();
+				String code = "5#" + gauche + "#" + droite + "#pasliste"; 
+				int i1 = gauche.indexOf("[");
+				int i2 = gauche.lastIndexOf("]");
+				if ( (i1>0) && (i2>i1) ) {
+					String indice = ligne.substring(i1+1, i2).trim();
+					code = "5#" + gauche.substring(0,i1) + "#" + droite + "#" + indice;
+				}
+				ecrireItem(ligne, code, "/>");
+			}
+			else if (this.isSi(ligne)) {
+				int i = ligne.indexOf("ALORS");
+				String condition = ligne.substring(2, i).trim();
+				String code = "6#" + condition; 
+				ecrireItem(ligne, code, ">");
+				ecrireItem("DEBUT_SI", "7#debutsi", "/>");
+			}
+			else if (this.isSinonSi(ligne)) {
+			}
+			else if (this.isSinon(ligne)) {
+				ecrireItem("FIN_SI", "8#finsi", "/>");
+				ecrireItem("SINON", "9#sinon", ">");
+				ecrireItem("DEBUT_SINON", "10#debutsinon", "/>");
+			}
+			else if (ligne.equals("FIN_SINON")) {
+				ecrireItem("FIN_SINON", "11#finsinon", "/>");
+				ecrireFinItem("SINON");
+				ecrireFinItem("SI");
+			}
+			else if (this.isFinSi(ligne)) {
+				ecrireItem("FIN_SI", "8#finsi", "/>");
+				ecrireFinItem("SI");
+			}
+			else if (this.isTantque(ligne)) {
+				int i = ligne.indexOf("FAIRE");
+				String condition = ligne.substring(8, i).trim();
+				String code = "15#" + condition; 
+				ecrireItem(ligne, code, ">");
+				ecrireItem("DEBUT_TANT_QUE", "16#debuttantque", "/>");	
+			}
+			else if (this.isFinTantQue(ligne)) {
+				ecrireItem("FIN_TANT_QUE", "17#fintantque", "/>");
+				ecrireFinItem("TANT_QUE");
+			}
+			else if (this.isPour(ligne)) {
+				int i = ligne.indexOf("ALLANT_DE");
+				int j = ligne.lastIndexOf(" A ");
+				String var = ligne.substring(4, i).trim();
+				String debut = ligne.substring(i+9, j).trim();
+				String fin = ligne.substring(j+3).trim();
+				String code = "12#" + var + "#" + debut + "#" + fin; 
+				ecrireItem(ligne, code, ">");
+				ecrireItem("DEBUT_POUR", "13#debutpour", "/>");	
+			}
+			else if (this.isFinPour(ligne)) {
+				ecrireItem("FIN_POUR", "14#finpour", "/>");
+				ecrireFinItem("POUR");
+			}
+			else if (this.isLire(ligne)) {
+				String nom = ligne.substring(5, ligne.length()).trim();
+				String code = "2#" + nom + "#pasliste"; 
+				int i1 = ligne.indexOf("[");
+				int i2 = ligne.lastIndexOf("]");
+				if ( (i1>0) && (i2>i1) ) {
+					nom = ligne.substring(5, i1).trim();
+					String indice = ligne.substring(i1+1, i2).trim();
+					code = "2#" + nom + "#" + indice;
+				}
+				ecrireItem(ligne, code, "/>");
+			}
+			else if (this.isEcrire(ligne)) {
+				String message = ligne.substring(9, ligne.length()).trim();
+				if (!message.startsWith("&quot;")) {
+					String code = "3#" + message + "#1" + "#pasliste"; 
+					int i1 = ligne.indexOf("[");
+					int i2 = ligne.lastIndexOf("]");
+					if ( (i1>0) && (i2>i1) ) {
+						message = ligne.substring(9, i1).trim();
+						String indice = ligne.substring(i1+1, i2).trim();
+						code = "3#" + message + "#1" + "#" + indice; 
+					}
+					ecrireItem(ligne, code, "/>");
+				}
+				else {
+					message = Divers.remplacer(message, "&quot;", "");
+					String code = "4#" + message + "#1"; 
+					ecrireItem(ligne, code, "/>");
+				}
+				
+			}
+		}
+		ecrireFinItem("DEBUT_ALGORITHME");
+		buf_xml.append("</Algo>"); buf_xml.append("\n");
+		return buf_xml.toString();
 	}
 
 }

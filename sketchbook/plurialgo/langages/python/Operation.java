@@ -51,4 +51,8 @@ public class Operation extends org.javascool.proglets.plurialgo.langages.modele.
 		Divers.ecrire(buf, "\n");
 	}
 	
+	public void ecrire(org.javascool.proglets.plurialgo.langages.modele.Programme prog, StringBuffer buf, int indent) {
+		this.ecrire((org.javascool.proglets.plurialgo.langages.python.Programme)prog, buf, indent);
+	}
+	
 }

@@ -34,8 +34,8 @@ public class FichierTexte {
 		Divers.ecrire(buf, "try {", indent);
 		Divers.indenter(buf, indent+1);
 		//instr_pere.addVariable(new Variable("f_in","BufferedReader"));
-		Divers.ecrire(buf, "BufferedReader " + "f_in" + " = new BufferedReader( ");
-		Divers.ecrire(buf, "new FileReader(" + arg_fichier.nom +") );");
+		Divers.ecrire(buf, "java.io.BufferedReader " + "f_in" + " = new java.io.BufferedReader( ");
+		Divers.ecrire(buf, "new java.io.FileReader(" + arg_fichier.nom +") );");
 		Divers.ecrire(buf, "String ligne; ", indent+1);
 		Divers.ecrire(buf, "while ( (ligne=" + "f_in" + ".readLine()) != null) {", indent+1);
 		Divers.ecrire(buf, "// analyse de la ligne lue", indent+2);
@@ -65,8 +65,8 @@ public class FichierTexte {
 		Divers.ecrire(buf, "try {", indent);
 		Divers.indenter(buf, indent+1);
 		//this.addVariable(new Variable("f_out","PrintStream"));
-		Divers.ecrire(buf, "PrintStream " + "f_out" + " = new PrintStream( ");
-		Divers.ecrire(buf, "new FileOutputStream(" + arg_fichier.nom +") );");
+		Divers.ecrire(buf, "java.io.PrintStream " + "f_out" + " = new java.io.PrintStream( ");
+		Divers.ecrire(buf, "new java.io.FileOutputStream(" + arg_fichier.nom +") );");
 		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Argument> iter=instr_pere.arguments.iterator(); iter.hasNext();) {
 			Argument arg = (Argument) iter.next();
 			String msg = prog.quote(arg.nom+" : ");

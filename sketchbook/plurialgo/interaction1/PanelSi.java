@@ -6,8 +6,13 @@ package org.javascool.proglets.plurialgo.interaction1;
 import java.awt.FlowLayout;
 import java.awt.Color;
 import java.awt.event.*;
+import java.util.Iterator;
+
 import javax.swing.*;
 
+import org.javascool.proglets.plurialgo.divers.Divers;
+import org.javascool.proglets.plurialgo.langages.modele.Instruction;
+import org.javascool.proglets.plurialgo.langages.modele.Programme;
 import org.javascool.proglets.plurialgo.langages.xml.ProgrammeSi;
 
 
@@ -24,6 +29,7 @@ public class PanelSi extends JPanel implements ActionListener {
 
 	PanelInteraction pInter;
 	JButton creerButton;
+	JButton insererButton;
 	
 	public PanelSi (PanelInteraction pInter) {
 		this.setLayout( new FlowLayout(FlowLayout.LEFT) );
@@ -38,8 +44,11 @@ public class PanelSi extends JPanel implements ActionListener {
 		Box hbox = Box.createHorizontalBox();
 		creerButton = new JButton("Creer"); creerButton.addActionListener(this);
 		creerButton.setActionCommand("creer");
+		insererButton = new JButton("Inserer"); insererButton.addActionListener(this);
+		insererButton.setActionCommand("inserer");
 		hbox.add(Box.createHorizontalStrut(5));
         hbox.add(creerButton); hbox.add(Box.createHorizontalStrut(5));
+        hbox.add(insererButton); hbox.add(Box.createHorizontalStrut(5));
         vBox.add(hbox);
         // création des alternatives
 		t_check = new JCheckBox[nb_max];
@@ -95,6 +104,10 @@ public class PanelSi extends JPanel implements ActionListener {
 			if (e.getSource() == this.creerButton) {	
 				this.nouveau();
 			}
+			if (e.getSource() == this.insererButton) {	
+				this.inserer();
+				pInter.selectPanel(pInter.pEdition);
+			}
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
@@ -103,8 +116,8 @@ public class PanelSi extends JPanel implements ActionListener {
 	// ---------------------------------------------
 	// Pour les autres Panels
 	// ---------------------------------------------
-	
-	private void nouveau() {
+		
+	void nouveau() {
 		org.javascool.proglets.plurialgo.langages.xml.Programme prog_xml;
 		ProgrammeSi prog_si = new ProgrammeSi();
 		for(int i=0; i<nb_max; i=i+1) {
@@ -116,5 +129,34 @@ public class PanelSi extends JPanel implements ActionListener {
 		pInter.add_xml(prog_xml);
 		pInter.traduireXml();
 	}
+	
+	void inserer() {
+		org.javascool.proglets.plurialgo.langages.xml.Programme prog_xml;
+		ProgrammeSi prog_si = new ProgrammeSi();
+		for(int i=0; i<nb_max; i=i+1) {
+			if (t_check[i].isSelected()) {
+				prog_si.ajouterBranche(t_branche[i].getNiveau(), t_branche[i].getCondition());
+			}
+		}
+		// conversion du programme en Xml
+		prog_xml = new org.javascool.proglets.plurialgo.langages.xml.Programme(prog_si);
+		pInter.add_xml(prog_xml);
+		// conversion du programme dans le langage courant
+		String lang = pInter.pPrincipal.getNomLangage();
+		String txt = pInter.pXml.getText();
+		Programme prog = Programme.getProgramme(txt,lang); 
+		// ajout de l'instruction conditionnelle
+		StringBuffer buf = new StringBuffer();
+		int indent = Divers.getIndent(pInter.pEdition.editArea);
+		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Instruction> iter=prog.instructions.iterator(); iter.hasNext();) {
+			Instruction instr = iter.next();
+			instr.ecrire(prog, buf, indent);
+		}
+		if (buf.length()>0 ) {
+			prog.postTraitement(buf);
+			Divers.inserer(pInter.pEdition.editArea, buf.toString());
+		}
+	}
+
 
 }

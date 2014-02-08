@@ -176,12 +176,49 @@ public class PanelBrancheSi extends JPanel implements ActionListener {
 		bloc2 = this.getBloc(var2, oper2, expr2); 
 		// reponse
 		String rep;
-		rep = "(" + bloc1 + ") " + alors1 + " (" + bloc2 + ")";
+		rep = "( " + bloc1 + " " + alors1 + " " + bloc2 + " )";
 		return(rep);
 	}
 	
 	public int getNiveau() {
 		return siList.getSelectedIndex();
+	}
+	
+	// ---------------------------------------------
+	// Pour l'onglet Html
+	// ---------------------------------------------
+	
+	void setSi(int indent, String var1, String oper1, String expr1, String alors1, String var2, String oper2, String expr2) {
+		siList.setSelectedIndex(indent);
+		var1Field.setText(var1);
+		oper1List.setSelectedItem(oper1);
+		expr1Field.setText(expr1);
+		alors1List.setSelectedItem(alors1);
+		var2Field.setText(var2);
+		oper2List.setSelectedItem(oper2);
+		expr2Field.setText(expr2);
+	}
+	
+	void setSi(int indent, String var1, String oper1, String expr1) {
+		siList.setSelectedIndex(indent);
+		var1Field.setText(var1);
+		oper1List.setSelectedItem(oper1);
+		expr1Field.setText(expr1);
+		alors1List.setSelectedIndex(0);
+		var2Field.setText("");
+		oper2List.setSelectedIndex(0);
+		expr2Field.setText("");		
+	}
+	
+	void setSi(int indent, String var1) {
+		siList.setSelectedIndex(indent);
+		var1Field.setText(var1);
+		oper1List.setSelectedIndex(0);
+		expr1Field.setText("");
+		alors1List.setSelectedIndex(0);
+		var2Field.setText("");
+		oper2List.setSelectedIndex(0);
+		expr2Field.setText("");		
 	}
 
 }

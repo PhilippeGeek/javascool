@@ -7,9 +7,17 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.Color;
 import java.awt.event.*;
+import java.util.Iterator;
+
 import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
 
+import org.javascool.proglets.plurialgo.divers.Divers;
+import org.javascool.proglets.plurialgo.langages.modele.Argument;
+import org.javascool.proglets.plurialgo.langages.modele.Instruction;
+import org.javascool.proglets.plurialgo.langages.modele.Operation;
+import org.javascool.proglets.plurialgo.langages.modele.Programme;
+import org.javascool.proglets.plurialgo.langages.modele.Variable;
 import org.javascool.proglets.plurialgo.langages.xml.Intermediaire;
 import org.javascool.proglets.plurialgo.langages.xml.ProgrammeNouveau;
 
@@ -48,6 +56,7 @@ public class PanelPrincipal extends JPanel implements ActionListener, ListSelect
 	private JButton creerButton;
 	private JButton effacerButton;
 	private JButton traduireButton, reformulerButton;
+	private JButton insererButton;
 	
 	public PanelPrincipal (PanelInteraction pInter) {
 		this.setLayout( new BorderLayout() );
@@ -153,10 +162,13 @@ public class PanelPrincipal extends JPanel implements ActionListener, ListSelect
 		traduireButton.setActionCommand("traduire");
 		reformulerButton = new JButton("Reformuler"); reformulerButton.addActionListener(this);
 		reformulerButton.setActionCommand("reformuler");
+		insererButton = new JButton("Inserer"); insererButton.addActionListener(this);
+		insererButton.setActionCommand("inserer"); insererButton.setVisible(true);
         hbox.add(creerButton); hbox.add(Box.createHorizontalStrut(5));
         hbox.add(effacerButton); hbox.add(Box.createHorizontalStrut(5));
         hbox.add(traduireButton); hbox.add(Box.createHorizontalStrut(5));
         hbox.add(reformulerButton); hbox.add(Box.createHorizontalStrut(5));
+        hbox.add(insererButton); hbox.add(Box.createHorizontalStrut(5));
         // panel final
 		vbox.add(Box.createGlue());
 		vbox.add(pAlgo);
@@ -188,6 +200,12 @@ public class PanelPrincipal extends JPanel implements ActionListener, ListSelect
 			}
 			else if (e.getSource() == this.reformulerButton || ("reformuler".equals(cmd))) {	
 				pInter.pEdition.reformuler();		
+			}
+			else if (e.getSource() == this.insererButton || ("inserer".equals(cmd))) {
+				this.inserer();
+				pInter.selectPanel(pInter.pEdition);
+				//CompilateurWrapper.doCompile( pInter.pEdition.getText() );
+				//pInter.setText( CompilateurWrapper.translate() );
 			}
 		} catch (Exception e1) {
 			e1.printStackTrace();
@@ -241,8 +259,72 @@ public class PanelPrincipal extends JPanel implements ActionListener, ListSelect
 		Intermediaire inter = pInter.creerIntermediaire();
 		org.javascool.proglets.plurialgo.langages.xml.Programme prog_xml;
 		prog_xml = new org.javascool.proglets.plurialgo.langages.xml.Programme(new ProgrammeNouveau(inter));
+		zoneListe(prog_xml);
 		pInter.add_xml(prog_xml);
 		pInter.traduireXml();
+	}	
+	
+	private void zoneListe(org.javascool.proglets.plurialgo.langages.xml.Programme prog_xml) {
+		Instruction instr = null;
+		for (Iterator<Instruction> iter=prog_xml.instructions.iterator(); iter.hasNext();) {
+			instr = iter.next();
+			if (instr.isLectureFormulaire()) break;
+		}		
+		if (instr==null) return;
+		for (Iterator<Argument> iter=instr.arguments.iterator(); iter.hasNext();) {
+			Argument arg = iter.next();
+			if (arg.isTexte()) {
+				String message = "pour la variable " + arg.nom + " : ";
+				message = message + "\n ---- zone de texte : cliquez sur Annuler";
+				message = message + "\n ---- zone de liste : entrez les choix (separes par des espaces), puis validez";
+				message = message + "\n ---- boutons d'option : entrez les choix (separes par des virgules), puis validez";
+				String reponse = JOptionPane.showInputDialog(message);
+				if (reponse==null) continue;
+				reponse = reponse.trim();
+				if (reponse.isEmpty()) continue;
+				if (reponse.contains(",")) {
+					reponse = Divers.remplacer(reponse, ",", " ");
+					reponse = reponse + " RADIO";
+				}
+				arg.type = arg.type + ":" + reponse;
+			}
+		}								
+	}
+	
+	private void inserer() {
+		Intermediaire inter = pInter.creerIntermediaire();
+		org.javascool.proglets.plurialgo.langages.xml.Programme prog_xml;
+		prog_xml = new org.javascool.proglets.plurialgo.langages.xml.Programme(new ProgrammeNouveau(inter));
+		pInter.add_xml(prog_xml);
+		// conversion du programme dans le langage courant
+		String lang = pInter.pPrincipal.getNomLangage();
+		String txt = pInter.pXml.getText();
+		Programme prog = Programme.getProgramme(txt,lang); 
+		// ajout des sous-programmes (ou des variables ou des entrées-sorties)
+		StringBuffer buf = new StringBuffer();
+		int indent = Divers.getIndent(pInter.pEdition.editArea);
+		if (prog.operations.size()>0) {	// ajout de sous-programmes
+			for (Iterator<Operation> iter=prog.operations.iterator(); iter.hasNext();) {
+				Operation oper = iter.next();
+				oper.ecrire(prog, buf, indent);
+			}					
+		}
+		if (prog.instructions.size()>0 && buf.length()==0 ) { // ajout de saisies ou d'affichages 
+			for (Iterator<Instruction> iter=prog.instructions.iterator(); iter.hasNext();) {
+				Instruction instr = iter.next();
+				if (instr.isCommentaire()) continue;
+				instr.ecrire(prog, buf, indent);
+			}		
+		}
+		if (prog.variables.size()>0 && buf.length()==0) {	// ajout de variables
+			for (Iterator<Variable> iter=prog.variables.iterator(); iter.hasNext();) {
+				Variable var = iter.next();
+				var.ecrire(prog, buf, indent);
+			}								
+		}
+		if (buf.length()>0 ) {
+			Divers.inserer(pInter.pEdition.editArea, buf.toString());
+		}	
 	}	
 	
 	private void effacer() {

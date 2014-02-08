@@ -2,69 +2,38 @@
 
 <div title="Introduction">
 <div>
-PluriAlgo est un logiciel d'algorithmique que j'ai commencé à expérimenter avec des étudiants d'IUT en 2011. 
-Il accompagne un <l link="http://public.iutenligne.net/informatique/algorithme-et-programmation/raffinat/algo/index.html" text="cours d'algorithmique"/> publié au début 
-de cette même année sur <l link="http://www.iutenligne.net" text="IUTenLigne"/>, le campus numérique des IUT. 
-</div>
-<div class="center">
-<l icon="iutenlignelien.jpg" link="http://www.iutenligne.net"/>
-</div>
-<div>
-Avec l'introduction de l'algorithmique dans les programmes de lycée, il m'a semblé souhaitable
-de réaliser une adaptation du logiciel destinée à un public lycéen :
-cela a débouché sur la création de la proglet PluriAlgo en 2013.
-</div>
-</div>
-
-<div title="Prérequis">
-<div>
-Il est nécessaire de connaître quelques ingrédients de base de tout algorithme (variables, instructions
-conditionnelles, boucles en particulier), ainsi que l'environnement d'exécution de Javascool.
-</div>
-</div>
-
-<div title="Utilisation du logiciel">
-<div class="center">
-<l icon="pluriproglet.PNG"/>
-</div>
-<div>
-La copie d'écran ci-dessus montre comment accéder au logiciel et à ses onglets :
+PluriAlgo est un logiciel d'algorithmique cherchant à s'adapter à la diversité des pratiques pédagogiques :
 </div>
 <div class="ul">
-<div>
-L'onglet "Principal" permet de créer des squelettes de programmes
-à partir d'informations telles que les <b>entrées</b> (ici quantite et prixUnitaire), les 
-<b>sorties</b> (ici prixTotal) et leur type.
+<div class="li">
+en facilitant l'écriture d'algorithmes dans plusieurs langages pédagogiques
+(Javascool, Algobox, Larp, Python). 
 </div>
-<div>
-L'onglet "Si" facilite l'introduction d'alternatives simples ou multiples.
-</div>
-<div>
-L'onglet "Boucles" facilite l'introduction de boucles et de techniques usuelles liées (sommation, comptage...).
-</div>
-<div>
-L'onglet "Documentation" vous permet d'en savoir plus...
+<div class="li">
+en facilitant le passage d'un langage pédagogique à un langage professionnel
+(Visual Basic, Javascript, Php...)
+ou à un autre langage pédagogique.
 </div>
 </div>
 <div>
-Des <l link="http://web.univ-pau.fr/~raffinat/plurialgo/jvs/index.html" text="travaux pratiques"/> sont 
-progressivement ajoutés sur mes pages professionnelles.
-Vous y trouverez notamment un recueil des exercices proposés à mes étudiants de première année d'IUT
-dans le cadre d'un module d'initiation à l'algorithmique.
+Il accompagne un <l link="http://public.iutenligne.net/informatique/algorithme-et-programmation/raffinat/algo/index.html" text="cours d'algorithmique"/> publié au début 
+en 2011 sur <l link="http://www.iutenligne.net" text="IUTenLigne"/>, le campus numérique des IUT. 
 </div>
 </div>
 
-<div title="Langages gérés">
+<div title="Documentation">
 <div>
-Les programmes créés à l'aide de la proglet PluriAlgo sont par défaut écrits en langage Javascool, ce qui
-a pour intérêt évident d'en permettre l'exécution dans l'environnement Javascool.
+L'onglet <b>Documentation</b>, accessible depuis l'onglet <b>Proglet plurialgo</b>, permet 
+de découvrir en quelques clics les principales fonctionnalités du logiciel.
 </div>
+<div></div>
+<div class="center">
+<l icon="pluriproglet_doc.PNG"/>
+</div>
+<div></div>
 <div>
-Mais comme écrire des programmes Javascool n'est pas une finalité, la proglet peut
-traduire dans d'autres langages (Python, Visual Basic, Javascript...) des programmes Javascool, avec
-quelques conditions restrictives évidemment.
-Il est également possible de récupérer des programmes Algobox ou Larp pour faire la traduction 
-inverse vers Javascool.
+Des <l link="http://web.univ-pau.fr/~raffinat/plurialgo/jvs/index.html" text="travaux pratiques"/>  
+disponibles sur mes pages professionnelles complètent cette documentation interne.
 </div>
 </div>
 

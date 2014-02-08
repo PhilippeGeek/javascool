@@ -6,6 +6,7 @@ package org.javascool.proglets.plurialgo.interaction1;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.*;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -16,6 +17,10 @@ import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.fife.ui.rtextarea.RTextScrollPane;
 import org.javascool.proglets.plurialgo.divers.Divers;
+import org.javascool.proglets.plurialgo.langages.modele.Instruction;
+import org.javascool.proglets.plurialgo.langages.modele.Pour;
+import org.javascool.proglets.plurialgo.langages.modele.Programme;
+import org.javascool.proglets.plurialgo.langages.modele.TantQue;
 import org.javascool.proglets.plurialgo.langages.xml.AnalyseurAlgobox;
 import org.javascool.proglets.plurialgo.langages.xml.AnalyseurJavascool;
 import org.javascool.proglets.plurialgo.langages.xml.AnalyseurLarp;
@@ -52,10 +57,10 @@ public class PanelProgrammes extends JPanel implements ActionListener, ListSelec
 	private JTextField miniModeField; private JCheckBox miniCheck;
 	private JTextField maxiModeField; private JCheckBox maxiCheck;
 	private JTextField chercherModeField; private JCheckBox chercherCheck;
-	private JButton vectoriserButton, bouclerButton;
+	private JButton vectoriserButton, bouclerButton, insererButton;
 	
 	private JPanel pEdit;
-	private RSyntaxTextArea editArea;	
+	RSyntaxTextArea editArea;	
 	private JList fichList;
 	private Map<String,StringBuffer> les_fichiers;
 	private String le_fichier; 
@@ -197,10 +202,14 @@ public class PanelProgrammes extends JPanel implements ActionListener, ListSelec
 		vectoriserButton.addActionListener(this);
 		vectoriserButton.setActionCommand("vectoriser");
 		vectoriserButton.setVisible(true);
-		bouclerButton = new JButton("Boucler"); p.add(bouclerButton);
+		bouclerButton = new JButton("Creer"); p.add(bouclerButton);
 		bouclerButton.addActionListener(this);
 		bouclerButton.setActionCommand("boucler");
-		vectoriserButton.setVisible(true);
+		bouclerButton.setVisible(true);
+		insererButton = new JButton("Inserer"); p.add(insererButton);
+		insererButton.addActionListener(this);
+		insererButton.setActionCommand("inserer");
+		insererButton.setVisible(true);
 		vbox.add(p);
 		// ajout de dimension
 		p = new JPanel(); 
@@ -215,10 +224,14 @@ public class PanelProgrammes extends JPanel implements ActionListener, ListSelec
         try {
 			String cmd = e.getActionCommand();
 			if (e.getSource() == this.vectoriserButton || ("vectoriser".equals(cmd))) {	
+				if (this.vectoriserSelection()) return;
 				this.vectoriser();	
 			}
 			else if (e.getSource() == this.bouclerButton || ("boucler".equals(cmd))) {	
 				this.boucler();	
+			}
+			else if (e.getSource() == this.insererButton || ("inserer".equals(cmd))) {	
+				this.inserer();	
 			}
 			else if ("traduire".equals(cmd)) {	
 				this.traduire();	
@@ -330,8 +343,8 @@ public class PanelProgrammes extends JPanel implements ActionListener, ListSelec
     		editArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_LISP);
     	}
     	else if (le_fichier.endsWith(".py")) {
-    		editArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_NONE);
-    		//editArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_PYTHON);
+    		//editArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_NONE);
+    		editArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_PYTHON);
     	}
     	else if (le_fichier.endsWith(".R")) {
     		editArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
@@ -352,47 +365,64 @@ public class PanelProgrammes extends JPanel implements ActionListener, ListSelec
 	// utilitaires pour vectorisation, reformulation et traduction
 	// ---------------------------------------------
 	
-	private boolean isJavascool() {
+	public boolean isJavascool() {
 		String txt=getText();
 		if (txt.contains("void ") && txt.contains(" main()")) return true;
 		if (txt.contains("void ") && txt.contains(" main( )")) return true;
 		return false;
 	}	
 	
-	private boolean isVb() {
+	public boolean isVb() {
 		String txt=getText().toLowerCase();
 		if (txt.contains("sub ")) return true;
+		if (txt.contains("end function")) return true;
 		if (txt.trim().length()==0) return true;
 		return false;
 	}	
 	
-	private boolean isLarp() {
+	public boolean isLarp() {
 		String txt=getText().toLowerCase();
-		if (isAlgobox()) return false;
+		if (txt.contains("debut_algorithme")) return false;		// Algobox
 		if ((txt.contains("debut")||txt.contains("début"))&&txt.contains("fin")) return true;
 		if (txt.contains("entrer")&&txt.contains("retourner")) return true;
 		return false;
 	}	
 	
-	private boolean isAlgobox() {
+	public boolean isAlgobox() {
 		String txt=getText().toLowerCase();
 		if (txt.contains("debut_algorithme")&&txt.contains("fin_algorithme")) return true;
 		return false;
 	}	
 	
-	private boolean isPython() {
+	public boolean isPython() {
 		String txt=getText().toLowerCase();
-		if (txt.contains("void ")) return false;
-		if (txt.contains("<html>")) return false;
-		if (txt.contains("<?php")) return false;
+		if (txt.contains("void ")) return false;	// Java, Javascool
+		if (txt.contains("<html>")) return false;	// Javascript
+		if (txt.contains("<?php")) return false;	// Php
+		if (isVb()) return false;	
+		if (isLarp()) return false;	
+		if (isAlgobox()) return false;	
 		return true;
 	}	
+	
+	public boolean isJavascript() {
+		String txt=getText().toLowerCase();
+		if (!txt.contains("<html>")) return false;	
+		if (txt.contains("<?php")) return false;	
+		return true;
+	}	
+	
+	public boolean isPhp() {
+		String txt=getText().toLowerCase();
+		if (txt.contains("<?php")) return true;	
+		return false;
+	}		
 		
 	// ---------------------------------------------
 	// Vectorisation
 	// ---------------------------------------------
 	
-	public void vectoriser() {
+	void vectoriser() {
 		Intermediaire inter = null;
 		iAnalyseur analyseur = null;
 		pInter.clearConsole();
@@ -403,6 +433,9 @@ public class PanelProgrammes extends JPanel implements ActionListener, ListSelec
 		else if (isJavascool()) {
 			analyseur = new AnalyseurJavascool(editArea.getText(), false, false);
 		}
+		else if (isAlgobox()) {
+			analyseur = new AnalyseurAlgobox(editArea.getText(), false, false);
+		}
 		else if (isLarp()) {
 			inter = pInter.creerIntermediaireLarp("vectoriser");
 			analyseur = new AnalyseurLarp(editArea.getText(), false, false, inter);
@@ -412,7 +445,11 @@ public class PanelProgrammes extends JPanel implements ActionListener, ListSelec
 			analyseur = new AnalyseurPython(editArea.getText(), false, false, inter);
 		}
 		else {
-			analyseur = new AnalyseurVb("", false, false);
+			pInter.clearConsole();
+			pInter.writeConsole("---------- Transformation impossible ----------\n");
+			pInter.writeConsole("l'algorithme initial ne semble pas etre du Javascool, du Larp, du Python ou de l'Algobox\n");
+			pInter.writeConsole("--> reessayez en selectionnant une portion de l'algorithme\n");
+			return;
 		}
 		// vectorisation
 		pInter.messageWarning(analyseur.getProgramme());
@@ -462,6 +499,120 @@ public class PanelProgrammes extends JPanel implements ActionListener, ListSelec
 		pInter.add_xml(new org.javascool.proglets.plurialgo.langages.xml.Programme(progVect));
 		pInter.traduireXml();
 	}
+	
+	private void inserer() {
+		pInter.clearConsole();
+		// vectorisation
+		org.javascool.proglets.plurialgo.langages.xml.Programme prog_xml;
+		prog_xml = new org.javascool.proglets.plurialgo.langages.xml.Programme();
+		prog_xml.nom = pInter.pPrincipal.getNomAlgo();
+		vectoriser(prog_xml);
+		ProgrammeVectorise progVect = new ProgrammeVectorise(prog_xml);
+		// conversion du programme en Xml
+		prog_xml = new org.javascool.proglets.plurialgo.langages.xml.Programme(progVect);
+		pInter.add_xml(prog_xml);
+		// conversion du programme dans le langage courant
+		String lang = pInter.pPrincipal.getNomLangage();
+		String txt = pInter.pXml.getText();
+		Programme prog = Programme.getProgramme(txt,lang); 
+		// ajout de la boucle
+		StringBuffer buf = new StringBuffer();
+		int indent = Divers.getIndent(pInter.pEdition.editArea);
+		for (Iterator<Instruction> iter=prog.instructions.iterator(); iter.hasNext();) {
+			Instruction instr = iter.next();
+			if (instr.isLecture()) continue;
+			if (instr.isEcriture()) continue;
+			instr.ecrire(prog, buf, indent);
+		}
+		if (buf.length()>0 ) {
+			prog.postTraitement(buf);
+			Divers.inserer(pInter.pEdition.editArea, buf.toString());
+		}
+	}
+	
+	boolean vectoriserSelection() {
+		pInter.clearConsole();
+		// recherche zone de sélection
+		int i_start = editArea.getSelectionStart();
+		int i_end = editArea.getSelectionEnd();
+		int indent = 0;
+		if (i_end - i_start<5) return false;	// trop petit (donc sélection involontaire ?)
+		String txt_select = "";
+		try {
+			int lig_start = editArea.getLineOfOffset(i_start);
+			i_start = editArea.getLineStartOffset(lig_start);
+			int lig_end = editArea.getLineOfOffset(i_end);
+			i_end = editArea.getLineEndOffset(lig_end) - 1;
+			txt_select = editArea.getText(i_start, i_end-i_start);
+			while (txt_select.substring(indent, indent+1).equals("\t")) {
+				indent = indent+1;
+			}
+			txt_select = "\t" + Divers.remplacer(txt_select, "\n", "\n\t");
+			editArea.select(i_start, i_end);			
+		}
+		catch(Exception ex) {
+			return false;
+		}
+		// vectorisation
+		org.javascool.proglets.plurialgo.langages.xml.Programme prog_xml;
+		prog_xml = new org.javascool.proglets.plurialgo.langages.xml.Programme();
+		prog_xml.nom = pInter.pPrincipal.getNomAlgo();
+		vectoriser(prog_xml);
+		ProgrammeVectorise progVect = new ProgrammeVectorise(prog_xml);
+		// ajout du commentaire transformer1n dans le Pour le programme vectorisé
+		for (Iterator<Instruction> iter=progVect.instructions.iterator(); iter.hasNext();) {
+			Instruction instr = iter.next();
+			if (instr.isPour()) {
+				Pour pour = instr.pours.get(0);
+				if (pour==null) continue;
+				if (pour.instructions.size()==1) {
+					if (pour.instructions.get(0).isCommentaire()) {
+						pour.instructions.remove(0);
+					}
+				}
+				pour.instructions.add(0, new Instruction("//transformer1n"));
+				break;
+			}
+			if (instr.isPour()) {
+				TantQue tq = instr.tantques.get(0);
+				if (tq==null) continue;
+				tq.instructions.add(0, new Instruction("//transformer1n"));
+				if (tq.instructions.size()==1) {
+					if (tq.instructions.get(0).isCommentaire()) {
+						tq.instructions.remove(0);
+					}
+				}
+				tq.instructions.add(0, new Instruction("//transformer1n"));
+				break;
+			}
+		}
+		// conversion du programme en Xml
+		prog_xml = new org.javascool.proglets.plurialgo.langages.xml.Programme(progVect);
+		pInter.add_xml(prog_xml);
+		// conversion du programme dans le langage courant
+		String lang = pInter.pPrincipal.getNomLangage();
+		String txt = pInter.pXml.getText();
+		Programme prog = Programme.getProgramme(txt,lang); 
+		// texte de la boucle (avec transformation1n)
+		StringBuffer buf = new StringBuffer();
+		for (Iterator<Instruction> iter=prog.instructions.iterator(); iter.hasNext();) {
+			Instruction instr = iter.next();
+			if (instr.isLecture()) continue;
+			if (instr.isEcriture()) continue;
+			instr.ecrire(prog, buf, indent);
+		}
+		// on remplace la ligne contenant transformation1n par txt_select
+		int k = buf.indexOf("transformer1n");
+		if (k<0) return false;
+		int k_debut = buf.substring(0, k).lastIndexOf("\n")+1;
+		int k_fin = buf.indexOf("\n", k);
+		buf.delete(k_debut, k_fin);
+		buf.insert(k_debut, txt_select);
+		prog.postTraitement(buf);
+		buf.delete(0, 1);
+		editArea.replaceRange(buf.toString(), i_start, i_end);
+		return true;
+	}
 
 	// ---------------------------------------------
 	// Traduction
@@ -491,8 +642,8 @@ public class PanelProgrammes extends JPanel implements ActionListener, ListSelec
 		}
 		else {
 			pInter.clearConsole();
-			pInter.writeConsole("---------- Avertissement ----------\n");
-			pInter.writeConsole("le programme à traduire ne semble pas etre du javascool, du visual basic, du Larp ou de l'algobox");
+			pInter.writeConsole("---------- Traduction impossible ----------\n");
+			pInter.writeConsole("l'algorithme initial ne semble pas etre du Javascool, du Larp, du Python ou de l'Algobox");
 			return;
 		}
 		// ajout du resultat dans les onglets Complements et Resultats
@@ -529,8 +680,9 @@ public class PanelProgrammes extends JPanel implements ActionListener, ListSelec
 		}
 		else {
 			pInter.clearConsole();
-			pInter.writeConsole("---------- Avertissement ----------\n");
-			pInter.writeConsole("le programme à reformuler ne semble pas etre du javascool ou du visual basic");
+			pInter.writeConsole("---------- Reformulation impossible ----------\n");
+			pInter.writeConsole("l'algorithme initial ne semble pas etre du Javascool, du Larp, du Python ou de l'Algobox");
+			return;	
 		}
 		// construction du programme dérivé
 		pInter.messageWarning(analyseur.getProgramme());

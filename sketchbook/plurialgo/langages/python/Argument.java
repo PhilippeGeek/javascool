@@ -71,7 +71,7 @@ public class Argument extends org.javascool.proglets.plurialgo.langages.modele.A
 		String msg1 = prog.quote("rang ") + " + str(i1) + " + prog.quote(" : ");
 		Argument arg = new Argument(this.nom+"[i1]", this.getTypeOfTab(), null);
 		arg.lireStandard(prog, buf, indent+1, msg1);
-		Divers.ecrire(buf, "#end for", indent);
+		Divers.ecrire(buf, "#end", indent);
 	}
 	
 	private void lireMatStandard(Programme prog, StringBuffer buf, int indent, String msg) {
@@ -81,8 +81,8 @@ public class Argument extends org.javascool.proglets.plurialgo.langages.modele.A
 		String msg1 = prog.quote("rang ") + " + str(i1) + " + prog.quote(", ") + " + str(j1) + " + prog.quote(" : ");
 		Argument arg = new Argument(this.nom+"[i1][j1]", this.getTypeOfMat(), null);
 		arg.lireStandard(prog, buf, indent+2, msg1);
-		Divers.ecrire(buf, "#end for", indent+1);
-		Divers.ecrire(buf, "#end for", indent);
+		Divers.ecrire(buf, "#end", indent+1);
+		Divers.ecrire(buf, "#end", indent);
 	}
 	
 	private void lireClasseStandard(Programme prog, StringBuffer buf, int indent, String msg) {
@@ -108,7 +108,7 @@ public class Argument extends org.javascool.proglets.plurialgo.langages.modele.A
 			msg1=prog.quote(prop.nom + " : ");
 			arg.lireStandard(prog, buf, indent+1, msg1);
 		}
-		Divers.ecrire(buf, "#end for", indent);
+		Divers.ecrire(buf, "#end", indent);
 	}
 	
 //	 --------------------------------
@@ -155,7 +155,7 @@ public class Argument extends org.javascool.proglets.plurialgo.langages.modele.A
 		String msg1 = prog.quote("\\t");
 		Argument arg = new Argument(this.nom+"[i1]", this.getTypeOfTab(), null);
 		arg.ecrireStandard(prog, buf, indent+1, msg1);
-		Divers.ecrire(buf, "#end for", indent);
+		Divers.ecrire(buf, "#end", indent);
 		Divers.ecrire(buf, "print", indent);
 	}
 	
@@ -166,9 +166,9 @@ public class Argument extends org.javascool.proglets.plurialgo.langages.modele.A
 		String msg1 = prog.quote("\\t");
 		Argument arg = new Argument(this.nom+"[i1][j1]", this.getTypeOfMat(), null);
 		arg.ecrireStandard(prog, buf, indent+2, msg1);
-		Divers.ecrire(buf, "#end for", indent+1);
+		Divers.ecrire(buf, "#end", indent+1);
 		Divers.ecrire(buf, "print", indent+1);
-		Divers.ecrire(buf, "#end for", indent);
+		Divers.ecrire(buf, "#end", indent);
 		Divers.ecrire(buf, "print", indent);
 	}
 	
@@ -197,7 +197,7 @@ public class Argument extends org.javascool.proglets.plurialgo.langages.modele.A
 			msg1=prog.quote(prop.nom + " : ");
 			arg.ecrireStandard(prog, buf, indent+1, msg1);
 		}
-		Divers.ecrire(buf, "#end for", indent);
+		Divers.ecrire(buf, "#end", indent);
 		Divers.ecrire(buf, "print ", indent);
 	}
 	

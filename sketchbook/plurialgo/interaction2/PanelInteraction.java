@@ -13,6 +13,7 @@ import org.javascool.proglets.plurialgo.langages.modele.Programme;
 import org.javascool.proglets.plurialgo.langages.xml.Intermediaire;
 import org.javascool.widgets.Console;
 import org.javascool.gui.Desktop;
+import org.javascool.gui.EditorWrapper;
 
 
 /**
@@ -28,7 +29,7 @@ public class PanelInteraction extends JPanel {
 	public PanelXml pXml;
 	public PanelSi pSi;
 	
-	public static String[] langList = { "javascool", "vb", "larp", "javascript", "java", "php", "python" };
+	public static String[] langList = { "javascool", "algobox", "larp", "python", "javascript", "java", "php", "vb" };
 	public static String dirTravail = null;
 	public static String urlDoc = "/org/javascool/proglets/plurialgo/";
 
@@ -56,6 +57,9 @@ public class PanelInteraction extends JPanel {
 			onglets.setSelectedComponent(pn);
 		}
 		else if (pn==pHtml) {
+			onglets.setSelectedComponent(pn);
+		}
+		else if (pn==pSi) {
 			onglets.setSelectedComponent(pn);
 		}
 	}
@@ -155,16 +159,18 @@ public class PanelInteraction extends JPanel {
 	// ---------------------------------------------
 	
 	public String getText() {
-		//String txt = org.javascool.gui.EditorWrapper.getText();
-		String txt = org.javascool.gui.EditorWrapper.getRTextArea().getText();
+		//String txt = org.javascool.gui.EditorWrapper.getText();	// car ajoute premiere ligne vide
+		String txt = EditorWrapper.getRTextArea().getText();
 		return txt;
 	}	
 	
 	public void setText(String txt) {
-		Desktop.getInstance().openNewFile();
-		org.javascool.gui.EditorWrapper.setText(txt);
+		Desktop.getInstance().openNewFile(); 
+		MenusEditeur.modifierStyles(this);
+		EditorWrapper.setText(txt);
+		MenusEditeur.addPopupMenu(this);
 	}	
-	
+
 	public void add_editeur(org.javascool.proglets.plurialgo.langages.modele.Programme prog) {
 		Iterator<String> iter = prog.les_fichiers.keySet().iterator();
 		while (iter.hasNext()) {
@@ -184,13 +190,14 @@ public class PanelInteraction extends JPanel {
 	public boolean isVb() {
 		String txt=getText().toLowerCase();
 		if (txt.contains("sub ")) return true;
+		if (txt.contains("end function")) return true;
 		if (txt.trim().length()==0) return true;
 		return false;
 	}	
 	
 	public boolean isLarp() {
 		String txt=getText().toLowerCase();
-		if (isAlgobox()) return false;
+		if (txt.contains("debut_algorithme")) return false;		// Algobox
 		if ((txt.contains("debut")||txt.contains("début"))&&txt.contains("fin")) return true;
 		if (txt.contains("entrer")&&txt.contains("retourner")) return true;
 		return false;
@@ -204,12 +211,28 @@ public class PanelInteraction extends JPanel {
 	
 	public boolean isPython() {
 		String txt=getText().toLowerCase();
-		if (txt.contains("void ")) return false;
-		if (txt.contains("<html>")) return false;
-		if (txt.contains("<?php")) return false;
+		if (txt.contains("void ")) return false;	// Java, Javascool
+		if (txt.contains("<html>")) return false;	// Javascript
+		if (txt.contains("<?php")) return false;	// Php
+		if (isVb()) return false;	
+		if (isLarp()) return false;	
+		if (isAlgobox()) return false;	
 		return true;
 	}	
 	
+	public boolean isJavascript() {
+		String txt=getText().toLowerCase();
+		if (!txt.contains("<html>")) return false;	
+		if (txt.contains("<?php")) return false;	
+		return true;
+	}	
+	
+	public boolean isPhp() {
+		String txt=getText().toLowerCase();
+		if (txt.contains("<?php")) return true;	
+		return false;
+	}	
+		
 	// ---------------------------------------------	
 	// methodes de creation d'intermediaire	
 	// ---------------------------------------------

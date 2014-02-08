@@ -1,0 +1,14 @@
+void main() {
+	double x1; 
+	double y1; 
+	double x2; 
+	double y2; 
+	double distance; 
+	x1 = readDouble( "abscisse du point 1 : " ); 
+	y1 = readDouble( "ordonnee du point 1 : " ); 
+	x2 = readDouble( "abscisse du point 2 : " ); 
+	y2 = readDouble( "ordonnee du point 2 : " );
+	distance = sqrt((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1));
+	println( "distance : " + distance ); 
+} 
+ 

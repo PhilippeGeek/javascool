@@ -24,6 +24,7 @@ public class ProgrammeSi extends Programme {
 	public void ajouterBranche(int niv_si, String cond) {
 		//System.out.println("ajouter " + niv_si + " " + cond);
 		Si si = new Si(); si.condition = cond;
+		si.instructions.add(new Instruction("// ajouter des instructions"));
 		if (niv_si==0) {
 			instr_si.sis.add(si);
 			instr_si_1 = null;

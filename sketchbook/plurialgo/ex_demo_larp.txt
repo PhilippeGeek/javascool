@@ -1,0 +1,22 @@
+\\ Module principal
+DEBUT
+	ECRIRE "n : "
+	LIRE n
+	POUR k=1 JUSQU'A n INCREMENT 1 FAIRE 
+		ECRIRE "prixUnitaire : "
+		LIRE prixUnitaire
+		ECRIRE "quantite : "
+		LIRE quantite
+		SI (quantite=1) ALORS
+			remise = 0
+		SINON SI ( (quantite=2) OR (quantite=3) ) ALORS
+			remise = 0.1
+		SINON SI ( (quantite=4) OR (quantite=5) ) ALORS
+			remise = 0.2
+		SINON
+			remise = 0.3
+		FINSI
+		prixTotal = quantite*prixUnitaire*(1-remise)
+		ECRIRE "prixTotal : ", prixTotal
+	FINPOUR
+FIN

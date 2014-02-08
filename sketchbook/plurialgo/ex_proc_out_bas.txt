@@ -11,7 +11,7 @@ sub calculer(ByVal prixUnitaire as double, ByVal quantite as integer, ByRef remi
 		remise = 0.2
 	end if
 	prixTotal = prixTotal - remise * prixTotal 
-end function
+end sub
 
 sub main()
 	Dim quantite as integer

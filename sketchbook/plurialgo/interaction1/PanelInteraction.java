@@ -26,7 +26,7 @@ public class PanelInteraction extends JPanel {
 	public PanelXml pXml;
 	public PanelSi pSi;
 	
-	public static String[] langList = { "javascool", "vb", "larp", "javascript", "php", "python", "java" };
+	public static String[] langList = { "javascool", "vb", "algobox", "larp", "javascript", "php", "python", "java" };
 	public static String dirTravail = null;
 	public static String urlDoc = null;
 
@@ -50,6 +50,7 @@ public class PanelInteraction extends JPanel {
 		pPrincipal = new PanelPrincipal(this);	onglets.add("Principal", pPrincipal);
 		pSi = new PanelSi(this);  onglets.add("Si", pSi);
 		pEdition = new PanelProgrammes(this); onglets.add("Résultats", pEdition);
+		//pEdition = new PanelProgrammes(this); onglets.add("Boucles", pEdition);
 		pHtml = new PanelHtml(this); onglets.add("Documentation", pHtml);
 		pXml = new PanelXml(this);  onglets.add("Compléments", pXml);
 		this.add(onglets, "Center");
