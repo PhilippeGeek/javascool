@@ -176,7 +176,7 @@ public class PanelBrancheSi extends JPanel implements ActionListener {
 		bloc2 = this.getBloc(var2, oper2, expr2); 
 		// reponse
 		String rep;
-		rep = "(" + bloc1 + ") " + alors1 + " (" + bloc2 + ")";
+		rep = "( " + bloc1 + " " + alors1 + " " + bloc2 + " )";
 		return(rep);
 	}
 	

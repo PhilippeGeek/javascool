@@ -67,4 +67,8 @@ public class Variable extends org.javascool.proglets.plurialgo.langages.modele.V
 		}
 	}
 	
+	public void ecrire(org.javascool.proglets.plurialgo.langages.modele.Programme prog, StringBuffer buf, int indent) {
+		this.ecrire((org.javascool.proglets.plurialgo.langages.javascool.Programme)prog, buf, indent);
+	}
+	
 }

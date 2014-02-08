@@ -1,20 +1,43 @@
+// ------------------------------------------------------------------------
+// Contraintes (traduction, reformulation ou transformation 1-n):
+// - une seule instruction par ligne
+// - accolades pour un if (for ou while), meme quand une seule instruction
+// - accolade fermante sur une ligne separee
+// - fonction : accolade ouvrante sur la ligne de declaration
+// - ...
+// ------------------------------------------------------------------------
+
 void main() {
-	double note; 
-	String avis; 	// variable introduite pour une meilleure traduction
-	note = readDouble("entrer la note : "); 
-	if (note<10) {
-		avis = "refus";	
-		// car println("refus") peut etre ignore par le traducteur
+	int nbEtud;
+	int k;  
+	double math; 
+	double ang; 
+	String avis; 
+	nbEtud = readInt( "nombre d'etudiants : " );
+	for(k=1; k<=nbEtud; k=k+1) {
+		math = readDouble( "note de math : " ); 
+		ang = readDouble( "note d'anglais : " ); 
+		avis = getAvis(math, ang); 
+		print( "l'etudiant est : "); 
+		println(avis);
+	}
+} 
+
+String getAvis(double math, double ang) { 
+	double moy; 
+	String avis; 
+	moy = (math+ang)/2; 
+	if (moy<10) {
+		avis = "refuse"; 
 	}
 	else {
-		avis = "admis";	
-		// car println("admis") peut etre ignore par le traducteur
+		avis = "admis"; 
 	}
-	println("la decision est : " + avis); 
+	return avis;
 } 
 
 // ------------------------------------------------------------------------
-// Autres contraintes (traduction, reformulation ou transformation 1-n):
+// Contraintes (traduction, reformulation ou transformation 1-n):
 // - une seule instruction par ligne
 // - accolades pour un if (for ou while), meme quand une seule instruction
 // - accolade fermante sur une ligne separee

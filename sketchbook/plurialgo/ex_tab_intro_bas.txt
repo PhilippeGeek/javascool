@@ -1,0 +1,20 @@
+Option Explicit
+const MAX_TAB as integer = 10	' taille maximale du tableau 
+sub main()
+	' donnees
+	Dim tab (1 to MAX_TAB) as double
+	Dim n as integer
+	tab(1) = 12.5
+	tab(2) = 10.5
+	tab(3) = 10
+	n = 3 
+	' les autres variables
+	Dim total as double
+	Dim k as integer
+	' calcul et affichage du total du tableau
+	total = 0 
+	for k=1 to n
+		total = total + tab(k) 
+	next k
+	MsgBox( "total : " & total ) 
+end sub

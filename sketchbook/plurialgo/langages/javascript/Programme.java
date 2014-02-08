@@ -73,8 +73,7 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 	}
 	
 	private void addSousProgs(StringBuffer buf, int indent) {
-		if ((operations.size()>0))
-			this.commenter(buf, "sous programmes", indent);
+		//if ((operations.size()>0)) this.commenter(buf, "sous programmes", indent);
 		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Operation> iter=operations.iterator(); iter.hasNext();) {
 			Operation oper = (Operation) iter.next();
 			oper.ecrire(this, buf, indent);
@@ -82,8 +81,7 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 	}
 	
 	private void addClasses(StringBuffer buf, int indent) {
-		if ((classes.size()>0))
-			this.commenter(buf, "enregistrements ou classes", indent);
+		//if ((classes.size()>0))	this.commenter(buf, "enregistrements ou classes", indent);
 		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Classe> iter=classes.iterator(); iter.hasNext();) {
 			Classe classe = (Classe) iter.next();
 			if (classe.isEnregistrement()) {
@@ -129,7 +127,7 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 		return "\"" + s + "\"";
 	}
 	
-	private void postTraitement(StringBuffer buf) {
+	public void postTraitement(StringBuffer buf) {
 		//Divers.remplacer(buf, "==", "==");
 		Divers.remplacer(buf, " et ", " && ");
 		Divers.remplacer(buf, " ET ", " && ");
@@ -164,9 +162,8 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 	// ------------------------------------------ 
 	
 	private void addTypes(StringBuffer buf, int indent) {
-		this.commenter(buf, "types standard utilises", indent);
 		if (avecType("TAB_") || avecType("MAT_")) {
-			Divers.ecrire(buf, "var MAX_TAB = 5;", indent);
+			Divers.ecrire(buf, "var MAX_TAB = 5; // taille maximale des tableaux", indent);
 		}
 	}
 	

@@ -33,7 +33,7 @@ public class Affectation extends org.javascool.proglets.plurialgo.langages.model
 		int fin = txt.lastIndexOf("}");
 		txt = txt.substring(debut+1, fin);
 		StringTokenizer tok = new StringTokenizer(txt,",");
-		int i = 0;
+		int i = 1;
 		while (tok.hasMoreTokens()) {
 			String elem = tok.nextToken().trim();
 			Divers.ecrire(buf, var + "[" + i + "]" + " = " + elem, indent);

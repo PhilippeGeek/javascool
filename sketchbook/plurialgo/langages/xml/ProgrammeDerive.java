@@ -18,6 +18,7 @@ public class ProgrammeDerive extends Programme {
 	private Intermediaire inter; // la reformulation à appliquer
 	private ArrayList<InfoTypee> infos; // liste de triplets (nom, type, mode) 
 	private Classe classe; // la classe créée (si reformulation avec regroupement)
+	private int nb_obj;
 
 	/**
 	 * 	Construit un programme par reformulation
@@ -386,8 +387,10 @@ public class ProgrammeDerive extends Programme {
 		classes.add(enreg);
 		this.classe = enreg;
 		infos = enreg.creerProprietes(infos, inter.getProprietesGroupe());
+		nb_obj = 0;
 		for(Iterator<InfoTypee> iter=infos.iterator(); iter.hasNext(); ) {
 			InfoTypee info = iter.next();
+			if (info.type.equals(nom_cl)) nb_obj = nb_obj+1;
 			if (info.isAutre()) {
 				if (inter!=null) {
 					if (inter.avecProcedureCalcul() || inter.avecFonctionsCalcul()) {
@@ -515,11 +518,11 @@ public class ProgrammeDerive extends Programme {
 	
 	private String traiterEnregistrementInstruction(String txt, String nom_obj){
 		if (txt==null) return "";
-		System.out.println("avant remplacer : " + txt);
+		//System.out.println("avant remplacer : " + txt);
 		StringBuffer buf = new StringBuffer(" " + txt + " ");
 		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Variable> iter=this.classe.proprietes.iterator(); iter.hasNext();) {
 			Variable prop = (Variable) iter.next();
-			System.out.println("propriete : " + prop.nom);
+			//System.out.println("propriete : " + prop.nom);
 			String ancien = prop.nom;
 			int lg_ancien = ancien.length();
 			String ch;
@@ -538,10 +541,10 @@ public class ProgrammeDerive extends Programme {
 					if  ( ch.equals("_") ) continue;
 					if  ( ch.equals("'") ) continue;
 					if  ( (ch.compareTo("0")>=0) && (ch.compareTo("9")<=0) ) {
-						if (nom_obj.equals("objet") && ch.equals("1")) {
+						if (nom_obj.equals("objet") && ch.equals("1") && (nb_obj==1)) {
 							nouveau = "objet" + "." + prop.nom;
 						}
-						else if (nom_obj.equals("objet") && !ch.equals("1")) {
+						else if (nom_obj.equals("objet")) {
 							nouveau = "objet" + ch + "." + prop.nom;
 						}
 						else {
@@ -849,11 +852,11 @@ public class ProgrammeDerive extends Programme {
 	
 	private String traiterClasseInstruction(String txt, String nom_obj){
 		if (txt==null) return "";
-		System.out.println("avant remplacer : " + txt);
+		//System.out.println("avant remplacer : " + txt);
 		StringBuffer buf = new StringBuffer(" " + txt + " ");
 		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Variable> iter=this.classe.proprietes.iterator(); iter.hasNext();) {
 			Variable prop = (Variable) iter.next();
-			System.out.println("propriete : " + prop.nom);
+			//System.out.println("propriete : " + prop.nom);
 			String ancien = prop.nom;
 			int lg_ancien = ancien.length();
 			String ch;
@@ -891,7 +894,7 @@ public class ProgrammeDerive extends Programme {
 			}		
 		}
 		buf.delete(0, 1); buf.delete(buf.length()-1, buf.length());
-		System.out.println("apres remplacer : " + buf.toString());
+		//System.out.println("apres remplacer : " + buf.toString());
 		return buf.toString();
 	}
 	

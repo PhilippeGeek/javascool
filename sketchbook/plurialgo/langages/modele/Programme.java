@@ -98,7 +98,11 @@ public class Programme extends Noeud {
 	/**
 	 * A redéfinir pour chaque langage implanté.
 	 */
-	public void ecrire() {}
+	public void ecrire() {		
+	}
+	
+	public void postTraitement(StringBuffer buf) {		
+	}
 	
 	public final void ecrire2() {
 		this.parcoursEnfants(); 

@@ -129,7 +129,7 @@ public class Formulaire {
 		Argument arg1 = new Argument(arg.nom+"[" + indice + "]", arg.getTypeOfTab(), arg.mode);
 		constrFormu(prog, buf, indent+1, msg1, arg1);
 		/* ajout */ Divers.ecrire(buf, "n_col=n_col+1", indent+1);
-		Divers.ecrire(buf, "#end for", indent);
+		Divers.ecrire(buf, "#end", indent);
 	}
 	
 	private void constrMatFormu(Programme prog, StringBuffer buf, int indent, String msg, Argument arg) {
@@ -139,7 +139,7 @@ public class Formulaire {
 		Divers.ecrire(buf, zone + " = []", indent);
 		Divers.ecrire(buf, "for i1 in range(0," + MAX_TAB + ") :", indent);
 		Divers.ecrire(buf, zone + ".append(" + "[0]*" + MAX_TAB + ")", indent+1);
-		Divers.ecrire(buf, "#end for", indent);
+		Divers.ecrire(buf, "#end", indent);
 		// les boucles
 		Divers.ecrire(buf, "for i1 in range(0, " + prog.getMaxTab() + ") :", indent);
 		Divers.ecrire(buf, "for j1 in range(0, " + prog.getMaxTab() + ") :", indent+1);
@@ -147,10 +147,10 @@ public class Formulaire {
 		Argument arg1 = new Argument(arg.nom+"[i1][j1]", arg.getTypeOfMat(), arg.mode);
 		constrFormu(prog, buf, indent+2, msg1, arg1);
 		/* ajout */ Divers.ecrire(buf, "n_col=n_col+1", indent+2);
-		Divers.ecrire(buf, "#end for", indent+1);
+		Divers.ecrire(buf, "#end", indent+1);
 		Divers.ecrire(buf, "n_lig=n_lig+1", indent+1);
 		Divers.ecrire(buf, "n_col=n_col-" + prog.getMaxTab(), indent+1);
-		Divers.ecrire(buf, "#end for", indent);
+		Divers.ecrire(buf, "#end", indent);
 	}
 	
 	private void constrClasseFormu(Programme prog, StringBuffer buf, int indent, String msg, Argument arg) {
@@ -266,7 +266,7 @@ public class Formulaire {
 		Divers.ecrire(buf, "for i1 in range(0, " + prog.getDim(1, arg) + ") :", indent);
 		Argument arg1 = new Argument(arg.nom+"[i1]", arg.getTypeOfTab(), arg.mode);
 		lireFormu(prog, buf, indent+1, arg1);
-		Divers.ecrire(buf, "#end for", indent);
+		Divers.ecrire(buf, "#end", indent);
 	}
 	
 	private void lireMatFormu(Programme prog, StringBuffer buf, int indent, Argument arg, String indice1, String indice2) {
@@ -276,8 +276,8 @@ public class Formulaire {
 		Divers.ecrire(buf, "for " + indice2 + " in range(0, " + prog.getDim(2, arg) + ") :", indent+1);
 		Argument arg1 = new Argument(arg.nom+"["+indice1+"]["+indice2+"]", arg.getTypeOfMat(), arg.mode);
 		lireFormu(prog, buf, indent+2, arg1);
-		Divers.ecrire(buf, "#end for", indent+1);
-		Divers.ecrire(buf, "#end for", indent);	
+		Divers.ecrire(buf, "#end", indent+1);
+		Divers.ecrire(buf, "#end", indent);	
 	}
 	
 	private void lireClasseFormu(Programme prog, StringBuffer buf, int indent, Argument arg) {

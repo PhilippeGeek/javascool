@@ -73,6 +73,10 @@ public class Instruction extends Noeud {
 		this.nom = nom;
 	}
 	
+	public void ecrire(Programme prog, StringBuffer buf, int indent) {
+		// à redéfinir pour chaque langage
+	}
+	
 	// ---------------------------------------------
 	// Noeuds
 	// ---------------------------------------------

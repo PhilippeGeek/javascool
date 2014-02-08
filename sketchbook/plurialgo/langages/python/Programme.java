@@ -39,7 +39,9 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 	}
 	
 	private void addDebut(StringBuffer buf) {
-		Divers.ecrire(buf, "from string import *", 0);
+		if (avecType("TAB_") || avecType("MAT_") || avecType("TEXTE")) {
+			Divers.ecrire(buf, "from string import *", 0);
+		}
 		if (this.avecFormulaire()) {
 			Divers.ecrire(buf, "from Tkinter import *", 0);
 		}
@@ -90,7 +92,7 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 		return "\"" +s + "\"";
 	}
 	
-	private void postTraitement(StringBuffer buf) {
+	public void postTraitement(StringBuffer buf) {
 		//Divers.remplacer(buf, "==", "==");
 		Divers.remplacer(buf, " et ", " and ");
 		Divers.remplacer(buf, " ET ", " and ");
@@ -157,7 +159,7 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 	private void addTypes(StringBuffer buf, int indent) {
 		//this.commenter(buf, "types standard utilises", indent);
 		if (avecType("TAB_") || avecType("MAT_")) {
-			Divers.ecrire(buf, "MAX_TAB = 5", indent);
+			Divers.ecrire(buf, "MAX_TAB = 5  # taille maximale des tableaux", indent);
 		}
 	}
 	// ------------------------------------------

@@ -45,6 +45,10 @@ public class Operation extends Noeud {
 		retours = new ArrayList<Variable>();
 	}
 	
+	public void ecrire(Programme prog, StringBuffer buf, int indent) {
+		// à redéfinir pour chaque langage
+	}
+	
 	// ---------------------------------------------
 	// Noeuds
 	// ---------------------------------------------

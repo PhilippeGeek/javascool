@@ -1,0 +1,40 @@
+VARIABLES
+	prixUnitaire EST_DU_TYPE NOMBRE
+	quantite EST_DU_TYPE NOMBRE
+	prixTotal EST_DU_TYPE NOMBRE
+	remise EST_DU_TYPE NOMBRE
+	n EST_DU_TYPE NOMBRE
+	k EST_DU_TYPE NOMBRE
+DEBUT_ALGORITHME
+	LIRE n
+	POUR k ALLANT_DE 1 A n
+		DEBUT_POUR
+		LIRE prixUnitaire
+		LIRE quantite
+		SI   (quantite==1)   ALORS
+			DEBUT_SI
+				remise PREND_LA_VALEUR 0
+			FIN_SI
+			SINON
+				DEBUT_SINON
+					SI   ( (quantite==2) OU (quantite==3) )   ALORS
+						DEBUT_SI
+						remise PREND_LA_VALEUR 0.1
+						FIN_SI
+						SINON
+							DEBUT_SINON
+								SI   ( (quantite==4) OU (quantite==5) )   ALORS
+									DEBUT_SI
+									remise PREND_LA_VALEUR 0.2
+									FIN_SI
+									SINON
+										DEBUT_SINON
+											remise PREND_LA_VALEUR 0.3
+										FIN_SINON
+							FIN_SINON
+				FIN_SINON
+		prixTotal PREND_LA_VALEUR quantite*prixUnitaire*(1-remise)
+		AFFICHER "prixTotal : "
+		AFFICHER prixTotal
+		FIN_POUR
+FIN_ALGORITHME

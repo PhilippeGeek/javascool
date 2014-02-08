@@ -102,7 +102,7 @@ public class Instruction extends org.javascool.proglets.plurialgo.langages.model
 			}
 		}
 		else {
-			Divers.ecrire(buf, nom, indent);
+			// Divers.ecrire(buf, nom, indent);
 		}
 	}
 	
@@ -126,6 +126,10 @@ public class Instruction extends org.javascool.proglets.plurialgo.langages.model
 		}
 		Divers.ecrire(buf, ")");	
 		Divers.ecrire(buf, ";");
+	}
+	
+	public void ecrire(org.javascool.proglets.plurialgo.langages.modele.Programme prog, StringBuffer buf, int indent) {
+		this.ecrire((org.javascool.proglets.plurialgo.langages.javascool.Programme)prog, buf, indent);
 	}
 	
 }

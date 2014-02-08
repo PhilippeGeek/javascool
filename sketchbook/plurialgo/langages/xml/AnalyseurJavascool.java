@@ -183,7 +183,7 @@ public class AnalyseurJavascool implements iAnalyseur {
 					ligne = ligne.trim();
 					ligne = Divers.remplacer(ligne, "&&", " ET ");
 					ligne = Divers.remplacer(ligne, "||", " OU ");
-					si.condition = ligne;				
+					si.condition = ligne.trim();				
 				}
 				else if (this.isSinonSi(ligne)) {
 					this.ajouterCommentaires(cur_nd);
@@ -197,7 +197,7 @@ public class AnalyseurJavascool implements iAnalyseur {
 					ligne = ligne.trim();
 					ligne = Divers.remplacer(ligne, "&&", " ET ");
 					ligne = Divers.remplacer(ligne, "||", " OU ");
-					sinonsi.condition = ligne;
+					sinonsi.condition = ligne.trim();
 				}
 				else if (this.isSinon(ligne)) {
 					this.ajouterCommentaires(cur_nd);
@@ -224,7 +224,7 @@ public class AnalyseurJavascool implements iAnalyseur {
 					ligne = ligne.trim();
 					ligne = Divers.remplacer(ligne, "&&", " ET ");
 					ligne = Divers.remplacer(ligne, "||", " OU ");
-					tq.condition = ligne;				
+					tq.condition = ligne.trim();				
 				}
 				else if (this.isFinTantQue(ligne)) {
 					if (i_pile>0) i_pile--;

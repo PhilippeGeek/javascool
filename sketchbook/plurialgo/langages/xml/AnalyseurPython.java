@@ -110,19 +110,16 @@ public class AnalyseurPython implements iAnalyseur {
 			StringTokenizer tok = new StringTokenizer(buf_pyt.toString(),"\n\r",false);
 			while(tok.hasMoreTokens()) {
 				String ligne = tok.nextToken();
-				System.out.println("ligne:"+ligne);
+				//System.out.println("ligne:"+ligne);
 				if (this.isClasse(ligne)) {
-					System.out.println("is");
 					i_pile++; pile[i_pile] = "class"; 
 					cur_class = (Classe) prog_xml.getClasse(trouverNom(ligne));
 				}
 				else if (this.isFinClasse(ligne)) {
-					System.out.println("isFinClasse");
 					if (i_pile>0) i_pile--;
 					cur_class = null;
 				}
 				else if (this.isConstructeur(ligne)) {
-					System.out.println("isonstructeur");
 					i_pile++; pile[i_pile] = "constructeur"; 
 					cur_constr = new Constructeur(cur_class.nom);
 					cur_class.constructeurs.add(cur_constr);
@@ -130,13 +127,11 @@ public class AnalyseurPython implements iAnalyseur {
 					cur_nd.parent = prog_xml;
 				}
 				else if (this.isFinConstructeur(ligne)) {
-					System.out.println("isFinconstructeur");
 					if (i_pile>0) i_pile--;
 					cur_nd = cur_nd.parent;
 					cur_constr = null;
 				}
 				else if (this.isAffectation(ligne)) {
-					System.out.println("isAffectation");
 					Instruction instr = new Instruction("affectation");
 					Affectation aff = new Affectation(); aff.var = ""; aff.expression = "";
 					int i = ligne.indexOf("=");
@@ -152,7 +147,6 @@ public class AnalyseurPython implements iAnalyseur {
 					this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;
 				}
 				else if (this.isRetour(ligne)) {
-					System.out.println("isRetour");
 					if (cur_oper==null) continue;
 					if (cur_oper.isProcedure()) {
 						Variable retour = new Variable();
@@ -180,7 +174,6 @@ public class AnalyseurPython implements iAnalyseur {
 					this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;
 				}
 				else if (this.isSi(ligne)) {
-					System.out.println("isSi");
 					i_pile++; pile[i_pile] = "si"; 
 					Instruction instr = new Instruction("si");
 					Si si = new Si(); si.condition = "";
@@ -195,7 +188,6 @@ public class AnalyseurPython implements iAnalyseur {
 					si.condition = ligne;				
 				}
 				else if (this.isSinonSi(ligne)) {
-					System.out.println("isinonSi");
 					this.ajouterCommentaires(cur_nd);
 					Instruction instr = (Instruction) cur_nd.parent;
 					Si sinonsi = new Si(); sinonsi.condition = "";
@@ -210,7 +202,6 @@ public class AnalyseurPython implements iAnalyseur {
 					sinonsi.condition = ligne;
 				}
 				else if (this.isSinon(ligne)) {
-					System.out.println("isSinon");
 					this.ajouterCommentaires(cur_nd);
 					Instruction instr = (Instruction) cur_nd.parent;
 					Si sinon = new Si(); sinon.condition = "";
@@ -218,14 +209,12 @@ public class AnalyseurPython implements iAnalyseur {
 					cur_nd = sinon;
 				}
 				else if (this.isFinSi(ligne)) {
-					System.out.println("isFinSi");
 					if (i_pile>0) i_pile--;
 					this.ajouterCommentaires(cur_nd);
 					cur_nd = cur_nd.parent; // de type Instruction
 					cur_nd = cur_nd.parent;
 				}
 				else if (this.isTantque(ligne)) {
-					System.out.println("isTantque");
 					i_pile++; pile[i_pile] = "tantque"; 
 					Instruction instr = new Instruction("tantque");
 					TantQue tq = new TantQue(); tq.condition = "";
@@ -240,14 +229,12 @@ public class AnalyseurPython implements iAnalyseur {
 					tq.condition = ligne;				
 				}
 				else if (this.isFinTantQue(ligne)) {
-					System.out.println("isFinTantque");
 					if (i_pile>0) i_pile--;
 					this.ajouterCommentaires(cur_nd);
 					cur_nd = cur_nd.parent; // de type Instruction
 					cur_nd = cur_nd.parent;
 				}
 				else if (this.isPour(ligne)) {
-					System.out.println("isPour");
 					i_pile++; pile[i_pile] = "pour"; 
 					Instruction instr = new Instruction("pour");
 					Pour pour = new Pour(); 
@@ -277,14 +264,12 @@ public class AnalyseurPython implements iAnalyseur {
 					pour.fin = pour.fin + "-1";
 				}
 				else if (this.isFinPour(ligne)) {
-					System.out.println("isFinpour");
 					if (i_pile>0) i_pile--;
 					this.ajouterCommentaires(cur_nd);
 					cur_nd = cur_nd.parent; // de type Instruction
 					cur_nd = cur_nd.parent;
 				}
 				else if (this.isLire(ligne)) {
-					System.out.println("isLire");
 					if (ignorerLire && (cur_oper==null)) continue;
 					Instruction instr = new Instruction("lire");
 					Argument arg = new Argument();
@@ -295,7 +280,6 @@ public class AnalyseurPython implements iAnalyseur {
 					this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd; 
 				}
 				else if (this.isEcrire(ligne)) {
-					System.out.println("isEcrire");
 					if (ignorerEcrire && (cur_oper==null)) continue;
 					Instruction instr = new Instruction("ecrire");
 					int i = ligne.indexOf("print") + 6;
@@ -332,14 +316,12 @@ public class AnalyseurPython implements iAnalyseur {
 					}
 				}
 				else if (this.isProc(ligne)) {
-					System.out.println("isProc");
 					i_pile++; pile[i_pile] = "sub"; 
 					cur_oper = (Operation) prog_xml.getOperation(this.trouverNom(ligne));
 					if (cur_oper==null) continue;
 					cur_nd = cur_oper;
 				}
 				else if (this.isFinProc(ligne)) {
-					System.out.println("isFinproc");
 					if (i_pile>0) i_pile--;
 					cur_nd = cur_nd.parent;
 					if (cur_oper!=null  & cur_oper.isFonction()) {
@@ -353,7 +335,6 @@ public class AnalyseurPython implements iAnalyseur {
 					cur_oper = null;
 				}
 				else if (this.isDim(ligne)) {
-					System.out.println("isDim");
 					Variable var = new Variable();
 					int i = ligne.indexOf("=");
 					if (i>0) ligne = ligne.substring(0, i);
@@ -371,7 +352,6 @@ public class AnalyseurPython implements iAnalyseur {
 					}
 				}
 				else if (this.isAppel(ligne)) {
-					System.out.println("isAppel");
 					String parametre = null;
 					String parametres = null;
 					String nom = trouverNom(ligne);
@@ -431,7 +411,6 @@ public class AnalyseurPython implements iAnalyseur {
 					}
 				}
 				else if (this.isPrimitive(ligne)) {
-					System.out.println("isPrimitive");
 					int j = ligne.lastIndexOf(")"); 
 					Instruction instr = new Instruction(ligne.substring(0, j+1));
 					this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;

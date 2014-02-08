@@ -49,4 +49,8 @@ public class Operation extends org.javascool.proglets.plurialgo.langages.modele.
 		if (isProcedure()) Divers.ecrire(buf, "end sub", indent);	
 	}
 	
+	public void ecrire(org.javascool.proglets.plurialgo.langages.modele.Programme prog, StringBuffer buf, int indent) {
+		this.ecrire((org.javascool.proglets.plurialgo.langages.vb.Programme)prog, buf, indent);
+	}
+	
 }

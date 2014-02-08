@@ -70,7 +70,7 @@ public class Classe extends org.javascool.proglets.plurialgo.langages.modele.Cla
 				}
 			}
 		}
-		Classe.afficherListe(infos_bis);
+		//Classe.afficherListe(infos_bis);
 		return infos_bis;
 	}
 	
@@ -146,11 +146,11 @@ public class Classe extends org.javascool.proglets.plurialgo.langages.modele.Cla
 				}
 			}
 		}
-		Classe.afficherListe(infos_bis);
+		//Classe.afficherListe(infos_bis);
 		return infos_bis;
 	}
 
-	private static void afficherListe(ArrayList<InfoTypee> infos) {
+	static void afficherListe(ArrayList<InfoTypee> infos) {
 		System.out.println("----------------");
 		for(Iterator<InfoTypee> iter=infos.iterator(); iter.hasNext(); ) {
 			InfoTypee info = iter.next();

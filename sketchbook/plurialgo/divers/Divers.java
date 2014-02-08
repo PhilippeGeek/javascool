@@ -185,6 +185,14 @@ public class Divers {
 		}
 		catch (Exception ex) {}
 		return indent;
+	}	
+	
+	public static void inserer(JTextArea editArea, String txt) {
+//		int start = editArea.getSelectionStart();
+//		editArea.setSelectionEnd(start);
+//		editArea.replaceSelection(txt);	
+		int i_cur = editArea.getCaretPosition();
+		editArea.insert(txt, i_cur);
 	}
 	
 	// ------------------------------------------

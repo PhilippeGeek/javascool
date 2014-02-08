@@ -10,6 +10,10 @@ public class Variable extends InfoTypee {
 	public Variable() {
 	}
 	
+	public void ecrire(Programme prog, StringBuffer buf, int indent) {
+		// à redéfinir pour chaque langage
+	}
+	
 	void ecrireXml(StringBuffer buf, int indent) {
 		Divers.ecrire(buf, "<variable", indent);
 		Divers.ecrireAttrXml(buf, "nom", nom);

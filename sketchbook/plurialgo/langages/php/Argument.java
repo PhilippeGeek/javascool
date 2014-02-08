@@ -47,7 +47,6 @@ public class Argument extends org.javascool.proglets.plurialgo.langages.modele.A
 // -------------------------------
 	
 	private void lireStandard(Programme prog, StringBuffer buf, int indent, String msg) { 
-		Divers.ecrire(buf, "// tache non realisee : lecture standard de " + this.nom , indent);
 	}
 	
 //	 --------------------------------
