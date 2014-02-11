@@ -112,7 +112,8 @@ public class Stdin {
    * @return La chaîne lue.
    */
   public static char readChar(String question) {
-    return readString(question, '\0').charAt(0);
+    String s = readString(question, '\0');
+    return s.length() > 0 ? s.charAt(0) : '\0';
   }
   /**
    * @see #readChar(String)
