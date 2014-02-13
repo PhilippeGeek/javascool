@@ -7,6 +7,7 @@ import java.io.File;
 
 // Used to report a throwable
 import java.lang.reflect.InvocationTargetException;
+import java.lang.ArrayIndexOutOfBoundsException;
 import org.javascool.tools.FileManager;
 
 /** Implémente le mécanisme de base de traduction d'un code Jvs en code Java standard.
@@ -156,11 +157,22 @@ public class Jvs2Java extends Translator {
     if(error instanceof InvocationTargetException) {
       return report(error.getCause());
     }
-    String s = error.toString() + "\n";
+    String s = "";
+    if(error instanceof ArrayIndexOutOfBoundsException) {
+      s += "Erreur lors de l'utilisation d'un tableau, l'index utilisé (" + error.toString().split(": ")[1] + ") n'est pas valide.\n\n";
+    } else {
+      s += error.toString() + "\n\n";
+    }
+    s += "========\nTrace d'exécution du programme\n";
     for(int i = 0; i < 4 && i < error.getStackTrace().length; i++) {
       String s_i = "" + error.getStackTrace()[i];
-      if(s_i.startsWith("JvsToJavaTranslated")) {
-        s += s_i.replaceFirst("JvsToJavaTranslated[0-9]*", "") + "\n";
+      if (s_i.startsWith("JvsToJavaTranslated")) {
+        s_i = s_i.replaceAll("JvsToJavaTranslated[0-9]*", "");
+        s_i = s_i.replaceFirst("\\.", "");
+        s_i = s_i.replaceFirst("\\.java:", ") l\\.");
+        s_i = s_i.substring(0, s_i.length() - 1);
+        String[] s_is = s_i.split(" ");
+        s += s_is[1] + ": " + s_is[0] + "\n";
       }
     }
     return s;
