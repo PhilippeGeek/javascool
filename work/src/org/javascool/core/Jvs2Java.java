@@ -160,6 +160,8 @@ public class Jvs2Java extends Translator {
     String s = "";
     if(error instanceof ArrayIndexOutOfBoundsException) {
       s += "Erreur lors de l'utilisation d'un tableau, l'index utilisé (" + error.toString().split(": ")[1] + ") n'est pas valide.\n\n";
+    } else if(error instanceof NullPointerException) {
+      s += "Utilisation d'une variable non initialisée (pointeur de valeur nul).\n\n";
     } else {
       s += error.toString() + "\n\n";
     }
