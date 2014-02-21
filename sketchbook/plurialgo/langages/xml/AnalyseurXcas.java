@@ -1,5 +1,5 @@
 /*******************************************************************************
-*     patrick.raffinat@univ-pau.fr, Copyright (C) 2013.  All rights reserved.  *
+*     patrick.raffinat@univ-pau.fr, Copyright (C) 2014.  All rights reserved.  *
 *******************************************************************************/
 package org.javascool.proglets.plurialgo.langages.xml;
 
@@ -14,34 +14,34 @@ import org.javascool.proglets.plurialgo.langages.modele.Noeud;
 
 
 /**
- * Cette classe permet de transformer un code Python en un objet de classe Programme.
+ * Cette classe permet de transformer un code Xcas en un objet de classe Programme.
  */
-public class AnalyseurPython implements iAnalyseur {
+public class AnalyseurXcas implements iAnalyseur {
 	
 	private Programme prog_xml;
-	private StringBuffer buf_pyt;
+	private StringBuffer buf_xcas;
 	private StringBuffer buf_xml;
 	private String pile[] = new String[50];
 	private int i_pile;
 
 	/**
-	      Transforme un code Python en un objet de classe Programme.
-	      @param txt le code Python à analyser
+	      Transforme un code Xcas en un objet de classe Programme.
+	      @param txt le code Xcas à analyser
 	      @param ignorerLire ignore les instructions de lire si true
 	      @param ignorerEcrire ignore les instructions d'écriture si true
-	      @param inter pour récupérer le type des variables du code Python
+	      @param inter pour récupérer le type des variables du code Xcas
 	*/	
-	public AnalyseurPython(String txt, boolean ignorerLire, boolean ignorerEcrire, Intermediaire inter) {
-		this.nettoyerPython(txt);
+	public AnalyseurXcas(String txt, boolean ignorerLire, boolean ignorerEcrire, Intermediaire inter) {
+		this.nettoyerXcas(txt);
 		prog_xml = new Programme(); 
 		Programme prog_nouveau = new ProgrammeNouveau(inter);
 		prog_xml.nom = prog_nouveau.nom;
 		prog_xml.variables.addAll(prog_nouveau.variables);
-		this.pythonEnXml(ignorerLire, ignorerEcrire);
+		this.xcasEnXml(ignorerLire, ignorerEcrire);
 	}
 
 	/**
-	      Retourne l'objet de classe Programme obtenu après analyse du code Python.
+	      Retourne l'objet de classe Programme obtenu après analyse du code Javascool.
 	*/		
 	public Programme getProgramme() {
 		if (buf_xml.toString().contains("[") && buf_xml.toString().contains("]")) {
@@ -66,78 +66,67 @@ public class AnalyseurPython implements iAnalyseur {
 		return buf_xml;
 	}
 	
-	private void nettoyerPython(String txt) {
-		buf_pyt = new StringBuffer();
-		buf_pyt.append("\n");
-		buf_pyt.append(txt);
-		buf_pyt.append("\n");
-		int i;
-		// on ote les commentaires (#) et les tabulations de debut de ligne
-		Divers.remplacer(buf_pyt, "\t", "");
-		StringTokenizer tok = new StringTokenizer(buf_pyt.toString(),"\n\r",false);
-		buf_pyt = new StringBuffer();
+	private void nettoyerXcas(String txt) {
+		buf_xcas = new StringBuffer();
+		buf_xcas.append("\n");
+		buf_xcas.append(txt);
+		buf_xcas.append("\n");
+		// on ote les commentaires (/* */)
+		int i,j;
+		i = buf_xcas.indexOf("/*");
+		while (i>=0) {
+			j = buf_xcas.indexOf("*/",i) + 2;
+			if (j<0) j=i+2;
+			buf_xcas.delete(i, j);
+			i = buf_xcas.indexOf("/*");
+		}
+		// on ote les commentaires (//) et les tabulations de debut de ligne
+		Divers.remplacer(buf_xcas, "\t", "");
+		StringTokenizer tok = new StringTokenizer(buf_xcas.toString(),"\n\r",false);
+		buf_xcas = new StringBuffer();
 		String ligne = "";
+		String ligne_prec = "";
 		while(tok.hasMoreTokens()) {
 			ligne = tok.nextToken();
 			if (ligne.isEmpty()) continue;
-			i = ligne.indexOf("#");
-			if (ligne.startsWith("#end")) {
+			i = ligne.indexOf("//");
+			if (i==0) continue;
+			if (i>=1) ligne = ligne.substring(0,i-1);
+			ligne = ligne.trim();
+			if (ligne.startsWith("else")) {
+				if (ligne_prec.equals("}")) {
+					buf_xcas.deleteCharAt(buf_xcas.length()-1);	// on ôte la fin de ligne
+				}
 			}
-			else if (i>=1){
-				ligne = ligne.substring(0,i-1);
-				ligne = ligne.trim();
-				if (ligne.isEmpty()) continue;
-			}
-			buf_pyt.append(ligne+"\n");
+			if (ligne.endsWith(";")) ligne = ligne.substring(0, ligne.length()-1);
+			if (ligne.isEmpty()) continue;
+			buf_xcas.append(ligne+"\n");
+			ligne_prec = ligne;
 		}
-		//Divers.remplacer(buf_pyt, "'", " ");
-		Divers.remplacer(buf_pyt, "\"", "'");
-		Divers.remplacer(buf_pyt, "self.", "this.");
-		Divers.remplacer(buf_pyt, "(self ,", "(");
-		Divers.remplacer(buf_pyt, "(self,", "(");
-		Divers.remplacer(buf_pyt, "(self)", "()");
+		Divers.remplacer(buf_xcas, "\\\"", " ");
+		Divers.remplacer(buf_xcas, "'", " ");
+		Divers.remplacer(buf_xcas, "\"", "'");
+		Divers.remplacer(buf_xcas, "}:", "}");
 	}
 	
-	private void pythonEnXml(boolean ignorerLire, boolean ignorerEcrire) {
+	private void xcasEnXml(boolean ignorerLire, boolean ignorerEcrire) {
 		try {
 			i_pile = 0; pile[0] = "";
-			//this.initImport();
-			this.initClasse();
+			this.initOperation();
 			Operation cur_oper = null;
-			Classe cur_class = null;
 			Constructeur cur_constr = null;
 			Noeud cur_nd = prog_xml;	// le noeud où seront ajoutées les instructions
-			StringTokenizer tok = new StringTokenizer(buf_pyt.toString(),"\n\r",false);
+			StringTokenizer tok = new StringTokenizer(buf_xcas.toString(),"\n\r",false);
 			while(tok.hasMoreTokens()) {
 				String ligne = tok.nextToken();
-				//System.out.println("ligne:"+ligne);
-				if (this.isClasse(ligne)) {
-					i_pile++; pile[i_pile] = "class"; 
-					cur_class = (Classe) prog_xml.getClasse(trouverNom(ligne));
-				}
-				else if (this.isFinClasse(ligne)) {
-					if (i_pile>0) i_pile--;
-					cur_class = null;
-				}
-				else if (this.isConstructeur(ligne)) {
-					i_pile++; pile[i_pile] = "constructeur"; 
-					cur_constr = new Constructeur(cur_class.nom);
-					cur_class.constructeurs.add(cur_constr);
-					cur_nd = cur_constr;
-					cur_nd.parent = prog_xml;
-				}
-				else if (this.isFinConstructeur(ligne)) {
-					if (i_pile>0) i_pile--;
-					cur_nd = cur_nd.parent;
-					cur_constr = null;
-				}
-				else if (this.isAffectation(ligne)) {
+				//System.out.println("ligne@ "+ligne);
+				if (this.isAffectation(ligne)) {
 					Instruction instr = new Instruction("affectation");
 					Affectation aff = new Affectation(); aff.var = ""; aff.expression = "";
-					int i = ligne.indexOf("=");
+					int i = ligne.indexOf(":=");
 					String gauche = ligne.substring(0, i);
 					if (gauche!=null) aff.var = gauche.trim();
-					String droite = ligne.substring(i+1, ligne.length());
+					String droite = ligne.substring(i+2, ligne.length());
 					if (droite!=null) aff.expression = droite.trim();
 					if (aff.isAffTabSimple() || aff.isAffMatSimple()) {
 						aff.expression = Divers.remplacer(aff.expression, "[", "{");
@@ -174,20 +163,25 @@ public class AnalyseurPython implements iAnalyseur {
 					this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;
 				}
 				else if (this.isSi(ligne)) {
-					i_pile++; pile[i_pile] = "si"; 
+					//System.out.println("isSi:"+ligne);
+					if (ligne.endsWith("{")) {
+						i_pile++; pile[i_pile] = "si"; 
+					}
 					Instruction instr = new Instruction("si");
 					Si si = new Si(); si.condition = "";
 					instr.sis.add(si); si.parent = instr;
 					this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;
 					cur_nd = si;
-					ligne = ligne.substring(2, ligne.length());
-					ligne = Divers.remplacer(ligne, ":", "");
+					ligne = ligne.substring(2, ligne.length());	// if et si ignores
+					ligne = Divers.remplacer(ligne, "{", "");
+					ligne = Divers.remplacer(ligne, "alors", "");
 					ligne = ligne.trim();
-					ligne = Divers.remplacer(ligne, " and ", " ET ");
-					ligne = Divers.remplacer(ligne, " or ", " OU ");
-					si.condition = ligne;				
+					ligne = Divers.remplacer(ligne, "&&", " ET ");
+					ligne = Divers.remplacer(ligne, "||", " OU ");
+					si.condition = ligne.trim();				
 				}
 				else if (this.isSinonSi(ligne)) {
+					//System.out.println("isSinonSi:"+ligne);
 					this.ajouterCommentaires(cur_nd);
 					Instruction instr = (Instruction) cur_nd.parent;
 					Si sinonsi = new Si(); sinonsi.condition = "";
@@ -195,13 +189,14 @@ public class AnalyseurPython implements iAnalyseur {
 					cur_nd = sinonsi;
 					int i = ligne.indexOf("if");
 					ligne = ligne.substring(i+2, ligne.length());
-					ligne = Divers.remplacer(ligne, ":", "");
+					ligne = Divers.remplacer(ligne, "{", "");
 					ligne = ligne.trim();
-					ligne = Divers.remplacer(ligne, " and ", " ET ");
-					ligne = Divers.remplacer(ligne, " or ", " OU ");
-					sinonsi.condition = ligne;
+					ligne = Divers.remplacer(ligne, "&&", " ET ");
+					ligne = Divers.remplacer(ligne, "||", " OU ");
+					sinonsi.condition = ligne.trim();
 				}
 				else if (this.isSinon(ligne)) {
+					//System.out.println("isSinon:"+ligne);
 					this.ajouterCommentaires(cur_nd);
 					Instruction instr = (Instruction) cur_nd.parent;
 					Si sinon = new Si(); sinon.condition = "";
@@ -209,62 +204,133 @@ public class AnalyseurPython implements iAnalyseur {
 					cur_nd = sinon;
 				}
 				else if (this.isFinSi(ligne)) {
-					if (i_pile>0) i_pile--;
+					//System.out.println("isFinSi:"+ligne);
+					if (ligne.endsWith("}")) {
+						if (i_pile>0) i_pile--;
+					}
 					this.ajouterCommentaires(cur_nd);
 					cur_nd = cur_nd.parent; // de type Instruction
 					cur_nd = cur_nd.parent;
 				}
 				else if (this.isTantque(ligne)) {
-					i_pile++; pile[i_pile] = "tantque"; 
+					if (ligne.endsWith("{")) {
+						i_pile++; pile[i_pile] = "tantque"; 
+					}
 					Instruction instr = new Instruction("tantque");
 					TantQue tq = new TantQue(); tq.condition = "";
 					instr.tantques.add(tq); tq.parent = instr;
 					this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;
 					cur_nd = tq;
-					ligne = ligne.substring(5, ligne.length());
-					ligne = Divers.remplacer(ligne, ":", "");
+					if (ligne.startsWith("while")) {
+						ligne = ligne.substring(5, ligne.length());
+						ligne = Divers.remplacer(ligne, "{", "");
+					}
+					else if (ligne.startsWith("tantque")) {
+						ligne = ligne.substring(7, ligne.length());
+						ligne = Divers.remplacer(ligne, " faire", "");
+					}
 					ligne = ligne.trim();
-					ligne = Divers.remplacer(ligne, " and ", " ET ");
-					ligne = Divers.remplacer(ligne, " or ", " OU ");
-					tq.condition = ligne;				
+					ligne = Divers.remplacer(ligne, "&&", " ET ");
+					ligne = Divers.remplacer(ligne, "||", " OU ");
+					tq.condition = ligne.trim();				
 				}
 				else if (this.isFinTantQue(ligne)) {
-					if (i_pile>0) i_pile--;
+					if (ligne.endsWith("}")) {
+						if (i_pile>0) i_pile--;
+					}
 					this.ajouterCommentaires(cur_nd);
 					cur_nd = cur_nd.parent; // de type Instruction
 					cur_nd = cur_nd.parent;
 				}
 				else if (this.isPour(ligne)) {
-					i_pile++; pile[i_pile] = "pour"; 
+					if (ligne.endsWith("{")) {
+						i_pile++; pile[i_pile] = "pour"; 
+					}
 					Instruction instr = new Instruction("pour");
 					Pour pour = new Pour(); 
 					pour.var = ""; pour.debut = ""; pour.fin = ""; pour.pas = "1";
 					instr.pours.add(pour); pour.parent = instr;
 					this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;
 					cur_nd = pour;
-					int i = ligne.indexOf("in"); if (i<0) continue;
-					pour.var = ligne.substring(4, i).trim();
-					int i0 = ligne.indexOf("(") + 1;
-					int i1 = ligne.indexOf(",");
-					int i2 = ligne.lastIndexOf(",");
-					int i3 = ligne.lastIndexOf(")");
-					if(i1<0){
-						pour.debut="0";
-						pour.fin=ligne.substring(i0,i3).trim();
+					if (ligne.startsWith("for")) {
+						int i0 = ligne.indexOf("(") + 1;
+						int i1 = ligne.indexOf(";"); if (i1<0) continue;
+						int i2 = ligne.indexOf(";",i1+1); if (i2<0) continue;
+						int i3 = ligne.lastIndexOf(")"); if (i3<0) continue;
+						// l'indice
+						String partie = ligne.substring(i0, i1);
+						int i = partie.indexOf(":="); if (i<0) continue;
+						pour.var = partie.substring(0, i).trim();
+						// le debut et la fin
+						pour.debut = partie.substring(i+2);
+						partie = ligne.substring(i1, i2);
+						if (partie.contains("<=")) {
+							i = partie.indexOf("<=") + 2;
+							pour.fin = partie.substring(i);
+						}
+						else if (partie.contains("<")) {
+							i = partie.indexOf("<") + 1;
+							pour.fin = partie.substring(i) + "-1";
+						}
+						else if (partie.contains(">=")) {
+							i = partie.indexOf(">=") + 2;
+							pour.fin = partie.substring(i);
+							pour.pas = "-1";
+						}
+						else if (partie.contains(">")) {
+							i = partie.indexOf(">") + 1;
+							pour.fin = partie.substring(i) + "+1";
+							pour.pas = "-1";
+						}
+						else {
+							continue;
+						}
+						// le pas
+						partie = Divers.remplacer(ligne.substring(i2, i3)," ","");
+						if (partie.contains("+=")) {
+							i = partie.indexOf("+=") + 2;
+							pour.pas = partie.substring(i);
+						}
+						else if (partie.contains("-=")) {
+							i = partie.indexOf("-=") + 2;
+							pour.pas = "-"+partie.substring(i);
+						}
+						else if (partie.contains("="+pour.var+"+")) {
+							i = partie.indexOf("="+pour.var+"+") + pour.var.length() + 2;
+							pour.pas = partie.substring(i);
+						}
+						else if (partie.contains("="+pour.var+"-")) {
+							i = partie.indexOf("="+pour.var+"-") + pour.var.length() + 1;
+							pour.pas = partie.substring(i);
+						}
 					}
-					else if(i1==i2){
-						pour.debut=ligne.substring(i0,i1).trim();
-						pour.fin=ligne.substring(i1+1,i3).trim();
+					else if (ligne.startsWith("pour")) {
+						ligne = Divers.remplacer(ligne, "pour ", "");
+						ligne = Divers.remplacer(ligne, " faire", "");
+						int i = ligne.indexOf(" de ");	if (i<0) continue;
+						String var = ligne.substring(0, i);
+						if (var!=null) pour.var = var.trim();
+						ligne = ligne.substring(i+4, ligne.length()); if (ligne==null) continue;
+						i = ligne.indexOf(" jusque "); if (i<0) continue;
+						String debut = ligne.substring(0, i);
+						if (debut!=null) pour.debut = debut.trim();
+						ligne = ligne.substring(i+8, ligne.length()); if (ligne==null) continue;
+						i = ligne.indexOf(" pas "); 
+						if (i<0) {
+							pour.fin = ligne.trim();
+						}
+						else {
+							String fin = ligne.substring(0, i);
+							if (fin!=null) pour.fin = fin.trim();
+							ligne = ligne.substring(i+5, ligne.length()); if (ligne==null) continue;
+							pour.pas = ligne.trim();
+						}						
 					}
-					else {
-						pour.debut=ligne.substring(i0,i1).trim();
-						pour.fin=ligne.substring(i1+1,i2).trim();
-						pour.pas=ligne.substring(i2+1,i3).trim();
-					}
-					pour.fin = pour.fin + "-1";
 				}
 				else if (this.isFinPour(ligne)) {
-					if (i_pile>0) i_pile--;
+					if (ligne.endsWith("}")) {
+						if (i_pile>0) i_pile--;
+					}
 					this.ajouterCommentaires(cur_nd);
 					cur_nd = cur_nd.parent; // de type Instruction
 					cur_nd = cur_nd.parent;
@@ -273,8 +339,14 @@ public class AnalyseurPython implements iAnalyseur {
 					if (ignorerLire && (cur_oper==null)) continue;
 					Instruction instr = new Instruction("lire");
 					Argument arg = new Argument();
-					int i = ligne.indexOf("=");
-					arg.nom = ligne.substring(0, i).trim();
+					int i = ligne.lastIndexOf(",")+1;
+					int j = ligne.lastIndexOf(")");
+					if (j<0) continue;
+					arg.nom = ligne.substring(i, j).trim();
+					if (arg.nom.contains("]") && !arg.nom.contains("[") && i>0) {
+						i = ligne.substring(0, i-1).lastIndexOf(",")+1;
+						arg.nom = ligne.substring(i, j).trim();
+					}
 					arg.type="REEL"; trouverType(arg, cur_oper, cur_constr);
 					instr.arguments.add(arg); arg.parent = instr;
 					this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd; 
@@ -282,36 +354,14 @@ public class AnalyseurPython implements iAnalyseur {
 				else if (this.isEcrire(ligne)) {
 					if (ignorerEcrire && (cur_oper==null)) continue;
 					Instruction instr = new Instruction("ecrire");
-					int i = ligne.indexOf("print") + 6;
-					int j = ligne.length();
-					if (ligne.startsWith("print(")) {
-						j = ligne.lastIndexOf(")");
-					}
-					String parametres = ligne.substring(i, j);
-					parametres = Divers.remplacer(parametres, " ", "");
-					parametres = Divers.remplacer(parametres, "',(", "'&");
-					parametres = Divers.remplacer(parametres, "',", "'&");
-					parametres = Divers.remplacer(parametres, "),'", "&'");
-					parametres = Divers.remplacer(parametres, ",'", "&'");
-					if (parametres.trim().isEmpty()) continue;
-					StringTokenizer tok1 = new StringTokenizer(parametres,"&",false);
-					while(tok1.hasMoreTokens()) {
-						String parametre = tok1.nextToken();
-						if (parametre==null) continue;
-						if (parametre.contains("'")) continue;
-						Argument arg = new Argument();
-						arg.nom = parametre.trim();	
-						arg.type = "EXPR"; trouverType(arg, cur_oper, cur_constr);
-						instr.arguments.add(arg); arg.parent = instr;
-					}
+					int i = ligne.indexOf("(")+1;
+					int j = ligne.lastIndexOf(")");
+					String parametres = ligne.substring(i, j).trim();
+					Argument arg = new Argument();
+					arg.nom = parametres.trim();	
+					arg.type = "EXPR"; trouverType(arg, cur_oper, cur_constr);
+					instr.arguments.add(arg); arg.parent = instr;
 					if (instr.arguments.size()>0) {
-						this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;
-					}
-					else if (!parametres.contains("&") && !parametres.contains(":")) {
-						Argument arg = new Argument();
-						arg.nom = ligne.substring(i, j).trim();	
-						arg.type = "EXPR";
-						instr.arguments.add(arg); arg.parent = instr;
 						this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;
 					}
 				}
@@ -324,31 +374,25 @@ public class AnalyseurPython implements iAnalyseur {
 				else if (this.isFinProc(ligne)) {
 					if (i_pile>0) i_pile--;
 					cur_nd = cur_nd.parent;
-					if (cur_oper!=null  & cur_oper.isFonction()) {
-						InfoTypee info;
-						InfoTypeeList liste = new InfoTypeeList();
-						liste.addVariables(cur_oper.variables);
-						if ((info=liste.getInfo(cur_oper.getRetour().nom))!=null) {
-								cur_oper.variables.remove(info);
-						}
-					}
 					cur_oper = null;
 				}
 				else if (this.isDim(ligne)) {
-					Variable var = new Variable();
-					int i = ligne.indexOf("=");
-					if (i>0) ligne = ligne.substring(0, i);
-					var.nom = this.trouverNom(ligne);
-					trouverType(var, cur_oper, cur_constr);
-					if (var.nom.equals("MAX_TAB")) continue;
-					if (cur_oper!=null) {
-						cur_oper.variables.add(var);
-					}
-					else if (cur_constr!=null) {
-						cur_constr.variables.add(var);
-					}
-					else {
-						prog_xml.variables.add(var);
+					ligne = ligne.substring("local ".length());
+					StringTokenizer tok1 = new StringTokenizer(ligne,",",false);
+					while(tok1.hasMoreTokens()) {
+						String mot = tok1.nextToken().trim();
+						Variable var = new Variable();
+						int i = mot.indexOf(":=");
+						if (i>0) mot = mot.substring(0, i);
+						if (!Divers.isIdent(mot)) continue;
+						var.nom = this.trouverNom(mot);
+						trouverType(var, cur_oper, cur_constr);
+						if (cur_oper!=null) {
+							cur_oper.variables.add(var);
+						}
+						else {
+							prog_xml.variables.add(var);
+						}
 					}
 				}
 				else if (this.isAppel(ligne)) {
@@ -418,106 +462,41 @@ public class AnalyseurPython implements iAnalyseur {
 			}
 		}
 		catch (Exception ex) {
-			prog_xml.ecrireWarning("probleme d'analyse du code Python");
+			prog_xml.ecrireWarning("probleme d'analyse du code Xcas");
 			ex.printStackTrace();
 		}
 		buf_xml = prog_xml.getXmlBuffer();
 		Divers.remplacer(buf_xml, "<==", "<=");
 		Divers.remplacer(buf_xml, ">==", ">=");
 	}	
-
-	private void initOperation(String ligne, Classe cur_classe) {
-		Operation oper = new Operation();
-		oper.nom = trouverNom(ligne);
-		int i = ligne.indexOf("(");
-		if (i>=0) {
-			String parametres = ligne.substring(i+1, ligne.lastIndexOf(")"));
-			StringTokenizer tok1 = new StringTokenizer(parametres,",",false);
-			while(tok1.hasMoreTokens()) {
-				String parametre = tok1.nextToken().trim();
-				if (parametre==null) continue;
-				Parametre param = new Parametre();
-				param.mode = "IN";
-				param.nom = trouverNom(parametre);
-				trouverType(param, null, null);
-				if (param.nom!=null) {
-					oper.parametres.add(param);
-				}
-			}
-		}
-//		if (this.isFonct(ligne)) {
-//			Variable retour = new Variable();
-//			retour.mode = "OUT";
-//			retour.type = trouverType(ligne);
-//			retour.nom = "retour";
-//			oper.retours.add(retour);
-//		}
-		if (cur_classe==null) {
-			prog_xml.operations.add(oper);	
-			oper.parent = prog_xml;
-		}
-		else {
-			cur_classe.operations.add(oper);	
-			oper.parent = cur_classe;
-			
-		}
-	}
 	
-	private void initClasse() {
-		StringTokenizer tok = new StringTokenizer(buf_pyt.toString(),"\n\r",false);
-		Classe cur_class = null;
-		i_pile = 0; pile[0] = "";
+	private void initOperation() {
+		StringTokenizer tok = new StringTokenizer(buf_xcas.toString(),"\n\r",false);
+		Operation oper = null;
 		while(tok.hasMoreTokens()) {
 			String ligne = tok.nextToken();
-			if (this.isClasse(ligne)) {
-				i_pile++; pile[i_pile] = "class"; 
-				cur_class = new Classe();
-				cur_class.nom = trouverNom(ligne);
-				prog_xml.classes.add(cur_class);
-				cur_class.parent = prog_xml;
-			}
-			else if (this.isFinClasse(ligne)) {	
-				if (i_pile>0) i_pile--;
-				cur_class = null;
-			}
-			else if (this.isPropriete(ligne)) {
-				Variable var = new Variable();
-				int i = ligne.indexOf("=");
-				if (i>0) ligne = ligne.substring(0, i);
-				var.nom = trouverNom(ligne);
-				trouverType(var, null, null);
-				cur_class.proprietes.add(var);
-			}
-			else if (this.isSi(ligne)) {
-				i_pile++; pile[i_pile] = "si"; 	
-			}
-			else if (this.isFinSi(ligne)) {
-				if (i_pile>0) i_pile--;
-			}
-			else if (this.isTantque(ligne)) {
-				i_pile++; pile[i_pile] = "tantque"; 
-			}
-			else if (this.isFinTantQue(ligne)) {
-				if (i_pile>0) i_pile--;
-			}
-			else if (this.isPour(ligne)) {
-				i_pile++; pile[i_pile] = "pour"; 
-			}
-			else if (this.isFinPour(ligne)) {
-				if (i_pile>0) i_pile--;
-			}
-			else if (this.isProc(ligne)) {
-				i_pile++; pile[i_pile] = "sub"; 
-				initOperation(ligne, cur_class);
-			}
-			else if (this.isFinProc(ligne)) {
-				if (i_pile>0) i_pile--;
-			}
-			else if (this.isConstructeur(ligne)) {
-				i_pile++; pile[i_pile] = "constructeur"; 
-			}
-			else if (this.isFinConstructeur(ligne)) {
-				if (i_pile>0) i_pile--;
+			if (this.isProc(ligne)) {
+				oper = new Operation();
+				oper.nom = trouverNom(ligne);
+				if (oper.nom==null) continue;
+				int i = ligne.indexOf("(");
+				if (i>=0) {
+					String parametres = ligne.substring(i+1, ligne.lastIndexOf(")"));
+					StringTokenizer tok1 = new StringTokenizer(parametres,",",false);
+					while(tok1.hasMoreTokens()) {
+						String parametre = tok1.nextToken();
+						if (parametre==null) continue;
+						Parametre param = new Parametre();
+						param.mode = "IN";
+						param.nom = trouverNom(parametre);
+						trouverType(param,null,null);
+						if (param.nom!=null) {
+							oper.parametres.add(param);
+						}
+					}
+				}
+				prog_xml.operations.add(oper);	
+				oper.parent = prog_xml;
 			}
 		}
 	}
@@ -549,46 +528,21 @@ public class AnalyseurPython implements iAnalyseur {
 				}
 			}
 		}
-		else {
-			int i = arg.nom.lastIndexOf(".");
-			nom = nom.substring(i+1, nom.length());
-			liste = new InfoTypeeList();
-			for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Classe> iter1=prog_xml.classes.iterator(); iter1.hasNext();) {
-				Classe cl = (Classe) iter1.next();
-				liste.addVariables(cl.proprietes);
-			}
-			if (nom.contains("[")) {
-				nom = nom.substring(0, nom.indexOf("["));
-				info = liste.getInfo(nom);
-				if (info!=null) {
-					arg.type = info.type.substring(4, info.type.length());
-				}
-			}
-			else {
-				info = liste.getInfo(nom);
-				if (info!=null) {
-					arg.type = info.type;
-				}
-			}
-		}
 	}
 	
 	private String trouverNom(String txt) {
-		// de variable (ou propriete), de fonction, de parametre
-		// de procedure, de classe, d'appel
+		// de variable, de fonction, de parametre 
+		// de procedure, d'appel
 		int i = 0;
 		int j = txt.length();
 		String nom = "";
-		if (txt.startsWith("def ")) {
-			i = 4;
-			j = txt.indexOf(":");
-		}
-		else if (txt.startsWith("class ")) {
-			i = 6;
-			j = txt.indexOf(":");
-		}
 		if (txt.contains("(")) {
 			j = txt.indexOf("(");
+		}
+		if (txt.contains(":=")) {
+			if (txt.indexOf(":=")<txt.indexOf("(")) {
+				j = txt.indexOf(":=");
+			}
 		}
 		nom = txt.substring(i,j).trim();
 		return nom;
@@ -628,122 +582,111 @@ public class AnalyseurPython implements iAnalyseur {
 	private boolean isSi(String ligne) {  
 		if (ligne.startsWith("if ")) return true;
 		if (ligne.startsWith("if(")) return true;
+		if (ligne.startsWith("si ")) return true;
+		if (ligne.startsWith("si(")) return true;
 		return false;
 	}
 	
 	private boolean isSinonSi(String ligne) {
-		if (!ligne.startsWith("elif")) return false;
+		if (!ligne.contains("else") && !ligne.contains("sinon")) return false;
+		if (ligne.contains("if") || ligne.contains("si")) return false;
+		if (!ligne.contains("if") && !ligne.contains("si")) return false;
 		return true;
 	}
 	
 	private boolean isSinon(String ligne) {
-		if (!ligne.startsWith("else")) return false;
+		if (!ligne.contains("else") && !ligne.contains("sinon")) return false;
+		if (!ligne.contains("if") && !ligne.contains("si")) return true;
 		return true;
 	}	
 	
 	private boolean isFinSi(String ligne) {
-		if (!ligne.startsWith("#end")) return false;
+		if (ligne.equals("fsi")) return true;
+		if (!ligne.equals("}")) return false;
 		if (!pile[i_pile].equals("si")) return false;
 		return true;
 	}	
 	
 	private boolean isPour(String ligne) {
-		if (!ligne.startsWith("for ")) return false;
-		return true;
+		if (ligne.startsWith("pour ")) return true;
+		if (ligne.startsWith("for ")) return true;
+		if (ligne.startsWith("for(")) return true;
+		return false;
 	}
 	
 	private boolean isFinPour(String ligne) {
-		if (!ligne.startsWith("#end")) return false;
+		if (ligne.equals("fpour")) return true;
+		if (!ligne.equals("}")) return false;
 		if (!pile[i_pile].equals("pour")) return false;
 		return true;
 	}	
 	
 	private boolean isTantque(String ligne) { 
+		if (ligne.startsWith("tantque ")) return true;
+		if (ligne.startsWith("tantque(")) return true;
 		if (ligne.startsWith("while ")) return true;
 		if (ligne.startsWith("while(")) return true;
 		return false;
 	}
 	
 	private boolean isFinTantQue(String ligne) {
-		if (!ligne.startsWith("#end")) return false;
+		if (ligne.equals("ftantque")) return true;
+		if (!ligne.equals("}")) return false;
 		if (!pile[i_pile].equals("tantque")) return false;
 		return true;
 	}	
 	
 	private boolean isLire(String ligne) {
-		if (ligne.contains("input")) return true;
+		if (!ligne.endsWith(")")) return false;
+		if (!ligne.contains(",")) return false;
+		if (ligne.startsWith("saisir(")) return true;
+		if (ligne.startsWith("saisir_chaine(")) return true;
+		if (ligne.startsWith("input(")) return true;
+		if (ligne.contains("textinput(")) return true;
 		return false;
 	}	
 	
 	private boolean isEcrire(String ligne) {
-		if (ligne.startsWith("print ")) return true;
+		if (!ligne.contains(")")) return false;
 		if (ligne.startsWith("print(")) return true;
+		if (ligne.startsWith("afficher(")) return true;
 		return false;
 	}	
 	
 	private boolean isAffectation(String ligne) {
-		if (!ligne.contains("=")) return false;
-		if (this.isSi(ligne)) return false;
-		if (this.isSinonSi(ligne)) return false;
-		if (this.isSinon(ligne)) return false;
-		if (this.isPour(ligne)) return false;
-		if (this.isTantque(ligne)) return false;
-		if (this.isLire(ligne)) return false;
-		if (this.isEcrire(ligne)) return false;
+		if (!ligne.contains(":=")) return false;
+		if (ligne.contains("[]")) return false;
+		if (ligne.contains("{")) return false;
+		if (ligne.startsWith("local ")) return false;
 		return true;
 	}	
 	
 	private boolean isProc(String ligne) {
-		if (!ligne.startsWith("def ")) return false;
+		int i = ligne.indexOf(":=");
+		if (i<0) return false;
+		String nom_prim = ligne.substring(0, i).trim();
+		if (!Divers.isIdent(nom_prim)) return false;
+		if (!ligne.contains("{")) return false;
 		return true;
 	}
 	
 	private boolean isFinProc(String ligne) {
-		if (!ligne.startsWith("#end")) return false;
+		if (!ligne.equals("}")) return false;
 		if (!pile[i_pile].equals("sub")) return false;
-		//System.out.println("isFinProc:"+ligne);
 		return true;
 	}	
 
 	private boolean isRetour(String ligne) {
 		if (ligne.startsWith("return ")) return true;
+		if (ligne.startsWith("retourne ")) return true;
 		return false;
 	}	
 	
 	private boolean isDim(String ligne) {
-		if (pile[i_pile].equals("class")) return false;
-		return false;
-	}	
-	
-	private boolean isPropriete(String ligne) {
-		if (!pile[i_pile].equals("class")) return false;
-		return false;
-	}	
-	
-	private boolean isClasse(String ligne) {
-		if (!ligne.startsWith("class ")) return false;
-		return true;
-	}
-	
-	private boolean isFinClasse(String ligne) {
-		if (!ligne.startsWith("#end")) return false;
-		if (!pile[i_pile].equals("class")) return false;
+		if (!ligne.startsWith("local ")) return false;
 		return true;
 	}	
-	
-	private boolean isConstructeur(String ligne) {
-		int i = ligne.indexOf("(");
-		if (i<0) return false;
-		String nom_cl = ligne.substring(0,i).trim();
-		return (prog_xml.getClasse(nom_cl)!=null);
-	}
-	
-	private boolean isFinConstructeur(String ligne) {
-		if (!ligne.startsWith("#end")) return false;
-		if (!pile[i_pile].equals("constructeur")) return false;
-		return true;
-	}	
-	
+
 	private boolean isAppel(String ligne) {
 		if (!ligne.contains("(")) return false;
 		if (!ligne.contains(")")) return false;
@@ -760,6 +703,8 @@ public class AnalyseurPython implements iAnalyseur {
 		if (i<0) return false;
 		int j = ligne.lastIndexOf(")"); 
 		if (j<i) return false;
+		String nom_prim = ligne.substring(0, i).trim();
+		if (!Divers.isIdent(nom_prim)) return false;
 		return true;	// isPrimitive à tester en dernier pour eliminer si, tantque...
 	}
 

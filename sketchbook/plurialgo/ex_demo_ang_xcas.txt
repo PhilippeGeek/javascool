@@ -1,0 +1,43 @@
+// ------------------------------------------------------------------------
+// Contraintes (traduction, reformulation ou transformation 1-n):
+// - une seule instruction par ligne
+// - accolades pour un if (for ou while), meme quand une seule instruction
+// - accolade fermante sur une ligne separee
+// - fonction : accolade ouvrante sur la ligne de declaration
+// - ...
+// ------------------------------------------------------------------------
+
+input("n : ",n); 
+for(k:=1; k<=n; k:=k+1) {
+	input("prixUnitaire : ",prixUnitaire); 
+	input("quantite : ",quantite); 
+	if (quantite==1) {
+		remise:=0; 
+	}
+	else {
+		if ( (quantite==2) or (quantite==3) ) {
+			remise:=0.1; 
+		}
+		else {
+			if ( (quantite==4) or (quantite==5) ) {
+				remise:=0.2; 
+			}
+			else {
+				remise:=0.3; 
+			};
+		};
+	};
+	prixTotal:=quantite*prixUnitaire*(1-remise);
+	print("prixTotal : "); 
+	print(prixTotal); 
+};
+
+// ------------------------------------------------------------------------
+// Contraintes (traduction, reformulation ou transformation 1-n):
+// - une seule instruction par ligne
+// - accolades pour un if (for ou while), meme quand une seule instruction
+// - accolade fermante sur une ligne separee
+// - fonction : accolade ouvrante sur la ligne de declaration
+// - ...
+// ------------------------------------------------------------------------
+

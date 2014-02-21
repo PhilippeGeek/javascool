@@ -37,8 +37,8 @@ public class Argument extends org.javascool.proglets.plurialgo.langages.modele.A
 	private String transformerMsg(String msg) {
 		if (msg==null) return "";
 		String txt = msg;
-		txt=Divers.remplacer(txt, "[", "[\" + (");
-		txt=Divers.remplacer(txt, "]", ") + \"]");
+        txt=Divers.remplacer(txt, "[", "[\" + (");
+        txt=Divers.remplacer(txt, "]", ") + \"]");
 		return txt;
 	}
 	

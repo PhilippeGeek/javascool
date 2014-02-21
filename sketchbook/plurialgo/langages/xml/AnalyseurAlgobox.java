@@ -78,6 +78,8 @@ public class AnalyseurAlgobox implements iAnalyseur {
 		else {
 			buf_algo.append(txt);
 		}
+		Divers.remplacer(buf_algo, "'", " ");
+		Divers.remplacer(buf_algo,"\"", "'");
 		Divers.remplacer(buf_algo, ")->(", ",");	// TRACER_SEGMENT
 		Divers.remplacer(buf_algo,"\t", "");	
 		Divers.remplacer(buf_algo,"\r", "");
@@ -211,12 +213,11 @@ public class AnalyseurAlgobox implements iAnalyseur {
 				else if (this.isEcrire(ligne)) {
 					if (ignorerEcrire && (cur_oper==null)) continue;
 					Instruction instr = new Instruction("ecrire");
-					String parametres = Divers.remplacer(ligne, "AFFICHER", "");
-					if (parametres.contains("&quot;")) continue;
-					if (parametres.contains("\"")) continue;
+					String parametres = Divers.remplacer(ligne, "AFFICHER", "").trim();
 					Argument arg = new Argument();
 					arg.nom = parametres.trim();	
-					arg.type = "REEL"; trouverType(arg);
+					arg.type = "EXPR"; trouverType(arg);
+					if (arg.isExpression() && !parametres.startsWith("'") && !parametres.endsWith("'")) continue;
 					instr.arguments.add(arg); arg.parent = instr;
 					if (instr.arguments.size()>0) {
 						this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;

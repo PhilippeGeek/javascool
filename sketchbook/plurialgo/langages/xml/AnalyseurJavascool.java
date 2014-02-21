@@ -767,8 +767,9 @@ public class AnalyseurJavascool implements iAnalyseur {
 	}
 	
 	private boolean isSi(String ligne) { 
-		if (!ligne.startsWith("if")) return false;
-		return true;
+		if (ligne.startsWith("if ")) return true;
+		if (ligne.startsWith("if(")) return true;
+		return false;
 	}
 	
 	private boolean isSinonSi(String ligne) {
@@ -801,8 +802,9 @@ public class AnalyseurJavascool implements iAnalyseur {
 	}	
 	
 	private boolean isTantque(String ligne) {
-		if (!ligne.startsWith("while")) return false;
-		return true;
+		if (ligne.startsWith("while ")) return true;
+		if (ligne.startsWith("while(")) return true;
+		return false;
 	}
 	
 	private boolean isFinTantQue(String ligne) {

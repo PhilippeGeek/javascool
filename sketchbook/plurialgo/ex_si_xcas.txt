@@ -1,0 +1,15 @@
+
+saisir("prixUnitaire : ",prixUnitaire); 
+saisir("quantite : ",quantite); 
+prixTotal := quantite * prixUnitaire;
+si (quantite == 1) alors
+	remise := 0;
+sinon
+	si(quantite <= 3) alors
+		remise := 0.1;
+	sinon
+		remise := 0.2;
+	fsi;
+fsi;
+prixTotal := prixTotal - remise * prixTotal;
+afficher(prixTotal); 

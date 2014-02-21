@@ -125,6 +125,58 @@ public class PanelHtml extends JPanel implements ActionListener, HyperlinkListen
 						pInter.colorier("javascool");
 					}
 					this.pInter.pEdition.setText(buf.toString());
+					if (desc.equals("ex_intro_nom_sel_jvs.txt")) {
+						try {
+							JTextArea editArea = pInter.pEdition.editArea;
+							editArea.requestFocusInWindow();
+							int i_start = editArea.getLineStartOffset(7);
+							editArea.setCaretPosition(i_start);
+							int i_end = editArea.getLineEndOffset(14);
+							editArea.select(i_start, i_end-1);
+							
+						}
+						catch(Exception ex) {
+							System.out.println(ex);
+						}						
+					}
+					if (desc.equals("ex_note_lire_sel_jvs.txt")) {
+						try {
+							JTextArea editArea = pInter.pEdition.editArea;
+							editArea.requestFocusInWindow();
+							int i_start = editArea.getLineStartOffset(3);
+							editArea.setCaretPosition(i_start);
+							int i_end = editArea.getLineEndOffset(3);
+							editArea.select(i_start, i_end-1);
+							
+						}
+						catch(Exception ex) {
+							System.out.println(ex);
+						}						
+					}
+					if (desc.startsWith("ex_si_sel") && desc.endsWith(".txt")) {
+						try {
+							JTextArea editArea = pInter.pEdition.editArea;
+							editArea.requestFocusInWindow();
+							int lig_start = 12;
+							int lig_end = 20;
+							if (desc.endsWith("_py.txt")) {
+								lig_start = 4;
+								lig_end = 10;
+							}
+							if (desc.endsWith("_bas.txt")) {
+								lig_start = 12;
+								lig_end = 19;
+							}
+							int i_start = editArea.getLineStartOffset(lig_start);
+							editArea.setCaretPosition(i_start);
+							int i_end = editArea.getLineEndOffset(lig_end);
+							editArea.select(i_start, i_end-1);
+							
+						}
+						catch(Exception ex) {
+							System.out.println(ex);
+						}						
+					}
 					pInter.selectPanel(pInter.pEdition);
 				}				
 			}
@@ -168,16 +220,23 @@ public class PanelHtml extends JPanel implements ActionListener, HyperlinkListen
 				pInter.pPrincipal.groupeField.setText("");
 				// instructions conditionnelles et sous-programmes
 				if (desc.startsWith("ex_si") || desc.startsWith("ex_fonct") || desc.startsWith("ex_proc") || desc.equals("ex_intro")) {
-					pInter.pPrincipal.donneesField.setText("prixUnitaire,quantite"); 
+					pInter.pPrincipal.donneesField.setText("prixUnitaire quantite"); 
 					pInter.pPrincipal.resultatsField.setText("prixTotal");
 					pInter.pPrincipal.entiersField.setText("quantite"); 
-					pInter.pPrincipal.reelsField.setText("prixTotal,prixUnitaire,remise"); 
+					pInter.pPrincipal.reelsField.setText("prixTotal prixUnitaire remise"); 
 				}	
 				if (desc.equals("ex_fonct")) {
 					pInter.pPrincipal.niv_calculList.setSelectedIndex(2);	// fonction
-				}	
+				}
+				if (desc.equals("ex_fonct_remise")) {
+					pInter.pPrincipal.niv_calculList.setSelectedIndex(2);	// fonction
+					pInter.pPrincipal.donneesField.setText("quantite"); 
+					pInter.pPrincipal.resultatsField.setText("remise");
+					pInter.pPrincipal.entiersField.setText("quantite"); 
+					pInter.pPrincipal.reelsField.setText("remise"); 
+				}		
 				if (desc.equals("ex_proc_out")) {
-					pInter.pPrincipal.resultatsField.setText("prixTotal,remise");
+					pInter.pPrincipal.resultatsField.setText("prixTotal remise");
 					pInter.pPrincipal.niv_calculList.setSelectedIndex(1);	// procedure
 				}	
 				if (desc.equals("ex_proc_in")) {
@@ -185,18 +244,18 @@ public class PanelHtml extends JPanel implements ActionListener, HyperlinkListen
 					pInter.pPrincipal.niv_calculList.setSelectedIndex(1);	// procedure
 				}
 				if (desc.equals("ex_proc_inout")) {
-					pInter.pPrincipal.donneesField.setText("quantite, prixTotal"); 
+					pInter.pPrincipal.donneesField.setText("quantite prixTotal"); 
 					pInter.pPrincipal.resultatsField.setText("prixTotal");
 					pInter.pPrincipal.entiersField.setText("quantite"); 
-					pInter.pPrincipal.reelsField.setText("prixTotal, remise"); 
+					pInter.pPrincipal.reelsField.setText("prixTotal remise"); 
 					pInter.pPrincipal.niv_calculList.setSelectedIndex(1);	// procedure
 				}	
 				if (desc.equals("ex_intro")) {
-					pInter.pPrincipal.reelsField.setText("prixTotal,prixUnitaire"); 
+					pInter.pPrincipal.reelsField.setText("prixTotal prixUnitaire"); 
 				}
 				// vecteurs
 				if (desc.startsWith("ex_tab_bon")) {
-					pInter.pPrincipal.donneesField.setText("n,nom,prixUnitaire,quantite"); 
+					pInter.pPrincipal.donneesField.setText("n nom prixUnitaire quantite"); 
 					pInter.pPrincipal.resultatsField.setText("totalCommande");
 					pInter.pPrincipal.entiersField.setText("n"); 
 					pInter.pPrincipal.reelsField.setText("totalCommande");
@@ -207,19 +266,41 @@ public class PanelHtml extends JPanel implements ActionListener, HyperlinkListen
 				}		
 				if (desc.equals("ex_tab_bon_form")) {
 					pInter.pPrincipal.niv_saisieList.setSelectedIndex(2);	// formulaire
-				}	
+				}
+				if (desc.equals("ex_tab_bon_fich")) {
+					pInter.pPrincipal.donneesField.setText("nom prixUnitaire quantite"); 
+					pInter.pPrincipal.entiersField.setText(""); 
+					pInter.pPrincipal.niv_saisieList.setSelectedIndex(3);	// sql
+					pInter.pPrincipal.niv_calculList.setSelectedIndex(0);	// elementaire
+				}
+				if (desc.equals("ex_tab_bon_sql")) {
+					pInter.pPrincipal.donneesField.setText("nom prixUnitaire quantite"); 
+					pInter.pPrincipal.entiersField.setText(""); 
+					pInter.pPrincipal.niv_saisieList.setSelectedIndex(4);	// sql
+					pInter.pPrincipal.niv_calculList.setSelectedIndex(0);	// elementaire
+				}
+				if (desc.startsWith("ex_tab_intro")) {
+					pInter.pPrincipal.donneesField.setText("n tab"); 
+					pInter.pPrincipal.resultatsField.setText("total");
+					pInter.pPrincipal.entiersField.setText("n"); 
+					pInter.pPrincipal.reelsField.setText("total");
+					pInter.pPrincipal.tab_reelsField.setText("tab");		
+					if (desc.equals("ex_tab_intro_fonct")) { 
+						pInter.pPrincipal.niv_calculList.setSelectedIndex(2);	// fonction
+					}
+				}			
 				// matrices
 				if (desc.startsWith("ex_mat_intro")) {
-					pInter.pPrincipal.donneesField.setText("n,p,mat"); 
-					pInter.pPrincipal.resultatsField.setText("n,p,mat");
-					pInter.pPrincipal.entiersField.setText("n,p"); 
+					pInter.pPrincipal.donneesField.setText("n p mat"); 
+					pInter.pPrincipal.resultatsField.setText("n p mat");
+					pInter.pPrincipal.entiersField.setText("n p"); 
 					pInter.pPrincipal.mat_reelsField.setText("mat"); 
 				}
 				// enregistrements : point
 				if (desc.startsWith("ex_enreg_point")||desc.startsWith("ex_objet_point")) {
-					pInter.pPrincipal.donneesField.setText("x1,y1,x2,y2"); 
+					pInter.pPrincipal.donneesField.setText("x1 y1 x2 y2"); 
 					pInter.pPrincipal.resultatsField.setText("distance");
-					pInter.pPrincipal.reelsField.setText("x1,y1,x2,y2,distance");
+					pInter.pPrincipal.reelsField.setText("x1 y1 x2 y2 distance");
 					pInter.pPrincipal.groupeField.setText("Point");
 					if (desc.startsWith("ex_enreg_point")) {
 						pInter.pPrincipal.niv_groupementList.setSelectedIndex(1);	// enregistrement
@@ -237,8 +318,8 @@ public class PanelHtml extends JPanel implements ActionListener, HyperlinkListen
 					pInter.pPrincipal.niv_saisieList.setSelectedIndex(1);	// procedure
 				}
 				// enregistrements : bon de commande
-				if (desc.startsWith("ex_enreg_bon")||desc.startsWith("ex_objet_bon")||desc.startsWith("ex_bon")) {
-					pInter.pPrincipal.donneesField.setText("n,nom,prixUnitaire,quantite"); 
+				if (desc.startsWith("ex_enreg_bon")||desc.startsWith("ex_objet_bon")) {
+					pInter.pPrincipal.donneesField.setText("n nom prixUnitaire quantite"); 
 					pInter.pPrincipal.resultatsField.setText("totalCommande");
 					pInter.pPrincipal.entiersField.setText("n,i"); 
 					pInter.pPrincipal.reelsField.setText("totalCommande");
@@ -246,24 +327,6 @@ public class PanelHtml extends JPanel implements ActionListener, HyperlinkListen
 					pInter.pPrincipal.tab_reelsField.setText("prixUnitaire"); 
 					pInter.pPrincipal.tab_textesField.setText("nom"); 
 					pInter.pPrincipal.groupeField.setText("Bon:n,nom,prixUnitaire,quantite");	
-					if (desc.startsWith("ex_bon")) {
-						pInter.pPrincipal.groupeField.setText("");	
-						pInter.pPrincipal.niv_calculList.setSelectedIndex(2);	// fonction
-					}
-					if (desc.equals("ex_bon_form")) {
-						pInter.pPrincipal.niv_saisieList.setSelectedIndex(2);	// formulaire
-						pInter.pPrincipal.niv_calculList.setSelectedIndex(2);	// fonction
-					}
-					if (desc.equals("ex_bon_fich")) {
-						pInter.pPrincipal.donneesField.setText("nom,prixUnitaire,quantite"); 
-						pInter.pPrincipal.niv_saisieList.setSelectedIndex(3);	// sql
-						pInter.pPrincipal.niv_calculList.setSelectedIndex(0);	// elementaire
-					}
-					if (desc.equals("ex_bon_sql")) {
-						pInter.pPrincipal.donneesField.setText("nom,prixUnitaire,quantite"); 
-						pInter.pPrincipal.niv_saisieList.setSelectedIndex(4);	// sql
-						pInter.pPrincipal.niv_calculList.setSelectedIndex(0);	// elementaire
-					}
 					if (desc.startsWith("ex_enreg_bon")) {
 						pInter.pPrincipal.niv_groupementList.setSelectedIndex(1);	// enregistrement
 					}
@@ -281,10 +344,10 @@ public class PanelHtml extends JPanel implements ActionListener, HyperlinkListen
 				}
 				// enregistrements : articles
 				if (desc.startsWith("ex_enreg_article")||desc.startsWith("ex_objet_article")) {
-					pInter.pPrincipal.donneesField.setText("nom,prixUnitaire,quantite"); 
+					pInter.pPrincipal.donneesField.setText("nom prixUnitaire quantite"); 
 					pInter.pPrincipal.resultatsField.setText("prixTotal");
 					pInter.pPrincipal.entiersField.setText("quantite"); 
-					pInter.pPrincipal.reelsField.setText("prixTotal,prixUnitaire"); 
+					pInter.pPrincipal.reelsField.setText("prixTotal prixUnitaire"); 
 					pInter.pPrincipal.textesField.setText("nom"); 
 					pInter.pPrincipal.groupeField.setText("Article:nom,prixUnitaire");	
 					if (desc.startsWith("ex_enreg_article")) {
@@ -300,28 +363,46 @@ public class PanelHtml extends JPanel implements ActionListener, HyperlinkListen
 				}
 				// civilite
 				if (desc.startsWith("ex_civilite")) {
-					pInter.pPrincipal.donneesField.setText("nom,age,sexe,civilite"); 
-					pInter.pPrincipal.resultatsField.setText("nom,age,sexe,civilite");
-					pInter.pPrincipal.textesField.setText("nom,sexe,civilite"); 
+					pInter.pPrincipal.donneesField.setText("nom age sexe"); 
+					pInter.pPrincipal.resultatsField.setText("nom age sexe");
+					pInter.pPrincipal.textesField.setText("nom sexe"); 
 					pInter.pPrincipal.reelsField.setText("age");
 					pInter.pPrincipal.niv_saisieList.setSelectedIndex(2); // formulaire
 				}
-				// vidage des champs inutiles pour transformation de programmes (perime ?)
-				if (desc.endsWith("_transfo")) {	
-					//pInter.pPrincipal.autresField.setText("");
-					pInter.pPrincipal.entiersField.setText(""); 
-					pInter.pPrincipal.reelsField.setText(""); 
-					pInter.pPrincipal.textesField.setText("");
-					pInter.pPrincipal.booleensField.setText("");
-					pInter.pPrincipal.tab_entiersField.setText(""); 
-					pInter.pPrincipal.tab_reelsField.setText(""); 
-					pInter.pPrincipal.tab_textesField.setText("");
-					pInter.pPrincipal.tab_booleensField.setText("");
-					pInter.pPrincipal.mat_entiersField.setText(""); 
-					pInter.pPrincipal.mat_reelsField.setText(""); 
-					pInter.pPrincipal.mat_textesField.setText("");
-					pInter.pPrincipal.mat_booleensField.setText("");
+				// exemples pour le bouton Inserer
+				if (desc.equals("ex_inserer_var")) {
+					pInter.pPrincipal.entiersField.setText("quantite"); 
+					pInter.pPrincipal.reelsField.setText("prixTotal prixUnitaire"); 
 				}
+				if (desc.equals("ex_inserer_var_nom")) {
+					pInter.pPrincipal.textesField.setText("nom"); 
+				}
+				if (desc.equals("ex_inserer_entree")) {
+					pInter.pPrincipal.entiersField.setText("quantite"); 
+					pInter.pPrincipal.reelsField.setText("prixUnitaire"); 
+					pInter.pPrincipal.donneesField.setText("prixUnitaire quantite"); 
+				}
+				if (desc.equals("ex_inserer_entree_nom")) {
+					pInter.pPrincipal.textesField.setText("nom"); 
+					pInter.pPrincipal.donneesField.setText("nom"); 
+				}
+				if (desc.equals("ex_inserer_sortie")) {
+					pInter.pPrincipal.reelsField.setText("prixTotal"); 
+					pInter.pPrincipal.resultatsField.setText("prixTotal"); 
+				}
+				if (desc.equals("ex_inserer_fonct")) {
+					pInter.pPrincipal.entiersField.setText("quantite"); 
+					pInter.pPrincipal.reelsField.setText("prixTotal prixUnitaire"); 
+					pInter.pPrincipal.donneesField.setText("prixUnitaire quantite");
+					pInter.pPrincipal.resultatsField.setText("prixTotal");  
+					pInter.pPrincipal.niv_calculList.setSelectedIndex(2);	// fonction
+				}
+				// exemple pour options de transformation 1-n
+				if (desc.equals("ex_note_lire")) {
+					pInter.pPrincipal.donneesField.setText("note"); 
+					pInter.pPrincipal.reelsField.setText("note"); 
+				}	
+				// selection du panel Principal
 				pInter.selectPanel(pInter.pPrincipal);
 			}
 		}

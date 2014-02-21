@@ -371,6 +371,44 @@ public class AnalyseurXml {
 					obj = new org.javascool.proglets.plurialgo.langages.algobox.Variable();
 				}
 			}
+			else if (nom_lang.equals("xcas")) {
+				if (nom_classe.equals("Affectation")) {
+					obj = new org.javascool.proglets.plurialgo.langages.xcas.Affectation();
+				}
+				else if (nom_classe.equals("Argument")) {
+					obj = new org.javascool.proglets.plurialgo.langages.xcas.Argument();
+				}
+				else if (nom_classe.equals("Classe")) {
+					obj = new org.javascool.proglets.plurialgo.langages.xcas.Classe();
+				}
+				else if (nom_classe.equals("Constructeur")) {
+					obj = new org.javascool.proglets.plurialgo.langages.xcas.Constructeur();
+				}
+				else if (nom_classe.equals("Instruction")) {
+					obj = new org.javascool.proglets.plurialgo.langages.xcas.Instruction();
+				}
+				else if (nom_classe.equals("Operation")) {
+					obj = new org.javascool.proglets.plurialgo.langages.xcas.Operation();
+				}
+				else if (nom_classe.equals("Parametre")) {
+					obj = new org.javascool.proglets.plurialgo.langages.xcas.Parametre();
+				}
+				else if (nom_classe.equals("Pour")) {
+					obj = new org.javascool.proglets.plurialgo.langages.xcas.Pour();
+				}
+				else if (nom_classe.equals("Programme")) {
+					obj = new org.javascool.proglets.plurialgo.langages.xcas.Programme();
+				}
+				else if (nom_classe.equals("Si")) {
+					obj = new org.javascool.proglets.plurialgo.langages.xcas.Si();
+				}
+				else if (nom_classe.equals("TantQue")) {
+					obj = new org.javascool.proglets.plurialgo.langages.xcas.TantQue();
+				}
+				else if (nom_classe.equals("Variable")) {
+					obj = new org.javascool.proglets.plurialgo.langages.xcas.Variable();
+				}
+			}
 			else {
 				if (nom_classe.equals("Affectation")) {
 					obj = new org.javascool.proglets.plurialgo.langages.javascool.Affectation();

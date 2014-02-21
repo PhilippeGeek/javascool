@@ -24,6 +24,7 @@ import org.javascool.proglets.plurialgo.langages.xml.AnalyseurJavascool;
 import org.javascool.proglets.plurialgo.langages.xml.AnalyseurLarp;
 import org.javascool.proglets.plurialgo.langages.xml.AnalyseurPython;
 import org.javascool.proglets.plurialgo.langages.xml.AnalyseurVb;
+import org.javascool.proglets.plurialgo.langages.xml.AnalyseurXcas;
 import org.javascool.proglets.plurialgo.langages.xml.Intermediaire;
 import org.javascool.proglets.plurialgo.langages.xml.ProgrammeDerive;
 import org.javascool.proglets.plurialgo.langages.xml.ProgrammeNouveau;
@@ -210,7 +211,8 @@ public class PanelPrincipal extends JPanel implements ActionListener, ListSelect
 			else if (e.getSource() == this.traduireButton || ("traduire".equals(cmd))) {	
 				this.traduire();	
 			}
-			else if (e.getSource() == this.reformulerButton || ("reformuler".equals(cmd))) {	
+			else if (e.getSource() == this.reformulerButton || ("reformuler".equals(cmd))) {
+				if (this.reformulerSelection()) return;
 				this.reformuler();		
 			}
 			else if (e.getSource() == this.insererButton || ("inserer".equals(cmd))) {
@@ -273,6 +275,7 @@ public class PanelPrincipal extends JPanel implements ActionListener, ListSelect
 		org.javascool.proglets.plurialgo.langages.xml.Programme prog_xml;
 		prog_xml = new org.javascool.proglets.plurialgo.langages.xml.Programme(new ProgrammeNouveau(inter));
 		zoneListe(prog_xml);
+		renommerOperations(prog_xml);
 		pInter.add_xml(prog_xml);
 		pInter.traduireXml();
 	}	
@@ -327,10 +330,14 @@ public class PanelPrincipal extends JPanel implements ActionListener, ListSelect
 			inter = pInter.creerIntermediaireLarp("traduire");
 			analyseur = new AnalyseurPython(pInter.getText(), false, false, inter);
 		}
+		else if (pInter.isXcas()) {
+			inter = pInter.creerIntermediaireLarp("traduire");
+			analyseur = new AnalyseurXcas(pInter.getText(), false, false, inter);
+		}
 		else {
 			pInter.clearConsole();
 			pInter.writeConsole("---------- Traduction impossible ----------\n");
-			pInter.writeConsole("l'algorithme initial ne semble pas etre du Javascool, du Larp, du Python, de l'Algobox ou du Visual Basic");
+			pInter.writeConsole("l'algorithme initial ne semble pas etre du Javascool, du Larp, du Python, de l'Algobox, du Xcas ou du Visual Basic\n");
 			return;
 		}
 		// ajout du resultat dans l' onglet Complements et dans l'editeur
@@ -361,10 +368,15 @@ public class PanelPrincipal extends JPanel implements ActionListener, ListSelect
 			inter = pInter.creerIntermediaireLarp("reformuler");
 			analyseur = new AnalyseurPython(pInter.getText(), true, true, inter);
 		}
+		else if (pInter.isXcas()) {
+			inter = pInter.creerIntermediaireLarp("reformuler");
+			analyseur = new AnalyseurXcas(pInter.getText(), true, true, inter);
+		}
 		else {
 			pInter.clearConsole();
 			pInter.writeConsole("---------- Reformulation impossible ----------\n");
-			pInter.writeConsole("l'algorithme initial ne semble pas etre du Javascool, du Larp, du Python, de l'Algobox ou du Visual Basic");
+			pInter.writeConsole("l'algorithme initial ne semble pas etre du Javascool, du Larp, du Python, de l'Algobox, du Xcas ou du Visual Basic\n");
+			pInter.writeConsole("--> reessayez en selectionnant une portion de l'algorithme\n");
 			return;			
 		}
 		// construction du programme dérivé
@@ -372,16 +384,100 @@ public class PanelPrincipal extends JPanel implements ActionListener, ListSelect
 		inter = pInter.creerIntermediaire();
 		ProgrammeDerive progDer = new ProgrammeDerive(analyseur.getProgramme(), inter);
 		// ajout du resultat dans l' onglet Complements et dans l'editeur
-//		pInter.add_xml(new org.javascool.proglets.plurialgo.langages.xml.Programme(progDer));
-//		pInter.pPrincipal.algoField.setText(progDer.nom);
-//		pInter.traduireXml();
 		pInter.pPrincipal.algoField.setText(progDer.nom);
 		org.javascool.proglets.plurialgo.langages.xml.Programme prog_xml;
 		prog_xml = new org.javascool.proglets.plurialgo.langages.xml.Programme(progDer);
 		zoneListe(prog_xml);
+		if (analyseur.getProgramme().operations.size()==0) renommerOperations(prog_xml);
 		pInter.add_xml(prog_xml);
 		pInter.traduireXml();
 	}	
+	
+	boolean reformulerSelection() {
+		pInter.clearConsole();
+		// recherche zone de sélection
+		JTextArea editArea = EditorWrapper.getRTextArea();
+		int i_start = editArea.getSelectionStart();
+		int i_end = editArea.getSelectionEnd();
+		int indent = 0;
+		if (i_end - i_start<5) return false;	// trop petit (donc sélection involontaire ?)
+		String txt_select = "";
+		try {
+			int lig_start = editArea.getLineOfOffset(i_start);
+			i_start = editArea.getLineStartOffset(lig_start);
+			int lig_end = editArea.getLineOfOffset(i_end);
+			i_end = editArea.getLineEndOffset(lig_end) - 1;
+			txt_select = editArea.getText(i_start, i_end-i_start);
+			while (txt_select.substring(indent, indent+1).equals("\t")) {
+				indent = indent+1;
+			}
+			// normalisation avec indentation 1 pour inserer dans les ss-programmes
+			if (indent==0) {
+				txt_select = Divers.remplacer(txt_select, "\n", "\n\t");
+				txt_select = "\t" + txt_select;
+			}
+			else if (indent>1) {
+				for(int i=2; i<=indent; i=i+1) {
+					txt_select = Divers.remplacer(txt_select, "\n\t", "\n");
+				}
+				txt_select = txt_select.substring(indent-1);
+			}
+		}
+		catch(Exception ex) {
+			return false;
+		}
+		// verification conditions d'application
+		Intermediaire inter = pInter.creerIntermediaire();
+		if (!inter.avecFonctionsCalcul() && !inter.avecProcedureCalcul()) return false;
+		String lang = pInter.pPrincipal.getNomLangage();
+		if (lang.equals("algobox") ) return false;
+		if (lang.equals("larp") ) return false;
+		if (lang.equals("php") ) return false;
+		if (lang.equals("java") ) return false;
+		if (lang.equals("javascript") ) return false;
+		// creation sous-programme
+		inter.niv_saisie = "";
+		inter.niv_affichage = "";
+		inter.niv_groupement = "elementaire";
+		org.javascool.proglets.plurialgo.langages.xml.Programme prog_xml;
+		prog_xml = new org.javascool.proglets.plurialgo.langages.xml.Programme(new ProgrammeNouveau(inter));
+		prog_xml.nom = pInter.pPrincipal.getNomAlgo();
+		System.out.println("operations:"+prog_xml.operations.size());
+		if (prog_xml.operations.size()==0) return false;
+		for (Iterator<Operation> iter=prog_xml.operations.iterator(); iter.hasNext();) {
+			Operation oper = iter.next();
+			if (oper.instructions.size()==1) {
+				if (oper.instructions.get(0).isCommentaire()) {
+					oper.instructions.remove(0);
+				}
+			}
+			oper.instructions.add(0, new Instruction("//reformulationOperation"));
+		}
+		renommerOperations(prog_xml);
+		pInter.add_xml(prog_xml);
+		// conversion du programme dans le langage courant
+		String txt = pInter.pXml.getText();
+		Programme prog = Programme.getProgramme(txt,lang); 
+		// texte des sous-programmes
+		StringBuffer buf_oper = new StringBuffer();
+		for (Iterator<Operation> iter=prog.operations.iterator(); iter.hasNext();) {
+			Operation oper = iter.next();
+			oper.ecrire(prog, buf_oper, 0);
+		}
+		Divers.remplacer(buf_oper, "// reformulationOperation", "reformulationOperation");
+		Divers.remplacer(buf_oper, "# reformulationOperation", "reformulationOperation");
+		Divers.remplacer(buf_oper, "\t"+"reformulationOperation", txt_select);
+		StringBuffer buf_appel = new StringBuffer();
+		for (Iterator<Instruction> iter=prog.instructions.iterator(); iter.hasNext();) {
+			Instruction instr = iter.next();
+			instr.ecrire(prog, buf_appel, indent);
+		}
+		// on modifie l'editeur
+		buf_appel.delete(0, 1);
+		editArea.replaceRange(buf_appel.toString(), i_start, i_end);
+		editArea.append(buf_oper.toString());
+		return true;
+	}
 	
 	private void inserer() {
 		Intermediaire inter = pInter.creerIntermediaire();
@@ -444,5 +540,28 @@ public class PanelPrincipal extends JPanel implements ActionListener, ListSelect
 				arg.type = arg.type + ":" + reponse;
 			}
 		}								
+	}	
+	
+	private void renommerOperations(org.javascool.proglets.plurialgo.langages.xml.Programme prog_xml) {
+		for (Iterator<Operation> iter=prog_xml.operations.iterator(); iter.hasNext();) {
+			Operation oper = iter.next();
+			String message = "changez eventuellement le nom du sous-programme : ";
+			String reponse = JOptionPane.showInputDialog(message, oper.nom);
+			if (reponse==null) continue;
+			reponse = reponse.trim();
+			if (reponse.isEmpty()) continue;
+			if (reponse.equals(oper.nom)) continue;
+			for (Iterator<Instruction> iter_instr=prog_xml.instructions.iterator(); iter_instr.hasNext();) {
+				Instruction instr = iter_instr.next();
+				if(oper.nom.equals(instr.nom)) {
+					instr.nom = reponse;
+					continue;
+				}
+			}
+			if (oper.nom.equals("lire")) continue;
+			if (oper.nom.equals("ecrire")) continue;
+			oper.nom=reponse;
+		}
 	}
+
 }

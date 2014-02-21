@@ -29,7 +29,7 @@ public class PanelInteraction extends JPanel {
 	public PanelXml pXml;
 	public PanelSi pSi;
 	
-	public static String[] langList = { "javascool", "algobox", "larp", "python", "javascript", "java", "php", "vb" };
+	public static String[] langList = { "javascool", "algobox", "larp", "python", "xcas", "javascript", "java", "php", "vb" };
 	public static String dirTravail = null;
 	public static String urlDoc = "/org/javascool/proglets/plurialgo/";
 
@@ -125,17 +125,20 @@ public class PanelInteraction extends JPanel {
 	public void traduireXml() {
 		String lang = pPrincipal.getNomLangage();
 		String txt = pXml.getText();
-		if (lang.equals("cplus") || lang.equals("java") || lang.equals("javascript") 
-				|| lang.equals("perl") || lang.equals("php") || lang.equals("python")
-				|| lang.equals("scala") || lang.equals("javascool")) {
+		if (lang.equals("javascool") || lang.equals("python") 
+				|| lang.equals("javascript") || lang.equals("php") 
+				|| lang.equals("perl") || lang.equals("cplus")
+				|| lang.equals("xcas") ) {
 			StringBuffer buf = new StringBuffer(pXml.getText());
 			Divers.remplacer(buf, "]", "-1]");
 			Divers.remplacer(buf, "+1-1]", "]");
 			pXml.setText(buf.toString());
 		}
 		traduireXml(pPrincipal.getNomLangage());
-		if (lang.equals("cplus") || lang.equals("java") || lang.equals("javascript") 
-				|| lang.equals("perl") || lang.equals("php") || lang.equals("python")) {
+		if (lang.equals("javascool") || lang.equals("python") 
+				|| lang.equals("javascript") || lang.equals("php") 
+				|| lang.equals("perl") || lang.equals("cplus")
+				|| lang.equals("xcas") ) {
 			pXml.setText(txt);
 		}
 	}
@@ -214,10 +217,29 @@ public class PanelInteraction extends JPanel {
 		if (txt.contains("void ")) return false;	// Java, Javascool
 		if (txt.contains("<html>")) return false;	// Javascript
 		if (txt.contains("<?php")) return false;	// Php
+		if (txt.contains("};")) return false;	// Xcas, Javascool...
+		if (isXcas()) return false;	
 		if (isVb()) return false;	
 		if (isLarp()) return false;	
 		if (isAlgobox()) return false;	
 		return true;
+	}	
+	
+	public boolean isXcas() {
+		String txt=getText().toLowerCase();
+		if (txt.contains("void ")) return false;	// Java, Javascool
+		if (txt.contains("<html>")) return false;	// Javascript
+		if (txt.contains("<?php")) return false;	// Php
+		if (txt.contains("fsi;")) return true;
+		if (txt.contains("fspour;")) return true;
+		if (txt.contains("ftantque;")) return true;			
+		if (txt.contains("}:")) return true;
+		if (isVb()) return false;	
+		if (isLarp()) return false;	
+		if (isAlgobox()) return false;		
+		if (txt.contains(":=")) return true;		
+		if (txt.contains("saisir(")) return true;
+		return false;
 	}	
 	
 	public boolean isJavascript() {

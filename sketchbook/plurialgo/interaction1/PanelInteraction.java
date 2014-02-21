@@ -26,7 +26,7 @@ public class PanelInteraction extends JPanel {
 	public PanelXml pXml;
 	public PanelSi pSi;
 	
-	public static String[] langList = { "javascool", "vb", "algobox", "larp", "javascript", "php", "python", "java" };
+	public static String[] langList = { "javascool", "vb", "algobox", "xcas", "larp", "javascript", "php", "python", "java" };
 	public static String dirTravail = null;
 	public static String urlDoc = null;
 
@@ -143,18 +143,20 @@ public class PanelInteraction extends JPanel {
 	public void traduireXml() {
 		String lang = pPrincipal.getNomLangage();
 		String txt = pXml.getText();
-		if (lang.equals("cplus") || lang.equals("java") || lang.equals("javascript") 
-				|| lang.equals("perl") || lang.equals("php") || lang.equals("python")
-				|| lang.equals("scala") || lang.equals("javascool")) {
+		if (lang.equals("javascool") || lang.equals("python") 
+				|| lang.equals("javascript") || lang.equals("php") 
+				|| lang.equals("perl") || lang.equals("cplus")
+				|| lang.equals("xcas") ) {
 			StringBuffer buf = new StringBuffer(pXml.getText());
 			Divers.remplacer(buf, "]", "-1]");
 			Divers.remplacer(buf, "+1-1]", "]");
 			pXml.setText(buf.toString());
 		}
 		traduireXml(pPrincipal.getNomLangage());
-		if (lang.equals("cplus") || lang.equals("java") || lang.equals("javascript") 
-				|| lang.equals("perl") || lang.equals("php") || lang.equals("python") 
-				|| lang.equals("scala") || lang.equals("javascool")) {
+		if (lang.equals("javascool") || lang.equals("python") 
+				|| lang.equals("javascript") || lang.equals("php") 
+				|| lang.equals("perl") || lang.equals("cplus")
+				|| lang.equals("xcas") ) {
 			pXml.setText(txt);
 		}
 	}
