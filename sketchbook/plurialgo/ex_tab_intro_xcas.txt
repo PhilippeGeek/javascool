@@ -1,0 +1,7 @@
+tab := [12.5, 10.5, 10];
+n := 3;
+total := 0;
+pour k de 0 jusque n-1 pas 1 faire 
+	total := total + tab[k];
+fpour;
+afficher(total); 

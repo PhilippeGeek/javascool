@@ -20,6 +20,7 @@ import org.javascool.proglets.plurialgo.langages.xml.AnalyseurJavascool;
 import org.javascool.proglets.plurialgo.langages.xml.AnalyseurLarp;
 import org.javascool.proglets.plurialgo.langages.xml.AnalyseurPython;
 import org.javascool.proglets.plurialgo.langages.xml.AnalyseurVb;
+import org.javascool.proglets.plurialgo.langages.xml.AnalyseurXcas;
 import org.javascool.proglets.plurialgo.langages.xml.Argument;
 import org.javascool.proglets.plurialgo.langages.xml.Intermediaire;
 import org.javascool.proglets.plurialgo.langages.xml.ProgrammeVectorise;
@@ -93,7 +94,7 @@ public class PanelBoucles extends JPanel implements ActionListener {
 		sommeCheck = new JCheckBox(); p.add(sommeCheck);
 		p.add( new JLabel("sommation : ") );
 		sommeModeField = new JTextField(21);
-		sommeModeField.setText("somme:increment");
+		sommeModeField.setText("som:increment");
 		p.add(sommeModeField);
 		vbox.add(p);
 		// comptage
@@ -208,10 +209,14 @@ public class PanelBoucles extends JPanel implements ActionListener {
 			inter = pInter.creerIntermediaireLarp("vectoriser");
 			analyseur = new AnalyseurPython(pInter.getText(), false, false, inter);
 		}
+		else if (pInter.isXcas()) {
+			inter = pInter.creerIntermediaireLarp("vectoriser");
+			analyseur = new AnalyseurXcas(pInter.getText(), false, false, inter);
+		}
 		else {
 			pInter.clearConsole();
 			pInter.writeConsole("---------- Transformation impossible ----------\n");
-			pInter.writeConsole("l'algorithme initial ne semble pas etre du Javascool, du Larp, du Python, de l'Algobox ou du Visual Basic");
+			pInter.writeConsole("l'algorithme initial ne semble pas etre du Javascool, du Larp, du Python, de l'Algobox, du Xcas ou du Visual Basic\n");
 			pInter.writeConsole("--> reessayez en selectionnant une portion de l'algorithme\n");
 			return;
 		}
@@ -296,7 +301,7 @@ public class PanelBoucles extends JPanel implements ActionListener {
 	
 	boolean vectoriserSelection() {
 		pInter.clearConsole();
-		// recherche zone de sélectionJ
+		// recherche zone de sélection
 		JTextArea editArea = EditorWrapper.getRTextArea();
 		int i_start = editArea.getSelectionStart();
 		int i_end = editArea.getSelectionEnd();
@@ -340,7 +345,6 @@ public class PanelBoucles extends JPanel implements ActionListener {
 			if (instr.isTantQue()) {
 				TantQue tq = instr.tantques.get(0);
 				if (tq==null) continue;
-				tq.instructions.add(0, new Instruction("//transformer1n"));
 				if (tq.instructions.size()==1) {
 					if (tq.instructions.get(0).isCommentaire()) {
 						tq.instructions.remove(0);
@@ -418,7 +422,7 @@ public class PanelBoucles extends JPanel implements ActionListener {
 	
 	void effacer() {
 		setBoucle("pour", "k", "1", "n", "1");
-		setSomme(false, "somme:increment");
+		setSomme(false, "som:increment");
 		setCompter(false, "effectif:condition");
 		setMaximum(false, "maxi:condition");
 		setMinimum(false, "mini:condition");

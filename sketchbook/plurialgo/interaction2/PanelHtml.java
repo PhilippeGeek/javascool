@@ -166,6 +166,34 @@ public class PanelHtml extends JPanel implements ActionListener, HyperlinkListen
 							System.out.println(ex);
 						}						
 					}
+					if (desc.startsWith("ex_si_sel") && desc.endsWith(".txt")) {
+						try {
+							JTextArea editArea = EditorWrapper.getRTextArea();
+							editArea.requestFocusInWindow();
+							int lig_start = 12;
+							int lig_end = 20;
+							if (desc.endsWith("_py.txt")) {
+								lig_start = 4;
+								lig_end = 10;
+							}
+							if (desc.endsWith("_bas.txt")) {
+								lig_start = 12;
+								lig_end = 19;
+							}
+							if (desc.endsWith("_xcas.txt")) {
+								lig_start = 4;
+								lig_end = 12;
+							}
+							int i_start = editArea.getLineStartOffset(lig_start);
+							editArea.setCaretPosition(i_start);
+							int i_end = editArea.getLineEndOffset(lig_end);
+							editArea.select(i_start, i_end-1);
+							
+						}
+						catch(Exception ex) {
+							System.out.println(ex);
+						}						
+					}
 				}				
 			}
 			else if (desc.endsWith(".xml")) {
@@ -218,7 +246,7 @@ public class PanelHtml extends JPanel implements ActionListener, HyperlinkListen
 				pInter.pEdition.effacer();
 				if (desc.equals("ex_impair")) {
 					pInter.pEdition.setBoucle("tantque", "k", "1", "99", "2");
-					pInter.pEdition.setSomme(true, "somme:1/k");
+					pInter.pEdition.setSomme(true, "som:1/k");
 				}	
 				else if (desc.equals("ex_intro_nom_jvs")) {
 					pInter.pEdition.setBoucle("pour", "k", "1", "n", "1");
@@ -259,7 +287,7 @@ public class PanelHtml extends JPanel implements ActionListener, HyperlinkListen
 				else if (desc.equals("ex_note_rech_somme")) {
 					pInter.pEdition.setBoucle("tantque", "k", "1", "", "1");
 					pInter.pEdition.setSomme(true, "total:note");
-					pInter.pEdition.setChercher(true, "note>=0 ET note<=20");
+					pInter.pEdition.setChercher(true, "note<0 OU note>20");
 				}					
 				pInter.selectPanel(pInter.pEdition);			
 			}
@@ -294,7 +322,14 @@ public class PanelHtml extends JPanel implements ActionListener, HyperlinkListen
 				}	
 				if (desc.equals("ex_fonct")) {
 					pInter.pPrincipal.niv_calculList.setSelectedIndex(2);	// fonction
-				}	
+				}
+				if (desc.equals("ex_fonct_remise")) {
+					pInter.pPrincipal.niv_calculList.setSelectedIndex(2);	// fonction
+					pInter.pPrincipal.donneesField.setText("quantite"); 
+					pInter.pPrincipal.resultatsField.setText("remise");
+					pInter.pPrincipal.entiersField.setText("quantite"); 
+					pInter.pPrincipal.reelsField.setText("remise"); 
+				}		
 				if (desc.equals("ex_proc_out")) {
 					pInter.pPrincipal.resultatsField.setText("prixTotal remise");
 					pInter.pPrincipal.niv_calculList.setSelectedIndex(1);	// procedure

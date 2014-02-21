@@ -34,30 +34,32 @@ si une portion de code est sélectionnée, c'est elle qui est transformée.
 <p>
 Dans le premier cas, la transformation ne peut s'appliquer
 qu'à un programme que PluriAlgo sait analyser :
-ce programme doit donc être exprimé dans un langage pédagogique
-(<a href="javascool.html">Javascool</a>,
-<a href="algobox.html">Algobox</a>, 
-<a href="larp.html">Larp</a>,
-<a href="python.html">Python</a>)
-ou en <a href="vb.html">Visual Basic</a>.
+ce programme doit donc être exprimé en
+Javascool,
+Algobox, 
+Larp,
+Python,
+Xcas
+ou Visual Basic.
 </p>
 
 <p>
 Dans le second cas, il n'y a pas de restriction sur le langage, mais
-le résultat obtenu est moins précis : par exemple, les variables
+sur l'option "vectorisation" qui sera ignorée.
+De plus, les variables
 introduites dans l'onglet Boucles ne seront pas déclarées.
-De plus, l'option "vectorisation" sera ignorée.
 </p>
 
 
-<h2>Transformation sans sélection de code</h2>
+<h2>Exemples</h2>
 
 <p>
-Vous allez ici appliquer la transformation à un programme lisant une note, exprimé
-dans un langage pédagogique 
-à fixer dans l'onglet Principal :
-pour l'obtenir, complétez l'onglet (<a href="ex_note_lire.princ">télécharger</a>),
-puis cliquez sur le bouton <b>Nouveau</b>.
+Vous êtes invité à transformer
+un programme Javascool lisant une note
+(<a href="ex_note_lire_sel_jvs.txt">télécharger</a>),
+en sélectionnant ou non l'instruction de saisie.
+Les tests peuvent être effectués dans un autre langage
+en <a href="theme_traduction.html">traduisant</a> ce programme.
 </p>
 
 <p>
@@ -66,7 +68,7 @@ puis cliquez sur le bouton <b>Nouveau</b>.
 
 <p>
 Complétez l'onglet Boucles (<a href="ex_note_somme.boucle">télécharger</a>), afin
-de calculer la somme des notes saisies.
+de calculer la somme des notes saisies (grâce au bouton <b>Transformer 1-n</b>).
 </p>
 
 <p>
@@ -94,30 +96,18 @@ de trouver la note minimale et la note maximale.
 <p>
 Complétez l'onglet Boucles, afin
 de répéter la saisie jusqu'à obtenir une note valide
-(<a href="ex_note_rech.boucle">exemple 1</a>, <a href="ex_note_rech_limit.boucle">exemple 2</a>), 
-ou tant que la note est valide (<a href="ex_note_rech_somme.boucle">exemple 3</a>).
+(<a href="ex_note_rech.boucle">version 1</a>
+ou <a href="ex_note_rech_limit.boucle">version 2</a>).
 </p>
 
 <p>
-<u>Exemple 5</u> : option "vectorisation"
+<u>Exemple 5</u> : option "vectorisation" (sans sélection de code)
 </p>
 
 <p>
-Reprenez un des exemples précédents en complétant le champ "vectorisation"
-(avec la valeur <b>note</b>), afin de transformer la variable
-réelle "note" en tableau de réels.
-</p>
-
-
-<h2>Transformation avec sélection de code</h2>
-
-<p>
-Vous allez ici appliquer la transformation
-à un programme Javascool lisant une note, 
-dans lequel l'instruction de saisie sera sélectionnée
-(<a href="ex_note_lire_sel_jvs.txt">télécharger</a>),
-en reprenant les exemples de la section précédente
-afin de comparer les résultats obtenus.
+Reprenez l'exemple 1 en complétant le champ "vectorisation"
+avec la valeur <b>note</b>, afin de transformer cette variable
+en tableau à une dimension.
 </p>
 
 <br/>

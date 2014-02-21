@@ -199,6 +199,7 @@ public class PanelPrincipal extends JPanel implements ActionListener, ListSelect
 				pInter.pEdition.traduire();	
 			}
 			else if (e.getSource() == this.reformulerButton || ("reformuler".equals(cmd))) {	
+				if (pInter.pEdition.reformulerSelection()) return;		
 				pInter.pEdition.reformuler();		
 			}
 			else if (e.getSource() == this.insererButton || ("inserer".equals(cmd))) {
@@ -259,12 +260,13 @@ public class PanelPrincipal extends JPanel implements ActionListener, ListSelect
 		Intermediaire inter = pInter.creerIntermediaire();
 		org.javascool.proglets.plurialgo.langages.xml.Programme prog_xml;
 		prog_xml = new org.javascool.proglets.plurialgo.langages.xml.Programme(new ProgrammeNouveau(inter));
+		renommerOperations(prog_xml);
 		zoneListe(prog_xml);
 		pInter.add_xml(prog_xml);
 		pInter.traduireXml();
 	}	
 	
-	private void zoneListe(org.javascool.proglets.plurialgo.langages.xml.Programme prog_xml) {
+	void zoneListe(org.javascool.proglets.plurialgo.langages.xml.Programme prog_xml) {
 		Instruction instr = null;
 		for (Iterator<Instruction> iter=prog_xml.instructions.iterator(); iter.hasNext();) {
 			instr = iter.next();
@@ -289,6 +291,26 @@ public class PanelPrincipal extends JPanel implements ActionListener, ListSelect
 				arg.type = arg.type + ":" + reponse;
 			}
 		}								
+	}
+	
+	void renommerOperations(org.javascool.proglets.plurialgo.langages.xml.Programme prog_xml) {
+		for (Iterator<Operation> iter=prog_xml.operations.iterator(); iter.hasNext();) {
+			Operation oper = iter.next();
+			String message = "changez éventuellement le nom du sous-programme : ";
+			String reponse = JOptionPane.showInputDialog(message, oper.nom);
+			if (reponse==null) continue;
+			reponse = reponse.trim();
+			if (reponse.isEmpty()) continue;
+			if (reponse.equals(oper.nom)) continue;
+			for (Iterator<Instruction> iter_instr=prog_xml.instructions.iterator(); iter_instr.hasNext();) {
+				Instruction instr = iter_instr.next();
+				if(oper.nom.equals(instr.nom)) {
+					instr.nom = reponse;
+					continue;
+				}
+			}
+			oper.nom=reponse;
+		}
 	}
 	
 	private void inserer() {

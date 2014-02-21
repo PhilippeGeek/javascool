@@ -18,6 +18,7 @@ import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.fife.ui.rtextarea.RTextScrollPane;
 import org.javascool.proglets.plurialgo.divers.Divers;
 import org.javascool.proglets.plurialgo.langages.modele.Instruction;
+import org.javascool.proglets.plurialgo.langages.modele.Operation;
 import org.javascool.proglets.plurialgo.langages.modele.Pour;
 import org.javascool.proglets.plurialgo.langages.modele.Programme;
 import org.javascool.proglets.plurialgo.langages.modele.TantQue;
@@ -26,9 +27,11 @@ import org.javascool.proglets.plurialgo.langages.xml.AnalyseurJavascool;
 import org.javascool.proglets.plurialgo.langages.xml.AnalyseurLarp;
 import org.javascool.proglets.plurialgo.langages.xml.AnalyseurVb;
 import org.javascool.proglets.plurialgo.langages.xml.AnalyseurPython;
+import org.javascool.proglets.plurialgo.langages.xml.AnalyseurXcas;
 import org.javascool.proglets.plurialgo.langages.xml.Argument;
 import org.javascool.proglets.plurialgo.langages.xml.Intermediaire;
 import org.javascool.proglets.plurialgo.langages.xml.ProgrammeDerive;
+import org.javascool.proglets.plurialgo.langages.xml.ProgrammeNouveau;
 import org.javascool.proglets.plurialgo.langages.xml.ProgrammeVectorise;
 import org.javascool.proglets.plurialgo.langages.xml.iAnalyseur;
 
@@ -236,7 +239,7 @@ public class PanelProgrammes extends JPanel implements ActionListener, ListSelec
 			else if ("traduire".equals(cmd)) {	
 				this.traduire();	
 			}
-			else if ("reformuler".equals(cmd)) {	
+			else if ("reformuler".equals(cmd)) {
 				this.reformuler();	
 			}
 			// menu Instructions
@@ -343,8 +346,8 @@ public class PanelProgrammes extends JPanel implements ActionListener, ListSelec
     		editArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_LISP);
     	}
     	else if (le_fichier.endsWith(".py")) {
-    		//editArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_NONE);
-    		editArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_PYTHON);
+    		editArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_NONE);
+    		//editArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_PYTHON);
     	}
     	else if (le_fichier.endsWith(".R")) {
     		editArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
@@ -399,12 +402,31 @@ public class PanelProgrammes extends JPanel implements ActionListener, ListSelec
 		if (txt.contains("void ")) return false;	// Java, Javascool
 		if (txt.contains("<html>")) return false;	// Javascript
 		if (txt.contains("<?php")) return false;	// Php
+		if (txt.contains("};")) return false;	// Xcas, Javascool...
+		if (isXcas()) return false;	
 		if (isVb()) return false;	
 		if (isLarp()) return false;	
 		if (isAlgobox()) return false;	
 		return true;
 	}	
 	
+	public boolean isXcas() {
+		String txt=getText().toLowerCase();
+		if (txt.contains("void ")) return false;	// Java, Javascool
+		if (txt.contains("<html>")) return false;	// Javascript
+		if (txt.contains("<?php")) return false;	// Php
+		if (txt.contains("fsi;")) return true;
+		if (txt.contains("fspour;")) return true;
+		if (txt.contains("ftantque;")) return true;			
+		if (txt.contains("}:")) return true;
+		if (isVb()) return false;	
+		if (isLarp()) return false;	
+		if (isAlgobox()) return false;		
+		if (txt.contains(":=")) return true;		
+		if (txt.contains("saisir(")) return true;
+		return false;
+	}	
+		
 	public boolean isJavascript() {
 		String txt=getText().toLowerCase();
 		if (!txt.contains("<html>")) return false;	
@@ -443,6 +465,10 @@ public class PanelProgrammes extends JPanel implements ActionListener, ListSelec
 		else if (isPython()) {
 			inter = pInter.creerIntermediaireLarp("vectoriser");
 			analyseur = new AnalyseurPython(editArea.getText(), false, false, inter);
+		}
+		else if (isXcas()) {
+			inter = pInter.creerIntermediaireLarp("vectoriser");
+			analyseur = new AnalyseurXcas(editArea.getText(), false, false, inter);
 		}
 		else {
 			pInter.clearConsole();
@@ -576,7 +602,6 @@ public class PanelProgrammes extends JPanel implements ActionListener, ListSelec
 			if (instr.isPour()) {
 				TantQue tq = instr.tantques.get(0);
 				if (tq==null) continue;
-				tq.instructions.add(0, new Instruction("//transformer1n"));
 				if (tq.instructions.size()==1) {
 					if (tq.instructions.get(0).isCommentaire()) {
 						tq.instructions.remove(0);
@@ -640,6 +665,10 @@ public class PanelProgrammes extends JPanel implements ActionListener, ListSelec
 			inter = pInter.creerIntermediaireLarp("traduire");
 			analyseur = new AnalyseurPython(editArea.getText(), false, false, inter);
 		}
+		else if (isXcas()) {
+			inter = pInter.creerIntermediaireLarp("traduire");
+			analyseur = new AnalyseurXcas(editArea.getText(), false, false, inter);
+		}
 		else {
 			pInter.clearConsole();
 			pInter.writeConsole("---------- Traduction impossible ----------\n");
@@ -678,6 +707,10 @@ public class PanelProgrammes extends JPanel implements ActionListener, ListSelec
 			inter = pInter.creerIntermediaireLarp("reformuler");
 			analyseur = new AnalyseurPython(editArea.getText(), true, true, inter);
 		}
+		else if (isXcas()) {
+			inter = pInter.creerIntermediaireLarp("reformuler");
+			analyseur = new AnalyseurXcas(editArea.getText(), true, true, inter);
+		}
 		else {
 			pInter.clearConsole();
 			pInter.writeConsole("---------- Reformulation impossible ----------\n");
@@ -689,10 +722,98 @@ public class PanelProgrammes extends JPanel implements ActionListener, ListSelec
 		inter = pInter.creerIntermediaire();
 		ProgrammeDerive progDer = new ProgrammeDerive(analyseur.getProgramme(), inter);
 		// ajout du resultat dans les onglets Complements et Resultats
-		pInter.add_xml(new org.javascool.proglets.plurialgo.langages.xml.Programme(progDer));
+		org.javascool.proglets.plurialgo.langages.xml.Programme prog_xml;
+		prog_xml = new org.javascool.proglets.plurialgo.langages.xml.Programme(progDer);
+		pInter.pPrincipal.zoneListe(prog_xml);
+		if (analyseur.getProgramme().operations.size()==0) pInter.pPrincipal.renommerOperations(prog_xml);
+		pInter.add_xml(prog_xml);
 		pInter.pPrincipal.algoField.setText(progDer.nom);
 		pInter.traduireXml();
 	}		
+	
+	boolean reformulerSelection() {
+		pInter.clearConsole();
+		// recherche zone de sélection
+		int i_start = editArea.getSelectionStart();
+		int i_end = editArea.getSelectionEnd();
+		int indent = 0;
+		if (i_end - i_start<5) return false;	// trop petit (donc sélection involontaire ?)
+		String txt_select = "";
+		try {
+			int lig_start = editArea.getLineOfOffset(i_start);
+			i_start = editArea.getLineStartOffset(lig_start);
+			int lig_end = editArea.getLineOfOffset(i_end);
+			i_end = editArea.getLineEndOffset(lig_end) - 1;
+			txt_select = editArea.getText(i_start, i_end-i_start);
+			while (txt_select.substring(indent, indent+1).equals("\t")) {
+				indent = indent+1;
+			}
+			// normalisation avec indentation 1 pour inserer dans les ss-programmes
+			if (indent==0) {
+				txt_select = Divers.remplacer(txt_select, "\n", "\n\t");
+				txt_select = "\t" + txt_select;
+			}
+			else if (indent>1) {
+				for(int i=2; i<=indent; i=i+1) {
+					txt_select = Divers.remplacer(txt_select, "\n\t", "\n");
+				}
+				txt_select = txt_select.substring(indent-1);
+			}
+		}
+		catch(Exception ex) {
+			return false;
+		}
+		// verification conditions d'application
+		Intermediaire inter = pInter.creerIntermediaire();
+		if (!inter.avecFonctionsCalcul() && !inter.avecProcedureCalcul()) return false;
+		String lang = pInter.pPrincipal.getNomLangage();
+		if (lang.equals("algobox") ) return false;
+		if (lang.equals("larp") ) return false;
+		if (lang.equals("php") ) return false;
+		if (lang.equals("java") ) return false;
+		if (lang.equals("javascript") ) return false;
+		// creation sous-programme
+		inter.niv_saisie = "";
+		inter.niv_affichage = "";
+		inter.niv_groupement = "elementaire";
+		org.javascool.proglets.plurialgo.langages.xml.Programme prog_xml;
+		prog_xml = new org.javascool.proglets.plurialgo.langages.xml.Programme(new ProgrammeNouveau(inter));
+		prog_xml.nom = pInter.pPrincipal.getNomAlgo();
+		if (prog_xml.operations.size()==0) return false;
+		for (Iterator<Operation> iter=prog_xml.operations.iterator(); iter.hasNext();) {
+			Operation oper = iter.next();
+			if (oper.instructions.size()==1) {
+				if (oper.instructions.get(0).isCommentaire()) {
+					oper.instructions.remove(0);
+				}
+			}
+			oper.instructions.add(0, new Instruction("//reformulationOperation"));
+		}
+		pInter.pPrincipal.renommerOperations(prog_xml);
+		pInter.add_xml(prog_xml);
+		// conversion du programme dans le langage courant
+		String txt = pInter.pXml.getText();
+		Programme prog = Programme.getProgramme(txt,lang); 
+		// texte des sous-programmes
+		StringBuffer buf_oper = new StringBuffer();
+		for (Iterator<Operation> iter=prog.operations.iterator(); iter.hasNext();) {
+			Operation oper = iter.next();
+			oper.ecrire(prog, buf_oper, 0);
+		}
+		Divers.remplacer(buf_oper, "// reformulationOperation", "reformulationOperation");
+		Divers.remplacer(buf_oper, "# reformulationOperation", "reformulationOperation");
+		Divers.remplacer(buf_oper, "\t"+"reformulationOperation", txt_select);
+		StringBuffer buf_appel = new StringBuffer();
+		for (Iterator<Instruction> iter=prog.instructions.iterator(); iter.hasNext();) {
+			Instruction instr = iter.next();
+			instr.ecrire(prog, buf_appel, indent);
+		}
+		// on modifie l'editeur
+		buf_appel.delete(0, 1);
+		editArea.replaceRange(buf_appel.toString(), i_start, i_end);
+		editArea.append(buf_oper.toString());
+		return true;
+	}	
 		
 	// ---------------------------------------------
 	// Commandes algorithmiques : Si, Pour, Tantque
