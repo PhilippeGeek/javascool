@@ -1,6 +1,6 @@
 /*======================================================================
  * Functions.java
- * 	Time-stamp:					"2012-12-29"
+ * 	Time-stamp:					"2014-03-20"
  * 
  * @author Lionel Avon
  * @since 2012-06-19
@@ -22,6 +22,10 @@ import org.javascool.macros.Macros.*;
  * @since 2012-06-19
  */
 public class Functions {
+
+    public static String version() {
+        return "Proglet Polyominos, version du 20 mars 2014";
+    }
 
     /*::::::::::::::::::::::::::::::
      * pour corriger un bug étrange :
