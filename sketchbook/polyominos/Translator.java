@@ -1,6 +1,6 @@
 /*======================================================================
  * Translator.java			Lionel Avon	 2012-06-09
- * 	Time-stamp:					"2012-12-28"
+ * 	Time-stamp:					"2014-03-22"
  *
  * Traducteur de Javascool (proglet Polyominos) vers Java
  * selon les spécifications de JavaScool
@@ -21,7 +21,7 @@ package org.javascool.proglets.polyominos;
 public class Translator extends org.javascool.core.Translator {
     @Override
 	public String getImports() {
-	return "import org.dnsalias.avon.polyominos.*; "
+	return "import fr.free.hd.avon.polyominos.*; "
 	    + "import java.lang.Math.*; "
 	    + "import java.math.*; "
 	    + "import java.util.*; "

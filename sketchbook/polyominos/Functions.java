@@ -1,6 +1,6 @@
 /*======================================================================
  * Functions.java
- * 	Time-stamp:					"2014-03-20"
+ * 	Time-stamp:					"2014-03-22"
  * 
  * @author Lionel Avon
  * @since 2012-06-19
@@ -12,7 +12,7 @@
 
 package org.javascool.proglets.polyominos;
 
-import org.dnsalias.avon.polyominos.*;
+import fr.free.hd.avon.polyominos.*;
 import org.javascool.macros.Macros.*;
 
 /**
@@ -24,7 +24,7 @@ import org.javascool.macros.Macros.*;
 public class Functions {
 
     public static String version() {
-        return "Proglet Polyominos, version du 20 mars 2014";
+        return "Proglet Polyominos, version du 22 mars 2014";
     }
 
     /*::::::::::::::::::::::::::::::
