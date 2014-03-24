@@ -1,6 +1,6 @@
 /*======================================================================
  * Panel.java
- * 	Time-stamp:					"2012-12-28"
+ * 	Time-stamp:					"2014-03-22"
  * 
  * @author Lionel Avon
  * @since 2012-06-14
@@ -12,7 +12,7 @@
 
 package org.javascool.proglets.polyominos;
 
-import org.dnsalias.avon.polyominos.ProgletJPanel;
+import fr.free.hd.avon.polyominos.ProgletJPanel;
 
 /**
  * Le panel pour Javascool, i.e. la proglet proprement dite.
