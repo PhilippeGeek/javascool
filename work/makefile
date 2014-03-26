@@ -46,7 +46,7 @@ nbe :
 jdoc :
 	ant javadoc ; firefox ./dist/javadoc/overview-summary.html
 
-sos8 :
+sos8 : # À utiliser avec la JDK 7
 	ant javascool-proglets.jar
 	rsync --rsh='ssh -C' -rl .htaccess ../work/dist/javascool-proglets.jar scm.gforge.inria.fr:/home/groups/javascool/htdocs/v4/javascool-proglets-8.jar
 
