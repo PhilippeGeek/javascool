@@ -216,7 +216,7 @@ public class Divers {
 		if (!Divers.isLettre(ch)) return false;
 		for(int i=0;i<txt.length(); i++) {
 			ch = txt.substring(i,i+1);
-			if (!Divers.isChiffre(ch) && !Divers.isLettre(ch)) return false;
+			if (!Divers.isChiffre(ch) && !Divers.isLettre(ch) && !ch.equals("_")) return false;
 		}
 		return true;
 	}

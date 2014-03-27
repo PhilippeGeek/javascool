@@ -39,9 +39,6 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 	}
 	
 	private void addDebut(StringBuffer buf) {
-		if (avecType("TAB_") || avecType("MAT_") || avecType("TEXTE")) {
-			Divers.ecrire(buf, "from string import *", 0);
-		}
 		if (this.avecFormulaire()) {
 			Divers.ecrire(buf, "from Tkinter import *", 0);
 		}
@@ -93,21 +90,17 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 	}
 	
 	public void postTraitement(StringBuffer buf) {
-		//Divers.remplacer(buf, "==", "==");
 		Divers.remplacer(buf, " et ", " and ");
 		Divers.remplacer(buf, " ET ", " and ");
 		Divers.remplacer(buf, " ou ", " or ");
 		Divers.remplacer(buf, " OU ", " or ");
-		//Divers.remplacer(buf, "!=", "!=");
 		Divers.remplacer(buf, "vrai", "True");
 		Divers.remplacer(buf, "VRAI", "True");
 		Divers.remplacer(buf, "faux", "False");
 		Divers.remplacer(buf, "FAUX", "False");
-		//Divers.remplacer(buf, "][", "*" + this.getMaxTab() + "+");
-		//Divers.remplacer(buf, "[", "[");
-		//Divers.remplacer(buf, "[", "[");
-		//Divers.remplacer(buf, "'", "\"");
 		Divers.remplacer(buf, "this", "self");
+		Divers.remplacer(buf, "-1+1)", ")");
+		Divers.remplacer(buf, "MAX_TAB", "10");
 	}
 	
 	private void remplacerPoint(StringBuffer buf) {
@@ -159,7 +152,7 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 	private void addTypes(StringBuffer buf, int indent) {
 		//this.commenter(buf, "types standard utilises", indent);
 		if (avecType("TAB_") || avecType("MAT_")) {
-			Divers.ecrire(buf, "MAX_TAB = 5  # taille maximale des tableaux", indent);
+			//Divers.ecrire(buf, "MAX_TAB = 10  # taille maximale des tableaux", indent);
 		}
 	}
 	// ------------------------------------------

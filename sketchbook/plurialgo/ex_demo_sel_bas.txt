@@ -1,0 +1,27 @@
+
+Option Explicit
+sub main()
+	Dim prixUnitaire as double
+	Dim quantite as double
+	Dim prixTotal as double
+	Dim remise as double
+	Dim n as double
+	Dim k as integer
+	n = InputBox( "n : " ) 
+	for k=1 to n
+		prixUnitaire = InputBox( "prixUnitaire : " ) 
+		quantite = InputBox( "quantite : " )
+		if (quantite=1) then 
+			remise = 0 
+		elseif ( (quantite=2) or (quantite=3) ) then 
+			remise = 0.1
+		elseif ( (quantite=4) or (quantite=5) ) then 
+			remise = 0.2 
+		else 
+			remise = 0.3 
+		end if 
+		prixTotal = quantite*prixUnitaire*(1-remise) 
+		MsgBox( "prixTotal : " & prixTotal ) 
+	next k
+end sub
+

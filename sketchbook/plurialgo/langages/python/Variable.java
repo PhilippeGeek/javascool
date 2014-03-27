@@ -24,7 +24,10 @@ public class Variable extends org.javascool.proglets.plurialgo.langages.modele.V
 	
 	public void ecrire(Programme prog, StringBuffer buf, int indent) {
 		String MAX_TAB = prog.getMaxTab();
-		if (this.isTabEntiers() || this.isTabReels()){
+		if (this.isTabEntiers()){
+			Divers.ecrire(buf, nom + " = [0]*" + MAX_TAB, indent);
+		}
+		if (this.isTabReels()){
 			Divers.ecrire(buf, nom + " = [0]*" + MAX_TAB, indent);
 		}
 		if (this.isTabTextes()){
@@ -33,24 +36,18 @@ public class Variable extends org.javascool.proglets.plurialgo.langages.modele.V
 		if (this.isTabBooleens()){
 			Divers.ecrire(buf, nom + " = [True]*" + MAX_TAB, indent);
 		}
-		if (this.isMatEntiers() || this.isMatReels()){
-			Divers.ecrire(buf, nom + " = []", indent);
-			Divers.ecrire(buf, "for i1 in range(0," + MAX_TAB + ") :", indent);
-			Divers.ecrire(buf, this.nom + ".append(" + "[0]*" + MAX_TAB + ")", indent+1);
-			Divers.ecrire(buf, "#end", indent);
+		if (this.isMatEntiers()){
+			// [[0 for j1 in range(10)] for i1 in range(10)]
+			Divers.ecrire(buf, nom + " = [[0 for j1 in range(" + MAX_TAB + ")] for i1 in range(" + MAX_TAB + ")]", indent);
+		}
+		if (this.isMatReels()){
+			Divers.ecrire(buf, nom + " = [[0 for j1 in range(" + MAX_TAB + ")] for i1 in range(" + MAX_TAB + ")]", indent);
 		}
 		if (this.isMatTextes()){
-			Divers.ecrire(buf, nom + " = []", indent);
-			Divers.ecrire(buf, "for i1 in range(0," + MAX_TAB + ") :", indent);
-			Divers.ecrire(buf, this.nom + ".append(" + "['']*" + MAX_TAB + ")", indent+1);
-			Divers.ecrire(buf, "#end", indent);
-			//Divers.ecrire(buf, nom + " = ['']*(" + MAX_TAB + "*" + MAX_TAB +")", indent);
+			Divers.ecrire(buf, nom + " = [['' for j1 in range(" + MAX_TAB + ")] for i1 in range(" + MAX_TAB + ")]", indent);
 		}
 		if (this.isMatBooleens()){
-			Divers.ecrire(buf, nom + " = []", indent);
-			Divers.ecrire(buf, "for i1 in range(0," + MAX_TAB + ") :", indent);
-			Divers.ecrire(buf, this.nom + ".append(" + "[True]*" + MAX_TAB + ")", indent+1);
-			Divers.ecrire(buf, "#end", indent);
+			Divers.ecrire(buf, nom + " = [[True for j1 in range(" + MAX_TAB + ")] for i1 in range(" + MAX_TAB + ")]", indent);
 		}
 		if (this.isEnregistrement(prog)) {
 			Divers.ecrire(buf, nom, indent);

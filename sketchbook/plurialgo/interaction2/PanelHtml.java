@@ -166,6 +166,34 @@ public class PanelHtml extends JPanel implements ActionListener, HyperlinkListen
 							System.out.println(ex);
 						}						
 					}
+					if (desc.startsWith("ex_demo_sel") && desc.endsWith(".txt")) {
+						try {
+							JTextArea editArea = EditorWrapper.getRTextArea();
+							editArea.requestFocusInWindow();
+							int lig_start = 14;
+							int lig_end = 25;
+							if (desc.endsWith("_py.txt")) {
+								lig_start = 5;
+								lig_end = 13;
+							}
+							if (desc.endsWith("_bas.txt")) {
+								lig_start = 13;
+								lig_end = 21;
+							}
+							if (desc.endsWith("_xcas.txt")) {
+								lig_start = 5;
+								lig_end = 17;
+							}
+							int i_start = editArea.getLineStartOffset(lig_start);
+							editArea.setCaretPosition(i_start);
+							int i_end = editArea.getLineEndOffset(lig_end);
+							editArea.select(i_start, i_end-1);
+							
+						}
+						catch(Exception ex) {
+							System.out.println(ex);
+						}						
+					}
 					if (desc.startsWith("ex_si_sel") && desc.endsWith(".txt")) {
 						try {
 							JTextArea editArea = EditorWrapper.getRTextArea();
@@ -386,10 +414,11 @@ public class PanelHtml extends JPanel implements ActionListener, HyperlinkListen
 				}			
 				// matrices
 				if (desc.startsWith("ex_mat_intro")) {
-					pInter.pPrincipal.donneesField.setText("n p mat"); 
-					pInter.pPrincipal.resultatsField.setText("n p mat");
-					pInter.pPrincipal.entiersField.setText("n p"); 
-					pInter.pPrincipal.mat_reelsField.setText("mat"); 
+					pInter.pPrincipal.donneesField.setText("nbLignes nbColonnes tab"); 
+					pInter.pPrincipal.resultatsField.setText("total");
+					pInter.pPrincipal.entiersField.setText("nbLignes nbColonnes");
+					pInter.pPrincipal.reelsField.setText("total"); 
+					pInter.pPrincipal.mat_reelsField.setText("tab"); 
 				}
 				// enregistrements : point
 				if (desc.startsWith("ex_enreg_point")||desc.startsWith("ex_objet_point")) {

@@ -1,0 +1,12 @@
+# donnees
+tab = [ [1, -1, 10], [3, 6, -3] ]
+nbLignes = 2
+nbColonnes = 3
+# calcul et affichage du total du tableau
+total=0 
+for i in range(0, nbLignes) :
+	for j in range(0, nbColonnes) :
+		total=total + tab[i][j] 
+	#end
+#end
+print "total : ", total

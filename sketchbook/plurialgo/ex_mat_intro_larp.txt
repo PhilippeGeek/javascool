@@ -1,0 +1,15 @@
+\\ Module principal
+DEBUT
+	\\ donnees
+	tab = [ [1, -1, 10], [3, 6, -3] ]
+	nbLignes = 2
+	nbColonnes = 3
+	\\ calcul et affichage du total du tableau
+	total = 0
+	POUR i=1 JUSQU'A nbLignes  FAIRE 
+		POUR j=1 JUSQU'A nbColonnes  FAIRE 
+			total = total + tab[i][j]
+		FINPOUR
+	FINPOUR
+	ECRIRE "total : ", total
+FIN

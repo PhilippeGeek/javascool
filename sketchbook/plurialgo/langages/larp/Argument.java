@@ -114,10 +114,7 @@ public class Argument extends org.javascool.proglets.plurialgo.langages.modele.A
 	}
 	
 	private void ecrireMatStandard(Programme prog, StringBuffer buf, int indent, String msg) {
-		if (msg!=null) Divers.ecrire(buf, "ECRIRE " + msg , indent); 
-		Divers.ecrire(buf, "POUR i1=1 JUSQU'A " + prog.getDim(1, this) + " FAIRE", indent);
-		Divers.ecrire(buf, "ECRIRE " + this.nom +"[i1]", indent+1);
-		Divers.ecrire(buf, "FINPOUR", indent);
+		this.ecrireSimpleStandard(prog, buf, indent, msg);
 	}
 	
 }

@@ -169,7 +169,7 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 	
 	private void addTypes(StringBuffer buf, int indent) {
 		if (avecType("TAB_") || avecType("MAT_")) {
-			Divers.ecrire(buf, "public static int MAX_TAB = 5; // taille maximale des tableaux", indent);
+			Divers.ecrire(buf, "public static int MAX_TAB = 10; // taille maximale des tableaux", indent);
 		}
 	}
 	

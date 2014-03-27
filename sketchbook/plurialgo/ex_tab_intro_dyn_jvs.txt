@@ -1,0 +1,19 @@
+void main() {
+	// les variables
+	double [] tab; 
+	int n; 
+	double total; 
+	int k;
+	// saisie des donnees
+	n = readInt("entrez la taille du tableau : ");
+	tab = new double[n];	// allocation DYNAMIQUE
+	for(k=0; k<n; k=k+1) { 
+		tab[k] = readDouble("element " + k + " : ");
+	}
+	// calcul et affichage du total du tableau
+	total = 0;
+	for(k=0; k<n; k=k+1) { 
+		total = total + tab[k];
+	}
+	println("Le prix total vaut " + total); 
+} 

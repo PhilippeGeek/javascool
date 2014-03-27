@@ -7,10 +7,6 @@ import java.util.*;
 
 /**
  * Cette classe permet de gérer les liens bidirectionnels dans l'arborescence d'un programme.
- * 
- * <p>
- * Cette classe a été ajoutée car seuls les liens descendants sont gérés par BindingCastor (package Divers).
- * </p>
 */
 public abstract class Noeud {
 	

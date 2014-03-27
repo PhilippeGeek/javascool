@@ -655,18 +655,23 @@ public class AnalyseurXcas implements iAnalyseur {
 	
 	private boolean isAffectation(String ligne) {
 		if (!ligne.contains(":=")) return false;
-		if (ligne.contains("[]")) return false;
 		if (ligne.contains("{")) return false;
 		if (ligne.startsWith("local ")) return false;
+		String droite = ligne.substring(ligne.indexOf(":=")+2).trim();
+		if (droite.startsWith("matrix(")) return false;
+		if (droite.equals("[]")) return false;
+		if (droite.equals("[ ]")) return false;
 		return true;
 	}	
 	
 	private boolean isProc(String ligne) {
-		int i = ligne.indexOf(":=");
+		if (!ligne.contains(":=")) return false;
+		if (!ligne.contains("{")) return false;
+		int i = ligne.indexOf("(");
 		if (i<0) return false;
 		String nom_prim = ligne.substring(0, i).trim();
+		if (nom_prim.equals("for")) return false;
 		if (!Divers.isIdent(nom_prim)) return false;
-		if (!ligne.contains("{")) return false;
 		return true;
 	}
 	

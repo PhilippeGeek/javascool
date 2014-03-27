@@ -1,0 +1,10 @@
+tab := [ [1, -1, 10], [3, 6, -3] ];
+nbLignes := 2;
+nbColonnes := 3;
+total := 0;
+pour ii de 0 jusque nbLignes-1 pas 1 faire 
+	pour jj de 0 jusque nbColonnes-1 pas 1 faire 
+		total := total + tab[ii,jj];
+	fpour;
+fpour;
+afficher(total); 
