@@ -100,10 +100,6 @@ public class Instruction extends org.javascool.proglets.plurialgo.langages.model
 		}
 		else if (isPrimitive()) {
 			Divers.ecrire(buf, "Call " + this.getPrimitive(), indent);
-			String comm = this.getPrimitiveCommentaire();
-			if (comm!=null) {
-				Divers.ecrire(buf, " ' " + comm);
-			}
 		}
 		else {
 			// Divers.ecrire(buf, nom, indent);

@@ -34,6 +34,14 @@ public class Argument extends org.javascool.proglets.plurialgo.langages.modele.A
 		}
 	}
 	
+	private String transformerMsg(String msg) {
+		if (msg==null) return "";
+		String txt = msg;
+        txt=Divers.remplacer(txt, "[", "[\" + str(");
+        txt=Divers.remplacer(txt, "]", ") + \"]");
+		return txt;
+	}
+	
 //	 -------------------------------
 //	 lecture d'arguments (standard)
 //	 -------------------------------
@@ -58,28 +66,26 @@ public class Argument extends org.javascool.proglets.plurialgo.langages.modele.A
 	
 	private void lireSimpleStandard(Programme prog, StringBuffer buf, int indent, String msg) {
 		if (isTexte()) {
-			Divers.ecrire(buf, this.nom + " = raw_input(" + msg + ") ", indent); 
+			Divers.ecrire(buf, this.nom + " = raw_input(" + transformerMsg(msg) + ") ", indent); 
 		}
 		else {
-			Divers.ecrire(buf, this.nom + " = input(" + msg + ") ", indent); 
+			Divers.ecrire(buf, this.nom + " = input(" + transformerMsg(msg) + ") ", indent); 
 		}
 	}
 	
 	private void lireTabStandard(Programme prog, StringBuffer buf, int indent, String msg) {
-		if (msg!=null) Divers.ecrire(buf, "print " + msg + " ", indent); 
 		Divers.ecrire(buf, "for i1 in range(0," + prog.getDim(1, this) + ") : ", indent);
-		String msg1 = prog.quote("rang ") + " + str(i1) + " + prog.quote(" : ");
 		Argument arg = new Argument(this.nom+"[i1]", this.getTypeOfTab(), null);
+		String msg1 = prog.quote(arg.nom + " : ");
 		arg.lireStandard(prog, buf, indent+1, msg1);
 		Divers.ecrire(buf, "#end", indent);
 	}
 	
 	private void lireMatStandard(Programme prog, StringBuffer buf, int indent, String msg) {
-		if (msg!=null) Divers.ecrire(buf, "print " + msg + " ", indent); 
 		Divers.ecrire(buf, "for i1 in range(0," + prog.getDim(1, this) + ") : ", indent);
 		Divers.ecrire(buf, "for j1 in range(0," + prog.getDim(2, this) + ") : ", indent+1);
-		String msg1 = prog.quote("rang ") + " + str(i1) + " + prog.quote(", ") + " + str(j1) + " + prog.quote(" : ");
 		Argument arg = new Argument(this.nom+"[i1][j1]", this.getTypeOfMat(), null);
+		String msg1 = prog.quote(arg.nom + " : ");
 		arg.lireStandard(prog, buf, indent+2, msg1);
 		Divers.ecrire(buf, "#end", indent+1);
 		Divers.ecrire(buf, "#end", indent);
@@ -99,13 +105,11 @@ public class Argument extends org.javascool.proglets.plurialgo.langages.modele.A
 	private void lireTabClasseStandard(Programme prog, StringBuffer buf, int indent, String msg) {
 		Classe cl = (Classe) getClasseOfTab(prog);
 		Divers.ecrire(buf, "for ii in range(0," + prog.getDim(1, this) + ") : ", indent);
-		String msg1 = prog.quote("rang ") + " + str(ii) + " + prog.quote(" de "+this.nom+" : ");
-		Divers.ecrire(buf, "print " + msg1 + " ", indent+1); 
 		for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Variable> iter=cl.proprietes.iterator(); iter.hasNext(); ) {
 			Variable prop = (Variable) iter.next();
 			Argument arg = new Argument(this.nom+"[ii]"+"."+prop.nom, prop.type, oteDim(1));
 			if (prop.isOut()) continue;
-			msg1=prog.quote(prop.nom + " : ");
+			String msg1=prog.quote(prop.nom + " : ");
 			arg.lireStandard(prog, buf, indent+1, msg1);
 		}
 		Divers.ecrire(buf, "#end", indent);
@@ -141,39 +145,20 @@ public class Argument extends org.javascool.proglets.plurialgo.langages.modele.A
 	}
 	
 	private void ecrireSimpleStandard(Programme prog, StringBuffer buf, int indent, String msg) {
-		if (msg!=null && !(prog.quote("\\t").equals(msg))) 
-			Divers.ecrire(buf, "print " + msg + ", " + this.nom, indent); 
-		else if (msg!=null && (prog.quote("\\t").equals(msg))) 
-			Divers.ecrire(buf, "print " + msg + ", " + this.nom + ", ", indent); 
-		else if (msg==null) 
-			Divers.ecrire(buf, "print " + this.nom, indent);
+		Divers.indenter(buf, indent);
+		if (msg!=null) Divers.ecrire(buf, "print " + transformerMsg(msg) + ", " + this.nom);
+		else Divers.ecrire(buf, "print " + this.nom);
 	}
 	
 	private void ecrireTabStandard(Programme prog, StringBuffer buf, int indent, String msg) {
-		if (msg!=null) Divers.ecrire(buf, "print " + msg + " ", indent);
-		Divers.ecrire(buf, "for i1 in range(0," + prog.getDim(1, this) + ") : ", indent);
-		String msg1 = prog.quote("\\t");
-		Argument arg = new Argument(this.nom+"[i1]", this.getTypeOfTab(), null);
-		arg.ecrireStandard(prog, buf, indent+1, msg1);
-		Divers.ecrire(buf, "#end", indent);
-		Divers.ecrire(buf, "print", indent);
+		this.ecrireSimpleStandard(prog, buf, indent, msg);
 	}
 	
 	private void ecrireMatStandard(Programme prog, StringBuffer buf, int indent, String msg) {
-		if (msg!=null) Divers.ecrire(buf, "print " + msg + " ", indent);
-		Divers.ecrire(buf, "for i1 in range(0," + prog.getDim(1, this) + ") : ", indent);
-		Divers.ecrire(buf, "for j1 in range(0," + prog.getDim(2, this) + ") : ", indent+1);
-		String msg1 = prog.quote("\\t");
-		Argument arg = new Argument(this.nom+"[i1][j1]", this.getTypeOfMat(), null);
-		arg.ecrireStandard(prog, buf, indent+2, msg1);
-		Divers.ecrire(buf, "#end", indent+1);
-		Divers.ecrire(buf, "print", indent+1);
-		Divers.ecrire(buf, "#end", indent);
-		Divers.ecrire(buf, "print", indent);
+		this.ecrireSimpleStandard(prog, buf, indent, msg);
 	}
 	
 	private void ecrireClasseStandard(Programme prog, StringBuffer buf, int indent, String msg) {
-		if (msg!=null) Divers.ecrire(buf, "print " + msg + " ", indent);
 		Classe cl = (Classe) getClasse(prog);
 		for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Variable> iter=cl.proprietes.iterator(); iter.hasNext(); ) {
 			Variable prop = (Variable) iter.next();
@@ -185,20 +170,16 @@ public class Argument extends org.javascool.proglets.plurialgo.langages.modele.A
 	}
 	
 	private void ecrireTabClasseStandard(Programme prog, StringBuffer buf, int indent, String msg) {
-		if (msg!=null) Divers.ecrire(buf, "print " + msg + " ", indent);
 		Classe cl = (Classe) getClasseOfTab(prog);
 		Divers.ecrire(buf, "for ii in range(0," + prog.getDim(1, this) + ") : ", indent);
-		String msg1 = prog.quote("rang ") + " + str(ii) + " + prog.quote(" de " + this.nom + " : ");
-		Divers.ecrire(buf, "print " + msg1 + " ", indent+1); 
 		for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Variable> iter=cl.proprietes.iterator(); iter.hasNext(); ) {
 			Variable prop = (Variable) iter.next();
 			if (prop.isIn()) continue;
 			Argument arg = new Argument(this.nom+"[ii]"+"."+prop.nom, prop.type, oteDim(1));
-			msg1=prog.quote(prop.nom + " : ");
+			String msg1=prog.quote(prop.nom + " : ");
 			arg.ecrireStandard(prog, buf, indent+1, msg1);
 		}
 		Divers.ecrire(buf, "#end", indent);
-		Divers.ecrire(buf, "print ", indent);
 	}
 	
 }

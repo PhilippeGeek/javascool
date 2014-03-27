@@ -21,12 +21,13 @@ public class Variable extends org.javascool.proglets.plurialgo.langages.modele.V
 	}
 	
 	public void ecrire(Programme prog, StringBuffer buf, int indent) {
+		String MAX_TAB = prog.getMaxTab();
 		Divers.ecrire(buf,this.nom);
 		if (this.isTabSimple()) {
 			Divers.ecrire(buf, ":=[]");
 		}
 		if (this.isMatSimple()) {
-			Divers.ecrire(buf, ":=matrix(5,5)");
+			Divers.ecrire(buf, ":=matrix("+MAX_TAB+","+MAX_TAB+")");
 		}
 	}
 

@@ -1,0 +1,21 @@
+
+saisir("n : ",n); 
+pour k de 1 jusque n pas 1 faire 
+	saisir("prixUnitaire : ",prixUnitaire); 
+	saisir("quantite : ",quantite); 
+	si (quantite==1) alors
+		remise := 0;
+	sinon
+		si ( (quantite==2) ou (quantite==3) ) alors
+			remise := 0.1;
+		sinon
+			si ( (quantite==4) ou (quantite==5) ) alors
+				remise := 0.2;
+			sinon
+				remise := 0.3;
+			fsi;
+		fsi;
+	fsi;
+	prixTotal := quantite*prixUnitaire*(1-remise);
+	afficher(prixTotal); 
+fpour;

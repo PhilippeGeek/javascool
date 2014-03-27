@@ -264,8 +264,8 @@ public class PanelPrincipal extends JPanel implements ActionListener, ListSelect
 
 	public String getNomLangage() {
 		return this.langList.getSelectedValue().toString();
-	}			
-	
+	}	
+
 	// ---------------------------------------------
 	// Commandes
 	// ---------------------------------------------

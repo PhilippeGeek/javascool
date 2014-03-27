@@ -64,7 +64,7 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 	}
 	
 	public String getMaxTab() {
-		return "5";
+		return "10";
 	}
 	
 	public void postTraitement(StringBuffer buf) {

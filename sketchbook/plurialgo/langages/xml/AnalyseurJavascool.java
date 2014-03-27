@@ -45,8 +45,7 @@ public class AnalyseurJavascool implements iAnalyseur {
 			Divers.remplacer(buf, "-1+1]", "]");
 			return (Programme) org.javascool.proglets.plurialgo.langages.modele.Programme.getProgramme(buf.toString(),"xml");
 		}
-		return prog_xml;
-	}
+		return prog_xml;	}
 
 	/**
 	      Retourne le code Xml obtenu après analyse du code Javascool.
@@ -400,6 +399,7 @@ public class AnalyseurJavascool implements iAnalyseur {
 						prog_xml.variables.add(var);
 					}
 					if (droite!=null) {
+						if (droite.trim().startsWith("new ")) continue;
 						Instruction instr = new Instruction("affectation");
 						Affectation aff = new Affectation(); 
 						aff.var = var.nom;	aff.expression = droite.trim();
@@ -480,6 +480,7 @@ public class AnalyseurJavascool implements iAnalyseur {
 		buf_xml = prog_xml.getXmlBuffer();
 		Divers.remplacer(buf_xml, "<==", "<=");
 		Divers.remplacer(buf_xml, ">==", ">=");
+		Divers.remplacer(buf_xml, "!==", "!=");
 	}	
 
 	private void initOperation(String ligne, Classe cur_classe) {
@@ -838,6 +839,9 @@ public class AnalyseurJavascool implements iAnalyseur {
 		if (this.isLire(ligne)) return false;
 		if (this.isEcrire(ligne)) return false;
 		if (!trouverType(ligne).isEmpty()) return false;
+		String droite = ligne.substring(ligne.indexOf("=")+1).trim();
+		if (droite.startsWith("new ")) return false;
+		if (droite.startsWith("{")) return false;
 		return true;
 	}	
 	
@@ -883,8 +887,10 @@ public class AnalyseurJavascool implements iAnalyseur {
 		if (pile[i_pile].equals("class")) return false;
 		String type = trouverType(ligne);
 		if (type.isEmpty()) return false;
-		if (ligne.contains("={")) return true;
-		if (ligne.contains("= {")) return true;
+		if (ligne.contains("=")) {
+			String droite = ligne.substring(ligne.indexOf("=")+1).trim();
+			if (droite.startsWith("{") && droite.contains("}")) return true;
+		}
 		if (ligne.contains("{")) return false;
 		return true;
 	}	
@@ -935,8 +941,9 @@ public class AnalyseurJavascool implements iAnalyseur {
 	private boolean isPrimitive(String ligne) {
 		int i = ligne.indexOf("("); 
 		if (i<0) return false;
-		int j = ligne.lastIndexOf(")"); 
-		if (j<i) return false;
+		if (!ligne.trim().endsWith(")")) return false;
+		String nom_prim = ligne.substring(0, i).trim();
+		if (!Divers.isIdent(nom_prim)) return false;
 		return true;	// isPrimitive à tester en dernier pour eliminer si, tantque...
 	}
 

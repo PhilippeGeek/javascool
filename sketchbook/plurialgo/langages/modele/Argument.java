@@ -15,9 +15,6 @@ import org.javascool.proglets.plurialgo.divers.*;
 public class Argument extends InfoTypee {	
 	
 	// variables utilisées par BindingCastor
-	/**
-	 * Bientôt obsolète ?
-	 */
 	public ArrayList<Instruction> instructions;	// pour arguments de type fichier
 	
 	public Argument() {

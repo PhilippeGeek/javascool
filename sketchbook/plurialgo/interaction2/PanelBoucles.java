@@ -46,7 +46,7 @@ public class PanelBoucles extends JPanel implements ActionListener {
 	private JTextField miniModeField; private JCheckBox miniCheck;
 	private JTextField maxiModeField; private JCheckBox maxiCheck;
 	private JTextField chercherModeField; private JCheckBox chercherCheck;
-	private JButton vectoriserButton, bouclerButton, insererButton, effacerButton, aideButton;
+	private JButton vectoriserButton, creerButton, insererButton, effacerButton, aideButton;
 
 	public PanelBoucles (PanelInteraction pInter) {
 		super(new BorderLayout());
@@ -131,10 +131,10 @@ public class PanelBoucles extends JPanel implements ActionListener {
 		vbox.add(p);
 		// bouton
 		p = new JPanel(); 
-		bouclerButton = new JButton("Creer"); p.add(bouclerButton);
-		bouclerButton.addActionListener(this);
-		bouclerButton.setActionCommand("boucler");
-		bouclerButton.setVisible(true);
+		creerButton = new JButton("Creer"); p.add(creerButton);
+		creerButton.addActionListener(this);
+		creerButton.setActionCommand("creer");
+		creerButton.setVisible(true);
 		insererButton = new JButton("Inserer"); p.add(insererButton);
 		insererButton.addActionListener(this);
 		insererButton.setActionCommand("inserer");
@@ -168,8 +168,11 @@ public class PanelBoucles extends JPanel implements ActionListener {
 				if (this.vectoriserSelection()) return;
 				this.vectoriser();	
 			}
-			else if (e.getSource() == this.bouclerButton || ("boucler".equals(cmd))) {	
-				this.boucler();	
+			else if (e.getSource() == this.creerButton || ("creer".equals(cmd))) {	
+				this.creer();	
+			}
+			else if (e.getSource() == this.effacerButton || ("effacer".equals(cmd))) {	
+				this.effacer();	
 			}
 			else if (e.getSource() == this.insererButton || ("inserer".equals(cmd))) {	
 				this.inserer();	
@@ -256,7 +259,7 @@ public class PanelBoucles extends JPanel implements ActionListener {
 		}
 	}	
 	
-	private void boucler() {
+	private void creer() {
 		pInter.clearConsole();
 		// vectorisation
 		org.javascool.proglets.plurialgo.langages.xml.Programme prog;

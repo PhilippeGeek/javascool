@@ -3,11 +3,8 @@
 *******************************************************************************/
 package org.javascool.proglets.plurialgo.langages.xml;
 
-
-import java.io.File;
 import java.util.*;
 
-import org.javascool.proglets.plurialgo.divers.*;
 
 /**
  * Cette classe hérite de la classe homonyme du modèle.
@@ -28,141 +25,6 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 		buf_warning = progDer.buf_warning;
 	}
 
-
-	// -------------------------------------------------------
-	// importation de librairies (non finalisé pour l'instant)
-	// -------------------------------------------------------
-
-	/**
-	      Cette méthode importe des librairies xml, larp, vb ou Javascool.
-	      @param chemin répertoire de stockage des librairies
-	*/	
-	public void deplierImportation(String chemin) {
-		Programme prog;
-		if (this.nom.endsWith(".xml")) {
-			if (!chemin.endsWith(File.separator)) chemin = chemin + File.separator;
-			String nom_f = chemin + this.nom;
-			StringBuffer buf = Divers.ouvrir(nom_f);
-			if (buf!=null) {
-				prog = (Programme)org.javascool.proglets.plurialgo.langages.modele.Programme.getProgramme(buf.toString(), "xml");
-				if (prog.buf_error.length()==0) {
-					this.nom = prog.nom;
-					this.fusionnerVariables(prog);
-					this.operations = prog.operations;
-					this.instructions = prog.instructions;
-					this.programmes = prog.programmes;
-					this.classes = prog.classes;
-				}
-			}
-		}
-		else if (this.nom.endsWith(".txt") || this.nom.endsWith(".larp")) {
-			if (!chemin.endsWith(File.separator)) chemin = chemin + File.separator;
-			String nom_f = chemin + this.nom;
-			StringBuffer buf = Divers.ouvrir(nom_f);
-			if (buf!=null) {
-				String txt = buf.toString();
-				boolean ignorerLire = false;
-				boolean ignorerEcrire = false;
-				iAnalyseur analyseur = new AnalyseurLarp(txt,ignorerLire,ignorerEcrire);
-				prog = analyseur.getProgramme();
-				if (prog.buf_error.length()==0) {
-					this.nom = this.nom.substring(0, this.nom.indexOf("."));
-					this.fusionnerVariables(prog);
-					this.operations = prog.operations;
-					this.instructions = prog.instructions;
-					this.programmes = prog.programmes;
-					this.classes = prog.classes;
-				}
-			}
-		}
-		else if (this.nom.endsWith(".bas")) {
-			if (!chemin.endsWith(File.separator)) chemin = chemin + File.separator;
-			String nom_f = chemin + this.nom;
-			StringBuffer buf = Divers.ouvrir(nom_f);
-			if (buf!=null) {
-				String txt = buf.toString();
-				boolean ignorerLire = false;
-				boolean ignorerEcrire = false;
-				iAnalyseur analyseur = new AnalyseurVb(txt, ignorerLire, ignorerEcrire);
-				prog = analyseur.getProgramme();
-				if (prog.buf_error.length()==0) {
-					this.nom = this.nom.substring(0, this.nom.indexOf("."));
-					this.fusionnerVariables(prog);
-					this.operations = prog.operations;
-					this.instructions = prog.instructions;
-					this.programmes = prog.programmes;
-					this.classes = prog.classes;
-				}
-			}
-		}
-		else {
-			// la récursion
-			for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Programme> iter=this.programmes.iterator(); iter.hasNext();) {
-				prog = (Programme) iter.next();
-				prog.deplierImportation(chemin);
-			}
-		}
-	}
-
-	/**
-	      Cette méthode finalise l'importation entamée par la méthode déplierImportation.
-	*/		
-	public void replierImportation() {
-		Programme prog;
-		Programme progSeq = new Programme();
-		// la récursion
-		for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Programme> iter=this.programmes.iterator();iter.hasNext();) {
-			prog = (Programme) iter.next();
-			prog.parent = this;
-			prog.replierImportation();
-			// la remontée des opérations, des instructions...
-			this.fusionnerOperations(prog);
-			this.fusionnerClasses(prog);
-			progSeq.fusionnerInstructions(prog);
-			this.fusionnerVariables(prog);
-		}
-		progSeq.fusionnerInstructions(this);
-		this.instructions = progSeq.instructions;
-	}
-	
-	private void fusionnerOperations(Programme prog) {
-		for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Operation> iter_oper=prog.operations.iterator(); iter_oper.hasNext();) {
-			Operation oper = (Operation) iter_oper.next();
-			if (this.getOperation(oper.nom)==null) {
-				this.operations.add(oper);
-			}
-		}
-	}
-	
-	private void fusionnerClasses(Programme prog) {
-		for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Classe> iter_cl=prog.classes.iterator(); iter_cl.hasNext();) {
-			Classe cl = (Classe) iter_cl.next();
-			if (this.getClasse(cl.nom)==null) {
-				this.classes.add(cl);
-			}
-			else {
-				((Classe)this.getClasse(cl.nom)).fusionner(cl);
-			}
-		}
-	}
-	
-	private void fusionnerVariables(Programme prog) {
-		InfoTypeeList liste = new InfoTypeeList();
-		liste.addVariables(this.variables);
-		for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Variable> iter_var=prog.variables.iterator(); iter_var.hasNext();) {
-			Variable var = (Variable) iter_var.next();
-			if (liste.getInfo(var.nom)==null) {
-				this.variables.add(var);
-			}
-		}
-	}
-	
-	private void fusionnerInstructions(Programme prog) {
-		for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Instruction> iter_instr=prog.instructions.iterator(); iter_instr.hasNext();) {
-			Instruction instr = (Instruction) iter_instr.next();
-			this.instructions.add(instr);
-		}
-	}
 	
 	// ----------------------------
 	// MAX_TAB

@@ -103,6 +103,7 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 		Divers.remplacer(buf, "]", ")");
 		Divers.remplacer(buf, "'", "\"");
 		Divers.remplacer(buf, "//", "'");
+		Divers.remplacer(buf, "MAX_TAB", "10");
 		Divers.remplacerPredef(buf, "racine", "Sqr");
 	}
 	
@@ -146,7 +147,7 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 	private void addTypes(StringBuffer buf, int indent) {
 		//this.commenter(buf, "types standard utilises", indent);
 		if (avecType("TAB_") || avecType("MAT_")) {
-			Divers.ecrire(buf, "const MAX_TAB as integer = 5", indent);
+			//Divers.ecrire(buf, "const MAX_TAB as integer = 10", indent);
 		}
 	}
 	

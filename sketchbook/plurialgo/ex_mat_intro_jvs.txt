@@ -1,0 +1,20 @@
+void main() {
+	// les donnees
+	double [][] tab = { {1, -1, 10}, {3, 6, -3} }; 
+	int nbLignes; 
+	nbLignes = 2;
+	int nbColonnes; 
+	nbColonnes = 3;
+	// les autres variables
+	double total; 
+	int i;	
+	int j;	
+	// calcul et affichage du total du tableau
+	total = 0;
+	for(i=0; i<nbLignes; i=i+1) { 
+		for(j=0; j<nbColonnes; j=j+1) { 
+			total = total + tab[i][j];
+		}
+	}
+	println("Le total vaut " + total); 
+} 

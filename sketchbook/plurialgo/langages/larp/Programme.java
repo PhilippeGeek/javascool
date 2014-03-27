@@ -68,25 +68,19 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 	}
 	
 	public String getMaxTab() {
-		return "5";
+		return "10";
 	}
 	
 	public void postTraitement(StringBuffer buf) {
 		Divers.remplacer(buf, "==", "=");
 		Divers.remplacer(buf, " et ", " ET ");
-		//Divers.remplacer(buf, " ET ", "&&");
 		Divers.remplacer(buf, " ou ", " OU ");
-		//Divers.remplacer(buf, " OU ", "||");
 		Divers.remplacer(buf, "true", "1");
 		Divers.remplacer(buf, "vrai", "1");
 		Divers.remplacer(buf, "VRAI", "1");
 		Divers.remplacer(buf, "false", "0");
 		Divers.remplacer(buf, "faux", "0");
 		Divers.remplacer(buf, "FAUX", "0");
-		//Divers.remplacer(buf, "][", "][");
-		//Divers.remplacer(buf, "[", "[");
-		//Divers.remplacer(buf, "[", "[");
-		//Divers.remplacer(buf, "'", "\"");
 	}
 	
 	private void postTraitement() {

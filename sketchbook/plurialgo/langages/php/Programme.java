@@ -279,7 +279,7 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 	
 	private void addTypes(StringBuffer buf, int indent) {
 		if (avecType("TAB_") || avecType("MAT_")) {
-			Divers.ecrire(buf, "define(" + quote("MAX_TAB") + ", 5); // taille maximale des tableaux", indent);
+			Divers.ecrire(buf, "define(" + quote("MAX_TAB") + ", 10); // taille maximale des tableaux", indent);
 		}
 	}
 	
@@ -297,7 +297,7 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 		Divers.ecrire(buf1, "<body>", 0);
 		if (avecType("TAB_") || avecType("MAT_")) {
 			Divers.ecrire(buf1, "<?php", 0);
-			Divers.ecrire(buf1, "define(" + quote("MAX_TAB") + ", 5); // taille maximale des tableaux", 1);
+			Divers.ecrire(buf1, "define(" + quote("MAX_TAB") + ", 10); // taille maximale des tableaux", 1);
 			addConstruction(buf1, form, 1);
 			Divers.ecrire(buf1, "?>", 0);
 		}

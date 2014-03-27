@@ -282,6 +282,7 @@ public class AnalyseurPython implements iAnalyseur {
 				else if (this.isEcrire(ligne)) {
 					if (ignorerEcrire && (cur_oper==null)) continue;
 					Instruction instr = new Instruction("ecrire");
+					if (ligne.trim().endsWith(",")) ligne = ligne.substring(0, ligne.lastIndexOf(","));
 					int i = ligne.indexOf("print") + 6;
 					int j = ligne.length();
 					if (ligne.startsWith("print(")) {
@@ -333,23 +334,6 @@ public class AnalyseurPython implements iAnalyseur {
 						}
 					}
 					cur_oper = null;
-				}
-				else if (this.isDim(ligne)) {
-					Variable var = new Variable();
-					int i = ligne.indexOf("=");
-					if (i>0) ligne = ligne.substring(0, i);
-					var.nom = this.trouverNom(ligne);
-					trouverType(var, cur_oper, cur_constr);
-					if (var.nom.equals("MAX_TAB")) continue;
-					if (cur_oper!=null) {
-						cur_oper.variables.add(var);
-					}
-					else if (cur_constr!=null) {
-						cur_constr.variables.add(var);
-					}
-					else {
-						prog_xml.variables.add(var);
-					}
 				}
 				else if (this.isAppel(ligne)) {
 					String parametre = null;
@@ -424,6 +408,13 @@ public class AnalyseurPython implements iAnalyseur {
 		buf_xml = prog_xml.getXmlBuffer();
 		Divers.remplacer(buf_xml, "<==", "<=");
 		Divers.remplacer(buf_xml, ">==", ">=");
+		Divers.remplacer(buf_xml, "!==", "!=");
+		Divers.remplacer(buf_xml, "-1+1\"", "\"");
+		Divers.remplacer(buf_xml, "-1+1]", "]");
+		Divers.remplacer(buf_xml, "-1+1-", "-");
+		Divers.remplacer(buf_xml, "+1-1\"", "\"");
+		Divers.remplacer(buf_xml, "+1-1]", "]");
+		Divers.remplacer(buf_xml, "+1-1+", "+");
 	}	
 
 	private void initOperation(String ligne, Classe cur_classe) {
@@ -445,13 +436,6 @@ public class AnalyseurPython implements iAnalyseur {
 				}
 			}
 		}
-//		if (this.isFonct(ligne)) {
-//			Variable retour = new Variable();
-//			retour.mode = "OUT";
-//			retour.type = trouverType(ligne);
-//			retour.nom = "retour";
-//			oper.retours.add(retour);
-//		}
 		if (cur_classe==null) {
 			prog_xml.operations.add(oper);	
 			oper.parent = prog_xml;
@@ -479,14 +463,6 @@ public class AnalyseurPython implements iAnalyseur {
 			else if (this.isFinClasse(ligne)) {	
 				if (i_pile>0) i_pile--;
 				cur_class = null;
-			}
-			else if (this.isPropriete(ligne)) {
-				Variable var = new Variable();
-				int i = ligne.indexOf("=");
-				if (i>0) ligne = ligne.substring(0, i);
-				var.nom = trouverNom(ligne);
-				trouverType(var, null, null);
-				cur_class.proprietes.add(var);
 			}
 			else if (this.isSi(ligne)) {
 				i_pile++; pile[i_pile] = "si"; 	
@@ -690,6 +666,9 @@ public class AnalyseurPython implements iAnalyseur {
 		if (this.isTantque(ligne)) return false;
 		if (this.isLire(ligne)) return false;
 		if (this.isEcrire(ligne)) return false;
+		String droite = ligne.substring(ligne.indexOf("=")+1).trim();
+		if (droite.startsWith("[") && !droite.endsWith("]")) return false;
+		if (droite.startsWith("[") && droite.contains(" for ")) return false;
 		return true;
 	}	
 	
@@ -707,16 +686,6 @@ public class AnalyseurPython implements iAnalyseur {
 
 	private boolean isRetour(String ligne) {
 		if (ligne.startsWith("return ")) return true;
-		return false;
-	}	
-	
-	private boolean isDim(String ligne) {
-		if (pile[i_pile].equals("class")) return false;
-		return false;
-	}	
-	
-	private boolean isPropriete(String ligne) {
-		if (!pile[i_pile].equals("class")) return false;
 		return false;
 	}	
 	
@@ -758,8 +727,9 @@ public class AnalyseurPython implements iAnalyseur {
 	private boolean isPrimitive(String ligne) {
 		int i = ligne.indexOf("("); 
 		if (i<0) return false;
-		int j = ligne.lastIndexOf(")"); 
-		if (j<i) return false;
+		if (!ligne.trim().endsWith(")")) return false;
+		String nom_prim = ligne.substring(0, i).trim();
+		if (!Divers.isIdent(nom_prim)) return false;
 		return true;	// isPrimitive à tester en dernier pour eliminer si, tantque...
 	}
 

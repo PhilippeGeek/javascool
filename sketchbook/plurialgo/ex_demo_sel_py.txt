@@ -1,0 +1,17 @@
+
+n = input("n : ") 
+for k in range(1, n+1) :
+	prixUnitaire = input("prixUnitaire : ") 
+	quantite = input("quantite : ") 
+	if (quantite==1) : 
+		remise=0 
+	elif ( (quantite==2) or (quantite==3) ) : 
+		remise=0.1 
+	elif ( (quantite==4) or (quantite==5) ) : 
+		remise=0.2 
+	else : 
+		remise=0.3 
+	#end
+	prixTotal=quantite*prixUnitaire*(1-remise) 
+	print "prixTotal : ", prixTotal
+#end

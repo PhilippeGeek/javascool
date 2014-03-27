@@ -51,10 +51,6 @@ public class Instruction extends Noeud {
 	 * Affectation (quand le nom de l'instruction vaut "affectation").
 	 */
 	public ArrayList<Affectation> affectations;	// 0 ou 1 Affectation
-	/**
-	 * Bientôt obsolète ?
-	 */
-	public ArrayList<Instruction> instructions;	
 	
 	public Instruction() {
 		arguments = new ArrayList<Argument>();
@@ -65,7 +61,6 @@ public class Instruction extends Noeud {
 		pours = new ArrayList<Pour>();
 		tantques = new ArrayList<TantQue>();
 		affectations = new ArrayList<Affectation>();
-		instructions = new ArrayList<Instruction>();
 	}	
 	
 	public Instruction (String nom) {
@@ -376,28 +371,20 @@ public class Instruction extends Noeud {
 		if (nom.startsWith("//")) return false;
 		if (nom.contains("////")) return true;
 		int i = nom.indexOf("("); 
-		if (i<2) return false;	// au moins 1 caractère pour le nom
+		if (i<1) return false;	// au moins 1 caractère pour le nom
 		int j = nom.lastIndexOf(")"); 
 		if (j<i) return false;
+		String nom_prim = nom.substring(0, i).trim();
+		if (!Divers.isIdent(nom_prim)) return false;
 		return true;
 	}
 	
 	public String getPrimitive() {
-		int i = nom.indexOf("////");
-		if (i>0) {
-			return nom.substring(0, i).trim();
-		}
-		i = nom.lastIndexOf(")"); 
+		int i = nom.lastIndexOf(")"); 
 		return nom.substring(0, i+1).trim();
 	}
 	
-	public String getPrimitiveCommentaire() {
-		int i = nom.indexOf("////");
-		if (i>0) {
-			return nom.substring(i+4, nom.length()).trim();
-		}
-		return null;
-	}
+
 	
 	public void ecrireSql(Programme prog, StringBuffer bufInto, StringBuffer bufVal, StringBuffer bufPrep) {
 		for (Iterator<Argument> iter=arguments.iterator(); iter.hasNext();) {

@@ -46,7 +46,8 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 				Divers.ecrire(buf, var.nom + ":=[];", indent);
 			}
 			if (var.isMatSimple()) {
-				Divers.ecrire(buf, var.nom + ":=matrix(5,5);", indent);
+				String MAX_TAB = getMaxTab();
+				Divers.ecrire(buf, var.nom + ":=matrix("+MAX_TAB+","+MAX_TAB+")", indent);
 			}
 		}
 		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Instruction> iter=instructions.iterator(); iter.hasNext();) {
@@ -68,7 +69,7 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 	}
 	
 	public String getMaxTab() {
-		return "5";
+		return "10";
 	}
 	
 	public void postTraitement(StringBuffer buf) {

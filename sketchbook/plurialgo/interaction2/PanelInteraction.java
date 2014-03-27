@@ -238,7 +238,7 @@ public class PanelInteraction extends JPanel {
 		if (isLarp()) return false;	
 		if (isAlgobox()) return false;		
 		if (txt.contains(":=")) return true;		
-		if (txt.contains("saisir(")) return true;
+		if (txt.contains("saisir(") && txt.contains(";")) return true;
 		return false;
 	}	
 	

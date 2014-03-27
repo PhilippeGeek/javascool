@@ -17,17 +17,17 @@
 <h2>Introduction</h2>
 
 <p>
-Ce mécanisme très utile encapsule dans une boucle (Pour ou Tantque) le programme
+Ce mécanisme encapsule dans une boucle (Pour ou Tantque) le programme
 <b>courant</b> de l'éditeur (donc <b>attention</b> si plusieurs programmes sont ouverts) :
 </p>
 
 <ol>
 <li>
-si aucune portion de code n'est sélectionnée, c'est tout le programme principal qui est transformé
+si aucune portion de code n'est sélectionnée, c'est tout le programme principal qui est répété
 quand on clique sur le bouton <b>Transformer 1-n</b>.
 </li>
 <li>
-si une portion de code est sélectionnée, c'est elle qui est transformée.
+si une portion de code est sélectionnée, c'est uniquement elle qui est répétée.
 </li>
 </ol>
 
@@ -45,69 +45,37 @@ ou Visual Basic.
 
 <p>
 Dans le second cas, il n'y a pas de restriction sur le langage, mais
-sur l'option "vectorisation" qui sera ignorée.
-De plus, les variables
-introduites dans l'onglet Boucles ne seront pas déclarées.
+les variables introduites dans l'onglet Boucles ne seront pas déclarées
+et l'option "vectorisation" sera ignorée.
 </p>
 
 
 <h2>Exemples</h2>
 
 <p>
-Vous êtes invité à transformer
-un programme Javascool lisant une note
-(<a href="ex_note_lire_sel_jvs.txt">télécharger</a>),
-en sélectionnant ou non l'instruction de saisie.
-Les tests peuvent être effectués dans un autre langage
-en <a href="theme_traduction.html">traduisant</a> ce programme.
+Vous êtes invité à passer
+d'un programme lisant une note
+(<a href="ex_note_lire_sel_jvs.txt">avec</a> ou <a href="ex_note_lire_jvs.txt">sans</a> code sélectionné)
+à un programme lisant plusieurs notes :
 </p>
+<ul>
+<li>
+exemple 1 (<a href="ex_note_somme.boucle">télécharger</a>) : <b>somme</b> des notes.
+</li>
+<li>
+exemple 2 (<a href="ex_note_comptage.boucle">télécharger</a>) : <b>comptage</b> des notes &gt;=10.
+</li>
+<li>
+exemple 3 (<a href="ex_note_minmax.boucle">télécharger</a>) : note <b>minimale</b> et note <b>maximale</b>.
+</li>
+<li>
+exemple 4 (<a href="ex_note_rech.boucle">version 1</a>
+ou <a href="ex_note_rech_limit.boucle">version 2</a>) : <b>recherche</b> d'une note valide (entre 0 et 20).
+</li>
+</ul>
 
 <p>
-<u>Exemple 1</u> : option "somme"
-</p>
-
-<p>
-Complétez l'onglet Boucles (<a href="ex_note_somme.boucle">télécharger</a>), afin
-de calculer la somme des notes saisies (grâce au bouton <b>Transformer 1-n</b>).
-</p>
-
-<p>
-<u>Exemple 2</u> : option "comptage"
-</p>
-
-<p>
-Complétez l'onglet Boucles (<a href="ex_note_comptage.boucle">télécharger</a>), afin
-de compter le nombre d'étudiants admis.
-</p>
-
-<p>
-<u>Exemple 3</u> : options "minimum" et "maximum"
-</p>
-
-<p>
-Complétez l'onglet Boucles (<a href="ex_note_minmax.boucle">télécharger</a>), afin
-de trouver la note minimale et la note maximale.
-</p>
-
-<p>
-<u>Exemple 4</u> : option "recherche"
-</p>
-
-<p>
-Complétez l'onglet Boucles, afin
-de répéter la saisie jusqu'à obtenir une note valide
-(<a href="ex_note_rech.boucle">version 1</a>
-ou <a href="ex_note_rech_limit.boucle">version 2</a>).
-</p>
-
-<p>
-<u>Exemple 5</u> : option "vectorisation" (sans sélection de code)
-</p>
-
-<p>
-Reprenez l'exemple 1 en complétant le champ "vectorisation"
-avec la valeur <b>note</b>, afin de transformer cette variable
-en tableau à une dimension.
+Après avoir complété l'onglet "Boucles", il vous reste à cliquer sur le bouton <b>Transformer 1-n</b>.
 </p>
 
 <br/>
