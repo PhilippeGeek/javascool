@@ -82,6 +82,10 @@ public class Macros {
   }
   /** Excécute une routine à un intervalle régulier.
    * Exemple d'usage (impression de 10 messages à interval d'1 sec. puis arrêt):<pre>
+   * // À mettre au début du fichier
+   * import java.util.Timer;
+   * import java.util.TimerTask;
+   * // À mttre dans le main 
    * Timer timer = sample(1000, new TimerTask() { public void run() {
    *    if (count &lt; 10) {
    *      println("Et de "+(++count)+" !");
