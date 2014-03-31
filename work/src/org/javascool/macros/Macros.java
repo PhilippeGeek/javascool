@@ -165,6 +165,8 @@ public class Macros {
     messageDialog = new Dialog();
     messageDialog.setTitle("Java's Cool message");
     messageDialog.setMinimumSize(new Dimension(300, 100));
+    messageDialog.setMaximumSize(new Dimension(800, 600));
+    messageDialog.setPreferredSize(new Dimension(800, 600));
     messageDialog.add(p);
     messageDialog.add(new JButton("OK") {
                         {
