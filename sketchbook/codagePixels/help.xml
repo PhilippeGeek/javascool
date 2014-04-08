@@ -50,6 +50,7 @@
   <p>Voici aussi deux exemples de tracés de fractals de <l class="editor" link="JFKMandel.jvs" text="Mandelbrot"/> et de <l class="editor" link="JFKJulia.jvs" text="Julia"/></p>
   <p>Voici un exemple de programme qui <l class="editor" link="DeuxImages.jvs" text="superpose deux images"/>.</p>
   <p>Voici un bel exemple de programme sur les <l class="editor" link="OndelettesDeHarr.jvs" text="ondelettes de Harr"/>.</p>
+  <p>Voici un autre bel exemple de programme de dessin d'<l class="editor" link="un-dragon-sous-8ecailles.jvs" text="undragon sous 8 écailles"/>.</p>
 
 
 <p>Cette «proglet» est un composant logiciel ouvert dont documentation et code-source sont disponibles <l link="http://javascool.gforge.inria.fr/?page=proglets&amp;action=show&amp;id=codagePixels&amp;helpFile=api/org/javascool/proglets/codagePixels/package-summary.html" text="ici"/></p>
