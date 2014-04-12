@@ -13,6 +13,7 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.Point;
 // tracé de texte
 import java.awt.font.FontRenderContext;
 import java.awt.font.GlyphVector;
@@ -77,6 +78,11 @@ public class Functions {
   public static void paintCircle(double cx, double cy, double r, int c1, int c2, int c3) {
     getPane().add(new Ellipse2D.Double(cx - r, cy - r, 2 * r, 2 * r), new Color(c1, c2, c3), new Color(c1, c2, c3));
   }
+  /** Affiche une imagette à un endroit donné et renvoie sa position pour permettre de la déplacer. */
+  public static Point drawImage(String location, int x, int y) {
+    return getPane().add(location, x, y);
+  }
+
   /** Écrit un texte au point (x, y) avec une fonte de taille size et la couleur RGB = (c1, c2, c3). */
   public static Rectangle2D drawText(String text, double x, double y, int size, int c1, int c2, int c3) {
     FontRenderContext ctx = new FontRenderContext(null, true, true);

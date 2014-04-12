@@ -45,6 +45,7 @@ public class Functions {
    * <p>- déplacé avec la construction <tt>icon.setLocation(x, y);</tt></p>
    * <p>- rendu visible/invisible avec la construction <tt>icon.setVisible(trueOrFalse);</tt></p>
    * <p>- modifié par la construction <tt>icon.setIcon(getIcon("nouvelle-icône"));</tt></p>
+   * <p>- détruit par la construction <tt>getPane.remove(icon);</tt>
    */
   public static JLabel showIcon(String location, int x, int y, int w, int h, int p) {
     JLabel icon = new JLabel();

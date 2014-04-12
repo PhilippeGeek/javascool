@@ -14,6 +14,7 @@ import java.awt.Shape;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.awt.image.BufferedImage;
+import java.awt.Point;
 
 /** Définit une proglet qui permet de manipuler les pixels d'une image.
  *
@@ -28,6 +29,10 @@ public class Panel extends JComponent {
   private class ColorShape { Shape shape; Color foreground, background; }
   // Liste des formes géométriques
   private ArrayList<ColorShape> shapes = new ArrayList<ColorShape>();
+  // Définit une icone à afficher
+  private class TranslatedIcon { BufferedImage img; Point p; }
+  // Liste des formes géométriques
+  private ArrayList<TranslatedIcon> icons = new ArrayList<TranslatedIcon>();
   // Image à afficher en fond
   BufferedImage background = null;
 
@@ -35,6 +40,7 @@ public class Panel extends JComponent {
   public void reset(int w, int h) {
     background = null;
     setPreferredSize(new Dimension(w, h));
+    icons.clear();
     shapes.clear();
     repaint();
   }
@@ -43,6 +49,7 @@ public class Panel extends JComponent {
     try {
       background = org.javascool.tools.image.ImageUtils.loadImage(location);
       setPreferredSize(new Dimension(background.getWidth(), background.getHeight()));
+      icons.clear();
       shapes.clear();
       repaint();
     } catch(Exception e) { 
@@ -59,14 +66,31 @@ public class Panel extends JComponent {
     shapes.add(s);
     repaint();
   }
+  /** Ajoute une icone au graphique au graphique. */
+  public Point add(String image, int x, int y) {
+    TranslatedIcon i = new TranslatedIcon();
+    i.img = org.javascool.tools.image.ImageUtils.loadImage(image);
+    i.p = new Point();
+    i.p.x = x; i.p.y = y;
+    icons.add(i);
+    repaint();
+    return i.p;
+  }
   /** Routine interne de tracé, ne pas utiliser. */
   @Override
   public void paint(Graphics g) {
-    super.paint(g);
     g.setColor(Color.WHITE);
     g.fillRect(0, 0, getWidth(), getHeight());
+    super.paint(g);
     if (background != null)
       g.drawImage(background, 0, 0, this);
+    try {
+      for(TranslatedIcon i : icons) {
+	g.drawImage(i.img, i.p.x, i.p.y, null);
+      }
+    } catch(Exception e) {
+      System.err.println("Upps" + e);
+    }
     try {
       for(ColorShape s : shapes) {
 	if(s.background != null) {
