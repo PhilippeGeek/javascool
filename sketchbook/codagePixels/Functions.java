@@ -124,6 +124,7 @@ public class Functions {
    * @return Renvoie true si le pixel est dans l'image, false si il est en dehors des limites d el'image.
    */
   static public boolean setPixel(int x, int y, String color) {
+    color = color.toLowerCase();
     if(centered) {
       return getPane().set(x + width, height - y, color);
     } else {
