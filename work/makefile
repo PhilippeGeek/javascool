@@ -30,6 +30,11 @@ tst2 :
 	cd ../web ; ant build
 	ls -l ./dist
 
+clean :
+	ant clean
+	rm -f tst*.jvs
+	svn status
+
 #################################################
 
 enc :
@@ -48,7 +53,9 @@ jdoc :
 
 sos8 : # À utiliser avec la JDK 7
 	ant javascool-proglets.jar
-	rsync --rsh='ssh -C' -rl .htaccess ../work/dist/javascool-proglets.jar scm.gforge.inria.fr:/home/groups/javascool/htdocs/v4/javascool-proglets-8.jar
+	rsync --rsh='ssh -C' -rl ../work/dist/javascool-proglets.jar scm.gforge.inria.fr:/home/groups/javascool/htdocs/v4/javascool-proglets-8.jar
+	ant javascool-builder.jar
+	rsync --rsh='ssh -C' -rl ../work/dist/javascool-builder.jar scm.gforge.inria.fr:/home/groups/javascool/htdocs/v4/javascool-builder-8.jar
 
 jbl :
 	ant javascool-builder.jar ; cd ../sketchbook ; java -jar ../work/dist/javascool-builder.jar
