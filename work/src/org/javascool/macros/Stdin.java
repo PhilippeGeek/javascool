@@ -437,7 +437,8 @@ public class Stdin {
    * <p>Exemple d'usage: <pre>
 setKeyListener(new Runnable() { public void run() {
   // Ici vient le code à exécuter quand une touche est enfoncée
-  println("Ô : la touche '" + getLastKey() + "' a été détectée");
+  echo("Ô : la touche '" + getLastKey() + "' a été détectée");
+  // echo affiche le resultat dans la console sans lui passer le focus.
 }});</pre>
    * @param runnable La portion de code à appeler, ou null pour annuler l'appel à la portion de code précédent.
    */
