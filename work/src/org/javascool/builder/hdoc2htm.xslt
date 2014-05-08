@@ -31,12 +31,12 @@
       </div>
       <xsl:call-template name="div"/>
     </xsl:when>
-    <xsl:when test="@class = 'objectif'"><h2>Objectif.</h2><xsl:call-template name="div"/></xsl:when>
+    <xsl:when test="@class = 'objectif'"><h2>Objectif</h2><xsl:call-template name="div"/></xsl:when>
     <xsl:when test="@class = 'intros' or @class = 'works' or @class = 'notes'">
       <xsl:choose>
-        <xsl:when test="@class = 'intros'"><h2>Introduction.</h2></xsl:when>
-        <xsl:when test="@class = 'works'"><h2>Travail proposé.</h2></xsl:when>
-        <xsl:when test="@class = 'notes'"><h2>Remarques.</h2></xsl:when>
+        <xsl:when test="@class = 'intros'"><h2>Introduction</h2></xsl:when>
+        <xsl:when test="@class = 'works'"><h2>Travail proposé</h2></xsl:when>
+        <xsl:when test="@class = 'notes'"><h2>Remarques</h2></xsl:when>
       </xsl:choose>
       <div id="{@class}"><ol><xsl:for-each select="*"><li><xsl:call-template name="div-2"/></li></xsl:for-each></ol></div>
     </xsl:when>
