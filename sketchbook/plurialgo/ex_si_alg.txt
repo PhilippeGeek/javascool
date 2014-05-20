@@ -4,7 +4,7 @@ VARIABLES
   prixTotal EST_DU_TYPE NOMBRE
   remise EST_DU_TYPE NOMBRE
 DEBUT_ALGORITHME
-  AFFICHER "prix unitaire de l'article en euros?"
+  AFFICHER "prix unitaire en euros ?"
   LIRE prixUnitaire
   AFFICHER "quantite achetee ?"
   LIRE quantite

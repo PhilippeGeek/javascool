@@ -152,13 +152,23 @@ public class PanelHtml extends JPanel implements ActionListener, HyperlinkListen
 							System.out.println(ex);
 						}						
 					}
-					if (desc.equals("ex_note_lire_sel_jvs.txt")) {
+					if (desc.startsWith("ex_note_lire_sel") && desc.endsWith(".txt")) {
 						try {
 							JTextArea editArea = EditorWrapper.getRTextArea();
 							editArea.requestFocusInWindow();
-							int i_start = editArea.getLineStartOffset(3);
+							int lig_start = 3;
+							int lig_end = 3;
+							if (desc.endsWith("_py.txt")) {
+								lig_start = 1;
+								lig_end = 1;
+							}
+							if (desc.endsWith("_larp.txt")) {
+								lig_start = 2;
+								lig_end = 3;
+							}
+							int i_start = editArea.getLineStartOffset(lig_start);
 							editArea.setCaretPosition(i_start);
-							int i_end = editArea.getLineEndOffset(3);
+							int i_end = editArea.getLineEndOffset(lig_end);
 							editArea.select(i_start, i_end-1);
 							
 						}
@@ -175,6 +185,10 @@ public class PanelHtml extends JPanel implements ActionListener, HyperlinkListen
 							if (desc.endsWith("_py.txt")) {
 								lig_start = 5;
 								lig_end = 13;
+							}
+							if (desc.endsWith("_larp.txt")) {
+								lig_start = 9;
+								lig_end = 17;
 							}
 							if (desc.endsWith("_bas.txt")) {
 								lig_start = 13;
@@ -203,6 +217,10 @@ public class PanelHtml extends JPanel implements ActionListener, HyperlinkListen
 							if (desc.endsWith("_py.txt")) {
 								lig_start = 4;
 								lig_end = 10;
+							}
+							if (desc.endsWith("_larp.txt")) {
+								lig_start = 9;
+								lig_end = 15;
 							}
 							if (desc.endsWith("_bas.txt")) {
 								lig_start = 12;
@@ -273,50 +291,44 @@ public class PanelHtml extends JPanel implements ActionListener, HyperlinkListen
 				desc = desc.substring(0, desc.length()-7);		
 				pInter.pEdition.effacer();
 				if (desc.equals("ex_impair")) {
-					pInter.pEdition.setBoucle("tantque", "k", "1", "99", "2");
+					pInter.pEdition.setPour("k", "1", "99", "2");
 					pInter.pEdition.setSomme(true, "som:1/k");
 				}	
 				else if (desc.equals("ex_intro_nom_jvs")) {
-					pInter.pEdition.setBoucle("pour", "k", "1", "n", "1");
+					pInter.pEdition.setPour("k", "1", "n", "1");
 					pInter.pEdition.setSomme(true, "totalCommande:prixTotal");
 				}			
 				else if (desc.equals("ex_tab_bon_form")) {
-					pInter.pEdition.setBoucle("pour", "k", "1", "n", "1");
+					pInter.pEdition.setPour("k", "1", "n", "1");
 					pInter.pEdition.setSomme(true, "totalCommande:quantite[k]*prixUnitaire[k]");						
 				}		
 				else if (desc.equals("ex_tab_bon_fich") || desc.equals("ex_tab_bon_sql")) {
-					pInter.pEdition.setBoucle("pour", "k", "1", "n_lig", "1");
+					pInter.pEdition.setPour("k", "1", "n_lig", "1");
 					pInter.pEdition.setSomme(true, "totalCommande:quantite[k]*prixUnitaire[k]");						
 				}
 				else if (desc.equals("ex_intro")) {
-					pInter.pEdition.setBoucle("pour", "k", "1", "n", "1");
+					pInter.pEdition.setPour("k", "1", "n", "1");
 				}
 				else if (desc.equals("ex_note_somme")) {
-					pInter.pEdition.setBoucle("pour", "k", "1", "n", "1");
+					pInter.pEdition.setPour("k", "1", "n", "1");
 					pInter.pEdition.setSomme(true, "total:note");
 				}
 				else if (desc.equals("ex_note_comptage")) {
-					pInter.pEdition.setBoucle("pour", "k", "1", "n", "1");
-					pInter.pEdition.setCompter(true, "nbAdmis:note>=10");
+					pInter.pEdition.setPour("k", "1", "n", "1");
+					pInter.pEdition.setCompterVar(true, "nbAdmis");
+					pInter.pEdition.setCompterCondition("note",">=","10");
 				}
 				else if (desc.equals("ex_note_minmax")) {
-					pInter.pEdition.setBoucle("pour", "k", "1", "n", "1");
+					pInter.pEdition.setPour("k", "1", "n", "1");
+					//pInter.pEdition.setPourOption("tantque");
 					pInter.pEdition.setMinimum(true, "mini:note");
 					pInter.pEdition.setMaximum(true, "maxi:note");
 				}
 				else if (desc.equals("ex_note_rech")) {
-					pInter.pEdition.setBoucle("tantque", "", "", "", "");
-					pInter.pEdition.setChercher(true, "note>=0 ET note<=20");
-				}
-				else if (desc.equals("ex_note_rech_limit")) {
-					pInter.pEdition.setBoucle("tantque", "essais", "1", "3", "1");
-					pInter.pEdition.setChercher(true, "note>=0 ET note<=20");
-				}
-				else if (desc.equals("ex_note_rech_somme")) {
-					pInter.pEdition.setBoucle("tantque", "k", "1", "", "1");
-					pInter.pEdition.setSomme(true, "total:note");
-					pInter.pEdition.setChercher(true, "note<0 OU note>20");
-				}					
+					pInter.pEdition.setPour("", "", "", "");
+					pInter.pEdition.setBoucle("tantque");
+					pInter.pEdition.setBoucleCondition("note","<","0","OU","note",">","20");
+				}				
 				pInter.selectPanel(pInter.pEdition);			
 			}
 			else if (desc.endsWith(".princ")) {

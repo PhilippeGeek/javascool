@@ -1,0 +1,5 @@
+
+DEBUT
+	ECRIRE "note : "
+	LIRE note
+FIN

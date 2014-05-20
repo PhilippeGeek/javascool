@@ -22,6 +22,7 @@ import org.javascool.proglets.plurialgo.langages.modele.Operation;
 import org.javascool.proglets.plurialgo.langages.modele.Pour;
 import org.javascool.proglets.plurialgo.langages.modele.Programme;
 import org.javascool.proglets.plurialgo.langages.modele.TantQue;
+import org.javascool.proglets.plurialgo.langages.modele.Variable;
 import org.javascool.proglets.plurialgo.langages.xml.AnalyseurAlgobox;
 import org.javascool.proglets.plurialgo.langages.xml.AnalyseurJavascool;
 import org.javascool.proglets.plurialgo.langages.xml.AnalyseurLarp;
@@ -52,15 +53,17 @@ public class PanelProgrammes extends JPanel implements ActionListener, ListSelec
 	private PanelInteraction pInter;	
 	
 	private JPanel pVect;	
+	private JPanel pPour, pTq;
+	private PanelBrancheSi pCond;
 	private JList boucleList;
-	private JTextField pourVarField, pourFinField, vectModeField;
+	private JComboBox pourOptionList;
+	private JTextField pourVarField, pourFinField;
 	private JTextField pourDebutField, pourPasField;
-	private JTextField sommeModeField; private JCheckBox sommeCheck;
-	private JTextField compterModeField; private JCheckBox compterCheck;
-	private JTextField miniModeField; private JCheckBox miniCheck;
-	private JTextField maxiModeField; private JCheckBox maxiCheck;
-	private JTextField chercherModeField; private JCheckBox chercherCheck;
-	private JButton vectoriserButton, bouclerButton, insererButton;
+	private JTextField sommeVarField, sommeArgField; private JCheckBox sommeCheck;
+	private JTextField compterVarField; private PanelBrancheSi pCompterCond; private JCheckBox compterCheck;
+	private JTextField miniVarField, miniArgField; private JCheckBox miniCheck;
+	private JTextField maxiVarField, maxiArgField; private JCheckBox maxiCheck;
+	private JButton vectoriserButton, creerButton, insererButton;
 	
 	private JPanel pEdit;
 	RSyntaxTextArea editArea;	
@@ -129,97 +132,105 @@ public class PanelProgrammes extends JPanel implements ActionListener, ListSelec
 		Box vbox = Box.createVerticalBox();
 		pVect.add(vbox); 
 		vbox.add(Box.createVerticalStrut(20));
-		// titre
-		p = new JPanel(); 
-		p.add( new JLabel("Transformation 1-n") );
-		vbox.add(p);
-		vbox.add(Box.createVerticalStrut(10)); 
 		// pour
+		pPour = new JPanel();
+		pPour.add( new JLabel(" : ") );
+		pourVarField = new JTextField(4);
+		pourVarField.setText("k");
+		pPour.add(pourVarField);
+		pPour.add( new JLabel(" de ") );
+		pourDebutField = new JTextField(2);
+		pourDebutField.setText("1");
+		pPour.add(pourDebutField);
+		pPour.add( new JLabel(" à ") );
+		pourFinField = new JTextField(6);
+		pourFinField.setText("n");
+		pPour.add(pourFinField);
+		pPour.add( new JLabel(" pas ") );
+		pourPasField = new JTextField(2);
+		pourPasField.setText("1");
+		pPour.add(pourPasField);
+		String [] choix_pour ={"...","tantque","jusque"};
+		pourOptionList = new JComboBox(choix_pour);
+		pourOptionList.setSelectedIndex(0);
+		pourOptionList.addActionListener(this);
+		pPour.add(new JScrollPane(pourOptionList));
+		// tantque
+		pTq = new JPanel();
+		pTq.add( new JLabel(" : ") );
+		pCond = new PanelBrancheSi();
+		pCond.masquerSi();
+		pTq.add(pCond);
+		// boucle
 		p = new JPanel(); 
 		boucleList = new JList();
-		String [] choix_boucle ={"pour","tantque"};
+		String [] choix_boucle ={"pour","tantque","jusque"};
 		boucleList.setListData(choix_boucle); 
 		boucleList.setSelectedIndex(0);
 		p.add(boucleList);
-		p.add( new JLabel(" : ") );
-		pourVarField = new JTextField(4);
-		pourVarField.setText("k");
-		p.add(pourVarField);
-		//p.add( new JLabel(" de 1 à ") );
-		p.add( new JLabel(" de ") );
-		pourDebutField = new JTextField(2);
-		pourDebutField.setText("1");
-		p.add(pourDebutField);
-		p.add( new JLabel(" à ") );
-		pourFinField = new JTextField(6);
-		pourFinField.setText("n");
-		p.add(pourFinField);
-		p.add( new JLabel(" pas ") );
-		pourPasField = new JTextField(2);
-		pourPasField.setText("1");
-		p.add(pourPasField);
+		boucleList.addListSelectionListener(this);
+		Box boxPourTq = Box.createVerticalBox();
+		boxPourTq.add(pPour);
+		boxPourTq.add(pTq); pTq.setVisible(false);
+		p.add(boxPourTq);
 		vbox.add(p);
-		// sommation
-		p = new JPanel(); 
-		sommeCheck = new JCheckBox(); p.add(sommeCheck);
-		p.add( new JLabel("sommation : ") );
-		sommeModeField = new JTextField(15);
-		sommeModeField.setText("somme:increment");
-		p.add(sommeModeField);
-		vbox.add(p);
-		// comptage
-		p = new JPanel(); 
-		compterCheck = new JCheckBox();	p.add(compterCheck);
-		p.add( new JLabel("comptage : ") );
-		compterModeField = new JTextField(20);
-		compterModeField.setText("effectif:condition");
-		p.add(compterModeField);
-		vbox.add(p);
-		// minimum
-		p = new JPanel(); 
-		miniCheck = new JCheckBox(); p.add(miniCheck);
-		p.add( new JLabel("minimum : ") );
-		miniModeField = new JTextField(15);
-		miniModeField.setText("mini:expression");
-		p.add(miniModeField);
-		vbox.add(p);
-		// maximum
-		p = new JPanel(); 
-		maxiCheck = new JCheckBox(); p.add(maxiCheck);
-		p.add( new JLabel("maximum : ") );
-		maxiModeField = new JTextField(15);
-		maxiModeField.setText("maxi:expression");
-		p.add(maxiModeField);
-		vbox.add(p);
-		// chercher
-		p = new JPanel(); 
-		chercherCheck = new JCheckBox(); p.add(chercherCheck);
-		p.add( new JLabel("chercher (un) : ") );
-		chercherModeField = new JTextField(15);
-		chercherModeField.setText("condition");
-		p.add(chercherModeField);
-		vbox.add(p);
-		// bouton
+		// boutons
+		vbox.add(Box.createVerticalStrut(20));
 		p = new JPanel(); 
 		vectoriserButton = new JButton("Transformer (1-n)"); p.add(vectoriserButton);
 		vectoriserButton.addActionListener(this);
 		vectoriserButton.setActionCommand("vectoriser");
 		vectoriserButton.setVisible(true);
-		bouclerButton = new JButton("Creer"); p.add(bouclerButton);
-		bouclerButton.addActionListener(this);
-		bouclerButton.setActionCommand("boucler");
-		bouclerButton.setVisible(true);
+		creerButton = new JButton("Creer"); p.add(creerButton);
+		creerButton.addActionListener(this);
+		creerButton.setActionCommand("boucler");
+		creerButton.setVisible(true);
 		insererButton = new JButton("Inserer"); p.add(insererButton);
 		insererButton.addActionListener(this);
 		insererButton.setActionCommand("inserer");
 		insererButton.setVisible(true);
 		vbox.add(p);
-		// ajout de dimension
+		vbox.add(Box.createVerticalStrut(20));
+		// sommation
 		p = new JPanel(); 
-		p.add( new JLabel("vectorisation : ") );
-		vectModeField = new JTextField(15);
-		vectModeField.setText("");
-		p.add(vectModeField);
+		sommeCheck = new JCheckBox(); p.add(sommeCheck);
+		p.add( new JLabel("somme de ") );
+		sommeArgField = new JTextField(10);	// sommeArgField.setText("increment");
+		p.add(sommeArgField);
+		p.add( new JLabel(" ---> ") );
+		sommeVarField = new JTextField(6); sommeVarField.setText("som");
+		p.add(sommeVarField);
+		vbox.add(p);
+		// minimum
+		p = new JPanel(); 
+		miniCheck = new JCheckBox(); p.add(miniCheck);
+		p.add( new JLabel("minimum de ") );
+		miniArgField = new JTextField(10);	// miniArgField.setText("expression");
+		p.add(miniArgField);
+		p.add( new JLabel(" ---> ") );
+		miniVarField = new JTextField(6); miniVarField.setText("mini");
+		p.add(miniVarField);
+		vbox.add(p);
+		// maximum
+		p = new JPanel(); 
+		maxiCheck = new JCheckBox(); p.add(maxiCheck);
+		p.add( new JLabel("maximum de ") );
+		maxiArgField = new JTextField(10);	// maxiArgField.setText("expression");
+		p.add(maxiArgField);
+		p.add( new JLabel(" ---> ") );
+		maxiVarField = new JTextField(6); maxiVarField.setText("maxi");
+		p.add(maxiVarField);
+		vbox.add(p);
+		// comptage
+		p = new JPanel(); 
+		compterCheck = new JCheckBox();	p.add(compterCheck);
+		p.add( new JLabel("comptage de ") );
+		pCompterCond = new PanelBrancheSi();
+		pCompterCond.masquerSi();
+		p.add(pCompterCond);
+		p.add( new JLabel(" ---> ") );
+		compterVarField = new JTextField(6); compterVarField.setText("effectif");
+		p.add(compterVarField);
 		vbox.add(p);
 	}
 		
@@ -230,8 +241,8 @@ public class PanelProgrammes extends JPanel implements ActionListener, ListSelec
 				if (this.vectoriserSelection()) return;
 				this.vectoriser();	
 			}
-			else if (e.getSource() == this.bouclerButton || ("boucler".equals(cmd))) {	
-				this.boucler();	
+			else if (e.getSource() == this.creerButton || ("boucler".equals(cmd))) {	
+				this.creer();	
 			}
 			else if (e.getSource() == this.insererButton || ("inserer".equals(cmd))) {	
 				this.inserer();	
@@ -252,6 +263,15 @@ public class PanelProgrammes extends JPanel implements ActionListener, ListSelec
 			else if ("tantque".equals(cmd)) {
 				this.addTantQue();	
 			}
+			// visibilite panel pTq
+			else if (e.getSource()==pourOptionList) {
+				if (pourOptionList.getSelectedIndex()==0) {	// pour standard
+					pTq.setVisible(false);
+				}
+				else  {	// pour_tantque ou pour_jusque
+					pTq.setVisible(true);
+				}
+			}
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
@@ -261,6 +281,23 @@ public class PanelProgrammes extends JPanel implements ActionListener, ListSelec
 		try {
 			if (e.getSource()==this.fichList) {
 				this.updateEditeur();
+			}
+			else if (e.getSource()==boucleList) {
+				if (boucleList.getSelectedIndex()==0) {	// pour
+					pPour.setVisible(true);
+					if (pourOptionList.getSelectedIndex()>0) {	
+						pTq.setVisible(true);
+					}
+					else {
+						pTq.setVisible(false);
+					}
+				}
+				else if (boucleList.getSelectedIndex()==1) {	// tantque
+					pPour.setVisible(false); pTq.setVisible(true);
+				}
+				else if (boucleList.getSelectedIndex()==2) {	// jusque
+					pPour.setVisible(false); pTq.setVisible(true);
+				}
 			}
 		} catch (Exception e1) {
 			e1.printStackTrace();
@@ -480,46 +517,88 @@ public class PanelProgrammes extends JPanel implements ActionListener, ListSelec
 		// vectorisation
 		pInter.messageWarning(analyseur.getProgramme());
 		org.javascool.proglets.plurialgo.langages.xml.Programme prog = analyseur.getProgramme();
-		vectoriser(prog);
+		vectoriser(prog, true);
 		ProgrammeVectorise progVect = new ProgrammeVectorise(prog);
 		// ajout du resultat dans les onglets Complements et Resultats
 		pInter.add_xml(new org.javascool.proglets.plurialgo.langages.xml.Programme(progVect));
 		pInter.traduireXml();
 	}
 	
-	private void vectoriser(org.javascool.proglets.plurialgo.langages.xml.Programme prog) {
-		prog.options.add( new Argument("vectorisation", null, vectModeField.getText()) );
-		prog.options.add( new Argument("pour_var", null, pourVarField.getText()) );
-		prog.options.add( new Argument("pour_fin", null, pourFinField.getText()) );
-		prog.options.add( new Argument("pour_debut", null, pourDebutField.getText()) );
-		prog.options.add( new Argument("pour_pas", null, pourPasField.getText()) );
-		if ("tantque".equals(boucleList.getSelectedValue())) {
-			prog.options.add( new Argument("tantque", null, "tantque") );
+	private void vectoriser(org.javascool.proglets.plurialgo.langages.xml.Programme prog, boolean avecVectorisation) {
+		// tantque ou jusque
+		if ( (boucleList.getSelectedIndex()==1) || ( (boucleList.getSelectedIndex()==0) && (pourOptionList.getSelectedIndex()==1) ) ) {
+			prog.options.add( new Argument("tantque", null, pCond.getCondition().trim()) );
 		}
+		if ( (boucleList.getSelectedIndex()==2) || ( (boucleList.getSelectedIndex()==0) && (pourOptionList.getSelectedIndex()==2) ) ) {
+			prog.options.add( new Argument("recherche", null, pCond.getCondition().trim()) );
+		}
+		// les options
 		if (sommeCheck.isSelected()) {
-			prog.options.add( new Argument("sommation", null, sommeModeField.getText()) );
+			prog.options.add( new Argument("sommation", null, sommeVarField.getText()+":"+sommeArgField.getText()) );
 		}
 		if (compterCheck.isSelected()) {
-			prog.options.add( new Argument("comptage", null, compterModeField.getText()) );
+			prog.options.add( new Argument("comptage", null, compterVarField.getText()+":"+pCompterCond.getCondition().trim()) );
 		}
 		if (miniCheck.isSelected()) {
-			prog.options.add( new Argument("minimum", null, miniModeField.getText()) );
+			prog.options.add( new Argument("minimum", null, miniVarField.getText()+":"+miniArgField.getText()) );
 		}
 		if (maxiCheck.isSelected()) {
-			prog.options.add( new Argument("maximum", null, maxiModeField.getText()) );
+			prog.options.add( new Argument("maximum", null, maxiVarField.getText()+":"+maxiArgField.getText()) );
 		}
-		if (chercherCheck.isSelected()) {
-			prog.options.add( new Argument("recherche", null, chercherModeField.getText()) );
+		// pour
+		if (boucleList.getSelectedIndex()==0) {
+			prog.options.add( new Argument("pour_var", null, pourVarField.getText()) );
+			prog.options.add( new Argument("pour_fin", null, pourFinField.getText()) );
+			prog.options.add( new Argument("pour_debut", null, pourDebutField.getText()) );
+			prog.options.add( new Argument("pour_pas", null, pourPasField.getText()) );		
 		}
+		else {
+			prog.options.add( new Argument("pour_var", null, "") );
+			prog.options.add( new Argument("pour_fin", null, "") );
+			prog.options.add( new Argument("pour_debut", null, "") );
+			prog.options.add( new Argument("pour_pas", null, "") );	
+		}
+		// vectorisation
+		String vect = "";
+		if (avecVectorisation && !pourVarField.getText().trim().isEmpty()) {
+			for (Iterator<Variable> iter=prog.variables.iterator(); iter.hasNext();) {
+				Variable var = iter.next();
+				if (var.nom.equals(pourVarField.getText().trim())) continue;
+				if (var.nom.equals("i")) continue;
+				if (var.nom.equals("i1")) continue;
+				if (var.nom.equals("j")) continue;
+				if (var.nom.equals("j1")) continue;
+				if (var.nom.equals("k")) continue;
+				if (var.isSimple()) {
+					vect = vect + " " + var.nom;
+				}
+			}
+			vect = vect.trim();
+			if (!vect.isEmpty()) {
+				String message = "2 options sont applicables au programme principal : ";
+				message = message + "\n ---- sans introduction de tableaux : cliquez sur Annuler";
+				message = message + "\n ---- avec introduction de tableaux : ";
+				message = message + "\n        - indiquez les variables concernees";
+				message = message + "\n        - cliquez sur OK";
+				String reponse = JOptionPane.showInputDialog(message, vect);
+				if (reponse==null) {
+					vect = "";
+				}
+				else {
+					vect = reponse.trim();
+				}
+			}
+		}
+		prog.options.add( new Argument("vectorisation", null, vect) );
 	}	
 	
-	private void boucler() {
+	private void creer() {
 		pInter.clearConsole();
 		// vectorisation
 		org.javascool.proglets.plurialgo.langages.xml.Programme prog;
 		prog = new org.javascool.proglets.plurialgo.langages.xml.Programme();
 		prog.nom = pInter.pPrincipal.getNomAlgo();
-		vectoriser(prog);
+		vectoriser(prog, false);
 		ProgrammeVectorise progVect = new ProgrammeVectorise(prog);
 		// ajout du resultat dans les onglets Complements et Resultats
 		pInter.add_xml(new org.javascool.proglets.plurialgo.langages.xml.Programme(progVect));
@@ -532,7 +611,7 @@ public class PanelProgrammes extends JPanel implements ActionListener, ListSelec
 		org.javascool.proglets.plurialgo.langages.xml.Programme prog_xml;
 		prog_xml = new org.javascool.proglets.plurialgo.langages.xml.Programme();
 		prog_xml.nom = pInter.pPrincipal.getNomAlgo();
-		vectoriser(prog_xml);
+		vectoriser(prog_xml, false);
 		ProgrammeVectorise progVect = new ProgrammeVectorise(prog_xml);
 		// conversion du programme en Xml
 		prog_xml = new org.javascool.proglets.plurialgo.langages.xml.Programme(progVect);
@@ -583,7 +662,7 @@ public class PanelProgrammes extends JPanel implements ActionListener, ListSelec
 		org.javascool.proglets.plurialgo.langages.xml.Programme prog_xml;
 		prog_xml = new org.javascool.proglets.plurialgo.langages.xml.Programme();
 		prog_xml.nom = pInter.pPrincipal.getNomAlgo();
-		vectoriser(prog_xml);
+		vectoriser(prog_xml, false);
 		ProgrammeVectorise progVect = new ProgrammeVectorise(prog_xml);
 		// ajout du commentaire transformer1n dans le Pour le programme vectorisé
 		for (Iterator<Instruction> iter=progVect.instructions.iterator(); iter.hasNext();) {
@@ -724,7 +803,7 @@ public class PanelProgrammes extends JPanel implements ActionListener, ListSelec
 		// ajout du resultat dans les onglets Complements et Resultats
 		org.javascool.proglets.plurialgo.langages.xml.Programme prog_xml;
 		prog_xml = new org.javascool.proglets.plurialgo.langages.xml.Programme(progDer);
-		pInter.pPrincipal.zoneListe(prog_xml);
+		if (inter.avecSaisieFormulaire()) pInter.pPrincipal.zoneListe(prog_xml);
 		if (analyseur.getProgramme().operations.size()==0) pInter.pPrincipal.renommerOperations(prog_xml);
 		pInter.add_xml(prog_xml);
 		pInter.pPrincipal.algoField.setText(progDer.nom);
@@ -800,9 +879,10 @@ public class PanelProgrammes extends JPanel implements ActionListener, ListSelec
 			Operation oper = iter.next();
 			oper.ecrire(prog, buf_oper, 0);
 		}
-		Divers.remplacer(buf_oper, "// reformulationOperation", "reformulationOperation");
-		Divers.remplacer(buf_oper, "# reformulationOperation", "reformulationOperation");
-		Divers.remplacer(buf_oper, "\t"+"reformulationOperation", txt_select);
+		int i_reformu = buf_oper.indexOf("reformulationOperation");
+		int i_tab = buf_oper.substring(0, i_reformu).lastIndexOf("\t");
+		buf_oper.delete(i_tab, i_reformu + "reformulationOperation".length());
+		buf_oper.insert(i_tab, txt_select);
 		StringBuffer buf_appel = new StringBuffer();
 		for (Iterator<Instruction> iter=prog.instructions.iterator(); iter.hasNext();) {
 			Instruction instr = iter.next();

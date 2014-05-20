@@ -1,5 +1,5 @@
 
-prixUnitaire = input("Quel est le prix unitaire de l'article en euros ?") 
+prixUnitaire = input("Quel est le prix unitaire en euros ?") 
 quantite = input("Quelle est la quantite achetee ?")
 prixTotal=quantite * prixUnitaire 
 if (quantite == 1) : 

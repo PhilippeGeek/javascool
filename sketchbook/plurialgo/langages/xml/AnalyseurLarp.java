@@ -20,6 +20,7 @@ public class AnalyseurLarp implements iAnalyseur {
 	private Programme prog_xml;
 	private StringBuffer buf_larp;
 	private StringBuffer buf_xml;
+	private String module_aux = "calculer";
 
 	/**
 	      Transforme un code Larp en un objet de classe Programme.
@@ -69,7 +70,8 @@ public class AnalyseurLarp implements iAnalyseur {
 		buf_larp.append("\n");
 		buf_larp.append(txt);
 		buf_larp.append("\n");
-		Divers.remplacer(buf_larp, "\"", "'");
+		// Divers.remplacer(buf_larp, "'", " ");  // dangereux car effets de bord
+		Divers.remplacer(buf_larp,"\"", "'");
 		StringTokenizer tok = new StringTokenizer(buf_larp.toString()," \t\n\r\\(),",true);
 		buf_larp = new StringBuffer();
 		boolean comment = false;
@@ -88,6 +90,7 @@ public class AnalyseurLarp implements iAnalyseur {
 				continue;
 			}
 			if (comment) {
+				if (Divers.isIdent(mot)) module_aux = mot;
 				continue;
 			}
 			String mot_maj = mot.toUpperCase();
@@ -149,6 +152,9 @@ public class AnalyseurLarp implements iAnalyseur {
 				buf_larp.append("EXECUTER"); continue;
 			}
 			if (mot_maj.equals("ENTRER")) {
+				if (buf_larp.toString().endsWith("\n")) {
+					buf_larp.append(module_aux + " ");
+				}
 				buf_larp.append(mot_maj); continue;
 			}
 			if (mot_maj.equals("RETOURNER")) {
@@ -328,7 +334,6 @@ public class AnalyseurLarp implements iAnalyseur {
 					while(tok1.hasMoreTokens()) {
 						String parametre = tok1.nextToken();
 						if (parametre==null) continue;
-						if (parametre.contains("\"")) continue;
 						if (parametre.contains("'")) continue;
 						Argument arg = new Argument();
 						arg.nom = parametre.trim();	
@@ -432,6 +437,7 @@ public class AnalyseurLarp implements iAnalyseur {
 		buf_xml = prog_xml.getXmlBuffer();
 		Divers.remplacer(buf_xml, "<==", "<=");
 		Divers.remplacer(buf_xml, ">==", ">=");
+		Divers.remplacer(buf_xml, "!==", "!=");
 	}
 
 	private void initOperation() {
@@ -497,7 +503,7 @@ public class AnalyseurLarp implements iAnalyseur {
 	}
 
 	private String trouverNom(String ligne) {
-		if (ligne.startsWith("ENTRER")) return "calculer";
+		if (ligne.startsWith("ENTRER")) return module_aux;
 		StringTokenizer tok = new StringTokenizer(ligne," (",true);
 		while(tok.hasMoreTokens()) {
 			String mot = tok.nextToken();	
@@ -612,7 +618,7 @@ public class AnalyseurLarp implements iAnalyseur {
 	}	
 	
 	private boolean isOper(String ligne) {
-		if (!ligne.contains("ENTRER")) return false;
+		if (!ligne.contains("ENTRER ")) return false;
 		return true;
 	}
 	

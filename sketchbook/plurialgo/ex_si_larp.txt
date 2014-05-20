@@ -1,6 +1,6 @@
 DEBUT
 	\\ saisie des entrees
-	ECRIRE "Quel est le prix unitaire de l'article en euros ?"
+	ECRIRE "Quel est le prix unitaire en euros ?"
 	LIRE prixUnitaire
 	ECRIRE "Quelle est la quantite achetee ?"
 	LIRE quantite

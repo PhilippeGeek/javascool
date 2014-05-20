@@ -109,7 +109,8 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 		Divers.ecrire(buf, "</head>", indent-1);
 		Divers.ecrire(buf, "<body>", indent-1);
 		Divers.indenter(buf, indent);
-		Divers.ecrire(buf, "<script language='javascript'> main(); </script>");
+		//Divers.ecrire(buf, "<script language='javascript'> main(); </script>");
+		Divers.ecrire(buf, "<a href='javascript:main()'>executer</a>");
 		Divers.ecrire(buf, "</body>", indent-1);
 		Divers.ecrire(buf, "</html>", indent-1);
 	}

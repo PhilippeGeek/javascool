@@ -19,7 +19,7 @@ public class PanelBrancheSi extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
 
 	static String[] niv_oper = { ")", "==", "!=", "<=", ">=", "<", ">" };
-	static String[] niv_alors = { "alors", "ET", "OU" };
+	static String[] niv_alors = { "...", "ET", "OU" };
 	static String[] niv_si = { "si", "--" };
 	static int var_taille = 8;
 	static int expr_taille = 8;
@@ -182,6 +182,14 @@ public class PanelBrancheSi extends JPanel implements ActionListener {
 	
 	public int getNiveau() {
 		return siList.getSelectedIndex();
+	}
+	
+	// ---------------------------------------------
+	// Pour l'onglet Boucles
+	// ---------------------------------------------
+	
+	public void masquerSi() {
+		siList.setVisible(false);
 	}
 
 }

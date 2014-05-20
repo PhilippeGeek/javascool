@@ -6,7 +6,7 @@ void main() {
 	double prixTotal; 
 	double remise;
 	// saisie des entrees
-	prixUnitaire = readDouble("Quel est le prix unitaire de l'article en euros ?"); 
+	prixUnitaire = readDouble("Quel est le prix unitaire en euros ?"); 
 	quantite = readInt("Quelle est la quantite achetee ?"); 
 	// calcul du prix total
 	prixTotal = quantite * prixUnitaire;

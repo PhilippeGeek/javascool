@@ -261,18 +261,22 @@ public class PanelPrincipal extends JPanel implements ActionListener, ListSelect
 		org.javascool.proglets.plurialgo.langages.xml.Programme prog_xml;
 		prog_xml = new org.javascool.proglets.plurialgo.langages.xml.Programme(new ProgrammeNouveau(inter));
 		renommerOperations(prog_xml);
-		zoneListe(prog_xml);
+		if (inter.avecSaisieFormulaire()) zoneListe(prog_xml);
 		pInter.add_xml(prog_xml);
 		pInter.traduireXml();
 	}	
 	
 	void zoneListe(org.javascool.proglets.plurialgo.langages.xml.Programme prog_xml) {
 		Instruction instr = null;
+		boolean trouveFormulaire = false;
 		for (Iterator<Instruction> iter=prog_xml.instructions.iterator(); iter.hasNext();) {
 			instr = iter.next();
-			if (instr.isLectureFormulaire()) break;
+			if (instr.isLectureFormulaire()) {
+				trouveFormulaire = true;
+				break;
+			}
 		}		
-		if (instr==null) return;
+		if (!trouveFormulaire) return;	
 		for (Iterator<Argument> iter=instr.arguments.iterator(); iter.hasNext();) {
 			Argument arg = iter.next();
 			if (arg.isTexte()) {
@@ -335,7 +339,27 @@ public class PanelPrincipal extends JPanel implements ActionListener, ListSelect
 			for (Iterator<Instruction> iter=prog.instructions.iterator(); iter.hasNext();) {
 				Instruction instr = iter.next();
 				if (instr.isCommentaire()) continue;
+				if (instr.isEcriture()) {
+					boolean isExpression = false;
+					String expression = "";
+					for (Iterator<Argument> iter_arg=instr.arguments.iterator(); iter_arg.hasNext();) {
+						Argument arg = iter_arg.next();
+						if (!Divers.isIdent(arg.nom))  isExpression = true;
+						expression = expression + " " + arg.nom;
+					}
+					if (isExpression) {
+						Argument arg_expr = null;
+						for (Iterator<Argument> iter_arg=instr.arguments.iterator(); iter_arg.hasNext();) {
+							Argument arg = iter_arg.next();
+							arg.nom = expression.trim();
+							arg.type = "EXPR";
+							arg_expr = arg;
+						}
+						instr.arguments.clear(); instr.arguments.add(arg_expr);
+					}
+				}
 				instr.ecrire(prog, buf, indent);
+				prog.postTraitement(buf);
 			}		
 		}
 		if (prog.variables.size()>0 && buf.length()==0) {	// ajout de variables

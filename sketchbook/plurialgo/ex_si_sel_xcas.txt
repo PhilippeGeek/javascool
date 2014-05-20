@@ -1,5 +1,5 @@
 
-saisir("Quel est le prix unitaire de l'article en euros ?", prixUnitaire); 
+saisir("Quel est le prix unitaire en euros ?", prixUnitaire); 
 saisir("Quelle est la quantite achetee ?", quantite); 
 prixTotal := quantite * prixUnitaire;
 si (quantite == 1) alors

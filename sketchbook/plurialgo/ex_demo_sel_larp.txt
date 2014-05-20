@@ -1,4 +1,4 @@
-\\ Module principal
+
 DEBUT
 	ECRIRE "n : "
 	LIRE n
