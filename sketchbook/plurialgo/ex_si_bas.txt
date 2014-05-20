@@ -7,7 +7,7 @@ sub main()
 	Dim prixTotal as double
 	Dim remise as double
 	' saisie des entrees
-	prixUnitaire = InputBox("Quel est le prix unitaire de l'article en euros ?") 
+	prixUnitaire = InputBox("Quel est le prix unitaire en euros ?") 
 	quantite = InputBox("Quelle est la quantite achetee ?") 
 	' calcul du prix total
 	prixTotal = quantite * prixUnitaire 

@@ -11,7 +11,7 @@ def calculer_prixTotal(prixUnitaire, quantite) :
 	return prixTotal
 #end
 
-prixUnitaire = input("Quel est le prix unitaire de l'article en euros ?") 
+prixUnitaire = input("Quel est le prix unitaire en euros ?") 
 quantite = input("Quelle est la quantite achetee ?")
 prixTotal=calculer_prixTotal(prixUnitaire, quantite) 
 print "Le prix total vaut ", prixTotal, " euros"

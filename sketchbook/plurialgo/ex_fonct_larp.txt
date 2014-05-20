@@ -1,0 +1,23 @@
+
+\\ Module principal
+DEBUT
+	ECRIRE "quantite : "
+	LIRE quantite
+	ECRIRE "prixUnitaire : "
+	LIRE prixUnitaire
+	prixTotal = calculer_prixTotal(prixUnitaire, quantite)
+	ECRIRE "prixTotal : ", prixTotal
+FIN
+
+\\ Module auxiliaire calculer_prixTotal
+ENTRER prixUnitaire, quantite
+	prixTotal = quantite * prixUnitaire
+	SI (quantite = 1) ALORS
+		remise = 0
+	SINON SI (quantite <= 3) ALORS
+		remise = 0.1
+	SINON
+		remise = 0.2
+	FINSI
+	prixTotal = prixTotal - remise * prixTotal
+RETOURNER prixTotal

@@ -228,7 +228,7 @@ public class ProgrammeVectorise extends Programme {
 			}
 		}
 		if ((option.nom.equals("recherche")) && (mode!=null)) {
-			chercherVar = "trouve";
+			chercherVar = "stopper";
 			//if (!ii.isEmpty()) chercherVar = chercherVar + "_" + ii;
 			chercherArg = mode;
 		}
@@ -338,6 +338,13 @@ public class ProgrammeVectorise extends Programme {
 			if (chercherVar!=null) {
 				if (!tq.condition.isEmpty()) tq.condition = tq.condition + " ET ";
 				tq.condition = tq.condition + "(" + chercherVar + "==" + "FAUX" + ")";
+			}
+			String mode_tq;
+			if ((mode_tq=prog.getOptionMode("tantque"))!=null) {
+				if (!mode_tq.isEmpty()) {
+					if (!tq.condition.isEmpty()) tq.condition = tq.condition + " ET ";
+					tq.condition = tq.condition + mode_tq;	
+				}
 			}
 			if (tq.condition.contains(" ET ") ) tq.condition = "(" + tq.condition + ")";
 			instr_iter.tantques.add(tq);

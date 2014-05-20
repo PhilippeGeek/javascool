@@ -8,7 +8,7 @@ void main() {
 	double prixUnitaire; 
 	double prixTotal;
 	String nom;	
-	nom = readString("Quel est le nom de l'article ?");
+	nom = readString("Quel est le nom de l_article ?");
 	prixUnitaire = readDouble("Quel est son prix unitaire en euros ?"); 
 	quantite = readInt("Quelle est la quantite achetee ?"); 
 	prixTotal = calculer_prixTotal(prixUnitaire, quantite); 

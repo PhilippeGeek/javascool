@@ -24,18 +24,17 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 		this.commenter(buf, "Module principal", 0);
 		Divers.ecrire(buf, "DEBUT", 0);
 		this.addClasses(buf, 0);
-		this.addSousProgs(buf, 0);
 		this.addMain(buf, 1);
 		Divers.ecrire(buf, "FIN", 0);
+		this.addSousProgs(buf, 0);
 		this.postTraitement();
 	}
 	
 	private void addSousProgs(StringBuffer buf, int indent) {
 		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Operation> iter=operations.iterator(); iter.hasNext();) {
 			Operation oper = (Operation) iter.next();
-			StringBuffer buf1 = new StringBuffer();
-			this.les_fichiers.put(oper.nom+".txt", buf1);
-			oper.ecrire(this, buf1, indent);
+			Divers.ecrire(buf, "\n");
+			oper.ecrire(this, buf, indent);
 		}
 	}
 	
@@ -81,6 +80,7 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 		Divers.remplacer(buf, "false", "0");
 		Divers.remplacer(buf, "faux", "0");
 		Divers.remplacer(buf, "FAUX", "0");
+		// Divers.remplacer(buf, "'", "\"");	// dangereux car effets de bord
 	}
 	
 	private void postTraitement() {

@@ -40,8 +40,8 @@ public class PanelPrincipal extends JPanel implements ActionListener, ListSelect
 
 	static String[] niv_groupement = { "elementaire", "enregistrement", "classe" };
 	static String[] niv_calcul = { "elementaire", "procedure", "fonctions" };
-	static String[] niv_affichage = { "elementaire", "procedure", "fichier_texte", "sql", "sans" };
-	static String[] niv_saisie = { "elementaire", "procedure", "formulaire", "fichier_texte", "sql", "sans" };
+	static String[] niv_affichage = { "elementaire", "procedure", "fichier_texte", "sql" };
+	static String[] niv_saisie = { "elementaire", "procedure", "formulaire", "fichier_texte", "sql" };
 	static int types_width=10;
 	static int algo_width=10;
 	static int donnees_width=15;
@@ -274,7 +274,7 @@ public class PanelPrincipal extends JPanel implements ActionListener, ListSelect
 		Intermediaire inter = pInter.creerIntermediaire();
 		org.javascool.proglets.plurialgo.langages.xml.Programme prog_xml;
 		prog_xml = new org.javascool.proglets.plurialgo.langages.xml.Programme(new ProgrammeNouveau(inter));
-		zoneListe(prog_xml);
+		if (inter.avecSaisieFormulaire()) zoneListe(prog_xml);
 		renommerOperations(prog_xml);
 		pInter.add_xml(prog_xml);
 		pInter.traduireXml();
@@ -387,7 +387,7 @@ public class PanelPrincipal extends JPanel implements ActionListener, ListSelect
 		pInter.pPrincipal.algoField.setText(progDer.nom);
 		org.javascool.proglets.plurialgo.langages.xml.Programme prog_xml;
 		prog_xml = new org.javascool.proglets.plurialgo.langages.xml.Programme(progDer);
-		zoneListe(prog_xml);
+		if (inter.avecSaisieFormulaire()) zoneListe(prog_xml);
 		if (analyseur.getProgramme().operations.size()==0) renommerOperations(prog_xml);
 		pInter.add_xml(prog_xml);
 		pInter.traduireXml();
@@ -431,7 +431,6 @@ public class PanelPrincipal extends JPanel implements ActionListener, ListSelect
 		if (!inter.avecFonctionsCalcul() && !inter.avecProcedureCalcul()) return false;
 		String lang = pInter.pPrincipal.getNomLangage();
 		if (lang.equals("algobox") ) return false;
-		if (lang.equals("larp") ) return false;
 		if (lang.equals("php") ) return false;
 		if (lang.equals("java") ) return false;
 		if (lang.equals("javascript") ) return false;
@@ -464,9 +463,10 @@ public class PanelPrincipal extends JPanel implements ActionListener, ListSelect
 			Operation oper = iter.next();
 			oper.ecrire(prog, buf_oper, 0);
 		}
-		Divers.remplacer(buf_oper, "// reformulationOperation", "reformulationOperation");
-		Divers.remplacer(buf_oper, "# reformulationOperation", "reformulationOperation");
-		Divers.remplacer(buf_oper, "\t"+"reformulationOperation", txt_select);
+		int i_reformu = buf_oper.indexOf("reformulationOperation");
+		int i_tab = buf_oper.substring(0, i_reformu).lastIndexOf("\t");
+		buf_oper.delete(i_tab, i_reformu + "reformulationOperation".length());
+		buf_oper.insert(i_tab, txt_select);
 		StringBuffer buf_appel = new StringBuffer();
 		for (Iterator<Instruction> iter=prog.instructions.iterator(); iter.hasNext();) {
 			Instruction instr = iter.next();
@@ -501,7 +501,27 @@ public class PanelPrincipal extends JPanel implements ActionListener, ListSelect
 			for (Iterator<Instruction> iter=prog.instructions.iterator(); iter.hasNext();) {
 				Instruction instr = iter.next();
 				if (instr.isCommentaire()) continue;
+				if (instr.isEcriture()) {
+					boolean isExpression = false;
+					String expression = "";
+					for (Iterator<Argument> iter_arg=instr.arguments.iterator(); iter_arg.hasNext();) {
+						Argument arg = iter_arg.next();
+						if (!Divers.isIdent(arg.nom))  isExpression = true;
+						expression = expression + " " + arg.nom;
+					}
+					if (isExpression) {
+						Argument arg_expr = null;
+						for (Iterator<Argument> iter_arg=instr.arguments.iterator(); iter_arg.hasNext();) {
+							Argument arg = iter_arg.next();
+							arg.nom = expression.trim();
+							arg.type = "EXPR";
+							arg_expr = arg;
+						}
+						instr.arguments.clear(); instr.arguments.add(arg_expr);
+					}
+				}
 				instr.ecrire(prog, buf, indent);
+				prog.postTraitement(buf);
 			}		
 		}
 		if (prog.variables.size()>0 && buf.length()==0) {	// ajout de variables
@@ -517,11 +537,15 @@ public class PanelPrincipal extends JPanel implements ActionListener, ListSelect
 	
 	private void zoneListe(org.javascool.proglets.plurialgo.langages.xml.Programme prog_xml) {
 		Instruction instr = null;
+		boolean trouveFormulaire = false;
 		for (Iterator<Instruction> iter=prog_xml.instructions.iterator(); iter.hasNext();) {
 			instr = iter.next();
-			if (instr.isLectureFormulaire()) break;
+			if (instr.isLectureFormulaire()) {
+				trouveFormulaire = true;
+				break;
+			}
 		}		
-		if (instr==null) return;
+		if (!trouveFormulaire) return;
 		for (Iterator<Argument> iter=instr.arguments.iterator(); iter.hasNext();) {
 			Argument arg = iter.next();
 			if (arg.isTexte()) {

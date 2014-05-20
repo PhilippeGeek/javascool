@@ -90,7 +90,7 @@ public class AnalyseurPython implements iAnalyseur {
 			}
 			buf_pyt.append(ligne+"\n");
 		}
-		//Divers.remplacer(buf_pyt, "'", " ");
+		// Divers.remplacer(buf_pyt, "'", " ");	// dangereux car effets de bord
 		Divers.remplacer(buf_pyt, "\"", "'");
 		Divers.remplacer(buf_pyt, "self.", "this.");
 		Divers.remplacer(buf_pyt, "(self ,", "(");

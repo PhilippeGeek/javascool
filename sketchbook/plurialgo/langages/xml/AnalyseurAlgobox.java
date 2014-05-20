@@ -101,6 +101,7 @@ public class AnalyseurAlgobox implements iAnalyseur {
 			StringTokenizer tok = new StringTokenizer(buf_algo.toString(),"\n\r",false);
 			while(tok.hasMoreTokens()) {
 				String ligne = tok.nextToken();
+				System.out.println("ligne:"+ligne);
 				if (this.isDim(ligne)) {
 					Variable var = new Variable();
 					int i = ligne.indexOf(" EST_DU_TYPE ");
@@ -239,12 +240,12 @@ public class AnalyseurAlgobox implements iAnalyseur {
 					else if (ligne.contains("TRACER_POINT")) {
 						prim = "setPoint";
 					}
-					Instruction instr = new Instruction(prim + ligne.substring(i, j+1) + " ////proglet algoDeMaths");
+					Instruction instr = new Instruction(prim + ligne.substring(i, j+1));
 					this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;
 				}
 				else if (this.isRepere(ligne)) {
-					int i = ligne.indexOf("repcode=\"");
-					int j = ligne.indexOf("\"",i+9);
+					int i = ligne.indexOf("repcode='");
+					int j = ligne.indexOf("'",i+9);
 					String repcode = ligne.substring(i+9, j);
 					int k;
 					k = repcode.lastIndexOf("#"); if (k<0) continue;
@@ -252,7 +253,7 @@ public class AnalyseurAlgobox implements iAnalyseur {
 					k = repcode.lastIndexOf("#"); if (k<0) continue;
 					repcode = repcode.substring(0, k);	// on ote gradX
 					repcode=Divers.remplacer(repcode, "#", ",");
-					Instruction instr = new Instruction("reset(" + repcode + ") ////proglet algoDeMaths");
+					Instruction instr = new Instruction("reset(" + repcode + ")");
 					this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;
 				}
 			}
@@ -266,9 +267,10 @@ public class AnalyseurAlgobox implements iAnalyseur {
 	}
 	
 	private void traiterOperF1(String ligne) {
+		System.out.println("traiterOper:+ligne");
 		int i,j;
-		i = ligne.indexOf("fctcode=\"");
-		j = ligne.indexOf("\"",i+9);
+		i = ligne.indexOf("fctcode='");
+		j = ligne.indexOf("'",i+9);
 		String fctcode = ligne.substring(i+9, j);
 		Operation oper = new Operation();
 		oper.nom = "F1";
@@ -287,11 +289,11 @@ public class AnalyseurAlgobox implements iAnalyseur {
 	
 	private void traiterOperF2(String ligne) {
 		int i,j;
-		i = ligne.indexOf("F2para=\"");	j = ligne.indexOf("\"",i+8);
+		i = ligne.indexOf("F2para='");	j = ligne.indexOf("'",i+8);
 		String f2para = ligne.substring(i+8, j);
-		i = ligne.indexOf("F2lignes=\""); j = ligne.indexOf("\"",i+10);
+		i = ligne.indexOf("F2lignes='"); j = ligne.indexOf("'",i+10);
 		String f2lignes = ligne.substring(i+10, j);
-		i = ligne.indexOf("F2defaut=\""); j = ligne.indexOf("\"",i+10);
+		i = ligne.indexOf("F2defaut='"); j = ligne.indexOf("'",i+10);
 		String f2defaut = ligne.substring(i+10, j);
 		Operation oper = new Operation();
 		oper.nom = "F2";
@@ -470,14 +472,9 @@ public class AnalyseurAlgobox implements iAnalyseur {
 	
 	private boolean isOperF1(String ligne) {
 		if (!ligne.contains("fonction ")) return false;
+		if (!ligne.contains("fctcode=")) return false;
 		if (ligne.contains("inactif")) return false;
-		int i = ligne.indexOf("fctcode=\"");
-		int j = ligne.indexOf("\"",i+9);
-		if (i>=0 && j>i+9) {
-			//String fctcode = ligne.substring(i+9, j);
-			return true;
-		}
-		return false;
+		return true;
 	}
 	
 	private boolean isOperF2(String ligne) {

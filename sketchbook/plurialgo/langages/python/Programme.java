@@ -101,6 +101,7 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 		Divers.remplacer(buf, "this", "self");
 		Divers.remplacer(buf, "-1+1)", ")");
 		Divers.remplacer(buf, "MAX_TAB", "10");
+		// Divers.remplacer(buf, "'", "\"");	// dangereux car effets de bord
 	}
 	
 	private void remplacerPoint(StringBuffer buf) {
