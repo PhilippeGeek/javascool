@@ -8,7 +8,7 @@ export JAVA_HOME=/usr/java/jdk1.6.0_25
 
 export PATH := $(JAVA_HOME)/bin:$(PATH)
 
-export JRE_HOME=/usr/java/jre1.7.0_07
+export JRE_HOME=/usr/java/jre1.7.0_60
 
 www :
 	cd .. ; ant web
@@ -16,11 +16,13 @@ www :
 jvs :
 	ant javascool-proglets.jar
 
-tst1 : 
+tst0 : 
 	echo $(PATH)
 	which java
 	java -version
 	echo OK
+
+tst1 :
 	ant clean
 	ant javascool-proglets.jar
 	$(JRE_HOME)/bin/java -jar dist/javascool-proglets.jar
