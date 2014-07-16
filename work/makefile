@@ -16,13 +16,10 @@ www :
 jvs :
 	ant javascool-proglets.jar
 
-tst0 : 
+tst1 : 
 	echo $(PATH)
 	which java
 	java -version
-	echo OK
-
-tst1 :
 	ant clean
 	ant javascool-proglets.jar
 	$(JRE_HOME)/bin/java -jar dist/javascool-proglets.jar
