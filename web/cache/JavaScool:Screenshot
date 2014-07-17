@@ -44,7 +44,7 @@
 </p>
 <!-- 
 NewPP limit report
-CPU time usage: 0.012 seconds
+CPU time usage: 0.008 seconds
 Real time usage: 0.009 seconds
 Preprocessor visited node count: 32/1000000
 Preprocessor generated node count: 76/1000000
@@ -54,5 +54,5 @@ Highest expansion depth: 2/40
 Expensive parser function count: 0/100
 -->
 
-<!-- Saved in parser cache with key wiki_sciencinfolycee:pcache:idhash:869-1!*!0!!fr!*!* and timestamp 20140716114256
+<!-- Saved in parser cache with key wiki_sciencinfolycee:pcache:idhash:869-1!*!0!!fr!*!* and timestamp 20140717073130
  -->
