@@ -6,6 +6,10 @@ include('includes/cache_get_contents.php');
 include('includes/wiki_get_contents.php');
 include('includes/html_get_normalized_url.php');
 include('includes/html_get_contents.php');
+if (isset($_GET['page']) && $_GET['page'] == "phpinfo.php") {
+  include('pages/phpinfo.php');
+  exit;
+ }
 if (isset($_GET['page'])) {
   if (v3_redirections($_GET['page']))
     exit;
