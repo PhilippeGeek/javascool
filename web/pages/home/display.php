@@ -18,7 +18,7 @@
                     <table class="news">
 <tr class="news-top"><td colspan="5" class="news-top"></td></tr>
 <tr class="news-center"><td class="news-left"></td><td class="news-leftborder"></td>
-  <td class="news-center"><?php echo wiki_get_contents('JavaScool:Actualité'); ?></td>
+  <td class="news-center"><?php echo wiki_get_contents('JavaScool:Actualite'); ?></td>
 <td class="news-rightborder"></td><td class="news-right"></td></tr>
 <tr class="news-bottom"><td colspan="5" class="news-bottom"></td></tr>
 <tr><td></td><td></td><td class="news-trailer"><br/>

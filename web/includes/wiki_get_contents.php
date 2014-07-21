@@ -2,7 +2,7 @@
 
 // Renvoie le texte sur http://wiki.inria.fr/sciencinfolycee avec mise en forme des liens
 function wiki_get_contents($name) {
-  $file = "./cache/".rawurlencode($name);
+  $file = "./cache/".$name;
   if (file_exists($file)) {
     $text = file_get_contents($file);
     if ($text === FALSE)

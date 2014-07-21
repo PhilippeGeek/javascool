@@ -12,4 +12,4 @@
     );
 ?>
 
-<?php echo wiki_get_contents('JavaScool:FaqDéveloppement'); ?>
+<?php echo wiki_get_contents('JavaScool:FaqDeveloppement'); ?>

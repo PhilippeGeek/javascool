@@ -15,7 +15,7 @@ On peut s'initier à la programmation de manière ludique, puisque les petits pr
 On peut donc mieux comprendre ces objets numériques à travers une démarche expérimentale concrète, qui mène à la compréhension des notions abstraites des sciences de l'information.
 Des textes de base sur ce qu'est l'information, comment sont codés les objets numériques et sur les ingrédients des algorithmes, sont référencés.
 </p><p>Parmi ces éléments, <a rel="nofollow" class="external text" href="http://web.univ-pau.fr/~raffinat/plurialgo">PluriAlgo</a>, une des proglets du parcours de formation, facilite l'écriture d'algorithmes en Javascool et dans plusieurs autres langages.
-</p><p>Ces éléments, ont été conçus par des <a class="internal" href="?page=contact&action=credits" title="JavaScool:Crédits">chercheurs et des enseignants</a> du supérieur et des lycées, et sont utilisés "pour de vrai" en classe&#160;: c'est ce qui fait leur valeur.
+</p><p>Ces éléments, ont été conçus par des <a class="internal" href="?page=contact&action=credits" title="JavaScool:Crédits" class="mw-redirect">chercheurs et des enseignants</a> du supérieur et des lycées, et sont utilisés "pour de vrai" en classe&#160;: c'est ce qui fait leur valeur.
 </p><p>Logiciels et documents sont soumis à un <a rel="nofollow" class="external text" href="/v4//index.php?page=run&amp;action=licence" class="internal">couple de licences</a> qui les rend utilisables par tous. 
 </p>
 <hr />
@@ -24,8 +24,8 @@ Et pour les curieux, avec quelqu'un de son entourage qui sait programmer (afin d
 </p>
 <!-- 
 NewPP limit report
-CPU time usage: 0.008 seconds
-Real time usage: 0.009 seconds
+CPU time usage: 0.012 seconds
+Real time usage: 0.010 seconds
 Preprocessor visited node count: 11/1000000
 Preprocessor generated node count: 52/1000000
 Post‐expand include size: 0/2097152 bytes
@@ -34,5 +34,5 @@ Highest expansion depth: 2/40
 Expensive parser function count: 0/100
 -->
 
-<!-- Saved in parser cache with key wiki_sciencinfolycee:pcache:idhash:36-1!*!0!*!*!*!* and timestamp 20140720210845
+<!-- Saved in parser cache with key wiki_sciencinfolycee:pcache:idhash:36-1!*!0!*!*!*!* and timestamp 20140721071800
  -->
