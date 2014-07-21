@@ -10,4 +10,4 @@
     );
 ?>
 
-<?php echo wiki_get_contents('JavaScool:Crédits'); ?>
+<?php echo wiki_get_contents('JavaScool:Credits'); ?>
