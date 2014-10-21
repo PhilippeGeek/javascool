@@ -25,27 +25,27 @@ public abstract class Noeud {
 	 * (Operation, Constructeur ou Programme).
 	 * @param var : la variable à ajouter
 	 */
-	public final void addVariable(Variable var) {
+	public final void addVariable(ModeleVariable var) {
 		Noeud nd = this;
-		ArrayList<Variable> vars = null;
+		ArrayList<ModeleVariable> vars = null;
 		while (nd!=null) {
-			if (nd instanceof Programme) {
-				vars = ((Programme)nd).variables;
+			if (nd instanceof ModeleProgramme) {
+				vars = ((ModeleProgramme)nd).variables;
 				break;
 			}
-			if (nd instanceof Operation) {
-				vars = ((Operation)nd).variables;
+			if (nd instanceof ModeleOperation) {
+				vars = ((ModeleOperation)nd).variables;
 				break;
 			}
-			if (nd instanceof Constructeur) {
-				vars = ((Constructeur)nd).variables;
+			if (nd instanceof ModeleConstructeur) {
+				vars = ((ModeleConstructeur)nd).variables;
 				break;
 			}
 			nd = nd.parent;
 		}
 		if (nd==null) return;
-		for(Iterator<Variable> iter=vars.iterator(); iter.hasNext(); ) {
-			Variable var1 = iter.next();
+		for(Iterator<ModeleVariable> iter=vars.iterator(); iter.hasNext(); ) {
+			ModeleVariable var1 = iter.next();
 			if (var.nom.equalsIgnoreCase(var1.nom)) return;
 		}
 		vars.add(0,var);

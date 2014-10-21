@@ -5,6 +5,7 @@ package org.javascool.proglets.plurialgo.interaction2;
 
 import java.io.File;
 
+import javax.script.*;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
@@ -13,7 +14,7 @@ import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.javascool.gui.EditorWrapper;
 import org.javascool.proglets.plurialgo.divers.Divers;
-import org.javascool.proglets.plurialgo.langages.xml.AnalyseurAlgobox;
+import org.javascool.proglets.plurialgo.langages.xml.*;
 import org.javascool.tools.FileManager;
 import org.javascool.tools.UserConfig;
 
@@ -22,7 +23,10 @@ import org.javascool.tools.UserConfig;
  * Cette classe ajoute des menus à l'éditeur Javascool
  */
 public class MenusEditeur {
-	
+
+	static ScriptEngineManager manager = null;		 
+    static ScriptEngine engine = null;
+    
 	// ---------------------------------------------
 	// Ajout des styles et des menus
 	// ---------------------------------------------
@@ -51,9 +55,9 @@ public class MenusEditeur {
 	public static void addPopupMenu(PanelInteraction pInter) {
 		final PanelInteraction inter = pInter;
 		JPopupMenu popup = EditorWrapper.getRTextArea().getPopupMenu();
+		//popup.addSeparator();
+		JMenuItem menu;
 		if (pInter.isJavascool()) {
-			popup.addSeparator();
-			JMenuItem menu;
 			menu = new JMenuItem("Compiler+"); 
 			menu.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -62,42 +66,16 @@ public class MenusEditeur {
 			});
 			popup.add(menu);
 		}
-		else if (pInter.isJavascript()) {
-			if(java.awt.Desktop.isDesktopSupported()){
-				if (java.awt.Desktop.getDesktop().isSupported(java.awt.Desktop.Action.BROWSE)) {
-					popup.addSeparator();
-					JMenuItem menu;
-					menu = new JMenuItem("Web"); 
-					menu.addActionListener(new java.awt.event.ActionListener() {
-						public void actionPerformed(java.awt.event.ActionEvent e) {
-							doJavascript(inter);
-						}
-					});
-					popup.add(menu);
-				}
-			}
-		}
-		else if (pInter.isPython()) {
-			popup.addSeparator();
-			JMenuItem menu;
-			menu = new JMenuItem("Python"); 
+		if (pInter.isJavascript()) {
+			menu = new JMenuItem("Web"); 
 			menu.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
-					doPython(inter);
+					doJavascript(inter);
 				}
 			});
-//			popup.add(menu);
-//			menu = new JMenuItem("Python (via commande DOS)"); 
-//			menu.addActionListener(new java.awt.event.ActionListener() {
-//				public void actionPerformed(java.awt.event.ActionEvent e) {
-//					doPythonCommande(inter);
-//				}
-//			});
 			popup.add(menu);
 		}
-		else if (pInter.isAlgobox()) {
-			popup.addSeparator();
-			JMenuItem menu;
+		if (pInter.isAlgobox()) {
 			menu = new JMenuItem("Algobox"); 
 			menu.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -116,6 +94,50 @@ public class MenusEditeur {
 			});
 			popup.add(menu);
 		}
+		if (pInter.isPython()) {
+			menu = new JMenuItem("Python"); 
+			menu.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					doPython(inter);
+				}
+			});
+			popup.add(menu);
+		}
+		if (pInter.isCarmetal()) {
+			menu = new JMenuItem("CarMetal"); 
+			menu.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					doCarmetal(inter);
+				}
+			});
+			popup.add(menu);
+		}
+	}
+		
+	public static void addToolBar(PanelInteraction pInter) {
+		// final PanelInteraction inter = pInter;
+		// boutons
+		/*
+		Desktop.getInstance().getToolBar().addTool("Exporter", new Runnable() {
+			public void run() {
+				exporter(inter);
+			}
+		});
+		*/
+		// menu popup
+		/*
+		JPopupMenu popup = Desktop.getInstance().getToolBar().addTool("......");
+		JMenuItem menu;
+		menu = new JMenuItem("Exporter"); 
+		menu.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				exporter(inter);
+			}
+		});
+		popup.add(menu);
+		popup.pack();
+		popup.setLocation(50, 50);
+		*/
 	}
 	
 	// ---------------------------------------------
@@ -200,52 +222,35 @@ public class MenusEditeur {
 	// Les commandes des menus
 	// ---------------------------------------------
 	
-	public static boolean doJavascript(PanelInteraction pInter) {
+	private static boolean doBrowse(PanelInteraction pInter, String nom) {
 		String code = pInter.getText();
-		String nom = "test"+ ".html";
 		String nomComplet = saveFile(code, nom);
 		if (nomComplet==null) return false;
 		// execution
 		return browseFileDesktop(nomComplet);
 	}
-
-	static boolean doPythonCommande(PanelInteraction pInter) {
-		String code = pInter.getText();
-		String msg_fin = "Taper sur la touche ENTREE";
-		if (!code.contains(msg_fin)) {
-			code = code + "\n" + "raw_input(\"" + msg_fin + "\")" + "\n";
-		}
-		String nom = "test"+ ".py";
-		String nomComplet = saveFile(code, nom);
-		if (nomComplet==null) return false;
-		// execution
-		String OS = System.getProperty("os.name").toLowerCase();		
-		if (OS.startsWith("win")) {
-			try {
-				Runtime runtime = Runtime.getRuntime();
-				runtime.exec("cmd.exe /c start python " + nomComplet);
-				return true;
-			} catch (Exception ex) {
-				pInter.writeConsole("\n"+"exception:"+ex.getMessage()+"\n");
-				return false;
-			} 
-		}
-		else {
-			return false;
-		}
-
+	
+	private static boolean doJavascript(PanelInteraction pInter) {
+		return doBrowse(pInter, "test.html");
 	}
 	
-	public static boolean doPython(PanelInteraction pInter) {
+	private static boolean doOpen(PanelInteraction pInter, String nom) {
 		String code = pInter.getText();
-		String nom = "test"+ ".py";
 		String nomComplet = saveFile(code, nom);
 		if (nomComplet==null) return false;
 		// execution
 		return openFileDesktop(nomComplet);
 	}
 	
-	public static boolean doAlgobox(PanelInteraction pInter) {
+	private static boolean doR(PanelInteraction pInter) {
+		return doOpen(pInter, "test.R");
+	}
+	
+	private static boolean doPython(PanelInteraction pInter) {
+		return doOpen(pInter, "test.py");
+	}
+	
+	private static boolean doAlgobox(PanelInteraction pInter) {
 		String code = pInter.getText();
 		int i = code.indexOf("<?xml");
 		if (i>=0) {
@@ -262,5 +267,86 @@ public class MenusEditeur {
 		// execution
 		return openFileDesktop(nomComplet);
 	}
+
 	
+	private static void doCarmetal(PanelInteraction pInter) {
+		//if (engine==null) {
+			manager = new ScriptEngineManager();		 
+			engine = manager.getEngineByName("js");
+		//}
+	    String fonctionsJS = ""
+	    		+ "function Input(message) {\n"
+	            + "var reponse = javax.swing.JOptionPane.showInputDialog(null,message,\"\",javax.swing.JOptionPane.PLAIN_MESSAGE);\n"
+	            + "if (reponse==null) throw Error('Exit');\n"
+	            + "return reponse;\n"
+	            + "}\n"
+	    		+ "function Println(message) {\n"
+	            + "java.lang.System.out.println(message);\n"
+	            + "}\n"
+	    		+ "function Print(message) {\n"
+	            + "java.lang.System.out.print(message);\n"
+	            + "}\n"
+	            ;
+		String code = pInter.getText();
+	    try {
+	    	pInter.clearConsole(); pInter.writeConsole("");
+	    	engine.eval(code+fonctionsJS);
+	    	/*
+	    	Bindings map = engine.getBindings(ScriptContext.ENGINE_SCOPE);
+	    	for(Iterator<String> iter = map.keySet().iterator();iter.hasNext();){
+	    		String cle = iter.next();
+	    		System.out.println(cle + ":" + map.get(cle));
+	    	}
+	    	*/
+	    }
+	    catch (javax.script.ScriptException ex) {
+	    	String msg = ex.getMessage();
+	    	int i;
+	    	i = msg.lastIndexOf("Error:");
+	    	if (i>0) msg = msg.substring(i+6, msg.length());
+	    	i = msg.lastIndexOf("Exception:");
+	    	if (i>0) msg = msg.substring(i+10, msg.length());
+	    	i = msg.indexOf("(<");
+	    	if (i>0) msg = msg.substring(0, i);
+	    	pInter.writeConsole("erreur ligne " + ex.getLineNumber() + " : " + msg );
+	    	pInter.writelnConsole();
+	    	//pInter.writeConsole("erreur complete :" + ex.getMessage() + "\n");
+			try {
+				int lig = ex.getLineNumber();
+				javax.swing.JTextArea area = EditorWrapper.getRTextArea();
+				int nb_lig = area.getLineCount();
+				if (lig<=nb_lig) {
+					int debut_lig = area.getLineStartOffset(lig-1);	// premiere ligne : ligne 0	
+					area.setCaretPosition(debut_lig);
+				}
+			}
+			catch(Exception ex1) {
+				return;
+			}
+	    }
+	}
+	
+	public static void exporter(PanelInteraction pInter) {
+		String nom_lang = pInter.pPrincipal.getNomLangage().toLowerCase();
+		if (pInter.isJavascript()) {
+			doJavascript(pInter);
+			return;
+		}
+		if (pInter.isAlgobox()) {
+			doAlgobox(pInter);
+			return;
+		}
+		if (nom_lang.equals("python")) {
+			doPython(pInter);
+			return;
+		}
+		if (nom_lang.equals("r")) {
+			doR(pInter);
+			return;
+		}
+		if (nom_lang.equals("carmetal")) {
+			doCarmetal(pInter);
+			return;
+		}
+	}
 }

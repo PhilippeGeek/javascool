@@ -7,14 +7,11 @@ import java.awt.FlowLayout;
 import java.awt.Color;
 import java.awt.event.*;
 import java.util.Iterator;
-
 import javax.swing.*;
 
-import org.javascool.gui.EditorWrapper;
 import org.javascool.proglets.plurialgo.divers.Divers;
-import org.javascool.proglets.plurialgo.langages.modele.Programme;
-import org.javascool.proglets.plurialgo.langages.modele.Instruction;
-import org.javascool.proglets.plurialgo.langages.xml.ProgrammeSi;
+import org.javascool.proglets.plurialgo.langages.modele.*;
+import org.javascool.proglets.plurialgo.langages.xml.*;
 
 
 /**
@@ -131,20 +128,20 @@ public class PanelSi extends JPanel implements ActionListener {
 	// ---------------------------------------------
 	
 	void nouveau() {
-		org.javascool.proglets.plurialgo.langages.xml.Programme prog_xml;
+		org.javascool.proglets.plurialgo.langages.xml.XmlProgramme prog_xml;
 		ProgrammeSi prog_si = new ProgrammeSi();
 		for(int i=0; i<nb_max; i=i+1) {
 			if (t_check[i].isSelected()) {
 				prog_si.ajouterBranche(t_branche[i].getNiveau(), t_branche[i].getCondition());
 			}
 		}
-		prog_xml = new org.javascool.proglets.plurialgo.langages.xml.Programme(prog_si);
+		prog_xml = new org.javascool.proglets.plurialgo.langages.xml.XmlProgramme(prog_si);
 		pInter.add_xml(prog_xml);
 		pInter.traduireXml();
 	}
 	
 	void inserer() {
-		org.javascool.proglets.plurialgo.langages.xml.Programme prog_xml;
+		org.javascool.proglets.plurialgo.langages.xml.XmlProgramme prog_xml;
 		ProgrammeSi prog_si = new ProgrammeSi();
 		for(int i=0; i<nb_max; i=i+1) {
 			if (t_check[i].isSelected()) {
@@ -152,22 +149,22 @@ public class PanelSi extends JPanel implements ActionListener {
 			}
 		}
 		// conversion du programme en Xml
-		prog_xml = new org.javascool.proglets.plurialgo.langages.xml.Programme(prog_si);
+		prog_xml = new org.javascool.proglets.plurialgo.langages.xml.XmlProgramme(prog_si);
 		pInter.add_xml(prog_xml);
 		// conversion du programme dans le langage courant
 		String lang = pInter.pPrincipal.getNomLangage();
-		String txt = pInter.pXml.getText();
-		Programme prog = Programme.getProgramme(txt,lang); 
+		String txt = pInter.getXml();
+		ModeleProgramme prog = ModeleProgramme.getProgramme(txt,lang); 
 		// ajout de l'instruction conditionnelle
 		StringBuffer buf = new StringBuffer();
-		int indent = Divers.getIndent(EditorWrapper.getRTextArea());
-		for (Iterator<Instruction> iter=prog.instructions.iterator(); iter.hasNext();) {
-			Instruction instr = iter.next();
+		int indent = Divers.getIndent(pInter.getTextArea());
+		for (Iterator<ModeleInstruction> iter=prog.instructions.iterator(); iter.hasNext();) {
+			ModeleInstruction instr = iter.next();
 			instr.ecrire(prog, buf, indent);
 		}
 		if (buf.length()>0 ) {
 			prog.postTraitement(buf);
-			Divers.inserer(EditorWrapper.getRTextArea(), buf.toString());
+			Divers.inserer(pInter.getTextArea(), buf.toString());
 		}
 	}
 	

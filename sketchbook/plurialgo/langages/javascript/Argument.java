@@ -5,14 +5,14 @@ package org.javascool.proglets.plurialgo.langages.javascript;
 
 
 import java.util.*;
-
 import org.javascool.proglets.plurialgo.divers.*;
+import org.javascool.proglets.plurialgo.langages.modele.*;
 
 
 /**
  * Cette classe hérite de la classe homonyme du modèle.
 */
-public class Argument extends org.javascool.proglets.plurialgo.langages.modele.Argument {
+public class Argument extends ModeleArgument {
 	
 	public Argument() {
 	}
@@ -97,7 +97,7 @@ public class Argument extends org.javascool.proglets.plurialgo.langages.modele.A
 	
 	private void lireClasseStandard(Programme prog, StringBuffer buf, int indent, String msg) {
 		Classe cl = (Classe) getClasse(prog);
-		for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Variable> iter=cl.proprietes.iterator(); iter.hasNext(); ) {
+		for(Iterator<ModeleVariable> iter=cl.proprietes.iterator(); iter.hasNext(); ) {
 			Variable prop = (Variable) iter.next();
 			if (prop.isOut()) continue;
 			Argument arg = new Argument(this.nom+"."+prop.nom, prop.type, this.mode);
@@ -110,9 +110,8 @@ public class Argument extends org.javascool.proglets.plurialgo.langages.modele.A
 	private void lireTabClasseStandard(Programme prog, StringBuffer buf, int indent, String msg) {
 		Classe cl = (Classe) getClasseOfTab(prog);
 		this.addVariable(new Variable("ii","ENTIER"));
-		Divers.ecrire(buf, "For ii=1 To " + prog.getDim(1, this) + " ", indent);
 		Divers.ecrire(buf, "for(ii=0; ii<" + prog.getDim(1, this) + "; ii++) {", indent);
-		for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Variable> iter=cl.proprietes.iterator(); iter.hasNext(); ) {
+		for(Iterator<ModeleVariable> iter=cl.proprietes.iterator(); iter.hasNext(); ) {
 			Variable prop = (Variable) iter.next();
 			Argument arg = new Argument(this.nom+"[ii]"+"."+prop.nom, prop.type, oteDim(1));
 			arg.parent = this.parent;
@@ -189,7 +188,7 @@ public class Argument extends org.javascool.proglets.plurialgo.langages.modele.A
 	private void ecrireClasseStandard(Programme prog, StringBuffer buf, int indent, String msg) {
 		if (msg!=null) Divers.ecrire(buf, "document.writeln(" + msg + ", " + prog.quote("<br/>") + "); ", indent);
 		Classe cl = (Classe) getClasse(prog);
-		for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Variable> iter=cl.proprietes.iterator(); iter.hasNext(); ) {
+		for(Iterator<ModeleVariable> iter=cl.proprietes.iterator(); iter.hasNext(); ) {
 			Variable prop = (Variable) iter.next();
 			if (prop.isIn()) continue;
 			Argument arg = new Argument(this.nom+"."+prop.nom, prop.type, this.mode);
@@ -206,7 +205,7 @@ public class Argument extends org.javascool.proglets.plurialgo.langages.modele.A
 		Divers.ecrire(buf, "for(ii=0; ii<" + prog.getDim(1, this) + "; ii++) {", indent);
 		String msg1 = prog.quote("rang ") + " , ii , " + prog.quote(" de " + this.nom + " : ");
 		if (msg1!=null) Divers.ecrire(buf, "document.writeln(" + msg1 + ", " + prog.quote("<br/>") + "); ", indent+1);
-		for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Variable> iter=cl.proprietes.iterator(); iter.hasNext(); ) {
+		for(Iterator<ModeleVariable> iter=cl.proprietes.iterator(); iter.hasNext(); ) {
 			Variable prop = (Variable) iter.next();
 			if (prop.isIn()) continue;
 			Argument arg = new Argument(this.nom+"[ii]"+"."+prop.nom, prop.type, oteDim(1));

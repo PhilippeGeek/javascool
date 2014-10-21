@@ -7,7 +7,6 @@ import java.awt.FlowLayout;
 import java.awt.Color;
 import java.awt.event.*;
 import java.util.StringTokenizer;
-
 import javax.swing.*;
 
 

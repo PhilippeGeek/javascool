@@ -199,16 +199,16 @@ public class InfoTypee extends Noeud {
 		return false;
 	}
 
-	public final boolean isFichierClasse(Programme prog) {
+	public final boolean isFichierClasse(ModeleProgramme prog) {
 		return (getClasseOfFichier(prog)!=null);
 	}
 	
-	public final boolean isTabClasse(Programme prog) {
-		Classe cl = getClasseOfTab(prog);
+	public final boolean isTabClasse(ModeleProgramme prog) {
+		ModeleClasse cl = getClasseOfTab(prog);
 		return (cl!=null);
 	}
 	
-	public final boolean isMatClasse(Programme prog) {
+	public final boolean isMatClasse(ModeleProgramme prog) {
 		return (getClasseOfMat(prog)!=null);
 	}
 	
@@ -220,14 +220,14 @@ public class InfoTypee extends Noeud {
 		return (isTabEntiers() || isTabReels());
 	}
 	
-	public final boolean isClasse(Programme prog) {
-		Classe cl = getClasse(prog);
+	public final boolean isClasse(ModeleProgramme prog) {
+		ModeleClasse cl = getClasse(prog);
 		if (cl==null) return false;
 		return cl.isClasse();
 	}
 	
-	public final boolean isEnregistrement(Programme prog) {
-		Classe cl = getClasse(prog);
+	public final boolean isEnregistrement(ModeleProgramme prog) {
+		ModeleClasse cl = getClasse(prog);
 		if (cl==null) return false;
 		return cl.isEnregistrement();
 	}
@@ -236,12 +236,12 @@ public class InfoTypee extends Noeud {
 	// fonctions get
 	// ---------------------------------------------
 	
-	public final Classe getClasseOfFichier(Programme prog) {
+	public final ModeleClasse getClasseOfFichier(ModeleProgramme prog) {
 		if (type==null) return null;
 		if (!type.startsWith("FICHIER_")) return null;
 		String nom_cl = type.substring( type.indexOf("_") + 1 );
-		for (Iterator<Classe> iter=prog.classes.iterator(); iter.hasNext();) {
-			Classe cl = iter.next();
+		for (Iterator<ModeleClasse> iter=prog.classes.iterator(); iter.hasNext();) {
+			ModeleClasse cl = iter.next();
 			if (cl.nom.equalsIgnoreCase(nom_cl)) return cl;
 		}
 		return null;
@@ -253,12 +253,12 @@ public class InfoTypee extends Noeud {
 		return type.substring( type.indexOf("_") + 1 );
 	}
 	
-	public final Classe getClasseOfTab(Programme prog) {
+	public final ModeleClasse getClasseOfTab(ModeleProgramme prog) {
 		if (type==null) return null;
 		if (!type.startsWith("TAB_")) return null;
 		String nom_cl = type.substring( type.indexOf("_") + 1 );
-		for (Iterator<Classe> iter=prog.classes.iterator(); iter.hasNext();) {
-			Classe cl = iter.next();
+		for (Iterator<ModeleClasse> iter=prog.classes.iterator(); iter.hasNext();) {
+			ModeleClasse cl = iter.next();
 			if (cl.nom.equalsIgnoreCase(nom_cl)) return cl;
 		}
 		return null;
@@ -270,20 +270,20 @@ public class InfoTypee extends Noeud {
 		return type.substring( type.indexOf("_") + 1 );
 	}
 	
-	public final Classe getClasseOfMat(Programme prog) {
+	public final ModeleClasse getClasseOfMat(ModeleProgramme prog) {
 		if (type==null) return null;
 		if (!type.startsWith("MAT_")) return null;
 		String nom_cl = type.substring( type.indexOf("_") + 1 );
-		for (Iterator<Classe> iter=prog.classes.iterator(); iter.hasNext();) {
-			Classe cl = iter.next();
+		for (Iterator<ModeleClasse> iter=prog.classes.iterator(); iter.hasNext();) {
+			ModeleClasse cl = iter.next();
 			if (cl.nom.equalsIgnoreCase(nom_cl)) return cl;
 		}
 		return null;
 	}
 	
-	public final Classe getClasse(Programme prog) {
-		for (Iterator<Classe> iter=prog.classes.iterator(); iter.hasNext();) {
-			Classe cl = iter.next();
+	public final ModeleClasse getClasse(ModeleProgramme prog) {
+		for (Iterator<ModeleClasse> iter=prog.classes.iterator(); iter.hasNext();) {
+			ModeleClasse cl = iter.next();
 			if (cl.nom.equalsIgnoreCase(this.type)) return cl;
 		}
 		return null;

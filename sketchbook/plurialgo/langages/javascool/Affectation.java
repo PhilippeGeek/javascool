@@ -4,13 +4,13 @@
 package org.javascool.proglets.plurialgo.langages.javascool;
 
 import java.util.StringTokenizer;
-
 import org.javascool.proglets.plurialgo.divers.Divers;
+import org.javascool.proglets.plurialgo.langages.modele.*;
 
 /**
  * Cette classe hérite de la classe homonyme du modèle.
 */
-public class Affectation extends org.javascool.proglets.plurialgo.langages.modele.Affectation {
+public class Affectation extends ModeleAffectation {
 
 	public Affectation() {
 	}

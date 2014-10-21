@@ -3,21 +3,18 @@
 *******************************************************************************/
 package org.javascool.proglets.plurialgo.langages.xml;
 
-
 import java.util.*;
-
-import org.javascool.proglets.plurialgo.langages.modele.InfoTypee;
-
+import org.javascool.proglets.plurialgo.langages.modele.*;
 
 /**
  * Cette classe permet de reformuler un programme (bouton Reformuler de l'onglet Principal).
 */
-public class ProgrammeDerive extends Programme {
+public class ProgrammeDerive extends XmlProgramme {
 
-	private Programme prog;	// le programme à reformuler	
+	private XmlProgramme prog;	// le programme à reformuler	
 	private Intermediaire inter; // la reformulation à appliquer
 	private ArrayList<InfoTypee> infos; // liste de triplets (nom, type, mode) 
-	private Classe classe; // la classe créée (si reformulation avec regroupement)
+	private XmlClasse classe; // la classe créée (si reformulation avec regroupement)
 	private int nb_obj;
 
 	/**
@@ -25,17 +22,17 @@ public class ProgrammeDerive extends Programme {
 	 *    @param prog le programme à reformuler
 	 *    @param inter la reformulation à appliquer
 	*/	
-	public ProgrammeDerive(Programme prog, Intermediaire inter) {
+	public ProgrammeDerive(XmlProgramme prog, Intermediaire inter) {
 		this.prog = prog;
 		this.nom = prog.nom; 
 		this.inter = inter;
 		// récupération des classes et des operations
-		for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Classe> iter=prog.classes.iterator(); iter.hasNext(); ) {
-			Classe cl = (Classe) iter.next();
+		for(Iterator<ModeleClasse> iter=prog.classes.iterator(); iter.hasNext(); ) {
+			XmlClasse cl = (XmlClasse) iter.next();
 			this.classes.add(cl);
 		}
-		for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Operation> iter=prog.operations.iterator(); iter.hasNext(); ) {
-			Operation oper = (Operation) iter.next();
+		for(Iterator<ModeleOperation> iter=prog.operations.iterator(); iter.hasNext(); ) {
+			XmlOperation oper = (XmlOperation) iter.next();
 			this.operations.add(oper);
 		}
 		// transformations
@@ -50,7 +47,7 @@ public class ProgrammeDerive extends Programme {
 			traiterClasse();
 		}
 		// divers
-		if (instructions.size()==0) instructions.add(new Instruction("// ajouter des instructions"));
+		if (instructions.size()==0) instructions.add(new XmlInstruction("// ajouter des instructions"));
 		traiterMaxTab();
 	}
 
@@ -58,7 +55,7 @@ public class ProgrammeDerive extends Programme {
 	 * 	Construit un programme par reformulation
 	 *    @param prog le programme à reformuler (reformulation précisée dans la propriété options du programme)
 	*/		
-	public ProgrammeDerive(Programme prog) {
+	public ProgrammeDerive(XmlProgramme prog) {
 		this(prog, new Intermediaire());
 	}
 	
@@ -86,17 +83,17 @@ public class ProgrammeDerive extends Programme {
 		}
 		else {
 			// recherche des instructions de lecture (perimé ?)
-			for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Instruction> iter=prog.instructions.iterator(); iter.hasNext(); ) {
-				Instruction instr = (Instruction) iter.next();
+			for(Iterator<ModeleInstruction> iter=prog.instructions.iterator(); iter.hasNext(); ) {
+				XmlInstruction instr = (XmlInstruction) iter.next();
 				if (instr.isLectureStandard() || instr.isLectureFormulaire()) {
-					for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Argument> iter1 = instr.arguments.iterator(); iter1.hasNext(); ) {
-						Argument arg = (Argument) iter1.next();
+					for(Iterator<ModeleArgument> iter1 = instr.arguments.iterator(); iter1.hasNext(); ) {
+						XmlArgument arg = (XmlArgument) iter1.next();
 						System.out.println(arg.nom);
 						infosList.addModes(arg.nom, "IN");
 						infosList.addTypes(arg.nom, arg.type);
 						infosList.addDim(arg.nom, arg.mode);
 					}
-					Argument arg = (Argument) instr.getObjet();
+					XmlArgument arg = (XmlArgument) instr.getObjet();
 					if (arg!=null) {
 						System.out.println(arg.nom);
 						infosList.addModes(arg.nom, "IN");
@@ -112,17 +109,17 @@ public class ProgrammeDerive extends Programme {
 		}
 		else {
 			// recherche des instructions d'ecriture (perimé ?)
-			for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Instruction> iter=prog.instructions.iterator(); iter.hasNext(); ) {
-				Instruction instr = (Instruction) iter.next();
+			for(Iterator<ModeleInstruction> iter=prog.instructions.iterator(); iter.hasNext(); ) {
+				XmlInstruction instr = (XmlInstruction) iter.next();
 				if (instr.isEcritureStandard()) {
-					for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Argument> iter1 = instr.arguments.iterator(); iter1.hasNext(); ) {
-						Argument arg = (Argument) iter1.next();
+					for(Iterator<ModeleArgument> iter1 = instr.arguments.iterator(); iter1.hasNext(); ) {
+						XmlArgument arg = (XmlArgument) iter1.next();
 						System.out.println(arg.nom);
 						infosList.addModes(arg.nom, "OUT");
 						infosList.addTypes(arg.nom, arg.type);
 						infosList.addDim(arg.nom, arg.mode);
 					}
-					Argument arg = (Argument) instr.getObjet();
+					XmlArgument arg = (XmlArgument) instr.getObjet();
 					if (arg!=null) {
 						System.out.println(arg.nom);
 						infosList.addModes(arg.nom, "OUT");
@@ -133,8 +130,8 @@ public class ProgrammeDerive extends Programme {
 			}
 		}
 		// ajout des variables auxiliaires
-		for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Variable> iter=prog.variables.iterator(); iter.hasNext(); ) {
-			Variable var = (Variable) iter.next();
+		for(Iterator<ModeleVariable> iter=prog.variables.iterator(); iter.hasNext(); ) {
+			XmlVariable var = (XmlVariable) iter.next();
 			infosList.addTypes(var.nom, var.type);
 			if (var.isIn()) {
 				infosList.addModes(var.nom, "IN");
@@ -162,7 +159,7 @@ public class ProgrammeDerive extends Programme {
 					}
 				}
 			}
-			Variable var = new Variable(info.nom, info.type, null);
+			XmlVariable var = new XmlVariable(info.nom, info.type, null);
 			variables.add(var);
 		}
 		traiterElementaireSaisie();
@@ -170,36 +167,36 @@ public class ProgrammeDerive extends Programme {
 		traiterElementaireAffichage();
 	}
 	
-	private void traiterElementaireInstructions(ArrayList<org.javascool.proglets.plurialgo.langages.modele.Instruction> liste1, ArrayList<org.javascool.proglets.plurialgo.langages.modele.Instruction> liste2){
-		for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Instruction> iter=liste1.iterator(); iter.hasNext(); ) {
-			Instruction instr = (Instruction) iter.next();
-			Instruction instr_copie = traiterElementaireInstruction(instr);
+	private void traiterElementaireInstructions(ArrayList<ModeleInstruction> liste1, ArrayList<ModeleInstruction> liste2){
+		for(Iterator<ModeleInstruction> iter=liste1.iterator(); iter.hasNext(); ) {
+			XmlInstruction instr = (XmlInstruction) iter.next();
+			XmlInstruction instr_copie = traiterElementaireInstruction(instr);
 			if (instr_copie!=null) liste2.add(instr_copie);
 		}
 	}
 	
-	private Instruction traiterElementaireInstruction(Instruction instr){
-		Instruction copie = new Instruction(instr.nom); 
+	private XmlInstruction traiterElementaireInstruction(XmlInstruction instr){
+		XmlInstruction copie = new XmlInstruction(instr.nom); 
 		if (instr.isSi()) {
-			for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Si> iter=instr.sis.iterator(); iter.hasNext();) {
-				Si si = (Si) iter.next();
-				Si si_copie = this.traiterElementaireInstructionSi(si);
+			for (Iterator<ModeleSi> iter=instr.sis.iterator(); iter.hasNext();) {
+				XmlSi si = (XmlSi) iter.next();
+				XmlSi si_copie = this.traiterElementaireInstructionSi(si);
 				if (si_copie!=null) copie.sis.add(si_copie);
 			}
 			if (copie.sis.size()==0) return null;
 		}
 		else if (instr.isPour()) {
-			for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Pour> iter=instr.pours.iterator(); iter.hasNext();) {
-				Pour pour = (Pour) iter.next();
-				Pour pour_copie = this.traiterElementaireInstructionPour(pour);
+			for (Iterator<ModelePour> iter=instr.pours.iterator(); iter.hasNext();) {
+				XmlPour pour = (XmlPour) iter.next();
+				XmlPour pour_copie = this.traiterElementaireInstructionPour(pour);
 				if (pour_copie!=null) copie.pours.add(pour_copie);
 			}
 			if (copie.pours.size()==0) return null;
 		}
 		else if (instr.isTantQue()) {
-			for (Iterator<org.javascool.proglets.plurialgo.langages.modele.TantQue> iter=instr.tantques.iterator(); iter.hasNext();) {
-				TantQue tq = (TantQue) iter.next();
-				TantQue tq_copie = this.traiterElementaireInstructionTantQue(tq);
+			for (Iterator<ModeleTantQue> iter=instr.tantques.iterator(); iter.hasNext();) {
+				XmlTantQue tq = (XmlTantQue) iter.next();
+				XmlTantQue tq_copie = this.traiterElementaireInstructionTantQue(tq);
 				if (tq_copie!=null) copie.tantques.add(tq_copie);
 			}
 			if (copie.tantques.size()==0) return null;
@@ -213,8 +210,8 @@ public class ProgrammeDerive extends Programme {
 		return copie;
 	}
 	
-	private Si traiterElementaireInstructionSi(Si si){
-		Si copie = new Si();
+	private XmlSi traiterElementaireInstructionSi(XmlSi si){
+		XmlSi copie = new XmlSi();
 		copie.condition = si.condition;
 		copie.schema = si.schema;
 		traiterElementaireInstructions(si.instructions, copie.instructions);
@@ -222,8 +219,8 @@ public class ProgrammeDerive extends Programme {
 		return (copie);
 	}
 	
-	private Pour traiterElementaireInstructionPour(Pour pour){
-		Pour copie = new Pour();
+	private XmlPour traiterElementaireInstructionPour(XmlPour pour){
+		XmlPour copie = new XmlPour();
 		copie.var = pour.var; copie.debut = pour.debut;
 		copie.fin = pour.fin; copie.pas = pour.pas;
 		copie.schema = pour.schema;
@@ -232,8 +229,8 @@ public class ProgrammeDerive extends Programme {
 		return (copie);
 	}
 	
-	private TantQue traiterElementaireInstructionTantQue(TantQue tq){
-		TantQue copie = new TantQue();
+	private XmlTantQue traiterElementaireInstructionTantQue(XmlTantQue tq){
+		XmlTantQue copie = new XmlTantQue();
 		copie.condition = tq.condition;
 		copie.schema = tq.schema;
 		traiterElementaireInstructions(tq.instructions, copie.instructions);
@@ -242,29 +239,29 @@ public class ProgrammeDerive extends Programme {
 	}
 	
 	private void traiterElementaireSaisie(){
-		Instruction instr;
-		Operation oper;
-		Argument arg;
+		XmlInstruction instr;
+		XmlOperation oper;
+		XmlArgument arg;
 		if (inter.avecSaisieElementaire() || inter.avecSaisieFichierTexte() || inter.avecSaisieFormulaire()  || inter.avecSaisieSql()) {
-			instr = new Instruction("lire");
+			instr = new XmlInstruction("lire");
 			if (inter.avecSaisieFichierTexte()) {
-				arg = new Argument("fich", "FICHIER_TEXTE", null);
-				arg.instructions.add( new Instruction("// ajouter des instructions"));
+				arg = new XmlArgument("fich", "FICHIER_TEXTE", null);
+				arg.instructions.add( new XmlInstruction("// ajouter des instructions"));
 				instr.setFichier(arg);
 			}
 			if (inter.avecSaisieFormulaire()) {
-				arg = new Argument("formu", "FORM", null);
+				arg = new XmlArgument("formu", "FORM", null);
 				instr.setFormulaire(arg);
 			}
 			if (inter.avecSaisieSql()) {
-				arg = new Argument("bd", "SQL", null);
-				arg.instructions.add( new Instruction("// ajouter des instructions"));
+				arg = new XmlArgument("bd", "SQL", null);
+				arg.instructions.add( new XmlInstruction("// ajouter des instructions"));
 				instr.setFichier(arg);
 			}
 			for(Iterator<InfoTypee> iter=infos.iterator(); iter.hasNext(); ) {
 				InfoTypee info = iter.next();
 				if (info.isIn() || info.isInOut()) {
-					arg = new Argument(info.nom, info.type, null);
+					arg = new XmlArgument(info.nom, info.type, null);
 					arg.dim = info.dim;
 					instr.arguments.add(arg);
 				}
@@ -277,8 +274,8 @@ public class ProgrammeDerive extends Programme {
 			for(Iterator<InfoTypee> iter=infos.iterator(); iter.hasNext(); ) {
 				InfoTypee info = iter.next();
 				if (info.isIn() || info.isInOut()) {
-					instr = new Instruction("saisir_"+info.nom);
-					oper = new Operation("saisir_"+info.nom);
+					instr = new XmlInstruction("saisir_"+info.nom);
+					oper = new XmlOperation("saisir_"+info.nom);
 					oper.traiterElementaireSaisieFonction(info, instr);
 					instructions.add(instr);
 					operations.add(oper);
@@ -286,8 +283,8 @@ public class ProgrammeDerive extends Programme {
 			}
 		}
 		if (inter.avecProcedureSaisie()) {
-			instr = new Instruction("saisir_"+this.nom);
-			oper = new Operation("saisir_"+this.nom);
+			instr = new XmlInstruction("saisir_"+this.nom);
+			oper = new XmlOperation("saisir_"+this.nom);
 			oper.traiterElementaireSaisieProcedure(infos, instr);
 			if (instr.arguments.size()>0) {
 				instructions.add(instr);
@@ -297,23 +294,23 @@ public class ProgrammeDerive extends Programme {
 	}
 	
 	private void traiterElementaireAffichage(){
-		Instruction instr;
-		Operation oper;
-		Argument arg;
+		XmlInstruction instr;
+		XmlOperation oper;
+		XmlArgument arg;
 		if ( inter.avecAffichageElementaire() || inter.avecAffichageFichierTexte() || inter.avecAffichageSql()) {
-			instr = new Instruction("ecrire");
+			instr = new XmlInstruction("ecrire");
 			if (inter.avecAffichageFichierTexte()) {
-				arg = new Argument("fich", "FICHIER_TEXTE", null);
+				arg = new XmlArgument("fich", "FICHIER_TEXTE", null);
 				instr.setFichier(arg);
 			}
 			if (inter.avecAffichageSql()) {
-				arg = new Argument("bd", "SQL", null);
+				arg = new XmlArgument("bd", "SQL", null);
 				instr.setFichier(arg);
 			}
 			for(Iterator<InfoTypee> iter=infos.iterator(); iter.hasNext(); ) {
 				InfoTypee info = iter.next();
 				if (info.isOut() || info.isInOut()) {
-					arg = new Argument(info.nom, info.type, null);
+					arg = new XmlArgument(info.nom, info.type, null);
 					arg.dim = info.dim;
 					instr.arguments.add(arg);
 				}
@@ -323,8 +320,8 @@ public class ProgrammeDerive extends Programme {
 			}
 		}
 		if (inter.avecProcedureAffichage()) {
-			instr = new Instruction("afficher_"+this.nom);
-			oper = new Operation("afficher_"+this.nom);
+			instr = new XmlInstruction("afficher_"+this.nom);
+			oper = new XmlOperation("afficher_"+this.nom);
 			oper.traiterElementaireAffichageProcedure(infos, instr);
 			if (instr.arguments.size()>0) {
 				instructions.add(instr);
@@ -334,23 +331,23 @@ public class ProgrammeDerive extends Programme {
 	}
 	
 	private void traiterElementaireCalcul(){
-		Instruction instr;
-		Operation oper;
+		XmlInstruction instr;
+		XmlOperation oper;
 		if (inter.avecFonctionsCalcul()) {
-			ArrayList<org.javascool.proglets.plurialgo.langages.modele.Argument> arg_donnees = new ArrayList<org.javascool.proglets.plurialgo.langages.modele.Argument>();
-			ArrayList<org.javascool.proglets.plurialgo.langages.modele.Parametre> param_donnees = new ArrayList<org.javascool.proglets.plurialgo.langages.modele.Parametre>();
+			ArrayList<ModeleArgument> arg_donnees = new ArrayList<ModeleArgument>();
+			ArrayList<ModeleParametre> param_donnees = new ArrayList<ModeleParametre>();
 			for(Iterator<InfoTypee> iter=infos.iterator(); iter.hasNext(); ) {
 				InfoTypee info = iter.next();
 				if (info.isIn()) {
-					arg_donnees.add (new Argument(info.nom, info.type, info.mode));
-					param_donnees.add (new Parametre(info.nom, info.type, info.mode));
+					arg_donnees.add (new XmlArgument(info.nom, info.type, info.mode));
+					param_donnees.add (new XmlParametre(info.nom, info.type, info.mode));
 				}
 			}
 			for(Iterator<InfoTypee> iter=infos.iterator(); iter.hasNext(); ) {
 				InfoTypee info = iter.next();
 				if (info.isOut()) {
-					instr = new Instruction("calculer_"+info.nom);
-					oper = new Operation("calculer_"+info.nom);
+					instr = new XmlInstruction("calculer_"+info.nom);
+					oper = new XmlOperation("calculer_"+info.nom);
 					oper.traiterElementaireCalculFonction(info, instr, param_donnees, arg_donnees);
 					this.traiterElementaireInstructions(prog.instructions, oper.instructions);
 					oper.traiterElementaireVariables(infos);
@@ -360,8 +357,8 @@ public class ProgrammeDerive extends Programme {
 			}
 		}
 		else if (inter.avecProcedureCalcul()) {
-			instr = new Instruction("calculer_"+this.nom);
-			oper = new Operation("calculer_"+this.nom);
+			instr = new XmlInstruction("calculer_"+this.nom);
+			oper = new XmlOperation("calculer_"+this.nom);
 			oper.traiterElementaireCalculProcedure(infos, instr);
 			this.traiterElementaireInstructions(prog.instructions, oper.instructions);
 			oper.traiterElementaireVariables(infos);
@@ -383,7 +380,7 @@ public class ProgrammeDerive extends Programme {
 	
 	private void traiterEnregistrement(){
 		String nom_cl = inter.getNomGroupe();
-		Classe enreg = new Classe(nom_cl, true);
+		XmlClasse enreg = new XmlClasse(nom_cl, true);
 		classes.add(enreg);
 		this.classe = enreg;
 		infos = enreg.creerProprietes(infos, inter.getProprietesGroupe());
@@ -398,7 +395,7 @@ public class ProgrammeDerive extends Programme {
 					}
 				}
 			}
-			Variable var = new Variable(info.nom, info.type, null);
+			XmlVariable var = new XmlVariable(info.nom, info.type, null);
 			variables.add(var);
 		}
 		traiterEnregistrementSaisie();
@@ -406,43 +403,43 @@ public class ProgrammeDerive extends Programme {
 		traiterEnregistrementAffichage();
 	}
 	
-	private void traiterEnregistrementInstructions(ArrayList<org.javascool.proglets.plurialgo.langages.modele.Instruction> liste1, ArrayList<org.javascool.proglets.plurialgo.langages.modele.Instruction> liste2, String nom_obj){
-		for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Instruction> iter=liste1.iterator(); iter.hasNext(); ) {
-			Instruction instr = (Instruction) iter.next();
-			Instruction instr_copie = traiterEnregistrementInstruction(instr, nom_obj);
+	private void traiterEnregistrementInstructions(ArrayList<ModeleInstruction> liste1, ArrayList<ModeleInstruction> liste2, String nom_obj){
+		for(Iterator<ModeleInstruction> iter=liste1.iterator(); iter.hasNext(); ) {
+			XmlInstruction instr = (XmlInstruction) iter.next();
+			XmlInstruction instr_copie = traiterEnregistrementInstruction(instr, nom_obj);
 			if (instr_copie!=null) liste2.add(instr_copie);
 		}
 	}
 	
-	private Instruction traiterEnregistrementInstruction(Instruction instr, String nom_obj){
-		Instruction copie = new Instruction(instr.nom); 
+	private XmlInstruction traiterEnregistrementInstruction(XmlInstruction instr, String nom_obj){
+		XmlInstruction copie = new XmlInstruction(instr.nom); 
 		if (instr.isSi()) {
-			for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Si> iter=instr.sis.iterator(); iter.hasNext();) {
-				Si si = (Si) iter.next();
-				Si si_copie = this.traiterEnregistrementInstructionSi(si, nom_obj);
+			for (Iterator<ModeleSi> iter=instr.sis.iterator(); iter.hasNext();) {
+				XmlSi si = (XmlSi) iter.next();
+				XmlSi si_copie = this.traiterEnregistrementInstructionSi(si, nom_obj);
 				if (si_copie!=null) copie.sis.add(si_copie);
 			}
 			if (copie.sis.size()==0) return null;
 		}
 		else if (instr.isPour()) {
-			for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Pour> iter=instr.pours.iterator(); iter.hasNext();) {
-				Pour pour = (Pour) iter.next();
-				Pour pour_copie = this.traiterEnregistrementInstructionPour(pour, nom_obj);
+			for (Iterator<ModelePour> iter=instr.pours.iterator(); iter.hasNext();) {
+				XmlPour pour = (XmlPour) iter.next();
+				XmlPour pour_copie = this.traiterEnregistrementInstructionPour(pour, nom_obj);
 				if (pour_copie!=null) copie.pours.add(pour_copie);
 			}
 			if (copie.pours.size()==0) return null;
 		}
 		else if (instr.isTantQue()) {
-			for (Iterator<org.javascool.proglets.plurialgo.langages.modele.TantQue> iter=instr.tantques.iterator(); iter.hasNext();) {
-				TantQue tq = (TantQue) iter.next();
-				TantQue tq_copie = this.traiterEnregistrementInstructionTantQue(tq, nom_obj);
+			for (Iterator<ModeleTantQue> iter=instr.tantques.iterator(); iter.hasNext();) {
+				XmlTantQue tq = (XmlTantQue) iter.next();
+				XmlTantQue tq_copie = this.traiterEnregistrementInstructionTantQue(tq, nom_obj);
 				if (tq_copie!=null) copie.tantques.add(tq_copie);
 			}
 			if (copie.tantques.size()==0) return null;
 		}
 		else if (instr.isAffectation()) {
-			for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Affectation> iter=instr.affectations.iterator(); iter.hasNext();) {
-				Affectation aff = (Affectation) iter.next();
+			for (Iterator<ModeleAffectation> iter=instr.affectations.iterator(); iter.hasNext();) {
+				XmlAffectation aff = (XmlAffectation) iter.next();
 				copie.affectations.add(this.traiterEnregistrementInstructionAffectation(aff, nom_obj));
 			}
 		}
@@ -455,8 +452,8 @@ public class ProgrammeDerive extends Programme {
 		return copie;
 	}
 	
-	private Si traiterEnregistrementInstructionSi(Si si, String nom_obj){
-		Si copie = new Si();
+	private XmlSi traiterEnregistrementInstructionSi(XmlSi si, String nom_obj){
+		XmlSi copie = new XmlSi();
 		copie.condition = traiterEnregistrementInstruction(si.condition, nom_obj);
 		copie.schema = si.schema;
 		traiterEnregistrementInstructions(si.instructions, copie.instructions, nom_obj);
@@ -464,8 +461,8 @@ public class ProgrammeDerive extends Programme {
 		return (copie);
 	}
 	
-	private Pour traiterEnregistrementInstructionPour(Pour pour, String nom_obj){
-		Pour copie = new Pour();
+	private XmlPour traiterEnregistrementInstructionPour(XmlPour pour, String nom_obj){
+		XmlPour copie = new XmlPour();
 		copie.var = pour.var;
 		copie.debut = traiterEnregistrementInstruction(pour.debut, nom_obj);
 		copie.fin = traiterEnregistrementInstruction(pour.fin, nom_obj);
@@ -476,8 +473,8 @@ public class ProgrammeDerive extends Programme {
 		return (copie);
 	}
 	
-	private TantQue traiterEnregistrementInstructionTantQue(TantQue tq, String nom_obj){
-		TantQue copie = new TantQue();
+	private XmlTantQue traiterEnregistrementInstructionTantQue(XmlTantQue tq, String nom_obj){
+		XmlTantQue copie = new XmlTantQue();
 		copie.condition = traiterEnregistrementInstruction(tq.condition, nom_obj);
 		copie.schema = tq.schema;
 		traiterEnregistrementInstructions(tq.instructions, copie.instructions, nom_obj);
@@ -485,31 +482,31 @@ public class ProgrammeDerive extends Programme {
 		return (copie);
 	}
 	
-	private Affectation traiterEnregistrementInstructionAffectation(Affectation aff, String nom_obj){
-		Affectation copie = new Affectation();
+	private XmlAffectation traiterEnregistrementInstructionAffectation(XmlAffectation aff, String nom_obj){
+		XmlAffectation copie = new XmlAffectation();
 		copie.var = traiterEnregistrementInstruction(aff.var, nom_obj);
 		copie.expression = traiterEnregistrementInstruction(aff.expression, nom_obj);
 		return (copie);
 	}
 	
-	private Instruction traiterEnregistrementArguments(Instruction instr, String nom_obj){
-		Instruction copie = new Instruction(instr.nom);
-		Argument arg, arg_copie;
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Argument> iter=instr.arguments.iterator(); iter.hasNext();) {
-			arg = (Argument) iter.next();
-			arg_copie = new Argument(arg.nom, arg.type, arg.mode);
+	private XmlInstruction traiterEnregistrementArguments(XmlInstruction instr, String nom_obj){
+		XmlInstruction copie = new XmlInstruction(instr.nom);
+		XmlArgument arg, arg_copie;
+		for (Iterator<ModeleArgument> iter=instr.arguments.iterator(); iter.hasNext();) {
+			arg = (XmlArgument) iter.next();
+			arg_copie = new XmlArgument(arg.nom, arg.type, arg.mode);
 			copie.arguments.add(arg_copie);
 			arg_copie.nom = traiterEnregistrementInstruction(arg.nom, nom_obj);
 		}
-		arg = (Argument) instr.getRetour();
+		arg = (XmlArgument) instr.getRetour();
 		if (arg!=null) {
-			arg_copie = new Argument(arg.nom, arg.type, arg.mode);
+			arg_copie = new XmlArgument(arg.nom, arg.type, arg.mode);
 			copie.retours.add(arg_copie);
 			arg_copie.nom = traiterEnregistrementInstruction(arg.nom, nom_obj);
 		}
-		arg = (Argument) instr.getObjet();
+		arg = (XmlArgument) instr.getObjet();
 		if (arg!=null) {
-			arg_copie = new Argument(arg.nom, arg.type, arg.mode);
+			arg_copie = new XmlArgument(arg.nom, arg.type, arg.mode);
 			copie.objets.add(arg_copie);
 			arg_copie.nom = traiterEnregistrementInstruction(arg.nom, nom_obj);
 		}
@@ -520,8 +517,8 @@ public class ProgrammeDerive extends Programme {
 		if (txt==null) return "";
 		//System.out.println("avant remplacer : " + txt);
 		StringBuffer buf = new StringBuffer(" " + txt + " ");
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Variable> iter=this.classe.proprietes.iterator(); iter.hasNext();) {
-			Variable prop = (Variable) iter.next();
+		for (Iterator<ModeleVariable> iter=this.classe.proprietes.iterator(); iter.hasNext();) {
+			XmlVariable prop = (XmlVariable) iter.next();
 			//System.out.println("propriete : " + prop.nom);
 			String ancien = prop.nom;
 			int lg_ancien = ancien.length();
@@ -565,10 +562,10 @@ public class ProgrammeDerive extends Programme {
 	}
 	
 	private void traiterEnregistrementSaisie(){
-		Instruction instr, instr_oper, instr_obj;
-		Operation oper=null;
-		Argument arg, arg_oper;
-		Parametre param_oper;
+		XmlInstruction instr, instr_oper, instr_obj;
+		XmlOperation oper=null;
+		XmlArgument arg, arg_oper;
+		XmlParametre param_oper;
 		if (inter.avecSaisieElementaire() || inter.avecSaisieFichierTexte() || inter.avecSaisieFormulaire()|| inter.avecSaisieSql()) {
 			for(Iterator<InfoTypee> iter=infos.iterator(); iter.hasNext(); ) {
 				InfoTypee info = iter.next();
@@ -580,11 +577,11 @@ public class ProgrammeDerive extends Programme {
 		}
 		if (inter.avecFonctionsSaisie() || inter.avecProcedureSaisie()) {
 			// infos non enregistrements
-			instr = new Instruction("lire");
+			instr = new XmlInstruction("lire");
 			for(Iterator<InfoTypee> iter=infos.iterator(); iter.hasNext(); ) {
 				InfoTypee info = iter.next();
 				if ( (info.isIn() || info.isInOut()) && (!info.isEnregistrement(this)) ) {
-					arg = new Argument(info.nom, info.type, null);
+					arg = new XmlArgument(info.nom, info.type, null);
 					instr.arguments.add(arg);
 				}
 			}
@@ -596,11 +593,11 @@ public class ProgrammeDerive extends Programme {
 				InfoTypee info = iter.next();
 				if ( (info.isIn() || info.isInOut()) && (info.isEnregistrement(this)) ) {
 					if (oper==null) {
-						oper = new Operation("saisir_"+inter.getNomGroupe());
-						param_oper = new Parametre(classe.getSansIndice(info.nom), info.type, "OUT");
+						oper = new XmlOperation("saisir_"+inter.getNomGroupe());
+						param_oper = new XmlParametre(classe.getSansIndice(info.nom), info.type, "OUT");
 						oper.parametres.add(param_oper);
-						instr_oper = new Instruction("lire");
-						arg_oper = new Argument(classe.getSansIndice(info.nom), info.type, null);
+						instr_oper = new XmlInstruction("lire");
+						arg_oper = new XmlArgument(classe.getSansIndice(info.nom), info.type, null);
 						if (info.dim!=null) {
 							arg_oper.dim = this.traiterEnregistrementInstruction(info.dim, arg_oper.nom);
 						}
@@ -608,8 +605,8 @@ public class ProgrammeDerive extends Programme {
 						oper.instructions.add(instr_oper);
 						operations.add(oper);
 					}
-					instr_obj = new Instruction("saisir_"+inter.getNomGroupe());
-					arg_oper = new Argument(info.nom, info.type, "OUT");
+					instr_obj = new XmlInstruction("saisir_"+inter.getNomGroupe());
+					arg_oper = new XmlArgument(info.nom, info.type, "OUT");
 					instr_obj.arguments.add(arg_oper);
 					instructions.add(instr_obj);
 				}
@@ -618,10 +615,10 @@ public class ProgrammeDerive extends Programme {
 	}
 	
 	private void traiterEnregistrementAffichage(){
-		Instruction instr, instr_oper, instr_obj;
-		Operation oper=null;
-		Argument arg, arg_oper;
-		Parametre param_oper;
+		XmlInstruction instr, instr_oper, instr_obj;
+		XmlOperation oper=null;
+		XmlArgument arg, arg_oper;
+		XmlParametre param_oper;
 		if ( inter.avecAffichageElementaire() || inter.avecAffichageFichierTexte() || inter.avecAffichageSql()) {
 			for(Iterator<InfoTypee> iter=infos.iterator(); iter.hasNext(); ) {
 				InfoTypee info = iter.next();
@@ -633,11 +630,11 @@ public class ProgrammeDerive extends Programme {
 		}
 		else if (inter.avecProcedureAffichage()) {
 			// infos non enregistrements
-			instr = new Instruction("ecrire");
+			instr = new XmlInstruction("ecrire");
 			for(Iterator<InfoTypee> iter=infos.iterator(); iter.hasNext(); ) {
 				InfoTypee info = iter.next();
 				if ( (info.isOut() || info.isInOut()) && (!info.isEnregistrement(this)) ) {
-					arg = new Argument(info.nom, info.type, null);
+					arg = new XmlArgument(info.nom, info.type, null);
 					instr.arguments.add(arg);
 				}
 			}
@@ -649,11 +646,11 @@ public class ProgrammeDerive extends Programme {
 				InfoTypee info = iter.next();
 				if ( (info.isOut() || info.isInOut()) && (info.isEnregistrement(this)) ) {
 					if (oper==null) {
-						oper = new Operation("afficher_"+inter.getNomGroupe());
-						param_oper = new Parametre(classe.getSansIndice(info.nom), info.type, "IN");
+						oper = new XmlOperation("afficher_"+inter.getNomGroupe());
+						param_oper = new XmlParametre(classe.getSansIndice(info.nom), info.type, "IN");
 						oper.parametres.add(param_oper);
-						instr_oper = new Instruction("ecrire");
-						arg_oper = new Argument(classe.getSansIndice(info.nom), info.type, null);
+						instr_oper = new XmlInstruction("ecrire");
+						arg_oper = new XmlArgument(classe.getSansIndice(info.nom), info.type, null);
 						if (info.dim!=null) {
 							arg_oper.dim = this.traiterEnregistrementInstruction(info.dim, arg_oper.nom);
 						}
@@ -661,8 +658,8 @@ public class ProgrammeDerive extends Programme {
 						oper.instructions.add(instr_oper);
 						operations.add(oper);
 					}
-					instr_obj = new Instruction("afficher_"+inter.getNomGroupe());
-					arg_oper = new Argument(info.nom, info.type, "IN");
+					instr_obj = new XmlInstruction("afficher_"+inter.getNomGroupe());
+					arg_oper = new XmlArgument(info.nom, info.type, "IN");
 					instr_obj.arguments.add(arg_oper);
 					instructions.add(instr_obj);
 				}
@@ -671,23 +668,23 @@ public class ProgrammeDerive extends Programme {
 	}
 	
 	private void traiterEnregistrementCalcul(){
-		Instruction instr;
-		Operation oper;
+		XmlInstruction instr;
+		XmlOperation oper;
 		if (inter.avecFonctionsCalcul()) {
-			ArrayList<org.javascool.proglets.plurialgo.langages.modele.Argument> arg_donnees = new ArrayList<org.javascool.proglets.plurialgo.langages.modele.Argument>();
-			ArrayList<org.javascool.proglets.plurialgo.langages.modele.Parametre> param_donnees = new ArrayList<org.javascool.proglets.plurialgo.langages.modele.Parametre>();
+			ArrayList<ModeleArgument> arg_donnees = new ArrayList<ModeleArgument>();
+			ArrayList<ModeleParametre> param_donnees = new ArrayList<ModeleParametre>();
 			for(Iterator<InfoTypee> iter=infos.iterator(); iter.hasNext(); ) {
 				InfoTypee info = iter.next();
 				if (info.isIn()) {
-					arg_donnees.add (new Argument(info.nom, info.type, info.mode));
-					param_donnees.add (new Parametre(info.nom, info.type, info.mode));
+					arg_donnees.add (new XmlArgument(info.nom, info.type, info.mode));
+					param_donnees.add (new XmlParametre(info.nom, info.type, info.mode));
 				}
 			}
 			for(Iterator<InfoTypee> iter=infos.iterator(); iter.hasNext(); ) {
 				InfoTypee info = iter.next();
 				if (info.isOut()) {
-					instr = new Instruction("calculer_"+info.nom);
-					oper = new Operation("calculer_"+info.nom);
+					instr = new XmlInstruction("calculer_"+info.nom);
+					oper = new XmlOperation("calculer_"+info.nom);
 					this.traiterEnregistrementInstructions(prog.instructions, oper.instructions, "objet");
 					oper.traiterElementaireCalculFonction(info, instr, param_donnees, arg_donnees);
 					oper.traiterElementaireVariables(infos);
@@ -697,8 +694,8 @@ public class ProgrammeDerive extends Programme {
 			}
 		}
 		else if (inter.avecProcedureCalcul()) {
-			instr = new Instruction("calculer");
-			oper = new Operation("calculer");
+			instr = new XmlInstruction("calculer");
+			oper = new XmlOperation("calculer");
 			this.traiterEnregistrementInstructions(prog.instructions, oper.instructions, "objet");
 			oper.traiterElementaireCalculProcedure(infos, instr);
 			oper.traiterElementaireVariables(infos);
@@ -716,7 +713,7 @@ public class ProgrammeDerive extends Programme {
 
 	private void traiterClasse(){
 		String nom_cl = inter.getNomGroupe();
-		classe = new Classe(nom_cl, false);
+		classe = new XmlClasse(nom_cl, false);
 		classes.add(classe);
 		infos = classe.creerProprietes(infos, inter.getProprietesGroupe());
 		for(Iterator<InfoTypee> iter=infos.iterator(); iter.hasNext(); ) {
@@ -728,55 +725,55 @@ public class ProgrammeDerive extends Programme {
 					}
 				}
 			}
-			Variable var = new Variable(info.nom, info.type, null);
+			XmlVariable var = new XmlVariable(info.nom, info.type, null);
 			variables.add(var);
 		}
 		traiterClasseSaisie();
 		traiterClasseCalcul();
 		traiterClasseAffichage();
 		// constructeur
-		Constructeur constr = new Constructeur(classe.nom);
-		constr.instructions.add( new Instruction("// ajouter des instructions"));
+		XmlConstructeur constr = new XmlConstructeur(classe.nom);
+		constr.instructions.add( new XmlInstruction("// ajouter des instructions"));
 		classe.constructeurs.add(constr);
 	}
 	
-	private void traiterClasseInstructions(ArrayList<org.javascool.proglets.plurialgo.langages.modele.Instruction> liste1, ArrayList<org.javascool.proglets.plurialgo.langages.modele.Instruction> liste2, String nom_obj){
-		for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Instruction> iter=liste1.iterator(); iter.hasNext(); ) {
-			Instruction instr = (Instruction) iter.next();
-			Instruction instr_copie = traiterClasseInstruction(instr, nom_obj);
+	private void traiterClasseInstructions(ArrayList<ModeleInstruction> liste1, ArrayList<ModeleInstruction> liste2, String nom_obj){
+		for(Iterator<ModeleInstruction> iter=liste1.iterator(); iter.hasNext(); ) {
+			XmlInstruction instr = (XmlInstruction) iter.next();
+			XmlInstruction instr_copie = traiterClasseInstruction(instr, nom_obj);
 			if (instr_copie!=null) liste2.add(instr_copie);
 		}
 	}
 	
-	private Instruction traiterClasseInstruction(Instruction instr, String nom_obj){
-		Instruction copie = new Instruction(instr.nom); 
+	private XmlInstruction traiterClasseInstruction(XmlInstruction instr, String nom_obj){
+		XmlInstruction copie = new XmlInstruction(instr.nom); 
 		if (instr.isSi()) {
-			for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Si> iter=instr.sis.iterator(); iter.hasNext();) {
-				Si si = (Si) iter.next();
-				Si si_copie = this.traiterClasseInstructionSi(si, nom_obj);
+			for (Iterator<ModeleSi> iter=instr.sis.iterator(); iter.hasNext();) {
+				XmlSi si = (XmlSi) iter.next();
+				XmlSi si_copie = this.traiterClasseInstructionSi(si, nom_obj);
 				if (si_copie!=null) copie.sis.add(si_copie);
 			}
 			if (copie.sis.size()==0) return null;
 		}
 		else if (instr.isPour()) {
-			for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Pour> iter=instr.pours.iterator(); iter.hasNext();) {
-				Pour pour = (Pour) iter.next();
-				Pour pour_copie = this.traiterClasseInstructionPour(pour, nom_obj);
+			for (Iterator<ModelePour> iter=instr.pours.iterator(); iter.hasNext();) {
+				XmlPour pour = (XmlPour) iter.next();
+				XmlPour pour_copie = this.traiterClasseInstructionPour(pour, nom_obj);
 				if (pour_copie!=null) copie.pours.add(pour_copie);
 			}
 			if (copie.pours.size()==0) return null;
 		}
 		else if (instr.isTantQue()) {
-			for (Iterator<org.javascool.proglets.plurialgo.langages.modele.TantQue> iter=instr.tantques.iterator(); iter.hasNext();) {
-				TantQue tq = (TantQue) iter.next();
-				TantQue tq_copie = this.traiterClasseInstructionTantQue(tq, nom_obj);
+			for (Iterator<ModeleTantQue> iter=instr.tantques.iterator(); iter.hasNext();) {
+				XmlTantQue tq = (XmlTantQue) iter.next();
+				XmlTantQue tq_copie = this.traiterClasseInstructionTantQue(tq, nom_obj);
 				if (tq_copie!=null) copie.tantques.add(tq_copie);
 			}
 			if (copie.tantques.size()==0) return null;
 		}
 		else if (instr.isAffectation()) {
-			for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Affectation> iter=instr.affectations.iterator(); iter.hasNext();) {
-				Affectation aff = (Affectation) iter.next();
+			for (Iterator<ModeleAffectation> iter=instr.affectations.iterator(); iter.hasNext();) {
+				XmlAffectation aff = (XmlAffectation) iter.next();
 				copie.affectations.add(this.traiterClasseInstructionAffectation(aff, nom_obj));
 			}
 		}
@@ -789,8 +786,8 @@ public class ProgrammeDerive extends Programme {
 		return copie;
 	}
 	
-	private Si traiterClasseInstructionSi(Si si, String nom_obj){
-		Si copie = new Si();
+	private XmlSi traiterClasseInstructionSi(XmlSi si, String nom_obj){
+		XmlSi copie = new XmlSi();
 		copie.condition = traiterClasseInstruction(si.condition, nom_obj);
 		copie.schema = si.schema;
 		traiterClasseInstructions(si.instructions, copie.instructions, nom_obj);
@@ -798,8 +795,8 @@ public class ProgrammeDerive extends Programme {
 		return (copie);
 	}
 	
-	private Pour traiterClasseInstructionPour(Pour pour, String nom_obj){
-		Pour copie = new Pour();
+	private XmlPour traiterClasseInstructionPour(XmlPour pour, String nom_obj){
+		XmlPour copie = new XmlPour();
 		copie.var = pour.var;
 		copie.debut = traiterClasseInstruction(pour.debut, nom_obj);
 		copie.fin = traiterClasseInstruction(pour.fin, nom_obj);
@@ -810,8 +807,8 @@ public class ProgrammeDerive extends Programme {
 		return (copie);
 	}
 	
-	private TantQue traiterClasseInstructionTantQue(TantQue tq, String nom_obj){
-		TantQue copie = new TantQue();
+	private XmlTantQue traiterClasseInstructionTantQue(XmlTantQue tq, String nom_obj){
+		XmlTantQue copie = new XmlTantQue();
 		copie.condition = traiterClasseInstruction(tq.condition, nom_obj);
 		copie.schema = tq.schema;
 		traiterClasseInstructions(tq.instructions, copie.instructions, nom_obj);
@@ -819,31 +816,31 @@ public class ProgrammeDerive extends Programme {
 		return (copie);
 	}
 	
-	private Affectation traiterClasseInstructionAffectation(Affectation aff, String nom_obj){
-		Affectation copie = new Affectation();
+	private XmlAffectation traiterClasseInstructionAffectation(XmlAffectation aff, String nom_obj){
+		XmlAffectation copie = new XmlAffectation();
 		copie.var = traiterClasseInstruction(aff.var, nom_obj);
 		copie.expression = traiterClasseInstruction(aff.expression, nom_obj);
 		return (copie);
 	}
 	
-	private Instruction traiterClasseArguments(Instruction instr, String nom_obj){
-		Instruction copie = new Instruction(instr.nom);
-		Argument arg, arg_copie;
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Argument> iter=instr.arguments.iterator(); iter.hasNext();) {
-			arg = (Argument) iter.next();
-			arg_copie = new Argument(arg.nom, arg.type, arg.mode);
+	private XmlInstruction traiterClasseArguments(XmlInstruction instr, String nom_obj){
+		XmlInstruction copie = new XmlInstruction(instr.nom);
+		XmlArgument arg, arg_copie;
+		for (Iterator<ModeleArgument> iter=instr.arguments.iterator(); iter.hasNext();) {
+			arg = (XmlArgument) iter.next();
+			arg_copie = new XmlArgument(arg.nom, arg.type, arg.mode);
 			copie.arguments.add(arg_copie);
 			arg_copie.nom = traiterEnregistrementInstruction(arg.nom, nom_obj);
 		}
-		arg = (Argument) instr.getRetour();
+		arg = (XmlArgument) instr.getRetour();
 		if (arg!=null) {
-			arg_copie = new Argument(arg.nom, arg.type, arg.mode);
+			arg_copie = new XmlArgument(arg.nom, arg.type, arg.mode);
 			copie.retours.add(arg_copie);
 			arg_copie.nom = traiterEnregistrementInstruction(arg.nom, nom_obj);
 		}
-		arg = (Argument) instr.getObjet();
+		arg = (XmlArgument) instr.getObjet();
 		if (arg!=null) {
-			arg_copie = new Argument(arg.nom, arg.type, arg.mode);
+			arg_copie = new XmlArgument(arg.nom, arg.type, arg.mode);
 			copie.objets.add(arg_copie);
 			arg_copie.nom = traiterEnregistrementInstruction(arg.nom, nom_obj);
 		}
@@ -854,8 +851,8 @@ public class ProgrammeDerive extends Programme {
 		if (txt==null) return "";
 		//System.out.println("avant remplacer : " + txt);
 		StringBuffer buf = new StringBuffer(" " + txt + " ");
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Variable> iter=this.classe.proprietes.iterator(); iter.hasNext();) {
-			Variable prop = (Variable) iter.next();
+		for (Iterator<ModeleVariable> iter=this.classe.proprietes.iterator(); iter.hasNext();) {
+			XmlVariable prop = (XmlVariable) iter.next();
 			//System.out.println("propriete : " + prop.nom);
 			String ancien = prop.nom;
 			int lg_ancien = ancien.length();
@@ -899,9 +896,9 @@ public class ProgrammeDerive extends Programme {
 	}
 	
 	private void traiterClasseSaisie(){
-		Instruction instr, instr_oper, instr_obj;
-		Operation oper=null;
-		Argument arg, arg_oper;
+		XmlInstruction instr, instr_oper, instr_obj;
+		XmlOperation oper=null;
+		XmlArgument arg, arg_oper;
 		if (inter.avecSaisieElementaire() || inter.avecSaisieFichierTexte() || inter.avecSaisieFormulaire() || inter.avecSaisieSql()) {
 			for(Iterator<InfoTypee> iter=infos.iterator(); iter.hasNext(); ) {
 				InfoTypee info = iter.next();
@@ -913,11 +910,11 @@ public class ProgrammeDerive extends Programme {
 		}
 		if (inter.avecProcedureSaisie()  || inter.avecFonctionsSaisie()) {
 			// infos non objets
-			instr = new Instruction("lire");
+			instr = new XmlInstruction("lire");
 			for(Iterator<InfoTypee> iter=infos.iterator(); iter.hasNext(); ) {
 				InfoTypee info = iter.next();
 				if ( (info.isIn() || info.isInOut()) && (!info.isClasse(this)) ) {
-					arg = new Argument(info.nom, info.type, null);
+					arg = new XmlArgument(info.nom, info.type, null);
 					instr.arguments.add(arg);
 				}
 			}
@@ -929,9 +926,9 @@ public class ProgrammeDerive extends Programme {
 				InfoTypee info = iter.next();
 				if ( (info.isIn() || info.isInOut()) && (info.isClasse(this)) ) {
 					if (oper==null) {
-						oper = new Operation("saisir");
-						instr_oper = new Instruction("lire");
-						arg_oper = new Argument("this", info.type, null);
+						oper = new XmlOperation("saisir");
+						instr_oper = new XmlInstruction("lire");
+						arg_oper = new XmlArgument("this", info.type, null);
 						if (info.dim!=null) {
 							arg_oper.dim = this.traiterClasseInstruction(info.dim, arg_oper.nom);
 						}
@@ -939,8 +936,8 @@ public class ProgrammeDerive extends Programme {
 						oper.instructions.add(instr_oper);
 						classe.operations.add(oper);
 					}
-					instr_obj = new Instruction("saisir");
-					arg = new Argument(info.nom, info.type, null);
+					instr_obj = new XmlInstruction("saisir");
+					arg = new XmlArgument(info.nom, info.type, null);
 					instr_obj.setObjet(arg);
 					instructions.add(instr_obj);
 				}
@@ -949,11 +946,11 @@ public class ProgrammeDerive extends Programme {
 	}
 	
 	private void traiterClasseCalcul(){
-		Instruction instr;
-		Operation oper=null;
-		Argument arg;
-		Parametre param_oper;
-		InfoTypee info_obj=null; Argument obj;
+		XmlInstruction instr;
+		XmlOperation oper=null;
+		XmlArgument arg;
+		XmlParametre param_oper;
+		InfoTypee info_obj=null; XmlArgument obj;
 		for(Iterator<InfoTypee> iter=infos.iterator(); iter.hasNext(); ) {
 			InfoTypee info = iter.next();
 			if ( (info.isClasse(this)) ) {
@@ -961,29 +958,29 @@ public class ProgrammeDerive extends Programme {
 			}
 		}
 		if (info_obj==null) return;
-		obj = new Argument(info_obj.nom, info_obj.type, null);
+		obj = new XmlArgument(info_obj.nom, info_obj.type, null);
 		if (inter.avecFonctionsCalcul()) {
-			ArrayList<org.javascool.proglets.plurialgo.langages.modele.Argument> arg_donnees = new ArrayList<org.javascool.proglets.plurialgo.langages.modele.Argument>();
-			ArrayList<org.javascool.proglets.plurialgo.langages.modele.Parametre> param_donnees = new ArrayList<org.javascool.proglets.plurialgo.langages.modele.Parametre>();
+			ArrayList<ModeleArgument> arg_donnees = new ArrayList<ModeleArgument>();
+			ArrayList<ModeleParametre> param_donnees = new ArrayList<ModeleParametre>();
 			for(Iterator<InfoTypee> iter=infos.iterator(); iter.hasNext(); ) {
 				InfoTypee info = iter.next();
 				if (info.isIn() && info!=info_obj) {
-					arg_donnees.add (new Argument(info.nom, info.type, info.mode));
-					param_donnees.add (new Parametre(info.nom, info.type, info.mode));
+					arg_donnees.add (new XmlArgument(info.nom, info.type, info.mode));
+					param_donnees.add (new XmlParametre(info.nom, info.type, info.mode));
 				}
 			}
 			for(Iterator<InfoTypee> iter=infos.iterator(); iter.hasNext(); ) {
 				InfoTypee info = iter.next();
 				if (info.isOut() && info!=info_obj) {
-					instr = new Instruction("calculer_"+info.nom);
-					arg = new Argument(info.nom, info.type, null);
+					instr = new XmlInstruction("calculer_"+info.nom);
+					arg = new XmlArgument(info.nom, info.type, null);
 					instr.setRetour(arg);
 					instr.setObjet(obj);
 					instr.arguments.addAll(arg_donnees);
 					instructions.add(instr);
-					oper = new Operation("calculer_"+info.nom);
+					oper = new XmlOperation("calculer_"+info.nom);
 					this.traiterClasseInstructions(prog.instructions, oper.instructions, "this");
-					oper.setRetour( new Variable(info.nom, info.type, null) );
+					oper.setRetour( new XmlVariable(info.nom, info.type, null) );
 					oper.parametres.addAll(param_donnees);
 					oper.traiterElementaireVariables(infos);
 					classe.operations.add(oper);
@@ -991,15 +988,15 @@ public class ProgrammeDerive extends Programme {
 			}
 		}
 		else if (inter.avecProcedureCalcul()) {
-			instr = new Instruction("calculer");
-			oper = new Operation("calculer");
+			instr = new XmlInstruction("calculer");
+			oper = new XmlOperation("calculer");
 			this.traiterClasseInstructions(prog.instructions, oper.instructions, "this");
 			for(Iterator<InfoTypee> iter=infos.iterator(); iter.hasNext(); ) {
 				InfoTypee info = iter.next();
 				if ( (info.isIn() || info.isInOut() || info.isOut()) && info!=info_obj ) {
-					arg = new Argument(info.nom, info.type, info.mode);
+					arg = new XmlArgument(info.nom, info.type, info.mode);
 					instr.arguments.add(arg);
-					param_oper = new Parametre(info.nom, info.type, info.mode);
+					param_oper = new XmlParametre(info.nom, info.type, info.mode);
 					oper.parametres.add(param_oper);
 					oper.traiterElementaireVariables(infos);
 				}
@@ -1018,9 +1015,9 @@ public class ProgrammeDerive extends Programme {
 	}
 	
 	private void traiterClasseAffichage(){
-		Instruction instr, instr_oper, instr_obj;
-		Operation oper=null;
-		Argument arg, arg_oper;
+		XmlInstruction instr, instr_oper, instr_obj;
+		XmlOperation oper=null;
+		XmlArgument arg, arg_oper;
 		if (inter.avecAffichageElementaire()  || inter.avecAffichageFichierTexte() || inter.avecAffichageSql()) {
 			for(Iterator<InfoTypee> iter=infos.iterator(); iter.hasNext(); ) {
 				InfoTypee info = iter.next();
@@ -1032,11 +1029,11 @@ public class ProgrammeDerive extends Programme {
 		}
 		if (inter.avecProcedureAffichage()) {
 			// avec infos non objets
-			instr = new Instruction("ecrire");
+			instr = new XmlInstruction("ecrire");
 			for(Iterator<InfoTypee> iter=infos.iterator(); iter.hasNext(); ) {
 				InfoTypee info = iter.next();
 				if ( (info.isOut() || info.isInOut()) && (!info.isClasse(this)) ) {
-					arg = new Argument(info.nom, info.type, null);
+					arg = new XmlArgument(info.nom, info.type, null);
 					instr.arguments.add(arg);
 				}
 			}
@@ -1048,9 +1045,9 @@ public class ProgrammeDerive extends Programme {
 				InfoTypee info = iter.next();
 				if ( (info.isOut() || info.isInOut()) && (info.isClasse(this)) ) {
 					if (oper==null) {
-						oper = new Operation("afficher");
-						instr_oper = new Instruction("ecrire");
-						arg_oper = new Argument("this", info.type, null);
+						oper = new XmlOperation("afficher");
+						instr_oper = new XmlInstruction("ecrire");
+						arg_oper = new XmlArgument("this", info.type, null);
 						if (info.dim!=null) {
 							arg_oper.dim = this.traiterClasseInstruction(info.dim, arg_oper.nom);
 						}
@@ -1058,8 +1055,8 @@ public class ProgrammeDerive extends Programme {
 						oper.instructions.add(instr_oper);
 						classe.operations.add(oper);
 					}
-					instr_obj = new Instruction("afficher");
-					arg = new Argument(info.nom, info.type, null);
+					instr_obj = new XmlInstruction("afficher");
+					arg = new XmlArgument(info.nom, info.type, null);
 					instr_obj.setObjet(arg);
 					instructions.add(instr_obj);
 				}

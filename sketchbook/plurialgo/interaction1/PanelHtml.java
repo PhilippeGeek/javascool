@@ -10,12 +10,13 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URI;
 import java.net.URL;
-
 import javax.swing.*;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 
+import org.javascool.gui.EditorWrapper;
 import org.javascool.proglets.plurialgo.divers.Divers;
 
 
@@ -32,6 +33,7 @@ public class PanelHtml extends JPanel implements ActionListener, HyperlinkListen
 	private JButton accueilButton;
 	private JButton precedentButton;
 	private JButton contactButton;
+	private JButton boutonsButton;
 	private String[] sites;
 	private int i_site;
 	private JPopupMenu popup;
@@ -60,10 +62,12 @@ public class PanelHtml extends JPanel implements ActionListener, HyperlinkListen
 	private void initBoutons() {
 		precedentButton = new JButton("Precedent"); precedentButton.addActionListener(this);
 		accueilButton = new JButton("Accueil"); accueilButton.addActionListener(this);
+		boutonsButton = new JButton("?"); boutonsButton.addActionListener(this);
 		contactButton = new JButton("Auteur"); contactButton.addActionListener(this);
 		JPanel p = new JPanel();
         p.add(precedentButton); p.add(Box.createHorizontalStrut(5)); 
         p.add(accueilButton); p.add(Box.createHorizontalStrut(5));
+        p.add(boutonsButton); p.add(Box.createHorizontalStrut(5));
         p.add(contactButton); p.add(Box.createHorizontalStrut(5));
 		this.add(p,"South");
 	}	
@@ -94,7 +98,10 @@ public class PanelHtml extends JPanel implements ActionListener, HyperlinkListen
 		else if (e.getSource() == this.accueilButton) {
 			i_site = 0;
 			sites[0] = PanelInteraction.urlDoc + accueil_page;
-			this.showHtml(PanelInteraction.urlDoc + accueil_page);	
+			this.showHtml(PanelInteraction.urlDoc + accueil_page);
+		}
+		else if (e.getSource() == this.boutonsButton) {
+			consulter("boutons.html");
 		}
 		else if (e.getSource() == this.contactButton) {
 			this.contacter();
@@ -107,7 +114,18 @@ public class PanelHtml extends JPanel implements ActionListener, HyperlinkListen
 	public void hyperlinkUpdate(HyperlinkEvent e) {
 		if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
 			String desc = e.getDescription();
-			if (desc.endsWith(".html")) {
+			if (desc.startsWith("http")) {
+				if(java.awt.Desktop.isDesktopSupported()){
+					if (java.awt.Desktop.getDesktop().isSupported(java.awt.Desktop.Action.BROWSE)){
+						java.awt.Desktop dt = java.awt.Desktop.getDesktop();
+						try {
+							dt.browse(new URI(desc));
+						} catch (Exception ex) {
+						} 
+					}
+				}
+			}
+			else if (desc.endsWith(".html")) {
 				pInter.clearConsole();
 				if (i_site < sites.length - 1) i_site = i_site+1;
 				sites[i_site] = PanelInteraction.urlDoc + desc;
@@ -118,16 +136,10 @@ public class PanelHtml extends JPanel implements ActionListener, HyperlinkListen
 				pInter.clearConsole();
 				StringBuffer buf = this.ouvrir(nom_url);
 				if (buf!=null) {
-					if (desc.endsWith(".bas")) {
-						pInter.colorier("vb");
-					}
-					else if (desc.endsWith(".jvs")) {
-						pInter.colorier("javascool");
-					}
-					this.pInter.pEdition.setText(buf.toString());
+					this.pInter.setText(buf.toString());
 					if (desc.equals("ex_intro_nom_sel_jvs.txt")) {
 						try {
-							JTextArea editArea = pInter.pEdition.editArea;
+							JTextArea editArea = EditorWrapper.getRTextArea();
 							editArea.requestFocusInWindow();
 							int i_start = editArea.getLineStartOffset(7);
 							editArea.setCaretPosition(i_start);
@@ -139,33 +151,19 @@ public class PanelHtml extends JPanel implements ActionListener, HyperlinkListen
 							System.out.println(ex);
 						}						
 					}
-					if (desc.equals("ex_note_lire_sel_jvs.txt")) {
+					if (desc.startsWith("ex_note_lire_sel") && desc.endsWith(".txt")) {
 						try {
-							JTextArea editArea = pInter.pEdition.editArea;
+							JTextArea editArea = EditorWrapper.getRTextArea();
 							editArea.requestFocusInWindow();
-							int i_start = editArea.getLineStartOffset(3);
-							editArea.setCaretPosition(i_start);
-							int i_end = editArea.getLineEndOffset(3);
-							editArea.select(i_start, i_end-1);
-							
-						}
-						catch(Exception ex) {
-							System.out.println(ex);
-						}						
-					}
-					if (desc.startsWith("ex_si_sel") && desc.endsWith(".txt")) {
-						try {
-							JTextArea editArea = pInter.pEdition.editArea;
-							editArea.requestFocusInWindow();
-							int lig_start = 12;
-							int lig_end = 20;
+							int lig_start = 3;
+							int lig_end = 3;
 							if (desc.endsWith("_py.txt")) {
-								lig_start = 4;
-								lig_end = 10;
+								lig_start = 1;
+								lig_end = 1;
 							}
-							if (desc.endsWith("_bas.txt")) {
-								lig_start = 12;
-								lig_end = 19;
+							if (desc.endsWith("_larp.txt")) {
+								lig_start = 2;
+								lig_end = 3;
 							}
 							int i_start = editArea.getLineStartOffset(lig_start);
 							editArea.setCaretPosition(i_start);
@@ -177,7 +175,70 @@ public class PanelHtml extends JPanel implements ActionListener, HyperlinkListen
 							System.out.println(ex);
 						}						
 					}
-					pInter.selectPanel(pInter.pEdition);
+					if (desc.startsWith("ex_demo_sel") && desc.endsWith(".txt")) {
+						try {
+							JTextArea editArea = EditorWrapper.getRTextArea();
+							editArea.requestFocusInWindow();
+							int lig_start = 14;
+							int lig_end = 25;
+							if (desc.endsWith("_py.txt")) {
+								lig_start = 5;
+								lig_end = 13;
+							}
+							if (desc.endsWith("_larp.txt")) {
+								lig_start = 9;
+								lig_end = 17;
+							}
+							if (desc.endsWith("_bas.txt")) {
+								lig_start = 13;
+								lig_end = 21;
+							}
+							if (desc.endsWith("_xcas.txt")) {
+								lig_start = 5;
+								lig_end = 17;
+							}
+							int i_start = editArea.getLineStartOffset(lig_start);
+							editArea.setCaretPosition(i_start);
+							int i_end = editArea.getLineEndOffset(lig_end);
+							editArea.select(i_start, i_end-1);
+							
+						}
+						catch(Exception ex) {
+							System.out.println(ex);
+						}						
+					}
+					if (desc.startsWith("ex_si_sel") && desc.endsWith(".txt")) {
+						try {
+							JTextArea editArea = EditorWrapper.getRTextArea();
+							editArea.requestFocusInWindow();
+							int lig_start = 12;
+							int lig_end = 20;
+							if (desc.endsWith("_py.txt")) {
+								lig_start = 4;
+								lig_end = 10;
+							}
+							if (desc.endsWith("_larp.txt")) {
+								lig_start = 9;
+								lig_end = 15;
+							}
+							if (desc.endsWith("_bas.txt")) {
+								lig_start = 12;
+								lig_end = 19;
+							}
+							if (desc.endsWith("_xcas.txt")) {
+								lig_start = 4;
+								lig_end = 12;
+							}
+							int i_start = editArea.getLineStartOffset(lig_start);
+							editArea.setCaretPosition(i_start);
+							int i_end = editArea.getLineEndOffset(lig_end);
+							editArea.select(i_start, i_end-1);
+							
+						}
+						catch(Exception ex) {
+							System.out.println(ex);
+						}						
+					}
 				}				
 			}
 			else if (desc.endsWith(".xml")) {
@@ -186,7 +247,7 @@ public class PanelHtml extends JPanel implements ActionListener, HyperlinkListen
 				StringBuffer buf = this.ouvrir(nom_url);
 				if (buf!=null) {
 					Divers.remplacerSpeciaux(buf);
-					pInter.pXml.setText(buf.toString());
+					pInter.setXml(buf.toString());
 					pInter.traduireXml();
 					pInter.clearConsole();
 					pInter.writeConsole("ouverture de " + nom_url);
@@ -195,6 +256,79 @@ public class PanelHtml extends JPanel implements ActionListener, HyperlinkListen
 					pInter.clearConsole();
 					pInter.writeConsole("url inexistante ou indisponible : " + nom_url + "\n");
 				}
+			}
+			else if (desc.endsWith(".si")) {
+				desc = desc.substring(0, desc.length()-3);	
+				pInter.pSi.effacer();
+				if (desc.equals("ex_tri_1")) {
+					pInter.pSi.setSi(0, 0, "x1", "<=", "x2", "ET", "x2", "<=", "x3");
+					pInter.pSi.setSi(1, 0, "x1", "<=", "x3", "ET", "x3", "<=", "x2");
+					pInter.pSi.setSi(2, 0, "x2", "<=", "x1", "ET", "x1", "<=", "x3");
+					pInter.pSi.setSi(3, 0, "x2", "<=", "x3", "ET", "x3", "<=", "x1");
+					pInter.pSi.setSi(4, 0, "x3", "<=", "x1", "ET", "x1", "<=", "x2");
+					pInter.pSi.setSi(5, 0, "");
+				}	
+				else if (desc.equals("ex_tri_2")) {
+					pInter.pSi.setSi(0, 0, "x1", "<=", "x2");
+					pInter.pSi.setSi(1, 1, "x3", "<=", "x1");
+					pInter.pSi.setSi(2, 1, "x3", "<=", "x2");
+					pInter.pSi.setSi(3, 1, "");
+					pInter.pSi.setSi(4, 0, "");
+					pInter.pSi.setSi(5, 1, "x3", "<=", "x2");
+					pInter.pSi.setSi(6, 1, "x3", "<=", "x1");
+					pInter.pSi.setSi(7, 1, "");
+				}
+				if (desc.equals("ex_si")) {
+					pInter.pSi.setSi(0, 0, "quantite", "==", "1");
+					pInter.pSi.setSi(1, 0, "quantite", "==", "2", "OU", "quantite", "==", "3");
+					pInter.pSi.setSi(2, 0, "quantite", "==", "4", "OU", "quantite", "==", "5");
+					pInter.pSi.setSi(3, 0, "");
+				}		
+				pInter.selectPanel(pInter.pSi);			
+			}
+			else if (desc.endsWith(".boucle")) {
+				desc = desc.substring(0, desc.length()-7);		
+				pInter.pBoucles.effacer();
+				if (desc.equals("ex_impair")) {
+					pInter.pBoucles.setPour("k", "1", "99", "2");
+					pInter.pBoucles.setSomme(true, "som:1/k");
+				}	
+				else if (desc.equals("ex_intro_nom_jvs")) {
+					pInter.pBoucles.setPour("k", "1", "n", "1");
+					pInter.pBoucles.setSomme(true, "totalCommande:prixTotal");
+				}			
+				else if (desc.equals("ex_tab_bon_form")) {
+					pInter.pBoucles.setPour("k", "1", "n", "1");
+					pInter.pBoucles.setSomme(true, "totalCommande:quantite[k]*prixUnitaire[k]");						
+				}		
+				else if (desc.equals("ex_tab_bon_fich") || desc.equals("ex_tab_bon_sql")) {
+					pInter.pBoucles.setPour("k", "1", "n_lig", "1");
+					pInter.pBoucles.setSomme(true, "totalCommande:quantite[k]*prixUnitaire[k]");						
+				}
+				else if (desc.equals("ex_intro")) {
+					pInter.pBoucles.setPour("k", "1", "n", "1");
+				}
+				else if (desc.equals("ex_note_somme")) {
+					pInter.pBoucles.setPour("k", "1", "n", "1");
+					pInter.pBoucles.setSomme(true, "total:note");
+				}
+				else if (desc.equals("ex_note_comptage")) {
+					pInter.pBoucles.setPour("k", "1", "n", "1");
+					pInter.pBoucles.setCompterVar(true, "nbAdmis");
+					pInter.pBoucles.setCompterCondition("note",">=","10");
+				}
+				else if (desc.equals("ex_note_minmax")) {
+					pInter.pBoucles.setPour("k", "1", "n", "1");
+					//pInter.pBoucles.setPourOption("tantque");
+					pInter.pBoucles.setMinimum(true, "mini:note");
+					pInter.pBoucles.setMaximum(true, "maxi:note");
+				}
+				else if (desc.equals("ex_note_rech")) {
+					pInter.pBoucles.setPour("", "", "", "");
+					pInter.pBoucles.setBoucle("tantque");
+					pInter.pBoucles.setBoucleCondition("note","<","0","OU","note",">","20");
+				}				
+				pInter.selectPanel(pInter.pBoucles);			
 			}
 			else if (desc.endsWith(".princ")) {
 				desc = desc.substring(0, desc.length()-6);
@@ -291,10 +425,11 @@ public class PanelHtml extends JPanel implements ActionListener, HyperlinkListen
 				}			
 				// matrices
 				if (desc.startsWith("ex_mat_intro")) {
-					pInter.pPrincipal.donneesField.setText("n p mat"); 
-					pInter.pPrincipal.resultatsField.setText("n p mat");
-					pInter.pPrincipal.entiersField.setText("n p"); 
-					pInter.pPrincipal.mat_reelsField.setText("mat"); 
+					pInter.pPrincipal.donneesField.setText("nbLignes nbColonnes tab"); 
+					pInter.pPrincipal.resultatsField.setText("total");
+					pInter.pPrincipal.entiersField.setText("nbLignes nbColonnes");
+					pInter.pPrincipal.reelsField.setText("total"); 
+					pInter.pPrincipal.mat_reelsField.setText("tab"); 
 				}
 				// enregistrements : point
 				if (desc.startsWith("ex_enreg_point")||desc.startsWith("ex_objet_point")) {
@@ -402,7 +537,7 @@ public class PanelHtml extends JPanel implements ActionListener, HyperlinkListen
 					pInter.pPrincipal.donneesField.setText("note"); 
 					pInter.pPrincipal.reelsField.setText("note"); 
 				}	
-				// selection du panel Principal
+				// selection du panel principal
 				pInter.selectPanel(pInter.pPrincipal);
 			}
 		}
@@ -436,6 +571,12 @@ public class PanelHtml extends JPanel implements ActionListener, HyperlinkListen
 		pInter.writeConsole("IUT des Pays de l'Adour\n");
 		pInter.writeConsole("Universite de Pau et des Pays de l'Adour\n");
 		pInter.writeConsole("Avenue de l'universite 64000 PAU (France)\n");
+	}
+	
+	void consulter(String page) {
+		if (i_site < sites.length - 1) i_site = i_site+1;
+		sites[i_site] = PanelInteraction.urlDoc + page;
+		this.showHtml(PanelInteraction.urlDoc + page);			
 	}
 	
 	private StringBuffer ouvrir(String nom_f) {

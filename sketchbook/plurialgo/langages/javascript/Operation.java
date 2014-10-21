@@ -4,8 +4,8 @@
 package org.javascool.proglets.plurialgo.langages.javascript;
 
 import java.util.*;
-
 import org.javascool.proglets.plurialgo.divers.*;
+import org.javascool.proglets.plurialgo.langages.modele.*;
 
 
 /**
@@ -13,7 +13,7 @@ import org.javascool.proglets.plurialgo.divers.*;
  * 
  * @author Raffinat Patrick
 */
-public class Operation extends org.javascool.proglets.plurialgo.langages.modele.Operation {
+public class Operation extends ModeleOperation {
 	
 	public Operation() {
 	}
@@ -24,21 +24,21 @@ public class Operation extends org.javascool.proglets.plurialgo.langages.modele.
 		Divers.ecrire(buf, "function ");
 		Divers.ecrire(buf, nom);
 		Divers.ecrire(buf, "(");
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Parametre> iter=parametres.iterator(); iter.hasNext();) {
+		for (Iterator<ModeleParametre> iter=parametres.iterator(); iter.hasNext();) {
 			Parametre param = (Parametre) iter.next();
 			param.ecrire(prog, buf);
 			if (iter.hasNext()) Divers.ecrire(buf, ", ");
 		}
 		Divers.ecrire(buf, ")");	
 		Divers.ecrire(buf, " { ");
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Variable> iter=variables.iterator(); iter.hasNext();) {
+		for (Iterator<ModeleVariable> iter=variables.iterator(); iter.hasNext();) {
 			Variable var = (Variable) iter.next();
 			var.ecrire(prog, buf, indent+1);
 		}
 		if (isFonction()) {
 			retour.ecrire(prog, buf, indent+1);
 		}
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Instruction> iter=instructions.iterator(); iter.hasNext();) {
+		for (Iterator<ModeleInstruction> iter=instructions.iterator(); iter.hasNext();) {
 			Instruction instr = (Instruction) iter.next();
 			instr.ecrire(prog, buf, indent+1);
 		}
@@ -48,7 +48,7 @@ public class Operation extends org.javascool.proglets.plurialgo.langages.modele.
 		Divers.ecrire(buf, "} ", indent);
 	}
 	
-	public void ecrire(org.javascool.proglets.plurialgo.langages.modele.Programme prog, StringBuffer buf, int indent) {
+	public void ecrire(ModeleProgramme prog, StringBuffer buf, int indent) {
 		this.ecrire((org.javascool.proglets.plurialgo.langages.javascript.Programme)prog, buf, indent);
 	}
 	

@@ -6,7 +6,7 @@ package org.javascool.proglets.plurialgo.langages.xml;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.StringTokenizer;
-import org.javascool.proglets.plurialgo.langages.modele.InfoTypee;
+import org.javascool.proglets.plurialgo.langages.modele.*;
 
 
 /**
@@ -100,11 +100,11 @@ public class InfoTypeeList {
 		infos.addAll(liste);
 	}
 	
-	void addVariables(ArrayList<org.javascool.proglets.plurialgo.langages.modele.Variable> liste) {
+	void addVariables(ArrayList<ModeleVariable> liste) {
 		infos.addAll(liste);
 	}
 	
-	void addParametres(ArrayList<org.javascool.proglets.plurialgo.langages.modele.Parametre> liste) {
+	void addParametres(ArrayList<ModeleParametre> liste) {
 		infos.addAll(liste);
 	}
 	

@@ -4,8 +4,8 @@
 package org.javascool.proglets.plurialgo.langages.java;
 
 import java.util.Iterator;
-
 import org.javascool.proglets.plurialgo.divers.Divers;
+import org.javascool.proglets.plurialgo.langages.modele.*;
 
 /**
  * Cette classe permet de traduire en Java une instruction
@@ -33,11 +33,11 @@ public class FichierTexte {
 		Divers.ecrire(buf, "while ( (ligne=" + "f_in" + ".readLine()) != null) {", indent+1);
 		Divers.ecrire(buf, "// analyse de la ligne lue", indent+2);
 		Divers.ecrire(buf, "java.util.StringTokenizer tok=new java.util.StringTokenizer(ligne," + prog.quote(" \\t") + ");", indent+2);
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Argument> iter=instr_pere.arguments.iterator(); iter.hasNext();) {
+		for (Iterator<ModeleArgument> iter=instr_pere.arguments.iterator(); iter.hasNext();) {
 			Argument arg = (Argument) iter.next();
 			lireFichierTexte(prog, buf, indent+2, arg);
 		}
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Instruction> iter=arg_fichier.instructions.iterator(); iter.hasNext();) {
+		for (Iterator<ModeleInstruction> iter=arg_fichier.instructions.iterator(); iter.hasNext();) {
 			Instruction instr = (Instruction) iter.next();
 			instr.ecrire(prog, buf, indent+2);
 		}
@@ -54,7 +54,7 @@ public class FichierTexte {
 		//this.addVariable(new Variable("f_out","PrintStream"));
 		Divers.ecrire(buf, "PrintStream " + "f_out" + " = new PrintStream( ");
 		Divers.ecrire(buf, "new FileOutputStream(" + arg_fichier.nom +") );");
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Argument> iter=instr_pere.arguments.iterator(); iter.hasNext();) {
+		for (Iterator<ModeleArgument> iter=instr_pere.arguments.iterator(); iter.hasNext();) {
 			Argument arg = (Argument) iter.next();
 			String msg = prog.quote(arg.nom+" : ");
 			ecrireFichierTexte(prog, buf, indent+1, msg, arg);
@@ -123,7 +123,7 @@ public class FichierTexte {
 	
 	private void lireTabClasseFichierTexte(Programme prog, StringBuffer buf, int indent, Argument arg) {
 		Classe cl = (Classe) arg.getClasseOfTab(prog);
-		for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Variable> iter=cl.proprietes.iterator(); iter.hasNext(); ) {
+		for(Iterator<ModeleVariable> iter=cl.proprietes.iterator(); iter.hasNext(); ) {
 			Variable prop = (Variable) iter.next();
 			if (prop.isOut()) continue;
 			if ( prop.isSimple()) {
@@ -141,7 +141,7 @@ public class FichierTexte {
 	
 	private void lireClasseFichierTexte(Programme prog, StringBuffer buf, int indent, Argument arg) {
 		Classe cl = (Classe) arg.getClasse(prog);
-		for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Variable> iter=cl.proprietes.iterator(); iter.hasNext(); ) {
+		for(Iterator<ModeleVariable> iter=cl.proprietes.iterator(); iter.hasNext(); ) {
 			Variable prop = (Variable) iter.next();
 			if (prop.isOut()) continue;
 			if ( prop.isTabSimple()) {
@@ -216,7 +216,7 @@ public class FichierTexte {
 	private void ecrireClasseFichierTexte(Programme prog, StringBuffer buf, int indent, String msg, Argument arg) {
 		if (msg!=null) Divers.ecrire(buf, "f_out.println(" + msg + ");", indent); 
 		Classe cl = (Classe) arg.getClasse(prog);
-		for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Variable> iter=cl.proprietes.iterator(); iter.hasNext(); ) {
+		for(Iterator<ModeleVariable> iter=cl.proprietes.iterator(); iter.hasNext(); ) {
 			Variable prop = (Variable) iter.next();
 			if (prop.isIn()) continue;
 			Argument arg1 = new Argument(arg.nom+"."+prop.nom, prop.type, arg.mode);
@@ -232,7 +232,7 @@ public class FichierTexte {
 		Divers.ecrire(buf, "for(ii=0; ii<" + prog.getDim(1, arg) + "; ii++) {", indent);
 		String msg1 = prog.quote("rang ") + " + ii + " + prog.quote(" de " + arg.nom + " : ");
 		Divers.ecrire(buf, "f_out.println(" + msg1 + "); ", indent+1); 
-		for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Variable> iter=cl.proprietes.iterator(); iter.hasNext(); ) {
+		for(Iterator<ModeleVariable> iter=cl.proprietes.iterator(); iter.hasNext(); ) {
 			Variable prop = (Variable) iter.next();
 			if (prop.isIn()) continue;
 			Argument arg1 = new Argument(arg.nom+"[ii]"+"."+prop.nom, prop.type, arg.oteDim(1));

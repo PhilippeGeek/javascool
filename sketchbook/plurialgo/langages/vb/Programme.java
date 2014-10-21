@@ -4,14 +4,14 @@
 package org.javascool.proglets.plurialgo.langages.vb;
 
 import java.util.*;
-
 import org.javascool.proglets.plurialgo.divers.*;
+import org.javascool.proglets.plurialgo.langages.modele.*;
 
 
 /**
  * Cette classe hérite de la classe homonyme du modèle.
 */
-public class Programme extends org.javascool.proglets.plurialgo.langages.modele.Programme {
+public class Programme extends ModeleProgramme {
 
 	/**
 	 * Redéfinition obligatoire de cette méthode.
@@ -38,7 +38,7 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 	
 	private void addSousProgs(StringBuffer buf, int indent) {
 		//if ((operations.size()>0)) this.commenter(buf, "sous programmes", indent);
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Operation> iter=operations.iterator(); iter.hasNext();) {
+		for (Iterator<ModeleOperation> iter=operations.iterator(); iter.hasNext();) {
 			Operation oper = (Operation) iter.next();
 			oper.ecrire(this, buf, indent);
 		}
@@ -46,7 +46,7 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 	
 	private void addClasses(StringBuffer buf, int indent) {
 		//if ((classes.size()>0))	this.commenter(buf, "enregistrements ou classes", indent);
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Classe> iter=classes.iterator(); iter.hasNext();) {
+		for (Iterator<ModeleClasse> iter=classes.iterator(); iter.hasNext();) {
 			Classe classe = (Classe) iter.next();
 			if (classe.isEnregistrement()) {
 				classe.ecrireEnregistrement(this, buf, indent);
@@ -62,11 +62,11 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 	private void addMain(StringBuffer buf, int indent) {
 		//this.commenter(buf, "programme principal", indent);
 		Divers.ecrire(buf, "sub main()", indent);
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Variable> iter=variables.iterator(); iter.hasNext();) {
+		for (Iterator<ModeleVariable> iter=variables.iterator(); iter.hasNext();) {
 			Variable var = (Variable) iter.next();
 			var.ecrire(this, buf, indent+1);
 		}
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Instruction> iter=instructions.iterator(); iter.hasNext();) {
+		for (Iterator<ModeleInstruction> iter=instructions.iterator(); iter.hasNext();) {
 			Instruction instr = (Instruction) iter.next();
 			instr.ecrire(this, buf, indent+1);
 		}

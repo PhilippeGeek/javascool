@@ -8,6 +8,6 @@ package org.javascool.proglets.plurialgo.langages.xml;
  * (Visual Basic, Javascool ou Larp).
 */
 public interface iAnalyseur {
-	public Programme getProgramme();
+	public XmlProgramme getProgramme();
 	public StringBuffer getXml();
 }

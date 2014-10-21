@@ -6,10 +6,8 @@ package org.javascool.proglets.plurialgo.langages.xml;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.StringTokenizer;
-
 import org.javascool.proglets.plurialgo.divers.*;
-import org.javascool.proglets.plurialgo.langages.modele.InfoTypee;
-import org.javascool.proglets.plurialgo.langages.modele.Noeud;
+import org.javascool.proglets.plurialgo.langages.modele.*;
 
 
 /**
@@ -17,7 +15,7 @@ import org.javascool.proglets.plurialgo.langages.modele.Noeud;
  */
 public class AnalyseurLarp implements iAnalyseur {
 	
-	private Programme prog_xml;
+	private XmlProgramme prog_xml;
 	private StringBuffer buf_larp;
 	private StringBuffer buf_xml;
 	private String module_aux = "calculer";
@@ -31,8 +29,8 @@ public class AnalyseurLarp implements iAnalyseur {
 	*/		
 	public AnalyseurLarp(String txt, boolean ignorerLire, boolean ignorerEcrire, Intermediaire inter) {
 		this.nettoyerLarp(txt);
-		prog_xml = new Programme(); 
-		Programme prog_nouveau = new ProgrammeNouveau(inter);
+		prog_xml = new XmlProgramme(); 
+		XmlProgramme prog_nouveau = new ProgrammeNouveau(inter);
 		prog_xml.nom = prog_nouveau.nom;
 		prog_xml.variables.addAll(prog_nouveau.variables);
 		this.larpEnXml(ignorerLire, ignorerEcrire);
@@ -46,7 +44,7 @@ public class AnalyseurLarp implements iAnalyseur {
 	*/		
 	public AnalyseurLarp(String txt, boolean ignorerLire, boolean ignorerEcrire) {
 		this.nettoyerLarp(txt);
-		prog_xml = new Programme(); 
+		prog_xml = new XmlProgramme(); 
 		prog_xml.nom = "exemple";
 		this.larpEnXml(ignorerLire, ignorerEcrire);
 	}
@@ -54,7 +52,7 @@ public class AnalyseurLarp implements iAnalyseur {
 	/**
 	      Retourne l'objet de classe Programme obtenu après analyse du code Larp.
 	*/		
-	public Programme getProgramme() {
+	public XmlProgramme getProgramme() {
 		return prog_xml;
 	}
 
@@ -182,7 +180,7 @@ public class AnalyseurLarp implements iAnalyseur {
 		try {
 			//this.initImport();
 			this.initOperation();
-			Operation cur_oper = null;
+			XmlOperation cur_oper = null;
 			Noeud cur_nd = prog_xml;
 			StringTokenizer tok = new StringTokenizer(buf_larp.toString(),"\n\r",false);
 			while(tok.hasMoreTokens()) {
@@ -190,8 +188,8 @@ public class AnalyseurLarp implements iAnalyseur {
 				if (this.isImport(ligne)) {
 				}
 				else if (this.isAffectation(ligne)) {
-					Instruction instr = new Instruction("affectation");
-					Affectation aff = new Affectation(); aff.var = ""; aff.expression = "";
+					XmlInstruction instr = new XmlInstruction("affectation");
+					XmlAffectation aff = new XmlAffectation(); aff.var = ""; aff.expression = "";
 					instr.affectations.add(aff); aff.parent = instr;
 					this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;
 					int i = ligne.indexOf("=");
@@ -205,8 +203,8 @@ public class AnalyseurLarp implements iAnalyseur {
 					}
 				}
 				else if (this.isSi(ligne)) {
-					Instruction instr = new Instruction("si");
-					Si si = new Si(); si.condition = "";
+					XmlInstruction instr = new XmlInstruction("si");
+					XmlSi si = new XmlSi(); si.condition = "";
 					instr.sis.add(si); si.parent = instr;
 					this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;
 					cur_nd = si;
@@ -220,8 +218,8 @@ public class AnalyseurLarp implements iAnalyseur {
 				}
 				else if (this.isSinonSi(ligne)) {
 					this.ajouterCommentaires(cur_nd);
-					Instruction instr = (Instruction) cur_nd.parent;
-					Si sinonsi = new Si(); sinonsi.condition = "";
+					XmlInstruction instr = (XmlInstruction) cur_nd.parent;
+					XmlSi sinonsi = new XmlSi(); sinonsi.condition = "";
 					instr.sis.add(sinonsi); sinonsi.parent = instr;
 					cur_nd = sinonsi;
 					ligne = Divers.remplacer(ligne, "SINON", "");
@@ -235,8 +233,8 @@ public class AnalyseurLarp implements iAnalyseur {
 				}
 				else if (this.isSinon(ligne)) {
 					this.ajouterCommentaires(cur_nd);
-					Instruction instr = (Instruction) cur_nd.parent;
-					Si sinon = new Si(); sinon.condition = "";
+					XmlInstruction instr = (XmlInstruction) cur_nd.parent;
+					XmlSi sinon = new XmlSi(); sinon.condition = "";
 					instr.sis.add(sinon); sinon.parent = instr;
 					cur_nd = sinon;
 				}
@@ -246,8 +244,8 @@ public class AnalyseurLarp implements iAnalyseur {
 					cur_nd = cur_nd.parent;
 				}
 				else if (this.isTantque(ligne)) {
-					Instruction instr = new Instruction("tantque");
-					TantQue tq = new TantQue(); tq.condition = "";
+					XmlInstruction instr = new XmlInstruction("tantque");
+					XmlTantQue tq = new XmlTantQue(); tq.condition = "";
 					instr.tantques.add(tq); tq.parent = instr;
 					this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;
 					cur_nd = tq;
@@ -265,8 +263,8 @@ public class AnalyseurLarp implements iAnalyseur {
 					cur_nd = cur_nd.parent;
 				}
 				else if (this.isPour(ligne)) {
-					Instruction instr = new Instruction("pour");
-					Pour pour = new Pour(); 
+					XmlInstruction instr = new XmlInstruction("pour");
+					XmlPour pour = new XmlPour(); 
 					pour.var = ""; pour.debut = ""; pour.fin = ""; pour.pas = "1";
 					instr.pours.add(pour); pour.parent = instr;
 					this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;
@@ -310,8 +308,8 @@ public class AnalyseurLarp implements iAnalyseur {
 					while(tok1.hasMoreTokens()) {
 						String parametre = tok1.nextToken();
 						if (parametre==null) continue;
-						Instruction instr = new Instruction("lire");
-						Argument arg = new Argument();
+						XmlInstruction instr = new XmlInstruction("lire");
+						XmlArgument arg = new XmlArgument();
 						arg.nom = parametre.trim();	
 						arg.type = "REEL"; trouverType(arg);
 						instr.arguments.add(arg); arg.parent = instr;
@@ -320,7 +318,7 @@ public class AnalyseurLarp implements iAnalyseur {
 				}
 				else if (this.isEcrire(ligne)) {
 					if (ignorerEcrire && (cur_oper==null)) continue;
-					Instruction instr = new Instruction("ecrire");
+					XmlInstruction instr = new XmlInstruction("ecrire");
 					int i = ligne.indexOf("ECRIRE") + 6;
 					int j = ligne.length();
 					String parametres = ligne.substring(i+1, j);
@@ -335,7 +333,7 @@ public class AnalyseurLarp implements iAnalyseur {
 						String parametre = tok1.nextToken();
 						if (parametre==null) continue;
 						if (parametre.contains("'")) continue;
-						Argument arg = new Argument();
+						XmlArgument arg = new XmlArgument();
 						arg.nom = parametre.trim();	
 						arg.type = "EXPR"; trouverType(arg);
 						instr.arguments.add(arg); arg.parent = instr;
@@ -344,7 +342,7 @@ public class AnalyseurLarp implements iAnalyseur {
 						this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;
 					}
 					else if (!parametres.contains("&") && !parametres.contains(":")) {
-						Argument arg = new Argument();
+						XmlArgument arg = new XmlArgument();
 						arg.nom = ligne.substring(i+1, j).trim();	
 						arg.type = "EXPR";
 						instr.arguments.add(arg); arg.parent = instr;
@@ -352,7 +350,7 @@ public class AnalyseurLarp implements iAnalyseur {
 					}
 				}
 				else if (this.isOper(ligne)) {
-					cur_oper = (Operation) prog_xml.getOperation(this.trouverNom(ligne));
+					cur_oper = (XmlOperation) prog_xml.getOperation(this.trouverNom(ligne));
 					if (cur_oper==null) continue;
 					cur_nd = cur_oper;
 				}
@@ -366,8 +364,8 @@ public class AnalyseurLarp implements iAnalyseur {
 						cur_oper = null;
 						continue;
 					}
-					Instruction instr = new Instruction("affectation");
-					Affectation aff = new Affectation(); 
+					XmlInstruction instr = new XmlInstruction("affectation");
+					XmlAffectation aff = new XmlAffectation(); 
 					aff.var = cur_oper.getRetour().nom;
 					aff.expression = trouverNom(ligne);
 					instr.affectations.add(aff); aff.parent = instr;
@@ -379,10 +377,10 @@ public class AnalyseurLarp implements iAnalyseur {
 					String parametre = null;
 					String parametres = null;
 					String nom = trouverNom(ligne);
-					Operation oper = (Operation) prog_xml.getOperation(nom);
+					XmlOperation oper = (XmlOperation) prog_xml.getOperation(nom);
 					if (oper==null) {
 						ligne = Divers.remplacer(ligne,"EXECUTER ", "" );
-						Instruction instr = new Instruction(ligne.trim());
+						XmlInstruction instr = new XmlInstruction(ligne.trim());
 						this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;
 						continue;
 					}
@@ -390,11 +388,11 @@ public class AnalyseurLarp implements iAnalyseur {
 					if (i>=0) {
 						parametres = ligne.substring(i+1, ligne.lastIndexOf(")"));
 					}
-					Instruction instr = new Instruction(oper.nom);
+					XmlInstruction instr = new XmlInstruction(oper.nom);
 					this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;
-					for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Parametre> iter=oper.parametres.iterator(); iter.hasNext();) {
-						Parametre param = (Parametre) iter.next();
-						Argument arg = new Argument(param.nom, param.type, param.mode);
+					for (Iterator<ModeleParametre> iter=oper.parametres.iterator(); iter.hasNext();) {
+						XmlParametre param = (XmlParametre) iter.next();
+						XmlArgument arg = new XmlArgument(param.nom, param.type, param.mode);
 						instr.arguments.add(arg);
 						if (parametres==null) continue;
 						if (parametres.trim().length()==0) continue;
@@ -442,11 +440,11 @@ public class AnalyseurLarp implements iAnalyseur {
 
 	private void initOperation() {
 		StringTokenizer tok = new StringTokenizer(buf_larp.toString(),"\n\r",false);
-		Operation oper = null;
+		XmlOperation oper = null;
 		while(tok.hasMoreTokens()) {
 			String ligne = tok.nextToken();
 			if (this.isOper(ligne)) {
-				oper = new Operation();
+				oper = new XmlOperation();
 				oper.nom = trouverNom(ligne);
 				if (oper.nom==null) continue;
 				int i = ligne.indexOf("ENTRER");
@@ -455,7 +453,7 @@ public class AnalyseurLarp implements iAnalyseur {
 				while(tok1.hasMoreTokens()) {
 					String parametre = tok1.nextToken();
 					if (parametre==null) continue;
-					Parametre param = new Parametre();
+					XmlParametre param = new XmlParametre();
 					param.mode = "IN";
 					param.type = "REEL";
 					param.nom = trouverNom(parametre);
@@ -472,7 +470,7 @@ public class AnalyseurLarp implements iAnalyseur {
 			}
 			if (this.isFinOper(ligne)) {
 				if (trouverNom(ligne)!=null) {
-					Variable retour = new Variable();
+					XmlVariable retour = new XmlVariable();
 					retour.mode = "OUT";
 					retour.type = "REEL";
 					retour.nom = "retour";
@@ -533,16 +531,16 @@ public class AnalyseurLarp implements iAnalyseur {
 	private void ajouterCommentaires(Noeud cur_nd) {
 		// pour eviter les listes d'instructions vides
 		if (this.getInstructions(cur_nd).size()>0) return;
-		Instruction instr = new Instruction("// ajouter des instructions");
+		XmlInstruction instr = new XmlInstruction("// ajouter des instructions");
 		this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;
 	}
 	
-	private ArrayList<org.javascool.proglets.plurialgo.langages.modele.Instruction> getInstructions(Noeud nd) {
-		if (nd instanceof Programme) return ((Programme) nd).instructions;
-		if (nd instanceof Operation) return ((Operation) nd).instructions;
-		if (nd instanceof Si) return ((Si) nd).instructions;
-		if (nd instanceof Pour) return ((Pour) nd).instructions;
-		if (nd instanceof TantQue) return ((TantQue) nd).instructions;
+	private ArrayList<ModeleInstruction> getInstructions(Noeud nd) {
+		if (nd instanceof XmlProgramme) return ((XmlProgramme) nd).instructions;
+		if (nd instanceof XmlOperation) return ((XmlOperation) nd).instructions;
+		if (nd instanceof XmlSi) return ((XmlSi) nd).instructions;
+		if (nd instanceof XmlPour) return ((XmlPour) nd).instructions;
+		if (nd instanceof XmlTantQue) return ((XmlTantQue) nd).instructions;
 		if (nd==null) return prog_xml.instructions;
 		return getInstructions(nd.parent);
 	}

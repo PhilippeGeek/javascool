@@ -6,11 +6,8 @@ package org.javascool.proglets.plurialgo.langages.xml;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.StringTokenizer;
-
 import org.javascool.proglets.plurialgo.divers.*;
-import org.javascool.proglets.plurialgo.langages.modele.InfoTypee;
-import org.javascool.proglets.plurialgo.langages.modele.Noeud;
-
+import org.javascool.proglets.plurialgo.langages.modele.*;
 
 
 /**
@@ -18,7 +15,7 @@ import org.javascool.proglets.plurialgo.langages.modele.Noeud;
  */
 public class AnalyseurJavascool implements iAnalyseur {
 	
-	private Programme prog_xml;
+	private XmlProgramme prog_xml;
 	private StringBuffer buf_jvs;
 	private StringBuffer buf_xml;
 	private String pile[] = new String[50];
@@ -38,12 +35,12 @@ public class AnalyseurJavascool implements iAnalyseur {
 	/**
 	      Retourne l'objet de classe Programme obtenu après analyse du code Javascool.
 	*/		
-	public Programme getProgramme() {
+	public XmlProgramme getProgramme() {
 		if (buf_xml.toString().contains("[") && buf_xml.toString().contains("]")) {
 			StringBuffer buf = new StringBuffer(buf_xml);
 			Divers.remplacer(buf, "]", "+1]");
 			Divers.remplacer(buf, "-1+1]", "]");
-			return (Programme) org.javascool.proglets.plurialgo.langages.modele.Programme.getProgramme(buf.toString(),"xml");
+			return (XmlProgramme) ModeleProgramme.getProgramme(buf.toString(),"xml");
 		}
 		return prog_xml;	}
 
@@ -105,15 +102,15 @@ public class AnalyseurJavascool implements iAnalyseur {
 	}
 	
 	private void jvsEnXml(boolean ignorerLire, boolean ignorerEcrire) {
-		prog_xml = new Programme();
+		prog_xml = new XmlProgramme();
 		prog_xml.nom = "exemple"; 
 		try {
 			i_pile = 0; pile[0] = "";
 			//this.initImport();
 			this.initClasse();
-			Operation cur_oper = null;
-			Classe cur_class = null;
-			Constructeur cur_constr = null;
+			XmlOperation cur_oper = null;
+			XmlClasse cur_class = null;
+			XmlConstructeur cur_constr = null;
 			Noeud cur_nd = prog_xml;	// le noeud où seront ajoutées les instructions
 			StringTokenizer tok = new StringTokenizer(buf_jvs.toString(),"\n\r",false);
 			while(tok.hasMoreTokens()) {
@@ -121,7 +118,7 @@ public class AnalyseurJavascool implements iAnalyseur {
 				//System.out.println("ligne:"+ligne);
 				if (this.isClasse(ligne)) {
 					i_pile++; pile[i_pile] = "class"; 
-					cur_class = (Classe) prog_xml.getClasse(trouverNom(ligne));
+					cur_class = (XmlClasse) prog_xml.getClasse(trouverNom(ligne));
 				}
 				else if (this.isFinClasse(ligne)) {
 					if (i_pile>0) i_pile--;
@@ -129,7 +126,7 @@ public class AnalyseurJavascool implements iAnalyseur {
 				}
 				else if (this.isConstructeur(ligne)) {
 					i_pile++; pile[i_pile] = "constructeur"; 
-					cur_constr = new Constructeur(cur_class.nom);
+					cur_constr = new XmlConstructeur(cur_class.nom);
 					cur_class.constructeurs.add(cur_constr);
 					cur_nd = cur_constr;
 					cur_nd.parent = prog_xml;
@@ -140,8 +137,8 @@ public class AnalyseurJavascool implements iAnalyseur {
 					cur_constr = null;
 				}
 				else if (this.isAffectation(ligne)) {
-					Instruction instr = new Instruction("affectation");
-					Affectation aff = new Affectation(); aff.var = ""; aff.expression = "";
+					XmlInstruction instr = new XmlInstruction("affectation");
+					XmlAffectation aff = new XmlAffectation(); aff.var = ""; aff.expression = "";
 					int i = ligne.indexOf("=");
 					String gauche = ligne.substring(0, i);
 					if (gauche!=null) aff.var = gauche.trim();
@@ -152,8 +149,8 @@ public class AnalyseurJavascool implements iAnalyseur {
 				}
 				else if (this.isRetour(ligne)) {
 					if (cur_oper==null) continue;
-					Instruction instr = new Instruction("affectation");
-					Affectation aff = new Affectation(); 
+					XmlInstruction instr = new XmlInstruction("affectation");
+					XmlAffectation aff = new XmlAffectation(); 
 					aff.var = cur_oper.getRetour().nom;
 					int i = ligne.indexOf(" "); 
 					aff.expression = "";
@@ -172,8 +169,8 @@ public class AnalyseurJavascool implements iAnalyseur {
 				}
 				else if (this.isSi(ligne)) {
 					i_pile++; pile[i_pile] = "si"; 
-					Instruction instr = new Instruction("si");
-					Si si = new Si(); si.condition = "";
+					XmlInstruction instr = new XmlInstruction("si");
+					XmlSi si = new XmlSi(); si.condition = "";
 					instr.sis.add(si); si.parent = instr;
 					this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;
 					cur_nd = si;
@@ -186,8 +183,8 @@ public class AnalyseurJavascool implements iAnalyseur {
 				}
 				else if (this.isSinonSi(ligne)) {
 					this.ajouterCommentaires(cur_nd);
-					Instruction instr = (Instruction) cur_nd.parent;
-					Si sinonsi = new Si(); sinonsi.condition = "";
+					XmlInstruction instr = (XmlInstruction) cur_nd.parent;
+					XmlSi sinonsi = new XmlSi(); sinonsi.condition = "";
 					instr.sis.add(sinonsi); sinonsi.parent = instr;
 					cur_nd = sinonsi;
 					int i = ligne.indexOf("if");
@@ -200,8 +197,8 @@ public class AnalyseurJavascool implements iAnalyseur {
 				}
 				else if (this.isSinon(ligne)) {
 					this.ajouterCommentaires(cur_nd);
-					Instruction instr = (Instruction) cur_nd.parent;
-					Si sinon = new Si(); sinon.condition = "";
+					XmlInstruction instr = (XmlInstruction) cur_nd.parent;
+					XmlSi sinon = new XmlSi(); sinon.condition = "";
 					instr.sis.add(sinon); sinon.parent = instr;
 					cur_nd = sinon;
 				}
@@ -213,8 +210,8 @@ public class AnalyseurJavascool implements iAnalyseur {
 				}
 				else if (this.isTantque(ligne)) {
 					i_pile++; pile[i_pile] = "tantque"; 
-					Instruction instr = new Instruction("tantque");
-					TantQue tq = new TantQue(); tq.condition = "";
+					XmlInstruction instr = new XmlInstruction("tantque");
+					XmlTantQue tq = new XmlTantQue(); tq.condition = "";
 					instr.tantques.add(tq); tq.parent = instr;
 					this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;
 					cur_nd = tq;
@@ -233,8 +230,8 @@ public class AnalyseurJavascool implements iAnalyseur {
 				}
 				else if (this.isPour(ligne)) {
 					i_pile++; pile[i_pile] = "pour"; 
-					Instruction instr = new Instruction("pour");
-					Pour pour = new Pour(); 
+					XmlInstruction instr = new XmlInstruction("pour");
+					XmlPour pour = new XmlPour(); 
 					pour.var = ""; pour.debut = ""; pour.fin = ""; pour.pas = "1";
 					instr.pours.add(pour); pour.parent = instr;
 					this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;
@@ -304,8 +301,8 @@ public class AnalyseurJavascool implements iAnalyseur {
 				}
 				else if (this.isLire(ligne)) {
 					if (ignorerLire && (cur_oper==null)) continue;
-					Instruction instr = new Instruction("lire");
-					Argument arg = new Argument();
+					XmlInstruction instr = new XmlInstruction("lire");
+					XmlArgument arg = new XmlArgument();
 					int i = ligne.indexOf("=");
 					arg.nom = ligne.substring(0, i).trim();
 					arg.type="REEL"; trouverType(arg, cur_oper, cur_constr);
@@ -314,7 +311,7 @@ public class AnalyseurJavascool implements iAnalyseur {
 				}
 				else if (this.isEcrire(ligne)) {
 					if (ignorerEcrire && (cur_oper==null)) continue;
-					Instruction instr = new Instruction("ecrire");
+					XmlInstruction instr = new XmlInstruction("ecrire");
 					int i = ligne.indexOf("(");
 					int j = ligne.lastIndexOf(")");
 					String parametres = ligne.substring(i+1, j);
@@ -329,7 +326,7 @@ public class AnalyseurJavascool implements iAnalyseur {
 						String parametre = tok1.nextToken();
 						if (parametre==null) continue;
 						if (parametre.contains("'")) continue;
-						Argument arg = new Argument();
+						XmlArgument arg = new XmlArgument();
 						arg.nom = parametre.trim();	
 						arg.type = "EXPR"; trouverType(arg, cur_oper, cur_constr);
 						instr.arguments.add(arg); arg.parent = instr;
@@ -338,7 +335,7 @@ public class AnalyseurJavascool implements iAnalyseur {
 						this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;
 					}
 					else if (!parametres.contains("&")) {
-						Argument arg = new Argument();
+						XmlArgument arg = new XmlArgument();
 						arg.nom = ligne.substring(i+1, j).trim();	
 						arg.type = "EXPR";
 						instr.arguments.add(arg); arg.parent = instr;
@@ -350,7 +347,7 @@ public class AnalyseurJavascool implements iAnalyseur {
 				}
 				else if (this.isProc(ligne)) {
 					i_pile++; pile[i_pile] = "sub"; 
-					cur_oper = (Operation) prog_xml.getOperation(this.trouverNom(ligne));
+					cur_oper = (XmlOperation) prog_xml.getOperation(this.trouverNom(ligne));
 					if (cur_oper==null) continue;
 					cur_nd = cur_oper;
 				}
@@ -361,7 +358,7 @@ public class AnalyseurJavascool implements iAnalyseur {
 				}
 				else if (this.isFonct(ligne)) {
 					i_pile++; pile[i_pile] = "function"; 
-					cur_oper = (Operation) prog_xml.getOperation(this.trouverNom(ligne));
+					cur_oper = (XmlOperation) prog_xml.getOperation(this.trouverNom(ligne));
 					if (cur_oper==null) continue;
 					cur_nd = cur_oper;
 				}
@@ -379,7 +376,7 @@ public class AnalyseurJavascool implements iAnalyseur {
 					cur_oper = null;
 				}
 				else if (this.isDim(ligne)) {
-					Variable var = new Variable();
+					XmlVariable var = new XmlVariable();
 					int i = ligne.indexOf("=");
 					String droite = null;
 					if (i>0) {
@@ -400,8 +397,8 @@ public class AnalyseurJavascool implements iAnalyseur {
 					}
 					if (droite!=null) {
 						if (droite.trim().startsWith("new ")) continue;
-						Instruction instr = new Instruction("affectation");
-						Affectation aff = new Affectation(); 
+						XmlInstruction instr = new XmlInstruction("affectation");
+						XmlAffectation aff = new XmlAffectation(); 
 						aff.var = var.nom;	aff.expression = droite.trim();
 						instr.affectations.add(aff); aff.parent = instr;
 						this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;
@@ -417,21 +414,21 @@ public class AnalyseurJavascool implements iAnalyseur {
 						objet = nom.substring(0, i_pt);
 						nom = nom.substring(i_pt+1);
 					}
-					Operation oper = (Operation) prog_xml.getOperation(nom);
+					XmlOperation oper = (XmlOperation) prog_xml.getOperation(nom);
 					int i = ligne.indexOf("(");
 					if (i>=0) {
 						parametres = ligne.substring(i+1, ligne.lastIndexOf(")"));
 					}
-					Instruction instr = new Instruction(oper.nom);
+					XmlInstruction instr = new XmlInstruction(oper.nom);
 					if (objet!=null) {
-						Argument arg = new Argument(objet, "REEL", null);
+						XmlArgument arg = new XmlArgument(objet, "REEL", null);
 						trouverType(arg, cur_oper, cur_constr);
 						instr.setObjet(arg);
 					}
 					this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;
-					for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Parametre> iter=oper.parametres.iterator(); iter.hasNext();) {
-						Parametre param = (Parametre) iter.next();
-						Argument arg = new Argument(param.nom, param.type, param.mode);
+					for (Iterator<ModeleParametre> iter=oper.parametres.iterator(); iter.hasNext();) {
+						XmlParametre param = (XmlParametre) iter.next();
+						XmlArgument arg = new XmlArgument(param.nom, param.type, param.mode);
 						instr.arguments.add(arg);
 						if (parametres==null) continue;
 						if (parametres.trim().length()==0) continue;
@@ -468,7 +465,7 @@ public class AnalyseurJavascool implements iAnalyseur {
 				}
 				else if (this.isPrimitive(ligne)) {
 					int j = ligne.lastIndexOf(")"); 
-					Instruction instr = new Instruction(ligne.substring(0, j+1));
+					XmlInstruction instr = new XmlInstruction(ligne.substring(0, j+1));
 					this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;
 				}
 			}
@@ -483,8 +480,8 @@ public class AnalyseurJavascool implements iAnalyseur {
 		Divers.remplacer(buf_xml, "!==", "!=");
 	}	
 
-	private void initOperation(String ligne, Classe cur_classe) {
-		Operation oper = new Operation();
+	private void initOperation(String ligne, XmlClasse cur_classe) {
+		XmlOperation oper = new XmlOperation();
 		oper.nom = trouverNom(ligne);
 		int i = ligne.indexOf("(");
 		if (i>=0) {
@@ -493,7 +490,7 @@ public class AnalyseurJavascool implements iAnalyseur {
 			while(tok1.hasMoreTokens()) {
 				String parametre = tok1.nextToken().trim();
 				if (parametre==null) continue;
-				Parametre param = new Parametre();
+				XmlParametre param = new XmlParametre();
 				param.mode = "IN";
 				param.type = trouverType(parametre);
 				param.nom = trouverNom(parametre);
@@ -503,7 +500,7 @@ public class AnalyseurJavascool implements iAnalyseur {
 			}
 		}
 		if (this.isFonct(ligne)) {
-			Variable retour = new Variable();
+			XmlVariable retour = new XmlVariable();
 			retour.mode = "OUT";
 			retour.type = trouverType(ligne);
 			retour.nom = "retour";
@@ -522,13 +519,13 @@ public class AnalyseurJavascool implements iAnalyseur {
 	
 	private void initClasse() {
 		StringTokenizer tok = new StringTokenizer(buf_jvs.toString(),"\n\r",false);
-		Classe cur_class = null;
+		XmlClasse cur_class = null;
 		i_pile = 0; pile[0] = "";
 		while(tok.hasMoreTokens()) {
 			String ligne = tok.nextToken();
 			if (this.isClasse(ligne)) {
 				i_pile++; pile[i_pile] = "class"; 
-				cur_class = new Classe();
+				cur_class = new XmlClasse();
 				cur_class.nom = trouverNom(ligne);
 				prog_xml.classes.add(cur_class);
 				cur_class.parent = prog_xml;
@@ -538,7 +535,7 @@ public class AnalyseurJavascool implements iAnalyseur {
 				cur_class = null;
 			}
 			else if (this.isPropriete(ligne)) {
-				Variable var = new Variable();
+				XmlVariable var = new XmlVariable();
 				int i = ligne.indexOf("=");
 				if (i>0) ligne = ligne.substring(0, i);
 				var.nom = trouverNom(ligne);
@@ -652,7 +649,7 @@ public class AnalyseurJavascool implements iAnalyseur {
 		return type;
 	}
 	
-	private void trouverType(Argument arg, Operation cur_oper, Constructeur cur_constr) { 
+	private void trouverType(XmlArgument arg, XmlOperation cur_oper, XmlConstructeur cur_constr) { 
 		// utilisé pour lire et ecrire
 		InfoTypeeList liste = new InfoTypeeList();
 		if (cur_oper!=null) {
@@ -683,8 +680,8 @@ public class AnalyseurJavascool implements iAnalyseur {
 			int i = arg.nom.lastIndexOf(".");
 			nom = nom.substring(i+1, nom.length());
 			liste = new InfoTypeeList();
-			for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Classe> iter1=prog_xml.classes.iterator(); iter1.hasNext();) {
-				Classe cl = (Classe) iter1.next();
+			for (Iterator<ModeleClasse> iter1=prog_xml.classes.iterator(); iter1.hasNext();) {
+				XmlClasse cl = (XmlClasse) iter1.next();
 				liste.addVariables(cl.proprietes);
 			}
 			if (nom.contains("[")) {
@@ -752,17 +749,17 @@ public class AnalyseurJavascool implements iAnalyseur {
 	private void ajouterCommentaires(Noeud cur_nd) {
 		// pour eviter les listes d'instructions vides
 		if (this.getInstructions(cur_nd).size()>0) return;
-		Instruction instr = new Instruction("// ajouter des instructions");
+		XmlInstruction instr = new XmlInstruction("// ajouter des instructions");
 		this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;
 	}
 	
-	private ArrayList<org.javascool.proglets.plurialgo.langages.modele.Instruction> getInstructions(Noeud nd) {
-		if (nd instanceof Programme) return ((Programme) nd).instructions;
-		if (nd instanceof Constructeur) return ((Constructeur) nd).instructions;
-		if (nd instanceof Operation) return ((Operation) nd).instructions;
-		if (nd instanceof Si) return ((Si) nd).instructions;
-		if (nd instanceof Pour) return ((Pour) nd).instructions;
-		if (nd instanceof TantQue) return ((TantQue) nd).instructions;
+	private ArrayList<ModeleInstruction> getInstructions(Noeud nd) {
+		if (nd instanceof XmlProgramme) return ((XmlProgramme) nd).instructions;
+		if (nd instanceof XmlConstructeur) return ((XmlConstructeur) nd).instructions;
+		if (nd instanceof XmlOperation) return ((XmlOperation) nd).instructions;
+		if (nd instanceof XmlSi) return ((XmlSi) nd).instructions;
+		if (nd instanceof XmlPour) return ((XmlPour) nd).instructions;
+		if (nd instanceof XmlTantQue) return ((XmlTantQue) nd).instructions;
 		if (nd==null) return prog_xml.instructions;
 		return getInstructions(nd.parent);
 	}
@@ -815,10 +812,11 @@ public class AnalyseurJavascool implements iAnalyseur {
 	}	
 	
 	private boolean isLire(String ligne) {
-		if (ligne.contains("readInt")) return true;
-		if (ligne.contains("readDouble")) return true;
-		if (ligne.contains("readString")) return true;
-		if (ligne.contains("readBoolean")) return true;
+		if (!ligne.contains("=")) return false;
+		if (ligne.contains("readInt(")) return true;
+		if (ligne.contains("readDouble(")) return true;
+		if (ligne.contains("readString(")) return true;
+		if (ligne.contains("readBoolean(")) return true;
 		return false;
 	}	
 	

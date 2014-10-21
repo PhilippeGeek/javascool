@@ -7,8 +7,8 @@ import java.awt.*;
 import javax.swing.*;
 
 import org.javascool.proglets.plurialgo.divers.Divers;
-import org.javascool.proglets.plurialgo.langages.modele.Programme;
-import org.javascool.proglets.plurialgo.langages.xml.Intermediaire;
+import org.javascool.proglets.plurialgo.langages.modele.*;
+import org.javascool.proglets.plurialgo.langages.xml.*;
 
 
 /**
@@ -18,62 +18,80 @@ import org.javascool.proglets.plurialgo.langages.xml.Intermediaire;
 public class PanelInteraction extends JPanel {	
 	private static final long serialVersionUID = 1L;
 	
-	public PanelConsole pConsole;
-	public JTabbedPane onglets;
-	public PanelProgrammes pEdition;
-	public PanelHtml pHtml;
-	public PanelPrincipal pPrincipal;
-	public PanelXml pXml;
-	public PanelSi pSi;
-	
-	public static String[] langList = { "javascool", "vb", "algobox", "xcas", "larp", "javascript", "php", "python", "java" };
-	public static String dirTravail = null;
-	public static String urlDoc = null;
+	PanelConsole pConsole;
+	JTabbedPane onglets;
+	PanelPrincipal pPrincipal;
+	PanelBoucles pBoucles;
+	PanelSi pSi;
+	PanelHtml pHtml;
+	PanelXml pXml;
+	PanelEdition pEdition;
 
-	public PanelInteraction() {
+	public static String urlDoc = null;
+	private static String[][] langages = null;
+	public static String[] langagesNoms = null;
+
+	public PanelInteraction(String [][] mesLangages, boolean documentationInterne) {
 		super(new BorderLayout());
-		this.initConfig();
+		// documentation
+		// documentation
+		if (documentationInterne) {
+			urlDoc = "/org/javascool/proglets/plurialgo/";
+		} else {
+			urlDoc = "http://web.univ-pau.fr/~raffinat/plurialgo/jvs/aideJVS/";
+		}
+		// langages
+		langages = mesLangages;
+		int n = langages.length;
+		langagesNoms = new String[n];
+		for(int i=0; i<n; i=i+1) {
+			langagesNoms[i] = new String(langages[i][0]);
+		}
+		// onglets
 		this.initOnglets();
 	}
-	
-	/**
-	 * L'initialisation des onglets (notamment le masquage de l'onglet Compléments)
-	 * peut être redéfini dans une classe dérivée.
-	 */
+
 	public void initOnglets() {
 		// nord
 		pConsole = new PanelConsole(null);
 		this.add(pConsole,"North");
-		// centre
+		// centre : editeur + onglets
 		onglets = new JTabbedPane(JTabbedPane.TOP);
 		onglets.setBackground(null);
 		pPrincipal = new PanelPrincipal(this);	onglets.add("Principal", pPrincipal);
 		pSi = new PanelSi(this);  onglets.add("Si", pSi);
-		pEdition = new PanelProgrammes(this); onglets.add("Résultats", pEdition);
-		//pEdition = new PanelProgrammes(this); onglets.add("Boucles", pEdition);
+		pBoucles = new PanelBoucles(this); onglets.add("Boucles", pBoucles);
 		pHtml = new PanelHtml(this); onglets.add("Documentation", pHtml);
-		pXml = new PanelXml(this);  onglets.add("Compléments", pXml);
-		this.add(onglets, "Center");
-		//onglets.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+		pXml = new PanelXml(this);  //onglets.add("Xml", pXml);
+		pEdition = new PanelEdition(this); 
+		JSplitPane splitPane= new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, pEdition, onglets);
+		splitPane.setDividerLocation(300);
+		splitPane.setOneTouchExpandable(true);
+		this.add(splitPane,"Center");
 	}
 	
-	/**
-	 * L'initialisation de la configuration (liste des langages, url de la documentation...) 
-	 * peut être redéfinie dans une classe dérivée.
-	 */
-	public void initConfig() {
-		// urlDoc
-		PanelInteraction.urlDoc = "http://web.univ-pau.fr/~raffinat/plurialgo/jvs/aideJVS/";
+	public String[] getLangagesNoms() {
+		return langagesNoms;
+	}
+	
+	public String getLangagePackage(String nom_lang) {
+		for(int i=0; i<langagesNoms.length; i=i+1) {
+			if (nom_lang.equals(langagesNoms[i])) return langages[i][1];
+		}
+		return nom_lang;
 	}
 		
 	public void selectPanel(Component pn) {
-		if (pn==pEdition) {
+		if (pn==pBoucles) {
 			onglets.setSelectedComponent(pn);
 		}
 		else if (pn==pPrincipal) {
 			onglets.setSelectedComponent(pn);
 		}
 		else if (pn==pHtml) {
+			onglets.setSelectedComponent(pn);
+		}
+		else if (pn==pSi) {
 			onglets.setSelectedComponent(pn);
 		}
 	}
@@ -94,7 +112,7 @@ public class PanelInteraction extends JPanel {
 		pConsole.writelnConsole();
 	}
 	
-	public boolean messageWarning(org.javascool.proglets.plurialgo.langages.modele.Programme prog) {
+	public boolean messageWarning(ModeleProgramme prog) {
 		if (prog.buf_warning.length()>0) {
 			this.clearConsole();
 			this.writeConsole("---------- Avertissement ----------\n");
@@ -104,7 +122,7 @@ public class PanelInteraction extends JPanel {
 		return false;
 	}
 	
-	public boolean messageErreur(org.javascool.proglets.plurialgo.langages.modele.Programme prog) {
+	public boolean messageErreur(ModeleProgramme prog) {
 		if (prog.buf_error.length()>0) {
 			this.clearConsole();
 			this.writeConsole("---------- Erreur ----------\n");
@@ -118,7 +136,15 @@ public class PanelInteraction extends JPanel {
 	// Xml
 	// ---------------------------------------------
 
-	public boolean add_xml(Programme prog) {
+	public void setXml(String txt) {
+		pXml.setText(txt);
+	}
+	
+	public String getXml() {
+		return pXml.getText();
+	}
+
+	public boolean add_xml(ModeleProgramme prog) {
 		StringBuffer buf_xml = prog.getXmlBuffer();
 		if (this.messageErreur(prog)) {
 			return false;
@@ -135,35 +161,36 @@ public class PanelInteraction extends JPanel {
 		}
 	}
 	
-	public Programme getProgramme(String txt_xml, String nom_lang) {
+	public ModeleProgramme getProgramme(String txt_xml, String nom_lang) {
 		//return BindingCastor.getProgramme(txt_algo, nom_lang);
-		return org.javascool.proglets.plurialgo.langages.modele.Programme.getProgramme(txt_xml, nom_lang);
+		return ModeleProgramme.getProgramme(txt_xml, nom_lang);
 	}	
 
 	public void traduireXml() {
 		String lang = pPrincipal.getNomLangage();
 		String txt = pXml.getText();
-		if (lang.equals("javascool") || lang.equals("python") 
-				|| lang.equals("javascript") || lang.equals("php") 
-				|| lang.equals("perl") || lang.equals("cplus")
-				|| lang.equals("xcas") ) {
+		int debut_tableau = 1;
+		for(int i=0; i<langagesNoms.length; i=i+1) {
+			if (lang.equals(langages[i][1])) {
+				if (langages[i][2].equals("0")) debut_tableau=0;
+				break;
+			};
+		}
+		if (debut_tableau == 0) {
 			StringBuffer buf = new StringBuffer(pXml.getText());
 			Divers.remplacer(buf, "]", "-1]");
 			Divers.remplacer(buf, "+1-1]", "]");
 			pXml.setText(buf.toString());
 		}
 		traduireXml(pPrincipal.getNomLangage());
-		if (lang.equals("javascool") || lang.equals("python") 
-				|| lang.equals("javascript") || lang.equals("php") 
-				|| lang.equals("perl") || lang.equals("cplus")
-				|| lang.equals("xcas") ) {
+		if (debut_tableau == 0) {
 			pXml.setText(txt);
 		}
 	}
 	
 	private boolean traduireXml(String nom_lang) {
 		// récupération du programme
-		Programme prog = getProgramme(pXml.getText(),nom_lang); 
+		ModeleProgramme prog = getProgramme(pXml.getText(),nom_lang); 
 		if (this.messageErreur(prog)) {
 			System.out.println("erreur:"+prog.getXmlBuffer().toString());
 			return false;
@@ -178,14 +205,112 @@ public class PanelInteraction extends JPanel {
 	// ---------------------------------------------
 	// Editeur
 	// ---------------------------------------------
+
+	public JTextArea getTextArea() {
+		return this.pEdition.getTextArea();
+	}
+	
+	public String getText() {
+		return this.pEdition.getText();
+	}	
+	
+	public void setText(String txt) {
+		this.pEdition.setText(txt);
+	}	
 		
-	public void add_editeur(org.javascool.proglets.plurialgo.langages.modele.Programme prog) {
+	public void add_editeur(ModeleProgramme prog) {
 		this.pEdition.add_editeur(prog);
 	}	
 	
-    public void colorier(String le_fichier) {
-    	this.pEdition.colorier(le_fichier);
-    }
+	public boolean isJavascool() {
+		String txt=getText();
+		if (txt.contains("void ") && txt.contains(" main()")) return true;
+		if (txt.contains("void ") && txt.contains(" main( ")) return true;
+		return false;
+	}	
+	
+	public boolean isVb() {
+		String txt=getText().toLowerCase();
+		if (txt.contains("sub ")) return true;
+		if (txt.contains("end function")) return true;
+		if (txt.trim().length()==0) return true;
+		return false;
+	}	
+	
+	public boolean isLarp() {
+		String txt=getText().toLowerCase();
+		if (txt.contains("debut_algorithme")) return false;		// Algobox
+		if ((txt.contains("debut")||txt.contains("début"))&&txt.contains("fin")) return true;
+		if (txt.contains("entrer")&&txt.contains("retourner")) return true;
+		return false;
+	}	
+	
+	public boolean isAlgobox() {
+		String txt=getText().toLowerCase();
+		if (txt.contains("debut_algorithme")&&txt.contains("fin_algorithme")) return true;
+		return false;
+	}	
+	
+	public boolean isPython() {
+		String txt=getText().toLowerCase();
+		if (txt.contains("void ")) return false;	// Java, Javascool
+		if (txt.contains("<html>")) return false;	// Javascript
+		if (txt.contains("<?php")) return false;	// Php
+		if (txt.contains("};")) return false;	// Xcas, Javascool...
+		if (txt.contains("library(")) return false;	// R		
+		if (isXcas()) return false;	
+		if (isVb()) return false;	
+		if (isLarp()) return false;	
+		if (isAlgobox()) return false;	
+		if (isCarmetal()) return false;	
+		return true;
+	}	
+	
+	public boolean isXcas() {
+		String txt=getText().toLowerCase();
+		if (txt.contains("void ")) return false;	// Java, Javascool
+		if (txt.contains("<html>")) return false;	// Javascript
+		if (txt.contains("<?php")) return false;	// Php
+		if (txt.contains("library(")) return false;	// R
+		if (txt.contains("fsi;")) return true;
+		if (txt.contains("fspour;")) return true;
+		if (txt.contains("ftantque;")) return true;			
+		if (txt.contains("}:")) return true;
+		if (isVb()) return false;	
+		if (isLarp()) return false;	
+		if (isAlgobox()) return false;		
+		if (txt.contains(":=")) return true;		
+		if (txt.contains("saisir(") && txt.contains(";")) return true;
+		return false;
+	}	
+	
+	public boolean isJavascript() {
+		String txt=getText().toLowerCase();
+		if (!txt.contains("<html>")) return false;	
+		if (txt.contains("<?php")) return false;	
+		return true;
+	}	
+	
+	public boolean isPhp() {
+		String txt=getText().toLowerCase();
+		if (txt.contains("<?php")) return true;	
+		return false;
+	}	
+	
+	public boolean isR() {
+		String txt=getText().toLowerCase();
+		if (txt.contains("library(")) return true;	
+		return false;
+	}	
+	
+	public boolean isCarmetal() {
+		String txt=getText();
+		if (txt.contains("library(")) return false;	
+		if (txt.contains("Println(")) return true;	
+		if (txt.contains("Input(")) return true;
+		return false;
+	}	
+		
 	
 	// ---------------------------------------------	
 	// méthodes de création d'intermediaire	
@@ -196,7 +321,7 @@ public class PanelInteraction extends JPanel {
 		PanelPrincipal fen = this.pPrincipal;
 		inter.nom_algo = fen.algoField.getText();
 		if (inter.nom_algo.equalsIgnoreCase("patrick")) inter.nom_algo = "raffinat";
-		inter.nom_langage = fen.langList.getSelectedValue().toString(); 
+		inter.nom_langage = fen.getNomLangage();
 		inter.donnees = fen.donneesField.getText();
 		inter.resultats = fen.resultatsField.getText();
 		inter.reels = fen.reelsField.getText();

@@ -9,8 +9,8 @@ import java.util.Iterator;
 import javax.swing.*;
 
 import org.javascool.proglets.plurialgo.divers.Divers;
-import org.javascool.proglets.plurialgo.langages.modele.Programme;
-import org.javascool.proglets.plurialgo.langages.xml.Intermediaire;
+import org.javascool.proglets.plurialgo.langages.modele.*;
+import org.javascool.proglets.plurialgo.langages.xml.*;
 import org.javascool.widgets.Console;
 import org.javascool.gui.Desktop;
 import org.javascool.gui.EditorWrapper;
@@ -23,19 +23,34 @@ public class PanelInteraction extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
 	public JTabbedPane onglets;
-	public PanelBoucles pEdition;
+	public PanelBoucles pBoucles;
 	public PanelHtml pHtml;
 	public PanelPrincipal pPrincipal;
-	public PanelXml pXml;
 	public PanelSi pSi;
+	private StringBuffer pXmlBuf;	// le programme courant de l'editeur au format xml
 	
-	public static String[] langList = { "javascool", "algobox", "larp", "python", "xcas", "javascript", "java", "php", "vb" };
-	public static String dirTravail = null;
-	public static String urlDoc = "/org/javascool/proglets/plurialgo/";
+	public static String urlDoc = null;
+	public static String[][] langages = null;
+	public static String[] langagesNoms = null;
 
-	public PanelInteraction() {
+	public PanelInteraction(String [][] mesLangages, boolean documentationInterne) {
 		super(new BorderLayout());
+		// documentation
+		if (documentationInterne) {
+			urlDoc = "/org/javascool/proglets/plurialgo/";
+		} else {
+			urlDoc = "http://web.univ-pau.fr/~raffinat/plurialgo/jvs/aideJVS/";
+		}
+		// langages
+		langages = mesLangages;
+		int n = langages.length;
+		langagesNoms = new String[n];
+		for(int i=0; i<n; i=i+1) {
+			langagesNoms[i] = new String(langages[i][0]);
+		}
+		// onglets
 		this.initOnglets();
+		MenusEditeur.addToolBar(this);
 	}
 
 	private void initOnglets() {
@@ -43,14 +58,25 @@ public class PanelInteraction extends JPanel {
 		onglets.setBackground(null);
 		pPrincipal = new PanelPrincipal(this);	onglets.add("Principal", pPrincipal);
 		pSi = new PanelSi(this); onglets.add("Si", pSi);
-		pEdition = new PanelBoucles(this); onglets.add("Boucles", pEdition);
+		pBoucles = new PanelBoucles(this); onglets.add("Boucles", pBoucles);
 		pHtml = new PanelHtml(this); onglets.add("Documentation", pHtml);
-		pXml = new PanelXml(this);  // onglets.add("Complements", pXml);
+		pXmlBuf = new StringBuffer();	// remplace l'onglet Xml du package interaction1
 		this.add(onglets, "Center");
 	}
-		
+	
+	public String[] getLangagesNoms() {
+		return langagesNoms;
+	}
+	
+	public String getLangagePackage(String nom_lang) {
+		for(int i=0; i<langagesNoms.length; i=i+1) {
+			if (nom_lang.equals(langagesNoms[i])) return langages[i][1];
+		}
+		return nom_lang;
+	}
+			
 	public void selectPanel(Component pn) {
-		if (pn==pEdition) {
+		if (pn==pBoucles) {
 			onglets.setSelectedComponent(pn);
 		}
 		else if (pn==pPrincipal) {
@@ -81,7 +107,7 @@ public class PanelInteraction extends JPanel {
 		Console.getInstance().print("\n");
 	}
 	
-	public boolean messageWarning(Programme prog) {
+	public boolean messageWarning(ModeleProgramme prog) {
 		if (prog.buf_warning.length()>0) {
 			this.clearConsole();
 			this.writeConsole("---------- Avertissement ----------\n");
@@ -91,7 +117,7 @@ public class PanelInteraction extends JPanel {
 		return false;
 	}
 	
-	public boolean messageErreur(Programme prog) {
+	public boolean messageErreur(ModeleProgramme prog) {
 		if (prog.buf_error.length()>0) {
 			this.clearConsole();
 			this.writeConsole("---------- Erreur ----------\n");
@@ -105,66 +131,80 @@ public class PanelInteraction extends JPanel {
 	// Xml
 	// ---------------------------------------------
 
-	public boolean add_xml(Programme prog) {
+	public void setXml(String txt) {
+		pXmlBuf.delete(0, pXmlBuf.length());
+		pXmlBuf.append(txt);
+		// pXml.setText(txt);
+	}
+	
+	public String getXml() {
+		return pXmlBuf.toString();
+		// return pXml.getText();
+	}
+
+	public boolean add_xml(ModeleProgramme prog) {
 		StringBuffer buf_xml = prog.getXmlBuffer();
 		if (this.messageErreur(prog)) {
 			return false;
 		}
 		else if (this.messageWarning(prog)) {
 			Divers.remplacerSpeciaux(buf_xml);
-			pXml.setText(buf_xml.toString());
+			setXml(buf_xml.toString());
 			return true;
 		}
 		else {
 			Divers.remplacerSpeciaux(buf_xml);
-			pXml.setText(buf_xml.toString());
+			setXml(buf_xml.toString());
 			return true;
 		}
 	}	
 
 	public void traduireXml() {
 		String lang = pPrincipal.getNomLangage();
-		String txt = pXml.getText();
-		if (lang.equals("javascool") || lang.equals("python") 
-				|| lang.equals("javascript") || lang.equals("php") 
-				|| lang.equals("perl") || lang.equals("cplus")
-				|| lang.equals("xcas") ) {
-			StringBuffer buf = new StringBuffer(pXml.getText());
+		String txt = getXml();
+		int debut_tableau = 1;
+		for(int i=0; i<langagesNoms.length; i=i+1) {
+			if (lang.equals(langages[i][1])) {
+				if (langages[i][2].equals("0")) debut_tableau=0;
+				break;
+			};
+		}
+		if (debut_tableau == 0) {
+			StringBuffer buf = new StringBuffer(getXml());
 			Divers.remplacer(buf, "]", "-1]");
 			Divers.remplacer(buf, "+1-1]", "]");
-			pXml.setText(buf.toString());
+			setXml(buf.toString());
 		}
 		traduireXml(pPrincipal.getNomLangage());
-		if (lang.equals("javascool") || lang.equals("python") 
-				|| lang.equals("javascript") || lang.equals("php") 
-				|| lang.equals("perl") || lang.equals("cplus")
-				|| lang.equals("xcas") ) {
-			pXml.setText(txt);
+		if (debut_tableau == 0) {
+			setXml(txt);
 		}
 	}
 	
 	private boolean traduireXml(String nom_lang) {
 		// recuperation du programme
-		Programme prog = Programme.getProgramme(pXml.getText(),nom_lang); 
+		ModeleProgramme prog = ModeleProgramme.getProgramme(getXml(),nom_lang); 
 		if (this.messageErreur(prog)) {
 			System.out.println("erreur:"+prog.getXmlBuffer().toString());
 			return false;
 		}
 		prog.ecrire2();
-		// edition du programme dans l'onglet Edition
+		// edition du programme 
 		this.add_editeur(prog);
-		//this.selectPanel(this.pEdition);
 		return true;
 	}
 	
 	// ---------------------------------------------
 	// Editeur
 	// ---------------------------------------------
+
+	public JTextArea getTextArea() {
+		return EditorWrapper.getRTextArea();
+	}
 	
 	public String getText() {
-		//String txt = org.javascool.gui.EditorWrapper.getText();	// car ajoute premiere ligne vide
-		String txt = EditorWrapper.getRTextArea().getText();
-		return txt;
+		// return org.javascool.gui.EditorWrapper.getText();	// car ajoute premiere ligne vide
+		return EditorWrapper.getRTextArea().getText();
 	}	
 	
 	public void setText(String txt) {
@@ -174,7 +214,7 @@ public class PanelInteraction extends JPanel {
 		MenusEditeur.addPopupMenu(this);
 	}	
 
-	public void add_editeur(org.javascool.proglets.plurialgo.langages.modele.Programme prog) {
+	public void add_editeur(ModeleProgramme prog) {
 		Iterator<String> iter = prog.les_fichiers.keySet().iterator();
 		while (iter.hasNext()) {
 			String nom_fich = iter.next();
@@ -186,7 +226,7 @@ public class PanelInteraction extends JPanel {
 	public boolean isJavascool() {
 		String txt=getText();
 		if (txt.contains("void ") && txt.contains(" main()")) return true;
-		if (txt.contains("void ") && txt.contains(" main( )")) return true;
+		if (txt.contains("void ") && txt.contains(" main( ")) return true;
 		return false;
 	}	
 	
@@ -218,10 +258,12 @@ public class PanelInteraction extends JPanel {
 		if (txt.contains("<html>")) return false;	// Javascript
 		if (txt.contains("<?php")) return false;	// Php
 		if (txt.contains("};")) return false;	// Xcas, Javascool...
+		if (txt.contains("library(")) return false;	// R		
 		if (isXcas()) return false;	
 		if (isVb()) return false;	
 		if (isLarp()) return false;	
 		if (isAlgobox()) return false;	
+		if (isCarmetal()) return false;	
 		return true;
 	}	
 	
@@ -230,6 +272,7 @@ public class PanelInteraction extends JPanel {
 		if (txt.contains("void ")) return false;	// Java, Javascool
 		if (txt.contains("<html>")) return false;	// Javascript
 		if (txt.contains("<?php")) return false;	// Php
+		if (txt.contains("library(")) return false;	// R
 		if (txt.contains("fsi;")) return true;
 		if (txt.contains("fspour;")) return true;
 		if (txt.contains("ftantque;")) return true;			
@@ -254,6 +297,20 @@ public class PanelInteraction extends JPanel {
 		if (txt.contains("<?php")) return true;	
 		return false;
 	}	
+	
+	public boolean isR() {
+		String txt=getText().toLowerCase();
+		if (txt.contains("library(")) return true;	
+		return false;
+	}	
+	
+	public boolean isCarmetal() {
+		String txt=getText();
+		if (txt.contains("library(")) return false;	
+		if (txt.contains("Println(")) return true;	
+		if (txt.contains("Input(")) return true;
+		return false;
+	}	
 		
 	// ---------------------------------------------	
 	// methodes de creation d'intermediaire	
@@ -264,7 +321,7 @@ public class PanelInteraction extends JPanel {
 		PanelPrincipal fen = this.pPrincipal;
 		inter.nom_algo = fen.algoField.getText();
 		if (inter.nom_algo.equalsIgnoreCase("patrick")) inter.nom_algo = "raffinat";
-		inter.nom_langage = fen.langList.getSelectedValue().toString(); 
+		inter.nom_langage = fen.getNomLangage(); 
 		inter.donnees = fen.donneesField.getText();
 		inter.resultats = fen.resultatsField.getText();
 		inter.reels = fen.reelsField.getText();

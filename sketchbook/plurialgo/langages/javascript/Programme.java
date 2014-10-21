@@ -4,14 +4,14 @@
 package org.javascool.proglets.plurialgo.langages.javascript;
 
 import java.util.*;
-
 import org.javascool.proglets.plurialgo.divers.*;
+import org.javascool.proglets.plurialgo.langages.modele.*;
 
 
 /**
  * Cette classe hérite de la classe homonyme du modèle.
 */
-public class Programme extends org.javascool.proglets.plurialgo.langages.modele.Programme {
+public class Programme extends ModeleProgramme {
 	
 	Instruction instr_saisie;	// saisie elementaire ou formulaire
 
@@ -22,7 +22,7 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 	 */
 	private void preTraitement() {	
 		instr_saisie = null	;
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Instruction> iter=instructions.iterator(); iter.hasNext();) {
+		for (Iterator<ModeleInstruction> iter=instructions.iterator(); iter.hasNext();) {
 			Instruction instr = (Instruction) iter.next();
 			if (instr.isLectureStandard() || instr.isLectureFormulaire()) {
 				if (instr_saisie==null) {
@@ -33,7 +33,7 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 					instr_saisie = instr;
 				}
 				else {
-					for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Argument> iter_arg=instr.arguments.iterator(); iter_arg.hasNext();) {
+					for (Iterator<ModeleArgument> iter_arg=instr.arguments.iterator(); iter_arg.hasNext();) {
 						Argument arg = (Argument) iter_arg.next();
 						instr_saisie.arguments.add(arg);
 					}
@@ -74,7 +74,7 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 	
 	private void addSousProgs(StringBuffer buf, int indent) {
 		//if ((operations.size()>0)) this.commenter(buf, "sous programmes", indent);
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Operation> iter=operations.iterator(); iter.hasNext();) {
+		for (Iterator<ModeleOperation> iter=operations.iterator(); iter.hasNext();) {
 			Operation oper = (Operation) iter.next();
 			oper.ecrire(this, buf, indent);
 		}
@@ -82,7 +82,7 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 	
 	private void addClasses(StringBuffer buf, int indent) {
 		//if ((classes.size()>0))	this.commenter(buf, "enregistrements ou classes", indent);
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Classe> iter=classes.iterator(); iter.hasNext();) {
+		for (Iterator<ModeleClasse> iter=classes.iterator(); iter.hasNext();) {
 			Classe classe = (Classe) iter.next();
 			if (classe.isEnregistrement()) {
 				classe.ecrireEnregistrement(this, buf, indent);
@@ -96,11 +96,11 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 	private void addMain(StringBuffer buf, int indent) {
 		this.commenter(buf, "programme principal", indent);
 		Divers.ecrire(buf, "function main() {", indent);
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Variable> iter=variables.iterator(); iter.hasNext();) {
+		for (Iterator<ModeleVariable> iter=variables.iterator(); iter.hasNext();) {
 			Variable var = (Variable) iter.next();
 			var.ecrire(this, buf, indent+1);
 		}
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Instruction> iter=instructions.iterator(); iter.hasNext();) {
+		for (Iterator<ModeleInstruction> iter=instructions.iterator(); iter.hasNext();) {
 			Instruction instr = (Instruction) iter.next();
 			instr.ecrire(this, buf, indent+1);
 		}
@@ -204,12 +204,12 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 	private void addAction(StringBuffer buf, Formulaire form, int indent) {
 		Instruction instr_saisie = form.instr_pere;
 		Divers.ecrire(buf, "function main (formu) {", indent);
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Variable> iter=variables.iterator(); iter.hasNext();) {
+		for (Iterator<ModeleVariable> iter=variables.iterator(); iter.hasNext();) {
 			Variable var = (Variable) iter.next();
 			var.ecrire(this, buf, indent+1);
 		}
 		form.lireFormu(this, buf, indent+1);
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Instruction> iter=instructions.iterator(); iter.hasNext();) {
+		for (Iterator<ModeleInstruction> iter=instructions.iterator(); iter.hasNext();) {
 			Instruction instr = (Instruction) iter.next();
 			if (instr == instr_saisie) continue;
 				instr.ecrire(this, buf, indent+1);

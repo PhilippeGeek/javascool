@@ -5,11 +5,12 @@ package org.javascool.proglets.plurialgo.langages.algobox;
 
 
 import org.javascool.proglets.plurialgo.divers.*;
+import org.javascool.proglets.plurialgo.langages.modele.*;
 
 /**
  * Cette classe hérite de la classe homonyme du modèle.
 */
-public class Argument extends org.javascool.proglets.plurialgo.langages.modele.Argument {
+public class Argument extends ModeleArgument {
 	
 	public Argument() {
 	}

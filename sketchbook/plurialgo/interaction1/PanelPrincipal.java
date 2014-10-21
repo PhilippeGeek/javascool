@@ -13,31 +13,26 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
 
 import org.javascool.proglets.plurialgo.divers.Divers;
-import org.javascool.proglets.plurialgo.langages.modele.Argument;
-import org.javascool.proglets.plurialgo.langages.modele.Instruction;
-import org.javascool.proglets.plurialgo.langages.modele.Operation;
-import org.javascool.proglets.plurialgo.langages.modele.Programme;
-import org.javascool.proglets.plurialgo.langages.modele.Variable;
-import org.javascool.proglets.plurialgo.langages.xml.Intermediaire;
-import org.javascool.proglets.plurialgo.langages.xml.ProgrammeNouveau;
+import org.javascool.proglets.plurialgo.langages.modele.*;
+import org.javascool.proglets.plurialgo.langages.xml.*;
 
 
 /**
  * Cette classe correspond à l'onglet Principal de l'interface graphique.
-*/
+*/  
 @SuppressWarnings("unchecked")	// car les JList doivent être paramétrées avec Java7
 public class PanelPrincipal extends JPanel implements ActionListener, ListSelectionListener {
 	private static final long serialVersionUID = 1L;
 
 	static String[] niv_groupement = { "elementaire", "enregistrement", "classe" };
 	static String[] niv_calcul = { "elementaire", "procedure", "fonctions" };
-	static String[] niv_affichage = { "elementaire", "procedure", "fichier_texte", "sql", "sans" };
-	static String[] niv_saisie = { "elementaire", "procedure", "formulaire", "fichier_texte", "sql", "sans" };
+	static String[] niv_affichage = { "elementaire", "procedure", "fichier_texte", "sql" };
+	static String[] niv_saisie = { "elementaire", "procedure", "formulaire", "fichier_texte", "sql" };
 	static int types_width=10;
 	static int algo_width=10;
 	static int donnees_width=15;
 	static int groupe_width=20; 
-	static int langList_count=3; 
+	static int langList_count=5; 
 	static int affichageList_count=3;
 	static int groupementList_count=3;
 	static int saisieList_count=3;
@@ -51,12 +46,14 @@ public class PanelPrincipal extends JPanel implements ActionListener, ListSelect
 	JTextField tab_reelsField, tab_entiersField, tab_textesField, tab_booleensField;
 	JTextField mat_reelsField, mat_entiersField, mat_textesField, mat_booleensField;
 	JTextField groupeField;
-	JList langList, niv_affichageList, niv_groupementList, niv_saisieList, niv_calculList;
+	private JList langList;
+	JList niv_affichageList, niv_groupementList, niv_saisieList, niv_calculList;
 
 	private JButton creerButton;
 	private JButton effacerButton;
 	private JButton traduireButton, reformulerButton;
 	private JButton insererButton;
+	private JButton aideButton;
 	
 	public PanelPrincipal (PanelInteraction pInter) {
 		this.setLayout( new BorderLayout() );
@@ -74,7 +71,7 @@ public class PanelPrincipal extends JPanel implements ActionListener, ListSelect
 		algoField.setText("exemple");
 		pAlgo.add(algoField);
 		pAlgo.add( new JLabel("langage") );
-		langList = new JList(PanelInteraction.langList);
+		langList = new JList(pInter.getLangagesNoms());
 		langList.setSelectedIndex(0);
 		langList.setVisibleRowCount(langList_count);
 		pAlgo.add(new JScrollPane(langList));
@@ -102,9 +99,9 @@ public class PanelPrincipal extends JPanel implements ActionListener, ListSelect
 		mat_booleensField = new JTextField();
 		pTypes.add( new JLabel("TYPES") );
 		pTypes.add( new JLabel("Entiers") );
-		pTypes.add( new JLabel("Réels") );
+		pTypes.add( new JLabel("Reels") );
 		pTypes.add( new JLabel("Textes") );
-		pTypes.add( new JLabel("Booléens") );
+		pTypes.add( new JLabel("Booleens") );
 		pTypes.add( new JLabel("Simples") );
 		pTypes.add( entiersField );
 		pTypes.add( reelsField );
@@ -154,6 +151,8 @@ public class PanelPrincipal extends JPanel implements ActionListener, ListSelect
 		groupeField.setText("");
 		// panel Boutons 
 		Box hbox = Box.createHorizontalBox();
+		aideButton = new JButton("?"); aideButton.addActionListener(this);
+		aideButton.setActionCommand("aide");
 		creerButton = new JButton("Nouveau"); creerButton.addActionListener(this);
 		creerButton.setActionCommand("nouveau");
 		effacerButton = new JButton("Effacer");	effacerButton.addActionListener(this);
@@ -165,10 +164,11 @@ public class PanelPrincipal extends JPanel implements ActionListener, ListSelect
 		insererButton = new JButton("Inserer"); insererButton.addActionListener(this);
 		insererButton.setActionCommand("inserer"); insererButton.setVisible(true);
         hbox.add(creerButton); hbox.add(Box.createHorizontalStrut(5));
+        hbox.add(insererButton); hbox.add(Box.createHorizontalStrut(5));
         hbox.add(effacerButton); hbox.add(Box.createHorizontalStrut(5));
         hbox.add(traduireButton); hbox.add(Box.createHorizontalStrut(5));
         hbox.add(reformulerButton); hbox.add(Box.createHorizontalStrut(5));
-        hbox.add(insererButton); hbox.add(Box.createHorizontalStrut(5));
+        hbox.add(aideButton); hbox.add(Box.createHorizontalStrut(5));
         // panel final
 		vbox.add(Box.createGlue());
 		vbox.add(pAlgo);
@@ -196,17 +196,18 @@ public class PanelPrincipal extends JPanel implements ActionListener, ListSelect
 				this.effacer();	
 			}
 			else if (e.getSource() == this.traduireButton || ("traduire".equals(cmd))) {	
-				pInter.pEdition.traduire();	
+				this.traduire();	
 			}
-			else if (e.getSource() == this.reformulerButton || ("reformuler".equals(cmd))) {	
-				if (pInter.pEdition.reformulerSelection()) return;		
-				pInter.pEdition.reformuler();		
+			else if (e.getSource() == this.reformulerButton || ("reformuler".equals(cmd))) {
+				if (this.reformulerSelection()) return;
+				this.reformuler();		
 			}
 			else if (e.getSource() == this.insererButton || ("inserer".equals(cmd))) {
 				this.inserer();
-				pInter.selectPanel(pInter.pEdition);
-				//CompilateurWrapper.doCompile( pInter.pEdition.getText() );
-				//pInter.setText( CompilateurWrapper.translate() );
+			}
+			else if (e.getSource() == this.aideButton || ("aide".equals(cmd))) {
+				pInter.selectPanel(pInter.pHtml);
+				pInter.pHtml.consulter("boutonsPrincipal.html");
 			}
 		} catch (Exception e1) {
 			e1.printStackTrace();
@@ -249,128 +250,21 @@ public class PanelPrincipal extends JPanel implements ActionListener, ListSelect
 	}	
 
 	public String getNomLangage() {
-		return this.langList.getSelectedValue().toString();
-	}			
-	
+		return pInter.getLangagePackage(langList.getSelectedValue().toString());
+	}	
+
 	// ---------------------------------------------
 	// Commandes
 	// ---------------------------------------------
 	
 	private void nouveau() {
 		Intermediaire inter = pInter.creerIntermediaire();
-		org.javascool.proglets.plurialgo.langages.xml.Programme prog_xml;
-		prog_xml = new org.javascool.proglets.plurialgo.langages.xml.Programme(new ProgrammeNouveau(inter));
-		renommerOperations(prog_xml);
+		org.javascool.proglets.plurialgo.langages.xml.XmlProgramme prog_xml;
+		prog_xml = new org.javascool.proglets.plurialgo.langages.xml.XmlProgramme(new ProgrammeNouveau(inter));
 		if (inter.avecSaisieFormulaire()) zoneListe(prog_xml);
+		renommerOperations(prog_xml);
 		pInter.add_xml(prog_xml);
 		pInter.traduireXml();
-	}	
-	
-	void zoneListe(org.javascool.proglets.plurialgo.langages.xml.Programme prog_xml) {
-		Instruction instr = null;
-		boolean trouveFormulaire = false;
-		for (Iterator<Instruction> iter=prog_xml.instructions.iterator(); iter.hasNext();) {
-			instr = iter.next();
-			if (instr.isLectureFormulaire()) {
-				trouveFormulaire = true;
-				break;
-			}
-		}		
-		if (!trouveFormulaire) return;	
-		for (Iterator<Argument> iter=instr.arguments.iterator(); iter.hasNext();) {
-			Argument arg = iter.next();
-			if (arg.isTexte()) {
-				String message = "pour la variable " + arg.nom + " : ";
-				message = message + "\n ---- zone de texte : cliquez sur Annuler";
-				message = message + "\n ---- zone de liste : entrez les choix (separes par des espaces), puis validez";
-				message = message + "\n ---- boutons d'option : entrez les choix (separes par des virgules), puis validez";
-				String reponse = JOptionPane.showInputDialog(message);
-				if (reponse==null) continue;
-				reponse = reponse.trim();
-				if (reponse.isEmpty()) continue;
-				if (reponse.contains(",")) {
-					reponse = Divers.remplacer(reponse, ",", " ");
-					reponse = reponse + " RADIO";
-				}
-				arg.type = arg.type + ":" + reponse;
-			}
-		}								
-	}
-	
-	void renommerOperations(org.javascool.proglets.plurialgo.langages.xml.Programme prog_xml) {
-		for (Iterator<Operation> iter=prog_xml.operations.iterator(); iter.hasNext();) {
-			Operation oper = iter.next();
-			String message = "changez éventuellement le nom du sous-programme : ";
-			String reponse = JOptionPane.showInputDialog(message, oper.nom);
-			if (reponse==null) continue;
-			reponse = reponse.trim();
-			if (reponse.isEmpty()) continue;
-			if (reponse.equals(oper.nom)) continue;
-			for (Iterator<Instruction> iter_instr=prog_xml.instructions.iterator(); iter_instr.hasNext();) {
-				Instruction instr = iter_instr.next();
-				if(oper.nom.equals(instr.nom)) {
-					instr.nom = reponse;
-					continue;
-				}
-			}
-			oper.nom=reponse;
-		}
-	}
-	
-	private void inserer() {
-		Intermediaire inter = pInter.creerIntermediaire();
-		org.javascool.proglets.plurialgo.langages.xml.Programme prog_xml;
-		prog_xml = new org.javascool.proglets.plurialgo.langages.xml.Programme(new ProgrammeNouveau(inter));
-		pInter.add_xml(prog_xml);
-		// conversion du programme dans le langage courant
-		String lang = pInter.pPrincipal.getNomLangage();
-		String txt = pInter.pXml.getText();
-		Programme prog = Programme.getProgramme(txt,lang); 
-		// ajout des sous-programmes (ou des variables ou des entrées-sorties)
-		StringBuffer buf = new StringBuffer();
-		int indent = Divers.getIndent(pInter.pEdition.editArea);
-		if (prog.operations.size()>0) {	// ajout de sous-programmes
-			for (Iterator<Operation> iter=prog.operations.iterator(); iter.hasNext();) {
-				Operation oper = iter.next();
-				oper.ecrire(prog, buf, indent);
-			}					
-		}
-		if (prog.instructions.size()>0 && buf.length()==0 ) { // ajout de saisies ou d'affichages 
-			for (Iterator<Instruction> iter=prog.instructions.iterator(); iter.hasNext();) {
-				Instruction instr = iter.next();
-				if (instr.isCommentaire()) continue;
-				if (instr.isEcriture()) {
-					boolean isExpression = false;
-					String expression = "";
-					for (Iterator<Argument> iter_arg=instr.arguments.iterator(); iter_arg.hasNext();) {
-						Argument arg = iter_arg.next();
-						if (!Divers.isIdent(arg.nom))  isExpression = true;
-						expression = expression + " " + arg.nom;
-					}
-					if (isExpression) {
-						Argument arg_expr = null;
-						for (Iterator<Argument> iter_arg=instr.arguments.iterator(); iter_arg.hasNext();) {
-							Argument arg = iter_arg.next();
-							arg.nom = expression.trim();
-							arg.type = "EXPR";
-							arg_expr = arg;
-						}
-						instr.arguments.clear(); instr.arguments.add(arg_expr);
-					}
-				}
-				instr.ecrire(prog, buf, indent);
-				prog.postTraitement(buf);
-			}		
-		}
-		if (prog.variables.size()>0 && buf.length()==0) {	// ajout de variables
-			for (Iterator<Variable> iter=prog.variables.iterator(); iter.hasNext();) {
-				Variable var = iter.next();
-				var.ecrire(prog, buf, indent);
-			}								
-		}
-		if (buf.length()>0 ) {
-			Divers.inserer(pInter.pEdition.editArea, buf.toString());
-		}	
 	}	
 	
 	private void effacer() {
@@ -383,7 +277,7 @@ public class PanelPrincipal extends JPanel implements ActionListener, ListSelect
 		this.niv_affichageList.setSelectedIndex(0);
 		this.niv_calculList.setSelectedIndex(0);
 		this.niv_groupementList.setSelectedIndex(0);
-		this.groupeField.setText("");		
+		this.groupeField.setText("");
 	}	
 	
 	private void effacerTypes() {
@@ -400,4 +294,288 @@ public class PanelPrincipal extends JPanel implements ActionListener, ListSelect
 		this.mat_textesField.setText("");
 		this.mat_booleensField.setText("");
 	}
+		
+	private void traduire() {
+		Intermediaire inter = null;
+		iAnalyseur analyseur = null;
+		pInter.clearConsole();
+		// analyse du programme initial
+		if (pInter.isVb()) {
+			analyseur = new AnalyseurVb(pInter.getText(), false, false);
+		}
+		else if (pInter.isJavascool()) {
+			analyseur = new AnalyseurJavascool(pInter.getText(), false, false);
+		}
+		else if (pInter.isAlgobox()) {
+			analyseur = new AnalyseurAlgobox(pInter.getText(), false, false);
+		}
+		else if (pInter.isLarp()) {
+			inter = pInter.creerIntermediaireLarp("traduire");
+			analyseur = new AnalyseurLarp(pInter.getText(), false, false, inter);
+		}
+		else if (pInter.isPython()) {
+			inter = pInter.creerIntermediaireLarp("traduire");
+			analyseur = new AnalyseurPython(pInter.getText(), false, false, inter);
+		}
+		else if (pInter.isXcas()) {
+			inter = pInter.creerIntermediaireLarp("traduire");
+			analyseur = new AnalyseurXcas(pInter.getText(), false, false, inter);
+		}
+		else if (pInter.isCarmetal()) {
+			inter = pInter.creerIntermediaireLarp("traduire");
+			analyseur = new AnalyseurCarmetal(pInter.getText(), false, false, inter);
+		}
+		else {
+			pInter.clearConsole();
+			pInter.writeConsole("---------- Traduction impossible ----------\n");
+			//pInter.writeConsole("l'algorithme initial ne semble pas etre du Javascool, du Larp, du Python, de l'Algobox, du Xcas ou du Visual Basic\n");
+			return;
+		}
+		// ajout du resultat dans l' onglet Complements et dans l'editeur
+		pInter.messageWarning(analyseur.getProgramme());
+		pInter.setXml(analyseur.getXml().toString());
+		pInter.traduireXml();
+	}
+	
+	private void reformuler() {
+		Intermediaire inter = null;
+		iAnalyseur analyseur = null;
+		pInter.clearConsole();
+		// analyse du programme initial
+		if (pInter.isVb()) {
+			analyseur = new AnalyseurVb(pInter.getText(), true, true);
+		}
+		else if (pInter.isJavascool()) {
+			analyseur = new AnalyseurJavascool(pInter.getText(), true, true);
+		}
+		else if (pInter.isAlgobox()) {
+			analyseur = new AnalyseurAlgobox(pInter.getText(), true, true);
+		}
+		else if (pInter.isLarp()) {
+			inter = pInter.creerIntermediaireLarp("reformuler");
+			analyseur = new AnalyseurLarp(pInter.getText(), true, true, inter);
+		}
+		else if (pInter.isPython()) {
+			inter = pInter.creerIntermediaireLarp("reformuler");
+			analyseur = new AnalyseurPython(pInter.getText(), true, true, inter);
+		}
+		else if (pInter.isXcas()) {
+			inter = pInter.creerIntermediaireLarp("reformuler");
+			analyseur = new AnalyseurXcas(pInter.getText(), true, true, inter);
+		}
+		else if (pInter.isCarmetal()) {
+			inter = pInter.creerIntermediaireLarp("reformuler");
+			analyseur = new AnalyseurCarmetal(pInter.getText(), true, true, inter);
+		}
+		else {
+			pInter.clearConsole();
+			pInter.writeConsole("---------- Reformulation impossible ----------\n");
+			return;			
+		}
+		// construction du programme dérivé
+		pInter.messageWarning(analyseur.getProgramme());
+		inter = pInter.creerIntermediaire();
+		ProgrammeDerive progDer = new ProgrammeDerive(analyseur.getProgramme(), inter);
+		// ajout du resultat dans l' onglet Complements et dans l'editeur
+		pInter.pPrincipal.algoField.setText(progDer.nom);
+		org.javascool.proglets.plurialgo.langages.xml.XmlProgramme prog_xml;
+		prog_xml = new org.javascool.proglets.plurialgo.langages.xml.XmlProgramme(progDer);
+		if (inter.avecSaisieFormulaire()) zoneListe(prog_xml);
+		if (analyseur.getProgramme().operations.size()==0) renommerOperations(prog_xml);
+		pInter.add_xml(prog_xml);
+		pInter.traduireXml();
+	}	
+	
+	boolean reformulerSelection() {
+		pInter.clearConsole();
+		// recherche zone de sélection
+		JTextArea editArea = pInter.getTextArea();
+		int i_start = editArea.getSelectionStart();
+		int i_end = editArea.getSelectionEnd();
+		int indent = 0;
+		if (i_end - i_start<5) return false;	// trop petit (donc sélection involontaire ?)
+		String lang = pInter.pPrincipal.getNomLangage();
+		if (lang.equals("algobox") ) return false;	
+		String txt_select = "";
+		try {
+			int lig_start = editArea.getLineOfOffset(i_start);
+			i_start = editArea.getLineStartOffset(lig_start);
+			int lig_end = editArea.getLineOfOffset(i_end);
+			i_end = editArea.getLineEndOffset(lig_end) - 1;
+			txt_select = editArea.getText(i_start, i_end-i_start);
+			while (txt_select.substring(indent, indent+1).equals("\t")) {
+				indent = indent+1;
+			}
+			// normalisation avec indentation 1 pour inserer dans les ss-programmes
+			if (indent==0) {
+				txt_select = Divers.remplacer(txt_select, "\n", "\n\t");
+				txt_select = "\t" + txt_select;
+			}
+			else if (indent>1) {
+				for(int i=2; i<=indent; i=i+1) {
+					txt_select = Divers.remplacer(txt_select, "\n\t", "\n");
+				}
+				txt_select = txt_select.substring(indent-1);
+			}
+		}
+		catch(Exception ex) {
+			return false;
+		}
+		// verification conditions d'application
+		Intermediaire inter = pInter.creerIntermediaire();
+		if (!inter.avecFonctionsCalcul() && !inter.avecProcedureCalcul()) return false;
+		// creation sous-programme
+		inter.niv_saisie = "";
+		inter.niv_affichage = "";
+		inter.niv_groupement = "elementaire";
+		org.javascool.proglets.plurialgo.langages.xml.XmlProgramme prog_xml;
+		prog_xml = new org.javascool.proglets.plurialgo.langages.xml.XmlProgramme(new ProgrammeNouveau(inter));
+		prog_xml.nom = pInter.pPrincipal.getNomAlgo();
+		System.out.println("operations:"+prog_xml.operations.size());
+		if (prog_xml.operations.size()==0) return false;
+		for (Iterator<ModeleOperation> iter=prog_xml.operations.iterator(); iter.hasNext();) {
+			ModeleOperation oper = iter.next();
+			if (oper.instructions.size()==1) {
+				if (oper.instructions.get(0).isCommentaire()) {
+					oper.instructions.remove(0);
+				}
+			}
+			oper.instructions.add(0, new ModeleInstruction("//reformulationOperation"));
+		}
+		renommerOperations(prog_xml);
+		pInter.add_xml(prog_xml);
+		// conversion du programme dans le langage courant
+		String txt = pInter.getXml();
+		ModeleProgramme prog = ModeleProgramme.getProgramme(txt,lang); 
+		// texte des sous-programmes
+		StringBuffer buf_oper = new StringBuffer();
+		for (Iterator<ModeleOperation> iter=prog.operations.iterator(); iter.hasNext();) {
+			ModeleOperation oper = iter.next();
+			oper.ecrire(prog, buf_oper, 0);
+		}
+		int i_reformu = buf_oper.indexOf("reformulationOperation");
+		int i_tab = buf_oper.substring(0, i_reformu).lastIndexOf("\t");
+		buf_oper.delete(i_tab, i_reformu + "reformulationOperation".length());
+		buf_oper.insert(i_tab, txt_select);
+		StringBuffer buf_appel = new StringBuffer();
+		for (Iterator<ModeleInstruction> iter=prog.instructions.iterator(); iter.hasNext();) {
+			ModeleInstruction instr = iter.next();
+			instr.ecrire(prog, buf_appel, indent);
+		}
+		// on modifie l'editeur
+		buf_appel.delete(0, 1);
+		editArea.replaceRange(buf_appel.toString(), i_start, i_end);
+		editArea.append(buf_oper.toString());
+		return true;
+	}
+	
+	private void inserer() {
+		Intermediaire inter = pInter.creerIntermediaire();
+		org.javascool.proglets.plurialgo.langages.xml.XmlProgramme prog_xml;
+		prog_xml = new org.javascool.proglets.plurialgo.langages.xml.XmlProgramme(new ProgrammeNouveau(inter));
+		pInter.add_xml(prog_xml);
+		// conversion du programme dans le langage courant
+		String lang = pInter.pPrincipal.getNomLangage();
+		String txt = pInter.getXml();
+		ModeleProgramme prog = ModeleProgramme.getProgramme(txt,lang); 
+		// ajout des sous-programmes (ou des variables ou des entrées-sorties)
+		StringBuffer buf = new StringBuffer();
+		int indent = Divers.getIndent(pInter.getTextArea());
+		if (prog.operations.size()>0) {	// ajout de sous-programmes
+			for (Iterator<ModeleOperation> iter=prog.operations.iterator(); iter.hasNext();) {
+				ModeleOperation oper = iter.next();
+				oper.ecrire(prog, buf, indent);
+			}					
+		}
+		if (prog.instructions.size()>0 && buf.length()==0 ) { // ajout de saisies ou d'affichages 
+			for (Iterator<ModeleInstruction> iter=prog.instructions.iterator(); iter.hasNext();) {
+				ModeleInstruction instr = iter.next();
+				if (instr.isCommentaire()) continue;
+				if (instr.isEcriture()) {
+					boolean isExpression = false;
+					String expression = "";
+					for (Iterator<ModeleArgument> iter_arg=instr.arguments.iterator(); iter_arg.hasNext();) {
+						ModeleArgument arg = iter_arg.next();
+						if (!Divers.isIdent(arg.nom))  isExpression = true;
+						expression = expression + " " + arg.nom;
+					}
+					if (isExpression) {
+						ModeleArgument arg_expr = null;
+						for (Iterator<ModeleArgument> iter_arg=instr.arguments.iterator(); iter_arg.hasNext();) {
+							ModeleArgument arg = iter_arg.next();
+							arg.nom = expression.trim();
+							arg.type = "EXPR";
+							arg_expr = arg;
+						}
+						instr.arguments.clear(); instr.arguments.add(arg_expr);
+					}
+				}
+				instr.ecrire(prog, buf, indent);
+				prog.postTraitement(buf);
+			}		
+		}
+		if (prog.variables.size()>0 && buf.length()==0) {	// ajout de variables
+			for (Iterator<ModeleVariable> iter=prog.variables.iterator(); iter.hasNext();) {
+				ModeleVariable var = iter.next();
+				var.ecrire(prog, buf, indent);
+			}								
+		}
+		if (buf.length()>0 ) {
+			Divers.inserer(pInter.getTextArea(), buf.toString());
+		}	
+	}	
+	
+	private void zoneListe(org.javascool.proglets.plurialgo.langages.xml.XmlProgramme prog_xml) {
+		ModeleInstruction instr = null;
+		boolean trouveFormulaire = false;
+		for (Iterator<ModeleInstruction> iter=prog_xml.instructions.iterator(); iter.hasNext();) {
+			instr = iter.next();
+			if (instr.isLectureFormulaire()) {
+				trouveFormulaire = true;
+				break;
+			}
+		}		
+		if (!trouveFormulaire) return;
+		for (Iterator<ModeleArgument> iter=instr.arguments.iterator(); iter.hasNext();) {
+			ModeleArgument arg = iter.next();
+			if (arg.isTexte()) {
+				String message = "pour la variable " + arg.nom + " : ";
+				message = message + "\n ---- zone de texte : cliquez sur Annuler";
+				message = message + "\n ---- zone de liste : entrez les choix (separes par des espaces), puis validez";
+				message = message + "\n ---- boutons d'option : entrez les choix (separes par des virgules), puis validez";
+				String reponse = JOptionPane.showInputDialog(message);
+				if (reponse==null) continue;
+				reponse = reponse.trim();
+				if (reponse.isEmpty()) continue;
+				if (reponse.contains(",")) {
+					reponse = Divers.remplacer(reponse, ",", " ");
+					reponse = reponse + " RADIO";
+				}
+				arg.type = arg.type + ":" + reponse;
+			}
+		}								
+	}	
+	
+	private void renommerOperations(org.javascool.proglets.plurialgo.langages.xml.XmlProgramme prog_xml) {
+		for (Iterator<ModeleOperation> iter=prog_xml.operations.iterator(); iter.hasNext();) {
+			ModeleOperation oper = iter.next();
+			String message = "changez eventuellement le nom du sous-programme : ";
+			String reponse = JOptionPane.showInputDialog(message, oper.nom);
+			if (reponse==null) continue;
+			reponse = reponse.trim();
+			if (reponse.isEmpty()) continue;
+			if (reponse.equals(oper.nom)) continue;
+			for (Iterator<ModeleInstruction> iter_instr=prog_xml.instructions.iterator(); iter_instr.hasNext();) {
+				ModeleInstruction instr = iter_instr.next();
+				if(oper.nom.equals(instr.nom)) {
+					instr.nom = reponse;
+					continue;
+				}
+			}
+			if (oper.nom.equals("lire")) continue;
+			if (oper.nom.equals("ecrire")) continue;
+			oper.nom=reponse;
+		}
+	}
+
 }

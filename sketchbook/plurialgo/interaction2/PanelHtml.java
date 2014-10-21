@@ -12,7 +12,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URL;
-
 import javax.swing.*;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
@@ -248,7 +247,7 @@ public class PanelHtml extends JPanel implements ActionListener, HyperlinkListen
 				StringBuffer buf = this.ouvrir(nom_url);
 				if (buf!=null) {
 					Divers.remplacerSpeciaux(buf);
-					pInter.pXml.setText(buf.toString());
+					pInter.setXml(buf.toString());
 					pInter.traduireXml();
 					pInter.clearConsole();
 					pInter.writeConsole("ouverture de " + nom_url);
@@ -289,47 +288,47 @@ public class PanelHtml extends JPanel implements ActionListener, HyperlinkListen
 			}
 			else if (desc.endsWith(".boucle")) {
 				desc = desc.substring(0, desc.length()-7);		
-				pInter.pEdition.effacer();
+				pInter.pBoucles.effacer();
 				if (desc.equals("ex_impair")) {
-					pInter.pEdition.setPour("k", "1", "99", "2");
-					pInter.pEdition.setSomme(true, "som:1/k");
+					pInter.pBoucles.setPour("k", "1", "99", "2");
+					pInter.pBoucles.setSomme(true, "som:1/k");
 				}	
 				else if (desc.equals("ex_intro_nom_jvs")) {
-					pInter.pEdition.setPour("k", "1", "n", "1");
-					pInter.pEdition.setSomme(true, "totalCommande:prixTotal");
+					pInter.pBoucles.setPour("k", "1", "n", "1");
+					pInter.pBoucles.setSomme(true, "totalCommande:prixTotal");
 				}			
 				else if (desc.equals("ex_tab_bon_form")) {
-					pInter.pEdition.setPour("k", "1", "n", "1");
-					pInter.pEdition.setSomme(true, "totalCommande:quantite[k]*prixUnitaire[k]");						
+					pInter.pBoucles.setPour("k", "1", "n", "1");
+					pInter.pBoucles.setSomme(true, "totalCommande:quantite[k]*prixUnitaire[k]");						
 				}		
 				else if (desc.equals("ex_tab_bon_fich") || desc.equals("ex_tab_bon_sql")) {
-					pInter.pEdition.setPour("k", "1", "n_lig", "1");
-					pInter.pEdition.setSomme(true, "totalCommande:quantite[k]*prixUnitaire[k]");						
+					pInter.pBoucles.setPour("k", "1", "n_lig", "1");
+					pInter.pBoucles.setSomme(true, "totalCommande:quantite[k]*prixUnitaire[k]");						
 				}
 				else if (desc.equals("ex_intro")) {
-					pInter.pEdition.setPour("k", "1", "n", "1");
+					pInter.pBoucles.setPour("k", "1", "n", "1");
 				}
 				else if (desc.equals("ex_note_somme")) {
-					pInter.pEdition.setPour("k", "1", "n", "1");
-					pInter.pEdition.setSomme(true, "total:note");
+					pInter.pBoucles.setPour("k", "1", "n", "1");
+					pInter.pBoucles.setSomme(true, "total:note");
 				}
 				else if (desc.equals("ex_note_comptage")) {
-					pInter.pEdition.setPour("k", "1", "n", "1");
-					pInter.pEdition.setCompterVar(true, "nbAdmis");
-					pInter.pEdition.setCompterCondition("note",">=","10");
+					pInter.pBoucles.setPour("k", "1", "n", "1");
+					pInter.pBoucles.setCompterVar(true, "nbAdmis");
+					pInter.pBoucles.setCompterCondition("note",">=","10");
 				}
 				else if (desc.equals("ex_note_minmax")) {
-					pInter.pEdition.setPour("k", "1", "n", "1");
-					//pInter.pEdition.setPourOption("tantque");
-					pInter.pEdition.setMinimum(true, "mini:note");
-					pInter.pEdition.setMaximum(true, "maxi:note");
+					pInter.pBoucles.setPour("k", "1", "n", "1");
+					//pInter.pBoucles.setPourOption("tantque");
+					pInter.pBoucles.setMinimum(true, "mini:note");
+					pInter.pBoucles.setMaximum(true, "maxi:note");
 				}
 				else if (desc.equals("ex_note_rech")) {
-					pInter.pEdition.setPour("", "", "", "");
-					pInter.pEdition.setBoucle("tantque");
-					pInter.pEdition.setBoucleCondition("note","<","0","OU","note",">","20");
+					pInter.pBoucles.setPour("", "", "", "");
+					pInter.pBoucles.setBoucle("tantque");
+					pInter.pBoucles.setBoucleCondition("note","<","0","OU","note",">","20");
 				}				
-				pInter.selectPanel(pInter.pEdition);			
+				pInter.selectPanel(pInter.pBoucles);			
 			}
 			else if (desc.endsWith(".princ")) {
 				desc = desc.substring(0, desc.length()-6);

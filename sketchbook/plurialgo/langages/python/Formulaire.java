@@ -5,6 +5,7 @@ package org.javascool.proglets.plurialgo.langages.python;
 
 import java.util.Iterator;
 import org.javascool.proglets.plurialgo.divers.Divers;
+import org.javascool.proglets.plurialgo.langages.modele.*;
 
 /**
  * Cette classe permet de traduire en Python une instruction
@@ -28,7 +29,7 @@ public class Formulaire {
 	 */
 	public void constrFormu(Programme prog, StringBuffer buf, int indent) {
 		Divers.ecrire(buf, "n_lig=0", indent);
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Argument> iter=instr_pere.arguments.iterator(); iter.hasNext();) {
+		for (Iterator<ModeleArgument> iter=instr_pere.arguments.iterator(); iter.hasNext();) {
 			Argument arg = (Argument) iter.next();
 			String msg = prog.quote(arg.nom+ " : ");
 			Divers.ecrire(buf, "n_col=0", indent);
@@ -44,7 +45,7 @@ public class Formulaire {
 	 * @param indent
 	 */
 	public void lireFormu(Programme prog, StringBuffer buf, int indent) {
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Argument> iter=instr_pere.arguments.iterator(); iter.hasNext();) {
+		for (Iterator<ModeleArgument> iter=instr_pere.arguments.iterator(); iter.hasNext();) {
 			Argument arg = (Argument) iter.next();
 			lireFormu(prog, buf, indent, arg);
 		}
@@ -156,7 +157,7 @@ public class Formulaire {
 	private void constrClasseFormu(Programme prog, StringBuffer buf, int indent, String msg, Argument arg) {
 		Classe cl = (Classe) arg.getClasse(prog);
 		this.constrLabelFormu(prog, buf, indent, msg, arg);	
-		for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Variable> iter=cl.proprietes.iterator(); iter.hasNext(); ) {
+		for(Iterator<ModeleVariable> iter=cl.proprietes.iterator(); iter.hasNext(); ) {
 			Variable prop = (Variable) iter.next();
 			if (prop.isOut()) continue;
 			String msg1 = prog.quote(prop.nom);
@@ -177,7 +178,7 @@ public class Formulaire {
 			Divers.ecrire(buf, "n_lig=n_lig+1", indent);
 			Divers.ecrire(buf, "n_col=0", indent);
 		}
-		for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Variable> iter=cl.proprietes.iterator(); iter.hasNext(); ) {
+		for(Iterator<ModeleVariable> iter=cl.proprietes.iterator(); iter.hasNext(); ) {
 			Variable prop = (Variable) iter.next();
 			if (prop.isOut()) continue;
 			String msg1 = prog.quote(prop.nom);
@@ -193,7 +194,7 @@ public class Formulaire {
 		}
 		Divers.ecrire(buf, "n_lig=n_lig+1", indent);
 		Divers.ecrire(buf, "n_col=0", indent);
-		for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Variable> iter=cl.proprietes.iterator(); iter.hasNext(); ) {
+		for(Iterator<ModeleVariable> iter=cl.proprietes.iterator(); iter.hasNext(); ) {
 			Variable prop = (Variable) iter.next();
 			if (prop.isOut()) continue;
 			if ( prop.isSimple()) {
@@ -282,7 +283,7 @@ public class Formulaire {
 	
 	private void lireClasseFormu(Programme prog, StringBuffer buf, int indent, Argument arg) {
 		Classe cl = (Classe) arg.getClasse(prog);
-		for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Variable> iter=cl.proprietes.iterator(); iter.hasNext(); ) {
+		for(Iterator<ModeleVariable> iter=cl.proprietes.iterator(); iter.hasNext(); ) {
 			Variable prop = (Variable) iter.next();
 			if (prop.isOut()) continue;
 			Argument arg1 = new Argument(arg.nom+"."+prop.nom, prop.type, arg.mode);
@@ -293,7 +294,7 @@ public class Formulaire {
 	private void lireTabClasseFormu(Programme prog, StringBuffer buf, int indent, Argument arg) {
 		Classe cl = (Classe) arg.getClasseOfTab(prog);
 		String zone = "zone_" + arg.nom; zone = Divers.remplacer(zone, ".", "_");
-		for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Variable> iter=cl.proprietes.iterator(); iter.hasNext(); ) {
+		for(Iterator<ModeleVariable> iter=cl.proprietes.iterator(); iter.hasNext(); ) {
 			Variable prop = (Variable) iter.next();
 			if (prop.isOut()) continue;
 			if ( prop.isSimple()) {

@@ -4,14 +4,14 @@
 package org.javascool.proglets.plurialgo.langages.xcas;
 
 import java.util.*;
-
 import org.javascool.proglets.plurialgo.divers.*;
+import org.javascool.proglets.plurialgo.langages.modele.*;
 
 
 /**
  * Cette classe hérite de la classe homonyme du modèle.
 */
-public class Programme extends org.javascool.proglets.plurialgo.langages.modele.Programme {
+public class Programme extends ModeleProgramme {
 	
 	public void ecrire() {
 		StringBuffer buf = new StringBuffer();
@@ -28,7 +28,7 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 	}
 	
 	private void addSousProgs(StringBuffer buf, int indent) {
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Operation> iter=operations.iterator(); iter.hasNext();) {
+		for (Iterator<ModeleOperation> iter=operations.iterator(); iter.hasNext();) {
 			Operation oper = (Operation) iter.next();
 			oper.ecrire(this, buf, indent);
 		}
@@ -40,7 +40,7 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 	}
 	
 	private void addMain(StringBuffer buf, int indent) {
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Variable> iter=variables.iterator(); iter.hasNext();) {
+		for (Iterator<ModeleVariable> iter=variables.iterator(); iter.hasNext();) {
 			Variable var = (Variable) iter.next();
 			if (var.isTabSimple()) {
 				Divers.ecrire(buf, var.nom + ":=[];", indent);
@@ -50,7 +50,7 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 				Divers.ecrire(buf, var.nom + ":=matrix("+MAX_TAB+","+MAX_TAB+")", indent);
 			}
 		}
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Instruction> iter=instructions.iterator(); iter.hasNext();) {
+		for (Iterator<ModeleInstruction> iter=instructions.iterator(); iter.hasNext();) {
 			Instruction instr = (Instruction) iter.next();
 			instr.ecrire(this, buf, indent);
 		}

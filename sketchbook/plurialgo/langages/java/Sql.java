@@ -4,8 +4,8 @@
 package org.javascool.proglets.plurialgo.langages.java;
 
 import java.util.Iterator;
-
 import org.javascool.proglets.plurialgo.divers.Divers;
+import org.javascool.proglets.plurialgo.langages.modele.*;
 
 /**
  * Cette classe permet de traduire (approximativement) en Java une instruction
@@ -39,11 +39,11 @@ public class Sql {
 		Divers.ecrire(buf, "ResultSet rs = stmt.executeQuery('select * from mabase');", indent+1);
 		Divers.ecrire(buf, "while (rs.next()) {", indent+1);
 		Divers.ecrire(buf, "n_col=0;", indent+2);
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Argument> iter=instr_pere.arguments.iterator(); iter.hasNext();) {
+		for (Iterator<ModeleArgument> iter=instr_pere.arguments.iterator(); iter.hasNext();) {
 			Argument arg = (Argument) iter.next();
 			lireSql(prog, buf, indent+2, arg);
 		}
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Instruction> iter=arg_sql.instructions.iterator(); iter.hasNext();) {
+		for (Iterator<ModeleInstruction> iter=arg_sql.instructions.iterator(); iter.hasNext();) {
 			Instruction instr = (Instruction) iter.next();
 			instr.ecrire(prog, buf, indent+2);
 		}
@@ -64,14 +64,14 @@ public class Sql {
 	public void ecrireSql(Programme prog, StringBuffer buf, int indent) {
 		// recherche du nombre de lignes
 		n_lig = null;
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Argument> iter=instr_pere.arguments.iterator(); iter.hasNext();) {
+		for (Iterator<ModeleArgument> iter=instr_pere.arguments.iterator(); iter.hasNext();) {
 			Argument arg = (Argument) iter.next();
 			if (arg.isTabSimple() || arg.isMatSimple() || arg.isTabClasse(prog)) {
 				n_lig = prog.getDim(1, arg); break;
 			}
 			else if ( arg.isEnregistrement(prog) || arg.isClasse(prog) ) {
 				Classe cl = (Classe) arg.getClasse(prog);
-				for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Variable> iter_prop=cl.proprietes.iterator(); iter.hasNext(); ) {
+				for(Iterator<ModeleVariable> iter_prop=cl.proprietes.iterator(); iter.hasNext(); ) {
 					Variable prop = (Variable) iter_prop.next();
 					if (prop.isOut()) continue;
 					if ( prop.isMatSimple()) {
@@ -92,7 +92,7 @@ public class Sql {
 			indent_for++;
 		}
 		Divers.ecrire(buf, "String req=" + prog.quote("insert into matable values(") + ";", indent_for);
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Argument> iter=instr_pere.arguments.iterator(); iter.hasNext();) {
+		for (Iterator<ModeleArgument> iter=instr_pere.arguments.iterator(); iter.hasNext();) {
 			Argument arg = (Argument) iter.next();
 			ecrireSql(prog, buf, indent_for, arg);
 		}
@@ -163,7 +163,7 @@ public class Sql {
 	
 	private void lireTabClasseSql(Programme prog, StringBuffer buf, int indent, Argument arg) {
 		Classe cl = (Classe) arg.getClasseOfTab(prog);
-		for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Variable> iter=cl.proprietes.iterator(); iter.hasNext(); ) {
+		for(Iterator<ModeleVariable> iter=cl.proprietes.iterator(); iter.hasNext(); ) {
 			Variable prop = (Variable) iter.next();
 			if (prop.isOut()) continue;
 			if ( prop.isSimple()) {
@@ -181,7 +181,7 @@ public class Sql {
 	
 	private void lireClasseSql(Programme prog, StringBuffer buf, int indent, Argument arg) {
 		Classe cl = (Classe) arg.getClasse(prog);
-		for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Variable> iter=cl.proprietes.iterator(); iter.hasNext(); ) {
+		for(Iterator<ModeleVariable> iter=cl.proprietes.iterator(); iter.hasNext(); ) {
 			Variable prop = (Variable) iter.next();
 			if (prop.isOut()) continue;
 			if ( prop.isTabSimple()) {
@@ -246,7 +246,7 @@ public class Sql {
 	
 	private void ecrireTabClasseSql(Programme prog, StringBuffer buf, int indent, Argument arg) {
 		Classe cl = (Classe) arg.getClasseOfTab(prog);
-		for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Variable> iter=cl.proprietes.iterator(); iter.hasNext(); ) {
+		for(Iterator<ModeleVariable> iter=cl.proprietes.iterator(); iter.hasNext(); ) {
 			Variable prop = (Variable) iter.next();
 			if (prop.isOut()) continue;
 			if ( prop.isSimple()) {
@@ -264,7 +264,7 @@ public class Sql {
 	
 	private void ecrireClasseSql(Programme prog, StringBuffer buf, int indent, Argument arg) {
 		Classe cl = (Classe) arg.getClasse(prog);
-		for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Variable> iter=cl.proprietes.iterator(); iter.hasNext(); ) {
+		for(Iterator<ModeleVariable> iter=cl.proprietes.iterator(); iter.hasNext(); ) {
 			Variable prop = (Variable) iter.next();
 			if (prop.isOut()) continue;
 			if ( prop.isTabSimple()) {

@@ -4,21 +4,21 @@
 package org.javascool.proglets.plurialgo.langages.larp;
 
 import java.util.*;
-
 import org.javascool.proglets.plurialgo.divers.*;
+import org.javascool.proglets.plurialgo.langages.modele.*;
 
 
 /**
  * Cette classe hérite de la classe homonyme du modèle.
 */
-public class Instruction extends org.javascool.proglets.plurialgo.langages.modele.Instruction {
+public class Instruction extends ModeleInstruction {
 	
 	public Instruction() {
 	}
 	
 	public void ecrire(Programme prog, StringBuffer buf, int indent) {
 		if (isLectureStandard()) {
-			for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Argument> iter=arguments.iterator(); iter.hasNext();) {
+			for (Iterator<ModeleArgument> iter=arguments.iterator(); iter.hasNext();) {
 				Argument arg = (Argument) iter.next();
 				arg.ecrire(prog, buf, indent, this);
 			}
@@ -28,7 +28,7 @@ public class Instruction extends org.javascool.proglets.plurialgo.langages.model
 			f.lireFichierTexte(prog, buf, indent);
 		}
 		else if (isEcritureStandard()) {
-			for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Argument> iter=arguments.iterator(); iter.hasNext();) {
+			for (Iterator<ModeleArgument> iter=arguments.iterator(); iter.hasNext();) {
 				Argument arg = (Argument) iter.next();
 				arg.ecrire(prog, buf, indent, this);
 			}
@@ -45,14 +45,14 @@ public class Instruction extends org.javascool.proglets.plurialgo.langages.model
 			if (isSelon()) {
 				String var = this.getVariableSelon();
 				Divers.ecrire(buf, "SÉLECTIONNER " + var, indent);
-				for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Si> iter=sis.iterator(); iter.hasNext();) {
+				for (Iterator<ModeleSi> iter=sis.iterator(); iter.hasNext();) {
 					Si si = (Si) iter.next();
 					si.ecrire(prog, buf, indent + 1);
 				}
 				Divers.ecrire(buf, "FINSÉLECTIONNER", indent);
 			}
 			else {	// si classique
-				for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Si> iter=sis.iterator(); iter.hasNext();) {
+				for (Iterator<ModeleSi> iter=sis.iterator(); iter.hasNext();) {
 					Si si = (Si) iter.next();
 					si.ecrire(prog, buf, indent);
 				}
@@ -61,20 +61,20 @@ public class Instruction extends org.javascool.proglets.plurialgo.langages.model
 		}
 		else if (isPour()) {
 			interpreterPour();	
-			for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Pour> iter=pours.iterator(); iter.hasNext();) {
+			for (Iterator<ModelePour> iter=pours.iterator(); iter.hasNext();) {
 				Pour pour = (Pour) iter.next();
 				pour.ecrire(prog, buf, indent);
 			}
 		}
 		else if (isTantQue()) {
 			interpreterTantQue();	
-			for (Iterator<org.javascool.proglets.plurialgo.langages.modele.TantQue> iter=tantques.iterator(); iter.hasNext();) {
+			for (Iterator<ModeleTantQue> iter=tantques.iterator(); iter.hasNext();) {
 				TantQue tq = (TantQue) iter.next();
 				tq.ecrire(prog, buf, indent);
 			}
 		}
 		else if (isAffectation()) {
-			for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Affectation> iter=affectations.iterator(); iter.hasNext();) {
+			for (Iterator<ModeleAffectation> iter=affectations.iterator(); iter.hasNext();) {
 				Affectation aff = (Affectation) iter.next();
 				aff.ecrire(prog, buf, indent);
 			}
@@ -93,7 +93,7 @@ public class Instruction extends org.javascool.proglets.plurialgo.langages.model
 	private void ecrireAppel(Programme prog, StringBuffer buf, int indent)  {
 		Argument retour = (Argument) getRetour();
 		Divers.indenter(buf, indent);
-		if (isAppelFonction(prog)) {
+		if (isAppelFonction(prog) && retour!=null) {
 			retour.ecrire(prog, buf);
 			Divers.ecrire(buf, " = ");
 		}
@@ -102,7 +102,7 @@ public class Instruction extends org.javascool.proglets.plurialgo.langages.model
 		}
 		Divers.ecrire(buf, nom);
 		Divers.ecrire(buf, "(");
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Argument> iter=arguments.iterator(); iter.hasNext();) {
+		for (Iterator<ModeleArgument> iter=arguments.iterator(); iter.hasNext();) {
 			Argument arg = (Argument) iter.next();
 			arg.ecrire(prog, buf);
 			if (iter.hasNext()) Divers.ecrire(buf, ", ");
@@ -110,7 +110,7 @@ public class Instruction extends org.javascool.proglets.plurialgo.langages.model
 		Divers.ecrire(buf, ")");
 	}
 	
-	public void ecrire(org.javascool.proglets.plurialgo.langages.modele.Programme prog, StringBuffer buf, int indent) {
+	public void ecrire(ModeleProgramme prog, StringBuffer buf, int indent) {
 		this.ecrire((org.javascool.proglets.plurialgo.langages.larp.Programme)prog, buf, indent);
 	}
 	

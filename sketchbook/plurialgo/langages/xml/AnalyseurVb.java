@@ -6,10 +6,8 @@ package org.javascool.proglets.plurialgo.langages.xml;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.StringTokenizer;
-
 import org.javascool.proglets.plurialgo.divers.*;
-import org.javascool.proglets.plurialgo.langages.modele.InfoTypee;
-import org.javascool.proglets.plurialgo.langages.modele.Noeud;
+import org.javascool.proglets.plurialgo.langages.modele.*;
 
 
 /**
@@ -17,7 +15,7 @@ import org.javascool.proglets.plurialgo.langages.modele.Noeud;
  */
 public class AnalyseurVb implements iAnalyseur {
 	
-	private Programme prog_xml;
+	private XmlProgramme prog_xml;
 	private StringBuffer buf_vb;
 	private StringBuffer buf_xml;
 
@@ -35,7 +33,7 @@ public class AnalyseurVb implements iAnalyseur {
 	/**
 	      Retourne l'objet de classe Programme obtenu après analyse du code Visual Basic.
 	*/		
-	public Programme getProgramme() {
+	public XmlProgramme getProgramme() {
 		return prog_xml;
 	}
 
@@ -179,12 +177,12 @@ public class AnalyseurVb implements iAnalyseur {
 	}
 	
 	private void vbEnXml(boolean ignorerLire, boolean ignorerEcrire) {
-		prog_xml = new Programme();
+		prog_xml = new XmlProgramme();
 		prog_xml.nom = "exemple"; 
 		try {
 			this.initEnreg();
 			this.initOperation();
-			Operation cur_oper = null;
+			XmlOperation cur_oper = null;
 			Noeud cur_nd = prog_xml;
 			StringTokenizer tok = new StringTokenizer(buf_vb.toString(),"\n\r",false);
 			while(tok.hasMoreTokens()) {
@@ -193,8 +191,8 @@ public class AnalyseurVb implements iAnalyseur {
 				}
 				else if (this.isAffectation(ligne)) {
 					ligne = ajouterCrochet(ligne);
-					Instruction instr = new Instruction("affectation");
-					Affectation aff = new Affectation(); aff.var = ""; aff.expression = "";
+					XmlInstruction instr = new XmlInstruction("affectation");
+					XmlAffectation aff = new XmlAffectation(); aff.var = ""; aff.expression = "";
 					int i = ligne.indexOf("=");
 					String gauche = ligne.substring(0, i);
 					if (gauche!=null) aff.var = gauche.trim();
@@ -223,8 +221,8 @@ public class AnalyseurVb implements iAnalyseur {
 				}
 				else if (this.isSi(ligne)) {
 					ligne = ajouterCrochet(ligne);
-					Instruction instr = new Instruction("si");
-					Si si = new Si(); si.condition = "";
+					XmlInstruction instr = new XmlInstruction("si");
+					XmlSi si = new XmlSi(); si.condition = "";
 					instr.sis.add(si); si.parent = instr;
 					this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;
 					cur_nd = si;
@@ -239,8 +237,8 @@ public class AnalyseurVb implements iAnalyseur {
 				else if (this.isSinonSi(ligne)) {
 					ligne = ajouterCrochet(ligne);
 					this.ajouterCommentaires(cur_nd);
-					Instruction instr = (Instruction) cur_nd.parent;
-					Si sinonsi = new Si(); sinonsi.condition = "";
+					XmlInstruction instr = (XmlInstruction) cur_nd.parent;
+					XmlSi sinonsi = new XmlSi(); sinonsi.condition = "";
 					instr.sis.add(sinonsi); sinonsi.parent = instr;
 					cur_nd = sinonsi;
 					ligne = Divers.remplacer(ligne, "ELSE", "");
@@ -255,8 +253,8 @@ public class AnalyseurVb implements iAnalyseur {
 				else if (this.isSinon(ligne)) {
 					ligne = ajouterCrochet(ligne);
 					this.ajouterCommentaires(cur_nd);
-					Instruction instr = (Instruction) cur_nd.parent;
-					Si sinon = new Si(); sinon.condition = "";
+					XmlInstruction instr = (XmlInstruction) cur_nd.parent;
+					XmlSi sinon = new XmlSi(); sinon.condition = "";
 					instr.sis.add(sinon); sinon.parent = instr;
 					cur_nd = sinon;
 				}
@@ -267,8 +265,8 @@ public class AnalyseurVb implements iAnalyseur {
 				}
 				else if (this.isTantque(ligne)) {
 					ligne = ajouterCrochet(ligne);
-					Instruction instr = new Instruction("tantque");
-					TantQue tq = new TantQue(); tq.condition = "";
+					XmlInstruction instr = new XmlInstruction("tantque");
+					XmlTantQue tq = new XmlTantQue(); tq.condition = "";
 					instr.tantques.add(tq); tq.parent = instr;
 					this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;
 					cur_nd = tq;
@@ -286,8 +284,8 @@ public class AnalyseurVb implements iAnalyseur {
 				}
 				else if (this.isPour(ligne)) {
 					ligne = ajouterCrochet(ligne);
-					Instruction instr = new Instruction("pour");
-					Pour pour = new Pour(); 
+					XmlInstruction instr = new XmlInstruction("pour");
+					XmlPour pour = new XmlPour(); 
 					pour.var = ""; pour.debut = ""; pour.fin = ""; pour.pas = "1";
 					instr.pours.add(pour); pour.parent = instr;
 					this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;
@@ -320,8 +318,8 @@ public class AnalyseurVb implements iAnalyseur {
 				else if (this.isLire(ligne)) {
 					ligne = ajouterCrochet(ligne);
 					if (ignorerLire && (cur_oper==null)) continue;
-					Instruction instr = new Instruction("lire");
-					Argument arg = new Argument();
+					XmlInstruction instr = new XmlInstruction("lire");
+					XmlArgument arg = new XmlArgument();
 					int i = ligne.indexOf("=");
 					arg.nom = ligne.substring(0, i).trim();
 					arg.type="REEL"; trouverType(arg, cur_oper);
@@ -331,7 +329,7 @@ public class AnalyseurVb implements iAnalyseur {
 				else if (this.isEcrire(ligne)) {
 					ligne = ajouterCrochet(ligne);
 					if (ignorerEcrire && (cur_oper==null)) continue;
-					Instruction instr = new Instruction("ecrire");
+					XmlInstruction instr = new XmlInstruction("ecrire");
 					int i = ligne.indexOf("(");
 					int j = ligne.lastIndexOf(")");
 					String parametres = ligne.substring(i+1, j);
@@ -341,7 +339,7 @@ public class AnalyseurVb implements iAnalyseur {
 						String parametre = tok1.nextToken();
 						if (parametre==null) continue;
 						if (parametre.contains("'")) continue;
-						Argument arg = new Argument();
+						XmlArgument arg = new XmlArgument();
 						arg.nom = parametre.trim();	
 						arg.type = "EXPR"; trouverType(arg, cur_oper);
 						instr.arguments.add(arg); arg.parent = instr;
@@ -350,7 +348,7 @@ public class AnalyseurVb implements iAnalyseur {
 						this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;
 					}
 					else if (!parametres.contains("&")) {
-						Argument arg = new Argument();
+						XmlArgument arg = new XmlArgument();
 						arg.nom = ligne.substring(i+1, j).trim();	
 						arg.type = "EXPR";
 						instr.arguments.add(arg); arg.parent = instr;
@@ -358,7 +356,7 @@ public class AnalyseurVb implements iAnalyseur {
 					}
 				}
 				else if (this.isProc(ligne)) {
-					cur_oper = (Operation) prog_xml.getOperation(this.trouverNom(ligne));
+					cur_oper = (XmlOperation) prog_xml.getOperation(this.trouverNom(ligne));
 					if (cur_oper==null) continue;
 					cur_nd = cur_oper;
 				}
@@ -367,7 +365,7 @@ public class AnalyseurVb implements iAnalyseur {
 					cur_oper = null;
 				}
 				else if (this.isFonct(ligne)) {
-					cur_oper = (Operation) prog_xml.getOperation(this.trouverNom(ligne));
+					cur_oper = (XmlOperation) prog_xml.getOperation(this.trouverNom(ligne));
 					if (cur_oper==null) continue;
 					cur_nd = cur_oper;
 				}
@@ -376,7 +374,7 @@ public class AnalyseurVb implements iAnalyseur {
 					cur_oper = null;
 				}
 				else if (this.isDim(ligne)) {
-					Variable var = new Variable();
+					XmlVariable var = new XmlVariable();
 					var.nom = this.trouverNom(ligne);
 					var.type = this.trouverType(ligne);
 					if (cur_oper==null) {
@@ -391,10 +389,10 @@ public class AnalyseurVb implements iAnalyseur {
 					String parametre = null;
 					String parametres = null;
 					String nom = trouverNom(ligne);
-					Operation oper = (Operation) prog_xml.getOperation(nom);
+					XmlOperation oper = (XmlOperation) prog_xml.getOperation(nom);
 					if (oper==null) {
 						ligne = Divers.remplacer(ligne,"CALL ", "" );
-						Instruction instr = new Instruction(ligne.trim());
+						XmlInstruction instr = new XmlInstruction(ligne.trim());
 						this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;
 						continue;
 					}
@@ -402,11 +400,11 @@ public class AnalyseurVb implements iAnalyseur {
 					if (i>=0) {
 						parametres = ligne.substring(i+1, ligne.lastIndexOf(")"));
 					}
-					Instruction instr = new Instruction(oper.nom);
+					XmlInstruction instr = new XmlInstruction(oper.nom);
 					this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;
-					for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Parametre> iter=oper.parametres.iterator(); iter.hasNext();) {
-						Parametre param = (Parametre) iter.next();
-						Argument arg = new Argument(param.nom, param.type, param.mode);
+					for (Iterator<ModeleParametre> iter=oper.parametres.iterator(); iter.hasNext();) {
+						XmlParametre param = (XmlParametre) iter.next();
+						XmlArgument arg = new XmlArgument(param.nom, param.type, param.mode);
 						instr.arguments.add(arg);
 						if (parametres==null) continue;
 						if (parametres.trim().length()==0) continue;
@@ -453,12 +451,12 @@ public class AnalyseurVb implements iAnalyseur {
 	
 	private void initOperation() {
 		StringTokenizer tok = new StringTokenizer(buf_vb.toString(),"\n\r",false);
-		Operation oper = null;
+		XmlOperation oper = null;
 		while(tok.hasMoreTokens()) {
 			String ligne = tok.nextToken();
 			if (this.isProcPrinc(ligne)) continue;
 			if (this.isProc(ligne) || this.isFonct(ligne)) {
-				oper = new Operation();
+				oper = new XmlOperation();
 				oper.nom = trouverNom(ligne);
 				if (oper.nom==null) continue;
 				int i = ligne.indexOf("(");
@@ -468,7 +466,7 @@ public class AnalyseurVb implements iAnalyseur {
 					while(tok1.hasMoreTokens()) {
 						String parametre = tok1.nextToken();
 						if (parametre==null) continue;
-						Parametre param = new Parametre();
+						XmlParametre param = new XmlParametre();
 						param.mode = "IN";
 						param.type = trouverType(parametre);
 						param.nom = trouverNom(parametre);
@@ -484,7 +482,7 @@ public class AnalyseurVb implements iAnalyseur {
 				oper.parent = prog_xml;
 			}
 			if (this.isFonct(ligne)) {
-				Variable retour = new Variable();
+				XmlVariable retour = new XmlVariable();
 				retour.mode = "OUT";
 				retour.type = "REEL";
 				retour.nom = "retour";
@@ -499,11 +497,11 @@ public class AnalyseurVb implements iAnalyseur {
 	
 	private void initEnreg() {
 		StringTokenizer tok = new StringTokenizer(buf_vb.toString(),"\n\r",false);
-		Classe enreg = null;
+		XmlClasse enreg = null;
 		while(tok.hasMoreTokens()) {
 			String ligne = tok.nextToken();
 			if (this.isEnreg(ligne)) {
-				enreg = new Classe();
+				enreg = new XmlClasse();
 				enreg.nom = trouverNom(ligne);
 				continue;
 			}
@@ -515,7 +513,7 @@ public class AnalyseurVb implements iAnalyseur {
 				enreg = null;
 				continue;
 			}
-			Variable var = new Variable();
+			XmlVariable var = new XmlVariable();
 			var.nom = trouverNom(ligne);
 			var.type = trouverType(ligne);
 			enreg.proprietes.add(var);
@@ -555,7 +553,7 @@ public class AnalyseurVb implements iAnalyseur {
 		return type;
 	}
 	
-	private void trouverType(Argument arg, Operation cur_oper) { 
+	private void trouverType(XmlArgument arg, XmlOperation cur_oper) { 
 		// utilisé pour lire et ecrire
 		InfoTypeeList liste = new InfoTypeeList();
 		if (cur_oper!=null) {
@@ -586,8 +584,8 @@ public class AnalyseurVb implements iAnalyseur {
 			int i = arg.nom.lastIndexOf(".");
 			nom = nom.substring(i+1, nom.length());
 			liste = new InfoTypeeList();
-			for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Classe> iter1=prog_xml.classes.iterator(); iter1.hasNext();) {
-				Classe cl = (Classe) iter1.next();
+			for (Iterator<ModeleClasse> iter1=prog_xml.classes.iterator(); iter1.hasNext();) {
+				XmlClasse cl = (XmlClasse) iter1.next();
 				liste.addVariables(cl.proprietes);
 			}
 			if (nom.contains("[")) {
@@ -639,16 +637,16 @@ public class AnalyseurVb implements iAnalyseur {
 	private void ajouterCommentaires(Noeud cur_nd) {
 		// pour eviter les listes d'instructions vides
 		if (this.getInstructions(cur_nd).size()>0) return;
-		Instruction instr = new Instruction("// ajouter des instructions");
+		XmlInstruction instr = new XmlInstruction("// ajouter des instructions");
 		this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;
 	}
 	
-	private ArrayList<org.javascool.proglets.plurialgo.langages.modele.Instruction> getInstructions(Noeud nd) {
-		if (nd instanceof Programme) return ((Programme) nd).instructions;
-		if (nd instanceof Operation) return ((Operation) nd).instructions;
-		if (nd instanceof Si) return ((Si) nd).instructions;
-		if (nd instanceof Pour) return ((Pour) nd).instructions;
-		if (nd instanceof TantQue) return ((TantQue) nd).instructions;
+	private ArrayList<ModeleInstruction> getInstructions(Noeud nd) {
+		if (nd instanceof XmlProgramme) return ((XmlProgramme) nd).instructions;
+		if (nd instanceof XmlOperation) return ((XmlOperation) nd).instructions;
+		if (nd instanceof XmlSi) return ((XmlSi) nd).instructions;
+		if (nd instanceof XmlPour) return ((XmlPour) nd).instructions;
+		if (nd instanceof XmlTantQue) return ((XmlTantQue) nd).instructions;
 		if (nd==null) return prog_xml.instructions;
 		return getInstructions(nd.parent);
 	}
@@ -787,29 +785,29 @@ public class AnalyseurVb implements iAnalyseur {
 	// ------------------------------------------ 
 
 	private void ajouterCrochet(StringBuffer buf) {
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Variable> iter=prog_xml.variables.iterator(); iter.hasNext();) {
-			Variable var = (Variable) iter.next();
+		for (Iterator<ModeleVariable> iter=prog_xml.variables.iterator(); iter.hasNext();) {
+			XmlVariable var = (XmlVariable) iter.next();
 			ajouterCrochet(buf, var.nom);
 		}
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Operation> iter1=prog_xml.operations.iterator(); iter1.hasNext();) {
-			Operation oper = (Operation) iter1.next();
-			for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Variable> iter=oper.variables.iterator(); iter.hasNext();) {
-				Variable var = (Variable) iter.next();
+		for (Iterator<ModeleOperation> iter1=prog_xml.operations.iterator(); iter1.hasNext();) {
+			XmlOperation oper = (XmlOperation) iter1.next();
+			for (Iterator<ModeleVariable> iter=oper.variables.iterator(); iter.hasNext();) {
+				XmlVariable var = (XmlVariable) iter.next();
 				ajouterCrochet(buf, var.nom);
 			}
-			for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Variable> iter=oper.retours.iterator(); iter.hasNext();) {
-				Variable retour = (Variable) iter.next();
+			for (Iterator<ModeleVariable> iter=oper.retours.iterator(); iter.hasNext();) {
+				XmlVariable retour = (XmlVariable) iter.next();
 				ajouterCrochet(buf, retour.nom);
 			}
-			for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Parametre> iter=oper.parametres.iterator(); iter.hasNext();) {
-				Parametre param = (Parametre) iter.next();
+			for (Iterator<ModeleParametre> iter=oper.parametres.iterator(); iter.hasNext();) {
+				XmlParametre param = (XmlParametre) iter.next();
 				ajouterCrochet(buf, param.nom);
 			}
 		}
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Classe> iter1=prog_xml.classes.iterator(); iter1.hasNext();) {
-			Classe cl = (Classe) iter1.next();
-			for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Variable> iter=cl.proprietes.iterator(); iter.hasNext();) {
-				Variable prop = (Variable) iter.next();
+		for (Iterator<ModeleClasse> iter1=prog_xml.classes.iterator(); iter1.hasNext();) {
+			XmlClasse cl = (XmlClasse) iter1.next();
+			for (Iterator<ModeleVariable> iter=cl.proprietes.iterator(); iter.hasNext();) {
+				XmlVariable prop = (XmlVariable) iter.next();
 				ajouterCrochet(buf, prop.nom);
 			}
 		}

@@ -3,20 +3,19 @@
 *******************************************************************************/
 package org.javascool.proglets.plurialgo.langages.xml;
 
-
 import java.util.*;
-
 import org.javascool.proglets.plurialgo.langages.modele.InfoTypee;
+import org.javascool.proglets.plurialgo.langages.modele.*;
 
 
 /**
  * Cette classe permet de créer des squelettes de programmes (bouton Nouveau de l'onglet Principal).
 */
-public class ProgrammeNouveau extends Programme {
+public class ProgrammeNouveau extends XmlProgramme {
 	
 	private Intermediaire inter; // inter les caractéristiques de l'onglet Principal à prendre en compte
 	private ArrayList<InfoTypee> infos; // liste de triplets (nom, type, mode)
-	private Classe classe;	 // la classe créée (si création avec regroupement)
+	private XmlClasse classe;	 // la classe créée (si création avec regroupement)
 
 	/**
 	 * Construit un squelette de programme.
@@ -37,7 +36,7 @@ public class ProgrammeNouveau extends Programme {
 		if (inter.avecClasse()) {
 			traiterClasse();
 		}
-		if (instructions.size()==0) instructions.add(new Instruction("// ajouter des instructions"));
+		if (instructions.size()==0) instructions.add(new XmlInstruction("// ajouter des instructions"));
 		traiterMaxTab();
 	}
 	
@@ -55,7 +54,7 @@ public class ProgrammeNouveau extends Programme {
 					}
 				}
 			}
-			Variable var = new Variable(info.nom, info.type, null);
+			XmlVariable var = new XmlVariable(info.nom, info.type, null);
 			variables.add(var);
 		}
 		traiterElementaireSaisie();
@@ -64,15 +63,15 @@ public class ProgrammeNouveau extends Programme {
 	}
 	
 	private void traiterElementaireSaisie(){
-		Instruction instr;
-		Operation oper;
-		Argument arg;
+		XmlInstruction instr;
+		XmlOperation oper;
+		XmlArgument arg;
 		if (inter.avecFonctionsSaisie()) {
 			for(Iterator<InfoTypee> iter=infos.iterator(); iter.hasNext(); ) {
 				InfoTypee info = iter.next();
 				if (info.isIn() || info.isInOut()) {
-					instr = new Instruction("saisir_"+info.nom);
-					oper = new Operation("saisir_"+info.nom);
+					instr = new XmlInstruction("saisir_"+info.nom);
+					oper = new XmlOperation("saisir_"+info.nom);
 					oper.traiterElementaireSaisieFonction(info, instr);
 					instructions.add(instr);
 					operations.add(oper);
@@ -80,8 +79,8 @@ public class ProgrammeNouveau extends Programme {
 			}
 		}
 		else if (inter.avecProcedureSaisie()) {
-			instr = new Instruction("saisir");
-			oper = new Operation("saisir");
+			instr = new XmlInstruction("saisir");
+			oper = new XmlOperation("saisir");
 			oper.traiterElementaireSaisieProcedure(infos, instr);
 			if (instr.arguments.size()>0) {
 				instructions.add(instr);
@@ -89,25 +88,25 @@ public class ProgrammeNouveau extends Programme {
 			}
 		}
 		else if (!inter.sansSaisie()){
-			instr = new Instruction("lire");
+			instr = new XmlInstruction("lire");
 			if (inter.avecSaisieFichierTexte()) {
-				arg = new Argument("'fich'", "FICHIER_TEXTE", null);
-				arg.instructions.add( new Instruction("// ajouter des instructions"));
+				arg = new XmlArgument("'fich'", "FICHIER_TEXTE", null);
+				arg.instructions.add( new XmlInstruction("// ajouter des instructions"));
 				instr.setFichier(arg);
 			}
 			else if (inter.avecSaisieFormulaire()) {
-				arg = new Argument("formu", "FORM", null);
+				arg = new XmlArgument("formu", "FORM", null);
 				instr.setFormulaire(arg);
 			}
 			else if (inter.avecSaisieSql()) {
-				arg = new Argument("bd", "SQL", null);
-				arg.instructions.add( new Instruction("// ajouter des instructions"));
+				arg = new XmlArgument("bd", "SQL", null);
+				arg.instructions.add( new XmlInstruction("// ajouter des instructions"));
 				instr.setFichier(arg);
 			}
 			for(Iterator<InfoTypee> iter=infos.iterator(); iter.hasNext(); ) {
 				InfoTypee info = iter.next();
 				if (info.isIn() || info.isInOut()) {
-					arg = new Argument(info.nom, info.type, null);
+					arg = new XmlArgument(info.nom, info.type, null);
 					instr.arguments.add(arg);
 				}
 			}
@@ -118,12 +117,12 @@ public class ProgrammeNouveau extends Programme {
 	}
 	
 	private void traiterElementaireAffichage(){
-		Instruction instr;
-		Operation oper;
-		Argument arg;
+		XmlInstruction instr;
+		XmlOperation oper;
+		XmlArgument arg;
 		if (inter.avecProcedureAffichage()) {
-			instr = new Instruction("afficher");
-			oper = new Operation("afficher");
+			instr = new XmlInstruction("afficher");
+			oper = new XmlOperation("afficher");
 			oper.traiterElementaireAffichageProcedure(infos, instr);
 			if (instr.arguments.size()>0) {
 				instructions.add(instr);
@@ -131,19 +130,19 @@ public class ProgrammeNouveau extends Programme {
 			}
 		}
 		else if (!inter.sansAffichage()){
-			instr = new Instruction("ecrire");
+			instr = new XmlInstruction("ecrire");
 			if (inter.avecAffichageFichierTexte()) {
-				arg = new Argument("'fich'", "FICHIER_TEXTE", null);
+				arg = new XmlArgument("'fich'", "FICHIER_TEXTE", null);
 				instr.setFichier(arg);
 			}
 			else if (inter.avecAffichageSql()) {
-				arg = new Argument("bd", "SQL", null);
+				arg = new XmlArgument("bd", "SQL", null);
 				instr.setFichier(arg);
 			}
 			for(Iterator<InfoTypee> iter=infos.iterator(); iter.hasNext(); ) {
 				InfoTypee info = iter.next();
 				if (info.isOut() || info.isInOut()) {
-					arg = new Argument(info.nom, info.type, null);
+					arg = new XmlArgument(info.nom, info.type, null);
 					instr.arguments.add(arg);
 				}
 			}
@@ -154,23 +153,23 @@ public class ProgrammeNouveau extends Programme {
 	}
 	
 	private void traiterElementaireCalcul(){
-		Instruction instr;
-		Operation oper;
+		XmlInstruction instr;
+		XmlOperation oper;
 		if (inter.avecFonctionsCalcul()) {
-			ArrayList<org.javascool.proglets.plurialgo.langages.modele.Argument> arg_donnees = new ArrayList<org.javascool.proglets.plurialgo.langages.modele.Argument>();
-			ArrayList<org.javascool.proglets.plurialgo.langages.modele.Parametre> param_donnees = new ArrayList<org.javascool.proglets.plurialgo.langages.modele.Parametre>();
+			ArrayList<ModeleArgument> arg_donnees = new ArrayList<ModeleArgument>();
+			ArrayList<ModeleParametre> param_donnees = new ArrayList<ModeleParametre>();
 			for(Iterator<InfoTypee> iter=infos.iterator(); iter.hasNext(); ) {
 				InfoTypee info = iter.next();
 				if (info.isIn()) {
-					arg_donnees.add (new Argument(info.nom, info.type, info.mode));
-					param_donnees.add (new Parametre(info.nom, info.type, info.mode));
+					arg_donnees.add (new XmlArgument(info.nom, info.type, info.mode));
+					param_donnees.add (new XmlParametre(info.nom, info.type, info.mode));
 				}
 			}
 			for(Iterator<InfoTypee> iter=infos.iterator(); iter.hasNext(); ) {
 				InfoTypee info = iter.next();
 				if (info.isOut()) {
-					instr = new Instruction("calculer_"+info.nom);
-					oper = new Operation("calculer_"+info.nom);
+					instr = new XmlInstruction("calculer_"+info.nom);
+					oper = new XmlOperation("calculer_"+info.nom);
 					oper.traiterElementaireCalculFonction(info, instr, param_donnees, arg_donnees);
 					traiterLocales(oper.variables);
 					instructions.add(instr);
@@ -179,8 +178,8 @@ public class ProgrammeNouveau extends Programme {
 			}
 		}
 		else if (inter.avecProcedureCalcul()) {
-			instr = new Instruction("calculer");
-			oper = new Operation("calculer");
+			instr = new XmlInstruction("calculer");
+			oper = new XmlOperation("calculer");
 			oper.traiterElementaireCalculProcedure(infos, instr);
 			traiterLocales(oper.variables);
 			instructions.add(instr);
@@ -188,14 +187,14 @@ public class ProgrammeNouveau extends Programme {
 		}
 	}
 	
-	private void traiterLocales(ArrayList<org.javascool.proglets.plurialgo.langages.modele.Variable> locales){
+	private void traiterLocales(ArrayList<ModeleVariable> locales){
 		if (locales==null) return;
 		for(Iterator<InfoTypee> iter=infos.iterator(); iter.hasNext(); ) {
 			InfoTypee info = iter.next();
 			if (info.isAutre()) {
 				if (inter!=null) {
 					if (inter.avecProcedureCalcul() || inter.avecFonctionsCalcul()) {
-						Variable var = new Variable(info.nom, info.type, null);
+						XmlVariable var = new XmlVariable(info.nom, info.type, null);
 						locales.add(var);
 					}
 				}
@@ -209,7 +208,7 @@ public class ProgrammeNouveau extends Programme {
 	
 	private void traiterEnregistrement(){
 		String nom_cl = inter.getNomGroupe();
-		Classe enreg = new Classe(nom_cl, true);
+		XmlClasse enreg = new XmlClasse(nom_cl, true);
 		classes.add(enreg);
 		this.classe = enreg;
 		infos = enreg.creerProprietes(infos, inter.getProprietesGroupe());
@@ -222,7 +221,7 @@ public class ProgrammeNouveau extends Programme {
 					}
 				}
 			}
-			Variable var = new Variable(info.nom, info.type, null);
+			XmlVariable var = new XmlVariable(info.nom, info.type, null);
 			variables.add(var);
 		}
 		traiterEnregistrementSaisie();
@@ -231,17 +230,17 @@ public class ProgrammeNouveau extends Programme {
 	}
 	
 	private void traiterEnregistrementSaisie(){
-		Instruction instr, instr_oper, instr_obj;
-		Operation oper=null;
-		Argument arg, arg_oper;
-		Parametre param_oper;
+		XmlInstruction instr, instr_oper, instr_obj;
+		XmlOperation oper=null;
+		XmlArgument arg, arg_oper;
+		XmlParametre param_oper;
 		if (inter.avecFonctionsSaisie() || inter.avecProcedureSaisie()) {
 			// infos non enregistrements
-			instr = new Instruction("lire");
+			instr = new XmlInstruction("lire");
 			for(Iterator<InfoTypee> iter=infos.iterator(); iter.hasNext(); ) {
 				InfoTypee info = iter.next();
 				if ( (info.isIn() || info.isInOut()) && (!info.isEnregistrement(this)) ) {
-					arg = new Argument(info.nom, info.type, null);
+					arg = new XmlArgument(info.nom, info.type, null);
 					instr.arguments.add(arg);
 				}
 			}
@@ -253,17 +252,17 @@ public class ProgrammeNouveau extends Programme {
 				InfoTypee info = iter.next();
 				if ( (info.isIn() || info.isInOut()) && (info.isEnregistrement(this)) ) {
 					if (oper==null) {
-						oper = new Operation("saisir");
-						param_oper = new Parametre(classe.getSansIndice(info.nom), info.type, "OUT");
+						oper = new XmlOperation("saisir");
+						param_oper = new XmlParametre(classe.getSansIndice(info.nom), info.type, "OUT");
 						oper.parametres.add(param_oper);
-						instr_oper = new Instruction("lire");
-						arg_oper = new Argument(classe.getSansIndice(info.nom), info.type, null);
+						instr_oper = new XmlInstruction("lire");
+						arg_oper = new XmlArgument(classe.getSansIndice(info.nom), info.type, null);
 						instr_oper.arguments.add(arg_oper);
 						oper.instructions.add(instr_oper);
 						operations.add(oper);
 					}
-					instr_obj = new Instruction("saisir");
-					arg_oper = new Argument(info.nom, info.type, "OUT");
+					instr_obj = new XmlInstruction("saisir");
+					arg_oper = new XmlArgument(info.nom, info.type, "OUT");
 					instr_obj.arguments.add(arg_oper);
 					instructions.add(instr_obj);
 				}
@@ -275,17 +274,17 @@ public class ProgrammeNouveau extends Programme {
 	}
 	
 	private void traiterEnregistrementAffichage(){
-		Instruction instr, instr_oper, instr_obj;
-		Operation oper=null;
-		Argument arg, arg_oper;
-		Parametre param_oper;
+		XmlInstruction instr, instr_oper, instr_obj;
+		XmlOperation oper=null;
+		XmlArgument arg, arg_oper;
+		XmlParametre param_oper;
 		if (inter.avecProcedureAffichage()) {
 			// infos non enregistrements
-			instr = new Instruction("ecrire");
+			instr = new XmlInstruction("ecrire");
 			for(Iterator<InfoTypee> iter=infos.iterator(); iter.hasNext(); ) {
 				InfoTypee info = iter.next();
 				if ( (info.isOut() || info.isInOut()) && (!info.isEnregistrement(this)) ) {
-					arg = new Argument(info.nom, info.type, null);
+					arg = new XmlArgument(info.nom, info.type, null);
 					instr.arguments.add(arg);
 				}
 			}
@@ -297,17 +296,17 @@ public class ProgrammeNouveau extends Programme {
 				InfoTypee info = iter.next();
 				if ( (info.isOut() || info.isInOut()) && (info.isEnregistrement(this)) ) {
 					if (oper==null) {
-						oper = new Operation("afficher");
-						param_oper = new Parametre(classe.getSansIndice(info.nom), info.type, "IN");
+						oper = new XmlOperation("afficher");
+						param_oper = new XmlParametre(classe.getSansIndice(info.nom), info.type, "IN");
 						oper.parametres.add(param_oper);
-						instr_oper = new Instruction("ecrire");
-						arg_oper = new Argument(classe.getSansIndice(info.nom), info.type, null);
+						instr_oper = new XmlInstruction("ecrire");
+						arg_oper = new XmlArgument(classe.getSansIndice(info.nom), info.type, null);
 						instr_oper.arguments.add(arg_oper);
 						oper.instructions.add(instr_oper);
 						operations.add(oper);
 					}
-					instr_obj = new Instruction("afficher");
-					arg_oper = new Argument(info.nom, info.type, "IN");
+					instr_obj = new XmlInstruction("afficher");
+					arg_oper = new XmlArgument(info.nom, info.type, "IN");
 					instr_obj.arguments.add(arg_oper);
 					instructions.add(instr_obj);
 				}
@@ -328,7 +327,7 @@ public class ProgrammeNouveau extends Programme {
 	
 	private void traiterClasse(){
 		String nom_cl = inter.getNomGroupe();
-		classe = new Classe(nom_cl, false);
+		classe = new XmlClasse(nom_cl, false);
 		classes.add(classe);
 		infos = classe.creerProprietes(infos, inter.getProprietesGroupe());
 		for(Iterator<InfoTypee> iter=infos.iterator(); iter.hasNext(); ) {
@@ -340,29 +339,29 @@ public class ProgrammeNouveau extends Programme {
 					}
 				}
 			}
-			Variable var = new Variable(info.nom, info.type, null);
+			XmlVariable var = new XmlVariable(info.nom, info.type, null);
 			variables.add(var);
 		}
 		traiterClasseSaisie();
 		traiterClasseCalcul();
 		traiterClasseAffichage();
 		// constructeur
-		Constructeur constr = new Constructeur(classe.nom);
-		constr.instructions.add( new Instruction("// ajouter des instructions"));
+		XmlConstructeur constr = new XmlConstructeur(classe.nom);
+		constr.instructions.add( new XmlInstruction("// ajouter des instructions"));
 		classe.constructeurs.add(constr);
 	}
 	
 	private void traiterClasseSaisie(){
-		Instruction instr, instr_oper, instr_obj;
-		Operation oper=null;
-		Argument arg, arg_oper;
+		XmlInstruction instr, instr_oper, instr_obj;
+		XmlOperation oper=null;
+		XmlArgument arg, arg_oper;
 		if (inter.avecProcedureSaisie()  || inter.avecFonctionsSaisie()) {
 			// infos non objets
-			instr = new Instruction("lire");
+			instr = new XmlInstruction("lire");
 			for(Iterator<InfoTypee> iter=infos.iterator(); iter.hasNext(); ) {
 				InfoTypee info = iter.next();
 				if ( (info.isIn() || info.isInOut()) && (!info.isClasse(this)) ) {
-					arg = new Argument(info.nom, info.type, null);
+					arg = new XmlArgument(info.nom, info.type, null);
 					instr.arguments.add(arg);
 				}
 			}
@@ -374,15 +373,15 @@ public class ProgrammeNouveau extends Programme {
 				InfoTypee info = iter.next();
 				if ( (info.isIn() || info.isInOut()) && (info.isClasse(this)) ) {
 					if (oper==null) {
-						oper = new Operation("saisir");
-						instr_oper = new Instruction("lire");
-						arg_oper = new Argument("this", info.type, null);
+						oper = new XmlOperation("saisir");
+						instr_oper = new XmlInstruction("lire");
+						arg_oper = new XmlArgument("this", info.type, null);
 						instr_oper.arguments.add(arg_oper);
 						oper.instructions.add(instr_oper);
 						classe.operations.add(oper);
 					}
-					instr_obj = new Instruction("saisir");
-					arg = new Argument(info.nom, info.type, null);
+					instr_obj = new XmlInstruction("saisir");
+					arg = new XmlArgument(info.nom, info.type, null);
 					instr_obj.setObjet(arg);
 					instructions.add(instr_obj);
 				}
@@ -394,11 +393,11 @@ public class ProgrammeNouveau extends Programme {
 	}
 	
 	private void traiterClasseCalcul(){
-		Instruction instr;
-		Operation oper=null;
-		Argument arg;
-		Parametre param_oper;
-		InfoTypee info_obj=null; Argument obj;
+		XmlInstruction instr;
+		XmlOperation oper=null;
+		XmlArgument arg;
+		XmlParametre param_oper;
+		InfoTypee info_obj=null; XmlArgument obj;
 		for(Iterator<InfoTypee> iter=infos.iterator(); iter.hasNext(); ) {
 			InfoTypee info = iter.next();
 			if ( (info.isClasse(this)) ) {
@@ -406,42 +405,42 @@ public class ProgrammeNouveau extends Programme {
 			}
 		}
 		if (info_obj==null) return;
-		obj = new Argument(info_obj.nom, info_obj.type, null);
+		obj = new XmlArgument(info_obj.nom, info_obj.type, null);
 		if (inter.avecFonctionsCalcul()) {
-			ArrayList<org.javascool.proglets.plurialgo.langages.modele.Argument> arg_donnees = new ArrayList<org.javascool.proglets.plurialgo.langages.modele.Argument>();
-			ArrayList<org.javascool.proglets.plurialgo.langages.modele.Parametre> param_donnees = new ArrayList<org.javascool.proglets.plurialgo.langages.modele.Parametre>();
+			ArrayList<ModeleArgument> arg_donnees = new ArrayList<ModeleArgument>();
+			ArrayList<ModeleParametre> param_donnees = new ArrayList<ModeleParametre>();
 			for(Iterator<InfoTypee> iter=infos.iterator(); iter.hasNext(); ) {
 				InfoTypee info = iter.next();
 				if (info.isIn() && info!=info_obj) {
-					arg_donnees.add (new Argument(info.nom, info.type, info.mode));
-					param_donnees.add (new Parametre(info.nom, info.type, info.mode));
+					arg_donnees.add (new XmlArgument(info.nom, info.type, info.mode));
+					param_donnees.add (new XmlParametre(info.nom, info.type, info.mode));
 				}
 			}
 			for(Iterator<InfoTypee> iter=infos.iterator(); iter.hasNext(); ) {
 				InfoTypee info = iter.next();
 				if (info.isOut() && info!=info_obj) {
-					instr = new Instruction("calculer_"+info.nom);
-					arg = new Argument(info.nom, info.type, null);
+					instr = new XmlInstruction("calculer_"+info.nom);
+					arg = new XmlArgument(info.nom, info.type, null);
 					instr.setRetour(arg);
 					instr.setObjet(obj);
 					instr.arguments.addAll(arg_donnees);
 					instructions.add(instr);
-					oper = new Operation("calculer_"+info.nom);
-					oper.setRetour( new Variable(info.nom, info.type, null) );
+					oper = new XmlOperation("calculer_"+info.nom);
+					oper.setRetour( new XmlVariable(info.nom, info.type, null) );
 					oper.parametres.addAll(param_donnees);
 					classe.operations.add(oper);
 				}
 			}
 		}
 		if (inter.avecProcedureCalcul()) {
-			instr = new Instruction("calculer");
-			oper = new Operation("calculer");
+			instr = new XmlInstruction("calculer");
+			oper = new XmlOperation("calculer");
 			for(Iterator<InfoTypee> iter=infos.iterator(); iter.hasNext(); ) {
 				InfoTypee info = iter.next();
 				if ( (info.isIn() || info.isInOut() || info.isOut()) && info!=info_obj ) {
-					arg = new Argument(info.nom, info.type, info.mode);
+					arg = new XmlArgument(info.nom, info.type, info.mode);
 					instr.arguments.add(arg);
-					param_oper = new Parametre(info.nom, info.type, info.mode);
+					param_oper = new XmlParametre(info.nom, info.type, info.mode);
 					oper.parametres.add(param_oper);
 				}
 			}
@@ -456,16 +455,16 @@ public class ProgrammeNouveau extends Programme {
 	}
 	
 	private void traiterClasseAffichage(){
-		Instruction instr, instr_oper, instr_obj;
-		Operation oper=null;
-		Argument arg, arg_oper;
+		XmlInstruction instr, instr_oper, instr_obj;
+		XmlOperation oper=null;
+		XmlArgument arg, arg_oper;
 		if (inter.avecProcedureAffichage()) {
 			// avec infos non objets
-			instr = new Instruction("ecrire");
+			instr = new XmlInstruction("ecrire");
 			for(Iterator<InfoTypee> iter=infos.iterator(); iter.hasNext(); ) {
 				InfoTypee info = iter.next();
 				if ( (info.isOut() || info.isInOut()) && (!info.isClasse(this)) ) {
-					arg = new Argument(info.nom, info.type, null);
+					arg = new XmlArgument(info.nom, info.type, null);
 					instr.arguments.add(arg);
 				}
 			}
@@ -477,15 +476,15 @@ public class ProgrammeNouveau extends Programme {
 				InfoTypee info = iter.next();
 				if ( (info.isOut() || info.isInOut()) && (info.isClasse(this)) ) {
 					if (oper==null) {
-						oper = new Operation("afficher");
-						instr_oper = new Instruction("ecrire");
-						arg_oper = new Argument("this", info.type, null);
+						oper = new XmlOperation("afficher");
+						instr_oper = new XmlInstruction("ecrire");
+						arg_oper = new XmlArgument("this", info.type, null);
 						instr_oper.arguments.add(arg_oper);
 						oper.instructions.add(instr_oper);
 						classe.operations.add(oper);
 					}
-					instr_obj = new Instruction("afficher");
-					arg = new Argument(info.nom, info.type, null);
+					instr_obj = new XmlInstruction("afficher");
+					arg = new XmlArgument(info.nom, info.type, null);
 					instr_obj.setObjet(arg);
 					instructions.add(instr_obj);
 				}

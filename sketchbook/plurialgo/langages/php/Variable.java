@@ -5,12 +5,13 @@ package org.javascool.proglets.plurialgo.langages.php;
 
 import java.util.Iterator;
 import org.javascool.proglets.plurialgo.divers.*;
+import org.javascool.proglets.plurialgo.langages.modele.*;
 
 
 /**
  * Cette classe hérite de la classe homonyme du modèle.
 */
-public class Variable extends org.javascool.proglets.plurialgo.langages.modele.Variable {
+public class Variable extends ModeleVariable {
 	
 	public Variable() {
 	}
@@ -41,7 +42,7 @@ public class Variable extends org.javascool.proglets.plurialgo.langages.modele.V
 			Divers.ecrire(buf, "$" + nom, indent);
 			Divers.ecrire(buf, " = array(); ");
 			Classe cl = (Classe) this.getClasse(prog);
-			for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Variable> iter=cl.proprietes.iterator(); iter.hasNext();) {
+			for (Iterator<ModeleVariable> iter=cl.proprietes.iterator(); iter.hasNext();) {
 				Variable prop = (Variable) iter.next();
 				Variable var = new Variable(this.nom+"."+prop.nom, prop.type);
 				var.ecrire(prog, buf, indent);

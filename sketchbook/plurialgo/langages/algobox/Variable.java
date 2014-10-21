@@ -4,12 +4,13 @@
 package org.javascool.proglets.plurialgo.langages.algobox;
 
 import org.javascool.proglets.plurialgo.divers.Divers;
+import org.javascool.proglets.plurialgo.langages.modele.*;
 
 
 /**
  * Cette classe hérite de la classe homonyme du modèle.
 */
-public class Variable extends org.javascool.proglets.plurialgo.langages.modele.Variable {
+public class Variable extends ModeleVariable {
 	
 	public Variable() {
 	}
@@ -32,7 +33,7 @@ public class Variable extends org.javascool.proglets.plurialgo.langages.modele.V
 		}
 	}
 	
-	public void ecrire(org.javascool.proglets.plurialgo.langages.modele.Programme prog, StringBuffer buf, int indent) {
+	public void ecrire(ModeleProgramme prog, StringBuffer buf, int indent) {
 		this.ecrire((org.javascool.proglets.plurialgo.langages.algobox.Programme)prog, buf, indent);
 	}
 

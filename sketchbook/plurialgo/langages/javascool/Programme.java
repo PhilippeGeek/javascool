@@ -4,14 +4,14 @@
 package org.javascool.proglets.plurialgo.langages.javascool;
 
 import java.util.*;
-
 import org.javascool.proglets.plurialgo.divers.*;
+import org.javascool.proglets.plurialgo.langages.modele.*;
 
 
 /**
  * Cette classe hérite de la classe homonyme du modèle.
 */
-public class Programme extends org.javascool.proglets.plurialgo.langages.modele.Programme {
+public class Programme extends ModeleProgramme {
 
 	/**
 	 * Redéfinition obligatoire de cette méthode.
@@ -38,7 +38,7 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 	
 	private void addSousProgs(StringBuffer buf, int indent) {
 		//if ((operations.size()>0)) this.commenter(buf, "sous programmes", indent);
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Operation> iter=operations.iterator(); iter.hasNext();) {
+		for (Iterator<ModeleOperation> iter=operations.iterator(); iter.hasNext();) {
 			Operation oper = (Operation) iter.next();
 			oper.ecrire(this, buf, indent);
 		}
@@ -46,7 +46,7 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 	
 	private void addClasses(StringBuffer buf, int indent) {
 		//if ((classes.size()>0))	this.commenter(buf, "enregistrements", indent);
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Classe> iter=classes.iterator(); iter.hasNext();) {
+		for (Iterator<ModeleClasse> iter=classes.iterator(); iter.hasNext();) {
 			Classe classe = (Classe) iter.next();
 			classe.ecrire(this, buf, indent);
 		}
@@ -55,11 +55,11 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 	private void addMain(StringBuffer buf, int indent) {
 		//this.commenter(buf, "programme principal", indent);
 		Divers.ecrire(buf, "void main() {", indent);
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Variable> iter=variables.iterator(); iter.hasNext();) {
+		for (Iterator<ModeleVariable> iter=variables.iterator(); iter.hasNext();) {
 			Variable var = (Variable) iter.next();
 			var.ecrire(this, buf, indent+1);
 		}
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Instruction> iter=instructions.iterator(); iter.hasNext();) {
+		for (Iterator<ModeleInstruction> iter=instructions.iterator(); iter.hasNext();) {
 			Instruction instr = (Instruction) iter.next();
 			instr.ecrire(this, buf, indent+1);
 		}
@@ -147,7 +147,7 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 	private void addMainFormulaire(StringBuffer buf, int indent) {
 		//this.commenter(buf, "programme principal et formulaire", indent);
 		Divers.ecrire(buf, "void main() {", indent);
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Instruction> iter=instructions.iterator(); iter.hasNext();) {
+		for (Iterator<ModeleInstruction> iter=instructions.iterator(); iter.hasNext();) {
 			Instruction instr = (Instruction) iter.next();
 			Argument formu = (Argument) instr.getFormulaire();
 			if (formu!=null) {
@@ -203,13 +203,13 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 	private void addActionFormulaire(StringBuffer buf, Formulaire form, int indent) {
 		Instruction instr_saisie = form.instr_pere;
 		Divers.ecrire(buf, "public void actionPerformed(ActionEvent e) { // actions associees aux boutons", indent);
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Variable> iter=variables.iterator(); iter.hasNext();) {
+		for (Iterator<ModeleVariable> iter=variables.iterator(); iter.hasNext();) {
 			Variable var = (Variable) iter.next();
 			var.ecrire(this, buf, indent+1);
 		}
 		Divers.ecrire(buf, "if (e.getSource()==bouton_ok) { // recuperation des entrees + calculs + affichage des sorties", indent+1);
 		form.lireFormu(this, buf, indent);
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Instruction> iter=instructions.iterator(); iter.hasNext();) {
+		for (Iterator<ModeleInstruction> iter=instructions.iterator(); iter.hasNext();) {
 			Instruction instr = (Instruction) iter.next();
 			if (instr == instr_saisie) continue;
 			instr.ecrire(this, buf, indent+2);

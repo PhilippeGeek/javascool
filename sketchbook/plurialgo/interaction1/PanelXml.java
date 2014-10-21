@@ -44,8 +44,8 @@ public class PanelXml extends JInternalFrame implements ActionListener {
 		// editeur de texte
         editArea = new RSyntaxTextArea(20,20);
 		//editArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_XML);
-		editArea.setCodeFoldingEnabled(true);
-		editArea.setAntiAliasingEnabled(true);
+		//editArea.setCodeFoldingEnabled(true);
+		//editArea.setAntiAliasingEnabled(true);
 		RTextScrollPane paneScrollPane = new RTextScrollPane(editArea);
         paneScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		editArea.setVisible(true);
@@ -61,7 +61,7 @@ public class PanelXml extends JInternalFrame implements ActionListener {
 		popup.add(menu);
 		menu = new JMenuItem("Reformuler"); menu.addActionListener(this); menu.setActionCommand("reformuler");
 		popup.add(menu);
-		menu = new JMenuItem("Transformer 1-n"); menu.addActionListener(this); menu.setActionCommand("vectoriser");
+		menu = new JMenuItem("Transformer"); menu.addActionListener(this); menu.setActionCommand("transformer");
 		popup.add(menu);
 	}
 			    
@@ -102,7 +102,7 @@ public class PanelXml extends JInternalFrame implements ActionListener {
 	private boolean reformulerXml() {
 		// récupération du programme Xml
 		pInter.clearConsole();
-		org.javascool.proglets.plurialgo.langages.xml.Programme prog = (org.javascool.proglets.plurialgo.langages.xml.Programme) pInter.getProgramme(this.getText(),"xml"); 
+		org.javascool.proglets.plurialgo.langages.xml.XmlProgramme prog = (org.javascool.proglets.plurialgo.langages.xml.XmlProgramme) pInter.getProgramme(this.getText(),"xml"); 
 		if (pInter.messageErreur(prog)) {
 			return false;
 		}
@@ -113,7 +113,7 @@ public class PanelXml extends JInternalFrame implements ActionListener {
 		ProgrammeDerive progDer = new ProgrammeDerive(prog, inter);
 		pInter.pPrincipal.algoField.setText(progDer.nom);
 		// écriture du programme Xml dans l'onglet Xml
-		pInter.add_xml(new org.javascool.proglets.plurialgo.langages.xml.Programme(progDer));
+		pInter.add_xml(new org.javascool.proglets.plurialgo.langages.xml.XmlProgramme(progDer));
 		pInter.pPrincipal.algoField.setText(progDer.nom);
 		return(true);
 	}
@@ -121,15 +121,15 @@ public class PanelXml extends JInternalFrame implements ActionListener {
 	private boolean vectoriserXml() {
 		pInter.clearConsole();
 		// récupération du programme Xml
-		org.javascool.proglets.plurialgo.langages.xml.Programme prog;
-		prog = (org.javascool.proglets.plurialgo.langages.xml.Programme) pInter.getProgramme(this.getText(),"xml");  
+		org.javascool.proglets.plurialgo.langages.xml.XmlProgramme prog;
+		prog = (org.javascool.proglets.plurialgo.langages.xml.XmlProgramme) pInter.getProgramme(this.getText(),"xml");  
 		if (pInter.messageErreur(prog)) {
 			return false;
 		}
 		// construction du programme vectorisé
 		ProgrammeVectorise progVect = new ProgrammeVectorise(prog);
 		// écriture du programme Xml dans l'onglet Xml
-		pInter.add_xml(new org.javascool.proglets.plurialgo.langages.xml.Programme(progVect));
+		pInter.add_xml(new org.javascool.proglets.plurialgo.langages.xml.XmlProgramme(progVect));
 		pInter.pPrincipal.algoField.setText(progVect.nom);
 		return(true);
 	}

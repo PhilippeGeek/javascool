@@ -4,14 +4,14 @@
 package org.javascool.proglets.plurialgo.langages.javascript;
 
 import java.util.Iterator;
-
 import org.javascool.proglets.plurialgo.divers.Divers;
+import org.javascool.proglets.plurialgo.langages.modele.*;
 
 
 /**
  * Cette classe hérite de la classe homonyme du modèle.
 */
-public class Si extends org.javascool.proglets.plurialgo.langages.modele.Si {
+public class Si extends ModeleSi {
 	
 	public Si() {
 	}
@@ -20,7 +20,7 @@ public class Si extends org.javascool.proglets.plurialgo.langages.modele.Si {
 		if (isSelon()) {
 			if (isSinon()) {
 				Divers.ecrire(buf, "default :", indent);
-				for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Instruction> iter=instructions.iterator(); iter.hasNext();) {
+				for (Iterator<ModeleInstruction> iter=instructions.iterator(); iter.hasNext();) {
 					Object obj = iter.next();
 					Instruction instr = (Instruction)obj ;
 					instr.ecrire(prog, buf, indent+1);
@@ -30,7 +30,7 @@ public class Si extends org.javascool.proglets.plurialgo.langages.modele.Si {
 			else if ( isSi() || isSinonSi() ) {
 				String valeur = this.getValeurSelon();
 				Divers.ecrire(buf, "case " + valeur + " :", indent);
-				for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Instruction> iter=instructions.iterator(); iter.hasNext();) {
+				for (Iterator<ModeleInstruction> iter=instructions.iterator(); iter.hasNext();) {
 					Object obj = iter.next();
 					Instruction instr = (Instruction)obj ;
 					instr.ecrire(prog, buf, indent+1);
@@ -41,7 +41,7 @@ public class Si extends org.javascool.proglets.plurialgo.langages.modele.Si {
 		else {
 			if (isSi()) {
 				Divers.ecrire(buf, "if " + this.getCondition() + " {", indent);
-				for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Instruction> iter=instructions.iterator(); iter.hasNext();) {
+				for (Iterator<ModeleInstruction> iter=instructions.iterator(); iter.hasNext();) {
 					Object obj = iter.next();
 					Instruction instr = (Instruction)obj ;
 					instr.ecrire(prog, buf, indent+1);
@@ -50,7 +50,7 @@ public class Si extends org.javascool.proglets.plurialgo.langages.modele.Si {
 			}
 			if (isSinonSi()) {
 				Divers.ecrire(buf, "else if " + this.getCondition() + " {", indent);
-				for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Instruction> iter=instructions.iterator(); iter.hasNext();) {
+				for (Iterator<ModeleInstruction> iter=instructions.iterator(); iter.hasNext();) {
 					Object obj = iter.next();
 					Instruction instr = (Instruction)obj ;
 					instr.ecrire(prog, buf, indent+1);
@@ -59,7 +59,7 @@ public class Si extends org.javascool.proglets.plurialgo.langages.modele.Si {
 			}
 			if (isSinon()) {
 				Divers.ecrire(buf, "else {", indent);
-				for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Instruction> iter=instructions.iterator(); iter.hasNext();) {
+				for (Iterator<ModeleInstruction> iter=instructions.iterator(); iter.hasNext();) {
 					Object obj = iter.next();
 					Instruction instr = (Instruction)obj ;
 					instr.ecrire(prog, buf, indent+1);
