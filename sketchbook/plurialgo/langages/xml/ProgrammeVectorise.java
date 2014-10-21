@@ -5,19 +5,17 @@ package org.javascool.proglets.plurialgo.langages.xml;
 
 
 import java.util.*;
-
 import org.javascool.proglets.plurialgo.divers.Divers;
-import org.javascool.proglets.plurialgo.langages.modele.InfoTypee;
-
+import org.javascool.proglets.plurialgo.langages.modele.*;
 
 
 /**
  * Cette classe implémente le mécanisme de transformation 1-n 
  * (bouton Transformer 1-n de l'onglet Résultats).
 */
-public class ProgrammeVectorise extends Programme {
+public class ProgrammeVectorise extends XmlProgramme {
 
-	private Programme prog; // le programme à vectoriser
+	private XmlProgramme prog; // le programme à vectoriser
 	private ArrayList<InfoTypee> infos; // les variables du programme principal
 	private ArrayList<InfoTypee> infosVect;  // les variables à vectoriser
 	
@@ -34,16 +32,16 @@ public class ProgrammeVectorise extends Programme {
 	 * 	Construit un programme par transformation 1-n
 	 *    @param prog le programme à transformer (transformation précisée dans la propriété options du programme)
 	*/	
-	public ProgrammeVectorise(Programme prog) {
+	public ProgrammeVectorise(XmlProgramme prog) {
 		this.prog = prog;
 		this.nom = prog.nom;
 		// récupération des classes et des operations
-		for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Classe> iter=prog.classes.iterator(); iter.hasNext(); ) {
-			Classe cl = (Classe) iter.next();
+		for(Iterator<ModeleClasse> iter=prog.classes.iterator(); iter.hasNext(); ) {
+			XmlClasse cl = (XmlClasse) iter.next();
 			this.classes.add(cl);
 		}
-		for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Operation> iter=prog.operations.iterator(); iter.hasNext(); ) {
-			Operation oper = (Operation) iter.next();
+		for(Iterator<ModeleOperation> iter=prog.operations.iterator(); iter.hasNext(); ) {
+			XmlOperation oper = (XmlOperation) iter.next();
 			this.operations.add(oper);
 		}
 		// vectorisation
@@ -68,13 +66,13 @@ public class ProgrammeVectorise extends Programme {
 		}
 		traiterStandard();
 		// divers
-		if (instructions.size()==0) instructions.add(new Instruction("// ajouter des instructions"));
+		if (instructions.size()==0) instructions.add(new XmlInstruction("// ajouter des instructions"));
 	}
 	
 	private void initInfos() {
 		infos = new ArrayList<InfoTypee>();
-		for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Variable> iter=prog.variables.iterator(); iter.hasNext(); ) {
-			Variable var = (Variable) iter.next();
+		for(Iterator<ModeleVariable> iter=prog.variables.iterator(); iter.hasNext(); ) {
+			XmlVariable var = (XmlVariable) iter.next();
 			infos.add(new InfoTypee(var.nom, var.type, null));
 		}
 		infosVect = new ArrayList<InfoTypee>();
@@ -119,67 +117,67 @@ public class ProgrammeVectorise extends Programme {
 
 	private void traiterStandard(){
 		// variables
-		Variable var;
+		XmlVariable var;
 		for(Iterator<InfoTypee> iter=infos.iterator(); iter.hasNext(); ) {
 			InfoTypee info = iter.next();
-			var = new Variable(info.nom, info.type, null);
+			var = new XmlVariable(info.nom, info.type, null);
 			variables.add(var);
 		}
 		InfoTypeeList liste = new InfoTypeeList();
 		liste.addVariables(variables);
 		if (Divers.isIdent(ii)) {
-			var = new Variable(ii, "ENTIER", null);
+			var = new XmlVariable(ii, "ENTIER", null);
 			if (liste.getInfo(ii)==null) {
 				variables.add(0, var); liste.addInfo(var);
 			}
 		}
 		if (Divers.isIdent(debut)) {
-			var = new Variable(debut, "ENTIER", null);
+			var = new XmlVariable(debut, "ENTIER", null);
 			if (liste.getInfo(debut)==null) {
 				variables.add(0, var); liste.addInfo(var);
 			}
 		}
 		if (Divers.isIdent(nn)) {
-			var = new Variable(nn, "ENTIER", null);
+			var = new XmlVariable(nn, "ENTIER", null);
 			if (liste.getInfo(nn)==null) {
 				variables.add(0, var); liste.addInfo(var);
 			}
 		}
 		if (Divers.isIdent(pas)) {
-			var = new Variable(pas, "ENTIER", null);
+			var = new XmlVariable(pas, "ENTIER", null);
 			if (liste.getInfo(pas)==null) {
 				variables.add(0, var); liste.addInfo(var);
 			}
 		}
-		for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Argument> iter=prog.options.iterator(); iter.hasNext(); ) {
-			Argument option = (Argument) iter.next();
+		for(Iterator<ModeleArgument> iter=prog.options.iterator(); iter.hasNext(); ) {
+			XmlArgument option = (XmlArgument) iter.next();
 			initOption(option);
 			if (sommeVar!=null) {
-				var = new Variable(sommeVar, "REEL", null);
+				var = new XmlVariable(sommeVar, "REEL", null);
 				if (liste.getInfo(sommeVar)==null) {
 					variables.add(var); liste.addInfo(var);
 				}
 			}
 			if (compterVar!=null) {
-				var = new Variable(compterVar, "ENTIER", null);
+				var = new XmlVariable(compterVar, "ENTIER", null);
 				if (liste.getInfo(compterVar)==null) {
 					variables.add(var); liste.addInfo(var);
 				}
 			}
 			if (miniVar!=null) {
-				var = new Variable(miniVar, "REEL", null);
+				var = new XmlVariable(miniVar, "REEL", null);
 				if (liste.getInfo(miniVar)==null) {
 					variables.add(var); liste.addInfo(var);
 				}
 			}
 			if (maxiVar!=null) {
-				var = new Variable(maxiVar, "REEL", null);
+				var = new XmlVariable(maxiVar, "REEL", null);
 				if (liste.getInfo(maxiVar)==null) {
 					variables.add(var); liste.addInfo(var);
 				}
 			}
 			if (chercherVar!=null) {
-				var = new Variable(chercherVar, "BOOLEEN", null);
+				var = new XmlVariable(chercherVar, "BOOLEEN", null);
 				if (liste.getInfo(chercherVar)==null) {
 					variables.add(var); liste.addInfo(var);
 				}
@@ -193,7 +191,7 @@ public class ProgrammeVectorise extends Programme {
 		traiterStandardAffichage();
 	}
 
-	private void initOption(Argument option) {
+	private void initOption(XmlArgument option) {
 		String mode = option.mode;
 		if ((option.nom.equals("sommation")) && (mode!=null)) {
 			sommeVar = null;
@@ -235,19 +233,19 @@ public class ProgrammeVectorise extends Programme {
 	}
 			
 	private void traiterStandardSaisie() {
-		Instruction instr;
-		Argument arg;
-		instr = new Instruction("lire");
+		XmlInstruction instr;
+		XmlArgument arg;
+		instr = new XmlInstruction("lire");
 		if (Divers.isIdent(nn)) {
-			arg = new Argument(nn, "ENTIER", null);
+			arg = new XmlArgument(nn, "ENTIER", null);
 			instr.arguments.add(arg);
 		}
 		if (Divers.isIdent(debut)) {
-			arg = new Argument(debut, "ENTIER", null);
+			arg = new XmlArgument(debut, "ENTIER", null);
 			instr.arguments.add(arg);
 		}
 		if (Divers.isIdent(pas)) {
-			arg = new Argument(pas, "ENTIER", null);
+			arg = new XmlArgument(pas, "ENTIER", null);
 			instr.arguments.add(arg);
 		}
 		if (instr.arguments.size()>0) {
@@ -256,30 +254,30 @@ public class ProgrammeVectorise extends Programme {
 	}
 	
 	private void traiterStandardAffichage() {
-		Instruction instr;
-		Argument arg;
-		instr = new Instruction("ecrire");
-		for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Argument> iter=prog.options.iterator(); iter.hasNext(); ) {
-			Argument option = (Argument) iter.next();
+		XmlInstruction instr;
+		XmlArgument arg;
+		instr = new XmlInstruction("ecrire");
+		for(Iterator<ModeleArgument> iter=prog.options.iterator(); iter.hasNext(); ) {
+			XmlArgument option = (XmlArgument) iter.next();
 			initOption(option);
 			if (option.nom.equals("sommation") && sommeVar!=null) {
-				arg = new Argument(sommeVar, "REEL", null);
+				arg = new XmlArgument(sommeVar, "REEL", null);
 				instr.arguments.add(arg);
 			}
 			if (option.nom.equals("comptage") && compterVar!=null) {
-				arg = new Argument(compterVar, "ENTIER", null);
+				arg = new XmlArgument(compterVar, "ENTIER", null);
 				instr.arguments.add(arg);
 			}
 			if (option.nom.equals("minimum") && miniVar!=null) {
-				arg = new Argument(miniVar, "REEL", null);
+				arg = new XmlArgument(miniVar, "REEL", null);
 				instr.arguments.add(arg);
 			}
 			if (option.nom.equals("maximum") && maxiVar!=null) {
-				arg = new Argument(maxiVar, "REEL", null);
+				arg = new XmlArgument(maxiVar, "REEL", null);
 				instr.arguments.add(arg);
 			}
 			if (option.nom.equals("recherche") && chercherVar!=null) {
-				arg = new Argument(chercherVar, "BOOLEEN", null);
+				arg = new XmlArgument(chercherVar, "BOOLEEN", null);
 				instr.arguments.add(arg);
 			}
 		}
@@ -290,42 +288,42 @@ public class ProgrammeVectorise extends Programme {
 	
 	private void traiterStandardCalcul() {
 		// avant la boucle
-		for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Argument> iter=prog.options.iterator(); iter.hasNext(); ) {
-			Argument option = (Argument) iter.next();
+		for(Iterator<ModeleArgument> iter=prog.options.iterator(); iter.hasNext(); ) {
+			XmlArgument option = (XmlArgument) iter.next();
 			initOption(option);
 			if (option.nom.equals("sommation") && sommeVar!=null) {
-				Instruction instr = Instruction.creerInstructionAffectation(sommeVar, "0");
+				XmlInstruction instr = XmlInstruction.creerInstructionAffectation(sommeVar, "0");
 				instructions.add(instr);
 			}
 			if (option.nom.equals("comptage") && compterVar!=null) {
-				Instruction instr = Instruction.creerInstructionAffectation(compterVar, "0");
+				XmlInstruction instr = XmlInstruction.creerInstructionAffectation(compterVar, "0");
 				instructions.add(instr);
 			}
 			if (option.nom.equals("minimum") && miniVar!=null) {
-				Instruction instr = Instruction.creerInstructionAffectation(miniVar, "1000");
+				XmlInstruction instr = XmlInstruction.creerInstructionAffectation(miniVar, "1000");
 				instructions.add(instr);
 			}
 			if (option.nom.equals("maximum") && maxiVar!=null) {
-				Instruction instr = Instruction.creerInstructionAffectation(maxiVar, "-1000");
+				XmlInstruction instr = XmlInstruction.creerInstructionAffectation(maxiVar, "-1000");
 				instructions.add(instr);
 			}
 			if (option.nom.equals("recherche") && chercherVar!=null) {
-				Instruction instr = Instruction.creerInstructionAffectation(chercherVar, "FAUX");
+				XmlInstruction instr = XmlInstruction.creerInstructionAffectation(chercherVar, "FAUX");
 				instructions.add(instr);
 			}
 		}
 		// Pour ou tantque ?
-		Pour pour = null;
-		TantQue tq = null;
-		Instruction instr_iter = null;
+		XmlPour pour = null;
+		XmlTantQue tq = null;
+		XmlInstruction instr_iter = null;
 		if (nn.isEmpty()) this.avecTantque = true;
 		if (ii.isEmpty()) this.avecTantque = true;
 		if (debut.isEmpty()) this.avecTantque = true;
 		if (pas.isEmpty()) this.avecTantque = true;
 		if (chercherVar!=null) this.avecTantque = true;
 		if (this.avecTantque) {
-			instr_iter = new Instruction("tantque");
-			tq = new TantQue();
+			instr_iter = new XmlInstruction("tantque");
+			tq = new XmlTantQue();
 			tq.condition = "";
 			if (!nn.isEmpty() && !ii.isEmpty() && !debut.isEmpty() && !pas.isEmpty()) {
 				if (pas.startsWith("-")) {
@@ -349,66 +347,66 @@ public class ProgrammeVectorise extends Programme {
 			if (tq.condition.contains(" ET ") ) tq.condition = "(" + tq.condition + ")";
 			instr_iter.tantques.add(tq);
 			if (!ii.isEmpty() && !debut.isEmpty()) {
-				instructions.add( Instruction.creerInstructionAffectation(ii, debut) );
+				instructions.add( XmlInstruction.creerInstructionAffectation(ii, debut) );
 			}
 			instructions.add(instr_iter);
 		}
 		else {
-			instr_iter = new Instruction("pour");
-			pour = new Pour(); 
+			instr_iter = new XmlInstruction("pour");
+			pour = new XmlPour(); 
 			pour.var = ii; pour.debut = debut; pour.fin = nn; pour.pas = pas;
 			instr_iter.pours.add(pour);
 			instructions.add(instr_iter);
 		}
 		// la boucle
-		for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Instruction> iter=prog.instructions.iterator(); iter.hasNext(); ) {
-			Instruction instr = (Instruction) iter.next();
+		for(Iterator<ModeleInstruction> iter=prog.instructions.iterator(); iter.hasNext(); ) {
+			XmlInstruction instr = (XmlInstruction) iter.next();
 			if (instr.isLecture() && prog.getOption("donnees")!=null) continue;
 			if (instr.isEcriture()&& prog.getOption("resultats")!=null) continue;
 			instr = this.vectoriser(instr);
 			if (pour!=null) pour.instructions.add(instr);
 			if (tq!=null) tq.instructions.add(instr);
 		}
-		for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Argument> iter=prog.options.iterator(); iter.hasNext(); ) {
-			Argument option = (Argument) iter.next();
+		for(Iterator<ModeleArgument> iter=prog.options.iterator(); iter.hasNext(); ) {
+			XmlArgument option = (XmlArgument) iter.next();
 			initOption(option);
 			if (option.nom.equals("sommation") && sommeVar!=null) {
-				Instruction instr = Instruction.creerInstructionAffectation(sommeVar, vectoriser(sommeVar + " + " + sommeArg));
+				XmlInstruction instr = XmlInstruction.creerInstructionAffectation(sommeVar, vectoriser(sommeVar + " + " + sommeArg));
 				if (pour!=null) pour.instructions.add(instr);
 				if (tq!=null) tq.instructions.add(instr);
 			}
 			if (option.nom.equals("comptage") && compterVar!=null) {
-				Instruction instr = new Instruction("si");
-				Si si = new Si(); 
+				XmlInstruction instr = new XmlInstruction("si");
+				XmlSi si = new XmlSi(); 
 				si.condition = vectoriser(compterArg);
-				si.instructions.add( Instruction.creerInstructionAffectation(compterVar, compterVar + "+1") );
+				si.instructions.add( XmlInstruction.creerInstructionAffectation(compterVar, compterVar + "+1") );
 				instr.sis.add(si);
 				if (pour!=null) pour.instructions.add(instr);
 				if (tq!=null) tq.instructions.add(instr);
 			}
 			if (option.nom.equals("minimum") && miniVar!=null) {
-				Instruction instr = new Instruction("si");
-				Si si = new Si(); 
+				XmlInstruction instr = new XmlInstruction("si");
+				XmlSi si = new XmlSi(); 
 				si.condition = vectoriser(miniArg + " < " + miniVar);
-				si.instructions.add( Instruction.creerInstructionAffectation(miniVar, vectoriser(miniArg)) );
+				si.instructions.add( XmlInstruction.creerInstructionAffectation(miniVar, vectoriser(miniArg)) );
 				instr.sis.add(si);
 				if (pour!=null) pour.instructions.add(instr);
 				if (tq!=null) tq.instructions.add(instr);
 			}
 			if (option.nom.equals("maximum") && maxiVar!=null) {
-				Instruction instr = new Instruction("si");
-				Si si = new Si(); 
+				XmlInstruction instr = new XmlInstruction("si");
+				XmlSi si = new XmlSi(); 
 				si.condition = vectoriser(maxiArg + " > " + maxiVar);
-				si.instructions.add( Instruction.creerInstructionAffectation(maxiVar, vectoriser(maxiArg)) );
+				si.instructions.add( XmlInstruction.creerInstructionAffectation(maxiVar, vectoriser(maxiArg)) );
 				instr.sis.add(si);
 				if (pour!=null) pour.instructions.add(instr);
 				if (tq!=null) tq.instructions.add(instr);
 			}
 			if (option.nom.equals("recherche") && chercherVar!=null) {
-				Instruction instr = new Instruction("si");
-				Si si = new Si(); 
+				XmlInstruction instr = new XmlInstruction("si");
+				XmlSi si = new XmlSi(); 
 				si.condition = vectoriser(chercherArg);
-				si.instructions.add( Instruction.creerInstructionAffectation(chercherVar, "VRAI") );
+				si.instructions.add( XmlInstruction.creerInstructionAffectation(chercherVar, "VRAI") );
 				instr.sis.add(si);
 				if (pour!=null) pour.instructions.add(instr);
 				if (tq!=null) tq.instructions.add(instr);
@@ -416,47 +414,47 @@ public class ProgrammeVectorise extends Programme {
 		}
 		if (pour!=null) {
 			if (pour.instructions.size()==0) {
-				pour.instructions.add(new Instruction("// ajouter des instructions"));
+				pour.instructions.add(new XmlInstruction("// ajouter des instructions"));
 			}
 		}
 		if (tq!=null) {
 			if (!ii.isEmpty() && !pas.isEmpty()) {
 				if (pas.startsWith("-")) {
-					tq.instructions.add( Instruction.creerInstructionAffectation(ii, ii + pas) );
+					tq.instructions.add( XmlInstruction.creerInstructionAffectation(ii, ii + pas) );
 				}
 				else {
-					tq.instructions.add( Instruction.creerInstructionAffectation(ii, ii + "+" + pas) );
+					tq.instructions.add( XmlInstruction.creerInstructionAffectation(ii, ii + "+" + pas) );
 				}
 			}
 			else if (tq.instructions.size()==0) {
-				tq.instructions.add(new Instruction("// ajouter des instructions"));
+				tq.instructions.add(new XmlInstruction("// ajouter des instructions"));
 			}
 		}
 	}
 	
-	private Instruction vectoriser(Instruction instr){
-		Instruction copie = new Instruction(instr.nom); 
+	private XmlInstruction vectoriser(XmlInstruction instr){
+		XmlInstruction copie = new XmlInstruction(instr.nom); 
 		if (instr.isSi()) {
-			for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Si> iter=instr.sis.iterator(); iter.hasNext();) {
-				Si si = (Si) iter.next();
+			for (Iterator<ModeleSi> iter=instr.sis.iterator(); iter.hasNext();) {
+				XmlSi si = (XmlSi) iter.next();
 				copie.sis.add(this.vectoriser(si));
 			}
 		}
 		else if (instr.isPour()) {
-			for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Pour> iter=instr.pours.iterator(); iter.hasNext();) {
-				Pour pour = (Pour) iter.next();
+			for (Iterator<ModelePour> iter=instr.pours.iterator(); iter.hasNext();) {
+				XmlPour pour = (XmlPour) iter.next();
 				copie.pours.add(this.vectoriser(pour));
 			}
 		}
 		else if (instr.isTantQue()) {
-			for (Iterator<org.javascool.proglets.plurialgo.langages.modele.TantQue> iter=instr.tantques.iterator(); iter.hasNext();) {
-				TantQue tq = (TantQue) iter.next();
+			for (Iterator<ModeleTantQue> iter=instr.tantques.iterator(); iter.hasNext();) {
+				XmlTantQue tq = (XmlTantQue) iter.next();
 				copie.tantques.add(this.vectoriser(tq));
 			}
 		}
 		else if (instr.isAffectation()) {
-			for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Affectation> iter=instr.affectations.iterator(); iter.hasNext();) {
-				Affectation aff = (Affectation) iter.next();
+			for (Iterator<ModeleAffectation> iter=instr.affectations.iterator(); iter.hasNext();) {
+				XmlAffectation aff = (XmlAffectation) iter.next();
 				copie.affectations.add(this.vectoriser(aff));
 			}
 		}
@@ -466,67 +464,67 @@ public class ProgrammeVectorise extends Programme {
 		return copie;
 	}
 	
-	private Si vectoriser(Si si){
-		Si copie = new Si();
+	private XmlSi vectoriser(XmlSi si){
+		XmlSi copie = new XmlSi();
 		copie.condition = vectoriser(si.condition);
 		copie.schema = si.schema;
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Instruction> iter=si.instructions.iterator(); iter.hasNext();) {
-			Instruction instr = (Instruction) iter.next();
+		for (Iterator<ModeleInstruction> iter=si.instructions.iterator(); iter.hasNext();) {
+			XmlInstruction instr = (XmlInstruction) iter.next();
 			copie.instructions.add(this.vectoriser(instr));
 		}
 		return (copie);
 	}
 	
-	private Pour vectoriser(Pour pour){
-		Pour copie = new Pour();
+	private XmlPour vectoriser(XmlPour pour){
+		XmlPour copie = new XmlPour();
 		copie.var = pour.var;
 		copie.debut = pour.debut;
 		copie.fin = vectoriser(pour.fin);
 		copie.pas = pour.pas;
 		copie.schema = pour.schema;
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Instruction> iter=pour.instructions.iterator(); iter.hasNext();) {
-			Instruction instr = (Instruction) iter.next();
+		for (Iterator<ModeleInstruction> iter=pour.instructions.iterator(); iter.hasNext();) {
+			XmlInstruction instr = (XmlInstruction) iter.next();
 			copie.instructions.add(this.vectoriser(instr));
 		}
 		return (copie);
 	}
 	
-	private TantQue vectoriser(TantQue tq){
-		TantQue copie = new TantQue();
+	private XmlTantQue vectoriser(XmlTantQue tq){
+		XmlTantQue copie = new XmlTantQue();
 		copie.condition = vectoriser(tq.condition);
 		copie.schema = tq.schema;
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Instruction> iter=tq.instructions.iterator(); iter.hasNext();) {
-			Instruction instr = (Instruction) iter.next();
+		for (Iterator<ModeleInstruction> iter=tq.instructions.iterator(); iter.hasNext();) {
+			XmlInstruction instr = (XmlInstruction) iter.next();
 			copie.instructions.add(this.vectoriser(instr));
 		}
 		return (copie);
 	}
 	
-	private Affectation vectoriser(Affectation aff){
-		Affectation copie = new Affectation();
+	private XmlAffectation vectoriser(XmlAffectation aff){
+		XmlAffectation copie = new XmlAffectation();
 		copie.var = vectoriser(aff.var);
 		copie.expression = vectoriser(aff.expression);
 		return (copie);
 	}
 	
-	private Instruction vectoriserArguments(Instruction instr) {
-		Argument arg, arg_copie;
-		Instruction copie = new Instruction(instr.nom);
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Argument> iter=instr.arguments.iterator(); iter.hasNext();) {
-			arg = (Argument) iter.next();
-			arg_copie = new Argument(arg.nom, arg.type, arg.mode);
+	private XmlInstruction vectoriserArguments(XmlInstruction instr) {
+		XmlArgument arg, arg_copie;
+		XmlInstruction copie = new XmlInstruction(instr.nom);
+		for (Iterator<ModeleArgument> iter=instr.arguments.iterator(); iter.hasNext();) {
+			arg = (XmlArgument) iter.next();
+			arg_copie = new XmlArgument(arg.nom, arg.type, arg.mode);
 			copie.arguments.add(arg_copie);
 			arg_copie.nom = vectoriser(arg.nom);
 		}
-		arg = (Argument) instr.getRetour();
+		arg = (XmlArgument) instr.getRetour();
 		if (arg!=null) {
-			arg_copie = new Argument(arg.nom, arg.type, arg.mode);
+			arg_copie = new XmlArgument(arg.nom, arg.type, arg.mode);
 			copie.retours.add(arg_copie);
 			arg_copie.nom = vectoriser(arg.nom);
 		}
-		arg = (Argument) instr.getObjet();
+		arg = (XmlArgument) instr.getObjet();
 		if (arg!=null) {
-			arg_copie = new Argument(arg.nom, arg.type, arg.mode);
+			arg_copie = new XmlArgument(arg.nom, arg.type, arg.mode);
 			copie.objets.add(arg_copie);
 			arg_copie.nom = vectoriser(arg.nom);
 		}

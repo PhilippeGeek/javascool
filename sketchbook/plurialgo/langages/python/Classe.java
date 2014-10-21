@@ -4,14 +4,14 @@
 package org.javascool.proglets.plurialgo.langages.python;
 
 import java.util.*;
-
 import org.javascool.proglets.plurialgo.divers.*;
+import org.javascool.proglets.plurialgo.langages.modele.*;
 
 
 /**
  * Cette classe hérite de la classe homonyme du modèle.
 */
-public class Classe extends org.javascool.proglets.plurialgo.langages.modele.Classe {
+public class Classe extends ModeleClasse {
 	
 	public Classe() {
 	}
@@ -27,13 +27,13 @@ public class Classe extends org.javascool.proglets.plurialgo.langages.modele.Cla
 //		}
 		if ((operations.size()>0))
 			prog.commenter(buf, "methodes", indent+1);
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Operation> iter=operations.iterator(); iter.hasNext();) {
+		for (Iterator<ModeleOperation> iter=operations.iterator(); iter.hasNext();) {
 			Operation oper = (Operation) iter.next();
 			oper.ecrire(prog, buf, indent+1);
 		}
 		if ((constructeurs.size()>0))
 			prog.commenter(buf, "constructeurs", indent+1);
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Constructeur> iter=constructeurs.iterator(); iter.hasNext();) {
+		for (Iterator<ModeleConstructeur> iter=constructeurs.iterator(); iter.hasNext();) {
 			Constructeur constr = (Constructeur) iter.next();
 			constr.ecrire(prog, buf, indent+1);
 		}

@@ -6,11 +6,8 @@ package org.javascool.proglets.plurialgo.langages.xml;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.StringTokenizer;
-
 import org.javascool.proglets.plurialgo.divers.*;
-import org.javascool.proglets.plurialgo.langages.modele.InfoTypee;
-import org.javascool.proglets.plurialgo.langages.modele.Noeud;
-
+import org.javascool.proglets.plurialgo.langages.modele.*;
 
 
 /**
@@ -18,7 +15,7 @@ import org.javascool.proglets.plurialgo.langages.modele.Noeud;
  */
 public class AnalyseurXcas implements iAnalyseur {
 	
-	private Programme prog_xml;
+	private XmlProgramme prog_xml;
 	private StringBuffer buf_xcas;
 	private StringBuffer buf_xml;
 	private String pile[] = new String[50];
@@ -33,8 +30,8 @@ public class AnalyseurXcas implements iAnalyseur {
 	*/	
 	public AnalyseurXcas(String txt, boolean ignorerLire, boolean ignorerEcrire, Intermediaire inter) {
 		this.nettoyerXcas(txt);
-		prog_xml = new Programme(); 
-		Programme prog_nouveau = new ProgrammeNouveau(inter);
+		prog_xml = new XmlProgramme(); 
+		XmlProgramme prog_nouveau = new ProgrammeNouveau(inter);
 		prog_xml.nom = prog_nouveau.nom;
 		prog_xml.variables.addAll(prog_nouveau.variables);
 		this.xcasEnXml(ignorerLire, ignorerEcrire);
@@ -43,12 +40,12 @@ public class AnalyseurXcas implements iAnalyseur {
 	/**
 	      Retourne l'objet de classe Programme obtenu après analyse du code Javascool.
 	*/		
-	public Programme getProgramme() {
+	public XmlProgramme getProgramme() {
 		if (buf_xml.toString().contains("[") && buf_xml.toString().contains("]")) {
 			StringBuffer buf = new StringBuffer(buf_xml);
 			Divers.remplacer(buf, "]", "+1]");
 			Divers.remplacer(buf, "-1+1]", "]");
-			return (Programme) org.javascool.proglets.plurialgo.langages.modele.Programme.getProgramme(buf.toString(),"xml");
+			return (XmlProgramme) ModeleProgramme.getProgramme(buf.toString(),"xml");
 		}
 		return prog_xml;
 	}
@@ -113,16 +110,16 @@ public class AnalyseurXcas implements iAnalyseur {
 		try {
 			i_pile = 0; pile[0] = "";
 			this.initOperation();
-			Operation cur_oper = null;
-			Constructeur cur_constr = null;
+			XmlOperation cur_oper = null;
+			XmlConstructeur cur_constr = null;
 			Noeud cur_nd = prog_xml;	// le noeud où seront ajoutées les instructions
 			StringTokenizer tok = new StringTokenizer(buf_xcas.toString(),"\n\r",false);
 			while(tok.hasMoreTokens()) {
 				String ligne = tok.nextToken();
 				//System.out.println("ligne@ "+ligne);
 				if (this.isAffectation(ligne)) {
-					Instruction instr = new Instruction("affectation");
-					Affectation aff = new Affectation(); aff.var = ""; aff.expression = "";
+					XmlInstruction instr = new XmlInstruction("affectation");
+					XmlAffectation aff = new XmlAffectation(); aff.var = ""; aff.expression = "";
 					int i = ligne.indexOf(":=");
 					String gauche = ligne.substring(0, i);
 					if (gauche!=null) aff.var = gauche.trim();
@@ -138,14 +135,14 @@ public class AnalyseurXcas implements iAnalyseur {
 				else if (this.isRetour(ligne)) {
 					if (cur_oper==null) continue;
 					if (cur_oper.isProcedure()) {
-						Variable retour = new Variable();
+						XmlVariable retour = new XmlVariable();
 						retour.mode = "OUT";
 						retour.nom = "retour";
 						trouverType(retour, cur_oper, cur_constr);
 						cur_oper.retours.add(retour);						
 					}
-					Instruction instr = new Instruction("affectation");
-					Affectation aff = new Affectation(); 
+					XmlInstruction instr = new XmlInstruction("affectation");
+					XmlAffectation aff = new XmlAffectation(); 
 					aff.var = cur_oper.getRetour().nom;
 					int i = ligne.indexOf(" "); 
 					aff.expression = "";
@@ -167,8 +164,8 @@ public class AnalyseurXcas implements iAnalyseur {
 					if (ligne.endsWith("{")) {
 						i_pile++; pile[i_pile] = "si"; 
 					}
-					Instruction instr = new Instruction("si");
-					Si si = new Si(); si.condition = "";
+					XmlInstruction instr = new XmlInstruction("si");
+					XmlSi si = new XmlSi(); si.condition = "";
 					instr.sis.add(si); si.parent = instr;
 					this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;
 					cur_nd = si;
@@ -183,8 +180,8 @@ public class AnalyseurXcas implements iAnalyseur {
 				else if (this.isSinonSi(ligne)) {
 					//System.out.println("isSinonSi:"+ligne);
 					this.ajouterCommentaires(cur_nd);
-					Instruction instr = (Instruction) cur_nd.parent;
-					Si sinonsi = new Si(); sinonsi.condition = "";
+					XmlInstruction instr = (XmlInstruction) cur_nd.parent;
+					XmlSi sinonsi = new XmlSi(); sinonsi.condition = "";
 					instr.sis.add(sinonsi); sinonsi.parent = instr;
 					cur_nd = sinonsi;
 					int i = ligne.indexOf("if");
@@ -198,8 +195,8 @@ public class AnalyseurXcas implements iAnalyseur {
 				else if (this.isSinon(ligne)) {
 					//System.out.println("isSinon:"+ligne);
 					this.ajouterCommentaires(cur_nd);
-					Instruction instr = (Instruction) cur_nd.parent;
-					Si sinon = new Si(); sinon.condition = "";
+					XmlInstruction instr = (XmlInstruction) cur_nd.parent;
+					XmlSi sinon = new XmlSi(); sinon.condition = "";
 					instr.sis.add(sinon); sinon.parent = instr;
 					cur_nd = sinon;
 				}
@@ -216,8 +213,8 @@ public class AnalyseurXcas implements iAnalyseur {
 					if (ligne.endsWith("{")) {
 						i_pile++; pile[i_pile] = "tantque"; 
 					}
-					Instruction instr = new Instruction("tantque");
-					TantQue tq = new TantQue(); tq.condition = "";
+					XmlInstruction instr = new XmlInstruction("tantque");
+					XmlTantQue tq = new XmlTantQue(); tq.condition = "";
 					instr.tantques.add(tq); tq.parent = instr;
 					this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;
 					cur_nd = tq;
@@ -246,8 +243,8 @@ public class AnalyseurXcas implements iAnalyseur {
 					if (ligne.endsWith("{")) {
 						i_pile++; pile[i_pile] = "pour"; 
 					}
-					Instruction instr = new Instruction("pour");
-					Pour pour = new Pour(); 
+					XmlInstruction instr = new XmlInstruction("pour");
+					XmlPour pour = new XmlPour(); 
 					pour.var = ""; pour.debut = ""; pour.fin = ""; pour.pas = "1";
 					instr.pours.add(pour); pour.parent = instr;
 					this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;
@@ -337,8 +334,8 @@ public class AnalyseurXcas implements iAnalyseur {
 				}
 				else if (this.isLire(ligne)) {
 					if (ignorerLire && (cur_oper==null)) continue;
-					Instruction instr = new Instruction("lire");
-					Argument arg = new Argument();
+					XmlInstruction instr = new XmlInstruction("lire");
+					XmlArgument arg = new XmlArgument();
 					int i = ligne.lastIndexOf(",")+1;
 					int j = ligne.lastIndexOf(")");
 					if (j<0) continue;
@@ -353,11 +350,11 @@ public class AnalyseurXcas implements iAnalyseur {
 				}
 				else if (this.isEcrire(ligne)) {
 					if (ignorerEcrire && (cur_oper==null)) continue;
-					Instruction instr = new Instruction("ecrire");
+					XmlInstruction instr = new XmlInstruction("ecrire");
 					int i = ligne.indexOf("(")+1;
 					int j = ligne.lastIndexOf(")");
 					String parametres = ligne.substring(i, j).trim();
-					Argument arg = new Argument();
+					XmlArgument arg = new XmlArgument();
 					arg.nom = parametres.trim();	
 					arg.type = "EXPR"; trouverType(arg, cur_oper, cur_constr);
 					instr.arguments.add(arg); arg.parent = instr;
@@ -367,7 +364,7 @@ public class AnalyseurXcas implements iAnalyseur {
 				}
 				else if (this.isProc(ligne)) {
 					i_pile++; pile[i_pile] = "sub"; 
-					cur_oper = (Operation) prog_xml.getOperation(this.trouverNom(ligne));
+					cur_oper = (XmlOperation) prog_xml.getOperation(this.trouverNom(ligne));
 					if (cur_oper==null) continue;
 					cur_nd = cur_oper;
 				}
@@ -381,7 +378,7 @@ public class AnalyseurXcas implements iAnalyseur {
 					StringTokenizer tok1 = new StringTokenizer(ligne,",",false);
 					while(tok1.hasMoreTokens()) {
 						String mot = tok1.nextToken().trim();
-						Variable var = new Variable();
+						XmlVariable var = new XmlVariable();
 						int i = mot.indexOf(":=");
 						if (i>0) mot = mot.substring(0, i);
 						if (!Divers.isIdent(mot)) continue;
@@ -405,21 +402,21 @@ public class AnalyseurXcas implements iAnalyseur {
 						objet = nom.substring(0, i_pt);
 						nom = nom.substring(i_pt+1);
 					}
-					Operation oper = (Operation) prog_xml.getOperation(nom);
+					XmlOperation oper = (XmlOperation) prog_xml.getOperation(nom);
 					int i = ligne.indexOf("(");
 					if (i>=0) {
 						parametres = ligne.substring(i+1, ligne.lastIndexOf(")"));
 					}
-					Instruction instr = new Instruction(oper.nom);
+					XmlInstruction instr = new XmlInstruction(oper.nom);
 					if (objet!=null) {
-						Argument arg = new Argument(objet, "REEL", null);
+						XmlArgument arg = new XmlArgument(objet, "REEL", null);
 						trouverType(arg, cur_oper, cur_constr);
 						instr.setObjet(arg);
 					}
 					this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;
-					for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Parametre> iter=oper.parametres.iterator(); iter.hasNext();) {
-						Parametre param = (Parametre) iter.next();
-						Argument arg = new Argument(param.nom, param.type, param.mode);
+					for (Iterator<ModeleParametre> iter=oper.parametres.iterator(); iter.hasNext();) {
+						XmlParametre param = (XmlParametre) iter.next();
+						XmlArgument arg = new XmlArgument(param.nom, param.type, param.mode);
 						instr.arguments.add(arg);
 						if (parametres==null) continue;
 						if (parametres.trim().length()==0) continue;
@@ -456,7 +453,7 @@ public class AnalyseurXcas implements iAnalyseur {
 				}
 				else if (this.isPrimitive(ligne)) {
 					int j = ligne.lastIndexOf(")"); 
-					Instruction instr = new Instruction(ligne.substring(0, j+1));
+					XmlInstruction instr = new XmlInstruction(ligne.substring(0, j+1));
 					this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;
 				}
 			}
@@ -472,11 +469,11 @@ public class AnalyseurXcas implements iAnalyseur {
 	
 	private void initOperation() {
 		StringTokenizer tok = new StringTokenizer(buf_xcas.toString(),"\n\r",false);
-		Operation oper = null;
+		XmlOperation oper = null;
 		while(tok.hasMoreTokens()) {
 			String ligne = tok.nextToken();
 			if (this.isProc(ligne)) {
-				oper = new Operation();
+				oper = new XmlOperation();
 				oper.nom = trouverNom(ligne);
 				if (oper.nom==null) continue;
 				int i = ligne.indexOf("(");
@@ -486,7 +483,7 @@ public class AnalyseurXcas implements iAnalyseur {
 					while(tok1.hasMoreTokens()) {
 						String parametre = tok1.nextToken();
 						if (parametre==null) continue;
-						Parametre param = new Parametre();
+						XmlParametre param = new XmlParametre();
 						param.mode = "IN";
 						param.nom = trouverNom(parametre);
 						trouverType(param,null,null);
@@ -501,7 +498,7 @@ public class AnalyseurXcas implements iAnalyseur {
 		}
 	}
 	
-	private void trouverType(InfoTypee arg, Operation cur_oper, Constructeur cur_constr) { 
+	private void trouverType(InfoTypee arg, XmlOperation cur_oper, XmlConstructeur cur_constr) { 
 		// utilisé pour lire et ecrire
 		InfoTypeeList liste = new InfoTypeeList();
 		if (cur_oper!=null) {
@@ -564,17 +561,17 @@ public class AnalyseurXcas implements iAnalyseur {
 	private void ajouterCommentaires(Noeud cur_nd) {
 		// pour eviter les listes d'instructions vides
 		if (this.getInstructions(cur_nd).size()>0) return;
-		Instruction instr = new Instruction("// ajouter des instructions");
+		XmlInstruction instr = new XmlInstruction("// ajouter des instructions");
 		this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;
 	}
 	
-	private ArrayList<org.javascool.proglets.plurialgo.langages.modele.Instruction> getInstructions(Noeud nd) {
-		if (nd instanceof Programme) return ((Programme) nd).instructions;
-		if (nd instanceof Constructeur) return ((Constructeur) nd).instructions;
-		if (nd instanceof Operation) return ((Operation) nd).instructions;
-		if (nd instanceof Si) return ((Si) nd).instructions;
-		if (nd instanceof Pour) return ((Pour) nd).instructions;
-		if (nd instanceof TantQue) return ((TantQue) nd).instructions;
+	private ArrayList<ModeleInstruction> getInstructions(Noeud nd) {
+		if (nd instanceof XmlProgramme) return ((XmlProgramme) nd).instructions;
+		if (nd instanceof XmlConstructeur) return ((XmlConstructeur) nd).instructions;
+		if (nd instanceof XmlOperation) return ((XmlOperation) nd).instructions;
+		if (nd instanceof XmlSi) return ((XmlSi) nd).instructions;
+		if (nd instanceof XmlPour) return ((XmlPour) nd).instructions;
+		if (nd instanceof XmlTantQue) return ((XmlTantQue) nd).instructions;
 		if (nd==null) return prog_xml.instructions;
 		return getInstructions(nd.parent);
 	}

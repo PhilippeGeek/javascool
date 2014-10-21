@@ -4,21 +4,21 @@
 package org.javascool.proglets.plurialgo.langages.larp;
 
 import java.util.Iterator;
-
 import org.javascool.proglets.plurialgo.divers.Divers;
+import org.javascool.proglets.plurialgo.langages.modele.*;
 
 
 /**
  * Cette classe hérite de la classe homonyme du modèle.
 */
-public class Pour extends org.javascool.proglets.plurialgo.langages.modele.Pour {
+public class Pour extends ModelePour {
 	
 	public void ecrire(Programme prog, StringBuffer buf, int indent) {
 		if (isTantQue()) {
 			if (pas.startsWith("-")) {
 				Divers.ecrire(buf, var + "=" + debut, indent) ;
 				Divers.ecrire(buf, "TANTQUE (" + var + ">=" + fin + ") ", indent);
-				for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Instruction> iter=instructions.iterator(); iter.hasNext();) {
+				for (Iterator<ModeleInstruction> iter=instructions.iterator(); iter.hasNext();) {
 					Object obj = iter.next();
 					Instruction instr = (Instruction)obj ;
 					instr.ecrire(prog, buf, indent+1);
@@ -29,7 +29,7 @@ public class Pour extends org.javascool.proglets.plurialgo.langages.modele.Pour 
 			else {
 				Divers.ecrire(buf, var + "=" + debut + "; ", indent) ;
 				Divers.ecrire(buf, "TANTQUE (" + var + "<=" + fin + ") FAIRE", indent);
-				for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Instruction> iter=instructions.iterator(); iter.hasNext();) {
+				for (Iterator<ModeleInstruction> iter=instructions.iterator(); iter.hasNext();) {
 					Object obj = iter.next();
 					Instruction instr = (Instruction)obj ;
 					instr.ecrire(prog, buf, indent+1);
@@ -42,7 +42,7 @@ public class Pour extends org.javascool.proglets.plurialgo.langages.modele.Pour 
 				Divers.ecrire(buf, "POUR " + var + "=" + debut  
 						+ " JUSQU'A " + fin 
 						+ " INCREMENT " + pas + " FAIRE ", indent);
-				for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Instruction> iter=instructions.iterator(); iter.hasNext();) {
+				for (Iterator<ModeleInstruction> iter=instructions.iterator(); iter.hasNext();) {
 					Object obj = iter.next();
 					Instruction instr = (Instruction)obj ;
 					instr.ecrire(prog, buf, indent+1);

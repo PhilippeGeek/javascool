@@ -3,11 +3,12 @@
 *******************************************************************************/
 package org.javascool.proglets.plurialgo.langages.larp;
 
+import org.javascool.proglets.plurialgo.langages.modele.*;
 
 /**
  * Cette classe hérite de la classe homonyme du modèle.
 */
-public class Variable extends org.javascool.proglets.plurialgo.langages.modele.Variable {
+public class Variable extends ModeleVariable {
 	
 	public Variable() {
 	}

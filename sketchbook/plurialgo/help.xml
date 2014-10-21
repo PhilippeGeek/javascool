@@ -1,40 +1,36 @@
 <div title="PluriAlgo : un logiciel d'algorithmique pluri-langages">
 
-<div title="Introduction">
 <div>
-PluriAlgo est un logiciel d'algorithmique cherchant à s'adapter à la diversité des pratiques pédagogiques :
+<s class="bold">PluriAlgo</s> est un logiciel pluri-langages d'initiation à l'algorithmique, destiné à des lycéens ou à des
+étudiants de premier cycle universitaire :
 </div>
 <div class="ul">
 <div class="li">
-en facilitant l'écriture d'algorithmes dans plusieurs langages pédagogiques
-(Javascool, Algobox, Larp, Python, Xcas). 
+il facilite l'écriture d'algorithmes dans plusieurs langages pédagogiques
+(Javascool, Algobox, Larp, Python...). 
 </div>
 <div class="li">
-en facilitant le passage d'un langage pédagogique à un langage professionnel
-(Visual Basic, Javascript, Php...)
-ou à un autre langage pédagogique.
-</div>
-</div>
-<div>
-Il accompagne un <l link="http://public.iutenligne.net/informatique/algorithme-et-programmation/raffinat/algo/index.html" text="cours d'algorithmique"/> publié 
-sur <l link="http://www.iutenligne.net" text="IUTenLigne"/>, le campus numérique des IUT. 
+il facilite le passage d'un langage pédagogique à un langage professionnel
+(Visual Basic, Javascript, Php...) ou à un autre langage pédagogique grâce à un traducteur.
 </div>
 </div>
 
-<div title="Documentation">
-<div>
-L'onglet <b>Documentation</b>, accessible depuis l'onglet <b>Proglet plurialgo</b>, permet 
-de découvrir en quelques clics les principales fonctionnalités du logiciel.
-</div>
 <div></div>
 <div class="center">
 <l icon="pluriproglet_doc.PNG"/>
 </div>
 <div></div>
+
 <div>
-Des informations complémentaires sont disponibles sur mes 
-<l link="http://web.univ-pau.fr/~raffinat/plurialgo/index.html" text="pages professionnelles"/>.  
-</div>
+Des <l link="http://public.iutenligne.net/informatique/algorithme-et-programmation/raffinat/algo/algo/tps.html" text="travaux pratiques"/> disponibles 
+sur <s class="bold">IUTEnLigne</s> montrent précisément comment utiliser PluriAlgo dans un cours d'algorithmique.
 </div>
 
+<div></div>
+<div class="center">
+<l icon="iutenlignelien.jpg" link="http://www.iutenligne.net"/>
 </div>
+<div></div>
+
+</div>
+

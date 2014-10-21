@@ -8,14 +8,14 @@ package org.javascool.proglets.plurialgo.langages.xml;
 /**
  * Cette classe permet de créer des instructions conditionnelles (onglet "Si").
 */
-public class ProgrammeSi extends Programme {
+public class ProgrammeSi extends XmlProgramme {
 	
-	private Instruction instr_si, instr_si_1;
-	private Si cur_si;
+	private XmlInstruction instr_si, instr_si_1;
+	private XmlSi cur_si;
 	
 	public ProgrammeSi() {
 		this.nom = "exemple";
-		instr_si = new Instruction("si");
+		instr_si = new XmlInstruction("si");
 		instr_si_1 = null;
 		cur_si = null; 
 		this.instructions.add(instr_si);
@@ -23,8 +23,8 @@ public class ProgrammeSi extends Programme {
 
 	public void ajouterBranche(int niv_si, String cond) {
 		//System.out.println("ajouter " + niv_si + " " + cond);
-		Si si = new Si(); si.condition = cond;
-		si.instructions.add(new Instruction("// ajouter des instructions"));
+		XmlSi si = new XmlSi(); si.condition = cond;
+		si.instructions.add(new XmlInstruction("// ajouter des instructions"));
 		if (niv_si==0) {
 			instr_si.sis.add(si);
 			instr_si_1 = null;
@@ -32,7 +32,7 @@ public class ProgrammeSi extends Programme {
 		}
 		else if (niv_si==1) {
 			if (instr_si_1==null) {
-				instr_si_1 = new Instruction("si");
+				instr_si_1 = new XmlInstruction("si");
 				cur_si.instructions.add(instr_si_1);
 			}
 			instr_si_1.sis.add(si);

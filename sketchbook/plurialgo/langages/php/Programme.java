@@ -4,13 +4,13 @@
 package org.javascool.proglets.plurialgo.langages.php;
 
 import java.util.*;
-
 import org.javascool.proglets.plurialgo.divers.*;
+import org.javascool.proglets.plurialgo.langages.modele.*;
 
 /**
  * Cette classe hérite de la classe homonyme du modèle.
 */
-public class Programme extends org.javascool.proglets.plurialgo.langages.modele.Programme {
+public class Programme extends ModeleProgramme {
 	Instruction instr_saisie;
 
 	/*
@@ -19,7 +19,7 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 	 */	
 	private void preTraitement() {
 		instr_saisie = null;
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Instruction> iter=instructions.iterator(); iter.hasNext();) {
+		for (Iterator<ModeleInstruction> iter=instructions.iterator(); iter.hasNext();) {
 			Instruction instr = (Instruction) iter.next();
 			if (instr.isLectureStandard() || instr.isLectureFormulaire()) {
 				if (instr_saisie==null) {
@@ -30,7 +30,7 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 					instr_saisie = instr;
 				}
 				else {
-					for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Argument> iter_arg=instr.arguments.iterator(); iter_arg.hasNext();) {
+					for (Iterator<ModeleArgument> iter_arg=instr.arguments.iterator(); iter_arg.hasNext();) {
 						Argument arg = (Argument) iter_arg.next();
 						instr_saisie.arguments.add(arg);
 					}
@@ -73,7 +73,7 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 	
 	private void addSousProgs(StringBuffer buf, int indent) {
 		if ((operations.size()>=0)) this.commenter(buf, "sous programmes", indent);
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Operation> iter=operations.iterator(); iter.hasNext();) {
+		for (Iterator<ModeleOperation> iter=operations.iterator(); iter.hasNext();) {
 			Operation oper = (Operation) iter.next();
 			oper.ecrire(this, buf, indent);
 		}
@@ -81,7 +81,7 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 	
 	private void addClasses(StringBuffer buf, int indent) {
 		//if ((classes.size()>0))	this.commenter(buf, "enregistrements ou classes", indent);
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Classe> iter=classes.iterator(); iter.hasNext();) {
+		for (Iterator<ModeleClasse> iter=classes.iterator(); iter.hasNext();) {
 			Classe classe = (Classe) iter.next();
 			if (classe.isEnregistrement()) {
 				//classe.ecrireEnregistrement(this, buf, indent);
@@ -95,11 +95,11 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 	private void addMain(StringBuffer buf, int indent) {
 		Divers.ecrire(buf, "<body>", indent-1);
 		Divers.ecrire(buf, "<?php", indent-1);
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Variable> iter=variables.iterator(); iter.hasNext();) {
+		for (Iterator<ModeleVariable> iter=variables.iterator(); iter.hasNext();) {
 			Variable var = (Variable) iter.next();
 			var.ecrire(this, buf, indent);
 		}
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Instruction> iter=instructions.iterator(); iter.hasNext();) {
+		for (Iterator<ModeleInstruction> iter=instructions.iterator(); iter.hasNext();) {
 			Instruction instr = (Instruction) iter.next();
 			instr.ecrire(this, buf, indent);
 		}
@@ -120,7 +120,6 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 	}
 	
 	public void postTraitement(StringBuffer buf) {
-		//Divers.remplacer(buf, "==", "==");
 		Divers.remplacer(buf, " et ", " && ");
 		Divers.remplacer(buf, " ET ", " && ");
 		Divers.remplacer(buf, " ou ", " || ");
@@ -129,15 +128,10 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 		Divers.remplacer(buf, " AND ", " && ");
 		Divers.remplacer(buf, " or ", " || ");
 		Divers.remplacer(buf, " OR ", " || ");
-		//Divers.remplacer(buf, "!=", "!=");
 		Divers.remplacer(buf, "vrai", "true");
 		Divers.remplacer(buf, "VRAI", "true");
 		Divers.remplacer(buf, "faux", "false");
 		Divers.remplacer(buf, "FAUX", "false");
-		//Divers.remplacer(buf, "][", "][");
-		//Divers.remplacer(buf, "[", "[");
-		//Divers.remplacer(buf, "[", "[");
-		//Divers.remplacer(buf, "'", "\"");
 		Divers.remplacer(buf, "this", "$this");
 		Divers.remplacer(buf, "$$", "$");
 		Divers.remplacer(buf, "[ii]", "[$ii]");
@@ -145,9 +139,9 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 	}
 	
 	private void remplacerPoint(StringBuffer buf) {
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Classe> iter1=classes.iterator(); iter1.hasNext();) {
+		for (Iterator<ModeleClasse> iter1=classes.iterator(); iter1.hasNext();) {
 			Classe cl = (Classe) iter1.next();
-			for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Variable> iter=cl.proprietes.iterator(); iter.hasNext();) {
+			for (Iterator<ModeleVariable> iter=cl.proprietes.iterator(); iter.hasNext();) {
 				Variable prop = (Variable) iter.next();
 				if (cl.isClasse()) {
 					this.remplacerPoint(buf, "." + prop.nom, "->" + prop.nom);
@@ -181,49 +175,49 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 	}
 
 	private void ajouterDollar(StringBuffer buf) {
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Variable> iter=variables.iterator(); iter.hasNext();) {
+		for (Iterator<ModeleVariable> iter=variables.iterator(); iter.hasNext();) {
 			Variable var = (Variable) iter.next();
 			ajouterDollar(buf, var.nom);
 		}
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Operation> iter1=operations.iterator(); iter1.hasNext();) {
+		for (Iterator<ModeleOperation> iter1=operations.iterator(); iter1.hasNext();) {
 			Operation oper = (Operation) iter1.next();
-			for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Variable> iter=oper.variables.iterator(); iter.hasNext();) {
+			for (Iterator<ModeleVariable> iter=oper.variables.iterator(); iter.hasNext();) {
 				Variable var = (Variable) iter.next();
 				ajouterDollar(buf, var.nom);
 			}
-			for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Variable> iter=oper.retours.iterator(); iter.hasNext();) {
+			for (Iterator<ModeleVariable> iter=oper.retours.iterator(); iter.hasNext();) {
 				Variable retour = (Variable) iter.next();
 				ajouterDollar(buf, retour.nom);
 			}
-			for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Parametre> iter=oper.parametres.iterator(); iter.hasNext();) {
+			for (Iterator<ModeleParametre> iter=oper.parametres.iterator(); iter.hasNext();) {
 				Parametre param = (Parametre) iter.next();
 				ajouterDollar(buf, param.nom);
 			}
 		}
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Classe> iter2=classes.iterator(); iter2.hasNext();) {
+		for (Iterator<ModeleClasse> iter2=classes.iterator(); iter2.hasNext();) {
 			Classe cl = (Classe) iter2.next();
-			for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Operation> iter1=cl.operations.iterator(); iter1.hasNext();) {
+			for (Iterator<ModeleOperation> iter1=cl.operations.iterator(); iter1.hasNext();) {
 				Operation oper = (Operation) iter1.next();
-				for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Variable> iter=oper.variables.iterator(); iter.hasNext();) {
+				for (Iterator<ModeleVariable> iter=oper.variables.iterator(); iter.hasNext();) {
 					Variable var = (Variable) iter.next();
 					ajouterDollar(buf, var.nom);
 				}
-				for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Variable> iter=oper.retours.iterator(); iter.hasNext();) {
+				for (Iterator<ModeleVariable> iter=oper.retours.iterator(); iter.hasNext();) {
 					Variable retour = (Variable) iter.next();
 					ajouterDollar(buf, retour.nom);
 				}
-				for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Parametre> iter=oper.parametres.iterator(); iter.hasNext();) {
+				for (Iterator<ModeleParametre> iter=oper.parametres.iterator(); iter.hasNext();) {
 					Parametre param = (Parametre) iter.next();
 					ajouterDollar(buf, param.nom);
 				}
 			}
-			for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Constructeur> iter1=cl.constructeurs.iterator(); iter1.hasNext();) {
+			for (Iterator<ModeleConstructeur> iter1=cl.constructeurs.iterator(); iter1.hasNext();) {
 				Constructeur constr = (Constructeur) iter1.next();
-				for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Variable> iter=constr.variables.iterator(); iter.hasNext();) {
+				for (Iterator<ModeleVariable> iter=constr.variables.iterator(); iter.hasNext();) {
 					Variable var = (Variable) iter.next();
 					ajouterDollar(buf, var.nom);
 				}
-				for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Parametre> iter=constr.parametres.iterator(); iter.hasNext();) {
+				for (Iterator<ModeleParametre> iter=constr.parametres.iterator(); iter.hasNext();) {
 					Parametre param = (Parametre) iter.next();
 					ajouterDollar(buf, param.nom);
 				}
@@ -327,12 +321,12 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 	private void addAction(StringBuffer buf, Formulaire form, int indent) {
 		Instruction instr_saisie = form.instr_pere;
 		Divers.ecrire(buf, "<?php ", indent);
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Variable> iter=variables.iterator(); iter.hasNext();) {
+		for (Iterator<ModeleVariable> iter=variables.iterator(); iter.hasNext();) {
 			Variable var = (Variable) iter.next();
 			var.ecrire(this, buf, indent+1);
 		}
 		form.lireFormu(this, buf, indent+1);
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Instruction> iter=instructions.iterator(); iter.hasNext();) {
+		for (Iterator<ModeleInstruction> iter=instructions.iterator(); iter.hasNext();) {
 			Instruction instr = (Instruction) iter.next();
 			if (instr == instr_saisie) continue;
 				instr.ecrire(this, buf, indent+1);

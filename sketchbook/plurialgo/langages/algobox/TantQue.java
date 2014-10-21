@@ -4,19 +4,19 @@
 package org.javascool.proglets.plurialgo.langages.algobox;
 
 import java.util.Iterator;
-
 import org.javascool.proglets.plurialgo.divers.Divers;
+import org.javascool.proglets.plurialgo.langages.modele.*;
 
 
 /**
  * Cette classe hérite de la classe homonyme du modèle.
 */
-public class TantQue extends org.javascool.proglets.plurialgo.langages.modele.TantQue {
+public class TantQue extends ModeleTantQue {
 
 	public void ecrire(Programme prog, StringBuffer buf, int indent) {
 		Divers.ecrire(buf, "TANT_QUE " + this.getCondition() + " FAIRE", indent);
 		Divers.ecrire(buf, "DEBUT_TANT_QUE", indent+1);
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Instruction> iter=instructions.iterator(); iter.hasNext();) {
+		for (Iterator<ModeleInstruction> iter=instructions.iterator(); iter.hasNext();) {
 			Object obj = iter.next();
 			Instruction instr = (Instruction)obj ;
 			instr.ecrire(prog, buf, indent+1);

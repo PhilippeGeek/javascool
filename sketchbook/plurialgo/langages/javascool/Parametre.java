@@ -4,16 +4,17 @@
 package org.javascool.proglets.plurialgo.langages.javascool;
 
 import org.javascool.proglets.plurialgo.divers.*;
+import org.javascool.proglets.plurialgo.langages.modele.*;
 
 /**
  * Cette classe hérite de la classe homonyme du modèle.
 */
-public class Parametre extends org.javascool.proglets.plurialgo.langages.modele.Parametre {
+public class Parametre extends ModeleParametre {
 	
 	public Parametre() {
 	}
 	
-	public void ecrire(Programme prog, StringBuffer buf) {
+	void ecrire(Programme prog, StringBuffer buf) {
 		prog.ecrireType(buf, this);
 		Divers.ecrire(buf, " ");
 		Divers.ecrire(buf, nom);

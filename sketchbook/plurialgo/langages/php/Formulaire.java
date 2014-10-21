@@ -5,6 +5,7 @@ package org.javascool.proglets.plurialgo.langages.php;
 
 import java.util.Iterator;
 import org.javascool.proglets.plurialgo.divers.Divers;
+import org.javascool.proglets.plurialgo.langages.modele.*;
 
 /**
  * Cette classe permet de traduire en Php une instruction
@@ -28,7 +29,7 @@ public class Formulaire {
 	 */
 	public void constrFormu(Programme prog, StringBuffer buf, int indent) {
 		Divers.ecrire(buf,"echo " + prog.quote("<table border='1'>") + "; ", indent);	
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Argument> iter=instr_pere.arguments.iterator(); iter.hasNext();) {
+		for (Iterator<ModeleArgument> iter=instr_pere.arguments.iterator(); iter.hasNext();) {
 			Argument arg = (Argument) iter.next();
 			String msg = arg.nom + " : "; 
 			Divers.ecrire(buf,"echo " + prog.quote("<tr>") + "; ", indent);
@@ -45,7 +46,7 @@ public class Formulaire {
 	 * @param indent
 	 */	
 	public void lireFormu(Programme prog, StringBuffer buf, int indent) {
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Argument> iter=instr_pere.arguments.iterator(); iter.hasNext();) {
+		for (Iterator<ModeleArgument> iter=instr_pere.arguments.iterator(); iter.hasNext();) {
 			Argument arg = (Argument) iter.next();
 			lireFormu(prog, buf, indent, arg);
 		}
@@ -176,7 +177,7 @@ public class Formulaire {
 		this.constrLabelFormu(prog, buf, indent, msg, arg);	
 		// la boucle
 		Divers.ecrire(buf,"echo " + prog.quote("<td><table>") + "; ", indent);
-		for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Variable> iter=cl.proprietes.iterator(); iter.hasNext(); ) {
+		for(Iterator<ModeleVariable> iter=cl.proprietes.iterator(); iter.hasNext(); ) {
 			Variable prop = (Variable) iter.next();
 			if (prop.isOut()) continue;
 			String msg1 = (prop.nom + " : ");
@@ -252,7 +253,7 @@ public class Formulaire {
 	
 	private void lireClasseFormu(Programme prog, StringBuffer buf, int indent, Argument arg) {
 		Classe cl = (Classe) arg.getClasse(prog);
-		for(Iterator<org.javascool.proglets.plurialgo.langages.modele.Variable> iter=cl.proprietes.iterator(); iter.hasNext(); ) {
+		for(Iterator<ModeleVariable> iter=cl.proprietes.iterator(); iter.hasNext(); ) {
 			Variable prop = (Variable) iter.next();
 			if (prop.isOut()) continue;
 			Argument arg1 = new Argument(arg.nom+"."+prop.nom, prop.type, arg.mode);

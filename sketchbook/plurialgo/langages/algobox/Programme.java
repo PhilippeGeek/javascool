@@ -4,14 +4,14 @@
 package org.javascool.proglets.plurialgo.langages.algobox;
 
 import java.util.*;
-
 import org.javascool.proglets.plurialgo.divers.*;
+import org.javascool.proglets.plurialgo.langages.modele.*;
 
 
 /**
  * Cette classe hérite de la classe homonyme du modèle.
 */
-public class Programme extends org.javascool.proglets.plurialgo.langages.modele.Programme {
+public class Programme extends ModeleProgramme {
 	
 	public void ecrire() {
 		StringBuffer buf = new StringBuffer();
@@ -39,12 +39,12 @@ public class Programme extends org.javascool.proglets.plurialgo.langages.modele.
 	
 	private void addMain(StringBuffer buf, int indent) {
 		Divers.ecrire(buf, "VARIABLES", indent);
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Variable> iter=variables.iterator(); iter.hasNext();) {
+		for (Iterator<ModeleVariable> iter=variables.iterator(); iter.hasNext();) {
 			Variable var = (Variable) iter.next();
 			var.ecrire(this, buf, indent+1);
 		}
 		Divers.ecrire(buf, "DEBUT_ALGORITHME", indent);
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Instruction> iter=instructions.iterator(); iter.hasNext();) {
+		for (Iterator<ModeleInstruction> iter=instructions.iterator(); iter.hasNext();) {
 			Instruction instr = (Instruction) iter.next();
 			instr.ecrire(this, buf, indent+1);
 		}

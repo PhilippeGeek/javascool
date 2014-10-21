@@ -7,27 +7,12 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.*;
 import java.util.Iterator;
-
 import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
 
-import org.javascool.gui.EditorWrapper;
 import org.javascool.proglets.plurialgo.divers.Divers;
-import org.javascool.proglets.plurialgo.langages.modele.Instruction;
-import org.javascool.proglets.plurialgo.langages.modele.Pour;
-import org.javascool.proglets.plurialgo.langages.modele.Programme;
-import org.javascool.proglets.plurialgo.langages.modele.TantQue;
-import org.javascool.proglets.plurialgo.langages.modele.Variable;
-import org.javascool.proglets.plurialgo.langages.xml.AnalyseurAlgobox;
-import org.javascool.proglets.plurialgo.langages.xml.AnalyseurJavascool;
-import org.javascool.proglets.plurialgo.langages.xml.AnalyseurLarp;
-import org.javascool.proglets.plurialgo.langages.xml.AnalyseurPython;
-import org.javascool.proglets.plurialgo.langages.xml.AnalyseurVb;
-import org.javascool.proglets.plurialgo.langages.xml.AnalyseurXcas;
-import org.javascool.proglets.plurialgo.langages.xml.Argument;
-import org.javascool.proglets.plurialgo.langages.xml.Intermediaire;
-import org.javascool.proglets.plurialgo.langages.xml.ProgrammeVectorise;
-import org.javascool.proglets.plurialgo.langages.xml.iAnalyseur;
+import org.javascool.proglets.plurialgo.langages.modele.*;
+import org.javascool.proglets.plurialgo.langages.xml.*;
 
 
 
@@ -268,62 +253,64 @@ public class PanelBoucles extends JPanel implements ActionListener, ListSelectio
 			inter = pInter.creerIntermediaireLarp("vectoriser");
 			analyseur = new AnalyseurXcas(pInter.getText(), false, false, inter);
 		}
+		else if (pInter.isCarmetal()) {
+			inter = pInter.creerIntermediaireLarp("vectoriser");
+			analyseur = new AnalyseurCarmetal(pInter.getText(), false, false, inter);
+		}
 		else {
 			pInter.clearConsole();
 			pInter.writeConsole("---------- Transformation impossible ----------\n");
-			pInter.writeConsole("l'algorithme initial ne semble pas etre du Javascool, du Larp, du Python, de l'Algobox, du Xcas ou du Visual Basic\n");
-			pInter.writeConsole("--> reessayez en selectionnant une portion de l'algorithme\n");
 			return;
 		}
 		// vectorisation
 		pInter.messageWarning(analyseur.getProgramme());
-		org.javascool.proglets.plurialgo.langages.xml.Programme prog = analyseur.getProgramme();
+		org.javascool.proglets.plurialgo.langages.xml.XmlProgramme prog = analyseur.getProgramme();
 		vectoriser(prog, true);
 		ProgrammeVectorise progVect = new ProgrammeVectorise(prog);
 		// ajout du resultat dans l' onglet Complements et dans l'editeur
-		pInter.add_xml(new org.javascool.proglets.plurialgo.langages.xml.Programme(progVect));
+		pInter.add_xml(new org.javascool.proglets.plurialgo.langages.xml.XmlProgramme(progVect));
 		pInter.traduireXml();
 	}
 	
-	private void vectoriser(org.javascool.proglets.plurialgo.langages.xml.Programme prog, boolean avecVectorisation) {
+	private void vectoriser(org.javascool.proglets.plurialgo.langages.xml.XmlProgramme prog, boolean avecVectorisation) {
 		// tantque ou jusque
 		if ( (boucleList.getSelectedIndex()==1) || ( (boucleList.getSelectedIndex()==0) && (pourOptionList.getSelectedIndex()==1) ) ) {
-			prog.options.add( new Argument("tantque", null, pCond.getCondition().trim()) );
+			prog.options.add( new XmlArgument("tantque", null, pCond.getCondition().trim()) );
 		}
 		if ( (boucleList.getSelectedIndex()==2) || ( (boucleList.getSelectedIndex()==0) && (pourOptionList.getSelectedIndex()==2) ) ) {
-			prog.options.add( new Argument("recherche", null, pCond.getCondition().trim()) );
+			prog.options.add( new XmlArgument("recherche", null, pCond.getCondition().trim()) );
 		}
 		// les options
 		if (sommeCheck.isSelected()) {
-			prog.options.add( new Argument("sommation", null, sommeVarField.getText()+":"+sommeArgField.getText()) );
+			prog.options.add( new XmlArgument("sommation", null, sommeVarField.getText()+":"+sommeArgField.getText()) );
 		}
 		if (compterCheck.isSelected()) {
-			prog.options.add( new Argument("comptage", null, compterVarField.getText()+":"+pCompterCond.getCondition().trim()) );
+			prog.options.add( new XmlArgument("comptage", null, compterVarField.getText()+":"+pCompterCond.getCondition().trim()) );
 		}
 		if (miniCheck.isSelected()) {
-			prog.options.add( new Argument("minimum", null, miniVarField.getText()+":"+miniArgField.getText()) );
+			prog.options.add( new XmlArgument("minimum", null, miniVarField.getText()+":"+miniArgField.getText()) );
 		}
 		if (maxiCheck.isSelected()) {
-			prog.options.add( new Argument("maximum", null, maxiVarField.getText()+":"+maxiArgField.getText()) );
+			prog.options.add( new XmlArgument("maximum", null, maxiVarField.getText()+":"+maxiArgField.getText()) );
 		}
 		// pour
 		if (boucleList.getSelectedIndex()==0) {
-			prog.options.add( new Argument("pour_var", null, pourVarField.getText()) );
-			prog.options.add( new Argument("pour_fin", null, pourFinField.getText()) );
-			prog.options.add( new Argument("pour_debut", null, pourDebutField.getText()) );
-			prog.options.add( new Argument("pour_pas", null, pourPasField.getText()) );		
+			prog.options.add( new XmlArgument("pour_var", null, pourVarField.getText()) );
+			prog.options.add( new XmlArgument("pour_fin", null, pourFinField.getText()) );
+			prog.options.add( new XmlArgument("pour_debut", null, pourDebutField.getText()) );
+			prog.options.add( new XmlArgument("pour_pas", null, pourPasField.getText()) );		
 		}
 		else {
-			prog.options.add( new Argument("pour_var", null, "") );
-			prog.options.add( new Argument("pour_fin", null, "") );
-			prog.options.add( new Argument("pour_debut", null, "") );
-			prog.options.add( new Argument("pour_pas", null, "") );	
+			prog.options.add( new XmlArgument("pour_var", null, "") );
+			prog.options.add( new XmlArgument("pour_fin", null, "") );
+			prog.options.add( new XmlArgument("pour_debut", null, "") );
+			prog.options.add( new XmlArgument("pour_pas", null, "") );	
 		}
 		// vectorisation
 		String vect = "";
 		if (avecVectorisation && !pourVarField.getText().trim().isEmpty()) {
-			for (Iterator<Variable> iter=prog.variables.iterator(); iter.hasNext();) {
-				Variable var = iter.next();
+			for (Iterator<ModeleVariable> iter=prog.variables.iterator(); iter.hasNext();) {
+				ModeleVariable var = iter.next();
 				if (var.nom.equals(pourVarField.getText().trim())) continue;
 				if (var.nom.equals("i")) continue;
 				if (var.nom.equals("i1")) continue;
@@ -350,56 +337,56 @@ public class PanelBoucles extends JPanel implements ActionListener, ListSelectio
 				}
 			}
 		}
-		prog.options.add( new Argument("vectorisation", null, vect) );
+		prog.options.add( new XmlArgument("vectorisation", null, vect) );
 	}	
 	
 	private void creer() {
 		pInter.clearConsole();
 		// vectorisation
-		org.javascool.proglets.plurialgo.langages.xml.Programme prog;
-		prog = new org.javascool.proglets.plurialgo.langages.xml.Programme();
+		org.javascool.proglets.plurialgo.langages.xml.XmlProgramme prog;
+		prog = new org.javascool.proglets.plurialgo.langages.xml.XmlProgramme();
 		prog.nom = pInter.pPrincipal.getNomAlgo();
 		vectoriser(prog, false);
 		ProgrammeVectorise progVect = new ProgrammeVectorise(prog);
 		// ajout du resultat dans les onglets Complements et Resultats
-		pInter.add_xml(new org.javascool.proglets.plurialgo.langages.xml.Programme(progVect));
+		pInter.add_xml(new org.javascool.proglets.plurialgo.langages.xml.XmlProgramme(progVect));
 		pInter.traduireXml();
 	}
 	
 	private void inserer() {
 		pInter.clearConsole();
 		// vectorisation
-		org.javascool.proglets.plurialgo.langages.xml.Programme prog_xml;
-		prog_xml = new org.javascool.proglets.plurialgo.langages.xml.Programme();
+		org.javascool.proglets.plurialgo.langages.xml.XmlProgramme prog_xml;
+		prog_xml = new org.javascool.proglets.plurialgo.langages.xml.XmlProgramme();
 		prog_xml.nom = pInter.pPrincipal.getNomAlgo();
 		vectoriser(prog_xml, false);
 		ProgrammeVectorise progVect = new ProgrammeVectorise(prog_xml);
 		// conversion du programme en Xml
-		prog_xml = new org.javascool.proglets.plurialgo.langages.xml.Programme(progVect);
+		prog_xml = new org.javascool.proglets.plurialgo.langages.xml.XmlProgramme(progVect);
 		pInter.add_xml(prog_xml);
 		// conversion du programme dans le langage courant
 		String lang = pInter.pPrincipal.getNomLangage();
-		String txt = pInter.pXml.getText();
-		Programme prog = Programme.getProgramme(txt,lang); 
+		String txt = pInter.getXml();
+		ModeleProgramme prog = ModeleProgramme.getProgramme(txt,lang); 
 		// ajout de la boucle
 		StringBuffer buf = new StringBuffer();
-		int indent = Divers.getIndent(EditorWrapper.getRTextArea());
-		for (Iterator<Instruction> iter=prog.instructions.iterator(); iter.hasNext();) {
-			Instruction instr = iter.next();
+		int indent = Divers.getIndent(pInter.getTextArea());
+		for (Iterator<ModeleInstruction> iter=prog.instructions.iterator(); iter.hasNext();) {
+			ModeleInstruction instr = iter.next();
 			if (instr.isLecture()) continue;
 			if (instr.isEcriture()) continue;
 			instr.ecrire(prog, buf, indent);
 		}
 		if (buf.length()>0 ) {
 			prog.postTraitement(buf);
-			Divers.inserer(EditorWrapper.getRTextArea(), buf.toString());
+			Divers.inserer(pInter.getTextArea(), buf.toString());
 		}
 	}
 	
 	boolean vectoriserSelection() {
 		pInter.clearConsole();
 		// recherche zone de sélection
-		JTextArea editArea = EditorWrapper.getRTextArea();
+		JTextArea editArea = pInter.getTextArea();
 		int i_start = editArea.getSelectionStart();
 		int i_end = editArea.getSelectionEnd();
 		int indent = 0;
@@ -420,48 +407,48 @@ public class PanelBoucles extends JPanel implements ActionListener, ListSelectio
 			return false;
 		}
 		// vectorisation
-		org.javascool.proglets.plurialgo.langages.xml.Programme prog_xml;
-		prog_xml = new org.javascool.proglets.plurialgo.langages.xml.Programme();
+		org.javascool.proglets.plurialgo.langages.xml.XmlProgramme prog_xml;
+		prog_xml = new org.javascool.proglets.plurialgo.langages.xml.XmlProgramme();
 		prog_xml.nom = pInter.pPrincipal.getNomAlgo();
 		vectoriser(prog_xml, false);
 		ProgrammeVectorise progVect = new ProgrammeVectorise(prog_xml);
 		// ajout du commentaire transformer1n dans le Pour le programme vectorisé
-		for (Iterator<Instruction> iter=progVect.instructions.iterator(); iter.hasNext();) {
-			Instruction instr = iter.next();
+		for (Iterator<ModeleInstruction> iter=progVect.instructions.iterator(); iter.hasNext();) {
+			ModeleInstruction instr = iter.next();
 			if (instr.isPour()) {
-				Pour pour = instr.pours.get(0);
+				ModelePour pour = instr.pours.get(0);
 				if (pour==null) continue;
 				if (pour.instructions.size()==1) {
 					if (pour.instructions.get(0).isCommentaire()) {
 						pour.instructions.remove(0);
 					}
 				}
-				pour.instructions.add(0, new Instruction("//transformer1n"));
+				pour.instructions.add(0, new ModeleInstruction("//transformer1n"));
 				break;
 			}
 			if (instr.isTantQue()) {
-				TantQue tq = instr.tantques.get(0);
+				ModeleTantQue tq = instr.tantques.get(0);
 				if (tq==null) continue;
 				if (tq.instructions.size()==1) {
 					if (tq.instructions.get(0).isCommentaire()) {
 						tq.instructions.remove(0);
 					}
 				}
-				tq.instructions.add(0, new Instruction("//transformer1n"));
+				tq.instructions.add(0, new ModeleInstruction("//transformer1n"));
 				break;
 			}
 		}
 		// conversion du programme en Xml
-		prog_xml = new org.javascool.proglets.plurialgo.langages.xml.Programme(progVect);
+		prog_xml = new org.javascool.proglets.plurialgo.langages.xml.XmlProgramme(progVect);
 		pInter.add_xml(prog_xml);
 		// conversion du programme dans le langage courant
 		String lang = pInter.pPrincipal.getNomLangage();
-		String txt = pInter.pXml.getText();
-		Programme prog = Programme.getProgramme(txt,lang); 
+		String txt = pInter.getXml();
+		ModeleProgramme prog = ModeleProgramme.getProgramme(txt,lang); 
 		// texte de la boucle (avec transformation1n)
 		StringBuffer buf = new StringBuffer();
-		for (Iterator<Instruction> iter=prog.instructions.iterator(); iter.hasNext();) {
-			Instruction instr = iter.next();
+		for (Iterator<ModeleInstruction> iter=prog.instructions.iterator(); iter.hasNext();) {
+			ModeleInstruction instr = iter.next();
 			if (instr.isLecture()) continue;
 			if (instr.isEcriture()) continue;
 			instr.ecrire(prog, buf, indent);

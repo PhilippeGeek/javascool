@@ -4,8 +4,8 @@
 package org.javascool.proglets.plurialgo.langages.larp;
 
 import java.util.Iterator;
-
 import org.javascool.proglets.plurialgo.divers.Divers;
+import org.javascool.proglets.plurialgo.langages.modele.*;
 
 /**
  * Cette classe permet de traduire en Larp une instruction
@@ -31,11 +31,11 @@ public class FichierTexte {
 		Divers.ecrire(buf, "LIRE ligne DE f_in", indent+1);
 		Divers.ecrire(buf, "SEPARATEUR \" \"", indent+1);
 		Divers.ecrire(buf, "n_lig = n_lig+1", indent+1);
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Argument> iter=instr_pere.arguments.iterator(); iter.hasNext();) {
+		for (Iterator<ModeleArgument> iter=instr_pere.arguments.iterator(); iter.hasNext();) {
 			Argument arg = (Argument) iter.next();
 			lireFichierTexte(prog, buf, indent+1, arg);
 		}
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Instruction> iter=arg_fichier.instructions.iterator(); iter.hasNext();) {
+		for (Iterator<ModeleInstruction> iter=arg_fichier.instructions.iterator(); iter.hasNext();) {
 			Instruction instr = (Instruction) iter.next();
 			instr.ecrire(prog, buf, indent+1);
 		}
@@ -46,7 +46,7 @@ public class FichierTexte {
 	public void ecrireFichierTexte(Programme prog, StringBuffer buf, int indent) {
 		Divers.ecrire(buf, "f_out=4 \\\\ numero de canal (arbitraire)", indent);
 		Divers.ecrire(buf, "OUVRIR FICHIER " + arg_fichier.nom + " SUR f_out EN ECRITURE  ", indent);
-		for (Iterator<org.javascool.proglets.plurialgo.langages.modele.Argument> iter=instr_pere.arguments.iterator(); iter.hasNext();) {
+		for (Iterator<ModeleArgument> iter=instr_pere.arguments.iterator(); iter.hasNext();) {
 			Argument arg = (Argument) iter.next();
 			String msg = prog.quote(arg.nom+" : ");
 			ecrireFichierTexte(prog, buf, indent+1, msg, arg);

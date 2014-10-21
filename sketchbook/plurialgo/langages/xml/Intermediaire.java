@@ -4,7 +4,7 @@
 package org.javascool.proglets.plurialgo.langages.xml;
 
 import java.util.*;
-import org.javascool.proglets.plurialgo.langages.modele.InfoTypee;
+import org.javascool.proglets.plurialgo.langages.modele.*;
 
 
 /**

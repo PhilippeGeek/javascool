@@ -5,10 +5,8 @@ package org.javascool.proglets.plurialgo.langages.xml;
 
 import java.util.ArrayList;
 import java.util.StringTokenizer;
-
 import org.javascool.proglets.plurialgo.divers.*;
-import org.javascool.proglets.plurialgo.langages.modele.InfoTypee;
-import org.javascool.proglets.plurialgo.langages.modele.Noeud;
+import org.javascool.proglets.plurialgo.langages.modele.*;
 
 
 /**
@@ -16,7 +14,7 @@ import org.javascool.proglets.plurialgo.langages.modele.Noeud;
  */
 public class AnalyseurAlgobox implements iAnalyseur {
 	
-	private Programme prog_xml;
+	private XmlProgramme prog_xml;
 	private StringBuffer buf_algo;
 	private StringBuffer buf_xml;
 	private boolean isXml;
@@ -40,7 +38,7 @@ public class AnalyseurAlgobox implements iAnalyseur {
 	/**
 	      Retourne l'objet de classe Programme obtenu après analyse du code Algobox.
 	*/		
-	public Programme getProgramme() {
+	public XmlProgramme getProgramme() {
 		return prog_xml;
 	}
 
@@ -93,25 +91,25 @@ public class AnalyseurAlgobox implements iAnalyseur {
 	}
 	
 	private void algoboxEnXml(boolean ignorerLire, boolean ignorerEcrire) {
-		prog_xml = new Programme(); 
+		prog_xml = new XmlProgramme(); 
 		prog_xml.nom = "exemple";
 		try {
-			Operation cur_oper = null;
+			XmlOperation cur_oper = null;
 			Noeud cur_nd = prog_xml;
 			StringTokenizer tok = new StringTokenizer(buf_algo.toString(),"\n\r",false);
 			while(tok.hasMoreTokens()) {
 				String ligne = tok.nextToken();
 				System.out.println("ligne:"+ligne);
 				if (this.isDim(ligne)) {
-					Variable var = new Variable();
+					XmlVariable var = new XmlVariable();
 					int i = ligne.indexOf(" EST_DU_TYPE ");
 					var.nom = ligne.substring(0, i).trim();
 					var.type = this.trouverType(ligne);
 					prog_xml.variables.add(var);
 				}
 				else if (this.isAffectation(ligne)) {
-					Instruction instr = new Instruction("affectation");
-					Affectation aff = new Affectation(); aff.var = ""; aff.expression = "";
+					XmlInstruction instr = new XmlInstruction("affectation");
+					XmlAffectation aff = new XmlAffectation(); aff.var = ""; aff.expression = "";
 					instr.affectations.add(aff); aff.parent = instr;
 					this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;
 					int i = ligne.indexOf("PREND_LA_VALEUR");
@@ -121,8 +119,8 @@ public class AnalyseurAlgobox implements iAnalyseur {
 					if (droite!=null) aff.expression = droite.trim();
 				}
 				else if (this.isSi(ligne)) {
-					Instruction instr = new Instruction("si");
-					Si si = new Si(); si.condition = "";
+					XmlInstruction instr = new XmlInstruction("si");
+					XmlSi si = new XmlSi(); si.condition = "";
 					instr.sis.add(si); si.parent = instr;
 					this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;
 					cur_nd = si;
@@ -132,8 +130,8 @@ public class AnalyseurAlgobox implements iAnalyseur {
 				}
 				else if (this.isSinonSi(ligne)) {
 					this.ajouterCommentaires(cur_nd);
-					Instruction instr = (Instruction) cur_nd.parent;
-					Si sinonsi = new Si(); sinonsi.condition = "";
+					XmlInstruction instr = (XmlInstruction) cur_nd.parent;
+					XmlSi sinonsi = new XmlSi(); sinonsi.condition = "";
 					instr.sis.add(sinonsi); sinonsi.parent = instr;
 					cur_nd = sinonsi;
 					ligne = Divers.remplacer(ligne, "SINON", "");
@@ -143,8 +141,8 @@ public class AnalyseurAlgobox implements iAnalyseur {
 				}
 				else if (this.isSinon(ligne)) {
 					this.ajouterCommentaires(cur_nd);
-					Instruction instr = (Instruction) cur_nd.parent;
-					Si sinon = new Si(); sinon.condition = "";
+					XmlInstruction instr = (XmlInstruction) cur_nd.parent;
+					XmlSi sinon = new XmlSi(); sinon.condition = "";
 					instr.sis.add(sinon); sinon.parent = instr;
 					cur_nd = sinon;
 				}
@@ -154,8 +152,8 @@ public class AnalyseurAlgobox implements iAnalyseur {
 					cur_nd = cur_nd.parent;
 				}
 				else if (this.isTantque(ligne)) {
-					Instruction instr = new Instruction("tantque");
-					TantQue tq = new TantQue(); tq.condition = "";
+					XmlInstruction instr = new XmlInstruction("tantque");
+					XmlTantQue tq = new XmlTantQue(); tq.condition = "";
 					instr.tantques.add(tq); tq.parent = instr;
 					this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;
 					cur_nd = tq;
@@ -169,8 +167,8 @@ public class AnalyseurAlgobox implements iAnalyseur {
 					cur_nd = cur_nd.parent;
 				}
 				else if (this.isPour(ligne)) {
-					Instruction instr = new Instruction("pour");
-					Pour pour = new Pour(); 
+					XmlInstruction instr = new XmlInstruction("pour");
+					XmlPour pour = new XmlPour(); 
 					pour.var = ""; pour.debut = ""; pour.fin = ""; pour.pas = "1";
 					instr.pours.add(pour); pour.parent = instr;
 					this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;
@@ -202,8 +200,8 @@ public class AnalyseurAlgobox implements iAnalyseur {
 				else if (this.isLire(ligne)) {
 					if (ignorerLire && (cur_oper==null)) continue;
 					String parametres = Divers.remplacer(ligne, "LIRE", "");
-					Instruction instr = new Instruction("lire");
-					Argument arg = new Argument();
+					XmlInstruction instr = new XmlInstruction("lire");
+					XmlArgument arg = new XmlArgument();
 					arg.nom = parametres.trim();	
 					arg.type = "REEL"; trouverType(arg);
 					instr.arguments.add(arg); arg.parent = instr;
@@ -213,9 +211,9 @@ public class AnalyseurAlgobox implements iAnalyseur {
 				}
 				else if (this.isEcrire(ligne)) {
 					if (ignorerEcrire && (cur_oper==null)) continue;
-					Instruction instr = new Instruction("ecrire");
+					XmlInstruction instr = new XmlInstruction("ecrire");
 					String parametres = Divers.remplacer(ligne, "AFFICHER", "").trim();
-					Argument arg = new Argument();
+					XmlArgument arg = new XmlArgument();
 					arg.nom = parametres.trim();	
 					arg.type = "EXPR"; trouverType(arg);
 					if (arg.isExpression() && !parametres.startsWith("'") && !parametres.endsWith("'")) continue;
@@ -240,7 +238,7 @@ public class AnalyseurAlgobox implements iAnalyseur {
 					else if (ligne.contains("TRACER_POINT")) {
 						prim = "setPoint";
 					}
-					Instruction instr = new Instruction(prim + ligne.substring(i, j+1));
+					XmlInstruction instr = new XmlInstruction(prim + ligne.substring(i, j+1));
 					this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;
 				}
 				else if (this.isRepere(ligne)) {
@@ -253,7 +251,7 @@ public class AnalyseurAlgobox implements iAnalyseur {
 					k = repcode.lastIndexOf("#"); if (k<0) continue;
 					repcode = repcode.substring(0, k);	// on ote gradX
 					repcode=Divers.remplacer(repcode, "#", ",");
-					Instruction instr = new Instruction("reset(" + repcode + ")");
+					XmlInstruction instr = new XmlInstruction("reset(" + repcode + ")");
 					this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;
 				}
 			}
@@ -272,17 +270,17 @@ public class AnalyseurAlgobox implements iAnalyseur {
 		i = ligne.indexOf("fctcode='");
 		j = ligne.indexOf("'",i+9);
 		String fctcode = ligne.substring(i+9, j);
-		Operation oper = new Operation();
+		XmlOperation oper = new XmlOperation();
 		oper.nom = "F1";
 		prog_xml.operations.add(oper); oper.parent = prog_xml;
-		Parametre param = new Parametre();
+		XmlParametre param = new XmlParametre();
 		param.mode = "IN"; param.type = "REEL";	param.nom = "x";
 		oper.parametres.add(param);
-		Variable retour = new Variable();
+		XmlVariable retour = new XmlVariable();
 		retour.mode = "OUT"; retour.type = "REEL"; retour.nom = "retour";
 		oper.retours.add(retour);
-		Instruction instr = new Instruction("affectation");
-		Affectation aff = new Affectation(); aff.var = "retour"; aff.expression = fctcode;
+		XmlInstruction instr = new XmlInstruction("affectation");
+		XmlAffectation aff = new XmlAffectation(); aff.var = "retour"; aff.expression = fctcode;
 		instr.affectations.add(aff); aff.parent = instr;
 		oper.instructions.add(instr); 
 	}	
@@ -295,7 +293,7 @@ public class AnalyseurAlgobox implements iAnalyseur {
 		String f2lignes = ligne.substring(i+10, j);
 		i = ligne.indexOf("F2defaut='"); j = ligne.indexOf("'",i+10);
 		String f2defaut = ligne.substring(i+10, j);
-		Operation oper = new Operation();
+		XmlOperation oper = new XmlOperation();
 		oper.nom = "F2";
 		prog_xml.operations.add(oper); oper.parent = prog_xml;
 		// les parametres
@@ -303,7 +301,7 @@ public class AnalyseurAlgobox implements iAnalyseur {
 		while(tok1.hasMoreTokens()) {
 			String parametre = tok1.nextToken();
 			if (parametre==null) continue;
-			Parametre param = new Parametre();
+			XmlParametre param = new XmlParametre();
 			param.mode = "IN"; param.type = "REEL"; param.nom = parametre.trim();
 			trouverType(param);
 			if (param.nom!=null) {
@@ -311,34 +309,34 @@ public class AnalyseurAlgobox implements iAnalyseur {
 			}
 		}
 		// le retour
-		Variable retour = new Variable();
+		XmlVariable retour = new XmlVariable();
 		retour.mode = "OUT"; retour.type = "REEL"; retour.nom = "retour";
 		oper.retours.add(retour);
 		// l'instruction conditionnelle
-		Instruction instr = new Instruction("si");
+		XmlInstruction instr = new XmlInstruction("si");
 		StringTokenizer tok2 = new StringTokenizer(f2lignes,"#",false);
 		while(tok2.hasMoreTokens()) {
 			String parametre = tok2.nextToken();
 			if (parametre==null) continue;
 			i = parametre.indexOf("@");
 			if (i<0) continue;
-			Si si = new Si(); si.condition = parametre.substring(0, i);
+			XmlSi si = new XmlSi(); si.condition = parametre.substring(0, i);
 			instr.sis.add(si); si.parent = instr;
-			Instruction instr_aff = new Instruction("affectation");
+			XmlInstruction instr_aff = new XmlInstruction("affectation");
 			si.instructions.add(instr_aff);
-			Affectation aff = new Affectation(); 
+			XmlAffectation aff = new XmlAffectation(); 
 			aff.var = retour.nom;; 
 			aff.expression = parametre.substring(i+1, parametre.length());
 			instr_aff.affectations.add(aff); 
 		}
 		if (f2defaut.trim().length()>0) {
-			Instruction instr_aff = new Instruction("affectation");
-			Affectation aff = new Affectation(); 
+			XmlInstruction instr_aff = new XmlInstruction("affectation");
+			XmlAffectation aff = new XmlAffectation(); 
 			aff.var = retour.nom;; 
 			aff.expression = f2defaut;
 			instr_aff.affectations.add(aff); 
 			if (instr.sis.size()>0) {
-				Si si = new Si(); si.condition = "";
+				XmlSi si = new XmlSi(); si.condition = "";
 				instr.sis.add(si); si.parent = instr;
 				si.instructions.add(instr_aff);
 			}
@@ -393,16 +391,16 @@ public class AnalyseurAlgobox implements iAnalyseur {
 	private void ajouterCommentaires(Noeud cur_nd) {
 		// pour eviter les listes d'instructions vides
 		if (this.getInstructions(cur_nd).size()>0) return;
-		Instruction instr = new Instruction("// ajouter des instructions");
+		XmlInstruction instr = new XmlInstruction("// ajouter des instructions");
 		this.getInstructions(cur_nd).add(instr); instr.parent = cur_nd;
 	}
 	
-	private ArrayList<org.javascool.proglets.plurialgo.langages.modele.Instruction> getInstructions(Noeud nd) {
-		if (nd instanceof Programme) return ((Programme) nd).instructions;
-		if (nd instanceof Operation) return ((Operation) nd).instructions;
-		if (nd instanceof Si) return ((Si) nd).instructions;
-		if (nd instanceof Pour) return ((Pour) nd).instructions;
-		if (nd instanceof TantQue) return ((TantQue) nd).instructions;
+	private ArrayList<ModeleInstruction> getInstructions(Noeud nd) {
+		if (nd instanceof XmlProgramme) return ((XmlProgramme) nd).instructions;
+		if (nd instanceof XmlOperation) return ((XmlOperation) nd).instructions;
+		if (nd instanceof XmlSi) return ((XmlSi) nd).instructions;
+		if (nd instanceof XmlPour) return ((XmlPour) nd).instructions;
+		if (nd instanceof XmlTantQue) return ((XmlTantQue) nd).instructions;
 		if (nd==null) return prog_xml.instructions;
 		return getInstructions(nd.parent);
 	}	
