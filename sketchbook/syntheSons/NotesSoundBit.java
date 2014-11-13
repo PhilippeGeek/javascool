@@ -58,8 +58,8 @@ public class NotesSoundBit extends SoundBit {
   public double get(char channel, double time) {
     return Math.sin(2 * Math.PI * time);
   }
-  // Internal sound used to sample the notes
-  private SoundBit sound = new SoundBit() {
+  /** Internal sound used to sample the notes. */
+  public SoundBit sound = new SoundBit() {
     @Override
     public double get(char channel, double time) {
       int i = (int) (time / tempo);
