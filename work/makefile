@@ -1,7 +1,7 @@
 
 # vthierry's ongoing tasks, . . .
 
-dft : sos8
+dft : tst1
 
 #export JAVA_HOME=/usr/java/jdk1.6.0_25
 #export JAVA_HOME=/usr/java/jdk1.7.0_71
@@ -54,7 +54,6 @@ jdoc :
 
 sos8 : # À utiliser avec la JDK 7 ou JDK 8
 	ant javascool-proglets.jar
-	java -jar ../work/dist/javascool-proglets.jar
 	rsync --rsh='ssh -C' -rl ../work/dist/javascool-proglets.jar scm.gforge.inria.fr:/home/groups/javascool/htdocs/v4/javascool-proglets-8.jar
 	ant javascool-builder.jar
 	rsync --rsh='ssh -C' -rl ../work/dist/javascool-builder.jar scm.gforge.inria.fr:/home/groups/javascool/htdocs/v4/javascool-builder-8.jar
