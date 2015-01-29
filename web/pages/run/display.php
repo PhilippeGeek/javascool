@@ -19,10 +19,10 @@ Il suffit de le télécharger <b><a href="javascool-proglets.jar">ICI</a></b>, e
 
     <p>- Avec Java, version 1.8, il faut utiliser ce <a href="http://javascool.gforge.inria.fr/v4/javascool-proglets-8.jar">téléchargement</a></p>.
 
-<p>- Si le lancement échoue, vous devrez probablement <a href="http://www.java.com/fr/download">installer Java<a/> (version 1.6 ou <a href="#Utilisation_avec_java7">1.7</a>).</p>
+    <p>- Si le lancement échoue, vous devrez probablement <a href="http://www.java.com/fr/download">installer Java<a/> (version 1.6 ou <a href="#Utilisation_avec_java7">1.7</a>, pour java 8 voir ci dessus).</p>
 <p>- Ci dessous, nous donnons des indications pour vous aider plus si besoin, sous <a href="#windows">windows</a>, <a href="#macos">Mac OS</a>, et <a href="#linux">Linux</a>.</p>
+<p>- Si vous avez des sdoutes sur l'installation java essayer ce <a href="http://javascool.gforge.inria.fr/documents/test-java/test.jar">programme minimal</a>, si il ne se lance pas c'est probablement un souci d'installation avec de <a href="https://www.java.com/fr/download/help/troubleshoot_java.xml">l'aide ici</a.</p>
 <p>- Si votre système est trop ancien la <a href="http://javascool.gforge.inria.fr/v3">version 3</a> est encore disponible.</p>
-
 <p>- En cas d'échec <a href="?page=contact">contactez-nous</a> : nous vous aiderons.</p>
 
 <p>Pour en savoir plus sur l'utilisation de l'interface se reporter à sa <a href="?page=run&action=screenshot">description picturale</a>.

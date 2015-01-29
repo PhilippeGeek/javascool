@@ -121,7 +121,7 @@ public class ProgletsBuilder {
         // Expansion des jars de javascool
         String javascoolJar = Utils.javascoolJar();
         log("Extraction de Java's cool", true);
-        String libs[] = { "org/javascool", "org/fife", "sun/tools/java", "com/sun/tools/javac", "com/sun/source/tree", "com/sun/source/util" };
+        String libs[] = { "org/javascool", "org/fife", "sun/tools/java", "com/sun/tools/javac", "com/sun/source/tree", "com/sun/source/util", "com/sun/tools/doclint"};
         for(String lib : libs)
           JarManager.jarExtract(javascoolJar, jarDir, lib);
       }
