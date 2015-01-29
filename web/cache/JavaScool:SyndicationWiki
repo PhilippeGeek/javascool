@@ -10,16 +10,9 @@
 <p>Les documentations de <a rel="nofollow" class="external text" href="/v4/" class="internal">«javascool»</a> ou de <a rel="nofollow" class="external text" href="http://www-sop.inria.fr/science-participative/film/pages.php">«pour quoi tu cherches»</a> sont éditées sur ce wiki collaboratif et syndiquée sur le site web idoine.
 </p><p>Le principe est de faire:
 </p>
-<ol>
-<li> faire produire sur le site cible les pages du wiki sous forme brute avec le lien:
-<ul>
-<li> <tt>http://wiki.inria.fr/sciencinfolycee/'.$name.'?printable=yes&amp;action=render</tt>
-</li>
-</ul>
-</li>
-<li> puis de parser les liens avec des expressions régulières pour obtenir les bons liens.
-</li>
-</ol>
+<ol><li> faire produire sur le site cible les pages du wiki sous forme brute avec le lien:
+<ul><li> <tt>http://wiki.inria.fr/sciencinfolycee/'.$name.'?printable=yes&amp;action=render</tt></li></ul></li>
+<li> puis de parser les liens avec des expressions régulières pour obtenir les bons liens.</li></ol>
 <h2><span class="mw-headline" id="Mise_en_forme_des_liens">Mise en forme des liens</span></h2>
 Le mécanisme suivant permet de mettre en forme les liens: <pre>
 function wiki_get_contents_load($name) {
@@ -80,7 +73,7 @@ function wiki_get_contents_cache_clear() {
 <!-- 
 NewPP limit report
 CPU time usage: 0.016 seconds
-Real time usage: 0.018 seconds
+Real time usage: 0.015 seconds
 Preprocessor visited node count: 44/1000000
 Preprocessor generated node count: 116/1000000
 Post‐expand include size: 0/2097152 bytes
@@ -89,5 +82,5 @@ Highest expansion depth: 2/40
 Expensive parser function count: 0/100
 -->
 
-<!-- Saved in parser cache with key wiki_sciencinfolycee:pcache:idhash:895-1!*!*!!fr!*!* and timestamp 20141217160659
+<!-- Saved in parser cache with key wiki_sciencinfolycee:pcache:idhash:895-1!*!*!!fr!*!* and timestamp 20150129141136 and revision id 6004
  -->

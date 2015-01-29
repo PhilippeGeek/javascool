@@ -122,12 +122,8 @@ La construction est de la forme:
 <p>qui correspondent à la façon dont le texte est structuré et à la façon dont le texte sera rendu sur la page. 
 </p><p>A titre de raccourci les paragraphes peuvent s'appeler <font color="#990000"><b>&lt;p&gt;</b></font> au lieu de <font color="#990000"><b>&lt;div&gt;</b></font>, les deux noms étant complètement équivalent à ce niveau.
 </p>
-<ul>
-<li> Dans le cas d'une liste, les sous-divisions seront les <i>items</i> de la liste.
-</li>
-<li> Dans le cas d'une table, les sous-divisions seront les <i>lignes</i> de la table et leurs sous-divisions les <i>cellules</i> de la table (on les définit de gauche à droite puis de haut en bas).
-</li>
-</ul>
+<ul><li> Dans le cas d'une liste, les sous-divisions seront les <i>items</i> de la liste.</li>
+<li> Dans le cas d'une table, les sous-divisions seront les <i>lignes</i> de la table et leurs sous-divisions les <i>cellules</i> de la table (on les définit de gauche à droite puis de haut en bas).</li></ul>
 <p><br />
 La façon dont le texte sera rendu, le <i>style</i> est complètement séparé du contenu: on distingue complètement le fait d'écrire le texte de la façon de le mettre en page. Cette mise en page sera définie dans les fichier de style. 
 </p><p><br />
@@ -419,8 +415,8 @@ La construction est de la forme:
 </p>
 <!-- 
 NewPP limit report
-CPU time usage: 0.064 seconds
-Real time usage: 0.076 seconds
+CPU time usage: 0.060 seconds
+Real time usage: 0.062 seconds
 Preprocessor visited node count: 200/1000000
 Preprocessor generated node count: 402/1000000
 Post‐expand include size: 0/2097152 bytes
@@ -429,5 +425,5 @@ Highest expansion depth: 2/40
 Expensive parser function count: 0/100
 -->
 
-<!-- Saved in parser cache with key wiki_sciencinfolycee:pcache:idhash:859-1!*!*!!fr!*!* and timestamp 20141217160700
+<!-- Saved in parser cache with key wiki_sciencinfolycee:pcache:idhash:859-1!*!*!!fr!*!* and timestamp 20150129141138 and revision id 8140
  -->

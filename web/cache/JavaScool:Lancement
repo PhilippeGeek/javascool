@@ -1,15 +1,6 @@
-<ul>
-<li> Si vous expérimentez un problème de lancement, surtout <a rel="nofollow" class="external text" href="/v4//?page=contact" class="internal">contactez nous</a>&#160;:
-<ul>
-<li> Ce sera si facile de vous aider et nous comprendrons mieux comment aider les suivants ensuite 
-</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li> Utilisation du Javascoolbuilder: se référer à sa page de <a class="internal" href="?page=developers&action=doc-javascoolbuilder" title="JavaScool:DocJavaScoolBuilder">documentation</a>.
-</li>
-</ul>
+<ul><li> Si vous expérimentez un problème de lancement, surtout <a rel="nofollow" class="external text" href="/v4//?page=contact" class="internal">contactez nous</a>&#160;:
+<ul><li> Ce sera si facile de vous aider et nous comprendrons mieux comment aider les suivants ensuite </li></ul></li></ul>
+<ul><li> Utilisation du Javascoolbuilder: se référer à sa page de <a class="internal" href="?page=developers&action=doc-javascoolbuilder" title="JavaScool:DocJavaScoolBuilder">documentation</a>.</li></ul>
 <hr />
 <hr />
 <h2><span class="mw-headline" id="Utilisation_de_.C2.ABproglets.C2.BB_3D_ou_avec_des_animations_sonores">Utilisation de «proglets» 3D ou avec des animations sonores</span></h2>
@@ -22,14 +13,9 @@
 <p>Si vous détenez un ordinateur «Mac» un peu ancien vous n'avez que la Java 1.5 de disponible. Il faut alors manuellement activer la Java1.6 comme <a rel="nofollow" class="external text" href="http://blogs.oracle.com/cmar/entry/java_1_6_finally_available">détaillé ici</a>.
 </p><p>Notez que c'est une bonne chose pour votre «Mac» d'utiliser Java1.6, pas seulement pour JavaS'Cool, mais pour plein d'autres applications du Web etc..
 </p>
-<ul>
-<li> 26 octobre 2007&#160;: Mac OS X 10.5, dite «&#160;Leopard&#160;»&#160;: <i>à activer</i>
-</li>
-<li> 28 août 2009&#160;: Mac OS X 10.6, dite «&#160;Snow Leopard&#160;»&#160;: <i>rien à faire, ok</i>.
-</li>
-<li> 20 juillet 2011&#160;: Mac OS X 10.7, dite «&#160;Lion&#160;» (Lion)&#160;: <i>rien à faire, ok</i>.
-</li>
-</ul>
+<ul><li> 26 octobre 2007&#160;: Mac OS X 10.5, dite «&#160;Leopard&#160;»&#160;: <i>à activer</i></li>
+<li> 28 août 2009&#160;: Mac OS X 10.6, dite «&#160;Snow Leopard&#160;»&#160;: <i>rien à faire, ok</i>.</li>
+<li> 20 juillet 2011&#160;: Mac OS X 10.7, dite «&#160;Lion&#160;» (Lion)&#160;: <i>rien à faire, ok</i>.</li></ul>
 <hr />
 <h2><span class="mw-headline" id="Utilisation_avec_java7">Utilisation avec java7</span></h2>
 <p>La jvs4 est compilée en jdk6 mais a été testée avec la jre7: en clair bien que construite en java6 elle marche avec java7, même si cela reste encore expérimental.
@@ -37,8 +23,8 @@
 </p>
 <!-- 
 NewPP limit report
-CPU time usage: 0.004 seconds
-Real time usage: 0.008 seconds
+CPU time usage: 0.012 seconds
+Real time usage: 0.012 seconds
 Preprocessor visited node count: 11/1000000
 Preprocessor generated node count: 16/1000000
 Post‐expand include size: 0/2097152 bytes
@@ -47,5 +33,5 @@ Highest expansion depth: 2/40
 Expensive parser function count: 0/100
 -->
 
-<!-- Saved in parser cache with key wiki_sciencinfolycee:pcache:idhash:316-1!*!0!!*!*!* and timestamp 20141217160704
+<!-- Saved in parser cache with key wiki_sciencinfolycee:pcache:idhash:316-1!*!0!!*!*!* and timestamp 20150129141146 and revision id 14437
  -->

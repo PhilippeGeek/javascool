@@ -31,19 +31,13 @@
 <p>Le logiciel <a rel="nofollow" class="external text" href="http://coq.inria.fr/">Coq</a> qui fournit un langage formel pour rédiger des définitions mathématiques, des algorithmes et des théorèmes exécutable avec un environnement de développement semi-interactif est utilisé par des professeurs de mathématiques (pas directement par les élèves) pour formaliser les contenus mathématiques du programme en géométrie. Ce travail est proposé par une <a rel="nofollow" class="external text" href="http://www-sop.inria.fr/lemme/Frederique.Guilhot">Professeure de Mathématiques</a> et rendu <a rel="nofollow" class="external text" href="http://coq.inria.fr/pylons/contribs/view/HighSchoolGeometry/v8.3">disponible</a> avec le logiciel.
 </p>
 <h4><span class="mw-headline" id="Autres_initiatives">Autres initiatives</span></h4>
-<ul>
-<li> Voir aussi d'autres <a class="internal" href="?page=home&action=faq-autres" title="JavaScool:AutresInitiatives">initiatives (extra-scolaires) de popularisation de l'Informatique</a>.
-</li>
-</ul>
-<ul>
-<li> Voir aussi d'autres  <a rel="nofollow" class="external text" href="http://linuxfr.org/2009/06/26/25652.html">logiciels libres dans les programmes de mathématiques du lycée.</a>
-</li>
-</ul>
+<ul><li> Voir aussi d'autres <a class="internal" href="?page=home&action=faq-autres" title="JavaScool:AutresInitiatives">initiatives (extra-scolaires) de popularisation de l'Informatique</a>.</li></ul>
+<ul><li> Voir aussi d'autres  <a rel="nofollow" class="external text" href="http://linuxfr.org/2009/06/26/25652.html">logiciels libres dans les programmes de mathématiques du lycée.</a></li></ul>
 
 <!-- 
 NewPP limit report
-CPU time usage: 0.020 seconds
-Real time usage: 0.023 seconds
+CPU time usage: 0.012 seconds
+Real time usage: 0.030 seconds
 Preprocessor visited node count: 43/1000000
 Preprocessor generated node count: 48/1000000
 Post‐expand include size: 0/2097152 bytes
@@ -52,5 +46,5 @@ Highest expansion depth: 2/40
 Expensive parser function count: 0/100
 -->
 
-<!-- Saved in parser cache with key wiki_sciencinfolycee:pcache:idhash:94-1!*!0!!*!*!* and timestamp 20141217160703
+<!-- Saved in parser cache with key wiki_sciencinfolycee:pcache:idhash:94-1!*!0!!*!*!* and timestamp 20150129141145 and revision id 6014
  -->

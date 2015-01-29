@@ -3,20 +3,11 @@
 <h2><span class="mw-headline" id=".C2.AB.C2.A0Science_culture_au_lyc.C3.A9e_.C2.BB_:_les_chercheurs_viennent_partager_des_p.C3.A9pites_de_science">« Science culture au lycée&#160;»&#160;: les chercheurs viennent partager des pépites de science</span></h2>
 <p>Partout en France, les chercheurs des laboratoires de recherche en Sciences Informatiques, dans les Universités ou dans les organismes de recherche comme l'<a rel="nofollow" class="external text" href="http://www.inria.fr">INRIA</a> ou le <a rel="nofollow" class="external text" href="http://www.cnrs.fr">CNRS</a> peuvent être invités à donner une conférence-dialogue de culture scientifique et technique. Pour favoriser le contact direct entre les lycéens et le monde des sciences, des technologies et de la recherche dans sa diversité ont pour objectif, éveiller la curiosité des lycéens et apprentis à la culture scientifique, présenter les enjeux et les métiers en lien avec la recherche et l'innovation.
 </p>
-<ul>
-<li> Ces conférences peuvent se faire en visio-conférence (ça marche très bien et on vous y aide) si le lycée est éloigné du laboratoire. 
-</li>
-</ul>
-<ul>
-<li> Ces conférences permettent aussi des échanges en lien avec les <a class="internal" href="?page=resources&action=link-tpe-accueil" title="JavaScool:TPE-Accueil">TPE</a>.
-</li>
-</ul>
+<ul><li> Ces conférences peuvent se faire en visio-conférence (ça marche très bien et on vous y aide) si le lycée est éloigné du laboratoire. </li></ul>
+<ul><li> Ces conférences permettent aussi des échanges en lien avec les <a class="internal" href="?page=resources&action=link-tpe-accueil" title="JavaScool:TPE-Accueil">TPE</a>.</li></ul>
 <p><b>Comment en profiter&#160;?</b>&#160;: en nous <a rel="nofollow" class="external text" href="http://www.fuscia.info/accueil">contactant</a>&#160;!
 </p>
-<dl>
-<dd> En <a rel="nofollow" class="external text" href="http://www.regionpaca.fr">PACA</a>, cette initiative est mutualisée avec l'initiative «<a rel="nofollow" class="external text" href="http://www.regionpaca.fr/vie-lyceenne-et-apprentie/dispositifs-culture-scientifique/science-culture-inria.html">Science Culture au lycée et au CFA</a>» de la direction de l’Education du <a rel="nofollow" class="external text" href="http://www.regionpaca.fr">Conseil régional Provence – Alpes – Côtes d’Azur</a>, voir ses <a rel="nofollow" class="external text" href="http://www-sop.inria.fr/culture_scient/documents/Modalit%C3%A9sConfsCultureLycee.pdf">modalités</a>.
-</dd>
-</dl>
+<dl><dd> En <a rel="nofollow" class="external text" href="http://www.regionpaca.fr">PACA</a>, cette initiative est mutualisée avec l'initiative «<a rel="nofollow" class="external text" href="http://www.regionpaca.fr/vie-lyceenne-et-apprentie/dispositifs-culture-scientifique/science-culture-inria.html">Science Culture au lycée et au CFA</a>» de la direction de l’Education du <a rel="nofollow" class="external text" href="http://www.regionpaca.fr">Conseil régional Provence – Alpes – Côtes d’Azur</a>, voir ses <a rel="nofollow" class="external text" href="http://www-sop.inria.fr/culture_scient/documents/Modalit%C3%A9sConfsCultureLycee.pdf">modalités</a>.</dd></dl>
 <hr />
 <div id="toc" class="toc"><div id="toctitle"><h2>Sommaire</h2></div>
 <ul>
@@ -72,10 +63,7 @@
 <h3><span class="mw-headline" id="Le_hasard_fait_bien_les_choses">Le hasard fait bien les choses</span></h3>
 <p>A l’aide de concepts mathématiques (plus ou moins) élémentaires deux sens différents de cette phrase seront commentées&#160;: celui du langage courant et le sens scientifique. On illustrera par de nombreux exemples pourquoi cette maxime favorite est tout sauf hasardeuse. Chemin faisant on parlera, entre autres, de modélisations probabilistes en biologie, des subprimes et de la crise financière, de stabilisation par des bruits aléatoires, et de grandes équations de la physique abordées mathématiquement et numériquement par des méthodes de la théorie des probabilités. Enfin on expliquera pourquoi la complexité du monde et les moyens informatiques actuels font bien les choses pour le hasard.
 </p>
-<ul>
-<li> Ref: <a rel="nofollow" class="external free" href="http://images.math.cnrs.fr/Le-hasard-fait-bien-les-choses.html">http://images.math.cnrs.fr/Le-hasard-fait-bien-les-choses.html</a>
-</li>
-</ul>
+<ul><li> Ref: <a rel="nofollow" class="external free" href="http://images.math.cnrs.fr/Le-hasard-fait-bien-les-choses.html">http://images.math.cnrs.fr/Le-hasard-fait-bien-les-choses.html</a></li></ul>
 <h3><span class="mw-headline" id="Pour_en_finir_avec_les_Sudokus_et_emp.C3.AAcher_les_prisonniers_de_pr.C3.A9parer_leur_.C3.A9vasion.2C_un_peu_de_logique_math.C3.A9matiques_pour_r.C3.A9soud_les_probl.C3.A8mes_les_plus_innatendus_.21">Pour en finir avec les Sudokus et empêcher les prisonniers de préparer leur évasion, un peu de logique mathématiques pour résoud les problèmes les plus innatendus&#160;!</span></h3>
 <p>Exemples de problèmes d'algorithmique de théorie des graphes&#160;: construction d'un réseau de degré et diamètre donnés ou d'un réseau embarqué tolérant aux pannes, comment trouver les plus courts chemins dans un réseau. Et comment des mécanismes similaires permettent de se représenter les règles plus ou moins difficiles (les règles logiques et celles basées sur la théorie des graphes) pour résoudre un sudoku. Et comment des mécanismes similaires permettent de se représenter les règles plus ou moins difficiles en télécom.
 </p>
@@ -102,8 +90,8 @@
 </p>
 <!-- 
 NewPP limit report
-CPU time usage: 0.028 seconds
-Real time usage: 0.023 seconds
+CPU time usage: 0.024 seconds
+Real time usage: 0.028 seconds
 Preprocessor visited node count: 71/1000000
 Preprocessor generated node count: 76/1000000
 Post‐expand include size: 0/2097152 bytes
@@ -112,5 +100,5 @@ Highest expansion depth: 2/40
 Expensive parser function count: 0/100
 -->
 
-<!-- Saved in parser cache with key wiki_sciencinfolycee:pcache:idhash:113-1!*!0!!fr!*!* and timestamp 20141217160705
+<!-- Saved in parser cache with key wiki_sciencinfolycee:pcache:idhash:113-1!*!0!!fr!*!* and timestamp 20150129141150 and revision id 6961
  -->

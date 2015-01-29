@@ -22,20 +22,11 @@
 <h2><span class="mw-headline" id="Trois_.C3.A9tapes_dans_l.27apprentissage_de_l.27informatique.">Trois étapes dans l'apprentissage de l'informatique.</span></h2>
 <p>Il faut être clair&#160;: à l'ère numérique dans laquelle nous vivons, les fondements de l'informatique constituent un savoir indispensable comme peut l'être la lecture ou l'écriture, et tôt ou tard (et plutôt <i> <a href="https://wiki.inria.fr/sciencinfolycee/JavaScool:Manifeste" title="JavaScool:Manifeste">tantôt que trop tard</a></i>&#160;!), c'est une discipline à part entière qu'il faut pouvoir enseigner à nos jeunes, probablement en trois étapes&#160;:
 </p>
-<ol>
-<li> [<i>primaire-collège</i>] <b>Apprentissage de l'usage des outils</b>&#160;: apprendre à utiliser les outils&#160;: édition, communication, (et un clavier&#160;!),... profiter des ressources de l'internet, etc.
-</li>
+<ol><li> [<i>primaire-collège</i>] <b>Apprentissage de l'usage des outils</b>&#160;: apprendre à utiliser les outils&#160;: édition, communication, (et un clavier&#160;!),... profiter des ressources de l'internet, etc.</li>
 <li> [<i>collège-lycée</i>] <b>Apprentissage des méthodes par la pratique expérimentale</b>&#160;: c'est à dire ici apprentissage des algorithmes et de la programmation. 
-<ul>
-<li> Il est indispensable d'apprendre l' «&#160;algorithmique&#160;» (et les fondements théoriques qui y conduisent), c'est le levier pour pouvoir comprendre et maîtriser, voire adapter les logiciels que nous utilisons (et pas uniquement les subir&#160;!).
-</li>
-<li> Il est impossible de s'approprier ce savoir sans une vraie pratique, une démarche expérimentale, il faut donc incarner cette algorithmique en faisant de la programmation.
-</li>
-</ul>
-</li>
-<li> [<i>fin de lycée-et au delà</i>] commence la <i>Formation Scientifique</i> dans le domaine&#160;: par exemple la théorie de l'information, de la compilation, traitement des données, etc.
-</li>
-</ol>
+<ul><li> Il est indispensable d'apprendre l' «&#160;algorithmique&#160;» (et les fondements théoriques qui y conduisent), c'est le levier pour pouvoir comprendre et maîtriser, voire adapter les logiciels que nous utilisons (et pas uniquement les subir&#160;!).</li>
+<li> Il est impossible de s'approprier ce savoir sans une vraie pratique, une démarche expérimentale, il faut donc incarner cette algorithmique en faisant de la programmation.</li></ul></li>
+<li> [<i>fin de lycée-et au delà</i>] commence la <i>Formation Scientifique</i> dans le domaine&#160;: par exemple la théorie de l'information, de la compilation, traitement des données, etc.</li></ol>
 <p>Sans oublier, à tous les niveaux, le développement de la réflexion et de la culture&#160;: comprendre d'où vient l'informatique, ce qu'elle change au niveau de notre société, etc..
 </p>
 <h3><span class="mw-headline" id="Un_levier:_l.27apprentissage_de_la_programmation.">Un levier: l'apprentissage de la programmation.</span></h3>
@@ -68,8 +59,8 @@ Cette position pédagogique a été vécue plusieurs fois en 2007-2009 avec un s
 </p>
 <!-- 
 NewPP limit report
-CPU time usage: 0.012 seconds
-Real time usage: 0.014 seconds
+CPU time usage: 0.020 seconds
+Real time usage: 0.064 seconds
 Preprocessor visited node count: 36/1000000
 Preprocessor generated node count: 52/1000000
 Post‐expand include size: 0/2097152 bytes
@@ -78,5 +69,5 @@ Highest expansion depth: 2/40
 Expensive parser function count: 0/100
 -->
 
-<!-- Saved in parser cache with key wiki_sciencinfolycee:pcache:idhash:93-1!*!0!!fr!*!* and timestamp 20141217160701
+<!-- Saved in parser cache with key wiki_sciencinfolycee:pcache:idhash:93-1!*!0!!fr!*!* and timestamp 20150129141142 and revision id 6012
  -->
