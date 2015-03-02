@@ -14,6 +14,31 @@ import javax.sound.sampled.LineUnavailableException;
 /** Defines a microphone-input sound-bit wrapper.
  * @see <a href="InputSoundBit.java.html">code source</a>
  * @serial exclude
+ * Voici un exemple d'utilisation de cette classe:<pre>
+ *import org.javascool.tools.sound.InputSoundBit;
+ *void main() {
+ *  // Enregistre un son pendant 4 secondes
+ *  // L'enregistrement se fait à 44000 Hz par défaut
+ *  println("On enregistre ..");
+ *  InputSoundBit input = new InputSoundBit();
+ *  // On lance l'enregistrement et patiente jusqu'à ce que ce soit fini
+ *  {
+ *     input.reset(4); // On enregistre pendant 4 secondes
+ *     sleep(4000); // On patiente 4000 milli-secondes donc 4 secondes
+ *  }
+ *  println("ok");
+ *  // On rejoue le son directement avec play
+ *  println("On rejoue");
+ *  input.play();
+ *  println("Ok");
+ *  // On écrit les 1ers échantillons de sons
+ *  println("On rerejoue");
+ *  for(int i = 0; i < 100; i++) {
+ *    // On ecrit les 100ers echantillons en ajoutant les caneaux gauche et droit
+ *     print(" "+ input.get('l', i)+input.get('r', i)+"\n");
+ *  }
+ *  println("\nOk");
+ *}</pre>
  */
 public class InputSoundBit extends SoundBit {
   private TargetDataLine line = null;
