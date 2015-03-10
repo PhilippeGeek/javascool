@@ -1,5 +1,0 @@
-
-void main() {
-	double note; 
-	note = readDouble( "note : " ); 
-} 
