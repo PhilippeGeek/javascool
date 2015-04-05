@@ -1,0 +1,4 @@
+Java's Cool (alias Javascool) est un logiciel conçu pour l'apprentissage des bases de la programmation. Il a été conçu à la demande de professeurs de lycées et de fuscia avec UNICIEL. Il permet de manipuler un macro-langage de programmation, basé sur le langage Java. Pour plus de détails . . [essayez le](http://javascool.gforge.inria.fr) !
+Créé pour apprendre aux personnes qui savent juste allumer leur ordinateur à programmer, par exemple des jeux (en 2D) ou des minis-logiciels, son interface est simple ainsi que son langage dit de "balisage".
+Ce programme est écrit en Java, il est donc compatible avec tous les systèmes.
+## Où le trouver : http://javascool.gforge.inria.fr ##
